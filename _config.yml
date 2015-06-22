@@ -2,8 +2,8 @@
 title: FAO Regional Statistical Yearbooks 2015 
 email: markus.kainu@fao.org
 description: "Regional Statistical Yearbooks 2015"
-baseurl: ""
-url: "http://unfaostatistics.github.io/regional15"
+baseurl: "http://unfaostatistics.github.io/regional15/"
+url: "http://unfaostatistics.github.io/regional15/"
 
 # Build settings
 markdown: redcarpet
