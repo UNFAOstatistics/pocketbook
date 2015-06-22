@@ -1,0 +1,21 @@
+footer {
+  float: left;
+  position: relative;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #777;
+  clear: both;
+  width: 100%;
+  margin: 40px auto 40px auto;
+  border-top: 1px solid #eee;
+/*  background-color: #90a959;*/
+}
+
+.site-footer-links li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.site-footer-links li:first-child {
+  margin-left: 0;
+}

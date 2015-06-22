@@ -1,0 +1,9 @@
+{
+    "path" : "~/btsync/fao_sync/regional15",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

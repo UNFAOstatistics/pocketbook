@@ -1,0 +1,17 @@
+{
+    "contents" : "---\nlayout: default\n---\n\n## Intro\n\n\n```{r reg_plot1, echo=FALSE, message=FALSE, warning=FALSE,results='hold'}\nlibrary(gisfao)\nlibrary(rgdal)\nlibrary(ggplot2)\nshape <- fao_world[which(fao_world[[\"REU\"]] == TRUE),]\nshape <- spTransform(shape, CRS(\"+proj=robin\"))\nmap.df <- fortify(shape)\np <- ggplot()\np <- p + geom_polygon(data=map.df,aes(long,lat,group=group), \n                      fill=\"#5087CE\", color=\"white\", size=.5)\np\n```",
+    "created" : 1434972133007.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4219212600",
+    "id" : "3BD8161A",
+    "lastKnownWriteTime" : 1434972135,
+    "path" : "~/btsync/fao_sync/regional15/REU/index.Rmd",
+    "project_path" : "REU/index.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

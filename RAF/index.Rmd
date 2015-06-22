@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+## Intro
+
+
+```{r reg_plot1, echo=FALSE, message=FALSE, warning=FALSE,results='hold'}
+library(gisfao)
+library(rgdal)
+library(ggplot2)
+shape <- fao_world[which(fao_world[["RAF"]] == TRUE),]
+shape <- spTransform(shape, CRS("+proj=robin"))
+map.df <- fortify(shape)
+p <- ggplot()
+p <- p + geom_polygon(data=map.df,aes(long,lat,group=group), 
+                      fill="#5087CE", color="white", size=.5)
+p
+```
