@@ -1,5 +1,6 @@
 ---
 layout: default
+title: FAO Regional Statistical Yearbooks 2015
 ---
 
 ## Intro
