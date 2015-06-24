@@ -57,7 +57,11 @@
 \vfill
 \centering
 \includegraphics[width=\paperwidth,height=\paperheight,%
-keepaspectratio]{./cover/front_cover.pdf}%
+% keepaspectratio]{./cover/front_cover.pdf}%
+% keepaspectratio]{./cover/front_cover_RAF.pdf}%
+% keepaspectratio]{./cover/front_cover_LAC.pdf}%
+% keepaspectratio]{./cover/front_cover_REU.pdf}%
+keepaspectratio]{./cover/front_cover_RNE.pdf}%
 \vfill
 }}}
 
@@ -166,7 +170,7 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 
 % Asetetaan koko raportin laajuiset parametrit knitr:lle
 <<setup, echo=FALSE>>=
-knitr::opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,
+knitr::opts_chunk$set(list(echo=FALSE,eval=FALSE,cache=FALSE,warning=FALSE,message=FALSE,
                     dev="pdf"))
 @
 
@@ -354,7 +358,7 @@ FAO is deeply committed to helping countries strengthen their statistical system
 %% Spreads start from here !!!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<spread_function, eval=TRUE, echo=FALSE>>=
+<<spread_function, echo=FALSE>>=
 source('latex_charts.R')
 #source('./publication/latex_charts.R')
 @
@@ -394,7 +398,7 @@ source('latex_charts.R')
 \rowcolors{1}{part1!10}{white}
 \clearpage
 
-<<Overview, eval=TRUE, results='asis'>>=
+<<Overview,  results='asis'>>=
 chart_spread2(title="Overview",                
             LeftTextCode="A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas.",  
             footnoteLeft="Data after 2010 are projections.",   
@@ -405,51 +409,7 @@ chart_spread2(title="Overview",
             MapCode="M.P1.OVER.1.6")
 @
 
-<<economy, eval=TRUE, results='asis'>>=
-chart_spread2(title="Economy",                
-            LeftTextCode="While some sectors have been hard hit, agriculture has demonstrated resilience during the recent economic downturn.  Changes in the wider economy, including growing global integration, affect the performance of the agriculture sector.  Higher overall economic growth also raises consumers’ incomes and hence food demand. Changing interest rates influence capital investments, land values and storage levels, while inflation affects input prices, revenues and credit costs. Fluctuations in exchange rates have an important bearing on international competitiveness and trade flows.",  
-            RightTextCode="C.P1.ECON.1.2",   
-            LeftChartCode="C.P1.ECON.1.3",   
-            RightChartCode="C.P1.ECON.1.4",  
-            BottomChartCode="C.P1.ECON.1.5", 
-            MapCode="M.P1.ECON.1.6")         
-@
 
-<<labour, eval=TRUE, results='asis'>>=
-chart_spread2(title="Labour",                
-            LeftTextCode="A strong labour market is the foundation of sustained well-being and economic growth, inclusion and social cohesion. Therefore access to safe, productive and remunerated work is essential. Yet many workers, especially the most vulnerable, do not enter into formal wage employment but are instead self-employed or participate in unpaid family work, such as in agriculture. This is especially the case with subsistence farming. As a large share of the working poor are involved in agriculture, developments in this sector have a major impact on welfare.",
-            RightTextCode="C.P1.LABO.1.2",   
-            LeftChartCode="C.P1.LABO.1.3",   
-            RightChartCode="C.P1.LABO.1.4",  
-            BottomChartCode="C.P1.LABO.1.5", 
-            MapCode="M.P1.LABO.1.6"
-            )         
-@
-
-
-<<Inputs, eval=TRUE, results='asis'>>=
-chart_spread2(title="Inputs",
-            LeftTextCode="Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. Throughout Asia and in parts of Latin America, expanding seed and fertilizer use has been accompanied by investments in irrigation, rural roads, marketing infrastructure and financial services, paving the way for dynamic commercial input markets. In other regions, such as sub-Saharan Africa, the uptake of agricultural inputs is relatively low because it is often cheaper to expand cropland to have higher production.",  
-            RightTextCode="C.P1.INPU.1.2",   
-            LeftChartCode="C.P1.INPU.1.3",   
-            RightChartCode="C.P1.INPU.1.4",  
-            BottomChartCode="C.P1.INPU.1.5", 
-            MapCode="M.P1.INPU.1.6",
-            notes=""
-            )         
-@
-
-<<investments, eval=TRUE, results='asis'>>=
-chart_spread2(title="Investment",
-            LeftTextCode="Investing in agriculture is one of the most effective strategies for reducing poverty and hunger, and promoting sustainability. The regions of the world where hunger and extreme poverty are most widespread today – South Asia and sub-Saharan Africa – have seen flat or declining rates of investment per worker in agriculture over the past thirty years. Farmers tend to be the largest investors in developing country agriculture, and therefore their investment decisions are paramount for any strategy aimed at improving agricultural investment.",  
-            RightTextCode="C.P1.INV.1.2",   
-            LeftChartCode="C.P1.INV.1.3",   
-            RightChartCode="C.P1.INV.1.4",  
-            BottomChartCode="C.P1.INV.1.5", 
-            MapCode="M.P1.INV.1.6",
-            notes=""
-            )         
-@
 
 
 %                         .^^^\ ../~/\       .==...==.
@@ -488,7 +448,7 @@ chart_spread2(title="Investment",
 \rowcolors{1}{part2!10}{white}
 \clearpage
 
-<<Undernourishmend, eval=TRUE,results='asis'>>=
+<<Undernourishmend, results='asis'>>=
 chart_spread(title="Undernourishment",                
             LeftTextCode="Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago.",  
             RightTextCode="MT.P2.UNU.1.2",   
@@ -500,54 +460,6 @@ chart_spread(title="Undernourishment",
             )
 @
 
-
-<<Availability, eval=TRUE,results='asis'>>=
-chart_spread2(title="Food Availability",                
-            LeftTextCode="Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security.",  
-            RightTextCode="C.P2.AV.1.2",   
-            LeftChartCode="C.P2.AV.1.3",   
-            RightChartCode="C.P2.AV.1.4",  
-            BottomChartCode="C.P2.AV.1.5", 
-            MapCode="M.P2.AV.1.6",
-            notes="" 
-            )
-@
-
-<<Access, eval=TRUE,results='asis'>>=
-chart_spread2(title="Access",                
-            LeftTextCode="An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads.",  
-            RightTextCode="C.P2.ACCESS.1.2",   
-            LeftChartCode="C.P2.ACCESS.1.3",   
-            RightChartCode="C.P2.ACCESS.1.4",  
-            BottomChartCode="C.P2.ACCESS.1.5", 
-            MapCode="M.P2.ACCESS.1.6",
-            notes=""
-            )
-@
-
-<<Stability, eval=TRUE,results='asis'>>=
-chart_spread2(title="Stability",                
-            LeftTextCode="Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food.",  
-            RightTextCode="C.P2.STB.1.2",   
-            LeftChartCode="C.P2.STB.1.3",   
-            RightChartCode="C.P2.STB.1.4",  
-            BottomChartCode="C.P2.STB.1.5", 
-            MapCode="M.P2.STB.1.6",
-            notes=""
-            )
-@
-
-<<Utilization, eval=TRUE,results='asis'>>=
-chart_spread(title="Utilization",                
-            LeftTextCode="Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels.",  
-            RightTextCode="MT.P2.UT.1.2",   
-            LeftChartCode="C.P2.UT.1.3",   
-            RightChartCode="C.P2.UT.1.4",  
-            BottomChartCode="C.P2.UT.1.5", 
-            MapCode="M.P2.UT.1.6",
-            notes=""
-            )
-@
 
 %
 %                         .^^^\ ../~/\       .==...==.
@@ -573,7 +485,7 @@ chart_spread(title="Utilization",
 %    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
 %        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
 %                   |++|            \+ + \_ _
-%                  _/ . \_           \ .  ___>
+%                  _/ . \_           \ .  __eval=TRUE,_>
 %               <(^ /  |__)>          `--.___>
 %                 \/^\/
 %
@@ -586,7 +498,7 @@ chart_spread(title="Utilization",
 \clearpage
 
 
-<<Dietary energy supply, eval=TRUE,results='asis'>>=
+<<Dietary energy supply, results='asis'>>=
 chart_spread2(title="Dietary energy supply",
             LeftTextCode="The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products.",  
             RightTextCode="C.P3.DES.1.2",   
@@ -598,65 +510,6 @@ chart_spread2(title="Dietary energy supply",
             )
 @
 
-<<Growth in crop production, eval=TRUE,results='asis'>>=
-chart_spread(title="Growth in crop production",
-            LeftTextCode="The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa.",  
-            RightTextCode="MT.P3.CRPRO.1.2",   
-            LeftChartCode="C.P3.CRPRO.1.3",   
-            RightChartCode="C.P3.CRPRO.1.4",  
-            BottomChartCode="C.P3.CRPRO.1.5", 
-            MapCode="M.P3.CRPRO.1.6",
-            notes=""
-            )
-@
-
-<<Trends in the crop sector, eval=TRUE,results='asis'>>=
-chart_spread(title="Crop sector",                
-            LeftTextCode="Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel.",  
-            RightTextCode="MT.P3.CRTRE.1.2",   
-            LeftChartCode="C.P3.CRTRE.1.3",   
-            RightChartCode="C.P3.CRTRE.1.4",  
-            BottomChartCode="C.P3.CRTRE.1.5", 
-            MapCode="M.P3.CRTRE.1.6",
-            notes=""
-            )
-@
-
-<<Trends in the livestock sector, eval=TRUE,results='asis'>>=
-chart_spread(title="Livestock sector",
-            LeftTextCode="The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment.",  
-            RightTextCode="MT.P3.LIVE.1.2", 
-            LeftChartCode="C.P3.LIVE.1.3",
-            RightChartCode="C.P3.LIVE.1.4",
-            BottomChartCode="C.P3.LIVE.1.5",
-            MapCode="M.P3.LIVE.1.6",
-            notes=""
-            )
-@
-
-<<Trends in the fisheries sector, eval=TRUE,results='asis'>>=
-chart_spread2(title="Fisheries sector",
-            LeftTextCode="Fish is an important component in people’s diets, providing about 2.9 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods.",  
-            RightTextCode="C.P3.FISH.1.2",   
-            LeftChartCode="C.P3.FISH.1.3",   
-            RightChartCode="C.P3.FISH.1.4",  
-            BottomChartCode="C.P3.FISH.1.5", 
-            MapCode="M.P3.FISH.1.6",
-            notes=""
-            )
-@
-
-
-<<Trends in agricultural trade, eval=TRUE,results='asis'>>=
-chart_spread(title="Agricultural trade",
-            LeftTextCode="Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production.",  
-            RightTextCode="MT.P3.TRADE.1.3",   
-            LeftChartCode="C.P3.TRADE.1.3",    
-            RightChartCode="C.P3.TRADE.1.4",  
-            BottomChartCode="C.P3.TRADE.1.5", 
-            MapCode="M.P3.TRADE.1.6"
-            )
-@
 
 
 %                         .^^^\ ../~/\       .==...==.
@@ -695,7 +548,7 @@ chart_spread(title="Agricultural trade",
 \clearpage
 
 
-<<Land, eval=TRUE, results='asis'>>=
+<<Land, results='asis'>>=
 chart_spread2(title="Land",                
             LeftTextCode="Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa.",  
             RightTextCode="C.P4.LAND.1.2",   
@@ -705,54 +558,6 @@ chart_spread2(title="Land",
             MapCode="M.P4.LAND.1.6",
             notes=""
             )     
-@
-
-<<Water, eval=TRUE,results='asis'>>=
-chart_spread(title="Water",                
-            LeftTextCode="Water is key to human life and agricultural activity. It is essential for food security, stable ecosystems and nutrition. Yet global demand for water has risen sharply over the last century and even more so in recent years. And is increasingly evident that the current use of water resources and services they provide is unsustainable. Already very small proportion of the planet’s water is available for human use. The impact of water stress and water scarcity is likely to grow further, particularly with climate change.",  
-            RightTextCode="MT.P4.WATER.1.2",   
-            LeftChartCode="C.P4.WATER.1.3",   
-            RightChartCode="C.P4.WATER.1.4",  
-            BottomChartCode="C.P4.WATER.1.5", 
-            MapCode="M.P4.WATER.1.6",
-            notes=""
-            )
-@
-
-<<Energy, eval=TRUE,results='asis'>>=
-chart_spread2(title="Energy",                
-            LeftTextCode="Energy is an important input for agri-food chain and is used to power agricultural machinery, to heat greenhouses, to power irrigation systems, among others, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases, both in absolute terms and per unit of land. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips.",  
-            RightTextCode="C.P4.ENER.1.2",
-            LeftChartCode="C.P4.ENER.1.3",
-            RightChartCode="C.P4.ENER.1.4",
-            BottomChartCode="C.P4.ENER.1.5",
-            MapCode="M.P4.ENER.1.6",
-            notes=""
-            )
-@
-
-<<Forestry, eval=TRUE,results='asis'>>=
-chart_spread2(title="Forestry",                
-            LeftTextCode="Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant.",  
-            RightTextCode="C.P4.FOR.1.2",   
-            LeftChartCode="C.P4.FOR.1.3",   
-            RightChartCode="C.P4.FOR.1.4",  
-            BottomChartCode="C.P4.FOR.1.5", 
-            MapCode="M.P4.FOR.1.6",
-            notes=""
-            )
-@
-
-<<Climate change, eval=TRUE,results='asis'>>=
-chart_spread2(title="Climate change",                
-            LeftTextCode="The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO2) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult.",  
-            RightTextCode="C.P4.CC.1.2",   
-            LeftChartCode="C.P4.CC.1.3",   
-            RightChartCode="C.P4.CC.1.4",  
-            BottomChartCode="C.P4.CC.1.5", 
-            MapCode="M.P4.CC.1.6",
-            notes=""    
-            )
 @
 
 
@@ -776,7 +581,7 @@ chart_spread2(title="Climate change",
 \parindent=0pt
 \parskip=\medskipamount
 \hangafter=-2
-\input{./Tables/CountryProfiles.tex}
+\input{./CountryProfiles.tex}
 
 %%% METADATA
 \newpart{white}
@@ -784,7 +589,7 @@ chart_spread2(title="Climate change",
 %\section{Definitions}
 \phantomsection
 \addcontentsline{toc}{section}{Definitions}
-\input{./Metadata.tex}
+%\input{./Metadata.tex}
 \clearpage
 
 \newpage
