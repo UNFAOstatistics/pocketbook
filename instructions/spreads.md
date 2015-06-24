@@ -19,6 +19,12 @@ Click the link for each column to open a new page
 
 |            chart_type           |            year_start           |             year_end            |            unit           |           countries            |           caption            |           notes            |
 | ------------------------------- | ------------------------------- | ------------------------------- | ------------------------- | ------------------------------ | ---------------------------- | -------------------------- |
-| [Instructions](chart_type.html) | [Instructions](chart_type.html) | [Instructions](chart_type.html) | [Instructions](unit.html) | [Instructions](countries.html) | [Instructions](caption.html) | [Instructions](notes.html) |
+| [Instructions](collab_define_the_spread#chart_type) | [Instructions](chart_type.html) | [Instructions](chart_type.html) | [Instructions](unit.html) | [Instructions](countries.html) | [Instructions](caption.html) | [Instructions](notes.html) |
 |                                 |                                 |                                 |                           |                                |                              |                            |
 
+
+
+|            chart_type           |            year_start           |             year_end            |            unit           |           countries            |           caption            |           notes            |
+| ------------------------------- | ------------------------------- | ------------------------------- | ------------------------- | ------------------------------ | ---------------------------- | -------------------------- |
+| [Instructions](https://github.com/UNFAOstatistics/regional15/wiki/) | [Instructions](chart_type.html) | [Instructions](chart_type.html) | [Instructions](unit.html) | [Instructions](countries.html) | [Instructions](caption.html) | [Instructions](notes.html) |
+|                                 |                                 |                                 |                           |                                |                              |                            |
