@@ -5,18 +5,13 @@ title: FAO Regional Statistical Yearbooks 2015
 
 ## Intro
 
+<img src="https://trakcel.com/images/process-design-1.png" width=150 style="float: right;"/>
+
 This is a website that facilitates the FAO Regional yearbook process in 2015
 
-![](https://trakcel.com/images/process-design-1.png)
-
-Please email <a href="mailto:markus.kainu@fao.org?Subject=FAO regional yearboks" target="_top">Markus.Kainu@fao.org</a> if you have questions about the site.
-
-
-
-<!-- 
 <div class="home">
 
-  <h1>Documents</h1>
+  <h3>Recent updates</h3>
 
   <ul class="posts">
     {% for post in site.posts %}
@@ -31,4 +26,5 @@ Please email <a href="mailto:markus.kainu@fao.org?Subject=FAO regional yearboks"
 
 </div>
 
--->
+
+Please email <a href="mailto:markus.kainu@fao.org?Subject=FAO regional yearboks" target="_top">Markus.Kainu@fao.org</a> if you have questions about the site.

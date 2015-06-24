@@ -6,5 +6,14 @@
     <link>http://unfaostatistics.github.io/regional15//</link>
     <atom:link href="http://unfaostatistics.github.io/regional15//feed.xml" rel="self" type="application/rss+xml" />
     
+      <item>
+        <title>Site created</title>
+        <description>&lt;p&gt;Site opened. Will create a new post when new content is added.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 24 Jun 2015 10:23:45 +0200</pubDate>
+        <link>http://unfaostatistics.github.io/regional15//general/2015/06/24/site-created.html</link>
+        <guid isPermaLink="true">http://unfaostatistics.github.io/regional15//general/2015/06/24/site-created.html</guid>
+      </item>
+    
   </channel>
 </rss>
