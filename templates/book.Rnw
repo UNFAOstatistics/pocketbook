@@ -59,9 +59,10 @@
 \includegraphics[width=\paperwidth,height=\paperheight,%
 % keepaspectratio]{./cover/front_cover.pdf}%
 % keepaspectratio]{./cover/front_cover_RAF.pdf}%
-% keepaspectratio]{./cover/front_cover_LAC.pdf}%
+keepaspectratio]{./cover/front_cover_RAP.pdf}%
 % keepaspectratio]{./cover/front_cover_REU.pdf}%
-keepaspectratio]{./cover/front_cover_RNE.pdf}%
+% keepaspectratio]{./cover/front_cover_RNE.pdf}%
+
 \vfill
 }}}
 

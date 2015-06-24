@@ -22,4 +22,4 @@
 #pandoc comment_definitions.md -o comment_definitions.html
 
 # upload the output pdf to kapsi
-scp book_RAF.pdf book_LAC.pdf book_REU.pdf book_RNE.pdf output muuankarski@kapsi.fi:public_html/fao/RSPB15
+scp book_RAF.pdf book_RAP.pdf book_REU.pdf book_RNE.pdf output muuankarski@kapsi.fi:public_html/fao/RSPB15
