@@ -165,32 +165,23 @@
 
     <div class="container">
 
-          ## Intro
+          <h2>Comment the current version of regional yearbook</h2>
 
-### Comment the yearbooks
+<p>You should see the pdf on the left and a text editor on the right.</p>
 
-- [Comment the global statistical pocketbook](comment.html)
-- [Comment the your regional pocketbook](comment_regional.html)
+<p>As you add new rows, please remove same number of empty rows BELOW your text not the mess the formatting below your comments!</p>
 
-
-```{r reg_plot1, echo=FALSE, message=FALSE, warning=FALSE,results='hold'}
-library(gisfao)
-library(rgdal)
-library(ggplot2)
-shape <- fao_world[which(fao_world[["RAP"]] == TRUE),]
-shape <- spTransform(shape, CRS("+proj=robin"))
-map.df <- fortify(shape)
-
-shape2 <- spTransform(fao_world, CRS("+proj=robin"))
-map.df2 <- fortify(shape2)
-
-p <- ggplot()
-p <- p + geom_polygon(data=map.df2,aes(long,lat,group=group), 
-                      fill=NA, color=NA)
-p <- p + geom_polygon(data=map.df,aes(long,lat,group=group), 
-                      fill="#5087CE", color="white", size=.5)
-p
-```
+<table><thead>
+<tr>
+<th>Document</th>
+<th>Comments</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><object data="http://koti.kapsi.fi/~muuankarski/fao/RSPB15/book_RAF.pdf" type="application/pdf" width="500" height="60000">  alt : <a href="http://koti.kapsi.fi/~muuankarski/fao/RSPB15/book_RAF.pdf">book_RAF.pdf</a> </object></td>
+<td><iframe name='embed_readwrite' src='https://pad.okfn.org/p/regional_syb15_raf_reg?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=600 height=60000></iframe></td>
+</tr>
+</tbody></table>
 
 
       <footer>

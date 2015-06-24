@@ -4,6 +4,11 @@ layout: default
 
 ## Intro
 
+### Comment the yearbooks
+
+- [Comment the global statistical pocketbook](comment.html)
+- [Comment the your regional pocketbook](comment_regional.html)
+
 
 ```{r reg_plot1, echo=FALSE, message=FALSE, warning=FALSE,results='hold'}
 library(gisfao)
@@ -12,7 +17,13 @@ library(ggplot2)
 shape <- fao_world[which(fao_world[["REU"]] == TRUE),]
 shape <- spTransform(shape, CRS("+proj=robin"))
 map.df <- fortify(shape)
+
+shape2 <- spTransform(fao_world, CRS("+proj=robin"))
+map.df2 <- fortify(shape2)
+
 p <- ggplot()
+p <- p + geom_polygon(data=map.df2,aes(long,lat,group=group), 
+                      fill=NA, color=NA)
 p <- p + geom_polygon(data=map.df,aes(long,lat,group=group), 
                       fill="#5087CE", color="white", size=.5)
 p

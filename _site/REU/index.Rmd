@@ -56,10 +56,14 @@
          -->
 
           <ul class="nav navbar-nav">
-          <li><a href="https://github.com/UNFAOstatistics/regional15/wiki" title="blog">Instructions</a></li>
+          <li><a href="/instructions/" title="blog">Instructions</a></li>
+          <li><a href="/RAF/" title="blog">Africa</a></li>
+          <li><a href="/RAP/" title="blog">Asia and the Pacific</a></li>
+          <li><a href="/REU/" title="blog">Europe and Central Asia</a></li>
+          <li><a href="/RNE/" title="blog">Near East and North Africa</a></li>
          </ul>
 
-                   <ul class="nav navbar-nav">
+<!--                   <ul class="nav navbar-nav">
                 <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Africa<span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="R">
@@ -102,7 +106,7 @@
 
          </div>
 
-
+-->
 
 
 
@@ -163,6 +167,11 @@
 
           ## Intro
 
+### Comment the yearbooks
+
+- [Comment the global statistical pocketbook](comment.html)
+- [Comment the your regional pocketbook](comment_regional.html)
+
 
 ```{r reg_plot1, echo=FALSE, message=FALSE, warning=FALSE,results='hold'}
 library(gisfao)
@@ -171,11 +180,18 @@ library(ggplot2)
 shape <- fao_world[which(fao_world[["REU"]] == TRUE),]
 shape <- spTransform(shape, CRS("+proj=robin"))
 map.df <- fortify(shape)
+
+shape2 <- spTransform(fao_world, CRS("+proj=robin"))
+map.df2 <- fortify(shape2)
+
 p <- ggplot()
+p <- p + geom_polygon(data=map.df2,aes(long,lat,group=group), 
+                      fill=NA, color=NA)
 p <- p + geom_polygon(data=map.df,aes(long,lat,group=group), 
                       fill="#5087CE", color="white", size=.5)
 p
 ```
+
 
       <footer>
 
