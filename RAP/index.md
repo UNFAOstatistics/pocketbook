@@ -11,6 +11,6 @@ layout: default
 
 ### Submitted data
 
-- See here: <https://github.com/unfaostatistics/regional15/data_region/RAP/>
+- See here: <https://github.com/unfaostatistics/regional15/tree/master/data_region/RAP/>
 
 ![plot of chunk reg_plot1](figure/reg_plot1-1.png) 
