@@ -1,0 +1,618 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Global Statistical Pocketbook 2015
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Global Pocket Yearbook class
+% \documentclass[print, Draft]{faofactbook}
+%\documentclass[print]{faofactbook}
+%\documentclass[web, Draft]{faofactbook}
+\documentclass[twoside,web]{faofactbook}
+
+%% Other packages to be loaded
+\usepackage{lipsum,textcomp}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{tabularx}
+\usepackage{fixltx2e}
+\usepackage{bpchem}
+\usepackage{arydshln}
+\usepackage{booktabs}
+%\usepackage[document]{ragged2e}
+
+
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\PrerenderUnicode {ô}
+\makeindex
+
+%% Define the colors
+\definecolor{part1}{cmyk}{0.90,0.40,0.24,0.32}
+\definecolor{part2}{cmyk}{0,0.54,0.96,0.10}
+\definecolor{part3}{cmyk}{0.18,0.90,0.75,0.31}
+\definecolor{part4}{cmyk}{0.73,0.10,0.97,0.29}
+\definecolor{part5}{cmyk}{0,0,0,0.5}
+\definecolor{part6}{cmyk}{0,0,0,0.5}
+
+%% Set the strip width
+\faoset{stripwidth=7.2mm}
+
+%% Trying to control the TOC
+% \usepackage{tocloft}
+% \renewcommand\cftchapfont{\normalsize\bfseries}
+% \renewcommand\cftsecfont{\normalsize}
+
+%\usepackage{titlesec}
+% \titleformat*{\section}{\Large\bfseries}
+
+
+% First page background graphics
+\usepackage{eso-pic}
+\newcommand\taustaeka{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,%
+% keepaspectratio]{./cover/front_cover.pdf}%
+% keepaspectratio]{./cover/front_cover_RAF.pdf}%
+keepaspectratio]{./cover/front_cover_RAP.pdf}%
+% keepaspectratio]{./cover/front_cover_REU.pdf}%
+% keepaspectratio]{./cover/front_cover_RNE.pdf}%
+
+\vfill
+}}}
+
+
+\newcommand\taustatoka{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,%
+keepaspectratio]{./cover/back_cover.pdf}%
+\vfill
+}}}
+
+\usepackage{xcolor}
+
+%% Tango color scheme
+\definecolor{Part1}{HTML}{1d5979}
+\definecolor{Part2}{HTML}{e07317}
+\definecolor{Part3}{HTML}{96212d}
+\definecolor{Part4}{HTML}{35802d}
+
+\begin{document}
+% \SweaveOpts{concordance=TRUE}
+% \SweaveOpts{concordance=TRUE}
+\faoset{bgcolor=white}\selectcolor
+\twocolumn
+
+
+%% Cover (just in the web version)
+\ifprint\addtocounter{page}{1}\else
+% \begin{picture}(0,0)
+% \put(-28,-502){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/front_cover_2015.png}}
+% \end{picture}
+% \input{./Tables/CountryProfiles.tex}
+
+% \newpage
+
+\AddToShipoutPicture*{\taustaeka}
+
+% \thispagestyle{empty}
+% \mbox{}
+% \clearpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\clearpage
+\fi
+
+
+
+
+
+
+% ###########################################################################
+% #
+% #    _(9(9)__        __/^\/^\__
+% #   /o o   \/_     __\_\_/\_/_/_
+% #   \___,   \/_   _\.'       './_      _/\_
+% #   `---`\  \/_ _\/           \/_   _|.'_/
+% #             \  \/_\/      /      \/_  |/ /
+% #              \  `-'      |        ';_:' /
+% #              /|          \      \     .'
+% #             /_/   |,___.-`',    /`'---`
+% #           /___/`       /____/
+% ###########################################################################
+
+
+\onecolumn
+% \pagenumbering{roman}
+\thispagestyle{empty}
+
+\vspace*{100pt}
+\begin{center}
+\Huge{FAO Statistical Pocketbook}
+\end{center}
+
+\vspace*{10pt}
+\begin{center}
+\Huge{2015}
+\end{center}
+
+\vfill
+\begin{center}
+Food and Agriculture Organization of the United Nations, Rome, 2015
+\end{center}
+
+\Huge{Generated at} \\ 
+\Sexpr{Sys.time()}
+
+\newpage
+
+% ###########################################################################
+% #
+% #    _(9(9)__        __/^\/^\__
+% #   /o o   \/_     __\_\_/\_/_/_
+% #   \___,   \/_   _\.'       './_      _/\_
+% #   `---`\  \/_ _\/           \/_   _|.'_/
+% #             \  \/_\/      /      \/_  |/ /
+% #              \  `-'      |        ';_:' /
+% #              /|          \      \     .'
+% #             /_/   |,___.-`',    /`'---`
+% #           /___/`       /____/
+% ###########################################################################
+
+
+% Asetetaan koko raportin laajuiset parametrit knitr:lle
+<<setup, echo=FALSE>>=
+knitr::opts_chunk$set(list(echo=FALSE,eval=FALSE,cache=FALSE,warning=FALSE,message=FALSE,
+                    dev="pdf"))
+@
+
+
+%% Disclamer
+\thispagestyle{empty}
+\ifprint
+\includepdf[width=\paperwidth,height=\paperheight, offset=-30 -100]{./I4691E_disclaimer.pdf}
+\else
+\includepdf[width=\paperwidth,height=\paperheight, offset=-10 -50]{./I4691E_disclaimer.pdf}
+\fi
+
+
+%% List of countries
+%\phantomsection
+%\renewcommand{\indexname}{List of countries} 
+%\addcontentsline{toc}{section}{List of countries}
+%\printindex
+
+%%% List of tables
+%\phantomsection
+%\addcontentsline{toc}{section}{List of Tables}
+%\listoftables
+
+%% To be commented if we want to show the List of countries
+% \thispagestyle{empty}
+% \mbox{}
+% \clearpage
+
+%% New part - Introduction
+\newpart{white}
+%\addtocounter{page}{1}
+%\cleardoublepage
+\pagenumbering{arabic}  %% Arabic page numbering
+\setlength{\parskip}{3pt plus 3pt minus 1pt}  %% Increasing the spacing in the introduction page
+
+
+% ###########################################################################
+% #
+% #    _(9(9)__        __/^\/^\__
+% #   /o o   \/_     __\_\_/\_/_/_
+% #   \___,   \/_   _\.'       './_      _/\_
+% #   `---`\  \/_ _\/           \/_   _|.'_/
+% #             \  \/_\/      /      \/_  |/ /
+% #              \  `-'      |        ';_:' /
+% #              /|          \      \     .'
+% #             /_/   |,___.-`',    /`'---`
+% #           /___/`       /____/
+% ###########################################################################
+
+\Large{Foreword}
+
+\bigskip
+\bigskip
+\bigskip
+
+\large
+
+This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
+
+This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 72 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
+
+This year also marks the beginning of the new post-2015 Sustainable Development Agenda. Again the international community will unite around new priorities for the future.
+
+Clear indicators to measure progress towards these international goals is of paramount importance. Timely and robust statistics are the fundamental tool in monitoring the myriad efforts being made, both with an eye to early detection of problems and the recognition of success. The better the data, the better the policies that can be designed. And the better the data, the easier it is to measure the impact of policies or to hold stakeholders accountable for the pledges they make. 
+
+This publication presents selected key indicators related to agriculture and food security that stakeholders can use to prioritize their actions. It is divided into two main sections, one thematic and one country-specific. It presents a variety of dimensions of agriculture and food security along four main focus areas:
+
+
+{\textbf{\color{Part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
+
+{\textbf{\color{Part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
+
+{\textbf{\color{Part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
+
+{\textbf{\color{Part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
+
+This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
+
+FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
+
+
+\bigskip
+\bigskip
+
+\hspace*{\fill}
+        Pietro Gennari
+\hspace*{\fill}\newline
+
+\hspace*{\fill}
+        \textit{Chief Statistician and Director, Statistics Division}
+\hspace*{\fill}
+
+
+
+
+% ###########################################################################
+% #
+% #    _(9(9)__        __/^\/^\__
+% #   /o o   \/_     __\_\_/\_/_/_
+% #   \___,   \/_   _\.'       './_      _/\_
+% #   `---`\  \/_ _\/           \/_   _|.'_/
+% #             \  \/_\/      /      \/_  |/ /
+% #              \  `-'      |        ';_:' /
+% #              /|          \      \     .'
+% #             /_/   |,___.-`',    /`'---`
+% #           /___/`       /____/
+% ###########################################################################
+
+%% Prelims
+\tableofcontents
+% \clearpage % commented because of the font size issue
+
+
+
+
+% \clearpage
+
+
+% \thispagestyle{empty}
+% \mbox{}
+
+% \newpage
+
+% ###########################################################################
+% #
+% #    _(9(9)__        __/^\/^\__
+% #   /o o   \/_     __\_\_/\_/_/_
+% #   \___,   \/_   _\.'       './_      _/\_
+% #   `---`\  \/_ _\/           \/_   _|.'_/
+% #             \  \/_\/      /      \/_  |/ /
+% #              \  `-'      |        ';_:' /
+% #              /|          \      \     .'
+% #             /_/   |,___.-`',    /`'---`
+% #           /___/`       /____/
+% ###########################################################################
+
+% \section{Introduction}
+
+% \bigskip
+% \bigskip
+
+% Overcoming malnutrition in all of its forms – caloric undernourishment, micronutrient deficiencies and obesity – requires a combination of interventions in different areas that guarantee the availability of and access to healthy diets. Among the key areas, interventions are required in food systems, public health systems and the provision of safe water and sanitation. This pocketbook not only focuses on indicators of food security and nutritional outcomes but also on the determinants that contribute to healthy lives. 
+
+% The pocketbook is structured in two sections: 
+% \begin{itemize}
+% \item Thematic spreads related to food security and nutrition, including detailed food consumption data collected from national household budget surveys,
+% \item Comprehensive country and regional profiles with indicators categorized by anthropometry, nutritional deficiencies, supplementation, dietary energy supplies, preceded by their "setting".
+% \end{itemize}
+
+% \textit{The setting} provides demographic indicators as well as health status indicators based on mortality patterns and the provision of safe water and sanitation. 
+
+% \textit{Anthropometry} indicators provide information not only on the prevalence of acute and chronic forms of under-nutrition but also on the prevalence of obesity. Their co-existence is often referred to as the double burden of malnutrition. 
+
+% \textit{Nutritional deficiency} indicators reveal food security issues at the national level based on the adequacy of energy supplies; they also reveal the prevalence of micronutrient deficiencies, often referred to as “hidden hunger”. Combined with anthropometric measurements, they allow for the identification of the triple burden of malnutrition (under-nutrition, obesity and hidden hunger). Regarding hidden hunger, indicators concerning iodine and vitamin A have been selected.
+
+% \textit{Dietary} indicators are based on national food supplies and inform on the overall quality of diets. Focus is also on the importance of diets during the first 1\,000 days of an infant’s life, with indicators selected on the quality of breastfeeding, dietary diversity and meal frequency. 
+
+% The choice of indicators was guided by the following criteria: relevance to health, food security and nutrition, comparability over time, and availability, in particular for low-income countries. But the criteria were relaxed for several indicators given their importance and the lack of available substitutes. It is hoped that the presence of data gaps will bring about greater efforts to collect the necessary information because only with timely and reliable data can interventions be designed and targeted towards those in most need. Wherever available, disaggregated data by gender have been provided. Such data are indeed key to mainstreaming gender in policies and programmes.
+
+% ###########################################################################
+% #
+% #    _(9(9)__        __/^\/^\__
+% #   /o o   \/_     __\_\_/\_/_/_
+% #   \___,   \/_   _\.'       './_      _/\_
+% #   `---`\  \/_ _\/           \/_   _|.'_/
+% #             \  \/_\/      /      \/_  |/ /
+% #              \  `-'      |        ';_:' /
+% #              /|          \      \     .'
+% #             /_/   |,___.-`',    /`'---`
+% #           /___/`       /____/
+% ###########################################################################
+
+
+
+\setlength{\parskip}{0pt}  %% Restoring the normal spacing
+
+
+\normalsize
+
+\makeatletter\clearpage\ifodd\c@page\hbox{}\newpage\fi\makeatother %% Remove the colored strip from the introduction page
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Spreads start from here !!!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<spread_function, echo=FALSE>>=
+source('latex_charts.R')
+#source('./publication/latex_charts.R')
+@
+
+%
+%                         .^^^\ ../~/\       .==...==.
+%                        .^\ /\  \    ^-------^^ O    O,
+%                       / \  \/    ---         ,..++---,
+%                      / \_\-          _,v.v^V^ ,/\^^^/
+%                     | \/       /^v^V^   _,.-^^  .;+^
+%                      \-\   (   \..,+-=~^   .-+/^
+%                       \--.__________.--+'^^
+%                    ...^--.__________.---^^^^~+._
+%   _            _,=^\                            ".
+%   \'\.       .^           FFFFF                   '
+%    \-/\     /  \          F  FF           )   /    \
+%     \-/\   | -      /        FF           )^`\,... |
+%     /\-\)  | ,,../^^\        FF           /  /     \
+%    /\.-\)  |^     \  \       FF          /  (      )
+%   /\. \/   (     \/  /\      FF         /    \/_/_/
+%  /==)-/\_   \_\_\/ / |      FFFF       )|
+% (=== /. /^^^~~~~~^^\  \               ) |
+% (/:/:/ /. /  /  /   \  ^+..........,^^  /
+%  \/:/:(:.(:.(:.(  (  \,             ,.;|
+%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
+%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
+%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
+%                   |++|            \+ + \_ _
+%                  _/ . \_           \ .  ___>
+%               <(^ /  |__)>          `--.___>
+%                 \/^\/
+%
+%% PART1 - The Setting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpart{part1}
+\rowcolors{1}{part1!10}{white}
+\clearpage
+
+<<Overview,  results='asis'>>=
+chart_spread2(title="Overview",                
+            LeftTextCode="A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas.",  
+            footnoteLeft="Data after 2010 are projections.",   
+            RightTextCode="C.P1.OVER.1.2",   
+            LeftChartCode="C.P1.OVER.1.3",   
+            RightChartCode="C.P1.OVER.1.4",  
+            BottomChartCode="C.P1.OVER.1.5", 
+            MapCode="M.P1.OVER.1.6")
+@
+
+
+
+
+%                         .^^^\ ../~/\       .==...==.
+%                        .^\ /\  \    ^-------^^ O    O,
+%                       / \  \/    ---         ,..++---,
+%                      / \_\-          _,v.v^V^ ,/\^^^/
+%                     | \/       /^v^V^   _,.-^^  .;+^
+%                      \-\   (   \..,+-=~^   .-+/^
+%                       \--.__________.--+'^^
+%                    ...^--.__________.---^^^^~+._
+%   _            _,=^\                            ".
+%   \'\.       .^              FFfffFFF             '
+%    \-/\     /  \             FF    FF     )   /    \
+%     \-/\   | -      /              FF     )^`\,... |
+%     /\-\)  | ,,../^^\             FF      /  /     \
+%    /\.-\)  |^     \  \           FF      /  (      )
+%   /\. \/   (     \/  /\        FF       /    \/_/_/
+%  /==)-/\_   \_\_\/ / |       FFFFFFF   )|
+% (=== /. /^^^~~~~~^^\  \               ) |
+% (/:/:/ /. /  /  /   \  ^+..........,^^  /
+%  \/:/:(:.(:.(:.(  (  \,             ,.;|
+%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
+%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
+%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
+%                   |++|            \+ + \_ _
+%                  _/ . \_           \ .  ___>
+%               <(^ /  |__)>          `--.___>
+%                 \/^\/
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PART2 - Hunger dimensions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpart{part2}
+\rowcolors{1}{part2!10}{white}
+\clearpage
+
+<<Undernourishmend, results='asis'>>=
+chart_spread(title="Undernourishment",                
+            LeftTextCode="Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago.",  
+            RightTextCode="MT.P2.UNU.1.2",   
+            LeftChartCode="C.P2.UNU.1.3",   
+            RightChartCode="C.P2.UNU.1.4",  
+            BottomChartCode="C.P2.UNU.1.5", 
+            MapCode="M.P2.UNU.1.6",
+            notes="" 
+            )
+@
+
+
+%
+%                         .^^^\ ../~/\       .==...==.
+%                        .^\ /\  \    ^-------^^ O    O,
+%                       / \  \/    ---         ,..++---,
+%                      / \_\-          _,v.v^V^ ,/\^^^/
+%                     | \/       /^v^V^   _,.-^^  .;+^
+%                      \-\   (   \..,+-=~^   .-+/^
+%                       \--.__________.--+'^^
+%                    ...^--.__________.---^^^^~+._
+%   _            _,=^\                            ".
+%   \'\.       .^             FFFffffF              '
+%    \-/\     /  \                   FF     )   /    \
+%     \-/\   | -      /              FF      )^`\,... |
+%     /\-\)  | ,,../^^\        FFffFF       /  /     \
+%    /\.-\)  |^     \  \            FF     /  (      )
+%   /\. \/   (     \/  /\           FF    /    \/_/_/
+%  /==)-/\_   \_\_\/ / |      FFFFFFF    )|
+% (=== /. /^^^~~~~~^^\  \               ) |
+% (/:/:/ /. /  /  /   \  ^+..........,^^  /
+%  \/:/:(:.(:.(:.(  (  \,             ,.;|
+%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
+%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
+%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
+%                   |++|            \+ + \_ _
+%                  _/ . \_           \ .  __eval=TRUE,_>
+%               <(^ /  |__)>          `--.___>
+%                 \/^\/
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PART3 - Food Supply
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpart{part3}
+\rowcolors{1}{part3!10}{white}
+\clearpage
+
+
+<<Dietary energy supply, results='asis'>>=
+chart_spread2(title="Dietary energy supply",
+            LeftTextCode="The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products.",  
+            RightTextCode="C.P3.DES.1.2",   
+            LeftChartCode="C.P3.DES.1.3",   
+            RightChartCode="C.P3.DES.1.4",  
+            BottomChartCode="C.P3.DES.1.5", 
+            MapCode="M.P3.DES.1.6",
+            notes=""
+            )
+@
+
+
+
+%                         .^^^\ ../~/\       .==...==.
+%                        .^\ /\  \    ^-------^^ O    O,
+%                       / \  \/    ---         ,..++---,
+%                      / \_\-          _,v.v^V^ ,/\^^^/
+%                     | \/       /^v^V^   _,.-^^  .;+^
+%                      \-\   (   \..,+-=~^   .-+/^
+%                       \--.__________.--+'^^
+%                    ...^--.__________.---^^^^~+._
+%   _            _,=^\                            ".
+%   \'\.       .^               FFFFF                 '
+%    \-/\     /  \             FF  FF         )   /    \
+%     \-/\   | -      /       FF   FF         )^`\,... |
+%     /\-\)  | ,,../^^\      FF    FF        /  /     \
+%    /\.-\)  |^     \  \     FFFFFFFFF      /  (      )
+%   /\. \/   (     \/  /\         FF       /    \/_/_/
+%  /==)-/\_   \_\_\/ / |          FF     )|
+% (=== /. /^^^~~~~~^^\  \         FF    ) |
+% (/:/:/ /. /  /  /   \  ^+..........,^^  /
+%  \/:/:(:.(:.(:.(  (  \,             ,.;|
+%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
+%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
+%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
+%                   |++|            \+ + \_ _
+%                  _/ . \_           \ .  ___>
+%               <(^ /  |__)>          `--.___>
+%                 \/^\/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PART4 - Sustainability dimensions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpart{part4}
+\rowcolors{1}{part4!10}{white}
+\clearpage
+
+
+<<Land, results='asis'>>=
+chart_spread2(title="Land",                
+            LeftTextCode="Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa.",  
+            RightTextCode="C.P4.LAND.1.2",   
+            LeftChartCode="C.P4.LAND.1.3",   
+            RightChartCode="C.P4.LAND.1.4",  
+            BottomChartCode="C.P4.LAND.1.5", 
+            MapCode="M.P4.LAND.1.6",
+            notes=""
+            )     
+@
+
+
+
+
+\newpage
+\pagecolor{FAOblue}
+\thispagestyle{empty}
+\mbox{}
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\clearpage
+\pagecolor{white}
+
+%%% COUNTRY DATA
+\newpart{FAOblue}
+\phantomsection
+\addcontentsline{toc}{section}{Country Profiles}
+\faoset{bgcolor=white}\selectcolor
+\parindent=0pt
+\parskip=\medskipamount
+\hangafter=-2
+\input{./CountryProfiles.tex}
+
+%%% METADATA
+\newpart{white}
+\part{}
+%\section{Definitions}
+\phantomsection
+\addcontentsline{toc}{section}{Definitions}
+%\input{./Metadata.tex}
+\clearpage
+
+\newpage
+
+\thispagestyle{empty}
+\AddToShipoutPicture*{\taustatoka}
+
+\mbox{}
+
+
+\ifprint\else
+\begin{picture}(0,0)
+\put(-58,-472){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover_2015.png}}
+%\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover_2015.png}
+\end{picture}
+
+\newpage
+
+\thispagestyle{empty}
+
+\newpage
+
+\fi
+
+\end{document}

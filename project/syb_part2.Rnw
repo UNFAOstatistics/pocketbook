@@ -1,0 +1,91 @@
+
+
+
+<<part2_setup>>=
+library(dplyr)
+library(magrittr)
+library(xtable)
+library(lazyeval)
+library(tidyr)
+library(stringr)
+library(scales)
+library(ggplot2)
+
+## Part 1
+colPart2 <- plot_colors(part = 2, 12)
+col.main2 <- colPart1[["Main"]][1]
+## color for the grid
+col.main2 <- colPart1[["Main"]][2]
+
+source("./Rcode/theme_functions/theme.R")
+source('./Rcode/plot_functions/plot_setup.R')
+
+@
+
+
+
+<<part2_example_text, text_chunk=TRUE>>=
+title <- "Example spread"
+text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in ultrices velit. In ac lectus id odio bibendum scelerisque. Sed facilisis porta arcu, sit amet elementum ex scelerisque id. Curabitur in vehicula orci, ut lacinia urna. Integer ornare elementum risus sit amet suscipit. Sed efficitur viverra dapibus. Maecenas dui est, dapibus tincidunt ante quis, feugiat finibus neque. "
+@
+
+<<part2_example_toprigth, top_right_chunk=TRUE>>=
+# data
+df <- mtcars
+dat <- df %>% group_by(carb) %>% dplyr::summarise(horsepower = mean(hp, na.rm=TRUE))
+
+# generated object
+caption_text <- "Number of carburetors in top right"
+ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
+  geom_bar(stat="identity") +
+  labs(title="", x="number of carburetors", y="mean horsepower") +
+  theme(text = element_text(family="Open Sans")) +
+  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+@
+
+
+<<part2_example_left, left_chunk=TRUE>>=
+caption_text <- "Number of carburetors in left"
+ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
+  geom_bar(stat="identity") +
+  labs(title="", x="number of carburetors", y="mean horsepower") +
+  theme(text = element_text(family="Open Sans")) +
+  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+@
+
+<<part2_example_right,right_chunk=TRUE>>=
+caption_text <- "Number of carburetors in right"
+ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
+  geom_bar(stat="identity") +
+  labs(title="", x="number of carburetors", y="mean horsepower") +
+  theme(text = element_text(family="Open Sans")) +
+  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+@
+
+
+<<part2_example_bottom,bottom_chunk=TRUE>>=
+caption_text <- "Number of carburetors in bottom"
+ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
+  geom_bar(stat="identity") +
+  labs(title="", x="number of carburetors", y="mean horsepower") +
+  theme(text = element_text(family="Open Sans")) +
+  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+@
+
+
+<<part2_example_end, end_chunk=TRUE>>=
+@
+
+
+<<part2_example_map,map_chunk=TRUE>>=
+caption_text <- "Number of carburetors in map"
+ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
+  geom_bar(stat="identity") +
+  labs(title="", x="number of carburetors", y="mean horsepower") +
+  theme(text = element_text(family="Open Sans")) +
+  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+@
+
+
+
+
