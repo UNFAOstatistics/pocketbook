@@ -24,5 +24,5 @@ include_metadata <- FALSE
 
 setwd("~/btsync/fao_sync/pocketbooks/regional15/project")
 knitr::knit("syb_main.Rnw")
-#system('pdflatex syb_main.tex')
+system('pdflatex syb_main.tex')
 setwd("~/btsync/fao_sync/pocketbooks/regional15")
