@@ -15,7 +15,6 @@ The setting,14,potash_tonnes_per_ha,,,"Fertilizers, Potash (nutrients per ha)",0
 The setting,16,energy.for.power.irrigation,,,"Energy consump, power irrigation (mln kWh)",,0
 The setting,17,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),1000,1
 Hunger dimensions,18,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
-Hunger dimensions,18,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
 Hunger dimensions,19,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,0
 Hunger dimensions,20,FBS.PCSS.CSR.PCT3D,,,"Dietary en supp, cereals/roots/tubers (%)",,0
 Hunger dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
