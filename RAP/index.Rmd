@@ -4,14 +4,16 @@ layout: default
 
 ## Intro
 
+This page gathers all the information related to your region. 
+
 ### Comment the yearbooks
 
 - [Comment the global statistical pocketbook](comment.html)
 - [Comment the your regional pocketbook](comment_regional.html)
 
-### Submitted data
+### Data submitted by region
 
-- See here: <https://github.com/unfaostatistics/regional15/tree/master/data_region/RAP/>
+- See here: <https://github.com/UNFAOstatistics/regional15/tree/master/input/data/RAP/>
 
 ```{r reg_plot1, echo=FALSE, message=FALSE, warning=FALSE,results='hold'}
 library(gisfao)

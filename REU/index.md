@@ -4,13 +4,15 @@ layout: default
 
 ## Intro
 
+This page gathers all the information related to your region. 
+
 ### Comment the yearbooks
 
 - [Comment the global statistical pocketbook](comment.html)
 - [Comment the your regional pocketbook](comment_regional.html)
 
-### Submitted data
+### Data submitted by region
 
-- See here: <https://github.com/unfaostatistics/regional15/tree/master/data_region/REU/>
+- See here: <https://github.com/UNFAOstatistics/regional15/tree/master/input/data/REU/>
 
 ![plot of chunk reg_plot1](figure/reg_plot1-1.png) 
