@@ -1,0 +1,19 @@
+\newpage
+\pagecolor{FAOblue}
+\thispagestyle{empty}
+\mbox{}
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\clearpage
+\pagecolor{white}
+
+%%% COUNTRY DATA
+\newpart{FAOblue}
+\phantomsection
+\addcontentsline{toc}{section}{Country Profiles}
+\faoset{bgcolor=white}\selectcolor
+\parindent=0pt
+\parskip=\medskipamount
+\hangafter=-2
+\input{./Tables/CountryProfiles.tex}
