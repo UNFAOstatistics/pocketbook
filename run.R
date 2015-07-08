@@ -22,6 +22,8 @@ include_metadata <- FALSE
 
 # -- Create output folder if not exists --- #
 if (!file.exists(paste0(root.dir,"/output"))) dir.create(paste0(root.dir,"/output"))
+if (!file.exists(paste0(root.dir,"/output/process"))) dir.create(paste0(root.dir,"/output/process"))
+if (!file.exists(paste0(root.dir,"/output/pdf"))) dir.create(paste0(root.dir,"/output/pdf"))
 
 ## Copy .Rnw files into process/-folder
 flist <- list.files(paste0(root.dir,"input/"), 
@@ -40,18 +42,18 @@ setwd(paste0(root.dir,"output/process"))
 
 knitr::knit("syb_main.Rnw")
 
-system('pdflatex syb_main.tex')
+system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
 
 # copy the output -pdf's into the output/pdf-folder
-
 flist <- list.files(paste0(root.dir,"output/process"), 
                     "+[.]pdf$", 
                     full.names = TRUE)
+
+ # Exclude the covers etc files from being copied
+flist <- flist[!grepl("cover", flist, ignore.case = TRUE)]
+flist <- flist[!grepl("disclaimer", flist, ignore.case = TRUE)]
+
 file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
-
-
-
-
 
 setwd(root.dir)
 

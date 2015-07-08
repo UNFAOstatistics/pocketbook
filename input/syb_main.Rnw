@@ -171,8 +171,7 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 library(knitr)
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
-opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,
-                    dev="pdf",results='asis'))
+opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=TRUE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
 knit_hooks$set(text_chunk = function(before, options, envir) {
   
      if (!before) {
