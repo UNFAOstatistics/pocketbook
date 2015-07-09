@@ -82,96 +82,24 @@ keepaspectratio]{front_cover_RAP.pdf}%
 \definecolor{Part3}{HTML}{96212d}
 \definecolor{Part4}{HTML}{35802d}
 
-\begin{document}
-% \SweaveOpts{concordance=TRUE}
-% \SweaveOpts{concordance=TRUE}
-\faoset{bgcolor=white}\selectcolor
-\twocolumn
-
-
-%% Cover (just in the web version)
-\ifprint\addtocounter{page}{1}\else
-% \begin{picture}(0,0)
-% \put(-28,-502){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/front_cover_2015.png}}
-% \end{picture}
-% \input{./Tables/CountryProfiles.tex}
-
-% \newpage
-
-\AddToShipoutPicture*{\taustaeka}
-
-% \thispagestyle{empty}
-% \mbox{}
-% \clearpage
-\newpage
-\thispagestyle{empty}
-\mbox{}
-\clearpage
-\fi
 
 
 
-
-
-
-% ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
-% ###########################################################################
-
-
-\onecolumn
-% \pagenumbering{roman}
-\thispagestyle{empty}
-
-\vspace*{100pt}
-\begin{center}
-\Huge{FAO Statistical Pocketbook}
-\end{center}
-
-\vspace*{10pt}
-\begin{center}
-\Huge{2015}
-\end{center}
-
-\vfill
-\begin{center}
-Food and Agriculture Organization of the United Nations, Rome, 2015
-\end{center}
-
-\Huge{Generated at} \\ 
-\Sexpr{Sys.time()}
-
-\newpage
-
-% ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
-% ###########################################################################
-
+% 88                      88                                 88                                     88                    
+% 88                      ""    ,d                           88                                     88                    
+% 88                            88                           88                                     88                    
+% 88   ,d8   8b,dPPYba,   88  MM88MMM  8b,dPPYba,            88,dPPYba,    ,adPPYba,    ,adPPYba,   88   ,d8   ,adPPYba,  
+% 88 ,a8"    88P'   `"8a  88    88     88P'   "Y8  aaaaaaaa  88P'    "8a  a8"     "8a  a8"     "8a  88 ,a8"    I8[    ""  
+% 8888[      88       88  88    88     88          """"""""  88       88  8b       d8  8b       d8  8888[       `"Y8ba,   
+% 88`"Yba,   88       88  88    88,    88                    88       88  "8a,   ,a8"  "8a,   ,a8"  88`"Yba,   aa    ]8I  
+% 88   `Y8a  88       88  88    "Y888  88                    88       88   `"YbbdP"'    `"YbbdP"'   88   `Y8a  `"YbbdP"' 
 
 
 % Asetetaan koko raportin laajuiset parametrit knitr:lle
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 library(knitr)
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
-opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=TRUE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
+opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
 knit_hooks$set(text_chunk = function(before, options, envir) {
   
      if (!before) {
@@ -234,7 +162,7 @@ knit_hooks$set(map_chunk = function(before, options, envir) {
 
 })
 
-
+# remove all the kframe tags from all chunk outputs (as we are placing outputs in custom environments already!)
 local({
   hook_chunk = knit_hooks$get('chunk')
   knit_hooks$set(chunk = function(x, options) {
@@ -246,14 +174,12 @@ local({
     } else x
   })
 })
-
-
-
-
-
 @
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
+
+
+
 # require(devtools)
 # if (!"FAOSTAT" %in% installed.packages()) {
 #   install_github(username = "mkao006", repo = "FAOSTATpackage",
@@ -319,6 +245,67 @@ grat_df_robin <- fortify(grat_robin)
 @
 
 
+%    ad88                                                                                                                             
+%   d8"                                           ,d                                           ,d       ,d                            
+%   88                                            88                                           88       88                            
+% MM88MMM  8b,dPPYba,   ,adPPYba,   8b,dPPYba,  MM88MMM      88,dPYba,,adPYba,   ,adPPYYba,  MM88MMM  MM88MMM  ,adPPYba,  8b,dPPYba,  
+%   88     88P'   "Y8  a8"     "8a  88P'   `"8a   88         88P'   "88"    "8a  ""     `Y8    88       88    a8P_____88  88P'   "Y8  
+%   88     88          8b       d8  88       88   88         88      88      88  ,adPPPPP88    88       88    8PP"""""""  88          
+%   88     88          "8a,   ,a8"  88       88   88,        88      88      88  88,    ,88    88,      88,   "8b,   ,aa  88          
+%   88     88           `"YbbdP"'   88       88   "Y888      88      88      88  `"8bbdP"Y8    "Y888    "Y888  `"Ybbd8"'  88          
+
+
+\begin{document}
+% \SweaveOpts{concordance=TRUE}
+% \SweaveOpts{concordance=TRUE}
+\faoset{bgcolor=white}\selectcolor
+\twocolumn
+
+
+%% Cover (just in the web version)
+\ifprint\addtocounter{page}{1}\else
+% \begin{picture}(0,0)
+% \put(-28,-502){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/front_cover_2015.png}}
+% \end{picture}
+% \input{./Tables/CountryProfiles.tex}
+
+% \newpage
+
+\AddToShipoutPicture*{\taustaeka}
+
+% \thispagestyle{empty}
+% \mbox{}
+% \clearpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\clearpage
+\fi
+
+\onecolumn
+% \pagenumbering{roman}
+\thispagestyle{empty}
+
+\vspace*{100pt}
+\begin{center}
+\Huge{FAO Statistical Pocketbook}
+\end{center}
+
+\vspace*{10pt}
+\begin{center}
+\Huge{2015}
+\end{center}
+
+\vfill
+\begin{center}
+Food and Agriculture Organization of the United Nations, Rome, 2015
+\end{center}
+
+\Huge{Generated at} \\ 
+\Sexpr{Sys.time()}
+
+\newpage
+
 %% Disclamer
 \thispagestyle{empty}
 \ifprint
@@ -352,18 +339,18 @@ grat_df_robin <- fortify(grat_robin)
 \setlength{\parskip}{3pt plus 3pt minus 1pt}  %% Increasing the spacing in the introduction page
 
 
-% ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
-% ###########################################################################
+% ######################################################################################################
+% 
+% 88888888888                                                                                         88  
+% 88                                                                                                  88  
+% 88                                                                                                  88  
+% 88aaaaa   ,adPPYba,   8b,dPPYba,   ,adPPYba,  8b      db      d8   ,adPPYba,   8b,dPPYba,   ,adPPYb,88  
+% 88"""""  a8"     "8a  88P'   "Y8  a8P_____88  `8b    d88b    d8'  a8"     "8a  88P'   "Y8  a8"    `Y88  
+% 88       8b       d8  88          8PP"""""""   `8b  d8'`8b  d8'   8b       d8  88          8b       88  
+% 88       "8a,   ,a8"  88          "8b,   ,aa    `8bd8'  `8bd8'    "8a,   ,a8"  88          "8a,   ,d88  
+% 88        `"YbbdP"'   88           `"Ybbd8"'      YP      YP       `"YbbdP"'   88           `"8bbdP"Y8
+% 
+% #####################################################################################################
 
 \Large{Foreword}
 
@@ -412,24 +399,21 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 
 % ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
+
+% 888888888888  ,ad8888ba,      ,ad8888ba,   
+%      88      d8"'    `"8b    d8"'    `"8b  
+%      88     d8'        `8b  d8'            
+%      88     88          88  88             
+%      88     88          88  88             
+%      88     Y8,        ,8P  Y8,            
+%      88      Y8a.    .a8P    Y8a.    .a8P  
+%      88       `"Y8888Y"'      `"Y8888Y"'  
+
 % ###########################################################################
 
 %% Prelims
 \tableofcontents
 % \clearpage % commented because of the font size issue
-
-
-
 
 % \clearpage
 
@@ -440,16 +424,16 @@ FAO is deeply committed to helping countries strengthen their statistical system
 % \newpage
 
 % ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
+% 
+% 88                                                
+% 88                ,d                              
+% 88                88                              
+% 88  8b,dPPYba,  MM88MMM  8b,dPPYba,   ,adPPYba,   
+% 88  88P'   `"8a   88     88P'   "Y8  a8"     "8a  
+% 88  88       88   88     88          8b       d8  
+% 88  88       88   88,    88          "8a,   ,a8"  
+% 88  88       88   "Y888  88           `"YbbdP"'  
+% 
 % ###########################################################################
 
 % \section{Introduction}
@@ -475,63 +459,23 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 % The choice of indicators was guided by the following criteria: relevance to health, food security and nutrition, comparability over time, and availability, in particular for low-income countries. But the criteria were relaxed for several indicators given their importance and the lack of available substitutes. It is hoped that the presence of data gaps will bring about greater efforts to collect the necessary information because only with timely and reliable data can interventions be designed and targeted towards those in most need. Wherever available, disaggregated data by gender have been provided. Such data are indeed key to mainstreaming gender in policies and programmes.
 
-% ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
-% ###########################################################################
-
-
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
-
 
 \normalsize
 
 \makeatletter\clearpage\ifodd\c@page\hbox{}\newpage\fi\makeatother %% Remove the colored strip from the introduction page
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Spreads start from here !!!!
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 88888888ba                                            88  
+% 88      "8b                            ,d           ,d88  
+% 88      ,8P                            88         888888  
+% 88aaaaaa8P'  ,adPPYYba,  8b,dPPYba,  MM88MMM          88  
+% 88""""""'    ""     `Y8  88P'   "Y8    88             88  
+% 88           ,adPPPPP88  88            88             88  
+% 88           88,    ,88  88            88,            88  
+% 88           `"8bbdP"Y8  88            "Y888          88
 
-
-
-%
-%                         .^^^\ ../~/\       .==...==.
-%                        .^\ /\  \    ^-------^^ O    O,
-%                       / \  \/    ---         ,..++---,
-%                      / \_\-          _,v.v^V^ ,/\^^^/
-%                     | \/       /^v^V^   _,.-^^  .;+^
-%                      \-\   (   \..,+-=~^   .-+/^
-%                       \--.__________.--+'^^
-%                    ...^--.__________.---^^^^~+._
-%   _            _,=^\                            ".
-%   \'\.       .^           FFFFF                   '
-%    \-/\     /  \          F  FF           )   /    \
-%     \-/\   | -      /        FF           )^`\,... |
-%     /\-\)  | ,,../^^\        FF           /  /     \
-%    /\.-\)  |^     \  \       FF          /  (      )
-%   /\. \/   (     \/  /\      FF         /    \/_/_/
-%  /==)-/\_   \_\_\/ / |      FFFF       )|
-% (=== /. /^^^~~~~~^^\  \               ) |
-% (/:/:/ /. /  /  /   \  ^+..........,^^  /
-%  \/:/:(:.(:.(:.(  (  \,             ,.;|
-%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
-%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
-%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
-%                   |++|            \+ + \_ _
-%                  _/ . \_           \ .  ___>
-%               <(^ /  |__)>          `--.___>
-%                 \/^\/
-%
 %% PART1 - The Setting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -543,35 +487,14 @@ FAO is deeply committed to helping countries strengthen their statistical system
 @
 
 
-
-
-%                         .^^^\ ../~/\       .==...==.
-%                        .^\ /\  \    ^-------^^ O    O,
-%                       / \  \/    ---         ,..++---,
-%                      / \_\-          _,v.v^V^ ,/\^^^/
-%                     | \/       /^v^V^   _,.-^^  .;+^
-%                      \-\   (   \..,+-=~^   .-+/^
-%                       \--.__________.--+'^^
-%                    ...^--.__________.---^^^^~+._
-%   _            _,=^\                            ".
-%   \'\.       .^              FFfffFFF             '
-%    \-/\     /  \             FF    FF     )   /    \
-%     \-/\   | -      /              FF     )^`\,... |
-%     /\-\)  | ,,../^^\             FF      /  /     \
-%    /\.-\)  |^     \  \           FF      /  (      )
-%   /\. \/   (     \/  /\        FF       /    \/_/_/
-%  /==)-/\_   \_\_\/ / |       FFFFFFF   )|
-% (=== /. /^^^~~~~~^^\  \               ) |
-% (/:/:/ /. /  /  /   \  ^+..........,^^  /
-%  \/:/:(:.(:.(:.(  (  \,             ,.;|
-%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
-%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
-%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
-%                   |++|            \+ + \_ _
-%                  _/ . \_           \ .  ___>
-%               <(^ /  |__)>          `--.___>
-%                 \/^\/
-
+% 88888888ba                                         ad888888b,  
+% 88      "8b                            ,d         d8"     "88  
+% 88      ,8P                            88                 a8P  
+% 88aaaaaa8P'  ,adPPYYba,  8b,dPPYba,  MM88MMM           ,d8P"   
+% 88""""""'    ""     `Y8  88P'   "Y8    88            a8P"      
+% 88           ,adPPPPP88  88            88          a8P'        
+% 88           88,    ,88  88            88,        d8"          
+% 88           `"8bbdP"Y8  88            "Y888      88888888888 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PART2 - Hunger dimensions
@@ -585,35 +508,15 @@ FAO is deeply committed to helping countries strengthen their statistical system
 @
 
 
+% 88888888ba                                         ad888888b,  
+% 88      "8b                            ,d         d8"     "88  
+% 88      ,8P                            88                 a8P  
+% 88aaaaaa8P'  ,adPPYYba,  8b,dPPYba,  MM88MMM           aad8"   
+% 88""""""'    ""     `Y8  88P'   "Y8    88              ""Y8,   
+% 88           ,adPPPPP88  88            88                 "8b  
+% 88           88,    ,88  88            88,        Y8,     a88  
+% 88           `"8bbdP"Y8  88            "Y888       "Y888888P'
 
-%
-%                         .^^^\ ../~/\       .==...==.
-%                        .^\ /\  \    ^-------^^ O    O,
-%                       / \  \/    ---         ,..++---,
-%                      / \_\-          _,v.v^V^ ,/\^^^/
-%                     | \/       /^v^V^   _,.-^^  .;+^
-%                      \-\   (   \..,+-=~^   .-+/^
-%                       \--.__________.--+'^^
-%                    ...^--.__________.---^^^^~+._
-%   _            _,=^\                            ".
-%   \'\.       .^             FFFffffF              '
-%    \-/\     /  \                   FF     )   /    \
-%     \-/\   | -      /              FF      )^`\,... |
-%     /\-\)  | ,,../^^\        FFffFF       /  /     \
-%    /\.-\)  |^     \  \            FF     /  (      )
-%   /\. \/   (     \/  /\           FF    /    \/_/_/
-%  /==)-/\_   \_\_\/ / |      FFFFFFF    )|
-% (=== /. /^^^~~~~~^^\  \               ) |
-% (/:/:/ /. /  /  /   \  ^+..........,^^  /
-%  \/:/:(:.(:.(:.(  (  \,             ,.;|
-%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
-%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
-%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
-%                   |++|            \+ + \_ _
-%                  _/ . \_           \ .  ___>
-%               <(^ /  |__)>          `--.___>
-%                 \/^\/
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PART3 - Food Supply
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -626,32 +529,15 @@ FAO is deeply committed to helping countries strengthen their statistical system
 @
 
 
-%                         .^^^\ ../~/\       .==...==.
-%                        .^\ /\  \    ^-------^^ O    O,
-%                       / \  \/    ---         ,..++---,
-%                      / \_\-          _,v.v^V^ ,/\^^^/
-%                     | \/       /^v^V^   _,.-^^  .;+^
-%                      \-\   (   \..,+-=~^   .-+/^
-%                       \--.__________.--+'^^
-%                    ...^--.__________.---^^^^~+._
-%   _            _,=^\                            ".
-%   \'\.       .^               FFFFF                 '
-%    \-/\     /  \             FF  FF         )   /    \
-%     \-/\   | -      /       FF   FF         )^`\,... |
-%     /\-\)  | ,,../^^\      FF    FF        /  /     \
-%    /\.-\)  |^     \  \     FFFFFFFFF      /  (      )
-%   /\. \/   (     \/  /\         FF       /    \/_/_/
-%  /==)-/\_   \_\_\/ / |          FF     )|
-% (=== /. /^^^~~~~~^^\  \         FF    ) |
-% (/:/:/ /. /  /  /   \  ^+..........,^^  /
-%  \/:/:(:.(:.(:.(  (  \,             ,.;|
-%   \$$(:(:(::(::(::(::: ^^""""""""""^  /\
-%    ^=U$$$$$Sb\;:\;:\:''"*********+++_/ \)
-%        ^"=*UUU$$$$$++ /$$$$&&PP!*=/^\ \/
-%                   |++|            \+ + \_ _
-%                  _/ . \_           \ .  ___>
-%               <(^ /  |__)>          `--.___>
-%                 \/^\/
+% 88888888ba                                                ,d8    
+% 88      "8b                            ,d               ,d888    
+% 88      ,8P                            88             ,d8" 88    
+% 88aaaaaa8P'  ,adPPYYba,  8b,dPPYba,  MM88MMM        ,d8"   88    
+% 88""""""'    ""     `Y8  88P'   "Y8    88         ,d8"     88    
+% 88           ,adPPPPP88  88            88         8888888888888  
+% 88           88,    ,88  88            88,                 88    
+% 88           `"8bbdP"Y8  88            "Y888               88   
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PART4 - Sustainability dimensions
@@ -665,36 +551,29 @@ FAO is deeply committed to helping countries strengthen their statistical system
 @
 
 
-% ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
-% ###########################################################################
+%   ,ad8888ba,                                                                                             ad88  
+%  d8"'    `"8b                ,d                                                                         d8"    
+% d8'                          88                                                                         88     
+% 88             8b,dPPYba,  MM88MMM  8b,dPPYba,  8b       d8      8b,dPPYba,   8b,dPPYba,   ,adPPYba,  MM88MMM  
+% 88             88P'   `"8a   88     88P'   "Y8  `8b     d8'      88P'    "8a  88P'   "Y8  a8"     "8a   88     
+% Y8,            88       88   88     88           `8b   d8'       88       d8  88          8b       d8   88     
+%  Y8a.    .a8P  88       88   88,    88            `8b,d8'        88b,   ,a8"  88          "8a,   ,a8"   88     
+%   `"Y8888Y"'   88       88   "Y888  88              Y88'         88`YbbdP"'   88           `"YbbdP"'    88    
 
 
 
 <<country_profiles, child = if (include_country_profiles) 'country_profiles.Rnw'>>=
 @
 
-% ###########################################################################
-% #
-% #    _(9(9)__        __/^\/^\__
-% #   /o o   \/_     __\_\_/\_/_/_
-% #   \___,   \/_   _\.'       './_      _/\_
-% #   `---`\  \/_ _\/           \/_   _|.'_/
-% #             \  \/_\/      /      \/_  |/ /
-% #              \  `-'      |        ';_:' /
-% #              /|          \      \     .'
-% #             /_/   |,___.-`',    /`'---`
-% #           /___/`       /____/
-% ###########################################################################
+
+% 88b           d88                                            88                                   
+% 888b         d888                ,d                          88                ,d                 
+% 88`8b       d8'88                88                          88                88                 
+% 88 `8b     d8' 88   ,adPPYba,  MM88MMM  ,adPPYYba,   ,adPPYb,88  ,adPPYYba,  MM88MMM  ,adPPYYba,  
+% 88  `8b   d8'  88  a8P_____88    88     ""     `Y8  a8"    `Y88  ""     `Y8    88     ""     `Y8  
+% 88   `8b d8'   88  8PP"""""""    88     ,adPPPPP88  8b       88  ,adPPPPP88    88     ,adPPPPP88  
+% 88    `888'    88  "8b,   ,aa    88,    88,    ,88  "8a,   ,d88  88,    ,88    88,    88,    ,88  
+% 88     `8'     88   `"Ybbd8"'    "Y888  `"8bbdP"Y8   `"8bbdP"Y8  `"8bbdP"Y8    "Y888  `"8bbdP"Y8
 
 
 <<metadata, child = if (include_metadata) 'metadata.Rnw'>>=
@@ -703,13 +582,22 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 
 
+% 88888888ba                           88                                                                      
+% 88      "8b                          88                                                                      
+% 88      ,8P                          88                                                                      
+% 88aaaaaa8P'  ,adPPYYba,   ,adPPYba,  88   ,d8   ,adPPYba,   ,adPPYba,   8b       d8   ,adPPYba,  8b,dPPYba,  
+% 88""""""8b,  ""     `Y8  a8"     ""  88 ,a8"   a8"     ""  a8"     "8a  `8b     d8'  a8P_____88  88P'   "Y8  
+% 88      `8b  ,adPPPPP88  8b          8888[     8b          8b       d8   `8b   d8'   8PP"""""""  88          
+% 88      a8P  88,    ,88  "8a,   ,aa  88`"Yba,  "8a,   ,aa  "8a,   ,a8"    `8b,d8'    "8b,   ,aa  88          
+% 88888888P"   `"8bbdP"Y8   `"Ybbd8"'  88   `Y8a  `"Ybbd8"'   `"YbbdP"'       "8"       `"Ybbd8"'  88         
+
+
 \newpage
 
 \thispagestyle{empty}
 \AddToShipoutPicture*{\taustatoka}
 
 \mbox{}
-
 
 \ifprint\else
 \begin{picture}(0,0)

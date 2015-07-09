@@ -10,6 +10,9 @@ library(tidyr)
 library(stringr)
 library(scales)
 library(ggplot2)
+library(grid)
+
+source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
 ## Part 1
 colPart1 <- plot_colors(part = 1, 12)
@@ -18,23 +21,16 @@ col.main1 <- colPart1[["Main"]][1]
 col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
-#source(paste0(root.dir,'./input/code/plot/plot_setup.R'))
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
-
-source(paste0(root.dir,"./input/code/plot/theme.R"))
-#source(paste0(root.dir,'./input/code/plot/plot_setup.R'))
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
 @
 
 
-
-<<part1_example_text, text_chunk=TRUE>>=
+<<P1overTEXT, eval=P1over, text_chunk=TRUE>>=
 title <- "Example spread"
 text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in ultrices velit. In ac lectus id odio bibendum scelerisque. Sed facilisis porta arcu, sit amet elementum ex scelerisque id. Curabitur in vehicula orci, ut lacinia urna. Integer ornare elementum risus sit amet suscipit. Sed efficitur viverra dapibus. Maecenas dui est, dapibus tincidunt ante quis, feugiat finibus neque. "
 @
 
-<<part1_example_toprigth, top_right_chunk=TRUE>>=
+<<P1overTOPRIGHT, eval=P1over, top_right_chunk=TRUE>>=
 # data
 df <- mtcars
 dat <- df %>% group_by(carb) %>% dplyr::summarise(horsepower = mean(hp, na.rm=TRUE))
@@ -49,7 +45,7 @@ ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
 @
 
 
-<<part1_example_left, left_chunk=TRUE>>=
+<<P1overLEFT, eval=P1over, left_chunk=TRUE>>=
 caption_text <- "Number of carburetors in left"
 ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
   geom_bar(stat="identity") +
@@ -58,7 +54,7 @@ ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
   scale_fill_manual(values=plot_colors(part = 1, 6)[["Sub"]])
 @
 
-<<part1_example_right,right_chunk=TRUE>>=
+<<P1overRIGHT, eval=P1over ,right_chunk=TRUE>>=
 caption_text <- "Number of carburetors in right"
 ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
   geom_bar(stat="identity") +
@@ -68,7 +64,7 @@ ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
 @
 
 
-<<part1_example_bottom,bottom_chunk=TRUE>>=
+<<P1overBOTTOM, eval=P1over, bottom_chunk=TRUE>>=
 caption_text <- "Number of carburetors in bottom"
 ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
   geom_bar(stat="identity") +
@@ -78,11 +74,11 @@ ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
 @
 
 
-<<part1_example_end, end_chunk=TRUE>>=
+<<P1overEND, end_chunk=TRUE>>=
 @
 
 
-<<part1_example_map,map_chunk=TRUE>>=
+<<P1overMAP, eval=P1over, map_chunk=TRUE>>=
 caption_text <- "Number of carburetors in map"
 ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
   geom_bar(stat="identity") +

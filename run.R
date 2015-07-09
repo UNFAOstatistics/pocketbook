@@ -2,16 +2,23 @@
 # This is the main script used to control the production of FAO statistical pocketbook workflow #
 #
 ################################################################################################
+rm(list=ls(all=TRUE)) 
 
-# set root directory
-root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
-setwd(root.dir)
+library(readr)
 
-# libraries
 
-# load the sybdata
+# Stuff you DO edit
+# ----------------------------------------------------------------------------------
+
 
 ## Chapters to include
+
+#region_to_report <- "RAF" # Africa
+# region_to_report <- "RAP" # Asia and the Pacific
+# region_to_report <- "REU" # Europe and Central Asia
+# region_to_report <- "RNE" # Near East and North Africa
+# region_to_report <- "COF" # Coffee
+region_to_report <- "GLO" # Global
 
 include_part1 <- TRUE
 include_part2 <- FALSE
@@ -20,10 +27,35 @@ include_part4 <- FALSE
 include_country_profiles <- FALSE
 include_metadata <- FALSE
 
+# set root directory
+root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
+setwd(root.dir)
+
+####################################################
+####################################################
+# Stuff You DO NOT edit
+####################################################
+
+## Conditions
+
+### Which spreads
+spreads <- read_csv("./input/define_spreads.csv")
+# subset to particular regions colunm 
+spreads <- spreads[c("SPREAD",region_to_report)]
+
+# 
+for (i in 1:nrow(spreads)) {
+  if (spreads[[i,2]] == 0) value <- FALSE
+  if (spreads[[i,2]] == 1) value <- TRUE
+  assign(spreads[[i,1]],value,envir = globalenv())
+}
+
+
 # -- Create output folder if not exists --- #
 if (!file.exists(paste0(root.dir,"/output"))) dir.create(paste0(root.dir,"/output"))
 if (!file.exists(paste0(root.dir,"/output/process"))) dir.create(paste0(root.dir,"/output/process"))
 if (!file.exists(paste0(root.dir,"/output/pdf"))) dir.create(paste0(root.dir,"/output/pdf"))
+if (!file.exists(paste0(root.dir,"/output/html"))) dir.create(paste0(root.dir,"/output/html"))
 
 ## Copy .Rnw files into process/-folder
 flist <- list.files(paste0(root.dir,"input/"), 
@@ -41,8 +73,12 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 setwd(paste0(root.dir,"output/process"))
 
 knitr::knit("syb_main.Rnw")
-
 system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+
+knitr::purl("syb_part1.Rnw","syb_part1.R")
+knitr::spin("syb_part1.R")
+
+#system(paste0("pdflatex ",root.dir,"output/process/syb_technical_report.tex"))
 
 # copy the output -pdf's into the output/pdf-folder
 flist <- list.files(paste0(root.dir,"output/process"), 
@@ -54,6 +90,14 @@ flist <- flist[!grepl("cover", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("disclaimer", flist, ignore.case = TRUE)]
 
 file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
+
+# copy the output -html's into the output/html-folder
+flist <- list.files(paste0(root.dir,"output/process"), 
+                    "+[.]html$", 
+                    full.names = TRUE)
+
+file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
+
 
 setwd(root.dir)
 
