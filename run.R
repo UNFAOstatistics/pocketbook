@@ -13,7 +13,7 @@ library(readr)
 
 ## Chapters to include
 
-#region_to_report <- "RAF" # Africa
+# region_to_report <- "RAF" # Africa
 # region_to_report <- "RAP" # Asia and the Pacific
 # region_to_report <- "REU" # Europe and Central Asia
 # region_to_report <- "RNE" # Near East and North Africa
@@ -50,6 +50,8 @@ for (i in 1:nrow(spreads)) {
   assign(spreads[[i,1]],value,envir = globalenv())
 }
 
+# -- delete output/ -folder recursively
+#unlink(paste0(root.dir,"/output"), recursive = TRUE)
 
 # -- Create output folder if not exists --- #
 if (!file.exists(paste0(root.dir,"/output"))) dir.create(paste0(root.dir,"/output"))
@@ -73,10 +75,11 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 setwd(paste0(root.dir,"output/process"))
 
 knitr::knit("syb_main.Rnw")
-system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex && cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
 
-knitr::purl("syb_part1.Rnw","syb_part1.R")
-knitr::spin("syb_part1.R")
+# Technical report
+# knitr::purl("syb_part1.Rnw","syb_part1.R")
+# knitr::spin("syb_part1.R")
 
 #system(paste0("pdflatex ",root.dir,"output/process/syb_technical_report.tex"))
 

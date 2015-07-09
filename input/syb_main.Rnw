@@ -2,88 +2,6 @@
 %% Global Statistical Pocketbook 2015
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Global Pocket Yearbook class
-% \documentclass[print, Draft]{faofactbook}
-%\documentclass[print]{faofactbook}
-%\documentclass[web, Draft]{faofactbook}
-\documentclass[twoside,web]{faofactbook}
-
-%% Other packages to be loaded
-\usepackage{lipsum,textcomp}
-\usepackage[T1]{fontenc}
-\usepackage[utf8x]{inputenc}
-\usepackage{tabularx}
-\usepackage{fixltx2e}
-\usepackage{bpchem}
-\usepackage{arydshln}
-\usepackage{booktabs}
-%\usepackage[document]{ragged2e}
-
-
-
-
-\usepackage{array}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
-\PrerenderUnicode {ô}
-\makeindex
-
-%% Define the colors
-\definecolor{part1}{cmyk}{0.90,0.40,0.24,0.32}
-\definecolor{part2}{cmyk}{0,0.54,0.96,0.10}
-\definecolor{part3}{cmyk}{0.18,0.90,0.75,0.31}
-\definecolor{part4}{cmyk}{0.73,0.10,0.97,0.29}
-\definecolor{part5}{cmyk}{0,0,0,0.5}
-\definecolor{part6}{cmyk}{0,0,0,0.5}
-
-%% Set the strip width
-\faoset{stripwidth=7.2mm}
-
-%% Trying to control the TOC
-% \usepackage{tocloft}
-% \renewcommand\cftchapfont{\normalsize\bfseries}
-% \renewcommand\cftsecfont{\normalsize}
-
-%\usepackage{titlesec}
-% \titleformat*{\section}{\Large\bfseries}
-
-
-% First page background graphics
-\usepackage{eso-pic}
-\newcommand\taustaeka{%
-\put(0,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,%
-keepaspectratio]{front_cover.pdf}%
-\vfill
-}}}
-
-
-\newcommand\taustatoka{%
-\put(0,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,%
-%keepaspectratio]{./cover/front_cover.pdf}%
-keepaspectratio]{front_cover_RAP.pdf}%
-\vfill
-}}}
-
-\usepackage{xcolor}
-
-%% Tango color scheme
-\definecolor{Part1}{HTML}{1d5979}
-\definecolor{Part2}{HTML}{e07317}
-\definecolor{Part3}{HTML}{96212d}
-\definecolor{Part4}{HTML}{35802d}
-
-
-
 
 % 88                      88                                 88                                     88                    
 % 88                      ""    ,d                           88                                     88                    
@@ -99,64 +17,83 @@ keepaspectratio]{front_cover_RAP.pdf}%
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 library(knitr)
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
+
 opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
+
 knit_hooks$set(text_chunk = function(before, options, envir) {
   
+  
+  # challenge with hooks was that when eval=FALSE hook was still executed and produced error
+  # Added the following line for each hook that stops the function IF there is FALSE in eval either
+  # written directly or passed through the spread condition region gadget thing..
+  
+        if (options$text_chunk == FALSE) return()
      if (!before) {
-       return(paste0("\\begin{ChartPage}{ ",title," } \n",
-               "\\LeftText{",text,"} \n"))
-    }
+       return(paste0("\\begin{ChartPage}{ ",spread_title," } \n",
+               "\\LeftText{",short_text,"} \n"))
+     }
 })
 
 knit_hooks$set(top_right_chunk = function(before, options, envir) {
   
-     if (before) {
+     if (options$top_right_chunk == FALSE) return()
+     
+  if (before) {
        return("\\RightText{\\begin{chart} \n")
      } else {
+
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
     }
 })
 
 knit_hooks$set(left_chunk = function(before, options, envir) {
-  
+
+  if (options$left_chunk == FALSE) return()
      if (before) {
        return("\\LeftChart{\\begin{chart} \n")
      } else {
+       
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
     }
 })
 
 knit_hooks$set(right_chunk = function(before, options, envir) {
   
+  if (options$right_chunk == FALSE) return()
      if (before) {
        return("\\RightChart{\\begin{chart} \n")
      } else {
+       
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
     }
 })
 
 knit_hooks$set(bottom_chunk = function(before, options, envir) {
   
+  if (options$bottom_chunk == FALSE) return()
      if (before) {
        return("\\BottomChart{\\begin{chart} \n")
      } else {
-      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
+       
+      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage}"))
     }
 })
 
-knit_hooks$set(end_chunk = function(before, options, envir) {
-  
-     if (!before) {
-       return("\\end{ChartPage}")
-    }
-
-})
+# knit_hooks$set(end_chunk = function(before, options, envir) {
+#   
+#      if (!before) {
+#        return("\\end{ChartPage}")
+#     }
+# 
+# })
 
 knit_hooks$set(map_chunk = function(before, options, envir) {
   
+  if (options$map_chunk == FALSE) return()
      if (before) {
        return("\\begin{chart} \n")
      } else {
+
       return(paste0("\\caption{",caption_text,"} \n","\\end{chart}"))
     }
 
@@ -243,6 +180,96 @@ grat_robin <- spTransform(grat, CRS("+proj=robin"))  # reproject graticule
 grat_df_robin <- fortify(grat_robin)
 
 @
+
+
+
+%% Global Pocket Yearbook class
+% \documentclass[print, Draft]{faofactbook}
+%\documentclass[print]{faofactbook}
+%\documentclass[web, Draft]{faofactbook}
+\documentclass[twoside,web]{faofactbook}
+
+%% Other packages to be loaded
+\usepackage{lipsum,textcomp}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{tabularx}
+\usepackage{fixltx2e}
+\usepackage{bpchem}
+\usepackage{arydshln}
+\usepackage{booktabs}
+%\usepackage[document]{ragged2e}
+
+
+
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\PrerenderUnicode {ô}
+\makeindex
+
+%% Define the colors
+\definecolor{part1}{cmyk}{0.90,0.40,0.24,0.32}
+\definecolor{part2}{cmyk}{0,0.54,0.96,0.10}
+\definecolor{part3}{cmyk}{0.18,0.90,0.75,0.31}
+\definecolor{part4}{cmyk}{0.73,0.10,0.97,0.29}
+\definecolor{part5}{cmyk}{0,0,0,0.5}
+\definecolor{part6}{cmyk}{0,0,0,0.5}
+
+%% Set the strip width
+\faoset{stripwidth=7.2mm}
+
+%% Trying to control the TOC
+% \usepackage{tocloft}
+% \renewcommand\cftchapfont{\normalsize\bfseries}
+% \renewcommand\cftsecfont{\normalsize}
+
+%\usepackage{titlesec}
+% \titleformat*{\section}{\Large\bfseries}
+
+
+% First page background graphics
+\usepackage{eso-pic}
+\newcommand\taustaeka{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,%
+<<define_front_cover, echo=FALSE, results='asis', eval=TRUE>>=
+  cover_name <- paste0("front_cover_",region_to_report,".pdf")
+  cat(paste0("keepaspectratio]{",cover_name,"}"))
+  @
+\vfill
+}}}
+
+
+\newcommand\taustatoka{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,%
+%keepaspectratio]{./cover/front_cover.pdf}%
+keepaspectratio]{front_cover_RAP.pdf}%
+\vfill
+}}}
+
+\usepackage{xcolor}
+
+%% Tango color scheme
+\definecolor{Part1}{HTML}{1d5979}
+\definecolor{Part2}{HTML}{e07317}
+\definecolor{Part3}{HTML}{96212d}
+\definecolor{Part4}{HTML}{35802d}
+
+
+
+
+
 
 
 %    ad88                                                                                                                             
