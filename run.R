@@ -13,12 +13,12 @@ library(readr)
 
 ## Chapters to include
 
-# region_to_report <- "RAF" # Africa
+region_to_report <- "RAF" # Africa
 # region_to_report <- "RAP" # Asia and the Pacific
 # region_to_report <- "REU" # Europe and Central Asia
 # region_to_report <- "RNE" # Near East and North Africa
 # region_to_report <- "COF" # Coffee
-region_to_report <- "GLO" # Global
+# region_to_report <- "GLO" # Global
 
 include_part1 <- TRUE
 include_part2 <- FALSE
@@ -76,6 +76,7 @@ setwd(paste0(root.dir,"output/process"))
 
 knitr::knit("syb_main.Rnw")
 system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex && cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
+system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex && cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
 
 # Technical report
 # knitr::purl("syb_part1.Rnw","syb_part1.R")
@@ -91,6 +92,8 @@ flist <- list.files(paste0(root.dir,"output/process"),
  # Exclude the covers etc files from being copied
 flist <- flist[!grepl("cover", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("disclaimer", flist, ignore.case = TRUE)]
+# Exclude the plain syb_main.pdf
+flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]
 
 file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
 

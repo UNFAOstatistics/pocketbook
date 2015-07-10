@@ -22,12 +22,14 @@ opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE
 
 knit_hooks$set(text_chunk = function(before, options, envir) {
   
-  
   # challenge with hooks was that when eval=FALSE hook was still executed and produced error
   # Added the following line for each hook that stops the function IF there is FALSE in eval either
   # written directly or passed through the spread condition region gadget thing..
   
-        if (options$text_chunk == FALSE) return()
+  if (options$text_chunk == FALSE) return()
+  # Set fig size
+  fig.width  =  3
+  fig.height =  10
      if (!before) {
        return(paste0("\\begin{ChartPage}{ ",spread_title," } \n",
                "\\LeftText{",short_text,"} \n"))
