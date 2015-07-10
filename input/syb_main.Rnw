@@ -255,8 +255,10 @@ grat_df_robin <- fortify(grat_robin)
 \vfill
 \centering
 \includegraphics[width=\paperwidth,height=\paperheight,%
-%keepaspectratio]{./cover/front_cover.pdf}%
-keepaspectratio]{front_cover_RAP.pdf}%
+<<define_back_cover, echo=FALSE, results='asis', eval=TRUE>>=
+  cover_name <- paste0("back_cover_",region_to_report,".pdf")
+  cat(paste0("keepaspectratio]{",cover_name,"}"))
+  @
 \vfill
 }}}
 
@@ -285,8 +287,6 @@ keepaspectratio]{front_cover_RAP.pdf}%
 
 
 \begin{document}
-% \SweaveOpts{concordance=TRUE}
-% \SweaveOpts{concordance=TRUE}
 \faoset{bgcolor=white}\selectcolor
 \twocolumn
 
@@ -316,13 +316,32 @@ keepaspectratio]{front_cover_RAP.pdf}%
 \thispagestyle{empty}
 
 \vspace*{100pt}
+
 \begin{center}
 \Huge{FAO Statistical Pocketbook}
 \end{center}
 
 \vspace*{10pt}
+
 \begin{center}
 \Huge{2015}
+\end{center}
+
+\vspace*{10pt}
+
+\begin{center}
+<<define_subtitle, echo=FALSE, results='asis', eval=TRUE>>=
+  
+if (region_to_report == "RAF") subtitle <- "Africa \n\n Food and Agriculture"
+if (region_to_report == "RAP") subtitle <- "Asia and the Pacific \n\n Food and Agriculture"
+if (region_to_report == "REU") subtitle <- "Europe and Central Asia \n\n Food and Agriculture"
+if (region_to_report == "RNE") subtitle <- "Near East and North Africa \n\n Food and Agriculture"
+if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
+if (region_to_report == "GLO") subtitle <- ""
+
+  cat(paste0("\\Huge{",subtitle,"}"))
+  @
+
 \end{center}
 
 \vfill
@@ -630,7 +649,9 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 \ifprint\else
 \begin{picture}(0,0)
-\put(-58,-472){\includegraphics[width=\paperwidth,height=\paperheight]{back_cover_2015.png}}
+
+
+%\put(-58,-472){\includegraphics[width=\paperwidth,height=\paperheight]{back_cover_2015.png}}
 %\put(-58,-432){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover.pdf}}
 %\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover_2015.png}
 \end{picture}
