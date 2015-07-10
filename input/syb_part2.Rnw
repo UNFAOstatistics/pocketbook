@@ -10,82 +10,115 @@ library(tidyr)
 library(stringr)
 library(scales)
 library(ggplot2)
+library(grid)
 
-## Part 1
-colPart2 <- plot_colors(part = 2, 12)
-col.main2 <- colPart1[["Main"]][1]
+source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+
+## Part 2
+colPart1 <- plot_colors(part = 2, 12)
+col.main1 <- colPart1[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart1[["Main"]][2]
 
-source("./Rcode/theme_functions/theme.R")
-source('./Rcode/plot_functions/plot_setup.R')
+source(paste0(root.dir,"./input/code/plot/theme.R"))
 
 @
 
 
+%   _   _             _                                         _       _                              _   
+%  | | | | _ __    __| |  ___  _ __  _ __    ___   _   _  _ __ (_) ___ | |__   _ __ ___    ___  _ __  | |_ 
+%  | | | || '_ \  / _` | / _ \| '__|| '_ \  / _ \ | | | || '__|| |/ __|| '_ \ | '_ ` _ \  / _ \| '_ \ | __|
+%  | |_| || | | || (_| ||  __/| |   | | | || (_) || |_| || |   | |\__ \| | | || | | | | ||  __/| | | || |_ 
+%   \___/ |_| |_| \__,_| \___||_|   |_| |_| \___/  \__,_||_|   |_||___/|_| |_||_| |_| |_| \___||_| |_| \__|
+                                                                                                        
 
-<<part2_example_text, text_chunk=TRUE>>=
-title <- "Example spread"
-text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in ultrices velit. In ac lectus id odio bibendum scelerisque. Sed facilisis porta arcu, sit amet elementum ex scelerisque id. Curabitur in vehicula orci, ut lacinia urna. Integer ornare elementum risus sit amet suscipit. Sed efficitur viverra dapibus. Maecenas dui est, dapibus tincidunt ante quis, feugiat finibus neque. "
+
+
+<<P2undernuTEXT, eval=P2undernu, text_chunk=P2undernu>>=
+spread_title <- "Undernourishment"
+short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
 @
 
-<<part2_example_toprigth, top_right_chunk=TRUE>>=
-# data
-df <- mtcars
-dat <- df %>% group_by(carb) %>% dplyr::summarise(horsepower = mean(hp, na.rm=TRUE))
+<<P2undernuTOPRIGHT, eval=P2undernu, top_right_chunk=P2undernu, fig.height=2.5, fig.width=3>>=
+# Retrieve data
+dat <- diamonds
+dat$price <- as.numeric(dat$price)
 
-# generated object
-caption_text <- "Number of carburetors in top right"
-ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
-  geom_bar(stat="identity") +
-  labs(title="", x="number of carburetors", y="mean horsepower") +
-  theme(text = element_text(family="Open Sans")) +
-  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
-@
+# Subset data
+if (region_to_report == "RAF") dat <- filter(dat, cut == "Fair")
+if (region_to_report == "RAP") dat <- filter(dat, cut == "Good")
+if (region_to_report == "REU") dat <- filter(dat, cut == "Very Good")
+if (region_to_report == "RNE") dat <- filter(dat, cut == "Premium")
+if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "COF") dat <- filter(dat, cut == "Ideal")
 
+# compute the mean per color
 
-<<part2_example_left, left_chunk=TRUE>>=
-caption_text <- "Number of carburetors in left"
-ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
-  geom_bar(stat="identity") +
-  labs(title="", x="number of carburetors", y="mean horsepower") +
-  theme(text = element_text(family="Open Sans")) +
-  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
-@
+dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = mean(price, na.rm=TRUE))
+dat_plot <- dat_plot %>%  mutate(sum = sum(var))
 
-<<part2_example_right,right_chunk=TRUE>>=
-caption_text <- "Number of carburetors in right"
-ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
-  geom_bar(stat="identity") +
-  labs(title="", x="number of carburetors", y="mean horsepower") +
-  theme(text = element_text(family="Open Sans")) +
-  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
-@
+# generate the object
+caption_text <- "Diamond price by the colour of the diamond on the top right"
 
-
-<<part2_example_bottom,bottom_chunk=TRUE>>=
-caption_text <- "Number of carburetors in bottom"
-ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
-  geom_bar(stat="identity") +
-  labs(title="", x="number of carburetors", y="mean horsepower") +
-  theme(text = element_text(family="Open Sans")) +
-  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+p <- ggplot(dat_plot, aes(x=sum/2, y = var, fill = color, width = sum))
+p <- p + geom_bar(position="fill", stat="identity") 
+p <- p + coord_polar("y")
+p <- p + theme(axis.title = element_blank())
+p <- p + theme(axis.ticks = element_blank())
+p <- p + theme(panel.grid.minor = element_blank())
+p <- p + theme(panel.grid.major = element_blank())
+p <- p + theme(axis.text = element_blank())
+p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
 @
 
 
-<<part2_example_end, end_chunk=TRUE>>=
+<<P2undernuLEFT, eval=P2undernu, left_chunk=P2undernu, fig.height=5.9, fig.width=3.2>>=
+# compute
+dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = mean(price, na.rm=TRUE))
+
+caption_text <- "Diamond price by the colour of the diamond on the left"
+p <- ggplot(dat_plot, aes(x=reorder(color, var),y=var,fill=color))
+p <- p + geom_bar(stat="identity")
+p <- p + labs(title="", x="Diamond color", y="price in US dollars")
+p <- p + theme(text = element_text(family="Open Sans"))
+p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
+@
+
+<<P2undernuRIGHT, eval=P2undernu ,right_chunk=P2undernu, fig.height=5.9, fig.width=3.2>>=
+# compute
+dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
+
+caption_text <- "Diamond price by the colour of the diamond on the left"
+p <- ggplot(dat_plot, aes(x=reorder(color, -var),y=var,fill=color))
+p <- p + geom_bar(stat="identity")
+p <- p + labs(title="", x="Diamond color", y="price in US dollars")
+p <- p + theme(text = element_text(family="Open Sans"))
+p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
 @
 
 
-<<part2_example_map,map_chunk=TRUE>>=
-caption_text <- "Number of carburetors in map"
-ggplot(dat, aes(x=factor(carb),y=horsepower,fill=factor(carb))) +
-  geom_bar(stat="identity") +
-  labs(title="", x="number of carburetors", y="mean horsepower") +
-  theme(text = element_text(family="Open Sans")) +
-  scale_fill_manual(values=plot_colors(part = 2, 6)[["Sub"]])
+<<P2undernuBOTTOM, eval=P2undernu, bottom_chunk=P2undernu, fig.height=3, fig.width=6>>=
+# compute
+dat_plot <- dat %>% group_by(color, clarity) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
+
+caption_text <- "Diamond price by the colour of the diamond on the bottom"
+p <- ggplot(dat_plot, aes(x=color,y=clarity,size=var,color=color))
+p <- p + geom_point()
+p <- p + labs(title="", x="Diamond color", y="price in US dollars")
+p <- p + theme(text = element_text(family="Open Sans"))
+p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
 @
 
 
+<<P2undernuMAP, eval=P2undernu, map_chunk=P2undernu, fig.height=15, fig.width=8>>=
+# compute
+dat_plot <- dat %>% group_by(clarity) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
 
+caption_text <- "Diamond price by the colour of the diamond as a map"
+p <- ggplot(dat_plot, aes(x=clarity,y=var,fill=clarity))
+p <- p + geom_bar(stat="identity")
+p <- p + labs(title="", x="Diamond color", y="price in US dollars")
+p <- p + theme(text = element_text(family="Open Sans"))
+p + scale_fill_manual(values=plot_colors(part = 1, 8)[["Sub"]])
+@
 

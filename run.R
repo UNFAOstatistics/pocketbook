@@ -13,12 +13,12 @@ library(readr)
 
 ## Chapters to include
 
-region_to_report <- "RAF" # Africa
+#region_to_report <- "RAF" # Africa
 # region_to_report <- "RAP" # Asia and the Pacific
 # region_to_report <- "REU" # Europe and Central Asia
 # region_to_report <- "RNE" # Near East and North Africa
 # region_to_report <- "COF" # Coffee
-# region_to_report <- "GLO" # Global
+region_to_report <- "GLO" # Global
 
 include_part1 <- TRUE
 include_part2 <- FALSE
@@ -79,8 +79,17 @@ system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex && cp ",root.dir
 system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex && cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
 
 # Technical report
-# knitr::purl("syb_part1.Rnw","syb_part1.R")
-# knitr::spin("syb_part1.R")
+knitr::purl("syb_part1.Rnw","syb_part1.R")
+knitr::spin("syb_part1.R")
+# 
+# knitr::purl("syb_part2.Rnw","syb_part2.R")
+# knitr::spin("syb_part2.R")
+# 
+# knitr::purl("syb_part3.Rnw","syb_part3.R")
+# knitr::spin("syb_part3.R")
+# 
+# knitr::purl("syb_part4.Rnw","syb_part4.R")
+# knitr::spin("syb_part4.R")
 
 #system(paste0("pdflatex ",root.dir,"output/process/syb_technical_report.tex"))
 

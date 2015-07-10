@@ -60,15 +60,26 @@ dat_plot <- dat_plot %>%  mutate(sum = sum(var))
 # generate the object
 caption_text <- "Diamond price by the colour of the diamond on the top right"
 
-p <- ggplot(dat_plot, aes(x=sum/2, y = var, fill = color, width = sum))
-p <- p + geom_bar(position="fill", stat="identity") 
-p <- p + coord_polar("y")
-p <- p + theme(axis.title = element_blank())
-p <- p + theme(axis.ticks = element_blank())
-p <- p + theme(panel.grid.minor = element_blank())
-p <- p + theme(panel.grid.major = element_blank())
-p <- p + theme(axis.text = element_blank())
-p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
+if (region_to_report == "GLO"){
+  
+  p <- ggplot(dat_plot, aes(x=sum/2, y = var, fill = color, width = sum))
+  p <- p + geom_bar(position="fill", stat="identity") 
+  p <- p + coord_polar("y")
+  p <- p + theme(axis.title = element_blank())
+  p <- p + theme(axis.ticks = element_blank())
+  p <- p + theme(panel.grid.minor = element_blank())
+  p <- p + theme(panel.grid.major = element_blank())
+  p <- p + theme(axis.text = element_blank())
+  p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
+}
+
+
+if (region_to_report != "GLO"){
+  
+  plot(cars)
+}
+
+
 @
 
 
@@ -87,6 +98,13 @@ p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
 <<P1overRIGHT, eval=P1over ,right_chunk=P1over, fig.height=5.9, fig.width=3.2>>=
 # compute
 dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
+
+# Comments here
+
+# alot
+# of 
+# description whi 
+
 
 caption_text <- "Diamond price by the colour of the diamond on the left"
 p <- ggplot(dat_plot, aes(x=reorder(color, -var),y=var,fill=color))
