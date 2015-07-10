@@ -58,7 +58,8 @@ dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = mean(price, na.rm
 dat_plot <- dat_plot %>%  mutate(sum = sum(var))
 
 # generate the object
-caption_text <- "Diamond price by the colour of the diamond on the top right"
+if (region_to_report == "COF") caption_text <- "Diamond price by the colour of the diamond on the top right"
+if (region_to_report == "GLO") caption_text <- "Diamond price by the colour of the diamond on the top right"
 
 if (region_to_report == "GLO"){
   
