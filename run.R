@@ -13,8 +13,8 @@ library(readr)
 
 ## Chapters to include
 
-# region_to_report <- "RAF" # Africa
-region_to_report <- "RAP" # Asia and the Pacific
+region_to_report <- "RAF" # Africa
+# region_to_report <- "RAP" # Asia and the Pacific
 # region_to_report <- "REU" # Europe and Central Asia
 # region_to_report <- "RNE" # Near East and North Africa
 # region_to_report <- "COF" # Coffee
@@ -28,8 +28,7 @@ include_country_profiles <- FALSE
 include_metadata <- FALSE
 
 # set root directory
-#root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/" # Markus
-root.dir <- "C://Users//Heyman//Documents//Github//regional15/" # amy
+root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
 setwd(root.dir)
 
 ####################################################
