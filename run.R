@@ -18,7 +18,7 @@ region_to_report <- "RAF" # Africa
 # region_to_report <- "REU" # Europe and Central Asia
 # region_to_report <- "RNE" # Near East and North Africa
 # region_to_report <- "COF" # Coffee
-# region_to_report <- "GLO" # Global
+#region_to_report <- "GLO" # Global
 
 include_part1 <- TRUE
 include_part2 <- TRUE
