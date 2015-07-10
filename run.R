@@ -28,7 +28,8 @@ include_country_profiles <- FALSE
 include_metadata <- FALSE
 
 # set root directory
-root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
+#root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/" # Markus
+root.dir <- "C://Users//Heyman//Documents//Github//regional15/" # amy
 setwd(root.dir)
 
 ####################################################
