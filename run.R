@@ -21,7 +21,7 @@ region_to_report <- "RAF" # Africa
 #region_to_report <- "GLO" # Global
 
 include_part1 <- TRUE
-include_part2 <- TRUE
+include_part2 <- FALSE
 include_part3 <- FALSE
 include_part4 <- FALSE
 include_country_profiles <- FALSE
@@ -30,6 +30,109 @@ include_metadata <- FALSE
 # set root directory
 root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
 setwd(root.dir)
+# set data directory
+data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
+
+############################################################
+############################################################
+# Customise SYB data for pocketbooks
+# 
+############################################################
+
+# load FAOcountryprofile data 
+FAOcountryProfile <- read_csv("./input/data/FAOcountryProfile.csv")
+
+# load SYB data
+load(paste0(data.dir,"Data/Processed/SYB.RData"))
+syb.df <- SYB.df; rm(SYB.df)
+
+syb.df <- 
+  merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")],
+        by = "FAOST_CODE", all.x = TRUE)
+
+## Abbreviate names
+syb.df[syb.df[, "FAO_TABLE_NAME"] == "Latin America and the Caribbean" & 
+         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Latin America\nand the Caribbean"
+syb.df[syb.df[, "FAO_TABLE_NAME"] == "Developed countries" & 
+         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Developed\ncountries"
+syb.df[syb.df[, "FAO_TABLE_NAME"] == "Developing countries" & 
+         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Developing\ncountries"
+syb.df[syb.df[, "SHORT_NAME"] == "Saint Vincent and the Grenadines" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Vincent\nand the\nGrenadines"
+syb.df[syb.df[, "SHORT_NAME"] == "Antigua and Barbuda" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "Antigua and\nBarbuda"
+syb.df[syb.df[, "SHORT_NAME"] == "Trinidad and Tobago" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-  "Trinidad and\nTobago"
+syb.df[syb.df[, "SHORT_NAME"] == "Republic of Moldova" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-  "Republic of\nMoldova"
+# syb.df[syb.df[, "SHORT_NAME"] == "Saint Helena, Ascension and Tristan da Cunha" & 
+#           !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-
+#   "Saint Helena,\nAscension and\nTristan da Cunha"
+syb.df[syb.df[, "SHORT_NAME"] == "Saint Helena, Ascension and Tristan da Cunha" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Saint Helena"
+syb.df[syb.df[, "SHORT_NAME"] == "Northern Mariana Islands" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "N. Mariana\nIslands"
+syb.df[syb.df[, "SHORT_NAME"] == "Wallis and Futuna Islands" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "Wallis and\nFutuna Is."
+syb.df[syb.df[, "SHORT_NAME"] == "United Arab Emirates" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "United Arab\nEmirates"
+syb.df[syb.df[, "SHORT_NAME"] == "Turks and Caicos Islands" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Turks and\nCaicos Is."
+syb.df[syb.df[, "SHORT_NAME"] == "Central African Republic" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Central African\nRepublic"
+syb.df[syb.df[, "SHORT_NAME"] == "Sao Tome and Principe" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Sao Tome and\nPrincipe"
+syb.df[syb.df[, "SHORT_NAME"] == "United States of America" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "United States\nof America"
+syb.df[syb.df[, "SHORT_NAME"] == "Iran (Islamic Republic of)" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Iran\n(Islamic Republic of)"
+syb.df[syb.df[, "SHORT_NAME"] == "Bosnia and Herzegovina" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Bosnia and\nHerzegovina"
+syb.df[syb.df[, "FAOST_CODE"] == "107" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Côte d'Ivoire"
+syb.df[syb.df[, "SHORT_NAME"] == "Falkland Islands (Malvinas)" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Falkland Islands\n(Malvinas)"
+syb.df[syb.df[, "SHORT_NAME"] == "Papua New Guinea" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Papua New\nGuinea"
+syb.df[syb.df[, "SHORT_NAME"] == "American Samoa" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "American\nSamoa"
+syb.df[syb.df[, "SHORT_NAME"] == "Western Sahara" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Western\nSahara"
+# REMOVE Western Sahara
+syb.df <- syb.df[syb.df$FAOST_CODE != 205, ]
+
+
+
+
+## Chinas
+syb.df[syb.df[, "FAOST_CODE"] %in% c(357), "Area"] <- "China 357"
+syb.df[syb.df[, "FAOST_CODE"] %in% c(41), "Area"] <-  "China 41"
+syb.df[syb.df[, "FAOST_CODE"] %in% c(128), "Area"] <- "Macau"
+syb.df[syb.df[, "FAOST_CODE"] %in% c(96), "Area"] <-  "Hong Kong"
+syb.df[syb.df[, "FAOST_CODE"] %in% c(214), "Area"] <- "Taiwan"
+## Occupied Palestinian Territory
+syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" & 
+         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "West Bank and\nGaza Strip"
+syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & 
+         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
+
+
+##############################################################
+##############################################################
+## Pppulation threshold
+#############################################################
+pop_threshold <- 120000 # 
+small_countries <- syb.df[syb.df$OA.TPBS.POP.PPL.NO <= pop_threshold,c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
+#small_countries <- small_countries[!duplicated(small_countries[c("FAOST_CODE")]),]
+small_countries <- small_countries[small_countries$Year %in% 2013,]
+small_countries_FAOST_CODE <- unique(small_countries$FAOST_CODE)
+small_countries_FAOST_CODE <- small_countries_FAOST_CODE[!is.na(small_countries_FAOST_CODE)]
+syb.df <- syb.df[!(syb.df$FAOST_CODE %in% small_countries_FAOST_CODE), ]
+
+na_countries <- syb.df[is.na(syb.df$OA.TPBS.POP.PPL.NO),c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
+na_countries <- na_countries[na_countries$Year %in% 2013,]
+na_countries_FAOST_CODE <- unique(na_countries$FAOST_CODE)
+syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 
 ####################################################
 ####################################################

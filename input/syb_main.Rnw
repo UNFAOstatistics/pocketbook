@@ -95,7 +95,7 @@ knit_hooks$set(map_chunk = function(before, options, envir) {
      if (before) {
        return("\\begin{chart} \n")
      } else {
-
+       
       return(paste0("\\caption{",caption_text,"} \n","\\end{chart}"))
     }
 
