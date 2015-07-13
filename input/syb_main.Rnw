@@ -20,13 +20,15 @@ knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
 
 opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
 
-knit_hooks$set(text_chunk = function(before, options, envir) {
+# Why we have to short_text_ChartPage and short_text_ChartPage2 hooks etc......
+
+knit_hooks$set(short_text_ChartPage = function(before, options, envir) {
   
   # challenge with hooks was that when eval=FALSE hook was still executed and produced error
   # Added the following line for each hook that stops the function IF there is FALSE in eval either
   # written directly or passed through the spread condition region gadget thing..
   
-  if (options$text_chunk == FALSE) return()
+  if (options$short_text_ChartPage == FALSE) return()
   # Set fig size
   fig.width  =  3
   fig.height =  10
@@ -36,9 +38,26 @@ knit_hooks$set(text_chunk = function(before, options, envir) {
      }
 })
 
-knit_hooks$set(top_right_chunk = function(before, options, envir) {
+knit_hooks$set(short_text_ChartPage2 = function(before, options, envir) {
   
-     if (options$top_right_chunk == FALSE) return()
+  # challenge with hooks was that when eval=FALSE hook was still executed and produced error
+  # Added the following line for each hook that stops the function IF there is FALSE in eval either
+  # written directly or passed through the spread condition region gadget thing..
+  
+  if (options$short_text_ChartPage2 == FALSE) return()
+  # Set fig size
+  fig.width  =  3
+  fig.height =  10
+     if (!before) {
+       return(paste0("\\begin{ChartPage2}{ ",spread_title," } \n",
+               "\\LeftText{",short_text,"} \n"))
+     }
+})
+
+
+knit_hooks$set(top_right_plot = function(before, options, envir) {
+  
+     if (options$top_right_plot == FALSE) return()
      
   if (before) {
        return("\\RightText{\\begin{chart} \n")
@@ -48,9 +67,24 @@ knit_hooks$set(top_right_chunk = function(before, options, envir) {
     }
 })
 
-knit_hooks$set(left_chunk = function(before, options, envir) {
 
-  if (options$left_chunk == FALSE) return()
+knit_hooks$set(top_right_minitable = function(before, options, envir) {
+  
+     if (options$top_right_minitable == FALSE) return()
+     
+  if (before) {
+       return("\\RightText{ \n")
+     } else {
+
+      return(paste0("} \n"))
+    }
+})
+
+
+
+knit_hooks$set(left_plot = function(before, options, envir) {
+
+  if (options$left_plot == FALSE) return()
      if (before) {
        return("\\LeftChart{\\begin{chart} \n")
      } else {
@@ -59,9 +93,9 @@ knit_hooks$set(left_chunk = function(before, options, envir) {
     }
 })
 
-knit_hooks$set(right_chunk = function(before, options, envir) {
+knit_hooks$set(right_plot = function(before, options, envir) {
   
-  if (options$right_chunk == FALSE) return()
+  if (options$right_plot == FALSE) return()
      if (before) {
        return("\\RightChart{\\begin{chart} \n")
      } else {
@@ -70,9 +104,9 @@ knit_hooks$set(right_chunk = function(before, options, envir) {
     }
 })
 
-knit_hooks$set(bottom_chunk = function(before, options, envir) {
+knit_hooks$set(bottom_plot = function(before, options, envir) {
   
-  if (options$bottom_chunk == FALSE) return()
+  if (options$bottom_plot == FALSE) return()
      if (before) {
        return("\\BottomChart{\\begin{chart} \n")
      } else {
@@ -80,6 +114,20 @@ knit_hooks$set(bottom_chunk = function(before, options, envir) {
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage}"))
     }
 })
+
+
+knit_hooks$set(bottom_plot2 = function(before, options, envir) {
+  
+  if (options$bottom_plot2 == FALSE) return()
+     if (before) {
+       return("\\BottomChart{\\begin{chart} \n")
+     } else {
+       
+      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage2}"))
+    }
+})
+
+
 
 # knit_hooks$set(end_chunk = function(before, options, envir) {
 #   
@@ -89,9 +137,9 @@ knit_hooks$set(bottom_chunk = function(before, options, envir) {
 # 
 # })
 
-knit_hooks$set(map_chunk = function(before, options, envir) {
+knit_hooks$set(map_plot = function(before, options, envir) {
   
-  if (options$map_chunk == FALSE) return()
+  if (options$map_plot == FALSE) return()
      if (before) {
        return("\\begin{chart} \n")
      } else {
@@ -116,16 +164,7 @@ local({
 
 
 
-require(grid)
-require(xtable)
-library(plyr)
-library(dplyr)
-library(rgdal)
-library(ggplot2)
-library(gisfao)
 
-library(extrafont)
-loadfonts()
 
 @
 
@@ -141,7 +180,7 @@ map.out.extra   <- NULL
 # RAF
 
 if (region_to_report == "RAF") map.fig.width  <- 6
-if (region_to_report == "RAF") map.fig.height  <- NULL
+if (region_to_report == "RAF") map.fig.height  <- 8
 if (region_to_report == "RAF") map.out.height  <- "1.5\\columnwidth"
 if (region_to_report == "RAF") map.out.extra  <- 'angle=0'
 
@@ -162,7 +201,7 @@ if (region_to_report == "REU") map.out.extra  <- 'angle=90'
 # RNE
 
 if (region_to_report == "RNE") map.fig.width  <- 6
-if (region_to_report == "RNE") map.fig.height  <- NULL
+if (region_to_report == "RNE") map.fig.height  <- 4
 if (region_to_report == "RNE") map.out.height  <- "1.0\\columnwidth"
 if (region_to_report == "RNE") map.out.extra  <- 'angle=90'
 
@@ -187,7 +226,15 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
 # function plotting maps!
 
-create_map_here <- function(){
+create_map_here <- function(nCol=5,addNA=FALSE){
+  
+colPart = plot_colors(part = syb_part, 12)
+mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
+tmpCol = mapColFun(nCol)[2]
+mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
+mapColors = mapColFun(nCol)
+
+if (addNA) mapColors <- c("grey70", mapColors)
   
   # Create the plot
 p <- ggplot(data=map.df, aes(long,lat,group=group))
@@ -195,7 +242,6 @@ p <- ggplot(data=map.df, aes(long,lat,group=group))
 p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
               linetype = "solid", color = col.main2, alpha=.1)
 # Grey for the non-data regions
-p <- p + geom_polygon(fill="Dim Grey",colour = NA)
 p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
 p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.7, guide = FALSE)
 p <- p + scale_fill_manual(values=mapColors) # no data to think about
