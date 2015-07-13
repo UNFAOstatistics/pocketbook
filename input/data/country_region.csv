@@ -1,0 +1,188 @@
+"","FAO_TABLE_NAME","FAOST_CODE","RAF","LAC","RAP","REU","RNE"
+"1",NA,0,1,0,1,0,1
+"2","Armenia",1,0,0,1,1,1
+"3","Afghanistan",2,0,0,1,1,1
+"4","Albania",3,0,0,0,1,0
+"5","Algeria",4,1,0,0,0,1
+"6","Angola",7,1,0,0,0,0
+"7","Argentina",9,0,1,0,0,0
+"8","Australia",10,0,0,1,0,0
+"9","Austria",11,0,0,0,1,0
+"10","the Bahamas",12,0,1,0,0,0
+"11","Bangladesh",16,0,0,1,0,0
+"12","Bhutan",18,0,0,1,0,0
+"13","Bolivia (Plurinational State of)",19,0,1,0,0,0
+"14","Botswana",20,1,0,0,0,0
+"15","Brazil",21,0,1,0,0,0
+"16","Belize",23,0,1,0,0,0
+"17","Solomon Islands",25,0,0,1,0,0
+"18","Brunei Darussalam",26,0,0,1,0,0
+"19","Bulgaria",27,0,0,0,1,0
+"20","Myanmar",28,0,0,1,0,0
+"21","Burundi",29,1,0,0,0,0
+"22","Cameroon",32,1,0,0,0,0
+"23","Canada",33,0,0,0,0,0
+"24","Central African Republic",37,1,0,0,0,1
+"25","Sri Lanka",38,0,0,1,0,0
+"26","Chad",39,1,0,0,0,1
+"27","Chile",40,0,1,0,0,0
+"28","China",41,0,0,1,1,0
+"29","Colombia",44,0,1,0,0,0
+"30","Congo",46,1,0,0,0,0
+"31","Costa Rica",48,0,1,0,0,0
+"32","Cuba",49,0,1,0,0,0
+"33","Cyprus",50,0,0,0,1,0
+"34","Azerbaijan",52,0,0,1,1,1
+"35","Benin",53,1,0,0,0,0
+"36","Denmark",54,0,0,0,1,0
+"37","the Dominican Republic",56,0,1,0,0,0
+"38","Belarus",57,0,0,1,1,0
+"39","Ecuador",58,0,1,0,0,0
+"40","Egypt",59,1,0,0,0,1
+"41","El Salvador",60,0,1,0,0,0
+"42","Equatorial Guinea",61,1,0,0,0,0
+"43","Estonia",63,0,0,1,1,0
+"44","Falkland Islands (Malvinas)",65,0,0,0,0,0
+"45","Fiji",66,0,0,1,0,0
+"46","Finland",67,0,0,0,1,0
+"47","France",68,0,0,0,1,0
+"48","French Guiana",69,0,1,0,0,0
+"49","French Southern and Antarctic Territories",71,0,0,0,0,0
+"50","Djibouti",72,1,0,0,0,0
+"51","Georgia",73,0,0,1,1,0
+"52","Gabon",74,1,0,0,0,0
+"53","the Gambia",75,1,0,0,0,0
+"54","Germany",79,0,0,0,1,0
+"55","Bosnia and Herzegovina",80,0,0,0,1,0
+"56","Ghana",81,1,0,0,0,0
+"57","Greece",84,0,0,0,1,0
+"58","Greenland",85,0,0,0,0,0
+"59","Guatemala",89,0,1,0,0,0
+"60","Guinea",90,1,0,0,0,0
+"61","Guyana",91,0,1,0,0,0
+"62","Haiti",93,0,1,0,0,0
+"63","Honduras",95,0,1,0,0,0
+"64","Hungary",97,0,0,0,1,0
+"65","Croatia",98,0,0,0,1,0
+"66","Iceland",99,0,0,0,1,0
+"67","India",100,0,0,1,0,0
+"68","Indonesia",101,0,0,1,0,0
+"69","Iran (Islamic Republic of)",102,0,0,1,1,1
+"70","Iraq",103,0,0,0,1,1
+"71","Ireland",104,0,0,0,1,0
+"72","Israel",105,0,0,0,1,1
+"73","Italy",106,0,0,0,1,0
+"74","Côte d'Ivoire",107,1,0,0,0,0
+"75","Kazakhstan",108,0,0,1,1,0
+"76","Jamaica",109,0,1,0,0,0
+"77","Japan",110,0,0,1,0,0
+"78","Jordan",112,0,0,0,1,1
+"79","Kyrgyzstan",113,0,0,1,1,0
+"80","Kenya",114,1,0,0,0,0
+"81","Cambodia",115,0,0,1,0,0
+"82","Democratic People's Republic of Korea",116,0,0,1,1,0
+"83","Republic of Korea",117,0,0,1,0,0
+"84","Kuwait",118,0,0,0,0,1
+"85","Latvia",119,0,0,1,1,0
+"86","the Lao People's Democratic Republic",120,0,0,1,0,0
+"87","Lebanon",121,0,0,0,1,1
+"88","Lesotho",122,1,0,0,0,0
+"89","Liberia",123,1,0,0,0,0
+"90","Libya",124,1,0,0,0,1
+"91","Lithuania",126,0,0,1,1,0
+"92","Madagascar",129,1,0,0,0,0
+"93","Malawi",130,1,0,0,0,0
+"94","Malaysia",131,0,0,1,0,0
+"95","Mali",133,1,0,0,0,1
+"96","Martinique",135,0,0,0,0,0
+"97","Mauritania",136,1,0,0,0,1
+"98","Mauritius",137,1,0,0,0,0
+"99","Mexico",138,0,1,0,0,0
+"100","Mongolia",141,0,0,1,1,0
+"101","Morocco",143,1,0,0,0,1
+"102","Mozambique",144,1,0,0,0,0
+"103","Republic of Moldova",146,0,0,0,1,0
+"104","Namibia",147,1,0,0,0,0
+"105","Nepal",149,0,0,1,0,0
+"106","the Netherlands",150,0,0,0,1,0
+"107","New Caledonia",153,0,0,0,0,0
+"108","The former Yugoslav Republic of Macedonia",154,0,0,0,1,0
+"109","Vanuatu",155,0,0,1,0,0
+"110","New Zealand",156,0,0,1,0,0
+"111","Nicaragua",157,0,1,0,0,0
+"112","the Niger",158,1,0,0,0,1
+"113","Nigeria",159,1,0,0,0,0
+"114","Norway",162,0,0,0,1,0
+"115","Pakistan",165,0,0,1,0,1
+"116","Panama",166,0,1,0,0,0
+"117","the Czech Republic",167,0,0,0,1,0
+"118","Papua New Guinea",168,0,0,1,0,0
+"119","Paraguay",169,0,1,0,0,0
+"120","Peru",170,0,1,0,0,0
+"121","the Philippines",171,0,0,1,0,0
+"122","Poland",173,0,0,0,1,0
+"123","Portugal",174,0,0,0,1,0
+"124","Guinea-Bissau",175,1,0,0,0,0
+"125","Timor-Leste",176,0,0,1,0,0
+"126","Puerto Rico",177,0,0,0,0,0
+"127","Eritrea",178,1,0,0,0,1
+"128","Qatar",179,0,0,0,0,1
+"129","Zimbabwe",181,1,0,0,0,0
+"130","Réunion",182,0,0,0,0,0
+"131","Romania",183,0,0,0,1,0
+"132","Rwanda",184,1,0,0,0,0
+"133","the Russian Federation",185,0,0,1,1,0
+"134","Saudi Arabia",194,0,0,0,0,1
+"135","Senegal",195,1,0,0,0,1
+"136","Sierra Leone",197,1,0,0,0,0
+"137","Slovenia",198,0,0,0,1,0
+"138","Slovakia",199,0,0,0,1,0
+"139","Somalia",201,1,0,0,0,0
+"140","South Africa",202,1,0,0,0,0
+"141","Spain",203,0,0,0,1,0
+"142","Western Sahara",205,1,0,0,0,1
+"143","Suriname",207,0,1,0,0,0
+"144","Tajikistan",208,0,0,1,1,0
+"145","Swaziland",209,1,0,0,0,0
+"146","Sweden",210,0,0,0,1,0
+"147","Switzerland",211,0,0,0,1,0
+"148","the Syrian Arab Republic",212,0,0,0,1,1
+"149","Turkmenistan",213,0,0,1,1,1
+"150","the United Republic of Tanzania",215,1,0,0,0,0
+"151","Thailand",216,0,0,1,0,0
+"152","Togo",217,1,0,0,0,0
+"153","Trinidad and Tobago",220,0,1,0,0,0
+"154","Oman",221,0,0,0,0,1
+"155","Tunisia",222,1,0,0,0,1
+"156","Turkey",223,0,0,0,1,1
+"157","the United Arab Emirates",225,0,0,0,0,1
+"158","Uganda",226,1,0,0,0,0
+"159","the United Kingdom of Great Britain and Northern Ireland",229,0,0,0,1,0
+"160","Ukraine",230,0,0,1,1,0
+"161","the United States of America",231,0,0,0,0,0
+"162","Burkina Faso",233,1,0,0,0,0
+"163","Uruguay",234,0,1,0,0,0
+"164","Uzbekistan",235,0,0,1,1,0
+"165","Venezuela (Bolivarian Republic of)",236,0,1,0,0,0
+"166","Viet Nam",237,0,0,1,0,0
+"167","Ethiopia",238,1,0,0,0,1
+"168","Samoa",244,0,0,0,0,0
+"169","the West Bank",245,0,0,0,1,1
+"170","Yemen",249,0,0,0,0,1
+"171","the Democratic Republic of the Congo",250,1,0,0,0,0
+"172","Zambia",251,1,0,0,0,0
+"173","Belgium",255,0,0,0,1,0
+"174","Luxembourg",256,0,0,0,1,0
+"175","Svalbard and Jan Mayen Islands",260,0,0,0,0,0
+"176","South Georgia and Sandwich Islands",271,0,0,0,0,0
+"177","Serbia",272,0,0,0,1,0
+"178","Montenegro",273,0,0,0,1,0
+"179","the Sudan",276,1,0,0,0,1
+"180","South Sudan",277,1,0,0,0,1
+"181",NA,480,0,0,0,0,0
+"182",NA,702,0,0,1,0,0
+"183",NA,704,0,0,1,0,0
+"184",NA,705,1,0,0,0,1
+"185",NA,708,0,0,0,0,0
+"186",NA,713,1,0,0,0,1
+"187",NA,718,0,0,1,0,0
