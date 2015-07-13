@@ -233,7 +233,7 @@ if (region_to_report == "GLO") caption_text <- "Total economically active popula
 @
 
 
-<<P1overMAP, eval=P1over, map_chunk=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.extra=map.out.extra>>=
+<<P1overMAP, eval=P1over, map_chunk=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
 
 # set Robinson projection

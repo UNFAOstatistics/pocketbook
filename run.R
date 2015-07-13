@@ -14,20 +14,13 @@ library(readr)
 ## Chapters to include
 
 regionS_to_report <- c(
-                      "GLO"
-                      ,"RAP"
-                      ,"RAF"
-                      ,"REU"
-                      ,"RNE"
-                      #,"COF"
+                      "GLO" # Global
+                      ,"RAP" # Asia and the Pacific
+                      ,"RAF"  # Africa
+                      ,"REU" # Europe and Central Asia
+                      ,"RNE" # Near East and North Africa
+                      #,"COF" # Coffee
                       )
-
-#region_to_report <- "RAF" # Africa
-# regionS_to_report <- "RAP" # Asia and the Pacific
-#region_to_report <- "REU" # Europe and Central Asia
-#region_to_report <- "RNE" # Near East and North Africa
-# region_to_report <- "COF" # Coffee
-#region_to_report <- "GLO" # Global
 
 include_part1 <- TRUE
 include_part2 <- FALSE
@@ -36,8 +29,8 @@ include_part4 <- FALSE
 include_country_profiles <- FALSE
 include_metadata <- FALSE
 
-
-upload_to_server <- TRUE
+# To be uploaded for comments or not
+upload_to_server <- FALSE
 
 # set root directory
 root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
