@@ -13,10 +13,19 @@ library(readr)
 
 ## Chapters to include
 
-region_to_report <- "RAF" # Africa
-# region_to_report <- "RAP" # Asia and the Pacific
-# region_to_report <- "REU" # Europe and Central Asia
-# region_to_report <- "RNE" # Near East and North Africa
+regionS_to_report <- c(
+                      "GLO"
+                      ,"RAP"
+                      ,"RAF"
+                      ,"REU"
+                      ,"RNE"
+                      #,"COF"
+                      )
+
+#region_to_report <- "RAF" # Africa
+# regionS_to_report <- "RAP" # Asia and the Pacific
+#region_to_report <- "REU" # Europe and Central Asia
+#region_to_report <- "RNE" # Near East and North Africa
 # region_to_report <- "COF" # Coffee
 #region_to_report <- "GLO" # Global
 
@@ -26,6 +35,8 @@ include_part3 <- FALSE
 include_part4 <- FALSE
 include_country_profiles <- FALSE
 include_metadata <- FALSE
+
+upload_to_server <- TRUE
 
 # set root directory
 root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
@@ -38,6 +49,8 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 # Customise SYB data for pocketbooks
 # 
 ############################################################
+
+
 
 # load FAOcountryprofile data 
 FAOcountryProfile <- read_csv("./input/data/FAOcountryProfile.csv")
@@ -139,19 +152,6 @@ syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # Stuff You DO NOT edit
 ####################################################
 
-## Conditions
-
-### Which spreads
-spreads <- read_csv("./input/define_spreads.csv")
-# subset to particular regions colunm 
-spreads <- spreads[c("SPREAD",region_to_report)]
-
-# 
-for (i in 1:nrow(spreads)) {
-  if (spreads[[i,2]] == 0) value <- FALSE
-  if (spreads[[i,2]] == 1) value <- TRUE
-  assign(spreads[[i,1]],value,envir = globalenv())
-}
 
 # -- delete output/ -folder recursively
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE)
@@ -177,25 +177,41 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
 setwd(paste0(root.dir,"output/process"))
 
-knitr::knit("syb_main.Rnw")
-system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
-system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
-system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
 
-# Technical report
-knitr::purl("syb_part1.Rnw","syb_part1.R")
-knitr::spin("syb_part1.R")
-# 
-# knitr::purl("syb_part2.Rnw","syb_part2.R")
-# knitr::spin("syb_part2.R")
-# 
-# knitr::purl("syb_part3.Rnw","syb_part3.R")
-# knitr::spin("syb_part3.R")
-# 
-# knitr::purl("syb_part4.Rnw","syb_part4.R")
-# knitr::spin("syb_part4.R")
 
-#system(paste0("pdflatex ",root.dir,"output/process/syb_technical_report.tex"))
+for (region_to_report in regionS_to_report) {
+  
+  ### Which spreads
+  spreads <- read_csv(paste0(root.dir,"/input/define_spreads.csv"))
+  # subset to particular regions colunm 
+  spreads <- spreads[c("SPREAD",region_to_report)]
+  
+  # 
+  for (i in 1:nrow(spreads)) {
+    if (spreads[[i,2]] == 0) value <- FALSE
+    if (spreads[[i,2]] == 1) value <- TRUE
+    assign(spreads[[i,1]],value,envir = globalenv())
+  }
+  
+
+  knitr::knit("syb_main.Rnw")
+  system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+  system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+  system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
+  
+  # Technical report
+#   knitr::purl("syb_part1.Rnw","syb_part1.R")
+#   knitr::spin("syb_part1.R")
+  
+  # knitr::purl("syb_part2.Rnw","syb_part2.R")
+  # knitr::spin("syb_part2.R")
+  # 
+  # knitr::purl("syb_part3.Rnw","syb_part3.R")
+  # knitr::spin("syb_part3.R")
+  # 
+  # knitr::purl("syb_part4.Rnw","syb_part4.R")
+  # knitr::spin("syb_part4.R")
+}
 
 # copy the output -pdf's into the output/pdf-folder
 flist <- list.files(paste0(root.dir,"output/process"), 
@@ -218,32 +234,36 @@ flist <- list.files(paste0(root.dir,"output/process"),
 file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
 
 
-setwd(root.dir)
+if (upload_to_server) {
+  
+#   pdftk GSPB15.pdf cat 19-20 output undernourishment.pdf
+#   pdftk GSPB15.pdf cat 15-16 output investment.pdf
+#   pdftk GSPB15.pdf cat 43-44 output energy.pdf
+#   pdftk GSPB15.pdf cat 60-61 output tables.pdf
+#   pdftk GSPB15.pdf cat 51-232 output tables_all.pdf
+#   pdftk GSPB15.pdf cat 1-50 output spreads.pdf
+#   pdftk GSPB15.pdf cat 134 output table.pdf
+#   pdftk GSPB15.pdf cat 233-end output definitions.pdf
+#   convert -density 200 table.pdf table.jpg
+#   pdftk GSPB15.pdf cat 179 output table2.pdf
+#   convert -density 200 table2.pdf table2.jpg
+#   
+#   pandoc comment_charts.md -o comment_charts.html
+#   pandoc comment_tables.md -o comment_tables.html
+#   pandoc comment_captions.md -o comment_captions.html
+#   pandoc comment_definitions.md -o comment_definitions.html
+  
+#  upload the output pdf to kapsi
+  pdfs <- list.files(paste0(root.dir,"output/pdf"), full.names = TRUE)
+  system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
+
+}
+
 
 
 #!/bin/bash
 
-#cd ~/btsync/fao_sync/pocketbooks/GSPB15/publication/
-#Rscript -e "library(knitr); knit('GSPB15.Rnw')"
-#pdflatex GSPB15.tex
 
-#pdftk GSPB15.pdf cat 19-20 output undernourishment.pdf
-#pdftk GSPB15.pdf cat 15-16 output investment.pdf
-#pdftk GSPB15.pdf cat 43-44 output energy.pdf
-#pdftk GSPB15.pdf cat 60-61 output tables.pdf
-#pdftk GSPB15.pdf cat 51-232 output tables_all.pdf
-#pdftk GSPB15.pdf cat 1-50 output spreads.pdf
-#pdftk GSPB15.pdf cat 134 output table.pdf
-#pdftk GSPB15.pdf cat 233-end output definitions.pdf
-#convert -density 200 table.pdf table.jpg
-#pdftk GSPB15.pdf cat 179 output table2.pdf
-#convert -density 200 table2.pdf table2.jpg
 
-#pandoc comment_charts.md -o comment_charts.html
-#pandoc comment_tables.md -o comment_tables.html
-#pandoc comment_captions.md -o comment_captions.html
-#pandoc comment_definitions.md -o comment_definitions.html
 
-# upload the output pdf to kapsi
-# scp book_RAF.pdf book_RAP.pdf book_REU.pdf book_RNE.pdf output muuankarski@kapsi.fi:public_html/fao/RSPB15
-
+setwd(root.dir)

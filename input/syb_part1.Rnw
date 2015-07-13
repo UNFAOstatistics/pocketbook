@@ -25,8 +25,25 @@ col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
+nCol <- 5
+colPart = plot_colors(part = 1, 12)
+mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
+tmpCol = mapColFun(nCol)[2]
+mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
+mapColors = mapColFun(nCol)
+
 # region_key
 region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
+
+# for Amy
+# country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
+# country_region <- country_region[c(7,1,2,3,4,5,6)]
+# for (col in 3:7){
+#   country_region[[col]][country_region[[col]] == TRUE] <- 1
+#   country_region[[col]][country_region[[col]] == FALSE] <- 0
+#   country_region[[col]][is.na(country_region[[col]])] <- 0
+# }
+# write.csv(country_region,paste0(root.dir,"/input/data/country_region"))
 
 # map functions
 source(paste0(root.dir,'./input/code/plot/map_categories.R'))
@@ -68,7 +85,7 @@ dat <- gather(dat, variable, value, 3:4)
 # Subset data
 if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE == 5100,]
 if (region_to_report == "RAP") dat <- dat[dat$FAOST_CODE == 5500,]
-if (region_to_report == "REU") dat <- dat[dat$FAOST_CODE == 5205,]
+if (region_to_report == "REU") dat <- dat[dat$FAOST_CODE == 5400,]
 if (region_to_report == "RNE") dat <- dat[dat$FAOST_CODE == 5300,]
 if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE == 5000,]
 if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
@@ -216,9 +233,7 @@ if (region_to_report == "GLO") caption_text <- "Total economically active popula
 @
 
 
-<<P1overMAP, eval=P1over, map_chunk=P1over, fig.width= if (region_to_report == "RAF") 6 else 15, fig.height= if (region_to_report == "RAF") 12 else 8,out.width= if (region_to_report == "RAF") "1\\columnwidth" else "2\\columnwidth", out.extra= if (region_to_report != "RAF") 'angle=90' else 'angle=0' ,fig.align= "center">>=
-# out.width= if (region_to_report == "RAF") "1\\columnwidth" else "2\\columnwidth"
-# fig.width= if (region_to_report != "RAF") 15 else 8, fig.height= if (region_to_report != "RAF") 8 else 15,
+<<P1overMAP, eval=P1over, map_chunk=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.extra=map.out.extra>>=
 dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
 
 # set Robinson projection
@@ -241,21 +256,12 @@ if (region_to_report == "GLO") map.df <- map.df
 if (region_to_report == "COF") map.df <- map.df
 
 cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","OA.TPR.POP.PPL.SHP")]
-cat_data$value_cat <- categories(cat_data$OA.TPR.POP.PPL.SHP)
-  
+cat_data$value_cat <- categories(x=cat_data$OA.TPR.POP.PPL.SHP, n=5, method="jenks")
+
 map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
-
-nCol=5
-
-colPart = plot_colors(part = 1, 12)
-mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
-tmpCol = mapColFun(nCol)[2]
-mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
-mapColors = mapColFun(nCol)
-
 
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
@@ -266,36 +272,7 @@ if (region_to_report != "GLO") {
   gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
 } else gr_rob <- gr_rob
 
-# Create the plot
-p <- ggplot(data=map.df, aes(long,lat,group=group))
-#  ---- grid below the countries ------------------------
-p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
-              linetype = "solid", color = col.main2, size = 0.001)
-# Grey for the non-data regions
-p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), linetype = "solid", color = "Dim Grey", size = .5)
-p <- p + geom_polygon(data = map.df, aes(long,lat),fill=NA,colour="white",size = .7)
-p <- p + geom_polygon(aes(fill = value_cat),colour="white",size=.2)
-#p <- p + scale_fill_manual(values=c("Dim Grey","#edf8fb","#b2e2e2","#66c2a4","#2ca25f","#006d2c")) 
-p <- p + scale_fill_manual(values=mapColors) # no data to think about
-p <- p + theme(legend.position = c(0.05,0.05), 
-                          legend.justification=c(0,0),
-                          legend.key.size=unit(6,'mm'),
-                          legend.direction = "vertical",
-                          legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
-                          legend.text=element_text(size=12), 
-                          legend.title=element_text(size=12), 
-                          title=element_text(size=16), 
-                          panel.background = element_blank(), 
-                          plot.background = element_blank(),
-                          panel.grid.minor = element_blank(),
-                          panel.grid.major = element_blank(),
-                          axis.text = element_blank(), 
-                          axis.title = element_blank(), 
-                          axis.ticks = element_blank())
-p <- p + guides(fill = guide_legend(title = map_unit,
-                                     title.position = "top", 
-                                     title.hjust=0))
-p
+create_map_here()
 
 # Caption
 if (region_to_report == "RAF") caption_text <- "Rural population, share of total population (2014)"
