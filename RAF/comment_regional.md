@@ -11,4 +11,4 @@ As you add new rows, please remove same number of empty rows BELOW your text not
 
 | Document | Comments |
 | -------- | -------- |
-| <object data="http://koti.kapsi.fi/~muuankarski/fao/RSPB15/book_RAF.pdf" type="application/pdf" width="500" height="60000">  alt : <a href="http://koti.kapsi.fi/~muuankarski/fao/RSPB15/book_RAF.pdf">book_RAF.pdf</a> </object> | <iframe name='embed_readwrite' src='https://pad.okfn.org/p/regional_syb15_raf_reg?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=600 height=60000></iframe> |
+| <object data="http://koti.kapsi.fi/~muuankarski/fao/RSPB15/syb_main_RAF.pdf" type="application/pdf" width="500" height="60000">  alt : <a href="http://koti.kapsi.fi/~muuankarski/fao/RSPB15/syb_main_RAF.pdf">syb_main_RAF.pdf</a> </object> | <iframe name='embed_readwrite' src='https://pad.okfn.org/p/regional_syb15_raf_reg?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=600 height=60000></iframe> |
