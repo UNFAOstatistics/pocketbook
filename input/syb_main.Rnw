@@ -113,6 +113,23 @@ local({
     } else x
   })
 })
+
+# chunk-options for map chunks
+
+map.fig.width  <- if (region_to_report == "RAF") 6 else 15
+map.fig.height <- if (region_to_report == "RAF") 12 else 8
+map.out.width  <- if (region_to_report == "RAF") "1\\columnwidth" else "2\\columnwidth" 
+map.out.extra  <- if (region_to_report != "RAF") 'angle=90' else 'angle=0'
+# ,fig.align= "center"
+
+require(grid)
+require(xtable)
+library(plyr)
+library(dplyr)
+
+library(extrafont)
+loadfonts()
+
 @
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
@@ -132,13 +149,7 @@ local({
 #require(FAOSYB)
 #require(zoo)
 #require(packrat)
-require(grid)
-require(xtable)
-library(plyr)
-library(dplyr)
 
-library(extrafont)
-loadfonts()
 # 
 # ## -- Sourcings Complementaty scripts from database folder.
 # 
@@ -180,6 +191,44 @@ library(gisfao)
 grat <- graticule # from gisfao-package
 grat_robin <- spTransform(grat, CRS("+proj=robin"))  # reproject graticule
 grat_df_robin <- fortify(grat_robin)
+
+
+
+create_map_here <- function(){
+  
+  # Create the plot
+p <- ggplot(data=map.df, aes(long,lat,group=group))
+#  ---- grid below the countries ------------------------
+p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
+              linetype = "solid", color = col.main2, alpha=.1)
+# Grey for the non-data regions
+p <- p + geom_polygon(fill="Dim Grey",colour = NA)
+p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
+p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.7, guide = FALSE)
+p <- p + scale_fill_manual(values=mapColors) # no data to think about
+p <- p + theme(legend.position = c(0.05,0.05), 
+                          legend.justification=c(0,0),
+                          legend.key.size=unit(6,'mm'),
+                          legend.direction = "vertical",
+                          legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
+                          legend.text=element_text(size=12), 
+                          legend.title=element_text(size=12), 
+                          title=element_text(size=16), 
+                          panel.background = element_blank(), 
+                          plot.background = element_blank(),
+                          panel.grid.minor = element_blank(),
+                          panel.grid.major = element_blank(),
+                          axis.text = element_blank(), 
+                          axis.title = element_blank(), 
+                          axis.ticks = element_blank())
+p <- p + guides(fill = guide_legend(title = map_unit,
+                                     title.position = "top", 
+                                     title.hjust=0))
+p <- p + guides(colour=FALSE)
+p
+}
+
+
 
 @
 
