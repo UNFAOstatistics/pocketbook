@@ -1,24 +1,14 @@
 
 
 
-<<part1_setup>>=
-library(dplyr)
-library(magrittr)
-library(xtable)
-library(lazyeval)
-library(tidyr)
-library(stringr)
-library(scales)
-library(ggplot2)
-library(grid)
-library(DT)
-library(gisfao)
-
+<<part1_setup, eval=include_part1>>=
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
+syb_part <- 1
+
 ## Part 1
-colPart1 <- plot_colors(part = 1, 12)
+colPart1 <- plot_colors(part = syb_part, 12)
 col.main1 <- colPart1[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart1[["Main"]][2]
@@ -26,7 +16,7 @@ col.main2 <- colPart1[["Main"]][2]
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
 nCol <- 5
-colPart = plot_colors(part = 1, 12)
+colPart = plot_colors(part = syb_part, 12)
 mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
 tmpCol = mapColFun(nCol)[2]
 mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
@@ -35,15 +25,29 @@ mapColors = mapColFun(nCol)
 # region_key
 region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
 
-# for Amy
-# country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
-# country_region <- country_region[c(7,1,2,3,4,5,6)]
-# for (col in 3:7){
-#   country_region[[col]][country_region[[col]] == TRUE] <- 1
-#   country_region[[col]][country_region[[col]] == FALSE] <- 0
-#   country_region[[col]][is.na(country_region[[col]])] <- 0
+# # for Amy
+# # country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
+# # country_region <- country_region[c(7,1,2,3,4,5,6)]
+# # for (col in 3:7){
+# #   country_region[[col]][country_region[[col]] == TRUE] <- 1
+# #   country_region[[col]][country_region[[col]] == FALSE] <- 0
+# #   country_region[[col]][is.na(country_region[[col]])] <- 0
+# # }
+# The up-to-date into from FIluippo
+# fao_prof <- read.csv("~/Dropbox/SYBproject/RegionalBooks/FAOcountryProfile.csv", encoding = "UTF-8", stringsAsFactors = FALSE)
+# 
+# country_region <- fao_prof[c("FAOST_CODE","FAO_TABLE_NAME",
+#                                                   "REU_BOOK",
+#                                                   "RAP_BOOK",
+#                                                   "RAF_BOOK",
+#                                                   "RNE_BOOK")]
+# names(country_region) <- c("FAOST_CODE","FAO_TABLE_NAME","REU","RAP","RAF","RNE")
+# for (col in 3:6){
+#   country_region[[col]][country_region[[col]] == "YES"] <- 1
+#   country_region[[col]][country_region[[col]] == ""] <- 0
+#   #country_region[[col]][is.na(country_region[[col]])] <- 0
 # }
-# write.csv(country_region,paste0(root.dir,"/input/data/country_region"))
+# write.csv(country_region,paste0(root.dir,"/input/data/country_region.csv"), row.names = FALSE)
 
 # map functions
 source(paste0(root.dir,'./input/code/plot/map_categories.R'))
@@ -59,7 +63,7 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 
 
 
-<<P1overTEXT, eval=P1over, text_chunk=P1over>>=
+<<P1overTEXT, eval=P1over, short_text_ChartPage=P1over>>=
 spread_title <- "Overview"
 short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
 @
@@ -80,7 +84,7 @@ dat <- gather(dat, variable, value, 3:4)
 @
 
 
-<<P1overTOPRIGHT, eval=P1over, top_right_chunk=P1over, fig.height=2.5, fig.width=3>>=
+<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=2.5, fig.width=3>>=
 
 # Subset data
 if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE == 5100,]
@@ -103,7 +107,7 @@ dat$value <- dat$value / 1000000
 # Draw the plot
 p <- ggplot(dat, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
-p <- p + scale_fill_manual(values=plot_colors(part = 1, 2)[["Sub"]])
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + theme(axis.text.x = element_text(angle = 45))
 p <- p + labs(x="",y="billion people")
 p
@@ -119,7 +123,7 @@ if (region_to_report == "GLO") caption_text <- "World rural and urban population
 @
 
 
-<<P1overLEFT, eval=P1over, left_chunk=P1over, fig.height=5.9, fig.width=3.2>>=
+<<P1overLEFT, eval=P1over, left_plot=P1over, fig.height=5.9, fig.width=3.2>>=
 # data
 dat <- filter(syb.df, Year %in%
                    c(2004:2014)) %>% 
@@ -143,7 +147,7 @@ dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.POP.PPL.GR10))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = 1, 2)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
 p
@@ -157,7 +161,7 @@ if (region_to_report == "GLO") caption_text <- "Population, average annual growt
 #if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
 @
 
-<<P1overRIGHT, eval=P1over ,right_chunk=P1over, fig.height=5.9, fig.width=3.2>>=
+<<P1overRIGHT, eval=P1over ,right_plot=P1over, fig.height=5.9, fig.width=3.2>>=
 
 # data
 dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,SHORT_NAME,SP.DYN.LE00.IN)
@@ -179,7 +183,7 @@ dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = 1, 2)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
 p
@@ -195,7 +199,7 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 @
 
 
-<<P1overBOTTOM, eval=P1over, bottom_chunk=P1over, fig.height=3, fig.width=6>>=
+<<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=3, fig.width=6>>=
 # data
 dat <- syb.df %>% filter(Year %in% c(2000:2014),
                          FAOST_CODE >= 5000) %>% select(FAOST_CODE,Year,FAO_TABLE_NAME,OA.TEAPT.POP.PPL.NO)
@@ -219,7 +223,7 @@ dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=FAO_TABLE_NAME))
 p <- p + geom_point() + geom_line()
-p <- p + scale_color_manual(values=plot_colors(part = 1, 6)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 6)[["Sub"]])
 p <- p + labs(x="",y="million people")
 p
 
@@ -233,8 +237,8 @@ if (region_to_report == "GLO") caption_text <- "Total economically active popula
 @
 
 
-<<P1overMAP, eval=P1over, map_chunk=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
-dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
+<<P1overMAP, eval=P1over, map_plot=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
 
 # set Robinson projection
 shape <- spTransform(fao_world, CRS("+proj=robin"))

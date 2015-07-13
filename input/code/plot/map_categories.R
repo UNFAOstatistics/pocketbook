@@ -1,11 +1,18 @@
-categories <- function(x, n=5,method="jenks") {
+categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL) {
   
   library(stringr)
   library(classInt)
-  levs <- as.data.frame(levels(cut(x, 
-                                   breaks=data.frame(classIntervals(x,n=n,method=method)[2])[,1],
-                                   include.lowest=T,
-                                   dig.lab=10)))
+  if (manual) {
+    levs <- as.data.frame(levels(cut(x, 
+                                     breaks=manual_breaks,
+                                     include.lowest=T,
+                                     dig.lab=1)))
+  } else {
+    levs <- as.data.frame(levels(cut(x, 
+                                     breaks=data.frame(classIntervals(x,n=n,method=method)[2])[,1],
+                                     include.lowest=T,
+                                     dig.lab=1)))
+  } 
   names(levs) <- "orig"
   levs$mod <- str_replace_all(levs$orig, "\\[", "")
   levs$mod <- str_replace_all(levs$mod, "\\]", "")
@@ -22,12 +29,20 @@ categories <- function(x, n=5,method="jenks") {
   levs$labs <- paste(levs$lower,levs$upper, sep=" ~< ")
   
   labs <- as.character(c(levs$labs))
-  y <- cut(x, breaks = data.frame(classIntervals(x,n=n,method=method)[2])[,1],
-                                   include.lowest=T,
-                                   dig.lab=10, labels = labs)
+  if (manual) {
+    y <- cut(x, breaks = manual_breaks,
+             include.lowest=T,
+             dig.lab=1, labels = labs)
+    rm(manual_breaks)
+  } else {
+    y <- cut(x, breaks = data.frame(classIntervals(x,n=n,method=method)[2])[,1],
+             include.lowest=T,
+             dig.lab=1, labels = labs)
+  }
   y <- as.character(y)
   #if (is.na(y)) {
-    y[is.na(y)] <- "No Data"
-    y <- factor(y, levels=c("No Data",labs[1:n]))
-  #} else y <- factor(y, levels=c("No Data",labs[1:n]))
+  y[is.na(y)] <- "No Data"
+  y <- factor(y, levels=c("No Data",labs[1:n]))
+  #} else y <- factor(y, levels=c(labs[1:n]))
+  y
 }

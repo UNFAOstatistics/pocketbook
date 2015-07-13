@@ -1,27 +1,37 @@
 
 
-
-<<part2_setup>>=
-library(dplyr)
-library(magrittr)
-library(xtable)
-library(lazyeval)
-library(tidyr)
-library(stringr)
-library(scales)
-library(ggplot2)
-library(grid)
+<<part2_setup, eval=include_part2>>=
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
+syb_part <- 2
+
 ## Part 2
-colPart1 <- plot_colors(part = 2, 12)
-col.main1 <- colPart1[["Main"]][1]
+colPart2 <- plot_colors(part = syb_part, 12)
+col.main1 <- colPart2[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
+
+
+# region_key
+region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
+region_key <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")])
+
+# for Amy
+# country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
+# country_region <- country_region[c(7,1,2,3,4,5,6)]
+# for (col in 3:7){
+#   country_region[[col]][country_region[[col]] == TRUE] <- 1
+#   country_region[[col]][country_region[[col]] == FALSE] <- 0
+#   country_region[[col]][is.na(country_region[[col]])] <- 0
+# }
+# write.csv(country_region,paste0(root.dir,"/input/data/country_region"))
+
+# map functions
+source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 @
 
 
@@ -33,92 +43,215 @@ source(paste0(root.dir,"./input/code/plot/theme.R"))
                                                                                                         
 
 
-
-<<P2undernuTEXT, eval=P2undernu, text_chunk=P2undernu>>=
+<<P2undernuTEXT, eval=P2undernu, short_text_ChartPage=P2undernu>>=
 spread_title <- "Undernourishment"
 short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
 @
 
-<<P2undernuTOPRIGHT, eval=P2undernu, top_right_chunk=P2undernu, fig.height=2.5, fig.width=3>>=
+<<P2undernuData,results='hide'>>=
 # Retrieve data
-dat <- diamonds
-dat$price <- as.numeric(dat$price)
+dat <- read.csv(paste0(data.dir,"/Data/Raw/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
+metdat <- read.csv(paste0(data.dir,"Data/Raw/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
+dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
+dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
+# SOFI to M49 conversions
+# Asia
+dat$FAOST_CODE[dat$FAOST_CODE == 5853] <- 5300
+dat$FAOST_CODE[dat$FAOST_CODE == 5001] <- 5000
 
-# Subset data
-if (region_to_report == "RAF") dat <- filter(dat, cut == "Fair")
-if (region_to_report == "RAP") dat <- filter(dat, cut == "Good")
-if (region_to_report == "REU") dat <- filter(dat, cut == "Very Good")
-if (region_to_report == "RNE") dat <- filter(dat, cut == "Premium")
+# Add Area var from sybdata.df
+tmp <- syb.df[!duplicated(syb.df[c("FAOST_CODE","Area")]),]
+dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
+dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
+# M49LatinAmericaAndCaribbean
+dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
+# dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
+# dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "ns"] <- 0
+dat$FS.OA.NOU.P3D1 <- as.factor(dat$FS.OA.NOU.P3D1)
+dat$FS.OA.NOU.P3D1 <- as.numeric(levels(dat$FS.OA.NOU.P3D1))[dat$FS.OA.NOU.P3D1]
+dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
+dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
+dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
+
+df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
+@
+
+
+<<P2undernuTOPRIGHT, eval=P2undernu, top_right_minitable=P2undernu, fig.height=2.5, fig.width=3>>=
+
+tbl <- df[df$FAOST_CODE %in% c(5000,5852,5851,5100,5300,5205,5500),] # World
+tbl <- tbl[tbl$Year %in% c(1991,2015),]
+library(tidyr)
+tbl$Year <- paste0("X",tbl$Year)
+tbl <- tbl[c("Year","FAO_TABLE_NAME","FS.OA.POU.PCT3D1")]
+dw <- spread(tbl,
+             Year,
+             FS.OA.POU.PCT3D1)
+dw$FAO_TABLE_NAME[dw$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
+dw$X2015[dw$X2015 == "20"] <- "20.0"
+names(dw) <- c("","1990-92","2014-16")
+
+#dw <- dw[c(7,3,4,1,2,5,6),]
+# Chiaras comments
+print.xtable(xtable(dw, caption = " Prevalence of undernourishment (percent)", digits = c(0,0,0,0),
+                    align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
+             type = "latex", table.placement = NULL, 
+             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
+@
+
+
+<<P2undernuLEFT, eval=P2undernu, left_plot=P2undernu, fig.height=5.9, fig.width=3.2>>=
+# data
+
+dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+
+dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
+# Add region key and subset
+dat <- join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
+if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
+if (region_to_report == "REU") dat <- dat[which(dat$REU),]
+if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
 if (region_to_report == "GLO") dat <- dat
-if (region_to_report == "COF") dat <- filter(dat, cut == "Ideal")
+if (region_to_report == "COF") dat <- dat
 
-# compute the mean per color
+dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
+top15 <- dat %>% slice(1:20) %>% mutate(color = "2014-2016")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% mutate(color = "1990-1992")
+dat_plot <- rbind(top15,top91)
 
-dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = mean(price, na.rm=TRUE))
-dat_plot <- dat_plot %>%  mutate(sum = sum(var))
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="percent")
+p
 
-# generate the object
-caption_text <- "Diamond price by the colour of the diamond on the top right"
+# Caption
+if (region_to_report == "RAF") caption_text <- "African countries with the highest number of undernourished in 2014-16"
+if (region_to_report == "RAP") caption_text <- "Asian and the Pacific countries with the highest number of undernourished in 2014-16"
+if (region_to_report == "REU") caption_text <- "European countries with the highest number of undernourished in 2014-16"
+if (region_to_report == "RNE") caption_text <- "North Aftican and Near East countries with the highest number of undernourished in 2014-16"
+if (region_to_report == "GLO") caption_text <- "Countries with the highest number of undernourished in 2014-16"
+#if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
+@
 
-p <- ggplot(dat_plot, aes(x=sum/2, y = var, fill = color, width = sum))
-p <- p + geom_bar(position="fill", stat="identity") 
-p <- p + coord_polar("y")
-p <- p + theme(axis.title = element_blank())
-p <- p + theme(axis.ticks = element_blank())
-p <- p + theme(panel.grid.minor = element_blank())
-p <- p + theme(panel.grid.major = element_blank())
-p <- p + theme(axis.text = element_blank())
-p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
+<<P2undernuRIGHT, eval=P2undernu ,right_plot=P2undernu, fig.height=5.9, fig.width=3.2>>=
+
+plot(cars)
+
+# Caption
+if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "RNE") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+#if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
+
 @
 
 
-<<P2undernuLEFT, eval=P2undernu, left_chunk=P2undernu, fig.height=5.9, fig.width=3.2>>=
-# compute
-dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = mean(price, na.rm=TRUE))
+<<P2undernuBOTTOM, eval=P2undernu, bottom_plot=P2undernu, fig.height=3, fig.width=6>>=
 
-caption_text <- "Diamond price by the colour of the diamond on the left"
-p <- ggplot(dat_plot, aes(x=reorder(color, var),y=var,fill=color))
-p <- p + geom_bar(stat="identity")
-p <- p + labs(title="", x="Diamond color", y="price in US dollars")
-p <- p + theme(text = element_text(family="Open Sans"))
-p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
+dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+
+
+
+dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
+# Add region key and subset
+dat <- join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
+if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
+if (region_to_report == "REU") dat <- dat[which(dat$REU),]
+if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
+if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "COF") dat <- dat
+
+dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
+top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
+dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
+
+
+p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.NOU.P3D1,color=SHORT_NAME))
+p <- p + geom_point() + geom_line()
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
+p <- p + labs(x="",y="million people")
+p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
+                            labels = c("1990-92", "1999-2001", "2004-06", "2009-11", "2014-16"))
+p
+
+# Caption
+if (region_to_report == "RAF") caption_text <- "Number of people undernourished"
+if (region_to_report == "RAP") caption_text <- "Number of people undernourished"
+if (region_to_report == "REU") caption_text <- "Number of people undernourished"
+if (region_to_report == "RNE") caption_text <- "Number of people undernourished"
+if (region_to_report == "GLO") caption_text <- "Number of people undernourished"
+#if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
 @
 
-<<P2undernuRIGHT, eval=P2undernu ,right_chunk=P2undernu, fig.height=5.9, fig.width=3.2>>=
-# compute
-dat_plot <- dat %>% group_by(color) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
 
-caption_text <- "Diamond price by the colour of the diamond on the left"
-p <- ggplot(dat_plot, aes(x=reorder(color, -var),y=var,fill=color))
-p <- p + geom_bar(stat="identity")
-p <- p + labs(title="", x="Diamond color", y="price in US dollars")
-p <- p + theme(text = element_text(family="Open Sans"))
-p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
+<<P2undernuMAP, eval=P2undernu, map_plot=P2undernu, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+# dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
+
+dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
+
+dat <- dat[dat$FAOST_CODE != 41,]
+dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
+
+#dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
+
+# set Robinson projection
+shape <- spTransform(fao_world, CRS("+proj=robin"))
+
+# Fortify the shape
+shape$id <- rownames(shape@data)
+map.points <- fortify(shape, region = "id")
+map.df <- merge(map.points, shape, by = "id")
+
+map.df <- left_join(dat,map.df)
+
+# Add region key and subset
+
+if (region_to_report == "RAF") map.df <- map.df[which(map.df$RAF),]
+if (region_to_report == "RAP") map.df <- map.df[which(map.df$RAP),]
+if (region_to_report == "REU") map.df <- map.df[which(map.df$REU),]
+if (region_to_report == "RNE") map.df <- map.df[which(map.df$RNE),]
+if (region_to_report == "GLO") map.df <- map.df
+if (region_to_report == "COF") map.df <- map.df
+
+cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","FS.OA.POU.PCT3D1")]
+cat_data$value_cat <- categories(x=cat_data$FS.OA.POU.PCT3D1, n=5, manual = TRUE, manual_breaks = c(0, 5, 15, 25, 35, 100), method="sd") # manualBreaks = c(0, 5, 15, 25, 35, 100),
+
+map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "Percent"
+
+# graticule
+grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
+gr_rob <- fortify(grat_robin)
+# crop the grid
+if (region_to_report != "GLO") {
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+} else gr_rob <- gr_rob
+
+create_map_here(nCol=5, addNA=TRUE) 
+
+# Caption
+if (region_to_report == "RAF") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
+if (region_to_report == "RAP") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
+if (region_to_report == "REU") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
+if (region_to_report == "RNE") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
+if (region_to_report == "GLO") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
 @
 
-
-<<P2undernuBOTTOM, eval=P2undernu, bottom_chunk=P2undernu, fig.height=3, fig.width=6>>=
-# compute
-dat_plot <- dat %>% group_by(color, clarity) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
-
-caption_text <- "Diamond price by the colour of the diamond on the bottom"
-p <- ggplot(dat_plot, aes(x=color,y=clarity,size=var,color=color))
-p <- p + geom_point()
-p <- p + labs(title="", x="Diamond color", y="price in US dollars")
-p <- p + theme(text = element_text(family="Open Sans"))
-p + scale_fill_manual(values=plot_colors(part = 1, 7)[["Sub"]])
-@
-
-
-<<P2undernuMAP, eval=P2undernu, map_chunk=P2undernu, fig.height=15, fig.width=8>>=
-# compute
-dat_plot <- dat %>% group_by(clarity) %>% dplyr::summarise(var = median(price, na.rm=TRUE))
-
-caption_text <- "Diamond price by the colour of the diamond as a map"
-p <- ggplot(dat_plot, aes(x=clarity,y=var,fill=clarity))
-p <- p + geom_bar(stat="identity")
-p <- p + labs(title="", x="Diamond color", y="price in US dollars")
-p <- p + theme(text = element_text(family="Open Sans"))
-p + scale_fill_manual(values=plot_colors(part = 1, 8)[["Sub"]])
-@
 

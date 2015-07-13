@@ -5,7 +5,25 @@
 rm(list=ls(all=TRUE)) 
 
 library(readr)
-
+library(magrittr)
+library(xtable)
+library(lazyeval)
+library(tidyr)
+library(stringr)
+library(scales)
+library(ggplot2)
+library(grid)
+library(DT)
+library(gisfao)
+require(grid)
+library(plyr)
+library(dplyr)
+library(rgdal)
+library(ggplot2)
+library(gisfao)
+library(FAOSTAT)
+library(extrafont)
+loadfonts()
 
 # Stuff you DO edit
 # ----------------------------------------------------------------------------------
@@ -15,22 +33,22 @@ library(readr)
 
 regionS_to_report <- c(
                       "GLO" # Global
-                      ,"RAP" # Asia and the Pacific
+                       ,"RAP" # Asia and the Pacific
                       ,"RAF"  # Africa
-                      ,"REU" # Europe and Central Asia
-                      ,"RNE" # Near East and North Africa
+                       ,"REU" # Europe and Central Asia
+                       ,"RNE" # Near East and North Africa
                       #,"COF" # Coffee
                       )
 
 include_part1 <- TRUE
-include_part2 <- FALSE
+include_part2 <- TRUE
 include_part3 <- FALSE
 include_part4 <- FALSE
 include_country_profiles <- FALSE
 include_metadata <- FALSE
 
 # To be uploaded for comments or not
-upload_to_server <- FALSE
+upload_to_server <- TRUE
 
 # set root directory
 root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
@@ -171,9 +189,9 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
 setwd(paste0(root.dir,"output/process"))
 
-
-
 for (region_to_report in regionS_to_report) {
+  
+  #region_to_report <- "GLO"
   
   ### Which spreads
   spreads <- read_csv(paste0(root.dir,"/input/define_spreads.csv"))
