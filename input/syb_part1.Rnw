@@ -45,11 +45,11 @@ for (var in names(unsd)[-1:-2]) {
   unsd[[var]] <- factor(unsd[[var]])
   for(level in unique(unsd[[var]])){
     level <- str_replace_all(level, " ", "_")
-    unsd[paste("d", level, sep = "_")] <- ifelse(unsd[[var]] == level, 1, 0)
+    unsd[paste("M49", level, sep = "_")] <- ifelse(unsd[[var]] == level, 1, 0)
   }
 }
 country_region <- unsd
-
+write.csv(country_region,paste0(root.dir,"/input/data/country_region.csv"), row.names = FALSE)
 # country_region <- fao_prof[c("FAOST_CODE","FAO_TABLE_NAME",
 #                                                   "REU_BOOK",
 #                                                   "RAP_BOOK",
@@ -61,7 +61,7 @@ country_region <- unsd
 #   country_region[[col]][country_region[[col]] == ""] <- 0
 #   #country_region[[col]][is.na(country_region[[col]])] <- 0
 # }
-write.csv(country_region,paste0(root.dir,"/input/data/country_region.csv"), row.names = FALSE)
+
 
 # map functions
 source(paste0(root.dir,'./input/code/plot/map_categories.R'))
