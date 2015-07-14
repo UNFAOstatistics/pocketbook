@@ -10,7 +10,7 @@ syb_part <- 2
 colPart2 <- plot_colors(part = syb_part, 12)
 col.main1 <- colPart2[["Main"]][1]
 ## color for the grid
-col.main2 <- colPart1[["Main"]][2]
+col.main2 <- colPart2[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
@@ -129,6 +129,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption

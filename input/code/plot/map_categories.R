@@ -6,12 +6,12 @@ categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL) 
     levs <- as.data.frame(levels(cut(x, 
                                      breaks=manual_breaks,
                                      include.lowest=T,
-                                     dig.lab=1)))
+                                     dig.lab=2)))
   } else {
     levs <- as.data.frame(levels(cut(x, 
                                      breaks=data.frame(classIntervals(x,n=n,method=method)[2])[,1],
                                      include.lowest=T,
-                                     dig.lab=1)))
+                                     dig.lab=2)))
   } 
   names(levs) <- "orig"
   levs$mod <- str_replace_all(levs$orig, "\\[", "")
@@ -21,10 +21,10 @@ categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL) 
   levs$upper <- gsub(".*,","", levs$mod)
   
   levs$lower <- factor(levs$lower)
-  levs$lower <- round(as.numeric(levels(levs$lower))[levs$lower],0)
+  #levs$lower <- round(as.numeric(levels(levs$lower))[levs$lower],0)
   
   levs$upper <- factor(levs$upper)
-  levs$upper <- round(as.numeric(levels(levs$upper))[levs$upper],0)
+  #levs$upper <- round(as.numeric(levels(levs$upper))[levs$upper],0)
   
   levs$labs <- paste(levs$lower,levs$upper, sep=" ~< ")
   
@@ -32,12 +32,12 @@ categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL) 
   if (manual) {
     y <- cut(x, breaks = manual_breaks,
              include.lowest=T,
-             dig.lab=1, labels = labs)
+             dig.lab=2, labels = labs)
     rm(manual_breaks)
   } else {
     y <- cut(x, breaks = data.frame(classIntervals(x,n=n,method=method)[2])[,1],
              include.lowest=T,
-             dig.lab=1, labels = labs)
+             dig.lab=2, labels = labs)
   }
   y <- as.character(y)
   #if (is.na(y)) {

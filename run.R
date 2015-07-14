@@ -33,17 +33,17 @@ loadfonts()
 
 regionS_to_report <- c(
                       "GLO" # Global
-                       ,"RAP" # Asia and the Pacific
-                      ,"RAF"  # Africa
+                        ,"RAP" # Asia and the Pacific
+                       ,"RAF"  # Africa
                        ,"REU" # Europe and Central Asia
-                       ,"RNE" # Near East and North Africa
+                        ,"RNE" # Near East and North Africa
                       #,"COF" # Coffee
                       )
 
 include_part1 <- TRUE
 include_part2 <- TRUE
-include_part3 <- FALSE
-include_part4 <- FALSE
+include_part3 <- TRUE
+include_part4 <- TRUE
 include_country_profiles <- FALSE
 include_metadata <- FALSE
 
@@ -61,7 +61,6 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 # Customise SYB data for pocketbooks
 # 
 ############################################################
-
 
 
 # load FAOcountryprofile data 
@@ -164,6 +163,7 @@ syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # Stuff You DO NOT edit
 ####################################################
 
+#region_to_report <- "GLO"
 
 # -- delete output/ -folder recursively
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE)
@@ -189,9 +189,10 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
 setwd(paste0(root.dir,"output/process"))
 
+
 for (region_to_report in regionS_to_report) {
   
-  #region_to_report <- "GLO"
+
   
   ### Which spreads
   spreads <- read_csv(paste0(root.dir,"/input/define_spreads.csv"))
@@ -205,6 +206,8 @@ for (region_to_report in regionS_to_report) {
     assign(spreads[[i,1]],value,envir = globalenv())
   }
   
+  # remove figures from previous region
+  unlink(paste0(root.dir,"/output/process/figure"), recursive = TRUE)
 
   knitr::knit("syb_main.Rnw")
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))

@@ -150,6 +150,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -186,6 +187,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -225,6 +227,7 @@ p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=FAO_TABLE_NAME))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 6)[["Sub"]])
 p <- p + labs(x="",y="million people")
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption

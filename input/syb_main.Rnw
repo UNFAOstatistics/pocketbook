@@ -16,6 +16,8 @@
 % Asetetaan koko raportin laajuiset parametrit knitr:lle
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 library(knitr)
+options(scipen = 999)
+
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
 
 opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
@@ -243,7 +245,7 @@ p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL),
               linetype = "solid", color = col.main2, alpha=.1)
 # Grey for the non-data regions
 p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
-p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.7, guide = FALSE)
+p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
 p <- p + scale_fill_manual(values=mapColors) # no data to think about
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
