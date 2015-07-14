@@ -36,7 +36,10 @@ region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
 # The up-to-date into from FIluippo
 fao_prof <- read.csv("./input/data/FAOcountryProfile.csv", encoding = "UTF-8", stringsAsFactors = FALSE)
 # Subset vars with unsd in their name & fao names
-unsd <- fao_prof[,c("FAOST_CODE","FAO_TABLE_NAME",grep("^UNSD", names(fao_prof), value=TRUE))]
+colnames <- grep("^UNSD", names(fao_prof), value=TRUE)
+colnames <- colnames[-grep("CODE",colnames)]
+
+unsd <- fao_prof[,c("FAOST_CODE","FAO_TABLE_NAME",colnames)]
 
 for (var in names(unsd)[-1:-2]) {
   unsd[[var]] <- factor(unsd[[var]])
