@@ -15,6 +15,7 @@
 
 % Asetetaan koko raportin laajuiset parametrit knitr:lle
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
+
 library(knitr)
 options(scipen = 999)
 

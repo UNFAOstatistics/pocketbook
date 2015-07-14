@@ -126,6 +126,14 @@ syb.df[syb.df[, "SHORT_NAME"] == "Western Sahara" &
 syb.df <- syb.df[syb.df$FAOST_CODE != 205, ]
 
 
+load(paste0(root.dir,"input/data/country_region.RData"))
+region_key <- country_region
+region_key <- join(region_key,syb.df[!duplicated(syb.df[c("FAOST_CODE")]),][c("FAOST_CODE","SHORT_NAME")])
+
+# Replace the ad-hoc regional grouping with the one we have created
+myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
+fao_world@data <- fao_world@data[!myvars]
+fao_world@data <- merge(fao_world@data,country_region,by="FAOST_CODE",all.x=TRUE)
 
 
 ## Chinas

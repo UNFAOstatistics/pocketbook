@@ -13,19 +13,6 @@ col.main1 <- colPart3[["Main"]][1]
 col.main2 <- colPart3[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
-# region_key
-region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
-region_key <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")])
-
-# for Amy
-# country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
-# country_region <- country_region[c(7,1,2,3,4,5,6)]
-# for (col in 3:7){
-#   country_region[[col]][country_region[[col]] == TRUE] <- 1
-#   country_region[[col]][country_region[[col]] == FALSE] <- 0
-#   country_region[[col]][is.na(country_region[[col]])] <- 0
-# }
-# write.csv(country_region,paste0(root.dir,"/input/data/country_region"))
 
 # map functions
 source(paste0(root.dir,'./input/code/plot/map_categories.R'))
