@@ -25,17 +25,28 @@ mapColors = mapColFun(nCol)
 # region_key
 region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
 
-# # for Amy
-# # country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
-# # country_region <- country_region[c(7,1,2,3,4,5,6)]
-# # for (col in 3:7){
-# #   country_region[[col]][country_region[[col]] == TRUE] <- 1
-# #   country_region[[col]][country_region[[col]] == FALSE] <- 0
-# #   country_region[[col]][is.na(country_region[[col]])] <- 0
-# # }
+# for Amy
+# country_region <- left_join(region_key,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")])
+# country_region <- country_region[c(7,1,2,3,4,5,6)]
+# for (col in 3:7){
+#   country_region[[col]][country_region[[col]] == TRUE] <- 1
+#   country_region[[col]][country_region[[col]] == FALSE] <- 0
+#   country_region[[col]][is.na(country_region[[col]])] <- 0
+# }
 # The up-to-date into from FIluippo
-# fao_prof <- read.csv("~/Dropbox/SYBproject/RegionalBooks/FAOcountryProfile.csv", encoding = "UTF-8", stringsAsFactors = FALSE)
-# 
+fao_prof <- read.csv("./input/data/FAOcountryProfile.csv", encoding = "UTF-8", stringsAsFactors = FALSE)
+# Subset vars with unsd in their name & fao names
+unsd <- fao_prof[,c("FAOST_CODE","FAO_TABLE_NAME",grep("^UNSD", names(fao_prof), value=TRUE))]
+
+for (var in names(unsd)[-1:-2]) {
+  unsd[[var]] <- factor(unsd[[var]])
+  for(level in unique(unsd[[var]])){
+    level <- str_replace_all(level, " ", "_")
+    unsd[paste("d", level, sep = "_")] <- ifelse(unsd[[var]] == level, 1, 0)
+  }
+}
+country_region <- unsd
+
 # country_region <- fao_prof[c("FAOST_CODE","FAO_TABLE_NAME",
 #                                                   "REU_BOOK",
 #                                                   "RAP_BOOK",
@@ -47,7 +58,7 @@ region_key <- fao_world@data[c("FAOST_CODE","RAF","LAC","RAP","REU","RNE")]
 #   country_region[[col]][country_region[[col]] == ""] <- 0
 #   #country_region[[col]][is.na(country_region[[col]])] <- 0
 # }
-# write.csv(country_region,paste0(root.dir,"/input/data/country_region.csv"), row.names = FALSE)
+write.csv(country_region,paste0(root.dir,"/input/data/country_region.csv"), row.names = FALSE)
 
 # map functions
 source(paste0(root.dir,'./input/code/plot/map_categories.R'))

@@ -1,285 +1,285 @@
-"FAOST_CODE","FAO_TABLE_NAME","REU","RAP","RAF","RNE"
-2,"Afghanistan","0","1","0","0"
-284,"Åland Islands","0","0","0","0"
-3,"Albania","1","0","0","0"
-4,"Algeria","0","0","1","1"
-5,"American Samoa","0","0","0","0"
-6,"Andorra","1","0","0","0"
-7,"Angola","0","0","1","0"
-258,"Anguilla","0","0","0","0"
-30,"Antarctica","0","0","0","0"
-8,"Antigua and Barbuda","0","0","0","0"
-9,"Argentina","0","0","0","0"
-1,"Armenia","1","0","0","0"
-22,"Aruba","0","0","0","0"
-NA,"Ashmore and Cartier Islands","0","0","0","0"
-10,"Australia","0","1","0","0"
-11,"Austria","1","0","0","0"
-52,"Azerbaijan","1","0","0","0"
-12,"Bahamas","0","0","0","0"
-13,"Bahrain","0","0","0","1"
-NA,"Baker Island","0","0","0","0"
-16,"Bangladesh","0","1","0","0"
-14,"Barbados","0","0","0","0"
-57,"Belarus","1","0","0","0"
-255,"Belgium","1","0","0","0"
-15,"Belgium-Luxembourg","0","0","0","0"
-23,"Belize","0","0","0","0"
-53,"Benin","0","0","1","0"
-17,"Bermuda","0","0","0","0"
-18,"Bhutan","0","1","0","0"
-NA,"Bird Island","0","0","0","0"
-19,"Bolivia (Plurinational State of)","0","0","0","0"
-278,"Bonaire, Sint Eustatius and Saba","0","0","0","0"
-80,"Bosnia and Herzegovina","1","0","0","0"
-20,"Botswana","0","0","1","0"
-31,"Bouvet Island","0","0","0","0"
-21,"Brazil","0","0","0","0"
-24,"British Indian Ocean Territory","0","0","0","0"
-239,"British Virgin Islands","0","0","0","0"
-26,"Brunei Darussalam","0","0","0","0"
-27,"Bulgaria","1","0","0","0"
-233,"Burkina Faso","0","0","1","0"
-29,"Burundi","0","0","1","0"
-115,"Cambodia","0","1","0","0"
-32,"Cameroon","0","0","1","0"
-33,"Canada","0","0","0","0"
-34,"Canton and Enderbury Islands","0","0","0","0"
-35,"Cabo Verde","0","0","1","0"
-36,"Cayman Islands","0","0","0","0"
-37,"Central African Republic","0","0","1","0"
-39,"Chad","0","0","1","0"
-259,"Channel Islands","0","0","0","0"
-40,"Chile","0","0","0","0"
-351,"China","0","0","0","0"
-41,"China","0","1","0","0"
-357,"China","0","0","0","0"
-96,"China, Hong Kong SAR","0","0","0","0"
-128,"China, Macao SAR","0","0","0","0"
-42,"Christmas Island","0","0","0","0"
-NA,"Clipperton Island","0","0","0","0"
-43,"Cocos (Keeling) Islands","0","0","0","0"
-44,"Colombia","0","0","0","0"
-45,"Comoros","0","0","1","0"
-46,"Congo","0","0","1","0"
-47,"Cook Islands","0","1","0","0"
-48,"Costa Rica","0","0","0","0"
-107,"Côte d'Ivoire","0","0","1","0"
-98,"Croatia","1","0","0","0"
-49,"Cuba","0","0","0","0"
-279,"Curaçao","0","0","0","0"
-50,"Cyprus","1","0","0","0"
-167,"Czech Republic","1","0","0","0"
-51,"Czechoslovakia","0","0","0","0"
-116,"Democratic People's Republic of Korea","0","1","0","0"
-250,"Democratic Republic of the Congo","0","0","1","0"
-54,"Denmark","1","0","0","0"
-NA,"Dhekelia and Akrotiri","0","0","0","0"
-72,"Djibouti","0","0","1","0"
-55,"Dominica","0","0","0","0"
-56,"Dominican Republic","0","0","0","0"
-58,"Ecuador","0","0","0","0"
-59,"Egypt","0","0","1","1"
-60,"El Salvador","0","0","0","0"
-NA,"England and Wales","0","0","0","0"
-61,"Equatorial Guinea","0","0","1","0"
-178,"Eritrea","0","0","1","0"
-63,"Estonia","1","0","0","0"
-238,"Ethiopia","0","0","1","0"
-62,"Ethiopia PDR","0","0","0","0"
-65,"Falkland Islands (Malvinas)","0","0","0","0"
-64,"Faroe Islands","0","0","0","0"
-66,"Fiji","0","1","0","0"
-67,"Finland","1","0","0","0"
-68,"France","1","0","0","0"
-69,"French Guiana","0","0","0","0"
-70,"French Polynesia","0","0","0","0"
-71,"French Southern and Antarctic Territories","0","0","0","0"
-74,"Gabon","0","0","1","0"
-75,"Gambia","0","0","1","0"
-76,"Gaza Strip","0","0","0","0"
-73,"Georgia","1","0","0","0"
-79,"Germany","1","0","0","0"
-81,"Ghana","0","0","1","0"
-82,"Gibraltar","0","0","0","0"
-84,"Greece","1","0","0","0"
-85,"Greenland","0","0","0","0"
-86,"Grenada","0","0","0","0"
-87,"Guadeloupe","0","0","0","0"
-88,"Guam","0","0","0","0"
-89,"Guatemala","0","0","0","0"
-274,"Guernsey","0","0","0","0"
-90,"Guinea","0","0","1","0"
-175,"Guinea-Bissau","0","0","1","0"
-91,"Guyana","0","0","0","0"
-93,"Haiti","0","0","0","0"
-92,"Heard and McDonald Islands","0","0","0","0"
-94,"Holy See","0","0","0","0"
-95,"Honduras","0","0","0","0"
-NA,"Howland Island","0","0","0","0"
-97,"Hungary","1","0","0","0"
-99,"Iceland","1","0","0","0"
-100,"India","0","1","0","0"
-101,"Indonesia","0","1","0","0"
-102,"Iran (Islamic Republic of)","0","1","0","1"
-103,"Iraq","0","0","0","1"
-104,"Ireland","1","0","0","0"
-264,"Isle of Man","0","0","0","0"
-105,"Israel","1","0","0","0"
-106,"Italy","1","0","0","0"
-109,"Jamaica","0","0","0","0"
-110,"Japan","0","1","0","0"
-NA,"Jarvis Island","0","0","0","0"
-283,"Jersey","0","0","0","0"
-111,"Johnston Island","0","0","0","0"
-112,"Jordan","0","0","0","1"
-108,"Kazakhstan","1","1","0","0"
-114,"Kenya","0","0","1","0"
-NA,"Kingman Reef","0","0","0","0"
-83,"Kiribati","0","1","0","0"
-275,"Kosovo","0","0","0","0"
-118,"Kuwait","0","0","0","1"
-113,"Kyrgyzstan","1","0","0","0"
-120,"Lao People's Democratic Republic","0","1","0","0"
-119,"Latvia","1","0","0","0"
-121,"Lebanon","0","0","0","1"
-122,"Lesotho","0","0","1","0"
-123,"Liberia","0","0","1","0"
-124,"Libya","0","0","1","1"
-125,"Liechtenstein","0","0","0","0"
-126,"Lithuania","1","0","0","0"
-256,"Luxembourg","1","0","0","0"
-129,"Madagascar","0","0","1","0"
-130,"Malawi","0","0","1","0"
-131,"Malaysia","0","1","0","0"
-132,"Maldives","0","1","0","0"
-133,"Mali","0","0","1","0"
-134,"Malta","1","0","0","0"
-127,"Marshall Islands","0","1","0","0"
-135,"Martinique","0","0","0","0"
-136,"Mauritania","0","0","1","1"
-137,"Mauritius","0","0","1","0"
-270,"Mayotte","0","0","0","0"
-138,"Mexico","0","0","0","0"
-145,"Micronesia (Federated States of)","0","1","0","0"
-139,"Midway Island","0","0","0","0"
-140,"Monaco","1","0","0","0"
-141,"Mongolia","0","1","0","0"
-273,"Montenegro","1","0","0","0"
-142,"Montserrat","0","0","0","0"
-143,"Morocco","0","0","1","1"
-144,"Mozambique","0","0","1","0"
-28,"Myanmar","0","1","0","0"
-147,"Namibia","0","0","1","0"
-148,"Nauru","0","1","0","0"
-149,"Nepal","0","1","0","0"
-150,"Netherlands","1","0","0","0"
-151,"Netherlands Antilles","0","0","0","0"
-NA,"Netherlands Antilles","0","0","0","0"
-152,"Neutral Zone","0","0","0","0"
-153,"New Caledonia","0","0","0","0"
-156,"New Zealand","0","1","0","0"
-157,"Nicaragua","0","0","0","0"
-158,"Niger","0","0","1","0"
-159,"Nigeria","0","0","1","0"
-160,"Niue","0","1","0","0"
-161,"Norfolk Island","0","0","0","0"
-163,"Northern Mariana Islands","0","0","0","0"
-162,"Norway","1","0","0","0"
-299,"Occupied Palestinian Territory","0","0","0","0"
-221,"Oman","0","0","0","1"
-164,"Pacific Islands Trust Territory","0","0","0","0"
-165,"Pakistan","0","1","0","0"
-180,"Palau","0","1","0","0"
-166,"Panama","0","0","0","0"
-168,"Papua New Guinea","0","1","0","0"
-169,"Paraguay","0","0","0","0"
-170,"Peru","0","0","0","0"
-171,"Philippines","0","1","0","0"
-172,"Pitcairn Islands","0","0","0","0"
-173,"Poland","1","0","0","0"
-174,"Portugal","1","0","0","0"
-177,"Puerto Rico","0","0","0","0"
-179,"Qatar","0","0","0","1"
-117,"Republic of Korea","0","1","0","0"
-146,"Republic of Moldova","1","0","0","0"
-182,"Réunion","0","0","0","0"
-183,"Romania","1","0","0","0"
-185,"Russian Federation","1","1","0","0"
-184,"Rwanda","0","0","1","0"
-282,"Saint Barthélemy","0","0","0","0"
-187,"Saint Helena, Ascension and Tristan da Cunha","0","0","0","0"
-188,"Saint Kitts and Nevis","0","0","0","0"
-189,"Saint Lucia","0","0","0","0"
-190,"Saint Pierre and Miquelon","0","0","0","0"
-191,"Saint Vincent and the Grenadines","0","0","0","0"
-281,"Saint-Martin (French Part)","0","0","0","0"
-244,"Samoa","0","1","0","0"
-192,"San Marino","1","0","0","0"
-193,"Sao Tome and Principe","0","0","1","0"
-285,"Sark","0","0","0","0"
-194,"Saudi Arabia","0","0","0","1"
-195,"Senegal","0","0","1","0"
-272,"Serbia","1","0","0","0"
-186,"Serbia and Montenegro","1","0","0","0"
-196,"Seychelles","0","0","1","0"
-197,"Sierra Leone","0","0","1","0"
-200,"Singapore","0","0","0","0"
-280,"Sint Maarten (Dutch Part)","0","0","0","0"
-199,"Slovakia","1","0","0","0"
-198,"Slovenia","1","0","0","0"
-25,"Solomon Islands","0","1","0","0"
-201,"Somalia","0","0","1","0"
-202,"South Africa","0","0","1","0"
-271,"South Georgia and the South Sandwich Islands","0","0","0","0"
-277,"South Sudan","0","0","1","0"
-228,"Soviet Union","0","0","0","0"
-203,"Spain","1","0","0","0"
-38,"Sri Lanka","0","1","0","0"
-206,"Sudan (former)","0","0","1","1"
-276,"Sudan","0","0","1","1"
-207,"Suriname","0","0","0","0"
-260,"Svalbard and Jan Mayen Islands","0","0","0","0"
-209,"Swaziland","0","0","1","0"
-210,"Sweden","1","0","0","0"
-211,"Switzerland","1","0","0","0"
-212,"Syrian Arab Republic","0","0","0","1"
-214,"Taiwan Province of China","0","0","0","0"
-208,"Tajikistan","1","0","0","0"
-216,"Thailand","0","1","0","0"
-154,"The former Yugoslav Republic of Macedonia","1","0","0","0"
-176,"Timor-Leste","0","1","0","0"
-217,"Togo","0","0","1","0"
-218,"Tokelau","0","0","0","0"
-219,"Tonga","0","1","0","0"
-220,"Trinidad and Tobago","0","0","0","0"
-NA,"Tromelin Island","0","0","0","0"
-222,"Tunisia","0","0","1","1"
-223,"Turkey","1","0","0","0"
-213,"Turkmenistan","1","0","0","0"
-224,"Turks and Caicos Islands","0","0","0","0"
-227,"Tuvalu","0","1","0","0"
-226,"Uganda","0","0","1","0"
-230,"Ukraine","1","0","0","0"
-225,"United Arab Emirates","0","0","0","1"
-229,"United Kingdom","1","0","0","0"
-215,"United Republic of Tanzania","0","0","1","0"
-231,"United States of America","0","0","0","0"
-240,"United States Virgin Islands","0","0","0","0"
-234,"Uruguay","0","0","0","0"
-232,"US Minor Is.","0","0","0","0"
-235,"Uzbekistan","1","1","0","0"
-155,"Vanuatu","0","1","0","0"
-236,"Venezuela (Bolivarian Republic of)","0","0","0","0"
-237,"Viet Nam","0","1","0","0"
-242,"Wake Island","0","0","0","0"
-243,"Wallis and Futuna Islands","0","0","0","0"
-245,"West Bank","0","0","0","0"
-205,"Western Sahara","0","0","0","0"
-249,"Yemen","0","0","0","1"
-247,"Yemen (former)","0","0","0","0"
-246,"Yemen (old)","0","0","0","0"
-248,"Yugoslav SFR","0","0","0","0"
-251,"Zambia","0","0","1","0"
-3698,"Zanzibar","0","0","0","0"
-181,"Zimbabwe","0","0","1","0"
+"FAOST_CODE","FAO_TABLE_NAME","UNSD_WORLD_REG","UNSD_WORLD_REG_CODE","UNSD_MACRO_REG","UNSD_MACRO_REG_CODE","UNSD_SUB_REG","UNSD_SUB_REG_CODE","UNSD_DVDDVG_REG","UNSD_DVDDVG_REG_CODE","UNSD_LDC_REG","UNSD_LLDC_REG","UNSD_SIDS_REG","UNSD_OTHER_REG_CODE","UNSD_OTHER_REG","d_World","d_","d_5000","d_NA","d_Asia","d_Europe","d_Africa","d_Oceania","d_Americas","d_5300","d_5400","d_5100","d_5500","d_5200","d_Southern_Asia","d_Northern_Europe","d_Southern_Europe","d_Northern_Africa","d_Polynesia","d_Middle_Africa","d_Caribbean","d_South_America","d_Western_Asia","d_Australia_and_New_Zealand","d_Western_Europe","d_Eastern_Europe","d_Central_America","d_Western_Africa","d_Northern_America","d_Southern_Africa","d_South-Eastern_Asia","d_Eastern_Africa","d_Eastern_Asia","d_Melanesia","d_Micronesia","d_Central_Asia","d_5303","d_5402","d_5403","d_5103","d_5504","d_5102","d_5206","d_5207","d_5305","d_5501","d_5404","d_5401","d_5204","d_5105","d_5203","d_5104","d_5304","d_5101","d_5302","d_5502","d_5503","d_5301","d_Developing","d_Developed","d_5800","d_5700","d_LeastDevelopedCountries","d_LandlockedDevelopingCountries","d_SmallIslandDevelopingStates","d_5806","d_5807","d_5810","d_259","d_Asia_excluding_Japan","d_Oceania_excluding_Australia_and_New_Zealand","d_Sub-Saharan_Africa","d_Channel_Islands"
+2,"Afghanistan","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0
+284,"Åland Islands","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+3,"Albania","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+4,"Algeria","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+5,"American Samoa","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+6,"Andorra","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+7,"Angola","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+258,"Anguilla","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+30,"Antarctica","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+8,"Antigua and Barbuda","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+9,"Argentina","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+1,"Armenia","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+22,"Aruba","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+NA,"Ashmore and Cartier Islands","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+10,"Australia","World","5000","Oceania","5500","Australia and New Zealand","5501","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+11,"Austria","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+52,"Azerbaijan","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+12,"the Bahamas","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+13,"Bahrain","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+NA,"Baker Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+16,"Bangladesh","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","LeastDevelopedCountries","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+14,"Barbados","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+57,"Belarus","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+255,"Belgium","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+15,"Belgium-Luxembourg","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+23,"Belize","World","5000","Americas","5200","Central America","5204","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+53,"Benin","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+17,"Bermuda","World","5000","Americas","5200","Northern America","5203","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+18,"Bhutan","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0
+NA,"Bird Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+19,"Bolivia (Plurinational State of)","World","5000","Americas","5200","South America","5207","Developing","5800","","LandlockedDevelopingCountries","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,NA,NA,NA,NA,0,0,0,0
+278,"Bonaire, Sint Eustatius and Saba","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+80,"Bosnia and Herzegovina","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+20,"Botswana","World","5000","Africa","5100","Southern Africa","5104","Developing","5800","","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0
+31,"Bouvet Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+21,"Brazil","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+24,"British Indian Ocean Territory","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+239,"British Virgin Islands","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+26,"Brunei Darussalam","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+27,"Bulgaria","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+233,"Burkina Faso","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+29,"Burundi","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+115,"Cambodia","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","LeastDevelopedCountries","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+32,"Cameroon","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+33,"Canada","World","5000","Americas","5200","Northern America","5203","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+34,"Cantony and Enderbury Islands","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+35,"Cabo Verde","World","5000","Africa","5100","Western Africa","5105","Developing","5800","","","SmallIslandDevelopingStates","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0
+36,"Cayman Islands","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+37,"Central African Republic","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+39,"Chad","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+259,"Channel Islands","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+40,"Chile","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+351,"China","World","5000","Asia","5300","Eastern Asia","5302","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+41,"China","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+357,"China","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+96,"China, Hong Kong SAR","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+128,"China, Macao SAR","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+42,"Christmas Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+NA,"Clipperton Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+43,"Cocos (Keeling) Islands","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+44,"Colombia","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+45,"the Comoros","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0
+46,"Congo","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+47,"the Cook Islands","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+48,"Costa Rica","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+107,"Côte d'Ivoire","World","5000","Africa","5100","Western Africa","5105","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+98,"Croatia","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+49,"Cuba","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+279,"Curaçao","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+50,"Cyprus","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+167,"the Czech Republic","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+51,"Czechoslovakia","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+116,"Democratic People's Republic of Korea","World","5000","Asia","5300","Eastern Asia","5302","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+250,"the Democratic Republic of the Congo","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+54,"Denmark","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+NA,"Dhekelia and Akrotiri SBAs","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+72,"Djibouti","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+55,"Dominica","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+56,"the Dominican Republic","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+58,"Ecuador","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+59,"Egypt","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+60,"El Salvador","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+NA,"England and Wales","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+61,"Equatorial Guinea","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+178,"Eritrea","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+63,"Estonia","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+238,"Ethiopia","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+62,"Ethiopia PDR","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+65,"Falkland Islands (Malvinas)","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+64,"Faroe Islands","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+66,"Fiji","World","5000","Oceania","5500","Melanesia","5502","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+67,"Finland","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+68,"France","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+69,"French Guiana","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+70,"French Polynesia","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+71,"French Southern and Antarctic Territories","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+74,"Gabon","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+75,"the Gambia","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+76,"Gaza Strip","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+73,"Georgia","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+79,"Germany","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+81,"Ghana","World","5000","Africa","5100","Western Africa","5105","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+82,"Gibraltar","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+84,"Greece","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+85,"Greenland","World","5000","Americas","5200","Northern America","5203","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+86,"Grenada","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+87,"Guadeloupe","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+88,"Guam","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+89,"Guatemala","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+274,"Guernsey","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","","259","Channel Islands",1,0,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0
+90,"Guinea","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+175,"Guinea-Bissau","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0
+91,"Guyana","World","5000","Americas","5200","South America","5207","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+93,"Haiti","World","5000","Americas","5200","Caribbean","5206","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,NA,NA,NA,NA,0,0,0,0
+92,"Heard and McDonald Islands","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+94,"Holy See","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+95,"Honduras","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+NA,"Howland Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+97,"Hungary","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+99,"Iceland","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+100,"India","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+101,"Indonesia","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+102,"Iran (Islamic Republic of)","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+103,"Iraq","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+104,"Ireland","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+264,"Isle of Man","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+105,"Israel","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+106,"Italy","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+109,"Jamaica","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+110,"Japan","World","5000","Asia","5300","Eastern Asia","5302","Developed","5700","","","",NA,"",1,1,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+NA,"Jarvis Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+283,"Jersey","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","","259","Channel Islands",1,0,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0
+111,"Johnston Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+112,"Jordan","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+108,"Kazakhstan","World","5000","Asia","5300","Central Asia","5301","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+114,"Kenya","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+NA,"Kingman Reef","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+83,"Kiribati","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0
+275,"Kosovo","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+118,"Kuwait","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+113,"Kyrgyzstan","World","5000","Asia","5300","Central Asia","5301","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+120,"the Lao People's Democratic Republic","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0
+119,"Latvia","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+121,"Lebanon","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+122,"Lesotho","World","5000","Africa","5100","Southern Africa","5104","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+123,"Liberia","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+124,"Libya","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+125,"Liechtenstein","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+126,"Lithuania","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+256,"Luxembourg","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+129,"Madagascar","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+130,"Malawi","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+131,"Malaysia","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+132,"Maldives","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","","","SmallIslandDevelopingStates","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0
+133,"Mali","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+134,"Malta","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+127,"the Marshall Islands","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+135,"Martinique","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+136,"Mauritania","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+137,"Mauritius","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","","","SmallIslandDevelopingStates","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0
+270,"Mayotte","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+138,"Mexico","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+145,"Micronesia (Federated States of)","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+139,"Midway Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+140,"Monaco","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+141,"Mongolia","World","5000","Asia","5300","Eastern Asia","5302","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+273,"Montenegro","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+142,"Montserrat","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+143,"Morocco","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+144,"Mozambique","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+28,"Myanmar","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","LeastDevelopedCountries","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+147,"Namibia","World","5000","Africa","5100","Southern Africa","5104","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+148,"Nauru","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+149,"Nepal","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0
+150,"the Netherlands","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+151,"Netherlands Antilles","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+NA,"Netherlands Antilles","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+152,"Neutral Zone","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+153,"New Caledonia","World","5000","Oceania","5500","Melanesia","5502","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+156,"New Zealand","World","5000","Oceania","5500","Australia and New Zealand","5501","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+157,"Nicaragua","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+158,"the Niger","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+159,"Nigeria","World","5000","Africa","5100","Western Africa","5105","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+160,"Niue","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+161,"Norfolk Island","World","5000","Oceania","5500","Australia and New Zealand","5501","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+163,"Northern Mariana Islands","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+162,"Norway","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+299,"Occupied Palestinian Territory","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+221,"Oman","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+164,"Pacific Islands, Trust Territory of","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+165,"Pakistan","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+180,"Palau","World","5000","Oceania","5500","Micronesia","5503","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+166,"Panama","World","5000","Americas","5200","Central America","5204","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+168,"Papua New Guinea","World","5000","Oceania","5500","Melanesia","5502","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+169,"Paraguay","World","5000","Americas","5200","South America","5207","Developing","5800","","LandlockedDevelopingCountries","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,NA,NA,NA,NA,0,0,0,0
+170,"Peru","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+171,"the Philippines","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+172,"Pitcairn Islands","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+173,"Poland","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+174,"Portugal","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+177,"Puerto Rico","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+179,"Qatar","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+117,"Republic of Korea","World","5000","Asia","5300","Eastern Asia","5302","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+146,"Republic of Moldova","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","LandlockedDevelopingCountries","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,NA,NA,NA,NA,0,0,0,0
+182,"Réunion","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+183,"Romania","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+185,"the Russian Federation","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+184,"Rwanda","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+282,"Saint Barthélemy","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+187,"Saint Helena, Ascension and Tristan da Cunha","World","5000","Africa","5100","Western Africa","5105","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+188,"Saint Kitts and Nevis","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+189,"Saint Lucia","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+190,"Saint Pierre and Miquelon","World","5000","Americas","5200","Northern America","5203","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+191,"Saint Vincent and the Grenadines","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+281,"Saint-Martin (French Part)","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+244,"Samoa","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+192,"San Marino","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+193,"Sao Tome and Principe","World","5000","Africa","5100","Middle Africa","5102","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0
+285,"Sark","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+194,"Saudi Arabia","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+195,"Senegal","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+272,"Serbia","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+186,"Serbia and Montenegro","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+196,"Seychelles","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","","","SmallIslandDevelopingStates","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0
+197,"Sierra Leone","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+200,"Singapore","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","SmallIslandDevelopingStates","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0
+280,"Sint Maarten (Dutch Part)","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+199,"Slovakia","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+198,"Slovenia","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+25,"Solomon Islands","World","5000","Oceania","5500","Melanesia","5502","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0
+201,"Somalia","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+202,"South Africa","World","5000","Africa","5100","Southern Africa","5104","Developing","5800","","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+271,"South Georgia and Sandwich Islands","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+277,"South Sudan","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+228,"Union of Soviet Socialist Republic","World","5000","Europe","5400","Eastern Europe","5401","",NA,"","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+203,"Spain","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+38,"Sri Lanka","World","5000","Asia","5300","Southern Asia","5303","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+206,"the Sudan","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","LeastDevelopedCountries","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,NA,NA,NA,NA,0,0,0,0
+276,"the Sudan","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","LeastDevelopedCountries","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,NA,NA,NA,NA,0,0,0,0
+207,"Suriname","World","5000","Americas","5200","South America","5207","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+260,"Svalbard and Jan Mayen Islands","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+209,"Swaziland","World","5000","Africa","5100","Southern Africa","5104","Developing","5800","","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0
+210,"Sweden","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+211,"Switzerland","World","5000","Europe","5400","Western Europe","5404","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+212,"the Syrian Arab Republic","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+214,"Taiwan, Province of China","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+208,"Tajikistan","World","5000","Asia","5300","Central Asia","5301","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+216,"Thailand","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+154,"The former Yugoslav Republic of Macedonia","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","LandlockedDevelopingCountries","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,NA,NA,NA,NA,0,0,0,0
+176,"Timor-Leste","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1,0,1,1,0,0,0,0,0,0,0
+217,"Togo","World","5000","Africa","5100","Western Africa","5105","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+218,"Tokelau","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+219,"Tonga","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0
+220,"Trinidad and Tobago","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+NA,"Tromelin Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+222,"Tunisia","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+223,"Turkey","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+213,"Turkmenistan","World","5000","Asia","5300","Central Asia","5301","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+224,"Turks and Caicos Islands","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+227,"Tuvalu","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0
+226,"Uganda","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+230,"Ukraine","World","5000","Europe","5400","Eastern Europe","5401","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+225,"the United Arab Emirates","World","5000","Asia","5300","Western Asia","5305","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+229,"the United Kingdom of Great Britain and Northern Ireland","World","5000","Europe","5400","Northern Europe","5402","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+215,"the United Republic of Tanzania","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0
+231,"the United States of America","World","5000","Americas","5200","Northern America","5203","Developed","5700","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+240,"United States Virgin Islands","World","5000","Americas","5200","Caribbean","5206","Developing","5800","","","SmallIslandDevelopingStates",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,NA,NA,NA,NA,0,0,0,0
+234,"Uruguay","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+232,"US Minor Is.","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+235,"Uzbekistan","World","5000","Asia","5300","Central Asia","5301","Developing","5800","","LandlockedDevelopingCountries","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0
+155,"Vanuatu","World","5000","Oceania","5500","Melanesia","5502","Developing","5800","LeastDevelopedCountries","","SmallIslandDevelopingStates","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0
+236,"Venezuela (Bolivarian Republic of)","World","5000","Americas","5200","South America","5207","Developing","5800","","","",NA,"",1,1,1,NA,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+237,"Viet Nam","World","5000","Asia","5300","South-Eastern Asia","5304","Developing","5800","","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0
+242,"Wake Island","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+243,"Wallis and Futuna Islands","World","5000","Oceania","5500","Polynesia","5504","Developing","5800","","","","5807","Oceania excluding Australia and New Zealand",1,0,1,NA,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0
+245,"the West Bank","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+205,"Western Sahara","World","5000","Africa","5100","Northern Africa","5103","Developing","5800","","","",NA,"",1,1,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,NA,NA,NA,NA,0,0,0,0
+249,"Yemen","World","5000","Asia","5300","Western Asia","5305","Developing","5800","LeastDevelopedCountries","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+247,"Democratic Yemen","World","5000","Asia","5300","Western Asia","5305","Developing","5800","LeastDevelopedCountries","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+246,"Yemen (old)","World","5000","Asia","5300","Western Asia","5305","Developing","5800","LeastDevelopedCountries","","","5806","Asia excluding Japan",1,0,1,NA,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+248,"Yugoslav SFR","World","5000","Europe","5400","Southern Europe","5403","Developed","5700","","","",NA,"",1,1,1,NA,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,NA,NA,NA,NA,0,0,0,0
+251,"Zambia","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","LeastDevelopedCountries","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0
+3698,"Zanzibar","",NA,"",NA,"",NA,"",NA,"","","",NA,"",0,1,NA,NA,0,0,0,0,0,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,NA,NA,0,0,0,NA,NA,NA,NA,0,0,0,0
+181,"Zimbabwe","World","5000","Africa","5100","Eastern Africa","5101","Developing","5800","","LandlockedDevelopingCountries","","5810","Sub-Saharan Africa",1,0,1,NA,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0
