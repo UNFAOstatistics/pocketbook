@@ -14,16 +14,32 @@
 
 
 % Asetetaan koko raportin laajuiset parametrit knitr:lle
+
+
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 
 library(knitr)
 options(scipen = 999)
 
-pdf.options(useDingbats = TRUE)
+#pdf.options(useDingbats = TRUE)
 
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
 
-opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
+syb_pdf = function(file, width, height) {
+  pdf(file, width = width, height = height, pointsize = 10, family = "PT Sans")
+}
+
+
+opts_chunk$set(list(echo=FALSE,
+                    eval=TRUE,
+                    cache=FALSE,
+                    warning=FALSE,
+                    message=FALSE,
+                    cache.path="~/fao_cache/regional15/",
+                     dev="syb_pdf",
+                     fig.ext='pdf',
+                    results='asis')
+               )
 
 # Why we have to short_text_ChartPage and short_text_ChartPage2 hooks etc......
 
@@ -175,12 +191,26 @@ local({
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 
+
+top_right_plot_height <- 2.5
+top_right_plot_width  <- 3
+
+left_plot_height  <- 6
+left_plot_width  <- 3.2
+
+right_plot_height <- 6
+right_plot_width <- 3.2
+
+bottom_plot_height <- 3
+bottom_plot_width  <- 6
+
 # defaults
 map.fig.width   <- NULL
 map.fig.height  <- NULL
 map.out.height  <- NULL
 map.out.width   <- NULL
 map.out.extra   <- NULL
+
 
 # RAF
 
@@ -221,8 +251,6 @@ if (region_to_report == "COF")
 if (region_to_report == "COF") 
 if (region_to_report == "COF") 
 if (region_to_report == "COF") map.out.extra  <- 'angle=90'
-  
-
 
 
 
@@ -231,16 +259,27 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
 # function plotting maps!
 
-create_map_here <- function(nCol=5,addNA=FALSE){
-  
-colPart = plot_colors(part = syb_part, 12)
-mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
-tmpCol = mapColFun(nCol)[2]
-mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
-mapColors = mapColFun(nCol)
 
-if (addNA) mapColors <- c("grey70", mapColors)
+create_map_here <- function(){
+
+  colPart = plot_colors(part = syb_part, 12)
+  mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
   
+  if ("No Data" %in% unique(cat_data$value_cat)) {
+    nCol = length(levels(cat_data$value_cat)) -1
+    tmpCol = mapColFun(nCol)[2]
+    mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
+    mapColors = mapColFun(nCol)
+    mapColors <- c("grey70", mapColors)
+  } 
+  if (!("No Data" %in% unique(cat_data$value_cat))){
+    nCol = length(levels(cat_data$value_cat))
+    tmpCol = mapColFun(nCol)[2]
+    mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
+    mapColors = mapColFun(nCol)
+  }
+
+
   # Create the plot
 p <- ggplot(data=map.df, aes(long,lat,group=group))
 #  ---- grid below the countries ------------------------
@@ -265,7 +304,7 @@ p <- p + theme(legend.position = c(0.05,0.05),
                           axis.text = element_blank(), 
                           axis.title = element_blank(), 
                           axis.ticks = element_blank())
-p <- p + guides(fill = guide_legend(title = map_unit,
+p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
                                      title.position = "top", 
                                      title.hjust=0))
 p <- p + guides(colour=FALSE)

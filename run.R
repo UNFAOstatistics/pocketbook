@@ -18,10 +18,10 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
                       "GLO" # Global
-#                         ,"RAP" # Asia and the Pacific
-#                        ,"RAF"  # Africa
-#                        ,"REU" # Europe and Central Asia
-#                         ,"RNE" # Near East and North Africa
+                        ,"RAP" # Asia and the Pacific
+                       ,"RAF"  # Africa
+                       ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                       #,"COF" # Coffee
                       )
 
@@ -33,7 +33,7 @@ include_country_profiles <- FALSE
 include_metadata <- FALSE
 
 # To be uploaded for comments or not
-upload_to_server <- FALSE
+upload_to_server <- TRUE
 
 
 
@@ -220,6 +220,16 @@ for (region_to_report in regionS_to_report) {
   unlink(paste0(root.dir,"/output/process/figure"), recursive = TRUE)
 
   knitr::knit("syb_main.Rnw")
+  # Embed fonts
+  flist <- list.files(paste0(root.dir,"output/process/figure"), 
+                      recursive = TRUE, 
+                      include.dirs = TRUE, 
+                      full.names = TRUE)
+  
+  for (plot in flist) {
+    embed_fonts(plot)
+  }
+
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))

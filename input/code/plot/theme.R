@@ -32,6 +32,8 @@ theme_update(
   #   legend.title.align = NULL,
   legend.position = "top",
   legend.direction = "horizontal",
+  legend.key.height = unit(5,"mm"),
+  legend.key.width = unit(4,"mm"),
   #   legend.justification = "center",
   legend.box = NULL,
 #   panel.background = element_rect(fill = col.main3, colour = col.main3,
