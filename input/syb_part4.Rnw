@@ -224,7 +224,7 @@ if (region_to_report != "GLO") {
   gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
 } else gr_rob <- gr_rob
 
-create_map_here(nCol=5, addNA=FALSE) 
+create_map_here(nCol=6, addNA=FALSE) 
 
 # Caption
 if (region_to_report == "RAF") caption_text <- "Cropland per capita, ha/cap"

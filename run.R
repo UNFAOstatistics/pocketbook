@@ -4,6 +4,45 @@
 ################################################################################################
 rm(list=ls(all=TRUE)) 
 
+# set root directory
+root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
+setwd(root.dir)
+# set data directory
+data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
+
+# Stuff you DO edit
+# ----------------------------------------------------------------------------------
+
+
+## Chapters to include
+
+regionS_to_report <- c(
+                      "GLO" # Global
+#                         ,"RAP" # Asia and the Pacific
+#                        ,"RAF"  # Africa
+#                        ,"REU" # Europe and Central Asia
+#                         ,"RNE" # Near East and North Africa
+                      #,"COF" # Coffee
+                      )
+
+include_part1 <- TRUE
+include_part2 <- TRUE
+include_part3 <- TRUE
+include_part4 <- TRUE
+include_country_profiles <- FALSE
+include_metadata <- FALSE
+
+# To be uploaded for comments or not
+upload_to_server <- FALSE
+
+
+
+############################################################
+############################################################
+# Customise SYB data for pocketbooks
+# 
+############################################################
+
 library(readr)
 library(magrittr)
 library(xtable)
@@ -24,43 +63,6 @@ library(gisfao)
 library(FAOSTAT)
 library(extrafont)
 loadfonts()
-
-# Stuff you DO edit
-# ----------------------------------------------------------------------------------
-
-
-## Chapters to include
-
-regionS_to_report <- c(
-                      "GLO" # Global
-                        ,"RAP" # Asia and the Pacific
-                       ,"RAF"  # Africa
-                       ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
-                      #,"COF" # Coffee
-                      )
-
-include_part1 <- TRUE
-include_part2 <- TRUE
-include_part3 <- TRUE
-include_part4 <- TRUE
-include_country_profiles <- FALSE
-include_metadata <- FALSE
-
-# To be uploaded for comments or not
-upload_to_server <- TRUE
-
-# set root directory
-root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
-setwd(root.dir)
-# set data directory
-data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
-
-############################################################
-############################################################
-# Customise SYB data for pocketbooks
-# 
-############################################################
 
 
 # load FAOcountryprofile data 
@@ -221,7 +223,7 @@ for (region_to_report in regionS_to_report) {
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
-  
+#   
   # Technical report
 #   knitr::purl("syb_part1.Rnw","syb_part1.R")
 #   knitr::spin("syb_part1.R")

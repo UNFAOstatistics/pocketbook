@@ -51,15 +51,3 @@ theme_update(
   plot.title =  element_blank(),
   plot.margin = unit(rep(0.1, 4), "line")
 )
-
-noLeg = function(x) theme(legend.position = "none")
-yesTitleX = function(x) theme(axis.title.x = element_text(family = "PT Sans", face = "plain", colour = "black",
-                                                          size = 9, hjust = 0.5, vjust = 0.2, angle = 0,
-                                                          lineheight = 0.7))
-angleText <- function(angle = 45) theme(axis.text.x = element_text(family = "PT Sans", face = "plain", colour = "black",
-                                                                   size = 9, hjust = 1, vjust = 1, angle = 45,
-                                                                   lineheight = 0.6))
-centerYear = function(x) theme(axis.text.x = element_text(family = "", face = "plain",
-        colour = "black", size = 9, hjust = 0.5, vjust = 1, angle = 0, lineheight = 0.6))
-mapLegend = function(x) theme(legend.key.size = unit(2.4, "cm"),
-                              legend.text = element_text(size = 32))

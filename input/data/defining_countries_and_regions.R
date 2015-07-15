@@ -38,5 +38,19 @@ country_region$RAP <- ifelse(country_region$M49_Asia | country_region$M49_Oceani
 country_region$RNE <- ifelse(country_region$M49_Northern.Africa | country_region$M49_Western.Asia, TRUE, FALSE) 
 country_region$GLO <- TRUE
 
+country_data <- data.frame(colx = rep("gaga", 284))
+for (col in 5:37){
+  colname <- names(country_region)[col]
+  vector <- ifelse(country_region[[colname]],country_region[[2]],NA)
+  vector <- vector[!is.na(vector)]
+  if (length(vector) < 284) vector <- c(vector, rep("empty", (284-length(vector))))
+  vector <- as.data.frame(vector)
+  country_data <- bind_cols(country_data,vector)
+  names(country_data)[col-3] <- colname
+}
+
+
+
+
 country_region$FAO_TABLE_NAME <- NULL
 save(country_region, file=paste0(root.dir,"input/data/country_region.RData"))

@@ -19,6 +19,8 @@
 library(knitr)
 options(scipen = 999)
 
+pdf.options(useDingbats = TRUE)
+
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
 
 opts_chunk$set(list(echo=FALSE,eval=TRUE,cache=FALSE,warning=FALSE,message=FALSE,cache.path="~/fao_cache/regional15/",dev="pdf",results='asis'))
@@ -338,8 +340,6 @@ p
 %\usepackage[document]{ragged2e}
 
 
-
-
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -397,13 +397,6 @@ p
 \vfill
 }}}
 
-\usepackage{xcolor}
-
-%% Tango color scheme
-\definecolor{Part1}{HTML}{1d5979}
-\definecolor{Part2}{HTML}{e07317}
-\definecolor{Part3}{HTML}{96212d}
-\definecolor{Part4}{HTML}{35802d}
 
 
 
@@ -498,17 +491,6 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 \fi
 
 
-%% List of countries
-%\phantomsection
-%\renewcommand{\indexname}{List of countries} 
-%\addcontentsline{toc}{section}{List of countries}
-%\printindex
-
-%%% List of tables
-%\phantomsection
-%\addcontentsline{toc}{section}{List of Tables}
-%\listoftables
-
 %% To be commented if we want to show the List of countries
 % \thispagestyle{empty}
 % \mbox{}
@@ -554,13 +536,13 @@ Clear indicators to measure progress towards these international goals is of par
 This publication presents selected key indicators related to agriculture and food security that stakeholders can use to prioritize their actions. It is divided into two main sections, one thematic and one country-specific. It presents a variety of dimensions of agriculture and food security along four main focus areas:
 
 
-{\textbf{\color{Part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
+{\textbf{\color{part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
 
-{\textbf{\color{Part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
+{\textbf{\color{part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
 
-{\textbf{\color{Part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
+{\textbf{\color{part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
 
-{\textbf{\color{Part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
+{\textbf{\color{part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
 
 This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
 
@@ -594,12 +576,28 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 % ###########################################################################
 
+
 %% Prelims
 \tableofcontents
 % \clearpage % commented because of the font size issue
 
 % \clearpage
 
+%% List of countries
+% \phantomsection
+% \renewcommand{\indexname}{List of countries} 
+% \addcontentsline{toc}{section}{List of countries}
+% \printindex
+
+% %%% List of tables
+% \phantomsection
+% \addcontentsline{toc}{section}{List of Tables}
+% \listoftables
+
+% %%% List of figrues
+% \phantomsection
+% \addcontentsline{toc}{section}{List of Charts}
+% \listoffigures
 
 % \thispagestyle{empty}
 % \mbox{}
