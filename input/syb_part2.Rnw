@@ -61,7 +61,7 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 @
 
 
-<<P2undernuTOPRIGHT, eval=P2undernu, top_right_minitable=P2undernu, fig.height=2.5, fig.width=3>>=
+<<P2undernuTOPRIGHT, eval=P2undernu, top_right_minitable=P2undernu>>=
 
 tbl <- df[df$FAOST_CODE %in% c(5000,5852,5851,5100,5300,5205,5500),] # World
 tbl <- tbl[tbl$Year %in% c(1991,2015),]
@@ -84,7 +84,7 @@ print.xtable(xtable(dw, caption = " Prevalence of undernourishment (percent)", d
 @
 
 
-<<P2undernuLEFT, eval=P2undernu, left_plot=P2undernu, fig.height=5.9, fig.width=3.2>>=
+<<P2undernuLEFT, eval=P2undernu, left_plot=P2undernu, fig.height=left_plot_height, fig.width=left_plot_width>>=
 # data
 
 dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
@@ -125,7 +125,7 @@ if (region_to_report == "GLO") caption_text <- "Countries with the highest numbe
 #if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
 @
 
-<<P2undernuRIGHT, eval=P2undernu ,right_plot=P2undernu, fig.height=5.9, fig.width=3.2>>=
+<<P2undernuRIGHT, eval=P2undernu ,right_plot=P2undernu, fig.height=right_plot_height, fig.width=right_plot_width>>=
 
 plot(cars)
 
@@ -140,7 +140,7 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 @
 
 
-<<P2undernuBOTTOM, eval=P2undernu, bottom_plot=P2undernu, fig.height=3, fig.width=6>>=
+<<P2undernuBOTTOM, eval=P2undernu, bottom_plot=P2undernu, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 
 dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
 
@@ -229,7 +229,7 @@ if (region_to_report != "GLO") {
   gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
 } else gr_rob <- gr_rob
 
-create_map_here(nCol=5, addNA=TRUE) 
+create_map_here() 
 
 # Caption
 if (region_to_report == "RAF") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"

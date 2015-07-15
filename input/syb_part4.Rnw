@@ -36,7 +36,7 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 @
 
 
-<<P4landTOPRIGHT, eval=P4land, top_right_minitable=P4land, fig.height=2.5, fig.width=3>>=
+<<P4landTOPRIGHT, eval=P4land, top_right_minitable=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,FAO_TABLE_NAME,RL.AREA.AGR.HA.SH,RL.AREA.FOR.HA.SH,RL.AREA.OTH.HA.SH)
 
 # Add region key and subset
@@ -75,7 +75,7 @@ if (region_to_report == "GLO") caption_text <- "Land area"
 @
 
 
-<<P4landLEFT, eval=P4land, left_plot=P4land, fig.height=5.9, fig.width=3.2>>=
+<<P4landLEFT, eval=P4land, left_plot=P4land, fig.height=left_plot_height, fig.width=left_plot_width>>=
 dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","RL.AREA.ARBL.HA.SHP")]
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
@@ -119,7 +119,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 c
 
 @
 
-<<P4landRIGHT, eval=P4land ,right_plot=P4land, fig.height=5.9, fig.width=3.2>>=
+<<P4landRIGHT, eval=P4land ,right_plot=P4land, fig.height=right_plot_height, fig.width=right_plot_width>>=
 dat_plot <- bottom20
 
 p <- ggplot(dat_plot, aes(x=reorder(FAO_TABLE_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
@@ -141,7 +141,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 @
 
 
-<<P4landBOTTOM, eval=P4land, bottom_plot=P4land, fig.height=3, fig.width=6>>=
+<<P4landBOTTOM, eval=P4land, bottom_plot=P4land, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,FAO_TABLE_NAME,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
 # Add region key and subset
@@ -224,7 +224,7 @@ if (region_to_report != "GLO") {
   gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
 } else gr_rob <- gr_rob
 
-create_map_here(nCol=6, addNA=FALSE) 
+create_map_here() 
 
 # Caption
 if (region_to_report == "RAF") caption_text <- "Cropland per capita, ha/cap"

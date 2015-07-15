@@ -61,7 +61,7 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 @
 
 
-<<P3desTOPRIGHT, eval=P3des, top_right_plot=P3des, fig.height=2.5, fig.width=3>>=
+<<P3desTOPRIGHT, eval=P3des, top_right_plot=P3des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 
 load(paste0(root.dir,"../ICN2PB14/Data/Processed/icn2.RData"))
 ## Plot
@@ -126,7 +126,7 @@ if (region_to_report == "GLO") caption_text <- "Share of dietary energy supply, 
 
 @
 
-<<P3desLEFT, eval=P3des, left_plot=P3des, fig.height=5.9, fig.width=3.2>>=
+<<P3desLEFT, eval=P3des, left_plot=P3des, fig.height=left_plot_height, fig.width=left_plot_width>>=
 # data
 
 dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
@@ -166,7 +166,7 @@ if (region_to_report == "RNE") caption_text <- "Dietary energy supply, top 20 co
 if (region_to_report == "GLO") caption_text <- "Dietary energy supply, top 20 countries in 2015"
 @
 
-<<P3desRIGHT, eval=P3des ,right_plot=P3des, fig.height=5.9, fig.width=3.2>>=
+<<P3desRIGHT, eval=P3des ,right_plot=P3des, fig.height=right_plot_height, fig.width=right_plot_width>>=
 
 dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
@@ -207,7 +207,7 @@ if (region_to_report == "GLO") caption_text <- "Dietary energy supply, bottom 20
 @
 
 
-<<P3desBOTTOM, eval=P3des, bottom_plot=P3des, fig.height=3, fig.width=6>>=
+<<P3desBOTTOM, eval=P3des, bottom_plot=P3des, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 dat <- df[df$Year %in%  c(2000:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
@@ -288,7 +288,7 @@ if (region_to_report != "GLO") {
   gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
 } else gr_rob <- gr_rob
 
-create_map_here(nCol=5, addNA=TRUE) 
+create_map_here() 
 
 # Caption
 if (region_to_report == "RAF") caption_text <- "Average dietary energy supply adequacy"

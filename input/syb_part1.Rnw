@@ -57,7 +57,7 @@ dat <- gather(dat, variable, value, 3:4)
 @
 
 
-<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=2.5, fig.width=3>>=
+<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 
 # Subset data
 if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE == 5100,]
@@ -96,7 +96,7 @@ if (region_to_report == "GLO") caption_text <- "World rural and urban population
 @
 
 
-<<P1overLEFT, eval=P1over, left_plot=P1over, fig.height=5.9, fig.width=3.2>>=
+<<P1overLEFT, eval=P1over, left_plot=P1over, fig.height=left_plot_height, fig.width=left_plot_width>>=
 # data
 dat <- filter(syb.df, Year %in%
                    c(2004:2014)) %>% 
@@ -135,7 +135,7 @@ if (region_to_report == "GLO") caption_text <- "Population, average annual growt
 #if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
 @
 
-<<P1overRIGHT, eval=P1over ,right_plot=P1over, fig.height=5.9, fig.width=3.2>>=
+<<P1overRIGHT, eval=P1over ,right_plot=P1over, fig.height=right_plot_height, fig.width=right_plot_width>>=
 
 # data
 dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,SHORT_NAME,SP.DYN.LE00.IN)
@@ -174,7 +174,7 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 @
 
 
-<<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=3, fig.width=6>>=
+<<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 # data
 dat <- syb.df %>% filter(Year %in% c(2000:2014),
                          FAOST_CODE >= 5000) %>% select(FAOST_CODE,Year,FAO_TABLE_NAME,OA.TEAPT.POP.PPL.NO)
