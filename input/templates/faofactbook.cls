@@ -225,12 +225,15 @@ left=1cm, right=1cm, twoside}{geometry}
   \BottomChart{To Be Done}}{%
   \clearpage\ifodd\c@page\hbox{}\newpage\fi
   \phantomsection\addcontentsline{toc}{section}{\@chartname}%
-  \raisebox{-\height}{\strut\parbox{0.50\textwidth}{\@LeftText}}%
+  \raisebox{-\height}{\strut\parbox{0.47\textwidth}{\@LeftText}}%
+% ---------------------------------------------------------------------------------
   \hspace{0.05\textwidth}%
-  \raisebox{-\height}{\strut\parbox{0.40\textwidth}{\@RightText}}\par\medskip
-  \raisebox{-\height}{\strut\parbox{0.47\textwidth}{\@LeftChart}}%
+  \raisebox{-\height}{\strut\parbox{0.48\textwidth}{\@RightText}}\par\medskip
+% ---------------------------------------------------------------------------------
+  \raisebox{-\height}{\strut\parbox{0.48\textwidth}{\@LeftChart}}%
   \hspace{0.05\textwidth}%
   \raisebox{-\height}{\strut\parbox{0.47\textwidth}{\@RightChart}}\par\medskip
+% ---------------------------------------------------------------------------------
   \faoset{floatwidth=\columnwidth}
   {\centering\@BottomChart\par}}
 \long\def\LeftText#1{\gdef\@LeftText{{\bfseries\large\@chartname\par}#1}}
