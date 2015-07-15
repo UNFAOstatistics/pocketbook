@@ -82,24 +82,26 @@ left=1cm, right=1cm, twoside}{geometry}
 \faoset{stripwidth=7.2mm}
 % ---------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------
-% Headers & Footers
+% Headers & Footers  & placement of the color strip!
 % ---------------------------------------------------------------------------------
 \fancypagestyle{plain}{%
   \fancyhf{}%
+  
   \fancyfoot[RO,LE]{\thepage}%
   \fancyhead[LO]{%
     \begin{picture}(0,0)%
-      \put(268,-157){\raisebox{-0.729\Gm@layoutheight}{%
+      \put(268,-162){\raisebox{-0.729\Gm@layoutheight}{%
           \color{@bgcolor}\hspace*{-\@stripwidth}%
           \rule{\@stripwidth}{1.05\Gm@layoutheight}}}%
     \end{picture}}
   \fancyhead[LE]{%
     \begin{picture}(0,0)%
-      \put(-39,-157){\raisebox{-0.729\Gm@layoutheight}{%
+      \put(-39,-162){\raisebox{-0.729\Gm@layoutheight}{%
           \color{@bgcolor}\rule{\@stripwidth}{1.05\Gm@layoutheight}}}%
     \end{picture}}
   \renewcommand{\headrulewidth}{\z@}%
   \renewcommand{\footrulewidth}{\z@}}
+  
 \AtBeginDocument{\pagestyle{plain}}
 \footskip15\p@
 \definecolor{FAOblue}{cmyk}{0.69,0.34,0,0}
@@ -159,16 +161,22 @@ left=1cm, right=1cm, twoside}{geometry}
   {\MakeUppercase\contentsname}%
   \@starttoc{toc}}
 
+
 \renewcommand*\l@section[2]{%
   \ifnum \c@tocdepth >-2\relax
     \addpenalty{-\@highpenalty}%
-    \setlength\@tempdima{3em}%
+    \setlength\@tempdima{2em}%
     \begingroup
      \parskip\z@
-      \parindent \z@ \rightskip -100pt
-      \parfillskip -\@pnumwidth
+% ------------------------------------------------------------
+% define the page number in toc
+     %\parindent \z@ \rightskip -100pt % commenting this line and
+     \parindent \z@ \rightskip \@pnumwidth  % adding this line fixed the page numbers!
+      \parfillskip  - \@pnumwidth 
+% ------------------------------------------------------------
       {\leavevmode\strut
-       #1\hfil \hb@xt@\@pnumwidth{\hss #2}}\par\@draw@tocrule@section
+       #1\hfil \hb@xt@\@pnumwidth{\hss #2}}
+       \par\@draw@tocrule@section
        \nobreak
          \global\@nobreaktrue
          \everypar{\global\@nobreakfalse\everypar{}}%
@@ -180,7 +188,10 @@ left=1cm, right=1cm, twoside}{geometry}
   \advance\@fao@tocrule@height5\p@
   \bgroup\parskip\z@\small
   \raisebox{\baselineskip}[\z@][\z@]{\parbox[b][\z@]{\z@}{\hspace*{240\p@}\color{@bgcolor}\rule{21\p@}{\@fao@tocrule@height}}}%
-  \par\vspace{-\baselineskip}\egroup}
+  \par\vspace{-\baselineskip}
+  \egroup}
+
+% ------------------------------------------------------------
 
 \def\listofcountries{{\twocolumn[\@makeschapterhead{List of
       Countries}]}%
