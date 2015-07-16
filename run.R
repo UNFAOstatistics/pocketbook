@@ -25,15 +25,15 @@ regionS_to_report <- c(
                       #,"COF" # Coffee
                       )
 
-include_part1 <- TRUE
-include_part2 <- TRUE
-include_part3 <- TRUE
-include_part4 <- TRUE
-include_country_profiles <- FALSE
-include_metadata <- FALSE
+include_part1 <- T
+include_part2 <- T
+include_part3 <- T
+include_part4 <- T
+include_country_profiles <- F
+include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- TRUE
+upload_to_server <- T
 
 
 

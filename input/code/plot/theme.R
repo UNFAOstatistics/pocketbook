@@ -30,7 +30,7 @@ theme_update(
   #   legend.text.align = NULL,
   legend.title = element_blank(),
   #   legend.title.align = NULL,
-  legend.position = "top",
+  legend.position = "bottom",
   legend.direction = "horizontal",
   legend.key.height = unit(5,"mm"),
   legend.key.width = unit(4,"mm"),
