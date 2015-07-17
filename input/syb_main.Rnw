@@ -191,6 +191,10 @@ local({
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 
+if (region_to_report == "GLO"){
+  print_overview_map <- FALSE
+  } else print_overview_map <- TRUE
+
 
 top_right_plot_height <- 2.5
 top_right_plot_width  <- 3
@@ -237,8 +241,8 @@ if (region_to_report == "REU") map.out.extra  <- 'angle=90'
 
 if (region_to_report == "RNE") map.fig.width  <- 6
 if (region_to_report == "RNE") map.fig.height  <- 4
-if (region_to_report == "RNE") map.out.height  <- "1.0\\columnwidth"
-if (region_to_report == "RNE") map.out.extra  <- 'angle=90'
+if (region_to_report == "RNE") map.out.height  <- ".7\\columnwidth"
+if (region_to_report == "RNE") map.out.extra  <- 'angle=0'
 
 # GLO
 
@@ -293,7 +297,8 @@ p <- p + theme(legend.position = c(0.05,0.05),
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
                           legend.direction = "vertical",
-                          legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
+                          legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
+                          #legend.background=element_rect(colour=NA, fill=NA),
                           legend.text=element_text(size=12), 
                           legend.title=element_text(size=12), 
                           title=element_text(size=16), 
@@ -678,6 +683,126 @@ FAO is deeply committed to helping countries strengthen their statistical system
 % \textit{Dietary} indicators are based on national food supplies and inform on the overall quality of diets. Focus is also on the importance of diets during the first 1\,000 days of an infant’s life, with indicators selected on the quality of breastfeeding, dietary diversity and meal frequency. 
 
 % The choice of indicators was guided by the following criteria: relevance to health, food security and nutrition, comparability over time, and availability, in particular for low-income countries. But the criteria were relaxed for several indicators given their importance and the lack of available substitutes. It is hoped that the presence of data gaps will bring about greater efforts to collect the necessary information because only with timely and reliable data can interventions be designed and targeted towards those in most need. Wherever available, disaggregated data by gender have been provided. Such data are indeed key to mainstreaming gender in policies and programmes.
+
+\clearpage
+
+<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
+
+# set Robinson projection
+shape <- spTransform(fao_world, CRS("+proj=robin"))
+
+# Fortify the shape
+shape$id <- rownames(shape@data)
+map.points <- fortify(shape, region = "id")
+map.df <- merge(map.points, shape, by = "id")
+
+# Add region key and subset
+if (region_to_report == "RAF"){
+  map.df <- map.df[which(map.df$RAF),]
+  map.df$value_cat[map.df$RAF_Central_Africa] <- "Central Africa" 
+  map.df$value_cat[map.df$RAF_East_Africa]    <- "East Africa" 
+  map.df$value_cat[map.df$RAF_North_Africa]   <- "North Africa" 
+  map.df$value_cat[map.df$RAF_South_Africa]   <- "South Africa" 
+  map.df$value_cat[map.df$RAF_West_Africa]    <- "West Africa" 
+}
+if (region_to_report == "RAP") {
+  map.df <- map.df[which(map.df$RAP),]
+  map.df$value_cat[map.df$RAP_Central_Asia]              <- "Central Asia"
+  map.df$value_cat[map.df$RAP_Eastern_Asia]              <- "Eastern Asia"
+  map.df$value_cat[map.df$RAP_Southern_Asia]             <- "Southern Asia"
+  map.df$value_cat[map.df$RAP_South_Eastern_Asia]        <- "South Eastern Asia"
+  map.df$value_cat[map.df$RAP_Western_Asia]              <- "Western Asia"
+  map.df$value_cat[map.df$RAP_Austriala_and_New_Zealand] <- "Australia and New Zealand"
+  map.df$value_cat[map.df$RAP_Melanesia]                 <- "Melanesia"
+  map.df$value_cat[map.df$RAP_Micronesia]                <- "Micronesia"
+  map.df$value_cat[map.df$RAP_Polynesia]                 <- "Polynesia"
+  map.df$value_cat[map.df$RAP_Russian_Federation]        <- "Russian Federation"
+  map.df$value_cat[map.df$RAP_France]                    <- "France"
+  map.df$value_cat[map.df$RAP_United_States]             <- "United States"
+}
+if (region_to_report == "REU"){
+  map.df <- map.df[which(map.df$REU),]
+  map.df$value_cat[map.df$REU_South_Eastern_Europe]          <- "South Eastern Europe"
+  map.df$value_cat[map.df$REU_Other_And_EFTA]         <- "Other and EFTA"
+  map.df$value_cat[map.df$REU_Caucasus_and_Turkey]    <- "Caucasus and Turkey"
+  map.df$value_cat[map.df$REU_CIS_Europe]             <- "CIS Europe"
+  map.df$value_cat[map.df$REU_Central_Eastern_Europe] <- "Central Eastern Europe"
+  map.df$value_cat[map.df$REU_Israel]                 <- "Israel"
+  map.df$value_cat[map.df$REU_Central_Asia]           <- "Central Asia"
+} 
+if (region_to_report == "RNE"){
+  map.df <- map.df[which(map.df$RNE),]
+  map.df$value_cat[map.df$RNE_Gulf_Cooperation_Council_States_and_Yemen] <- "Gulf Cooperation Council States and Yemen"
+  map.df$value_cat[map.df$RNE_Other_Near_East_countries]                 <- "Near East countries"
+  map.df$value_cat[map.df$RNE_North_Africa]                              <- "North Africa"
+}
+if (region_to_report == "GLO") map.df <- map.df
+if (region_to_report == "COF") map.df <- map.df
+
+
+# define map unit
+map_unit <- ""
+
+# graticule
+grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
+gr_rob <- fortify(grat_robin)
+# crop the grid
+if (region_to_report != "GLO") {
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+} else gr_rob <- gr_rob
+
+
+source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+
+syb_part <- 1
+
+## Part 1
+colPart1 <- plot_colors(part = syb_part, 12)
+col.main1 <- colPart1[["Main"]][1]
+## color for the grid
+col.main2 <- colPart1[["Main"]][2]
+
+source(paste0(root.dir,"./input/code/plot/theme.R"))
+
+namedata <- map.df[!is.na(map.df$SHORT_NAME),]
+cnames <- stats:::aggregate.formula(cbind(long, lat) ~ SHORT_NAME, data=namedata, mean)
+
+# Create the plot
+p <- ggplot(data=map.df, aes(long,lat,group=group))
+#  ---- grid below the countries ------------------------
+p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
+              linetype = "solid", color = col.main2, alpha=.1)
+# Grey for the non-data regions
+p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
+p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(map.df$value_cat)))[["Sub"]])
+p <- p + geom_text(data=cnames, aes(long, lat, label = SHORT_NAME, group=SHORT_NAME), size=2, color="black")
+p <- p + theme(legend.position = c(0.05,0.05), 
+                          legend.justification=c(0,0),
+                          legend.key.size=unit(6,'mm'),
+                          legend.direction = "vertical",
+                          legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
+                          #legend.background=element_rect(colour=NA, fill=NA),
+                          legend.text=element_text(size=12), 
+                          legend.title=element_text(size=12), 
+                          title=element_text(size=16), 
+                          panel.background = element_blank(), 
+                          plot.background = element_blank(),
+                          panel.grid.minor = element_blank(),
+                          panel.grid.major = element_blank(),
+                          axis.text = element_blank(), 
+                          axis.title = element_blank(), 
+                          axis.ticks = element_blank())
+p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
+                                     title.position = "top", 
+                                     title.hjust=0))
+p <- p + guides(colour=FALSE)
+p
+
+@
+
+
 
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
