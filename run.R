@@ -18,10 +18,10 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
                       "GLO" # Global
-                        ,"RAP" # Asia and the Pacific
-                       ,"RAF"  # Africa
-                       ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                          ,"RAP" # Asia and the Pacific
+                         ,"RAF"  # Africa
+                        ,"REU" # Europe and Central Asia
+                         ,"RNE" # Near East and North Africa
                       #,"COF" # Coffee
                       )
 
@@ -29,19 +29,25 @@ include_part1 <- T
 include_part2 <- T
 include_part3 <- T
 include_part4 <- T
-include_country_profiles <- F
+include_country_profiles <- T
 include_metadata <- F
 
 # To be uploaded for comments or not
 upload_to_server <- T
 
+# just for troubleshooting
+region_to_report <- "GLO"
 
+############################################################
+############################################################
 
-############################################################
-############################################################
-# Customise SYB data for pocketbooks
-# 
-############################################################
+#   _ _ _                    _           
+#  | (_) |__  _ __ __ _ _ __(_) ___  ___ 
+#  | | | '_ \| '__/ _` | '__| |/ _ \/ __|
+#  | | | |_) | | | (_| | |  | |  __/\__ \
+#  |_|_|_.__/|_|  \__,_|_|  |_|\___||___/
+#                                       
+
 
 library(readr)
 library(magrittr)
@@ -65,78 +71,71 @@ library(extrafont)
 loadfonts()
 
 
+# _                 _       _       _        
+# | | ___   __ _  __| |   __| | __ _| |_ __ _ 
+# | |/ _ \ / _` |/ _` |  / _` |/ _` | __/ _` |
+# | | (_) | (_| | (_| | | (_| | (_| | || (_| |
+# |_|\___/ \__,_|\__,_|  \__,_|\__,_|\__\__,_|
+#                                              
+
+
 # load FAOcountryprofile data 
 FAOcountryProfile <- read_csv("./input/data/FAOcountryProfile.csv")
+
+# Recode the Short Name Variables
+## Abbreviate names
+FAOcountryProfile[FAOcountryProfile[, "FAO_TABLE_NAME"] == "Latin America and the Caribbean"          & !is.na(FAOcountryProfile[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Latin America\nand the Caribbean"
+FAOcountryProfile[FAOcountryProfile[, "FAO_TABLE_NAME"] == "Developed countries"                      & !is.na(FAOcountryProfile[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Developed\ncountries"
+FAOcountryProfile[FAOcountryProfile[, "FAO_TABLE_NAME"] == "Developing countries"                     & !is.na(FAOcountryProfile[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Developing\ncountries"
+
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Vincent and the Grenadines"             & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Vincent\nand the\nGrenadines"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Antigua and Barbuda"                          & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Antigua and\nBarbuda"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Trinidad and Tobago"                          & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Trinidad and\nTobago"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Republic of Moldova"                          & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Republic of\nMoldova"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Helena, Ascension and Tristan da Cunha" & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Helena"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Northern Mariana Islands"                     & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "N. Mariana\nIslands"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Wallis and Futuna Islands"                    & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Wallis and\nFutuna Is."
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "United Arab Emirates"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "United Arab\nEmirates"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Turks and Caicos Islands"                     & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Turks and\nCaicos Is."
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Central African Republic"                     & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Central African\nRepublic"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Sao Tome and Principe"                        & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Sao Tome and\nPrincipe"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "United States of America"                     & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "United States\nof America"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Iran (Islamic Republic of)"                   & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Iran\n(Islamic Republic of)"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Bosnia and Herzegovina"                       & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Bosnia and\nHerzegovina"
+FAOcountryProfile[FAOcountryProfile[, "FAOST_CODE"] == 107                                            & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Côte d'Ivoire"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Falkland Islands (Malvinas)"                  & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Falkland Islands\n(Malvinas)"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Papua New Guinea"                             & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Papua New\nGuinea"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "American Samoa"                               & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "American\nSamoa"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Western Sahara"                               & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Western\nSahara"
+
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Union of Soviet Socialist Republic"           & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Soviet Union"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Micronesia (Federated States of)"             & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Micronesia"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Svalbard and Jan Mayen Islands"               & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Svalbard"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Occupied Palestinian Territory"               & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Occupied\nPalestinian Territory"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "United States Virgin Islands"                 & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "U.S. Virgin Islands"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Pierre and Miquelon"                    & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Pierre\nand Miquelon"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Serbia and Montenegro"                        & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Serbia and\nMontenegro"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Kitts and Nevis"                        & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Kitts\nand Nevis"
+FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Netherlands\nAntilles"
+#FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == ""                                            & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- ""
+
+# syb.df$nchar <- nchar(syb.df$SHORT_NAME)
+# f <- syb.df %>% select(SHORT_NAME,FAO_TABLE_NAME,FAOST_CODE,nchar) %>% arrange(-nchar)
+# f <- f[!duplicated(f[c("FAO_TABLE_NAME")]),]
+# h(f,40)
 
 # load SYB data
 load(paste0(data.dir,"Data/Processed/SYB.RData"))
 syb.df <- SYB.df; rm(SYB.df)
 
-syb.df <- 
-  merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")],
-        by = "FAOST_CODE", all.x = TRUE)
+syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], by = "FAOST_CODE", all.x = TRUE)
 
-## Abbreviate names
-syb.df[syb.df[, "FAO_TABLE_NAME"] == "Latin America and the Caribbean" & 
-         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Latin America\nand the Caribbean"
-syb.df[syb.df[, "FAO_TABLE_NAME"] == "Developed countries" & 
-         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Developed\ncountries"
-syb.df[syb.df[, "FAO_TABLE_NAME"] == "Developing countries" & 
-         !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Developing\ncountries"
-syb.df[syb.df[, "SHORT_NAME"] == "Saint Vincent and the Grenadines" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Vincent\nand the\nGrenadines"
-syb.df[syb.df[, "SHORT_NAME"] == "Antigua and Barbuda" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "Antigua and\nBarbuda"
-syb.df[syb.df[, "SHORT_NAME"] == "Trinidad and Tobago" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-  "Trinidad and\nTobago"
-syb.df[syb.df[, "SHORT_NAME"] == "Republic of Moldova" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-  "Republic of\nMoldova"
-# syb.df[syb.df[, "SHORT_NAME"] == "Saint Helena, Ascension and Tristan da Cunha" & 
-#           !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-
-#   "Saint Helena,\nAscension and\nTristan da Cunha"
-syb.df[syb.df[, "SHORT_NAME"] == "Saint Helena, Ascension and Tristan da Cunha" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Saint Helena"
-syb.df[syb.df[, "SHORT_NAME"] == "Northern Mariana Islands" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "N. Mariana\nIslands"
-syb.df[syb.df[, "SHORT_NAME"] == "Wallis and Futuna Islands" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <- "Wallis and\nFutuna Is."
-syb.df[syb.df[, "SHORT_NAME"] == "United Arab Emirates" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "United Arab\nEmirates"
-syb.df[syb.df[, "SHORT_NAME"] == "Turks and Caicos Islands" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Turks and\nCaicos Is."
-syb.df[syb.df[, "SHORT_NAME"] == "Central African Republic" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Central African\nRepublic"
-syb.df[syb.df[, "SHORT_NAME"] == "Sao Tome and Principe" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Sao Tome and\nPrincipe"
-syb.df[syb.df[, "SHORT_NAME"] == "United States of America" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "United States\nof America"
-syb.df[syb.df[, "SHORT_NAME"] == "Iran (Islamic Republic of)" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Iran\n(Islamic Republic of)"
-syb.df[syb.df[, "SHORT_NAME"] == "Bosnia and Herzegovina" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Bosnia and\nHerzegovina"
-syb.df[syb.df[, "FAOST_CODE"] == "107" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Côte d'Ivoire"
-syb.df[syb.df[, "SHORT_NAME"] == "Falkland Islands (Malvinas)" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Falkland Islands\n(Malvinas)"
-syb.df[syb.df[, "SHORT_NAME"] == "Papua New Guinea" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Papua New\nGuinea"
-syb.df[syb.df[, "SHORT_NAME"] == "American Samoa" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "American\nSamoa"
-syb.df[syb.df[, "SHORT_NAME"] == "Western Sahara" & 
-         !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "Western\nSahara"
+# Fill missing values in SHORT_NAME with FAO_TABLE_NAME
+syb.df$SHORT_NAME <- ifelse(is.na(syb.df$SHORT_NAME), syb.df$FAO_TABLE_NAME, syb.df$SHORT_NAME)
+
+
 # REMOVE Western Sahara
 syb.df <- syb.df[syb.df$FAOST_CODE != 205, ]
-
-
-load(paste0(root.dir,"input/data/country_region.RData"))
-region_key <- country_region
-region_key <- join(region_key,syb.df[!duplicated(syb.df[c("FAOST_CODE")]),][c("FAOST_CODE","SHORT_NAME")])
-
-# Replace the ad-hoc regional grouping with the one we have created
-myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
-fao_world@data <- fao_world@data[!myvars]
-fao_world@data <- merge(fao_world@data,country_region,by="FAOST_CODE",all.x=TRUE)
-
 
 ## Chinas
 syb.df[syb.df[, "FAOST_CODE"] %in% c(357), "Area"] <- "China 357"
@@ -150,6 +149,20 @@ syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" &
 syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & 
          !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
 
+
+#  ____          __  _                                  _                    
+# |  _ \   ___  / _|(_) _ __    ___   _ __  ___   __ _ (_)  ___   _ __   ___ 
+# | | | | / _ \| |_ | || '_ \  / _ \ | '__|/ _ \ / _` || | / _ \ | '_ \ / __|
+# | |_| ||  __/|  _|| || | | ||  __/ | |  |  __/| (_| || || (_) || | | |\__ \
+# |____/  \___||_|  |_||_| |_| \___| |_|   \___| \__, ||_| \___/ |_| |_||___/
+#                                                 |___/                       
+
+source(paste0(root.dir,"input/data/defining_countries_and_regions.R"))
+
+# Replace the ad-hoc regional grouping with the one we have created
+myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
+fao_world@data <- fao_world@data[!myvars]
+fao_world@data <- merge(fao_world@data,region_key,by="FAOST_CODE",all.x=TRUE)
 
 ##############################################################
 ##############################################################
@@ -198,6 +211,15 @@ flist <- list.files(paste0(root.dir,"input/templates"),
 file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
 setwd(paste0(root.dir,"output/process"))
+
+
+###################################################################################3
+#   _                           _                   _             
+#  | |     ___    ___   _ __   | |__    ___   __ _ (_) _ __   ___ 
+#  | |    / _ \  / _ \ | '_ \  | '_ \  / _ \ / _` || || '_ \ / __|
+#  | |___| (_) || (_) || |_) | | |_) ||  __/| (_| || || | | |\__ \
+#  |_____|\___/  \___/ | .__/  |_.__/  \___| \__, ||_||_| |_||___/
+#                      |_|                   |___/                
 
 
 for (region_to_report in regionS_to_report) {
