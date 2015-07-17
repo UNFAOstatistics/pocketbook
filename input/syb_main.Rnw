@@ -782,7 +782,7 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 
 
-<<country_profiles, child = if (include_country_profiles) 'country_profiles.Rnw'>>=
+<<country_profiles, child = if (include_country_profiles) 'syb_country_profiles.Rnw'>>=
 @
 
 
