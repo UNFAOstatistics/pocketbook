@@ -177,9 +177,9 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 <<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 # data
 dat <- syb.df %>% filter(Year %in% c(2000:2014),
-                         FAOST_CODE >= 5000) %>% select(FAOST_CODE,Year,FAO_TABLE_NAME,OA.TEAPT.POP.PPL.NO)
+                         FAOST_CODE >= 5000) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
 dat <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
-dat <- dat[!is.na(dat$FAO_TABLE_NAME),]
+dat <- dat[!is.na(dat$SHORT_NAME),]
 # Add region key and subset
 #dat <- join(dat,region_key)
 if (region_to_report == "RAF") dat <- filter(dat, FAOST_CODE %in% c(5101,5102,5103,5104,5105))
@@ -190,13 +190,13 @@ if (region_to_report == "GLO") dat <- filter(dat, FAOST_CODE %in% c(5301,5302,53
 if (region_to_report == "COF") dat <- dat
 
 # remove duplicates
-dat <- dat[!duplicated(dat[c("FAO_TABLE_NAME","Year")]),]
+dat <- dat[!duplicated(dat[c("SHORT_NAME","Year")]),]
 
 dat$OA.TEAPT.POP.PPL.NO <- dat$OA.TEAPT.POP.PPL.NO / 1000000
 
 dat_plot <- dat
 
-p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=FAO_TABLE_NAME))
+p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 6)[["Sub"]])
 p <- p + labs(x="",y="million people")
@@ -278,7 +278,7 @@ short_text <- "While some sectors have been hard hit, agriculture has demonstrat
 @
 
 <<P1econTOPRIGHT, eval=P1econ, top_right_plot=P1econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,FAO_TABLE_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
 
 # Add region key and subset
 dat <- join(dat,region_key)
@@ -297,10 +297,10 @@ dat_plot$fill[dat_plot$variable == "NV.SRV.TETC.ZS"] <- "Services"
 ss_data <- dat_plot %>% filter(fill == "Agriculture") %>%   arrange(-value) %>% slice(1:6) %>% select(FAOST_CODE)
 dat_plot <- dat_plot %>% filter(FAOST_CODE %in% ss_data$FAOST_CODE)
 # reorder regions by the share of agricultural land
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$FAO_TABLE_NAME )
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$SHORT_NAME )
 
-p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -317,7 +317,7 @@ if (region_to_report == "GLO") caption_text <- "Value added in agriculture, indu
 
 
 <<P1econLEFT, eval=P1econ, left_plot=P1econ, fig.height=left_plot_height, fig.width=left_plot_width>>=
-dat <- syb.df[syb.df$Year %in%  2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","EA.PRD.AGRI.KD")]
+dat <- syb.df[syb.df$Year %in%  2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","EA.PRD.AGRI.KD")]
 
 dat <- dat[!is.na(dat$EA.PRD.AGRI.KD),]
 # Add region key and subset
@@ -419,7 +419,7 @@ dl <- merge(dl,FAOcountryProfile[c("ISO2_WB_CODE","FAOST_CODE","UNSD_MACRO_REG_C
 dl <- na.omit(dl)
 
 # nominator from syb FAOSTAT
-nomin <- syb.df[c("FAOST_CODE","FAO_TABLE_NAME","Year","NV.AGR.TOTL.KD")]
+nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
 
 # Recode aggreagates
 dl$UNSD_MACRO_REG_CODE[dl$UNSD_SUB_REG_CODE == 5206] <- 5205
@@ -436,7 +436,7 @@ if (region_to_report == "GLO") {
     dl$UNSD_MACRO_REG_CODE <- NULL
     dl$UNSD_SUB_REG_CODE <- NULL
     dat <- rbind(m49,m49world)
-    dat <- merge(nomin,dat,c("FAOST_CODE","Year"))
+    dat <- merge(nomin,dat,by=c("FAOST_CODE","Year"))
     dat <- dat[dat$FAOST_CODE %in% c(5000,5100,5300,5205,5400,5500),]
 
 }
@@ -445,38 +445,38 @@ if (region_to_report == "RAF"){
   # Add region key and subset
   dat <- join(dl,region_key)
   dat <- dat[which(dat$RAF),]
-  dat <- merge(dat,nomin,c("FAOST_CODE","Year"),all.x=TRUE)
+  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
   names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
 }
 if (region_to_report == "RAP"){
   # Add region key and subset
   dat <- join(dl,region_key)
   dat <- dat[which(dat$RAP),]
-  dat <- merge(dat,nomin,c("FAOST_CODE","Year"),all.x=TRUE)
+  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
   names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
 }
 if (region_to_report == "REU"){
   # Add region key and subset
   dat <- join(dl,region_key)
   dat <- dat[which(dat$REU),]
-  dat <- merge(dat,nomin,c("FAOST_CODE","Year"),all.x=TRUE)
+  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
   names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
 }
 if (region_to_report == "RNE"){
   # Add region key and subset
   dat <- join(dl,region_key)
   dat <- dat[which(dat$RNE),]
-  dat <- merge(dat,nomin,c("FAOST_CODE","Year"),all.x=TRUE)
+  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
   names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
 }
 
 
-dat_plot <- dat %>%  group_by(FAO_TABLE_NAME,Year) %>% mutate(share = NV.AGR.TOTL.KD/constant_gdp*100) %>% 
+dat_plot <- dat %>%  group_by(SHORT_NAME,Year) %>% mutate(share = NV.AGR.TOTL.KD/constant_gdp*100) %>% 
   ungroup() %>%  arrange(-share)
 top6 <- head(dat_plot[dat_plot$Year == 2013,]$FAOST_CODE,6)
 dat_plot <- dat_plot %>% filter(FAOST_CODE %in% top6)
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
+p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line()
 p <- p + scale_color_manual(values = plot_colors(part = 1, 6)[["Sub"]])
 p <- p + labs(y="percent", x="")

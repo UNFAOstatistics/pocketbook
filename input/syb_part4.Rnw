@@ -37,7 +37,7 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 
 
 <<P4landTOPRIGHT, eval=P4land, top_right_minitable=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,FAO_TABLE_NAME,RL.AREA.AGR.HA.SH,RL.AREA.FOR.HA.SH,RL.AREA.OTH.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,SHORT_NAME,RL.AREA.AGR.HA.SH,RL.AREA.FOR.HA.SH,RL.AREA.OTH.HA.SH)
 
 # Add region key and subset
 dat <- join(dat,region_key)
@@ -56,10 +56,10 @@ dat_plot$fill[dat_plot$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 ss_data <- dat_plot %>% filter(fill == "Agricultural") %>%   arrange(-value) %>% slice(1:6) %>% select(FAOST_CODE)
 dat_plot <- dat_plot %>% filter(FAOST_CODE %in% ss_data$FAOST_CODE)
 # reorder regions by the share of agricultural land
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$FAO_TABLE_NAME )
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$SHORT_NAME )
 
-p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -76,7 +76,7 @@ if (region_to_report == "GLO") caption_text <- "Land area"
 
 
 <<P4landLEFT, eval=P4land, left_plot=P4land, fig.height=left_plot_height, fig.width=left_plot_width>>=
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","RL.AREA.ARBL.HA.SHP")]
+dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","RL.AREA.ARBL.HA.SHP")]
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
 # Add region key and subset
@@ -122,7 +122,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 c
 <<P4landRIGHT, eval=P4land ,right_plot=P4land, fig.height=right_plot_height, fig.width=right_plot_width>>=
 dat_plot <- bottom20
 
-p <- ggplot(dat_plot, aes(x=reorder(FAO_TABLE_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -142,7 +142,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 
 
 <<P4landBOTTOM, eval=P4land, bottom_plot=P4land, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,FAO_TABLE_NAME,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,SHORT_NAME,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
 # Add region key and subset
 dat <- join(dat,region_key)
@@ -162,10 +162,10 @@ ss_data <- dat_plot %>% filter(fill == "Arable") %>%   arrange(-value) %>% slice
 dat_plot <- dat_plot %>% filter(FAOST_CODE %in% ss_data$FAOST_CODE)
 
 # reorder regions by the share of agricultural land
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$FAO_TABLE_NAME )
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$SHORT_NAME )
 
-p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -183,7 +183,7 @@ if (region_to_report == "GLO") caption_text <- "Agricultural area"
 
 
 <<P4landMAP, eval=P4land, map_plot=P4land, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
-dat <- filter(syb.df, Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,FAO_TABLE_NAME,RL.AREA.ARBLPRMN.HA.SH)
+dat <- filter(syb.df, Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,RL.AREA.ARBLPRMN.HA.SH)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 # dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
