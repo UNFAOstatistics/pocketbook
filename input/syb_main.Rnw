@@ -394,6 +394,7 @@ p
 \usepackage{bpchem}
 \usepackage{arydshln}
 \usepackage{booktabs}
+\usepackage{lscape}
 %\usepackage[document]{ragged2e}
 
 
@@ -805,7 +806,8 @@ p
 @
 
 
-
+\clearpage
+\begin{landscape}
 
 <<overview_table, eval=print_overview_map, results='asis'>>=
 
@@ -813,26 +815,27 @@ df <- map.df[!duplicated(map.df[c("SHORT_NAME")]),]
 df <- df[c("SHORT_NAME","value_cat")]
 tbl <- spread(df, value_cat, SHORT_NAME)
 
-country_data <- data.frame(colx = rep("FAO", 284))
+overview_data <- data.frame(colx = rep("FAO", 284))
 for (col in 1:ncol(tbl)){
   vector <- tbl[[col]][!is.na(tbl[[col]])]
   if (length(vector) < 284) vector <- c(vector, rep("empty", (284-length(vector))))
   vector <- as.data.frame(vector)
-  country_data <- bind_cols(country_data,vector)
-  names(country_data)[col+1] <- names(tbl)[col]
+  overview_data <- bind_cols(overview_data,vector)
+  names(overview_data)[col+1] <- names(tbl)[col]
 }
-country_data$colx <- NULL
+overview_data$colx <- NULL
 
-for (col in 1:ncol(country_data)){
-  country_data[[col]][country_data[[col]] %in% "empty"] <- NA
+for (col in 1:ncol(overview_data)){
+  overview_data[[col]][overview_data[[col]] %in% "empty"] <- NA
 }
-country_data <- country_data[rowSums(is.na(country_data))!=ncol(country_data), ]
-
+overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data), ]
+# 
 print(
-  xtable(country_data, caption = "Countries included"), include.rownames = F
+  xtable(overview_data, caption = "Countries included"), type = "latex", table.placement = NULL, booktabs = TRUE, include.rownames = FALSE, size = "scriptsize", caption.placement = "top"
 )
 @
 
+\end{landscape}
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
 
