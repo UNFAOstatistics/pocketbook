@@ -18,22 +18,22 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
                       "GLO" # Global
-                          ,"RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                         ,"RNE" # Near East and North Africa
+#                          ,"RAP" # Asia and the Pacific
+                          ,"RAF"  # Africa
+                         ,"REU" # Europe and Central Asia
+#                          ,"RNE" # Near East and North Africa
                       #,"COF" # Coffee
                       )
 
-include_part1 <- T
-include_part2 <- T
-include_part3 <- T
-include_part4 <- T
-include_country_profiles <- T
+include_part1 <- F
+include_part2 <- F
+include_part3 <- F
+include_part4 <- F
+include_country_profiles <- F
 include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # just for troubleshooting
 region_to_report <- "GLO"
