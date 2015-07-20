@@ -204,9 +204,9 @@ local({
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 
-if (region_to_report == "GLO"){
-  print_overview_map <- FALSE
-  } else print_overview_map <- TRUE
+# if (region_to_report == "GLO"){
+#   print_overview_map <- FALSE
+#   } else print_overview_map <- TRUE
 
 
 top_right_plot_height <- 2.5
@@ -690,7 +690,7 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 \clearpage
 
-<<overview_map, eval=print_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
+<<overview_map, eval=TRUE, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
 
 #<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
 
@@ -702,10 +702,10 @@ shape <- spTransform(fao_world, CRS("+proj=robin"))
 shape$id <- rownames(shape@data)
 map.points <- fortify(shape, region = "id")
 map.df <- merge(map.points, shape, by = "id")
-
+the_whole <- map.df # for mapping the grey areas
 # Add region key and subset
 if (region_to_report == "RAF"){
-  #map.df <- map.df[which(map.df$RAF),]
+  map.df <- map.df[which(map.df$RAF),]
   map.df$value_cat[map.df$RAF_Central_Africa] <- "Central Africa" 
   map.df$value_cat[map.df$RAF_East_Africa]    <- "East Africa" 
   map.df$value_cat[map.df$RAF_North_Africa]   <- "North Africa" 
@@ -713,7 +713,7 @@ if (region_to_report == "RAF"){
   map.df$value_cat[map.df$RAF_West_Africa]    <- "West Africa" 
 }
 if (region_to_report == "RAP") {
-  #map.df <- map.df[which(map.df$RAP),]
+  map.df <- map.df[which(map.df$RAP),]
   map.df$value_cat[map.df$RAP_Central_Asia]              <- "Central Asia"
   map.df$value_cat[map.df$RAP_Eastern_Asia]              <- "Eastern Asia"
   map.df$value_cat[map.df$RAP_Southern_Asia]             <- "Southern Asia"
@@ -728,8 +728,8 @@ if (region_to_report == "RAP") {
   map.df$value_cat[map.df$RAP_United_States]             <- "United States"
 }
 if (region_to_report == "REU"){
-  #map.df <- map.df[which(map.df$REU),]
-  map.df$value_cat[map.df$REU_South_Eastern_Europe]          <- "South Eastern Europe"
+  map.df <- map.df[which(map.df$REU),]
+  map.df$value_cat[map.df$REU_South_Eastern_Europe]   <- "South Eastern Europe"
   map.df$value_cat[map.df$REU_Other_And_EFTA]         <- "Other and EFTA"
   map.df$value_cat[map.df$REU_Caucasus_and_Turkey]    <- "Caucasus and Turkey"
   map.df$value_cat[map.df$REU_CIS_Europe]             <- "CIS Europe"
@@ -738,12 +738,19 @@ if (region_to_report == "REU"){
   map.df$value_cat[map.df$REU_Central_Asia]           <- "Central Asia"
 } 
 if (region_to_report == "RNE"){
-  #map.df <- map.df[which(map.df$RNE),]
+  map.df <- map.df[which(map.df$RNE),]
   map.df$value_cat[map.df$RNE_Gulf_Cooperation_Council_States_and_Yemen] <- "Gulf Cooperation Council States and Yemen"
   map.df$value_cat[map.df$RNE_Other_Near_East_countries]                 <- "Near East countries"
   map.df$value_cat[map.df$RNE_North_Africa]                              <- "North Africa"
 }
-if (region_to_report == "GLO") map.df <- map.df
+if (region_to_report == "GLO"){
+  map.df <- map.df[which(map.df$GLO),]
+  map.df$value_cat[map.df$GLO_Europe]      <- "Europe"
+  map.df$value_cat[map.df$GLO_Asia]        <- "Asia"
+  map.df$value_cat[map.df$GLO_Africa]      <- "Africa"
+  map.df$value_cat[map.df$GLO_Oceania]     <- "Oceania"
+  map.df$value_cat[map.df$GLO_Americas]    <- "Americas"
+}
 if (region_to_report == "COF") map.df <- map.df
 
 
@@ -754,10 +761,10 @@ map_unit <- ""
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
-} else gr_rob <- gr_rob
+# if (region_to_report != "GLO") {
+#   gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
+#   gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+# } else gr_rob <- gr_rob
 
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
@@ -772,14 +779,19 @@ col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
-if (region_to_report == "RAF") namedata <- map.df[which(map.df$RAF),]
-if (region_to_report == "RAP") namedata <- map.df[which(map.df$RAP),]
-if (region_to_report == "REU") namedata <- map.df[which(map.df$REU),]
-if (region_to_report == "RNE") namedata <- map.df[which(map.df$RNE),]
-if (region_to_report == "GLO") namedata <- map.df[!is.na(map.df$SHORT_NAME),]
-if (region_to_report == "COF") namedata <- map.df[!is.na(map.df$SHORT_NAME),]
-
+# if (region_to_report == "RAF") namedata <- map.df[which(map.df$RAF),]
+# if (region_to_report == "RAP") namedata <- map.df[which(map.df$RAP),]
+# if (region_to_report == "REU") namedata <- map.df[which(map.df$REU),]
+# if (region_to_report == "RNE") namedata <- map.df[which(map.df$RNE),]
+# if (region_to_report == "GLO") namedata <- map.df[!is.na(map.df$SHORT_NAME),]
+# if (region_to_report == "COF") namedata <- map.df[!is.na(map.df$SHORT_NAME),]
+# 
+namedata <- the_whole[!is.na(the_whole$SHORT_NAME),]
 cnames <- stats:::aggregate.formula(cbind(long, lat) ~ SHORT_NAME, data=namedata, mean)
+
+# namedata <- the_whole[!is.na(the_whole$ADM0_NAME),]
+# cnames <- stats:::aggregate.formula(cbind(long, lat) ~ ADM0_NAME, data=namedata, mean)
+
 
 # Create the plot
 p <- ggplot(data=map.df, aes(long,lat,group=group))
@@ -787,11 +799,13 @@ p <- ggplot(data=map.df, aes(long,lat,group=group))
 p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
               linetype = "solid", color = col.main2, alpha=.1)
 # Grey for the non-data regions
-p <- p + geom_polygon(fill="grey80", colour = NA)
+p <- p + geom_polygon(data=the_whole, fill="grey80", colour = NA)
 p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
 p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(map.df$value_cat)))[["Sub"]])
-#p <- p + geom_text(data=cnames, aes(long, lat, label = SHORT_NAME, group=SHORT_NAME), size=2, color="black")
+p <- p + geom_text(data=cnames, aes(long, lat, label = SHORT_NAME, group=SHORT_NAME), size=2, color="black")
+#p <- p + geom_text(data=cnames, aes(long, lat, label = ADM0_NAME, group=ADM0_NAME), size=2, color="black")
+
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
@@ -820,7 +834,7 @@ p
 \clearpage
 %\begin{landscape}
 
-<<overview_table, eval=print_overview_map, results='asis'>>=
+<<overview_table, eval=TRUE, results='asis'>>=
 
 # Add region key and subset
 if (region_to_report == "RAF"){
@@ -834,8 +848,9 @@ if (region_to_report == "REU"){
 } 
 if (region_to_report == "RNE"){
   map.df <- map.df[which(map.df$RNE),]
+  
 }
-if (region_to_report == "GLO") map.df <- map.df
+if (region_to_report == "GLO") map.df <- map.df; map.df <- map.df[!is.na(map.df$value_cat),]
 if (region_to_report == "COF") map.df <- map.df
 
 if(length(unique(map.df$value_cat)) >= 6) cat(paste("\\begin{landscape}"))
@@ -847,6 +862,7 @@ tbl <- spread(df, value_cat, SHORT_NAME)
 overview_data <- data.frame(colx = rep("FAO", 284))
 for (col in 1:ncol(tbl)){
   vector <- tbl[[col]][!is.na(tbl[[col]])]
+  vector <- sort(vector)
   if (length(vector) < 284) vector <- c(vector, rep("empty", (284-length(vector))))
   vector <- as.data.frame(vector)
   overview_data <- bind_cols(overview_data,vector)
@@ -865,9 +881,22 @@ rws <- seq(0, (nrow(overview_data)), by = 2)
 col <- rep("\\rowcolor[gray]{0.95}", length(rws))
 bold <- function(x) {paste('{\\textbf{',x,'}}', sep ='')}
 
+if(length(unique(map.df$value_cat)) == 2) alignment <- "lp{1.1in}p{1.1in}"
+if(length(unique(map.df$value_cat)) == 3) alignment <- "lp{.9in}p{.9in}p{.9in}"
+if(length(unique(map.df$value_cat)) == 4) alignment <- "lp{.7in}p{.7in}p{.7in}p{.7in}"
+if(length(unique(map.df$value_cat)) == 5) alignment <- "lp{.5in}p{.6in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(map.df$value_cat)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
+if(length(unique(map.df$value_cat)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(map.df$value_cat)) == 8) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(map.df$value_cat)) == 9) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(map.df$value_cat)) == 10) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(map.df$value_cat)) == 11) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(map.df$value_cat)) == 12) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 
 print(
-  xtable(overview_data, caption = "Countries included"), type = "latex", table.placement = NULL, 
+  xtable(overview_data, caption = "Countries included", 
+         align= alignment), 
+  type = "latex", table.placement = NULL, 
   booktabs = TRUE, 
   include.rownames = FALSE, 
   size = "scriptsize", 

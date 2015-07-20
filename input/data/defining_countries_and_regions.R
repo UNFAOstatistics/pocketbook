@@ -5,7 +5,7 @@
 # The aim is to create a region_key that has FAOST_CODE and SHORT_NAME AND dummy vars for each region and subregion - belongs T/F
 
 # First lets download the raw FAOcountryprofile and begin with the m49 classificaion defined there "UNSD_MACRO_REG","UNSD_SUB_REG" variables
-
+# 
 # library(dplyr)
 # library(stringr)
 # 
@@ -478,6 +478,295 @@ RNE <- c(RNE_Gulf_Cooperation_Council_States_and_Yemen,
          RNE_North_Africa)
 
 
+# ____  _      ___  
+# / ___|| |    / _ \ 
+# | |  _ | |   | | | |
+# | |_| || |___| |_| |
+# \____||_____|\___/ 
+#   
+  
+
+# cat(paste(country_data$M49_Europe, collapse=","))
+# cat(paste(faost_code_data$M49_Europe, collapse=","))
+
+GLO_Europe <- c(284,	 # Åland Islands
+                3,	 # Albania
+                6,	 # Andorra
+                11,	 # Austria
+                57,	 # Belarus
+                255,	 # Belgium
+                15,	 # Belgium-Luxembourg
+                80,	 # Bosnia and Herzegovina
+                27,	 # Bulgaria
+                98,	 # Croatia
+                167,	 # the Czech Republic
+                51,	 # Czechoslovakia
+                54,	 # Denmark
+                63,	 # Estonia
+                64,	 # Faroe Islands
+                67,	 # Finland
+                68,	 # France
+                79,	 # Germany
+                82,	 # Gibraltar
+                84,	 # Greece
+                274,	 # Guernsey
+                94,	 # Holy See
+                97,	 # Hungary
+                99,	 # Iceland
+                104,	 # Ireland
+                264,	 # Isle of Man
+                106,	 # Italy
+                283,	 # Jersey
+                119,	 # Latvia
+                125,	 # Liechtenstein
+                126,	 # Lithuania
+                256,	 # Luxembourg
+                134,	 # Malta
+                140,	 # Monaco
+                273,	 # Montenegro
+                150,	 # the Netherlands
+                162,	 # Norway
+                173,	 # Poland
+                174,	 # Portugal
+                146,	 # Republic of Moldova
+                183,	 # Romania
+                185,	 # the Russian Federation
+                192,	 # San Marino
+                285,	 # Sark
+                272,	 # Serbia
+                186,	 # Serbia and Montenegro
+                199,	 # Slovakia
+                198,	 # Slovenia
+                228,	 # Union of Soviet Socialist Republic
+                203,	 # Spain
+                260,	 # Svalbard and Jan Mayen Islands
+                210,	 # Sweden
+                211,	 # Switzerland
+                154,	 # The former Yugoslav Republic of Macedonia
+                230,	 # Ukraine
+                229,	 # the United Kingdom of Great Britain and Northern Ireland
+                248	 # Yugoslav SFR
+)
+
+# cat(paste(country_data$M49_Asia, collapse=","))
+# cat(paste(faost_code_data$M49_Asia, collapse=","))
+
+GLO_Asia <- c(2,	 # Afghanistan
+              1,	 # Armenia
+              52,	 # Azerbaijan
+              13,	 # Bahrain
+              16,	 # Bangladesh
+              18,	 # Bhutan
+              26,	 # Brunei Darussalam
+              115,	 # Cambodia
+              351,	 # China
+              50,	 # Cyprus
+              116,	 # Democratic People's Republic of Korea
+              73,	 # Georgia
+              100,	 # India
+              101,	 # Indonesia
+              102,	 # Iran (Islamic Republic of)
+              103,	 # Iraq
+              105,	 # Israel
+              110,	 # Japan
+              112,	 # Jordan
+              108,	 # Kazakhstan
+              118,	 # Kuwait
+              113,	 # Kyrgyzstan
+              120,	 # the Lao People's Democratic Republic
+              121,	 # Lebanon
+              131,	 # Malaysia
+              132,	 # Maldives
+              141,	 # Mongolia
+              28,	 # Myanmar
+              149,	 # Nepal
+              299,	 # Occupied Palestinian Territory
+              221,	 # Oman
+              165,	 # Pakistan
+              171,	 # the Philippines
+              179,	 # Qatar
+              117,	 # Republic of Korea
+              194,	 # Saudi Arabia
+              200,	 # Singapore
+              38,	 # Sri Lanka
+              212,	 # the Syrian Arab Republic
+              208,	 # Tajikistan
+              216,	 # Thailand
+              176,	 # Timor-Leste
+              223,	 # Turkey
+              213,	 # Turkmenistan
+              225,	 # the United Arab Emirates
+              235,	 # Uzbekistan
+              237,	 # Viet Nam
+              249,	 # Yemen
+              247,	 # Democratic Yemen
+              246	 # Yemen (old)
+)
+
+# cat(paste(country_data$M49_Africa, collapse=","))
+# cat(paste(faost_code_data$M49_Africa, collapse=","))
+
+GLO_Africa <- c(4,	 # Algeria
+                7,	 # Angola
+                53,	 # Benin
+                20,	 # Botswana
+                233,	 # Burkina Faso
+                29,	 # Burundi
+                32,	 # Cameroon
+                35,	 # Cabo Verde
+                37,	 # Central African Republic
+                39,	 # Chad
+                45,	 # the Comoros
+                46,	 # Congo
+                107,	 # Côte d'Ivoire
+                250,	 # the Democratic Republic of the Congo
+                72,	 # Djibouti
+                59,	 # Egypt
+                61,	 # Equatorial Guinea
+                178,	 # Eritrea
+                238,	 # Ethiopia
+                62,	 # Ethiopia PDR
+                74,	 # Gabon
+                75,	 # the Gambia
+                81,	 # Ghana
+                90,	 # Guinea
+                175,	 # Guinea-Bissau
+                114,	 # Kenya
+                122,	 # Lesotho
+                123,	 # Liberia
+                124,	 # Libya
+                129,	 # Madagascar
+                130,	 # Malawi
+                133,	 # Mali
+                136,	 # Mauritania
+                137,	 # Mauritius
+                270,	 # Mayotte
+                143,	 # Morocco
+                144,	 # Mozambique
+                147,	 # Namibia
+                158,	 # the Niger
+                159,	 # Nigeria
+                182,	 # Réunion
+                184,	 # Rwanda
+                187,	 # Saint Helena, Ascension and Tristan da Cunha
+                193,	 # Sao Tome and Principe
+                195,	 # Senegal
+                196,	 # Seychelles
+                197,	 # Sierra Leone
+                201,	 # Somalia
+                202,	 # South Africa
+                277,	 # South Sudan
+                206,	 # the Sudan
+                276,	 # the Sudan
+                209,	 # Swaziland
+                217,	 # Togo
+                222,	 # Tunisia
+                226,	 # Uganda
+                215,	 # the United Republic of Tanzania
+                205,	 # Western Sahara
+                251,	 # Zambia
+                181	 # Zimbabwe
+)
+
+# cat(paste(country_data$M49_Oceania, collapse=","))
+# cat(paste(faost_code_data$M49_Oceania, collapse=","))
+
+GLO_Oceania <- c(5,	 # American Samoa
+                 10,	 # Australia
+                 47,	 # the Cook Islands
+                 66,	 # Fiji
+                 70,	 # French Polynesia
+                 88,	 # Guam
+                 83,	 # Kiribati
+                 127,	 # the Marshall Islands
+                 145,	 # Micronesia (Federated States of)
+                 148,	 # Nauru
+                 153,	 # New Caledonia
+                 156,	 # New Zealand
+                 160,	 # Niue
+                 161,	 # Norfolk Island
+                 163,	 # Northern Mariana Islands
+                 164,	 # Pacific Islands, Trust Territory of
+                 180,	 # Palau
+                 168,	 # Papua New Guinea
+                 172,	 # Pitcairn Islands
+                 244,	 # Samoa
+                 25,	 # Solomon Islands
+                 218,	 # Tokelau
+                 219,	 # Tonga
+                 227,	 # Tuvalu
+                 155,	 # Vanuatu
+                 243	 # Wallis and Futuna Islands
+)
+
+
+# cat(paste(country_data$M49_Americas, collapse=","))
+# cat(paste(faost_code_data$M49_Americas, collapse=",")
+
+GLO_Americas <- c(258,	 # Anguilla
+                  8,	 # Antigua and Barbuda
+                  9,	 # Argentina
+                  22,	 # Aruba
+                  12,	 # the Bahamas
+                  14,	 # Barbados
+                  23,	 # Belize
+                  17,	 # Bermuda
+                  19,	 # Bolivia (Plurinational State of)
+                  278,	 # Bonaire, Sint Eustatius and Saba
+                  21,	 # Brazil
+                  239,	 # British Virgin Islands
+                  33,	 # Canada
+                  36,	 # Cayman Islands
+                  40,	 # Chile
+                  44,	 # Colombia
+                  48,	 # Costa Rica
+                  49,	 # Cuba
+                  279,	 # Curaçao
+                  55,	 # Dominica
+                  56,	 # the Dominican Republic
+                  58,	 # Ecuador
+                  60,	 # El Salvador
+                  65,	 # Falkland Islands (Malvinas)
+                  69,	 # French Guiana
+                  85,	 # Greenland
+                  86,	 # Grenada
+                  87,	 # Guadeloupe
+                  89,	 # Guatemala
+                  91,	 # Guyana
+                  93,	 # Haiti
+                  95,	 # Honduras
+                  109,	 # Jamaica
+                  135,	 # Martinique
+                  138,	 # Mexico
+                  142,	 # Montserrat
+                  151,	 # Netherlands Antilles
+                  157,	 # Nicaragua
+                  166,	 # Panama
+                  169,	 # Paraguay
+                  170,	 # Peru
+                  177,	 # Puerto Rico
+                  282,	 # Saint Barthélemy
+                  188,	 # Saint Kitts and Nevis
+                  189,	 # Saint Lucia
+                  190,	 # Saint Pierre and Miquelon
+                  191,	 # Saint Vincent and the Grenadines
+                  281,	 # Saint-Martin (French Part)
+                  280,	 # Sint Maarten (Dutch Part)
+                  207,	 # Suriname
+                  220,	 # Trinidad and Tobago
+                  224,	 # Turks and Caicos Islands
+                  231,	 # the United States of America
+                  240,	 # United States Virgin Islands
+                  234,	 # Uruguay
+                  236	 # Venezuela (Bolivarian Republic of)
+)
+
+GLO <- c(GLO_Europe,
+         GLO_Asia,
+         GLO_Africa,
+         GLO_Oceania,
+         GLO_Americas)
+
 ##########################################################################################################
 # Create dummy vars 
 
@@ -517,8 +806,16 @@ region_key$RNE_Gulf_Cooperation_Council_States_and_Yemen  <- ifelse(region_key$F
 region_key$RNE_Other_Near_East_countries                  <- ifelse(region_key$FAOST_CODE %in% RNE_Other_Near_East_countries, TRUE, FALSE)
 region_key$RNE_North_Africa                               <- ifelse(region_key$FAOST_CODE %in% RNE_North_Africa, TRUE, FALSE)
 
-region_key$GLO <- TRUE
-save(region_key, file=paste0(root.dir,"input/data/region_key.RData"))
+region_key$GLO             <- ifelse(region_key$FAOST_CODE %in% GLO, TRUE, FALSE)
+region_key$GLO_Asia        <- ifelse(region_key$FAOST_CODE %in% GLO_Asia, TRUE, FALSE)
+region_key$GLO_Africa      <- ifelse(region_key$FAOST_CODE %in% GLO_Africa, TRUE, FALSE)
+region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE, FALSE)
+region_key$GLO_Oceania     <- ifelse(region_key$FAOST_CODE %in% GLO_Oceania, TRUE, FALSE)
+region_key$GLO_Americas    <- ifelse(region_key$FAOST_CODE %in% GLO_Americas, TRUE, FALSE)
+
+region_key <- region_key[!duplicated(region_key[c("FAOST_CODE")]),]
+
+#save(region_key, file=paste0(root.dir,"input/data/region_key.RData"))
 
 
 
