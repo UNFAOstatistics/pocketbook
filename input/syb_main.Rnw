@@ -414,6 +414,7 @@ p
 \definecolor{part5}{cmyk}{0,0,0,0.5}
 \definecolor{part6}{cmyk}{0,0,0,0.5}
 
+
 %% Set the strip width
 \faoset{stripwidth=7.2mm}
 
@@ -689,7 +690,10 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 \clearpage
 
-<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
+<<overview_map, eval=print_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
+
+#<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
+
 
 # set Robinson projection
 shape <- spTransform(fao_world, CRS("+proj=robin"))
@@ -701,7 +705,7 @@ map.df <- merge(map.points, shape, by = "id")
 
 # Add region key and subset
 if (region_to_report == "RAF"){
-  map.df <- map.df[which(map.df$RAF),]
+  #map.df <- map.df[which(map.df$RAF),]
   map.df$value_cat[map.df$RAF_Central_Africa] <- "Central Africa" 
   map.df$value_cat[map.df$RAF_East_Africa]    <- "East Africa" 
   map.df$value_cat[map.df$RAF_North_Africa]   <- "North Africa" 
@@ -709,7 +713,7 @@ if (region_to_report == "RAF"){
   map.df$value_cat[map.df$RAF_West_Africa]    <- "West Africa" 
 }
 if (region_to_report == "RAP") {
-  map.df <- map.df[which(map.df$RAP),]
+  #map.df <- map.df[which(map.df$RAP),]
   map.df$value_cat[map.df$RAP_Central_Asia]              <- "Central Asia"
   map.df$value_cat[map.df$RAP_Eastern_Asia]              <- "Eastern Asia"
   map.df$value_cat[map.df$RAP_Southern_Asia]             <- "Southern Asia"
@@ -724,7 +728,7 @@ if (region_to_report == "RAP") {
   map.df$value_cat[map.df$RAP_United_States]             <- "United States"
 }
 if (region_to_report == "REU"){
-  map.df <- map.df[which(map.df$REU),]
+  #map.df <- map.df[which(map.df$REU),]
   map.df$value_cat[map.df$REU_South_Eastern_Europe]          <- "South Eastern Europe"
   map.df$value_cat[map.df$REU_Other_And_EFTA]         <- "Other and EFTA"
   map.df$value_cat[map.df$REU_Caucasus_and_Turkey]    <- "Caucasus and Turkey"
@@ -734,7 +738,7 @@ if (region_to_report == "REU"){
   map.df$value_cat[map.df$REU_Central_Asia]           <- "Central Asia"
 } 
 if (region_to_report == "RNE"){
-  map.df <- map.df[which(map.df$RNE),]
+  #map.df <- map.df[which(map.df$RNE),]
   map.df$value_cat[map.df$RNE_Gulf_Cooperation_Council_States_and_Yemen] <- "Gulf Cooperation Council States and Yemen"
   map.df$value_cat[map.df$RNE_Other_Near_East_countries]                 <- "Near East countries"
   map.df$value_cat[map.df$RNE_North_Africa]                              <- "North Africa"
@@ -768,7 +772,13 @@ col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
-namedata <- map.df[!is.na(map.df$SHORT_NAME),]
+if (region_to_report == "RAF") namedata <- map.df[which(map.df$RAF),]
+if (region_to_report == "RAP") namedata <- map.df[which(map.df$RAP),]
+if (region_to_report == "REU") namedata <- map.df[which(map.df$REU),]
+if (region_to_report == "RNE") namedata <- map.df[which(map.df$RNE),]
+if (region_to_report == "GLO") namedata <- map.df[!is.na(map.df$SHORT_NAME),]
+if (region_to_report == "COF") namedata <- map.df[!is.na(map.df$SHORT_NAME),]
+
 cnames <- stats:::aggregate.formula(cbind(long, lat) ~ SHORT_NAME, data=namedata, mean)
 
 # Create the plot
@@ -777,10 +787,11 @@ p <- ggplot(data=map.df, aes(long,lat,group=group))
 p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
               linetype = "solid", color = col.main2, alpha=.1)
 # Grey for the non-data regions
+p <- p + geom_polygon(fill="grey80", colour = NA)
 p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
 p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(map.df$value_cat)))[["Sub"]])
-p <- p + geom_text(data=cnames, aes(long, lat, label = SHORT_NAME, group=SHORT_NAME), size=2, color="black")
+#p <- p + geom_text(data=cnames, aes(long, lat, label = SHORT_NAME, group=SHORT_NAME), size=2, color="black")
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
@@ -807,9 +818,27 @@ p
 
 
 \clearpage
-\begin{landscape}
+%\begin{landscape}
 
 <<overview_table, eval=print_overview_map, results='asis'>>=
+
+# Add region key and subset
+if (region_to_report == "RAF"){
+  map.df <- map.df[which(map.df$RAF),]
+}
+if (region_to_report == "RAP") {
+  map.df <- map.df[which(map.df$RAP),]
+}
+if (region_to_report == "REU"){
+  map.df <- map.df[which(map.df$REU),]
+} 
+if (region_to_report == "RNE"){
+  map.df <- map.df[which(map.df$RNE),]
+}
+if (region_to_report == "GLO") map.df <- map.df
+if (region_to_report == "COF") map.df <- map.df
+
+if(length(unique(map.df$value_cat)) >= 6) cat(paste("\\begin{landscape}"))
 
 df <- map.df[!duplicated(map.df[c("SHORT_NAME")]),]
 df <- df[c("SHORT_NAME","value_cat")]
@@ -830,12 +859,30 @@ for (col in 1:ncol(overview_data)){
 }
 overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data), ]
 # 
+
+library(xtable)
+rws <- seq(0, (nrow(overview_data)), by = 2)
+col <- rep("\\rowcolor[gray]{0.95}", length(rws))
+bold <- function(x) {paste('{\\textbf{',x,'}}', sep ='')}
+
+
 print(
-  xtable(overview_data, caption = "Countries included"), type = "latex", table.placement = NULL, booktabs = TRUE, include.rownames = FALSE, size = "scriptsize", caption.placement = "top"
-)
+  xtable(overview_data, caption = "Countries included"), type = "latex", table.placement = NULL, 
+  booktabs = TRUE, 
+  include.rownames = FALSE, 
+  size = "scriptsize", 
+  caption.placement = "top", 
+  add.to.row = list(pos = as.list(rws), command = col),
+  sanitize.colnames.function=bold
+  )
+
+if(length(unique(map.df$value_cat)) >= 6) cat(paste("\\end{landscape}"))
 @
 
-\end{landscape}
+
+
+
+%\end{landscape}
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
 
