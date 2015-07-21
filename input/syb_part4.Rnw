@@ -17,12 +17,16 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 @
 
 
-%   ____   _        _                                                                                         _        
-%  |  _ \ (_)  ___ | |_  __ _  _ __  _   _    ___  _ __    ___  _ __  __ _  _   _   ___  _   _  _ __   _ __  | | _   _ 
-%  | | | || | / _ \| __|/ _` || '__|| | | |  / _ \| '_ \  / _ \| '__|/ _` || | | | / __|| | | || '_ \ | '_ \ | || | | |
-%  | |_| || ||  __/| |_| (_| || |   | |_| | |  __/| | | ||  __/| |  | (_| || |_| | \__ \| |_| || |_) || |_) || || |_| |
-%  |____/ |_| \___| \__|\__,_||_|    \__, |  \___||_| |_| \___||_|   \__, | \__, | |___/ \__,_|| .__/ | .__/ |_| \__, |
-%                                    |___/                           |___/  |___/              |_|    |_|        |___/ 
+
+% 
+%   _                       _ 
+%  | |     __ _  _ __    __| |
+%  | |    / _` || '_ \  / _` |
+%  | |___| (_| || | | || (_| |
+%  |_____|\__,_||_| |_| \__,_|
+%                             
+% 
+
 
 
 <<P4landTEXT, eval=P4land, short_text_ChartPage=P4land>>=
@@ -37,7 +41,10 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 
 
 <<P4landTOPRIGHT, eval=P4land, top_right_minitable=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,SHORT_NAME,RL.AREA.AGR.HA.SH,RL.AREA.FOR.HA.SH,RL.AREA.OTH.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
+                                                 RL.AREA.AGR.HA.SH,
+                                                 RL.AREA.FOR.HA.SH,
+                                                 RL.AREA.OTH.HA.SH)
 
 # Add region key and subset
 dat <- join(dat,region_key)
@@ -45,21 +52,29 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500),]
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
-dat_plot <- gather(dat, variable, value, 3:5)
-dat_plot$fill[dat_plot$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
-dat_plot$fill[dat_plot$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
-dat_plot$fill[dat_plot$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
+dat <- gather(dat, variable, value, 2:4)
+dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
+dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
+dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 
-ss_data <- dat_plot %>% filter(fill == "Agricultural") %>%   arrange(-value) %>% slice(1:6) %>% select(FAOST_CODE)
-dat_plot <- dat_plot %>% filter(FAOST_CODE %in% ss_data$FAOST_CODE)
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+# AGREGATE
+dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
+
 # reorder regions by the share of agricultural land
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$SHORT_NAME )
+dat_plot$subgroup <- factor(dat_plot$subgroup,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$subgroup )
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
+
+p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -76,7 +91,7 @@ if (region_to_report == "GLO") caption_text <- "Land area"
 
 
 <<P4landLEFT, eval=P4land, left_plot=P4land, fig.height=left_plot_height, fig.width=left_plot_width>>=
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","RL.AREA.ARBL.HA.SHP")]
+dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RL.AREA.ARBL.HA.SHP")]
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
 # Add region key and subset
@@ -89,7 +104,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 # top for this plot
@@ -142,7 +157,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 
 
 <<P4landBOTTOM, eval=P4land, bottom_plot=P4land, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,SHORT_NAME,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
 # Add region key and subset
 dat <- join(dat,region_key)
@@ -150,22 +165,28 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500),]
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
-dat_plot <- gather(dat, variable, value, 3:5)
-dat_plot$fill[dat_plot$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
-dat_plot$fill[dat_plot$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
-dat_plot$fill[dat_plot$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
+dat <- gather(dat, variable, value, 2:4)
+dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
+dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
+dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
 
-ss_data <- dat_plot %>% filter(fill == "Arable") %>%   arrange(-value) %>% slice(1:6) %>% select(FAOST_CODE)
-dat_plot <- dat_plot %>% filter(FAOST_CODE %in% ss_data$FAOST_CODE)
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+# AGREGATE
+dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
 
 # reorder regions by the share of agricultural land
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$SHORT_NAME )
+dat_plot$subgroup <- factor(dat_plot$subgroup,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$subgroup )
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -183,34 +204,28 @@ if (region_to_report == "GLO") caption_text <- "Agricultural area"
 
 
 <<P4landMAP, eval=P4land, map_plot=P4land, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
-dat <- filter(syb.df, Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,RL.AREA.ARBLPRMN.HA.SH)
+dat <- filter(syb.df, Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,
+                                                                    RL.AREA.ARBLPRMN.HA.SH)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
-# dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
-shape <- spTransform(fao_world, CRS("+proj=robin"))
-
-# Fortify the shape
-shape$id <- rownames(shape@data)
-map.points <- fortify(shape, region = "id")
-map.df <- merge(map.points, shape, by = "id")
-
-map.df <- left_join(dat,map.df)
+map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.df <- map.df[which(map.df$RAF),]
-if (region_to_report == "RAP") map.df <- map.df[which(map.df$RAP),]
-if (region_to_report == "REU") map.df <- map.df[which(map.df$REU),]
-if (region_to_report == "RNE") map.df <- map.df[which(map.df$RNE),]
-if (region_to_report == "GLO") map.df <- map.df
-if (region_to_report == "COF") map.df <- map.df
+if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
+if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
+if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
+if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
+if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
+if (region_to_report == "COF") map.plot <- map.plot
 
-cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","RL.AREA.ARBLPRMN.HA.SH")]
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RL.AREA.ARBLPRMN.HA.SH")]
 cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5)
 
-map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
@@ -220,8 +235,8 @@ grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
 if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
 create_map_here() 

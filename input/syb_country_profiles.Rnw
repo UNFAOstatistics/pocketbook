@@ -376,7 +376,7 @@ if (region_to_report == "RAF") M49countries <- M49countries[which(M49countries$R
 if (region_to_report == "RAP") M49countries <- M49countries[which(M49countries$RAP),]
 if (region_to_report == "REU") M49countries <- M49countries[which(M49countries$REU),]
 if (region_to_report == "RNE") M49countries <- M49countries[which(M49countries$RNE),]
-if (region_to_report == "GLO") M49countries <- M49countries
+if (region_to_report == "GLO") M49countries <- M49countries[which(M49countries$GLO),]
 if (region_to_report == "COF") M49countries <- M49countries
 
 

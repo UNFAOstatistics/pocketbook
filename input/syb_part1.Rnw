@@ -53,19 +53,19 @@ dat <- getFAOtoSYB(domainCode = "OA",
                    itemCode = 3010)
 dat2 <- dat$aggregates
 dat <- left_join(dat1,dat2)
-dat <- gather(dat, variable, value, 3:4)
+df <- gather(dat, variable, value, 3:4)
 @
 
 
 <<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 
 # Subset data
-if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE == 5100,]
-if (region_to_report == "RAP") dat <- dat[dat$FAOST_CODE == 5500,]
-if (region_to_report == "REU") dat <- dat[dat$FAOST_CODE == 5400,]
-if (region_to_report == "RNE") dat <- dat[dat$FAOST_CODE == 5300,]
-if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE == 5000,]
-if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
+if (region_to_report == "RAF") dat <- df[df$FAOST_CODE == 5100,]
+if (region_to_report == "RAP") dat <- df[df$FAOST_CODE == 5500,]
+if (region_to_report == "REU") dat <- df[df$FAOST_CODE == 5400,]
+if (region_to_report == "RNE") dat <- df[df$FAOST_CODE == 5300,]
+if (region_to_report == "GLO") dat <- df[df$FAOST_CODE == 5000,]
+if (region_to_report == "COF") dat <- df[df$FAOST_CODE == 5000,]
 
 
 dat$variable <- as.character(dat$variable)
@@ -110,7 +110,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 dat <- arrange(dat, -OA.TPBS.POP.PPL.GR10)
@@ -138,16 +138,16 @@ if (region_to_report == "GLO") caption_text <- "Population, average annual growt
 <<P1overRIGHT, eval=P1over ,right_plot=P1over, fig.height=right_plot_height, fig.width=right_plot_width>>=
 
 # data
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,SHORT_NAME,SP.DYN.LE00.IN)
+dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
 dat <- dat[!is.na(dat$SP.DYN.LE00.IN),]
-dat <- dat[!is.na(dat$SHORT_NAME),]
+
 # Add region key and subset
 dat <- join(dat,region_key)
 if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 dat <- arrange(dat, -SP.DYN.LE00.IN)
@@ -176,29 +176,24 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 
 <<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 # data
-dat <- syb.df %>% filter(Year %in% c(2000:2014),
-                         FAOST_CODE >= 5000) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
 dat <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
-# Add region key and subset
-#dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- filter(dat, FAOST_CODE %in% c(5101,5102,5103,5104,5105))
-if (region_to_report == "RAP") dat <- filter(dat, FAOST_CODE %in% c(5301,5302,5303,5304,5305))
-if (region_to_report == "REU") dat <- filter(dat, FAOST_CODE %in% c(5401,5402,5403,5404,5301))
-if (region_to_report == "RNE") dat <- filter(dat, FAOST_CODE %in% c(5103,5101))
-if (region_to_report == "GLO") dat <- filter(dat, FAOST_CODE %in% c(5301,5302,5303,5304,5305))
-if (region_to_report == "COF") dat <- dat
 
-# remove duplicates
-dat <- dat[!duplicated(dat[c("SHORT_NAME","Year")]),]
 
-dat$OA.TEAPT.POP.PPL.NO <- dat$OA.TEAPT.POP.PPL.NO / 1000000
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
 
-dat_plot <- dat
+# merge data with the region info
+dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
+# AGREGATE
+dat_plot <- dat %>% group_by(subgroup,Year) %>% summarise(OA.TEAPT.POP.PPL.NO = sum(OA.TEAPT.POP.PPL.NO, na.rm=TRUE)) %>% 
+  mutate(OA.TEAPT.POP.PPL.NO = OA.TEAPT.POP.PPL.NO / 1000000)
+
+p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=subgroup))
 p <- p + geom_point() + geom_line()
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 6)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(x="",y="million people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
@@ -216,29 +211,21 @@ if (region_to_report == "GLO") caption_text <- "Total economically active popula
 <<P1overMAP, eval=P1over, map_plot=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
 
-# set Robinson projection
-shape <- spTransform(fao_world, CRS("+proj=robin"))
-
-# Fortify the shape
-shape$id <- rownames(shape@data)
-map.points <- fortify(shape, region = "id")
-map.df <- merge(map.points, shape, by = "id")
-
-map.df <- left_join(dat,map.df)
+map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.df <- map.df[which(map.df$RAF),]
-if (region_to_report == "RAP") map.df <- map.df[which(map.df$RAP),]
-if (region_to_report == "REU") map.df <- map.df[which(map.df$REU),]
-if (region_to_report == "RNE") map.df <- map.df[which(map.df$RNE),]
-if (region_to_report == "GLO") map.df <- map.df
-if (region_to_report == "COF") map.df <- map.df
+if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
+if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
+if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
+if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
+if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
+if (region_to_report == "COF") map.plot <- map.plot
 
-cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","OA.TPR.POP.PPL.SHP")]
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","OA.TPR.POP.PPL.SHP")]
 cat_data$value_cat <- categories(x=cat_data$OA.TPR.POP.PPL.SHP, n=5, method="jenks")
 
-map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
@@ -248,8 +235,8 @@ grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
 if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
 create_map_here()
@@ -278,7 +265,10 @@ short_text <- "While some sectors have been hard hit, agriculture has demonstrat
 @
 
 <<P1econTOPRIGHT, eval=P1econ, top_right_plot=P1econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
+                                                 NV.AGR.TOTL.ZS,
+                                                 NV.IND.TOTL.ZS,
+                                                 NV.SRV.TETC.ZS)
 
 # Add region key and subset
 dat <- join(dat,region_key)
@@ -286,21 +276,28 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500),]
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
-dat_plot <- gather(dat, variable, value, 3:5)
-dat_plot$fill[dat_plot$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
-dat_plot$fill[dat_plot$variable == "NV.IND.TOTL.ZS"] <- "Indurstry"
-dat_plot$fill[dat_plot$variable == "NV.SRV.TETC.ZS"] <- "Services"
+dat <- gather(dat, variable, value, 2:4)
+dat$fill[dat$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
+dat$fill[dat$variable == "NV.IND.TOTL.ZS"] <- "Indurstry"
+dat$fill[dat$variable == "NV.SRV.TETC.ZS"] <- "Services"
 
-ss_data <- dat_plot %>% filter(fill == "Agriculture") %>%   arrange(-value) %>% slice(1:6) %>% select(FAOST_CODE)
-dat_plot <- dat_plot %>% filter(FAOST_CODE %in% ss_data$FAOST_CODE)
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+# AGREGATE
+dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
+
 # reorder regions by the share of agricultural land
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$SHORT_NAME )
+dat_plot$subgroup <- factor(dat_plot$subgroup,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$subgroup )
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -330,7 +327,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 # top for this plot
@@ -367,7 +364,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 top10 <- dat %>% arrange(FAOST_CODE,Year) %>%  
@@ -421,64 +418,27 @@ dl <- na.omit(dl)
 # nominator from syb FAOSTAT
 nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
 
-# Recode aggreagates
-dl$UNSD_MACRO_REG_CODE[dl$UNSD_SUB_REG_CODE == 5206] <- 5205
-dl$UNSD_MACRO_REG_CODE[dl$UNSD_SUB_REG_CODE == 5207] <- 5205
 
-if (region_to_report == "GLO") {
-  
-   #¤ have to manually aggregate the World Bank data
-    m49 <- dl %>% group_by(UNSD_MACRO_REG_CODE,Year) %>% dplyr::summarise(constant_gdp = sum(NY.GDP.MKTP.KD,na.rm=TRUE))
-    names(m49) <- c("FAOST_CODE","Year","constant_gdp")
-    m49world <- dl %>% group_by(Year) %>% dplyr::summarise(constant_gdp = sum(NY.GDP.MKTP.KD,na.rm=TRUE))
-    names(m49world) <- c("Year","constant_gdp")
-    m49world$FAOST_CODE <- 5000
-    dl$UNSD_MACRO_REG_CODE <- NULL
-    dl$UNSD_SUB_REG_CODE <- NULL
-    dat <- rbind(m49,m49world)
-    dat <- merge(nomin,dat,by=c("FAOST_CODE","Year"))
-    dat <- dat[dat$FAOST_CODE %in% c(5000,5100,5300,5205,5400,5500),]
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
 
-}
+# merge data with the region info
+dat <- merge(dl,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-if (region_to_report == "RAF"){
-  # Add region key and subset
-  dat <- join(dl,region_key)
-  dat <- dat[which(dat$RAF),]
-  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
-  names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
-}
-if (region_to_report == "RAP"){
-  # Add region key and subset
-  dat <- join(dl,region_key)
-  dat <- dat[which(dat$RAP),]
-  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
-  names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
-}
-if (region_to_report == "REU"){
-  # Add region key and subset
-  dat <- join(dl,region_key)
-  dat <- dat[which(dat$REU),]
-  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
-  names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
-}
-if (region_to_report == "RNE"){
-  # Add region key and subset
-  dat <- join(dl,region_key)
-  dat <- dat[which(dat$RNE),]
-  dat <- merge(dat,nomin,by=c("FAOST_CODE","SHORT_NAME","Year"),all.x=TRUE)
-  names(dat)[names(dat)=="NY.GDP.MKTP.KD"] <- "constant_gdp"
-}
+#dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(constant_gdp = sum(NY.GDP.MKTP.KD,na.rm=TRUE))
 
+dat <- merge(nomin,dat,by=c("FAOST_CODE","Year"))
 
-dat_plot <- dat %>%  group_by(SHORT_NAME,Year) %>% mutate(share = NV.AGR.TOTL.KD/constant_gdp*100) %>% 
-  ungroup() %>%  arrange(-share)
-top6 <- head(dat_plot[dat_plot$Year == 2013,]$FAOST_CODE,6)
-dat_plot <- dat_plot %>% filter(FAOST_CODE %in% top6)
+dat_plot <- dat %>%  group_by(subgroup,Year) %>% 
+    summarise(constant_gdp    = sum(NY.GDP.MKTP.KD,na.rm=TRUE),
+              agr_value_added = sum(NV.AGR.TOTL.KD,na.rm=TRUE)) %>% 
+    mutate(share = agr_value_added/constant_gdp*100) %>% 
+    ungroup() %>%  
+    arrange(-share)
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
+p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgroup))
 p <- p + geom_line()
-p <- p + scale_color_manual(values = plot_colors(part = 1, 6)[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p
 
@@ -499,29 +459,21 @@ dat <- syb.df %>% filter(Year %in% c(2010:2013), FAOST_CODE < 5000) %>%
                 group_by(FAOST_CODE) %>% dplyr::summarise(NV.AGR.TOTL.ZS = max(NV.AGR.TOTL.ZS)) %>% 
                 ungroup()
 
-# set Robinson projection
-shape <- spTransform(fao_world, CRS("+proj=robin"))
-
-# Fortify the shape
-shape$id <- rownames(shape@data)
-map.points <- fortify(shape, region = "id")
-map.df <- merge(map.points, shape, by = "id")
-
-map.df <- left_join(dat,map.df)
+map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.df <- map.df[which(map.df$RAF),]
-if (region_to_report == "RAP") map.df <- map.df[which(map.df$RAP),]
-if (region_to_report == "REU") map.df <- map.df[which(map.df$REU),]
-if (region_to_report == "RNE") map.df <- map.df[which(map.df$RNE),]
-if (region_to_report == "GLO") map.df <- map.df
-if (region_to_report == "COF") map.df <- map.df
+if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
+if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
+if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
+if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
+if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
+if (region_to_report == "COF") map.plot <- map.plot
 
-cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","NV.AGR.TOTL.ZS")]
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","NV.AGR.TOTL.ZS")]
 cat_data$value_cat <- categories(x=cat_data$NV.AGR.TOTL.ZS, n=5, method="jenks")
 
-map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
@@ -531,8 +483,8 @@ grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
 if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
 create_map_here()

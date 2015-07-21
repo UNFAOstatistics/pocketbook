@@ -142,7 +142,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
@@ -181,7 +181,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 dat <- arrange(dat, -Year, FBS.PCS.PDES.KCD3D)
@@ -260,21 +260,21 @@ shape$id <- rownames(shape@data)
 map.points <- fortify(shape, region = "id")
 map.df <- merge(map.points, shape, by = "id")
 
-map.df <- left_join(dat,map.df)
+map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.df <- map.df[which(map.df$RAF),]
-if (region_to_report == "RAP") map.df <- map.df[which(map.df$RAP),]
-if (region_to_report == "REU") map.df <- map.df[which(map.df$REU),]
-if (region_to_report == "RNE") map.df <- map.df[which(map.df$RNE),]
-if (region_to_report == "GLO") map.df <- map.df
-if (region_to_report == "COF") map.df <- map.df
+if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
+if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
+if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
+if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
+if (region_to_report == "GLO") map.plot <- map.plot
+if (region_to_report == "COF") map.plot <- map.plot
 
-cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","FS.DA.ADESA.PCT3D")]
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.DA.ADESA.PCT3D")]
 cat_data$value_cat <- categories(x=cat_data$FS.DA.ADESA.PCT3D, n=5, manual=FALSE, method="jenks") # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
-map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
@@ -284,8 +284,8 @@ grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
 if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
 create_map_here() 

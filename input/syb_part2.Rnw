@@ -63,6 +63,8 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 <<P2undernuTOPRIGHT, eval=P2undernu, top_right_minitable=P2undernu>>=
 
+# This should be thought twice how to produce it for regional books!
+
 tbl <- df[df$FAOST_CODE %in% c(5000,5852,5851,5100,5300,5205,5500),] # World
 tbl <- tbl[tbl$Year %in% c(1991,2015),]
 library(tidyr)
@@ -100,7 +102,7 @@ if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
 if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
 if (region_to_report == "REU") dat <- dat[which(dat$REU),]
 if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
+if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
 if (region_to_report == "COF") dat <- dat
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
@@ -127,7 +129,7 @@ if (region_to_report == "GLO") caption_text <- "Countries with the highest numbe
 
 <<P2undernuRIGHT, eval=P2undernu ,right_plot=P2undernu, fig.height=right_plot_height, fig.width=right_plot_width>>=
 
-plot(cars)
+p
 
 # Caption
 if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
@@ -143,8 +145,6 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 <<P2undernuBOTTOM, eval=P2undernu, bottom_plot=P2undernu, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 
 dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
-
-
 
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 # Add region key and subset
@@ -164,7 +164,6 @@ dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
-
 p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.NOU.P3D1,color=SHORT_NAME))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
@@ -174,11 +173,11 @@ p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
 p
 
 # Caption
-if (region_to_report == "RAF") caption_text <- "Number of people undernourished"
-if (region_to_report == "RAP") caption_text <- "Number of people undernourished"
-if (region_to_report == "REU") caption_text <- "Number of people undernourished"
-if (region_to_report == "RNE") caption_text <- "Number of people undernourished"
-if (region_to_report == "GLO") caption_text <- "Number of people undernourished"
+if (region_to_report == "RAF") caption_text <- "Number of people undernourished, top 5 countries from region"
+if (region_to_report == "RAP") caption_text <- "Number of people undernourished, top 5 countries from region"
+if (region_to_report == "REU") caption_text <- "Number of people undernourished, top 5 countries from region"
+if (region_to_report == "RNE") caption_text <- "Number of people undernourished, top 5 countries from region"
+if (region_to_report == "GLO") caption_text <- "Number of people undernourished, top 5 countries"
 #if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
 @
 
@@ -201,21 +200,21 @@ shape$id <- rownames(shape@data)
 map.points <- fortify(shape, region = "id")
 map.df <- merge(map.points, shape, by = "id")
 
-map.df <- left_join(dat,map.df)
+map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.df <- map.df[which(map.df$RAF),]
-if (region_to_report == "RAP") map.df <- map.df[which(map.df$RAP),]
-if (region_to_report == "REU") map.df <- map.df[which(map.df$REU),]
-if (region_to_report == "RNE") map.df <- map.df[which(map.df$RNE),]
-if (region_to_report == "GLO") map.df <- map.df
-if (region_to_report == "COF") map.df <- map.df
+if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
+if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
+if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
+if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
+if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
+if (region_to_report == "COF") map.plot <- map.plot
 
-cat_data <- map.df[!duplicated(map.df[c("FAOST_CODE")]),c("FAOST_CODE","FS.OA.POU.PCT3D1")]
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.OA.POU.PCT3D1")]
 cat_data$value_cat <- categories(x=cat_data$FS.OA.POU.PCT3D1, n=5, manual = TRUE, manual_breaks = c(0, 5, 15, 25, 35, 100), method="sd") # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
-map.df <- left_join(map.df,cat_data[c("FAOST_CODE","value_cat")])
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
@@ -225,8 +224,8 @@ grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
 if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.df$lat) & gr_rob$lat <= max(map.df$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.df$long) & gr_rob$long <= max(map.df$long),]
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
 create_map_here() 
