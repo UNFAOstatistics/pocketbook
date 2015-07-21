@@ -19,25 +19,25 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
                        "GLO" # Global
-                           ,"RAP" # Asia and the Pacific
-                           ,"RAF"  # Africa
-                           ,"REU" # Europe and Central Asia
-                            ,"RNE" # Near East and North Africa
+                            ,"RAP" # Asia and the Pacific
+                            ,"RAF"  # Africa
+                            ,"REU" # Europe and Central Asia
+                             ,"RNE" # Near East and North Africa
                       #,"COF" # Coffee
                       )
 
-include_part1 <- T
-include_part2 <- T
-include_part3 <- T
-include_part4 <- T
-include_country_profiles <- T
+include_part1 <- F
+include_part2 <- F
+include_part3 <- F
+include_part4 <- F
+include_country_profiles <- F
 include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # just for troubleshooting
-region_to_report <- "GLO"
+region_to_report <- "RAF"
 
 ############################################################
 ############################################################
@@ -163,24 +163,55 @@ source(paste0(root.dir,"input/data/defining_countries_and_regions.R"))
 # Replace the ad-hoc regional grouping with the one we have created
 myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
 fao_world@data <- fao_world@data[!myvars]
-fao_world@data <- merge(fao_world@data,region_key,by="FAOST_CODE",all.x=TRUE)
+
+# View(region_key[!(region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE),])
+fao_world$FAOST_CODE[fao_world$FAOST_CODE %in% 41] <- 351
+
+attribute_data <- region_key[region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE,]
+
+
+FAOST_CODE <- as.character(fao_world$FAOST_CODE)
+VarX <- rep(NA, 187)
+dat <- data.frame(FAOST_CODE,VarX)
+# then we shall merge this with region_key data.frame
+dat2 <- merge(dat,attribute_data,by="FAOST_CODE", all.x=TRUE)
+## merge this manipulated attribute data with the spatialpolygondataframe
+## rownames
+row.names(dat2) <- dat2$FAOST_CODE
+row.names(fao_world) <- as.character(fao_world$FAOST_CODE)
+## order data
+dat2 <- dat2[order(row.names(dat2)), ]
+fao_world <- fao_world[order(row.names(fao_world)), ]
+## join
+library(maptools)
+dat2$FAOST_CODE <- NULL
+fao_world <- spCbind(fao_world, dat2)
+
+# recode China
+# region_key <- region_key[region_key$FAOST_CODE != 41]
+# region_key$FAOST_CODE[region_key$FAOST_CODE %in% 351] <- 41
+# fao_world@data <- merge(fao_world@data,region_key,by="FAOST_CODE",all.x=TRUE)
+# region_key$FAOST_CODE[region_key$FAOST_CODE %in% 41] <- 351
+
+
+
 
 ##############################################################
 ##############################################################
-## Pppulation threshold
+## Pppulation threshold - currently disabled 
 #############################################################
-pop_threshold <- 120000 # 
-small_countries <- syb.df[syb.df$OA.TPBS.POP.PPL.NO <= pop_threshold,c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
-#small_countries <- small_countries[!duplicated(small_countries[c("FAOST_CODE")]),]
-small_countries <- small_countries[small_countries$Year %in% 2013,]
-small_countries_FAOST_CODE <- unique(small_countries$FAOST_CODE)
-small_countries_FAOST_CODE <- small_countries_FAOST_CODE[!is.na(small_countries_FAOST_CODE)]
-syb.df <- syb.df[!(syb.df$FAOST_CODE %in% small_countries_FAOST_CODE), ]
-
-na_countries <- syb.df[is.na(syb.df$OA.TPBS.POP.PPL.NO),c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
-na_countries <- na_countries[na_countries$Year %in% 2013,]
-na_countries_FAOST_CODE <- unique(na_countries$FAOST_CODE)
-syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
+# pop_threshold <- 120000 # 
+# small_countries <- syb.df[syb.df$OA.TPBS.POP.PPL.NO <= pop_threshold,c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
+# #small_countries <- small_countries[!duplicated(small_countries[c("FAOST_CODE")]),]
+# small_countries <- small_countries[small_countries$Year %in% 2013,]
+# small_countries_FAOST_CODE <- unique(small_countries$FAOST_CODE)
+# small_countries_FAOST_CODE <- small_countries_FAOST_CODE[!is.na(small_countries_FAOST_CODE)]
+# syb.df <- syb.df[!(syb.df$FAOST_CODE %in% small_countries_FAOST_CODE), ]
+# 
+# na_countries <- syb.df[is.na(syb.df$OA.TPBS.POP.PPL.NO),c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
+# na_countries <- na_countries[na_countries$Year %in% 2013,]
+# na_countries_FAOST_CODE <- unique(na_countries$FAOST_CODE)
+# syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 
 ####################################################
 ####################################################
@@ -225,7 +256,7 @@ setwd(paste0(root.dir,"output/process"))
 
 for (region_to_report in regionS_to_report) {
   
-
+  # region_to_report <- regionS_to_report[1]
   
   ### Which spreads
   spreads <- read_csv(paste0(root.dir,"/input/define_spreads.csv"))

@@ -190,6 +190,7 @@ RAP_Central_Asia <- c(108, # Kazakhstan
 # cat(paste(faost_code_data$M49_Eastern.Asia, collapse=","))  
 
 RAP_Eastern_Asia  <- c(351, # China
+                       #41, # China
                        116, # Democratic People's Republic of Korea
                        110, # Japan
                        141, # Mongolia
@@ -560,6 +561,7 @@ GLO_Asia <- c(2,	 # Afghanistan
               26,	 # Brunei Darussalam
               115,	 # Cambodia
               351,	 # China
+              #41, # China
               50,	 # Cyprus
               116,	 # Democratic People's Republic of Korea
               73,	 # Georgia
@@ -771,6 +773,9 @@ GLO <- c(GLO_Europe,
 # Create dummy vars 
 
 region_key <- FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME","SHORT_NAME")]
+# include only countries listed above
+region_key <- region_key[region_key$FAOST_CODE %in% GLO,]
+
 region_key$RAF                <- ifelse(region_key$FAOST_CODE %in% RAF, TRUE, FALSE)
 region_key$RAF_Central_Africa <- ifelse(region_key$FAOST_CODE %in% RAF_Central_Africa, TRUE, FALSE) 
 region_key$RAF_East_Africa    <- ifelse(region_key$FAOST_CODE %in% RAF_East_Africa, TRUE, FALSE) 
@@ -813,7 +818,7 @@ region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE
 region_key$GLO_Oceania     <- ifelse(region_key$FAOST_CODE %in% GLO_Oceania, TRUE, FALSE)
 region_key$GLO_Americas    <- ifelse(region_key$FAOST_CODE %in% GLO_Americas, TRUE, FALSE)
 
-region_key <- region_key[!duplicated(region_key[c("FAOST_CODE")]),]
+#region_key <- region_key[!duplicated(region_key[c("FAOST_CODE")]),]
 
 #save(region_key, file=paste0(root.dir,"input/data/region_key.RData"))
 
