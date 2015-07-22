@@ -288,14 +288,18 @@ subgrouping <- function(region_to_report){
   df <- region_key[c("FAOST_CODE","SHORT_NAME",names(region_key)[grep(region_to_report, names(region_key))])]
   df <- df[which(df[[region_to_report]]),]
   df$subgroup <- NA
+  df$subgroup2 <- NA
   for (var in names(df)[grep(paste0(region_to_report,"_"), names(df))]) {
-    for(t in unique(df[[var]])) {
-      df$subgroup <- ifelse(df[[var]],var,df$subgroup)
-    }
+      
+        df$subgroup <- ifelse(df[[var]] & is.na(df$subgroup),var,df$subgroup) 
+        df$subgroup2 <- ifelse(df[[var]] & !is.na(df$subgroup),var,df$subgroup2)
   }
+  df$subgroup3 <- ifelse(df$subgroup2 != df$subgroup, paste(df$subgroup, df$subgroup2, sep="_AND_"), df$subgroup)
+  df$subgroup <- NULL
+  df$subgroup2 <- NULL
+  names(df)[names(df)=="subgroup3"] <- "subgroup"
   df$subgroup <- str_replace_all(df$subgroup, paste0(region_to_report,"_"), "")
   df$subgroup <- str_replace_all(df$subgroup, "_", " ")
-  
   if (region_to_report == "RNE") {
     df$subgroup[df$subgroup %in% "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\nCouncil States\nand Yemen"
     df$subgroup[df$subgroup %in% "Other Near East countries"] <- "Other Near East\ncountries"
