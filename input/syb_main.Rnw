@@ -163,10 +163,10 @@ knit_hooks$set(map_plot = function(before, options, envir) {
   
   if (options$map_plot == FALSE) return()
      if (before) {
-       return("\\begin{chart} \n")
+       return("\\begin{figure} \n")
      } else {
        
-      return(paste0("\\caption{",caption_text,"} \n","\\end{chart}"))
+      return(paste0("\\caption{",caption_text,"} \n","\\end{figure}"))
     }
 
 })
@@ -252,9 +252,9 @@ if (region_to_report == "REU") map.out.extra  <- 'angle=90'
 
 # RNE
 
-if (region_to_report == "RNE") map.fig.width  <- 6
+if (region_to_report == "RNE") map.fig.width  <- 7
 if (region_to_report == "RNE") map.fig.height  <- 4
-if (region_to_report == "RNE") map.out.height  <- ".7\\columnwidth"
+if (region_to_report == "RNE") map.out.height  <- ".6\\columnwidth"
 if (region_to_report == "RNE") map.out.extra  <- 'angle=0'
 
 # GLO
@@ -293,8 +293,14 @@ subgrouping <- function(region_to_report){
       df$subgroup <- ifelse(df[[var]],var,df$subgroup)
     }
   }
-  df$subgroup <- str_replace_all(df$subgroup, region_to_report, "")
+  df$subgroup <- str_replace_all(df$subgroup, paste0(region_to_report,"_"), "")
   df$subgroup <- str_replace_all(df$subgroup, "_", " ")
+  
+  if (region_to_report == "RNE") {
+    df$subgroup[df$subgroup %in% "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\nCouncil States\nand Yemen"
+    df$subgroup[df$subgroup %in% "Other Near East countries"] <- "Other Near East\ncountries"
+  }
+  
   df[c("FAOST_CODE","subgroup")]
 }
 
@@ -350,6 +356,8 @@ p <- p + theme(legend.position = c(0.05,0.05),
                           axis.text = element_blank(), 
                           axis.title = element_blank(), 
                           axis.ticks = element_blank())
+if (region_to_report == "REU") p <- p + coord_cartesian(xlim=c(-4290114,13198767,ylim=c(1965387,8184223)))
+if (region_to_report == "RNE") p <- p + coord_cartesian(xlim=c(-4078415,1783566,ylim=c(29258,6247852)))
 p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
                                      title.position = "top", 
                                      title.hjust=0))

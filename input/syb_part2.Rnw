@@ -98,12 +98,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2014-2016")
@@ -153,12 +148,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
@@ -204,12 +194,7 @@ map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
-if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
-if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
-if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
-if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
-if (region_to_report == "COF") map.plot <- map.plot
+dat <- dat[which(dat[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.OA.POU.PCT3D1")]
 cat_data$value_cat <- categories(x=cat_data$FS.OA.POU.PCT3D1, n=5, manual = TRUE, manual_breaks = c(0, 5, 15, 25, 35, 100), method="sd") # manualBreaks = c(0, 5, 15, 25, 35, 100),

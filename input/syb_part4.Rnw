@@ -40,7 +40,7 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 @
 
 
-<<P4landTOPRIGHT, eval=P4land, top_right_minitable=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+<<P4landTOPRIGHT, eval=P4land, top_right_plot=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  RL.AREA.AGR.HA.SH,
                                                  RL.AREA.FOR.HA.SH,
@@ -48,12 +48,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
 
 # Add region key and subset
 dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
@@ -100,12 +95,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RL.AREA.ARBL.HA.SHP)
@@ -161,12 +151,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,R
 
 # Add region key and subset
 dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
@@ -204,7 +189,7 @@ if (region_to_report == "GLO") caption_text <- "Agricultural area"
 
 
 <<P4landMAP, eval=P4land, map_plot=P4land, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
-dat <- filter(syb.df, Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                                     RL.AREA.ARBLPRMN.HA.SH)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
@@ -213,14 +198,8 @@ dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 # set Robinson projection
 map.plot <- left_join(dat,map.df)
 
-# Add region key and subset
-
-if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
-if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
-if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
-if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
-if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
-if (region_to_report == "COF") map.plot <- map.plot
+# Subset
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RL.AREA.ARBLPRMN.HA.SH")]
 cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5)

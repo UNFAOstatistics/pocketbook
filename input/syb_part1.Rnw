@@ -41,7 +41,7 @@ spread_title <- "Overview"
 short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
 @
 
-<<P1overData,results='hide'>>=
+<<P1overData,results='hide', cache=TRUE>>=
 # Retrieve data
 library(FAOSTAT)
 dat <- getFAOtoSYB(domainCode = "OA",
@@ -59,20 +59,26 @@ df <- gather(dat, variable, value, 3:4)
 
 <<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 
-# Subset data
-if (region_to_report == "RAF") dat <- df[df$FAOST_CODE == 5100,]
-if (region_to_report == "RAP") dat <- df[df$FAOST_CODE == 5500,]
-if (region_to_report == "REU") dat <- df[df$FAOST_CODE == 5400,]
-if (region_to_report == "RNE") dat <- df[df$FAOST_CODE == 5300,]
-if (region_to_report == "GLO") dat <- df[df$FAOST_CODE == 5000,]
-if (region_to_report == "COF") dat <- df[df$FAOST_CODE == 5000,]
+# old way
 
+# Subset data
+# if (region_to_report == "RAF") dat <- df[df$FAOST_CODE == 5100,]
+# if (region_to_report == "RAP") dat <- df[df$FAOST_CODE == 5500,]
+# if (region_to_report == "REU") dat <- df[df$FAOST_CODE == 5400,]
+# if (region_to_report == "RNE") dat <- df[df$FAOST_CODE == 5300,]
+# if (region_to_report == "GLO") dat <- df[df$FAOST_CODE == 5000,]
+# if (region_to_report == "COF") dat <- df[df$FAOST_CODE == 5000,]
+# 
+
+dat <- df %>% select(FAOST_CODE,Year,variable,value)
+dat <- join(dat,region_key)
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat$variable <- as.character(dat$variable)
 dat$variable[dat$variable == "OA_3010_551"] <- "Urban population"
 dat$variable[dat$variable == "OA_3010_561"] <- "Rural population"
 
-dat$value <- dat$value / 1000000
+dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
 
 # print data for technical report
 #datatable(dat)
@@ -106,12 +112,8 @@ dat <- ungroup(dat)
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.GR10),]
 # Add region key and subset
 dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -OA.TPBS.POP.PPL.GR10)
 top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
@@ -272,17 +274,13 @@ dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
 
 # Add region key and subset
 dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
 dat$fill[dat$variable == "NV.IND.TOTL.ZS"] <- "Indurstry"
 dat$fill[dat$variable == "NV.SRV.TETC.ZS"] <- "Services"
+
 
 # DEFAULT GROUPING
 df <- subgrouping(region_to_report = region_to_report)
@@ -323,12 +321,8 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+#and subset
+dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -EA.PRD.AGRI.KD)
@@ -360,12 +354,7 @@ dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 # Add region key and subset
 dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 top10 <- dat %>% arrange(FAOST_CODE,Year) %>%  
               #mutate(Growth=NV.AGR.TOTL.KD/lag(NV.AGR.TOTL.KD)-1) %>% # dplyr_group does not give NA for first years of groups... hence
@@ -405,7 +394,7 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 @
 
 
-<<P1econBOTTOM, eval=P1econ, bottom_plot=P1econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P1econBOTTOM_data, cache=TRUE>>=
 # data
 # Constant GDP from World Bank
 library(WDI)
@@ -417,7 +406,11 @@ dl <- na.omit(dl)
 
 # nominator from syb FAOSTAT
 nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
+@
 
+
+
+<<P1econBOTTOM, eval=P1econ, bottom_plot=P1econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 
 # DEFAULT GROUPING
 df <- subgrouping(region_to_report = region_to_report)
@@ -440,6 +433,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgro
 p <- p + geom_line()
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="percent", x="")
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -463,12 +457,7 @@ map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
-if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
-if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
-if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
-if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
-if (region_to_report == "COF") map.plot <- map.plot
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","NV.AGR.TOTL.ZS")]
 cat_data$value_cat <- categories(x=cat_data$NV.AGR.TOTL.ZS, n=5, method="jenks")

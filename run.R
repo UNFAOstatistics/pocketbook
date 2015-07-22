@@ -18,7 +18,7 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 ## Chapters to include
 
 regionS_to_report <- c(
-                       "GLO" # Global
+                      "GLO" # Global
                             ,"RAP" # Asia and the Pacific
                             ,"RAF"  # Africa
                              ,"REU" # Europe and Central Asia
@@ -26,15 +26,15 @@ regionS_to_report <- c(
                       #,"COF" # Coffee
                       )
 
-include_part1 <- T
-include_part2 <- T
+include_part1 <- F
+include_part2 <- F
 include_part3 <- T
-include_part4 <- T
-include_country_profiles <- T
+include_part4 <- F
+include_country_profiles <- F
 include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -346,7 +346,8 @@ RAP_Western_Asia  <- c(1, # Armenia
                        225, # the United Arab Emirates
                        249, # Yemen
                        247, # Democratic Yemen
-                       246) # Yemen (old)
+                       246 # Yemen (old)
+)
 
 
 # cat(paste(country_data$M49_Australia.and.New.Zealand, collapse=","))
@@ -354,7 +355,8 @@ RAP_Western_Asia  <- c(1, # Armenia
 
 RAP_Austriala_and_New_Zealand  <- c(10,  # Australia
                                     156, # New Zealand
-                                    161) # Norfolk Island
+                                    161 # Norfolk Island
+)
 
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
@@ -365,7 +367,8 @@ RAP_Melanesia  <- c(66, # Fiji
                     153, # New Caledonia
                     168, # Papua New Guinea
                     25, # Solomon Islands
-                    155) # Vanuatu
+                    155 # Vanuatu
+)
 
 # cat(paste(country_data$M49_Micronesia, collapse=","))
 # cat(paste(faost_code_data$M49_Micronesia, collapse=","))  
@@ -378,7 +381,8 @@ RAP_Micronesia  <- c(88, # Guam
                      148, # Nauru
                      163, # Northern Mariana Islands
                      164, # Pacific Islands
-                     180) # Trust Territory of,Palau
+                     180 # Trust Territory of,Palau
+)
 
 
 # cat(paste(country_data$M49_Polynesia, collapse=","))
@@ -393,7 +397,8 @@ RAP_Polynesia  <- c(5, # American Samoa
                     218, # Tokelau
                     219, # Tonga
                     227, # Tuvalu
-                    243) # Wallis and Futuna Islands
+                    243 # Wallis and Futuna Islands
+)
 
 
 RAP_Russian_Federation  <- c(185)
@@ -420,7 +425,8 @@ RAP <- c(RAP_Central_Asia,
          RAP_Polynesia,
          RAP_Russian_Federation,
          RAP_France,
-         RAP_United_States)
+         RAP_United_States
+         )
 
 
 # ____  _____ _   _ 
@@ -868,6 +874,9 @@ GLO <- c(GLO_Europe,
          GLO_Africa,
          GLO_Oceania,
          GLO_Americas)
+
+GLO <- GLO[!duplicated(GLO)]
+
 
 ##########################################################################################################
 # Create dummy vars 

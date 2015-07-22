@@ -297,7 +297,6 @@ syb.df <- merge(syb.df,water_vars.df,by=c("FAOST_CODE","Year"), all.x=TRUE)
 M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>% 
   select(FAOST_CODE, SHORT_NAME) %>%  arrange(SHORT_NAME) %>%  na.omit()
 
-source(paste0(root.dir,"input/code/table/ZsanitizeToLatex.R"))
 
 ## Sanitize the country names
 # This is odd now
