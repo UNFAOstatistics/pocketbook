@@ -32,7 +32,7 @@ spread_title <- "Dietary energy supply"
 short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
 @
 
-<<P3desData,results='hide'>>=
+<<P3desData,results='hide', cache=TRUE>>=
 # Retrieve data
 dat <- read.csv(paste0(data.dir,"/Data/Raw/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
 metdat <- read.csv(paste0(data.dir,"Data/Raw/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
@@ -58,12 +58,15 @@ dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
 dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
 
 df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
+
+# For despie graphs icn2.df
+load(paste0(root.dir,"../ICN2PB14/Data/Processed/icn2.RData"))
 @
 
 
 <<P3desTOPRIGHT, eval=P3des, top_right_plot=P3des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 
-load(paste0(root.dir,"../ICN2PB14/Data/Processed/icn2.RData"))
+
 ## Plot
 despie <- icn2.df[icn2.df$Year %in% c(2009:2011), c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.SDES.CRLS.PCT3D","FBS.SDES.SR.PCT3D","FBS.SDES.SS.PCT3D","FBS.SDES.MO.PCT3D","FBS.SDES.VOAF.PCT3D","FBS.SDES.MEB.PCT3D")]
 #despie <- despie[despie$FAOST_CODE %in% "5000",]
@@ -87,13 +90,27 @@ d$FAOST_CODE <- as.numeric(levels(d$FAOST_CODE))[d$FAOST_CODE]
 
 dat <- join(d,region_key)
 
+## option 1
+pop <- syb.df %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO) %>%  group_by(FAOST_CODE) %>% filter(Year == 2014)
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- join(dat[c("FAOST_CODE","var","mean")],pop)
+dat <- dat[!is.na(dat$mean),]
+dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
+
+dat <- dat %>% group_by(var) %>%  summarise(wmean = weighted.mean(mean, OA.TPBS.POP.PPL.NO, na.rm=FALSE)) %>% 
+             mutate(mean = wmean/sum(wmean)*100)
+
+## option old
+
 # Subset data
-if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE %in% 5100,]
-if (region_to_report == "RAP") dat <- dat[dat$FAOST_CODE %in% 5500,]
-if (region_to_report == "REU") dat <- dat[dat$FAOST_CODE %in% 5400,]
-if (region_to_report == "RNE") dat <- dat[dat$FAOST_CODE %in% 5300,]
-if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE %in% 5000,]
-if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE %in% 5000,]
+# if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE %in% 5100,]
+# if (region_to_report == "RAP") dat <- dat[dat$FAOST_CODE %in% 5500,]
+# if (region_to_report == "REU") dat <- dat[dat$FAOST_CODE %in% 5400,]
+# if (region_to_report == "RNE") dat <- dat[dat$FAOST_CODE %in% 5300,]
+# if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE %in% 5000,]
+# if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE %in% 5000,]
 
 dat_plot <- dat  %>% mutate(sum = sum(mean)) 
 
@@ -138,12 +155,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat$region_to_report),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
@@ -177,12 +189,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat$region_to_report),]
 
 dat <- arrange(dat, -Year, FBS.PCS.PDES.KCD3D)
 bottom2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
@@ -217,12 +224,8 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat
-if (region_to_report == "COF") dat <- dat
+
+dat <- dat[which(dat$region_to_report),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
@@ -252,24 +255,12 @@ dat <- df[df$Year %in%  2015 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.DA
 dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
-# set Robinson projection
-shape <- spTransform(fao_world, CRS("+proj=robin"))
-
-# Fortify the shape
-shape$id <- rownames(shape@data)
-map.points <- fortify(shape, region = "id")
-map.df <- merge(map.points, shape, by = "id")
-
 map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
-if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
-if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
-if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
-if (region_to_report == "GLO") map.plot <- map.plot
-if (region_to_report == "COF") map.plot <- map.plot
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.DA.ADESA.PCT3D")]
 cat_data$value_cat <- categories(x=cat_data$FS.DA.ADESA.PCT3D, n=5, manual=FALSE, method="jenks") # manualBreaks = c(0, 5, 15, 25, 35, 100),
