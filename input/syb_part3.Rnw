@@ -155,7 +155,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-dat <- dat[which(dat$region_to_report),]
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
@@ -189,7 +189,7 @@ dat <- join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-dat <- dat[which(dat$region_to_report),]
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, FBS.PCS.PDES.KCD3D)
 bottom2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
@@ -225,7 +225,7 @@ dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 
-dat <- dat[which(dat$region_to_report),]
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)

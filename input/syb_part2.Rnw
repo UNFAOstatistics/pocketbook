@@ -193,8 +193,7 @@ map.df <- merge(map.points, shape, by = "id")
 map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
-
-dat <- dat[which(dat[[region_to_report]]),]
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.OA.POU.PCT3D1")]
 cat_data$value_cat <- categories(x=cat_data$FS.OA.POU.PCT3D1, n=5, manual = TRUE, manual_breaks = c(0, 5, 15, 25, 35, 100), method="sd") # manualBreaks = c(0, 5, 15, 25, 35, 100),

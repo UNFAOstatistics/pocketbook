@@ -371,13 +371,7 @@ M49countries <-
 # Add region key and subset
 M49countries <- join(M49countries,region_key)
 
-if (region_to_report == "RAF") M49countries <- M49countries[which(M49countries$RAF),]
-if (region_to_report == "RAP") M49countries <- M49countries[which(M49countries$RAP),]
-if (region_to_report == "REU") M49countries <- M49countries[which(M49countries$REU),]
-if (region_to_report == "RNE") M49countries <- M49countries[which(M49countries$RNE),]
-if (region_to_report == "GLO") M49countries <- M49countries[which(M49countries$GLO),]
-if (region_to_report == "COF") M49countries <- M49countries
-
+M49countries <- M49countries[which(M49countries[[region_to_report]]),]
 
 
 # Indicators --------------------------------------------------------------
@@ -392,14 +386,14 @@ if (region_to_report == "REU") indicators.df <- read.csv(paste0(root.dir,"input/
                                                          na.strings = "", stringsAsFactors = FALSE)
 if (region_to_report == "RNE") indicators.df <- read.csv(paste0(root.dir,"input/data/RNE/country_profile_indicators.csv"), 
                                                          na.strings = "", stringsAsFactors = FALSE)
-if (region_to_report == "GLO") indicators.df <- read.csv(paste0(root.dir,"input/data/RAF/country_profile_indicators.csv"), 
+if (region_to_report == "GLO") indicators.df <- read.csv(paste0(root.dir,"input/data/GLO/country_profile_indicators.csv"), 
                                                          na.strings = "", stringsAsFactors = FALSE)
-if (region_to_report == "COF") indicators.df <- read.csv(paste0(root.dir,"input/data/RAF/country_profile_indicators.csv"), 
+if (region_to_report == "COF") indicators.df <- read.csv(paste0(root.dir,"input/data/COF/country_profile_indicators.csv"), 
                                                          na.strings = "", stringsAsFactors = FALSE)
 
 dim(M49countries)
 
-source(paste0(root.dir,"input/code/table/tableInfo.R"))
+# source(paste0(root.dir,"input/code/table/tableInfo.R"))
 
 
 ## Create the new .tex file
