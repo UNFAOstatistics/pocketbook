@@ -230,40 +230,43 @@ map.out.extra   <- NULL
 
 
 # RAF
-
 if (region_to_report == "RAF") map.fig.width  <- 6
 if (region_to_report == "RAF") map.fig.height  <- 8
 if (region_to_report == "RAF") map.out.height  <- "1.5\\columnwidth"
 if (region_to_report == "RAF") map.out.extra  <- 'angle=0'
 
 # RAP
-
 if (region_to_report == "RAP") map.fig.width  <- 12
 if (region_to_report == "RAP") map.fig.height  <- 8
 if (region_to_report == "RAP") map.out.width  <- "1.7\\columnwidth"
 if (region_to_report == "RAP") map.out.extra  <- 'angle=90'
 
 # REU
-
 if (region_to_report == "REU") map.fig.width  <- 12
 if (region_to_report == "REU") map.fig.height  <- 6
 if (region_to_report == "REU") map.out.width  <- "2\\columnwidth"
 if (region_to_report == "REU") map.out.extra  <- 'angle=90'
 
 # RNE
-
 if (region_to_report == "RNE") map.fig.width  <- 7
 if (region_to_report == "RNE") map.fig.height  <- 4
 if (region_to_report == "RNE") map.out.height  <- ".6\\columnwidth"
 if (region_to_report == "RNE") map.out.extra  <- 'angle=0'
 
-# GLO
+# LAC
+if (region_to_report == "LAC") map.fig.width  <- 8
+if (region_to_report == "LAC") map.fig.height  <- 12
+if (region_to_report == "LAC") map.out.width  <- "1.2\\columnwidth"
+if (region_to_report == "LAC") map.out.extra  <- 'angle=0'
 
+
+# GLO
 if (region_to_report == "GLO") map.fig.width  <- 12
 if (region_to_report == "GLO") map.fig.height  <- 8
 if (region_to_report == "GLO") map.out.width  <- "1.7\\columnwidth"
 if (region_to_report == "GLO") map.out.extra  <- 'angle=90'
 
+# COF
 if (region_to_report == "COF") 
 if (region_to_report == "COF") 
 if (region_to_report == "COF") 
@@ -284,22 +287,67 @@ map.df$FAOST_CODE[map.df$FAOST_CODE %in% 41] <- 351
 
 # Function for subgroups
 
-subgrouping <- function(region_to_report){
+#` This is a bit complicated one. However, the idea is construct a data.frame
+# with FAOST_CODE and subgroup columns that tells into which subgroup a particular country
+# belongs to. If a country belongs to multiple groups, you want something like
+# gather = TRUE
+# Russia | Asia and the Pacific
+# Russia | Europe and the Central Asia
+# Or gather = FALSE
+# Russia | Asia and the Pacific AND Europe and the Central Asia
+
+subgrouping <- function(region_to_report, gather=TRUE){
   df <- region_key[c("FAOST_CODE","SHORT_NAME",names(region_key)[grep(region_to_report, names(region_key))])]
   df <- df[which(df[[region_to_report]]),]
-  df$subgroup <- NA
-  df$subgroup2 <- NA
-  for (var in names(df)[grep(paste0(region_to_report,"_"), names(df))]) {
-      
-        df$subgroup <- ifelse(df[[var]] & is.na(df$subgroup),var,df$subgroup) 
-        df$subgroup2 <- ifelse(df[[var]] & !is.na(df$subgroup),var,df$subgroup2)
+  # subregions for this region
+  subregion <- names(df)[grep(paste0(region_to_report,"_"), names(df))]
+  n_subregion <- length(subregion)
+  # create n_subregions number of empty vars
+  if (n_subregion >= 1) df$subgroup1 <- ""
+  if (n_subregion >= 2) df$subgroup2 <- ""
+  if (n_subregion >= 3) df$subgroup3 <- ""
+  if (n_subregion >= 4) df$subgroup4 <- ""
+  if (n_subregion >= 5) df$subgroup5 <- ""
+  if (n_subregion >= 6) df$subgroup6 <- ""
+  if (n_subregion >= 7) df$subgroup7 <- ""
+  if (n_subregion >= 8) df$subgroup8 <- ""
+  if (n_subregion >= 9) df$subgroup9 <- ""
+  if (n_subregion >= 10) df$subgroup10 <- ""
+  if (n_subregion >= 11) df$subgroup11 <- ""
+  if (n_subregion >= 12) df$subgroup12 <- ""
+  if (n_subregion >= 13) df$subgroup13 <- ""
+  if (n_subregion >= 14) df$subgroup14 <- ""
+  if (n_subregion >= 15) df$subgroup15 <- ""
+  if (n_subregion >= 16) stop("more than 16 subregions. Current code cannot handle it!")
+  
+  for (i in 1:n_subregion) {
+        df[[paste0("subgroup",i)]] <- ifelse(df[[subregion[i]]] & df[[paste0("subgroup",i)]] == "",
+                                             subregion[i],
+                                             df[[paste0("subgroup",i)]]) 
   }
-  df$subgroup3 <- ifelse(df$subgroup2 != df$subgroup, paste(df$subgroup, df$subgroup2, sep="_AND_"), df$subgroup)
-  df$subgroup <- NULL
-  df$subgroup2 <- NULL
-  names(df)[names(df)=="subgroup3"] <- "subgroup"
-  df$subgroup <- str_replace_all(df$subgroup, paste0(region_to_report,"_"), "")
-  df$subgroup <- str_replace_all(df$subgroup, "_", " ")
+  for (i in 1:n_subregion) {
+          df[[paste0("subgroup",i)]] <- str_replace_all(df[[paste0("subgroup",i)]], paste0(region_to_report,"_"), "")
+          df[[paste0("subgroup",i)]] <- str_replace_all(df[[paste0("subgroup",i)]], "_", " ")
+  }
+  df$subgroup <- ""
+  if (gather){
+    df_x <- data.frame()
+    for (i in 1:n_subregion) {
+          FAOST_CODE <- ifelse(df[[paste0("subgroup",i)]] != "",df$FAOST_CODE, NA)
+          subgroup <- ifelse(df[[paste0("subgroup",i)]] != "",df[[paste0("subgroup",i)]], NA)
+          df_x <- rbind(df_x,data.frame(FAOST_CODE,subgroup))
+    }
+    df <- na.omit(df_x)
+  } else {
+      for (i in 1:n_subregion) {
+          df$subgroup <- paste(df$subgroup, df[[paste0("subgroup",i)]], sep="+")
+        }
+        df$subgroup <- str_trim(df$subgroup)
+        df$subgroup <- str_replace_all(df$subgroup, "^\\++", "")
+        df$subgroup <- str_replace_all(df$subgroup, "\\++$", "")
+        df$subgroup <- str_replace_all(df$subgroup, "\\++", " AND ")
+    }
+  
   if (region_to_report == "RNE") {
     df$subgroup[df$subgroup %in% "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\nCouncil States\nand Yemen"
     df$subgroup[df$subgroup %in% "Other Near East countries"] <- "Other Near East\ncountries"
@@ -362,6 +410,7 @@ p <- p + theme(legend.position = c(0.05,0.05),
                           axis.ticks = element_blank())
 if (region_to_report == "REU") p <- p + coord_cartesian(xlim=c(-4290114,13198767,ylim=c(1965387,8184223)))
 if (region_to_report == "RNE") p <- p + coord_cartesian(xlim=c(-4078415,1783566,ylim=c(29258,6247852)))
+if (region_to_report == "LAC") p <- p + coord_cartesian(xlim=c(-14078415,-1078415,ylim=c(29258,0)))
 p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
                                      title.position = "top", 
                                      title.hjust=0))
@@ -558,6 +607,7 @@ if (region_to_report == "RAF") subtitle <- "Africa \n\n Food and Agriculture"
 if (region_to_report == "RAP") subtitle <- "Asia and the Pacific \n\n Food and Agriculture"
 if (region_to_report == "REU") subtitle <- "Europe and Central Asia \n\n Food and Agriculture"
 if (region_to_report == "RNE") subtitle <- "Near East and North Africa \n\n Food and Agriculture"
+if (region_to_report == "LAC") subtitle <- "Latin America and \n\n the Caribbean"
 if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
 if (region_to_report == "GLO") subtitle <- ""
 
@@ -736,7 +786,7 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 the_whole   <- map.df # for mapping the grey areas
 
-df <- subgrouping(region_to_report = region_to_report)
+df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 
 # merge data with the region info
 overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
@@ -805,23 +855,11 @@ p
 <<overview_table, eval=TRUE, results='asis'>>=
 
 # Add region key and subset
-if (region_to_report == "RAF"){
-  overview.df <- overview.df[which(overview.df$RAF),]
-}
-if (region_to_report == "RAP") {
-  overview.df <- overview.df[which(overview.df$RAP),]
-}
-if (region_to_report == "REU"){
-  overview.df <- overview.df[which(overview.df$REU),]
-} 
-if (region_to_report == "RNE"){
-  overview.df <- overview.df[which(overview.df$RNE),]
-  
-}
+if (region_to_report != "GLO") overview.df <- overview.df[which(overview.df[[region_to_report]]),]
 if (region_to_report == "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
 if (region_to_report == "COF") overview.df <- overview.df
 
-if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\begin{landscape}"))
+if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}"))
 
 df <- overview.df[!duplicated(overview.df[c("SHORT_NAME")]),]
 df <- df[c("SHORT_NAME","subgroup")]
