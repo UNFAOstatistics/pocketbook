@@ -116,6 +116,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Arable land per capita, top 20 African countries"
 if (region_to_report == "RAP") caption_text <- "Arable land per capita, top 20 Asian and the Pacific countries"
 if (region_to_report == "REU") caption_text <- "Arable land per capita, top 20 European and Central Asian countries"
@@ -137,6 +138,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Arable land per capita, bottom 20 African countries"
 if (region_to_report == "RAP") caption_text <- "Arable land per capita, bottom 20 Asian and the Pacific countries"
 if (region_to_report == "REU") caption_text <- "Arable land per capita, bottom 20 European and Central Asian countries"
@@ -179,6 +181,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Agricultural area"
 if (region_to_report == "RAP") caption_text <- "Agricultural area"
 if (region_to_report == "REU") caption_text <- "Agricultural area"
@@ -221,6 +224,7 @@ if (region_to_report != "GLO") {
 create_map_here() 
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Cropland per capita, ha/cap"
 if (region_to_report == "RAP") caption_text <- "Cropland per capita, ha/cap"
 if (region_to_report == "REU") caption_text <- "Cropland per capita, ha/cap"

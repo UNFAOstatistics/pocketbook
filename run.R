@@ -16,25 +16,25 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 
 ## Chapters to include
-
 regionS_to_report <- c(
                       "GLO" # Global
-                            ,"RAP" # Asia and the Pacific
-                            ,"RAF"  # Africa
-                             ,"REU" # Europe and Central Asia
-                              ,"RNE" # Near East and North Africa
+                              ,"RAP" # Asia and the Pacific
+                             ,"RAF"  # Africa
+                              ,"REU" # Europe and Central Asia
+                               ,"RNE" # Near East and North Africa
+                               "LAC" # Latin America and the Caribbean
                       #,"COF" # Coffee
                       )
 
-include_part1 <- F
-include_part2 <- F
+include_part1 <- T
+include_part2 <- T
 include_part3 <- T
-include_part4 <- F
-include_country_profiles <- F
+include_part4 <- T
+include_country_profiles <- T
 include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- F
+upload_to_server <- T
 
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -502,6 +502,7 @@ REU_CIS_Europe <- c(57, # Belarus
 REU_Central_Eastern_Europe <- c(27,  # Bulgaria
                                 167, # the Czech Republic
                                 51,  # Czechoslovakia
+                                63, # Estonia
                                 97,  # Hungary
                                 119, # Latvia
                                 126, # Lithuania
@@ -578,11 +579,79 @@ RNE_North_Africa <- c(4,   # Algeria
                       124, # Libya
                       136, # Mauritania
                       143, # Morocco
+                      #67, #Finland
                       222) # Tunisia
 
 RNE <- c(RNE_Gulf_Cooperation_Council_States_and_Yemen,
          RNE_Other_Near_East_countries,
          RNE_North_Africa)
+
+
+# _        _    ____ 
+# | |      / \  / ___|
+# | |     / _ \| |    
+# | |___ / ___ \ |___ 
+# |_____/_/   \_\____|
+#   
+
+LAC_Caribbean <- c(8, # Antigua and Barbuda
+                   12, # Bahamas
+                   14, # Barbados
+                   49, # Cuba
+                   55, # Dominica
+                   56, # Dominican Republic
+                   86, # Grenada
+                   93, # Haiti
+                   188, # Saint Kitts and Nevis
+                   189, # Saint Lucia
+                   191, # Saint Vincent and the Grenadines
+                   220  # Trinidad and Tobago 
+)
+
+
+
+LAC_Central_America <- c(23, # Belize
+                         48, # Costa Rica
+                         60, # El Salvador
+                         89, # Guatemala
+                         95, # Honduras
+                         138, # Mexico
+                         157, # Nicaragua
+                         166 # Panama
+)
+
+
+LAC_South_America <- c(9, # Argentina
+                       19, # Bolivia (Plurinational State of)
+                       21, # Brazil
+                       40, # Chile
+                       44, # Colombia
+                       58, # Ecuador
+                       91, # Guyana
+                       169, # Paraguay
+                       170, # Peru
+                       207, # Suriname
+                       234, # Uruguay
+                       236 # Venezuela (Bolivarian Republic of)
+
+)
+
+
+
+LAC_North_America <- c(33, # Canada
+                       #67, #Finland
+                       231 # United States of America
+)
+
+
+LAC <- c(LAC_Caribbean,
+         LAC_Central_America,
+         LAC_South_America,
+         LAC_North_America)
+  
+
+
+
 
 
 # ____  _      ___  
@@ -869,13 +938,22 @@ GLO_Americas <- c(258,	 # Anguilla
                   236	 # Venezuela (Bolivarian Republic of)
 )
 
+
+GLO_Europe <- REU
+GLO_Asia <- RAP
+GLO_Africa <- RAF
+GLO_North_Africa_and_Middle_East <- RNE
+GLO_Latin_America_and_the_Caribbean <- LAC
+
 GLO <- c(GLO_Europe,
          GLO_Asia,
          GLO_Africa,
-         GLO_Oceania,
-         GLO_Americas)
+         GLO_North_Africa_and_Middle_East,
+         GLO_Latin_America_and_the_Caribbean
+#          GLO_Oceania,
+#          GLO_Americas
+         )
 
-GLO <- GLO[!duplicated(GLO)]
 
 
 ##########################################################################################################
@@ -920,13 +998,27 @@ region_key$RNE_Gulf_Cooperation_Council_States_and_Yemen  <- ifelse(region_key$F
 region_key$RNE_Other_Near_East_countries                  <- ifelse(region_key$FAOST_CODE %in% RNE_Other_Near_East_countries, TRUE, FALSE)
 region_key$RNE_North_Africa                               <- ifelse(region_key$FAOST_CODE %in% RNE_North_Africa, TRUE, FALSE)
 
+# region_key$GLO             <- ifelse(region_key$FAOST_CODE %in% GLO, TRUE, FALSE)
+# region_key$GLO_Asia        <- ifelse(region_key$FAOST_CODE %in% GLO_Asia, TRUE, FALSE)
+# region_key$GLO_Africa      <- ifelse(region_key$FAOST_CODE %in% GLO_Africa, TRUE, FALSE)
+# region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE, FALSE)
+# region_key$GLO_Oceania     <- ifelse(region_key$FAOST_CODE %in% GLO_Oceania, TRUE, FALSE)
+# region_key$GLO_Americas    <- ifelse(region_key$FAOST_CODE %in% GLO_Americas, TRUE, FALSE)
+
+
+region_key$LAC                  <- ifelse(region_key$FAOST_CODE %in% LAC, TRUE, FALSE)
+region_key$LAC_Caribbean        <- ifelse(region_key$FAOST_CODE %in% LAC_Caribbean, TRUE, FALSE)
+region_key$LAC_Central_America  <- ifelse(region_key$FAOST_CODE %in% LAC_Central_America, TRUE, FALSE)
+region_key$LAC_South_America    <- ifelse(region_key$FAOST_CODE %in% LAC_South_America, TRUE, FALSE)
+region_key$LAC_North_America    <- ifelse(region_key$FAOST_CODE %in% LAC_North_America, TRUE, FALSE)
+
+
 region_key$GLO             <- ifelse(region_key$FAOST_CODE %in% GLO, TRUE, FALSE)
 region_key$GLO_Asia        <- ifelse(region_key$FAOST_CODE %in% GLO_Asia, TRUE, FALSE)
 region_key$GLO_Africa      <- ifelse(region_key$FAOST_CODE %in% GLO_Africa, TRUE, FALSE)
 region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE, FALSE)
-region_key$GLO_Oceania     <- ifelse(region_key$FAOST_CODE %in% GLO_Oceania, TRUE, FALSE)
-region_key$GLO_Americas    <- ifelse(region_key$FAOST_CODE %in% GLO_Americas, TRUE, FALSE)
-
+region_key$GLO_North_Africa_and_Middle_East <- ifelse(region_key$FAOST_CODE %in% GLO_North_Africa_and_Middle_East, TRUE, FALSE)
+region_key$GLO_Latin_America_and_the_Caribbean <- ifelse(region_key$FAOST_CODE %in% GLO_Latin_America_and_the_Caribbean, TRUE, FALSE)
 
 
 # Replace the ad-hoc regional grouping with the one we have created
@@ -940,7 +1032,7 @@ attribute_data <- region_key[region_key$FAOST_CODE %in% fao_world@data$FAOST_COD
 
 
 FAOST_CODE <- as.character(fao_world$FAOST_CODE)
-VarX <- rep(NA, 187)
+VarX <- rep(NA, length(FAOST_CODE))
 dat <- data.frame(FAOST_CODE,VarX)
 # then we shall merge this with region_key data.frame
 dat2 <- merge(dat,attribute_data,by="FAOST_CODE", all.x=TRUE)
@@ -1079,6 +1171,7 @@ flist <- list.files(paste0(root.dir,"output/process"),
  # Exclude the covers etc files from being copied
 flist <- flist[!grepl("cover", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("disclaimer", flist, ignore.case = TRUE)]
+flist <- flist[!grepl("book\\.", flist, ignore.case = TRUE)]
 # Exclude the plain syb_main.pdf
 flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]
 

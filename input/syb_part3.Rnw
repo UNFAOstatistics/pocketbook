@@ -135,6 +135,7 @@ p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
 if (region_to_report == "RAP") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
 if (region_to_report == "REU") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
@@ -171,6 +172,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Dietary energy supply, top 20 countries in 2015"
 if (region_to_report == "RAP") caption_text <- "Dietary energy supply, top 20 countries in 2015"
 if (region_to_report == "REU") caption_text <- "Dietary energy supply, top 20 countries in 2015"
@@ -205,6 +207,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
 if (region_to_report == "RAP") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
 if (region_to_report == "REU") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
@@ -239,6 +242,7 @@ p <- p + labs(x="",y="kcal/cap/day")
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Dietary energy supply"
 if (region_to_report == "RAP") caption_text <- "Dietary energy supply"
 if (region_to_report == "REU") caption_text <- "Dietary energy supply"
@@ -282,6 +286,7 @@ if (region_to_report != "GLO") {
 create_map_here() 
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Average dietary energy supply adequacy"
 if (region_to_report == "RAP") caption_text <- "Average dietary energy supply adequacy"
 if (region_to_report == "REU") caption_text <- "Average dietary energy supply adequacy"

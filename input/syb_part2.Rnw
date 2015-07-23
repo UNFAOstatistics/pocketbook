@@ -114,6 +114,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "African countries with the highest number of undernourished in 2014-16"
 if (region_to_report == "RAP") caption_text <- "Asian and the Pacific countries with the highest number of undernourished in 2014-16"
 if (region_to_report == "REU") caption_text <- "European countries with the highest number of undernourished in 2014-16"
@@ -127,6 +128,7 @@ if (region_to_report == "GLO") caption_text <- "Countries with the highest numbe
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
@@ -163,6 +165,7 @@ p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Number of people undernourished, top 5 countries from region"
 if (region_to_report == "RAP") caption_text <- "Number of people undernourished, top 5 countries from region"
 if (region_to_report == "REU") caption_text <- "Number of people undernourished, top 5 countries from region"
@@ -215,6 +218,7 @@ if (region_to_report != "GLO") {
 create_map_here() 
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
 if (region_to_report == "RAP") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
 if (region_to_report == "REU") caption_text <- "Prevalence of undernourishment (percent, 2014-16)"

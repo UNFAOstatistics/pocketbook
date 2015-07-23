@@ -93,6 +93,7 @@ p
 
 # Caption
 
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Africa rural and urban population"
 if (region_to_report == "RAP") caption_text <- "Asia and Pacific rural and urban population"
 if (region_to_report == "REU") caption_text <- "Europe and Central Asia rural and urban population"
@@ -129,6 +130,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Population, average annual growth (2004-2014)"
 if (region_to_report == "RAP") caption_text <- "Population, average annual growth (2004-2014)"
 if (region_to_report == "REU") caption_text <- "Population, average annual growth (2004-2014)"
@@ -145,12 +147,7 @@ dat <- dat[!is.na(dat$SP.DYN.LE00.IN),]
 
 # Add region key and subset
 dat <- join(dat,region_key)
-if (region_to_report == "RAF") dat <- dat[which(dat$RAF),]
-if (region_to_report == "RAP") dat <- dat[which(dat$RAP),]
-if (region_to_report == "REU") dat <- dat[which(dat$REU),]
-if (region_to_report == "RNE") dat <- dat[which(dat$RNE),]
-if (region_to_report == "GLO") dat <- dat[which(dat$GLO),]
-if (region_to_report == "COF") dat <- dat
+dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SP.DYN.LE00.IN)
 top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
@@ -166,6 +163,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
@@ -201,6 +199,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Total economically active population in Africa (2000 to 2014)"
 if (region_to_report == "RAP") caption_text <- "Total economically active population in Asia (2000 to 2014)"
 if (region_to_report == "REU") caption_text <- "Total economically active population in Europe and Central Asia (2000 to 2014)"
@@ -217,12 +216,7 @@ map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-if (region_to_report == "RAF") map.plot <- map.plot[which(map.plot$RAF),]
-if (region_to_report == "RAP") map.plot <- map.plot[which(map.plot$RAP),]
-if (region_to_report == "REU") map.plot <- map.plot[which(map.plot$REU),]
-if (region_to_report == "RNE") map.plot <- map.plot[which(map.plot$RNE),]
-if (region_to_report == "GLO") map.plot <- map.plot[which(map.plot$GLO),]
-if (region_to_report == "COF") map.plot <- map.plot
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","OA.TPR.POP.PPL.SHP")]
 cat_data$value_cat <- categories(x=cat_data$OA.TPR.POP.PPL.SHP, n=5, method="jenks")
@@ -244,6 +238,7 @@ if (region_to_report != "GLO") {
 create_map_here()
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Rural population, share of total population (2014)"
 if (region_to_report == "RAP") caption_text <- "Rural population, share of total population (2014)"
 if (region_to_report == "REU") caption_text <- "Rural population, share of total population (2014)"
@@ -303,6 +298,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
 if (region_to_report == "RAP") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
 if (region_to_report == "REU") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
@@ -384,6 +380,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
@@ -437,6 +434,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Value added in agriculture as share of GDP"
 if (region_to_report == "RAP") caption_text <- "Value added in agriculture as share of GDP"
 if (region_to_report == "REU") caption_text <- "Value added in agriculture as share of GDP"
@@ -479,6 +477,7 @@ if (region_to_report != "GLO") {
 create_map_here()
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
 if (region_to_report == "RAP") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
 if (region_to_report == "REU") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
