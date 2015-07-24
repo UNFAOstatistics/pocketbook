@@ -2,13 +2,13 @@
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
-syb_part <- 4
+syb_part <- 5
 
-## Part 4
-colPart4 <- plot_colors(part = syb_part, 12)
-col.main1 <- colPart4[["Main"]][1]
+## Part 5
+colPart5 <- plot_colors(part = syb_part, 12)
+col.main1 <- colPart5[["Main"]][1]
 ## color for the grid
-col.main2 <- colPart4[["Main"]][2]
+col.main2 <- colPart5[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
@@ -29,18 +29,18 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 
 
 
-<<P5extra1TEXT, eval=P5extra1, short_text_ChartPage=P5extra1>>=
-spread_title <- "Land"
+<<P5coffeeTEXT, eval=P5coffee, short_text_ChartPage=P5coffee>>=
+spread_title <- "Coffee production"
 short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
 @
 
-<<P5extra1Data,results='hide'>>=
+<<P5coffeeData,results='hide'>>=
 
 
 @
 
 
-<<P5extra1TOPRIGHT, eval=P5extra1, top_right_plot=P5extra1, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+<<P5coffeeTOPRIGHT, eval=P5coffee, top_right_plot=P5coffee, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  RL.AREA.AGR.HA.SH,
                                                  RL.AREA.FOR.HA.SH,
@@ -77,6 +77,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
+caption_text <- "This is the default caption if no region spesific is defined"
 if (region_to_report == "RAF") caption_text <- "Land area"
 if (region_to_report == "RAP") caption_text <- "Land area"
 if (region_to_report == "REU") caption_text <- "Land area"
@@ -85,7 +86,7 @@ if (region_to_report == "GLO") caption_text <- "Land area"
 @
 
 
-<<P5extra1LEFT, eval=P5extra1, left_plot=P5extra1, fig.height=left_plot_height, fig.width=left_plot_width>>=
+<<P5coffeeLEFT, eval=P5coffee, left_plot=P5coffee, fig.height=left_plot_height, fig.width=left_plot_width>>=
 dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RL.AREA.ARBL.HA.SHP")]
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
@@ -125,7 +126,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 c
 
 @
 
-<<P5extra1RIGHT, eval=P5extra1 ,right_plot=P5extra1, fig.height=right_plot_height, fig.width=right_plot_width>>=
+<<P5coffeeRIGHT, eval=P5coffee ,right_plot=P5coffee, fig.height=right_plot_height, fig.width=right_plot_width>>=
 dat_plot <- bottom20
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
@@ -148,7 +149,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 @
 
 
-<<P5extra1BOTTOM, eval=P5extra1, bottom_plot=P5extra1, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P5coffeeBOTTOM, eval=P5coffee, bottom_plot=P5coffee, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
 # Add region key and subset
@@ -191,7 +192,7 @@ if (region_to_report == "GLO") caption_text <- "Agricultural area"
 @
 
 
-<<P5extra1MAP, eval=P5extra1, map_plot=P5extra1, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+<<P5coffeeMAP, eval=P5coffee, map_plot=P5coffee, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                                     RL.AREA.ARBLPRMN.HA.SH)
 
@@ -215,11 +216,7 @@ map_unit <- "Percent"
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
-# crop the grid
-if (region_to_report != "GLO") {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
-} else gr_rob <- gr_rob
+
 
 create_map_here() 
 

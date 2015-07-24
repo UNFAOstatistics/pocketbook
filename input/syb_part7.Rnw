@@ -1,14 +1,14 @@
-<<part6_setup, eval=include_part6>>=
+<<part7_setup, eval=include_part6>>=
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
-syb_part <- 6
+syb_part <- 7
 
-## Part 4
-colPart6 <- plot_colors(part = syb_part, 12)
+## Part 7
+colPart7 <- plot_colors(part = syb_part, 12)
 col.main1 <- colPart6[["Main"]][1]
 ## color for the grid
-col.main2 <- colPart6[["Main"]][2]
+col.main2 <- colPart7[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
@@ -31,18 +31,18 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 
 
 
-<<P6coffeeTEXT, eval=P6coffee, short_text_ChartPage=P6coffee>>=
-spread_title <- "Coffee consumption"
+<<P7coffeeTEXT, eval=P7coffee, short_text_ChartPage=P7coffee>>=
+spread_title <- "Happiness and coffee"
 short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
 @
 
-<<P6coffeeData,results='hide'>>=
+<<P7coffeeData,results='hide'>>=
 
 
 @
 
 
-<<P6coffeeTOPRIGHT, eval=P6coffee, top_right_plot=P6coffee, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+<<P7coffeeTOPRIGHT, eval=P7coffee, top_right_plot=P7coffee, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  RL.AREA.AGR.HA.SH,
                                                  RL.AREA.FOR.HA.SH,
@@ -88,7 +88,7 @@ if (region_to_report == "GLO") caption_text <- "Land area"
 @
 
 
-<<P6coffeeLEFT, eval=P6coffee, left_plot=P6coffee, fig.height=left_plot_height, fig.width=left_plot_width>>=
+<<P7coffeeLEFT, eval=P7coffee, left_plot=P7coffee, fig.height=left_plot_height, fig.width=left_plot_width>>=
 dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RL.AREA.ARBL.HA.SHP")]
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
@@ -129,7 +129,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 c
 
 @
 
-<<P6coffeeRIGHT, eval=P6coffee ,right_plot=P6coffee, fig.height=right_plot_height, fig.width=right_plot_width>>=
+<<P7coffeeRIGHT, eval=P7coffee ,right_plot=P7coffee, fig.height=right_plot_height, fig.width=right_plot_width>>=
 dat_plot <- bottom20
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
@@ -153,7 +153,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 @
 
 
-<<P6coffeeBOTTOM, eval=P6coffee, bottom_plot=P6coffee, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P7coffeeBOTTOM, eval=P7coffee, bottom_plot=P7coffee, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
 # Add region key and subset
@@ -197,7 +197,7 @@ if (region_to_report == "GLO") caption_text <- "Agricultural area"
 @
 
 
-<<P6coffeeMAP, eval=P6coffee, map_plot=P6coffee, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+<<P7coffeeMAP, eval=P7coffee, map_plot=P7coffee, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                                     RL.AREA.ARBLPRMN.HA.SH)
 
@@ -221,7 +221,6 @@ map_unit <- "Percent"
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
-
 
 create_map_here() 
 

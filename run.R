@@ -30,13 +30,14 @@ include_part1 <- F
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
-include_part5 <- F
+include_part5 <- T
 include_part6 <- T
+include_part7 <- T
 include_country_profiles <- F
 include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- F
+upload_to_server <- T
 
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -963,18 +964,200 @@ GLO <- c(GLO_Europe,
 # \____|\___/ |_|    
 #   
   
+COF_Coffee_producers_April <- c(7, # Angola
+                                19, # Bolivia
+                                21, # Brazil
+                                29, # Burundi
+                                58, # Ecuador
+                                101, # Indonesia
+                                129, # Madagascar
+                                130, # Malawi
+                                168, # Papua New Guinea
+                                169, # Paraguay
+                                170, # Peru
+                                184, # Rwanda
+                                176, # Timor-Leste
+                                181 # Zimbabwe
+                                )
 
-COF_Europe <- REU
-COF_Asia <- RAP
-COF_Africa <- RAF
-COF_North_Africa_and_Middle_East <- RNE
-COF_Latin_America_and_the_Caribbean <- LAC
+COF_Coffee_producers_July <- c(46, # the Republic of the Congo
+                               #19, # the Democratic Republic of the Congo
+                               49, # Cuba
+                               56, # Dominican Republic
+                               93, # Haiti
+                               171, # Philippines
+                               215, # Tanzania
+                               251 # Zambia
+                               )
 
-COF <- c(COF_Europe,
-         COF_Asia,
-         COF_Africa,
-         COF_North_Africa_and_Middle_East,
-         COF_Latin_America_and_the_Caribbean
+
+COF_Coffee_producers_October <- c(53, # Benin
+                                  32, # Cameroon
+                                  37, # Central African Republic
+                                  44, # Colombia
+                                  250, # the Democratic Republic of the Congo
+                                  48, # Costa Rica
+                                  107, # Côte d'Ivoire
+                                  60, # El Salvador
+                                  61, # Equatorial Guinea
+                                  238, # Ethiopia
+                                  74, # Gabon
+                                  81, # Ghana
+                                  89, # Guatemala
+                                  90, # Guinea
+                                  91, # Guyana
+                                  95, # Honduras
+                                  100, # India
+                                  109, # Jamaica
+                                  114, # Kenya
+                                  120, # the Lao People's Democratic Republic
+                                  123, # Liberia
+                                  138, # Mexico
+                                  149, # Nepal
+                                  157, # Nicaragua
+                                  159, # Nigeria
+                                  166, # Panama
+                                  197, # Sierra Leone
+                                  38, # Sri Lanka
+                                  216, # Thailand
+                                  217, # Togo
+                                  197, # Trinidad
+                                  220, # Trinidad & Tobago
+                                  226, # Uganda
+                                  236, # Venezuela
+                                  237, # Vietnam
+                                  246 # Yemen
+                                  )
+
+
+COF_Nonmember_countries_Africa <- c(4,	# Algeria
+                                    20,	# Botswana
+                                    233,	# Burkina Faso
+                                    35,	# Cape Verde
+                                    39,	# Chad
+                                    45,	# Comoros
+                                    72,	# Djibouti
+                                    59,	# Egypt
+                                    75,	# Gambia
+                                    175,	# Guinea-Bissau
+                                    122,	# Lesotho
+                                    124,	# Libya
+                                    133,	# Mali
+                                    136,	# Mauritania
+                                    137,	# Mauritius
+                                    143,	# Morocco
+                                    144,	# Mozambique
+                                    147,	# Namibia
+                                    158,	# Niger
+                                    193,	# Sao Tome and Principe
+                                    195,	# Senegal
+                                    196,	# Seychelles
+                                    201,	# Somalia
+                                    202,	# South Africa, Rep.of
+                                    276,	# Sudan
+                                    209	# Swaziland
+                                    )
+
+COF_Nonmember_countries_Asia_and_Oceania <- c(
+                                                2,	# Afghanistan
+                                                1,	 # Armenia
+                                                10,	 # Australia
+                                                52,	 # Azerbaijan
+                                                13,	 # Bahrain
+                                                16,	 # Bangladesh
+                                                26,	 # Brunei Darussalam
+                                                115,	 # Cambodia
+                                                351,	 # China, People's Republic of
+                                                47,	 # Cook Islands
+                                                66,	 # Fiji
+                                                102,	 # Iran, Islamic Rep. of
+                                                103,	 # Iraq
+                                                105,	 # Israel
+                                                112,	 # Jordan
+                                                108,	 # Kazakhstan
+                                                83,	 # Kiribati
+                                                116,	 # Korea, Dem. People's Rep. of
+                                                117,	 # Korea, Rep. of
+                                                118,	 # Kuwait
+                                                113,	 # Kyrgyz Republic
+                                                121,	 # Lebanon
+                                                131,	 # Malaysia
+                                                141,	 # Mongolia
+                                                28,	 # Myanmar
+                                                156,	 # New Zealand
+                                                221,	 # Oman
+                                                165,	 # Pakistan
+                                                179,	 # Qatar
+                                                244,	 # Samoa
+                                                194,	 # Saudi Arabia
+                                                200,	 # Singapore
+                                                25,	 # Solomon Islands
+                                                212,	 # Syrian Arab Republic
+                                                NA,	 # Taiwan
+                                                219,	 # Tonga
+                                                225,	 # United Arab Emirates
+                                                225,	 #    United Arab Emirates
+                                                155	 # Vanuatu
+)
+
+COF_Nonmember_countries_Caribbean <- c(258, # Anguila
+                                      8, # Antigua
+                                      22, # Aruba
+                                      12, # Bahamas
+                                      14, # Barbados
+                                      36, # Cayman
+                                      55, # Dominica
+                                      86, # Grenada
+                                      142, # Montserrat
+                                      278, # Bonaire, Sint Eustatius and Saba
+                                      177, # Puerto Rico
+                                      188, # Saint Kitts and Nevis
+                                      189, # Saint Lucia
+                                      191, # Saint Vincent
+                                      239 # Virgin Is
+)
+
+COF_Nonmember_countries_Central_America_and_Mexico <- c(23, # Belize
+                                                         17 # Bermuda
+
+)
+
+COF_Nonmember_countries_Europe <- c(3, # Albania
+                                    57, # Belarus
+                                    80, # Bosnia
+                                    73, # Georgia
+                                    82, # Gibraltar
+                                    94, # Holy see
+                                    99, # Iceland
+                                    154, # Macedonia
+                                    146, # Moldova
+                                    273, # Montenegro
+                                    272, # Serbia
+                                    185, # Russian Fede
+                                    230 # Ukraine
+
+)
+
+COF_Nonmember_countries_North_America <- c(33 # Canada
+)
+
+COF_Nonmember_countries_South_America <- c(234, # Uruguya
+                                           40, # Chile
+                                           207, # Suriname
+                                           234 # Uruguay
+)
+
+
+COF <- c(COF_Coffee_producers_April,
+         COF_Coffee_producers_July,
+         COF_Coffee_producers_October,
+         COF_Nonmember_countries_Africa,
+         COF_Nonmember_countries_Asia_and_Oceania,
+         COF_Nonmember_countries_Caribbean,
+         COF_Nonmember_countries_Central_America_and_Mexico,
+         COF_Nonmember_countries_Europe,
+         COF_Nonmember_countries_North_America,
+         COF_Nonmember_countries_South_America
 )
 
 
@@ -1043,13 +1226,19 @@ region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE
 region_key$GLO_North_Africa_and_Middle_East <- ifelse(region_key$FAOST_CODE %in% GLO_North_Africa_and_Middle_East, TRUE, FALSE)
 region_key$GLO_Latin_America_and_the_Caribbean <- ifelse(region_key$FAOST_CODE %in% GLO_Latin_America_and_the_Caribbean, TRUE, FALSE)
 
+region_key$COF                          <- ifelse(region_key$FAOST_CODE %in% COF, TRUE, FALSE)
+region_key$COF_Coffee_producers_April   <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_April, TRUE, FALSE)
+region_key$COF_Coffee_producers_July    <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_July, TRUE, FALSE)
+region_key$COF_Coffee_producers_October <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_October, TRUE, FALSE)
 
-region_key$COF             <- ifelse(region_key$FAOST_CODE %in% COF, TRUE, FALSE)
-region_key$COF_Asia        <- ifelse(region_key$FAOST_CODE %in% COF_Asia, TRUE, FALSE)
-region_key$COF_Africa      <- ifelse(region_key$FAOST_CODE %in% COF_Africa, TRUE, FALSE)
-region_key$COF_Europe      <- ifelse(region_key$FAOST_CODE %in% COF_Europe, TRUE, FALSE)
-region_key$COF_North_Africa_and_Middle_East <- ifelse(region_key$FAOST_CODE %in% COF_North_Africa_and_Middle_East, TRUE, FALSE)
-region_key$COF_Latin_America_and_the_Caribbean <- ifelse(region_key$FAOST_CODE %in% COF_Latin_America_and_the_Caribbean, TRUE, FALSE)
+region_key$COF_Nonmember_countries_Africa <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Africa, TRUE, FALSE)
+region_key$COF_Nonmember_countries_Asia_and_Oceania <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Asia_and_Oceania, TRUE, FALSE)
+region_key$COF_Nonmember_countries_Caribbean <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Caribbean, TRUE, FALSE)
+region_key$COF_Nonmember_countries_Central_America_and_Mexico <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Central_America_and_Mexico, TRUE, FALSE)
+region_key$COF_Nonmember_countries_Europe <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Europe, TRUE, FALSE)
+region_key$COF_Nonmember_countries_North_America <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_North_America, TRUE, FALSE)
+
+
 
 
 # Replace the ad-hoc regional grouping with the one we have created

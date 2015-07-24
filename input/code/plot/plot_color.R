@@ -12,8 +12,9 @@ plot_colors = function(part = 1, n = 5){
            rgb(255, 92, 100, alpha = c(1, 0.2, 0) * 255, maxColorValue = 255),
            rgb(130, 40, 46,  alpha = c(1, 0.2, 0) * 255, maxColorValue = 255),
            rgb(53, 118, 53,  alpha = c(1, 0.2, 0) * 255, maxColorValue = 255),
-           rgb(242, 12, 219, alpha = c(1, 0.2, 0) * 255, maxColorValue = 255),
-           rgb(111, 78, 55,  alpha = c(1, 0.2, 0) * 255, maxColorValue = 255)
+           rgb(111, 78, 55,  alpha = c(1, 0.2, 0) * 255, maxColorValue = 255), # Coffee
+           rgb(166, 123, 91, alpha = c(1, 0.2, 0) * 255, maxColorValue = 255), # Cafe au Lait
+           rgb(75, 54, 33,   alpha = c(1, 0.2, 0) * 255, maxColorValue = 255) # Coffee
            )
     col_list[[2]] = switch(n,
             rgb(68,119,170, maxColorValue = 255),
