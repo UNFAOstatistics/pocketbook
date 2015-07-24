@@ -456,7 +456,7 @@ p
 \definecolor{part3}{cmyk}{0.18,0.90,0.75,0.31}
 \definecolor{part4}{cmyk}{0.73,0.10,0.97,0.29}
 \definecolor{part5}{cmyk}{0,0.95,0.095,0.051}
-\definecolor{part6}{cmyk}{0,0.539,0.901,0.404}
+\definecolor{part6}{cmyk}{0,0.30,0.51,0.57}
 
 
 %% Set the strip width
@@ -623,7 +623,12 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 
 \large
 
-This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
+
+<<>>=
+
+  if (region_to_report != "COF"){
+    cat(
+"This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
 
 This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 72 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
 
@@ -634,29 +639,67 @@ Clear indicators to measure progress towards these international goals is of par
 This publication presents selected key indicators related to agriculture and food security that stakeholders can use to prioritize their actions. It is divided into two main sections, one thematic and one country-specific. It presents a variety of dimensions of agriculture and food security along four main focus areas:
 
 
-{\textbf{\color{part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
+{\\textbf{\\color{part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
 
-{\textbf{\color{part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
+{\\textbf{\\color{part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
 
-{\textbf{\color{part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
+{\\textbf{\\color{part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
 
-{\textbf{\color{part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
+{\\textbf{\\color{part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
 
 This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
 
 FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
 
 
-\bigskip
-\bigskip
+\\bigskip
+\\bigskip
 
-\hspace*{\fill}
+\\hspace*{\\fill}
         Pietro Gennari
-\hspace*{\fill}
+\\hspace*{\\fill}
 
-\hspace*{\fill}
-        \textit{Chief Statistician and Director, Statistics Division}
-\hspace*{\fill}
+\\hspace*{\\fill}
+        \\textit{Chief Statistician and Director, Statistics Division}
+\\hspace*{\\fill}
+")
+  } else {
+  
+    
+    cat(
+"
+Coffee is a brownish color that is a representation of the color of an unroasted coffee bean. Different types of coffee beans have different colors when unroasted--the color coffee represents an average.
+
+The first recorded use of coffee as a color name in English was in 1695.
+
+{\\textbf{\\color{part5} The pink}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
+
+{\\textbf{\\color{part6} Coffee production}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
+
+This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
+
+FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
+
+
+\\bigskip
+\\bigskip
+
+\\hspace*{\\fill}
+        Pietro Gennari
+\\hspace*{\\fill}
+
+\\hspace*{\\fill}
+        \\textit{Chief Statistician and Director, Statistics Division}
+\\hspace*{\\fill}
+")
+    
+}
+
+  
+  
+@
+
+
 
 
 
@@ -767,39 +810,98 @@ col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
-# Create the plot
-p <- ggplot(data=overview.df, aes(long,lat,group=group))
-#  ---- grid below the countries ------------------------
-p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
-              linetype = "solid", color = col.main2, alpha=.1)
-# Grey for the non-data regions
-p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
-p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
-p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
-#p <- p + geom_text(data=cnames, aes(long, lat, label = ADM0_NAME, group=ADM0_NAME), size=2, color="black")
+if (region_to_report != "COF"){
+  
+    # Create the plot
+    p <- ggplot(data=overview.df, aes(long,lat,group=group))
+    #  ---- grid below the countries ------------------------
+    p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
+                  linetype = "solid", color = col.main2, alpha=.1)
+    # Grey for the non-data regions
+    p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
+    p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
+    p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
+    p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
+    #p <- p + geom_text(data=cnames, aes(long, lat, label = ADM0_NAME, group=ADM0_NAME), size=2, color="black")
+    
+    p <- p + theme(legend.position = c(0.05,0.05), 
+                              legend.justification=c(0,0),
+                              legend.key.size=unit(6,'mm'),
+                              legend.direction = "vertical",
+                              legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
+                              #legend.background=element_rect(colour=NA, fill=NA),
+                              legend.text=element_text(size=12), 
+                              legend.title=element_text(size=12), 
+                              title=element_text(size=16), 
+                              panel.background = element_blank(), 
+                              plot.background = element_blank(),
+                              panel.grid.minor = element_blank(),
+                              panel.grid.major = element_blank(),
+                              axis.text = element_blank(), 
+                              axis.title = element_blank(), 
+                              axis.ticks = element_blank())
+    p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
+                                         title.position = "top", 
+                                         title.hjust=0))
+    p <- p + guides(colour=FALSE)
+    p
+  
+}
 
-p <- p + theme(legend.position = c(0.05,0.05), 
-                          legend.justification=c(0,0),
-                          legend.key.size=unit(6,'mm'),
-                          legend.direction = "vertical",
-                          legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
-                          #legend.background=element_rect(colour=NA, fill=NA),
-                          legend.text=element_text(size=12), 
-                          legend.title=element_text(size=12), 
-                          title=element_text(size=16), 
-                          panel.background = element_blank(), 
-                          plot.background = element_blank(),
-                          panel.grid.minor = element_blank(),
-                          panel.grid.major = element_blank(),
-                          axis.text = element_blank(), 
-                          axis.title = element_blank(), 
-                          axis.ticks = element_blank())
-p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
-                                     title.position = "top", 
-                                     title.hjust=0))
-p <- p + guides(colour=FALSE)
-p
+
+
+
+
+if (region_to_report == "COF") {
+  
+    syb_part <- 6
+    colPart = plot_colors(part = syb_part, 12)
+    mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
+    
+    nCol = length(unique(overview.df$subgroup))
+    tmpCol = mapColFun(nCol)[2]
+    mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
+    mapColors = mapColFun(nCol)
+    
+    source(paste0(root.dir,"./input/code/plot/theme.R"))
+
+    # Create the plot
+    p <- ggplot(data=overview.df, aes(long,lat,group=group))
+    #  ---- grid below the countries ------------------------
+    p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
+                  linetype = "solid", color = col.main2, alpha=.1)
+    # Grey for the non-data regions
+    p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
+    p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
+    p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
+    #p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
+    p <- p + scale_fill_manual(values=mapColors) # no data to think about
+    #p <- p + geom_text(data=cnames, aes(long, lat, label = ADM0_NAME, group=ADM0_NAME), size=2, color="black")
+    
+    p <- p + theme(legend.position = c(0.05,0.05), 
+                              legend.justification=c(0,0),
+                              legend.key.size=unit(6,'mm'),
+                              legend.direction = "vertical",
+                              legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
+                              #legend.background=element_rect(colour=NA, fill=NA),
+                              legend.text=element_text(size=12), 
+                              legend.title=element_text(size=12), 
+                              title=element_text(size=16), 
+                              panel.background = element_blank(), 
+                              plot.background = element_blank(),
+                              panel.grid.minor = element_blank(),
+                              panel.grid.major = element_blank(),
+                              axis.text = element_blank(), 
+                              axis.title = element_blank(), 
+                              axis.ticks = element_blank())
+    p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
+                                         title.position = "top", 
+                                         title.hjust=0))
+    p <- p + guides(colour=FALSE)
+    p
+  
+}
+
 
 @
 
