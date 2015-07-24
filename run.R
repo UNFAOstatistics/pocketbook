@@ -17,24 +17,26 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 ## Chapters to include
 regionS_to_report <- c(
-                      "GLO" # Global
-                              ,"RAP" # Asia and the Pacific
-                             ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                               ,"RNE" # Near East and North Africa
-                               ,"LAC" # Latin America and the Caribbean
-                      #,"COF" # Coffee
+#                       "GLO" # Global
+#                              "RAP" # Asia and the Pacific
+#                              ,"RAF"  # Africa
+#                               ,"REU" # Europe and Central Asia
+#                                ,"RNE" # Near East and North Africa
+#                                ,"LAC" # Latin America and the Caribbean
+                      "COF" # Coffee
                       )
 
-include_part1 <- T
-include_part2 <- T
-include_part3 <- T
-include_part4 <- T
-include_country_profiles <- T
+include_part1 <- F
+include_part2 <- F
+include_part3 <- F
+include_part4 <- F
+include_part5 <- F
+include_part6 <- T
+include_country_profiles <- F
 include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -167,8 +169,6 @@ syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" &
 # | |_) |  / _ \ | |_   
 # |  _ <  / ___ \|  _|  
 # |_| \_\/_/   \_\_|    
-#   (I seemed to have lost the email from Eloi. I am waiting for him to re-send the information)
-
 # cat(paste(shQuote(country_data$RAF, type="cmd"), collapse=", "))
 # FAO_TABLE_NAME
 
@@ -956,6 +956,29 @@ GLO <- c(GLO_Europe,
 
 
 
+#  ____  ___   _____ 
+# / ___|/ _ \ |  ___|
+# | |   | | | || |_   
+# | |___| |_| ||  _|  
+# \____|\___/ |_|    
+#   
+  
+
+COF_Europe <- REU
+COF_Asia <- RAP
+COF_Africa <- RAF
+COF_North_Africa_and_Middle_East <- RNE
+COF_Latin_America_and_the_Caribbean <- LAC
+
+COF <- c(COF_Europe,
+         COF_Asia,
+         COF_Africa,
+         COF_North_Africa_and_Middle_East,
+         COF_Latin_America_and_the_Caribbean
+)
+
+
+
 ##########################################################################################################
 # Create dummy vars 
 
@@ -1019,6 +1042,14 @@ region_key$GLO_Africa      <- ifelse(region_key$FAOST_CODE %in% GLO_Africa, TRUE
 region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE, FALSE)
 region_key$GLO_North_Africa_and_Middle_East <- ifelse(region_key$FAOST_CODE %in% GLO_North_Africa_and_Middle_East, TRUE, FALSE)
 region_key$GLO_Latin_America_and_the_Caribbean <- ifelse(region_key$FAOST_CODE %in% GLO_Latin_America_and_the_Caribbean, TRUE, FALSE)
+
+
+region_key$COF             <- ifelse(region_key$FAOST_CODE %in% COF, TRUE, FALSE)
+region_key$COF_Asia        <- ifelse(region_key$FAOST_CODE %in% COF_Asia, TRUE, FALSE)
+region_key$COF_Africa      <- ifelse(region_key$FAOST_CODE %in% COF_Africa, TRUE, FALSE)
+region_key$COF_Europe      <- ifelse(region_key$FAOST_CODE %in% COF_Europe, TRUE, FALSE)
+region_key$COF_North_Africa_and_Middle_East <- ifelse(region_key$FAOST_CODE %in% COF_North_Africa_and_Middle_East, TRUE, FALSE)
+region_key$COF_Latin_America_and_the_Caribbean <- ifelse(region_key$FAOST_CODE %in% COF_Latin_America_and_the_Caribbean, TRUE, FALSE)
 
 
 # Replace the ad-hoc regional grouping with the one we have created

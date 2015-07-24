@@ -267,9 +267,9 @@ if (region_to_report == "GLO") map.out.width  <- "1.7\\columnwidth"
 if (region_to_report == "GLO") map.out.extra  <- 'angle=90'
 
 # COF
-if (region_to_report == "COF") 
-if (region_to_report == "COF") 
-if (region_to_report == "COF") 
+if (region_to_report == "COF") map.fig.width  <- 12
+if (region_to_report == "COF") map.fig.height  <- 8
+if (region_to_report == "COF") map.out.width  <- "1.7\\columnwidth"
 if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
 
@@ -419,51 +419,6 @@ p
 }
 
 
-# require(devtools)
-# if (!"FAOSTAT" %in% installed.packages()) {
-#   install_github(username = "mkao006", repo = "FAOSTATpackage",
-#                  ref = "master", subdir = "FAOSTAT")
-# }
-# # if (!"FAOSYB" %in% installed.packages()) {
-# #   install_github(username = "mkao006", repo = "FAOSYBpackage",
-# #                  ref = "master", subdir = "FAOSYB")
-# # }
-# require(FAOSTAT)
-#require(FAOSYB)
-#require(zoo)
-#require(packrat)
-
-# 
-# ## -- Sourcings Complementaty scripts from database folder.
-# 
-# construction_functions = list.files(c("./Rcode/construction_functions/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# debug_functions        = list.files(c("./Rcode/debug_functions/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# misc                   = list.files(c("./Rcode/misc/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# plot_functions         = list.files(c("./Rcode/plot_functions/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# table_functions        = list.files(c("./Rcode/table_functions/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# text_functions         = list.files(c("./Rcode/text_functions/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# theme_functions        = list.files(c("./Rcode/theme_functions/"), pattern="*.R$", full.names=TRUE, ignore.case=TRUE)
-# 
-# # Source sanitizeToLatex before
-# source(plot_functions[11])
-# source(table_functions[4])
-# source(theme_functions[2])
-# source(theme_functions[1])
-# 
-# scripts_to_source <- c(construction_functions,
-#                          debug_functions,
-#                          #misc,
-#                          plot_functions,
-#                          table_functions,
-#                          #text_functions,
-#                          theme_functions)
-# 
-# # A nested for loop for sourcing all the scripts
-# 
-# for (i in 1:length(scripts_to_source)){
-#     source(scripts_to_source[i], encoding = "UTF-8")
-# }
-
 @
 
 
@@ -500,8 +455,8 @@ p
 \definecolor{part2}{cmyk}{0,0.54,0.96,0.10}
 \definecolor{part3}{cmyk}{0.18,0.90,0.75,0.31}
 \definecolor{part4}{cmyk}{0.73,0.10,0.97,0.29}
-\definecolor{part5}{cmyk}{0,0,0,0.5}
-\definecolor{part6}{cmyk}{0,0,0,0.5}
+\definecolor{part5}{cmyk}{0,0.95,0.095,0.051}
+\definecolor{part6}{cmyk}{0,0.539,0.901,0.404}
 
 
 %% Set the strip width
@@ -1013,6 +968,56 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 <<part4, child = if (include_part4) 'syb_part4.Rnw'>>=
 @
+
+
+
+
+% 
+%   ____               _    ____  
+%  |  _ \  __ _  _ __ | |_ | ___| 
+%  | |_) |/ _` || '__|| __||___ \ 
+%  |  __/| (_| || |   | |_  ___) |
+%  |_|    \__,_||_|    \__||____/ 
+%                                 
+% 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PART5 - Custom stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpart{part5}
+\rowcolors{1}{part5!10}{white}
+\clearpage
+
+<<part5, child = if (include_part5) 'syb_part5.Rnw'>>=
+@
+
+
+
+
+%   ____               _     __   
+%  |  _ \  __ _  _ __ | |_  / /_  
+%  | |_) |/ _` || '__|| __|| '_ \ 
+%  |  __/| (_| || |   | |_ | (_) |
+%  |_|    \__,_||_|    \__| \___/ 
+%                                 
+% 
+                                 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PART6 - Coffee book!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpart{part6}
+\rowcolors{1}{part6!10}{white}
+\clearpage
+
+<<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
+@
+
 
 
 % 

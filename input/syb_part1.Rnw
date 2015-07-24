@@ -176,7 +176,8 @@ if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countr
 
 <<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 # data
-dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>% 
+  select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
 dat <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 
@@ -188,7 +189,8 @@ df <- subgrouping(region_to_report = region_to_report)
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
-dat_plot <- dat %>% group_by(subgroup,Year) %>% summarise(OA.TEAPT.POP.PPL.NO = sum(OA.TEAPT.POP.PPL.NO, na.rm=TRUE)) %>% 
+dat_plot <- dat %>% group_by(subgroup,Year) %>% 
+  summarise(OA.TEAPT.POP.PPL.NO = sum(OA.TEAPT.POP.PPL.NO, na.rm=TRUE)) %>% 
   mutate(OA.TEAPT.POP.PPL.NO = OA.TEAPT.POP.PPL.NO / 1000000)
 
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=subgroup))
@@ -199,7 +201,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
+caption_text <- "This is the default caption if no region specific is defined"
 if (region_to_report == "RAF") caption_text <- "Total economically active population in Africa (2000 to 2014)"
 if (region_to_report == "RAP") caption_text <- "Total economically active population in Asia (2000 to 2014)"
 if (region_to_report == "REU") caption_text <- "Total economically active population in Europe and Central Asia (2000 to 2014)"
