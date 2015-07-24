@@ -1148,16 +1148,28 @@ COF_Nonmember_countries_South_America <- c(234, # Uruguya
 )
 
 
+
+
+
+COF_nonmembers_underdeveloped <- c(COF_Nonmember_countries_Caribbean,
+                                  COF_Nonmember_countries_Central_America_and_Mexico,
+                                  COF_Nonmember_countries_South_America,
+                                  COF_Nonmember_countries_Africa,
+                                  COF_Nonmember_countries_Asia_and_Oceania)
+
+COF_nonmembers_developed <- c(COF_Nonmember_countries_Europe,
+                              COF_Nonmember_countries_North_America
+)
+
+
+
+
+
 COF <- c(COF_Coffee_producers_April,
          COF_Coffee_producers_July,
          COF_Coffee_producers_October,
-         COF_Nonmember_countries_Africa,
-         COF_Nonmember_countries_Asia_and_Oceania,
-         COF_Nonmember_countries_Caribbean,
-         COF_Nonmember_countries_Central_America_and_Mexico,
-         COF_Nonmember_countries_Europe,
-         COF_Nonmember_countries_North_America,
-         COF_Nonmember_countries_South_America
+         COF_nonmembers_underdeveloped,
+         COF_nonmembers_developed
 )
 
 
@@ -1231,12 +1243,9 @@ region_key$COF_Coffee_producers_April   <- ifelse(region_key$FAOST_CODE %in% COF
 region_key$COF_Coffee_producers_July    <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_July, TRUE, FALSE)
 region_key$COF_Coffee_producers_October <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_October, TRUE, FALSE)
 
-region_key$COF_Nonmember_countries_Africa <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Africa, TRUE, FALSE)
-region_key$COF_Nonmember_countries_Asia_and_Oceania <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Asia_and_Oceania, TRUE, FALSE)
-region_key$COF_Nonmember_countries_Caribbean <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Caribbean, TRUE, FALSE)
-region_key$COF_Nonmember_countries_Central_America_and_Mexico <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Central_America_and_Mexico, TRUE, FALSE)
-region_key$COF_Nonmember_countries_Europe <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_Europe, TRUE, FALSE)
-region_key$COF_Nonmember_countries_North_America <- ifelse(region_key$FAOST_CODE %in% COF_Nonmember_countries_North_America, TRUE, FALSE)
+region_key$COF_nonmembers_underdeveloped <- ifelse(region_key$FAOST_CODE %in% COF_nonmembers_underdeveloped, TRUE, FALSE)
+region_key$COF_nonmembers_developed <- ifelse(region_key$FAOST_CODE %in% COF_nonmembers_developed, TRUE, FALSE)
+
 
 
 
