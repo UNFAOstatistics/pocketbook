@@ -499,7 +499,231 @@ if (region_to_report == "GLO") caption_text <- "Value added in agriculture, shar
 %                                               
 
 
+<<P1laboTEXT, eval=P1labo, short_text_ChartPage=P1labo>>=
+spread_title <- "Labour"
+short_text <- "A strong labour market is the foundation of sustained well-being and economic growth, inclusion and social cohesion. Therefore access to safe, productive and remunerated work is essential. Yet many workers, especially the most vulnerable, do not enter into formal wage employment but are instead self-employed or participate in unpaid family work, such as in agriculture. This is especially the case with subsistence farming. As a large share of the working poor are involved in agriculture, developments in this sector have a major impact on welfare."
+@
 
+<<P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
+                                                 SL.TLF.CACT.MA.ZS,
+                                                 SL.TLF.CACT.FE.ZS,
+                                                 OA.TPBS.POP.PPL.NO)
+
+# Add region key and subset
+dat <- join(dat,region_key)
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- gather(dat, variable, value, 2:3)
+dat$fill[dat$variable == "SL.TLF.CACT.MA.ZS"] <- "Male"
+dat$fill[dat$variable == "SL.TLF.CACT.FE.ZS"] <- "Female"
+
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+# AGREGATE
+dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
+dat_plot <- dat %>% group_by(subgroup,fill) %>% summarise(value = weighted.mean(value, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
+
+# reorder
+dat_plot$subgroup <- factor(dat_plot$subgroup,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Female",],-value)$subgroup )
+
+p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- p + geom_bar(stat="identity", position="dodge")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + labs(x="",y="percent")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p
+
+# Caption
+caption_text <- "This is the default caption if no region spesific is defined"
+if (region_to_report == "RAF") caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
+if (region_to_report == "RAP") caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
+if (region_to_report == "REU") caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
+if (region_to_report == "RNE") caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
+if (region_to_report == "GLO") caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
+@
+
+
+<<P1laboLEFT, eval=P1labo, left_plot=P1labo, fig.height=left_plot_height, fig.width=left_plot_width>>=
+dat <- syb.df[syb.df$Year %in%  2012 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
+
+dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
+# Add region key and subset
+dat <- join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+#and subset
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -SL.AGR.EMPL.FE.ZS)
+dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SL.AGR.EMPL.FE.ZS),y=SL.AGR.EMPL.FE.ZS))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Female employment in agriculture, share of female employment (2013)"
+if (region_to_report == "RAF") caption_text <- "Female employment in agriculture, share of female employment (2013)"
+if (region_to_report == "RAP") caption_text <- "Female employment in agriculture, share of female employment (2013)"
+if (region_to_report == "REU") caption_text <- "Female employment in agriculture, share of female employment (2013)"
+if (region_to_report == "RNE") caption_text <- "Female employment in agriculture, share of female employment (2013)"
+if (region_to_report == "GLO") caption_text <- "Female employment in agriculture, share of female employment (2013)"
+
+@
+
+<<P1laboRIGHT, eval=P1labo ,right_plot=P1labo, fig.height=right_plot_height, fig.width=right_plot_width>>=
+dat <- syb.df[syb.df$Year %in%  2012 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
+
+dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
+# Add region key and subset
+dat <- join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+#and subset
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -SL.AGR.EMPL.MA.ZS)
+dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SL.AGR.EMPL.MA.ZS),y=SL.AGR.EMPL.MA.ZS))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+if (region_to_report == "RAF") caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+if (region_to_report == "RAP") caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+if (region_to_report == "REU") caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+if (region_to_report == "RNE") caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+if (region_to_report == "GLO") caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+
+@
+
+
+<<P1laboBOTTOM_data, cache=TRUE, results='hide'>>=
+# data
+
+
+# Retrieve data
+library(FAOSTAT)
+dat <- getFAOtoSYB(domainCode = "OA", # male economically active population
+                   elementCode = 592,
+                   itemCode = 3010)
+dat1 <- dat$aggregates
+dat <- getFAOtoSYB(domainCode = "OA", # female economically active population
+                   elementCode = 593,
+                   itemCode = 3010)
+dat2 <- dat$aggregates
+dat <- getFAOtoSYB(domainCode = "OA", # male economically active population IN AGRICULTURE
+                   elementCode = 602,
+                   itemCode = 3010)
+dat3 <- dat$aggregates
+dat <- getFAOtoSYB(domainCode = "OA", # female economically active population IN AGRICULTURE
+                   elementCode = 603,
+                   itemCode = 3010)
+dat4 <- dat$aggregates
+dat <- left_join(dat1,dat2)
+dat <- left_join(dat,dat3)
+datx <- left_join(dat,dat4)
+
+@
+
+
+
+<<P1laboBOTTOM, eval=P1labo, bottom_plot=P1labo, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+dat <- datx %>%  filter(Year %in% 2000:2014) %>% select(-OA_3010_592,-OA_3010_602)
+
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+dat_plot <- dat %>% group_by(subgroup,Year) %>% summarise(sum_593 = sum(OA_3010_593, na.rm=TRUE),
+                                                          sum_603 = sum(OA_3010_603, na.rm=TRUE)) %>% 
+                                                mutate(share = sum_603 / sum_593 * 100) %>% 
+                                                ungroup()
+
+p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgroup))
+p <- p + geom_line()
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + labs(y="percent", x="")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+if (region_to_report == "RAF") caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+if (region_to_report == "RAP") caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+if (region_to_report == "REU") caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+if (region_to_report == "RNE") caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+if (region_to_report == "GLO") caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+
+@
+
+
+<<P1laboMAP, eval=P1labo, map_plot=P1labo, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
+                select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
+                group_by(FAOST_CODE) %>% summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>% 
+                #filter(!is.na(SL.AGR.EMPL.ZS)) %>% 
+                ungroup()
+
+map.plot <- left_join(dat,map.df)
+
+# Add region key and subset
+
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","SL.AGR.EMPL.ZS")]
+cat_data$value_cat <- categories(x=cat_data$SL.AGR.EMPL.ZS, n=5, method="jenks")
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "Percent"
+
+# graticule
+grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
+gr_rob <- fortify(grat_robin)
+# crop the grid
+if (region_to_report != "GLO") {
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
+} else gr_rob <- gr_rob
+
+create_map_here()
+
+# Caption
+caption_text <- "Employment in agriculture, share of total employment"
+if (region_to_report == "RAF") caption_text <- "Employment in agriculture, share of total employment (2007-2012)"
+if (region_to_report == "RAP") caption_text <- "Employment in agriculture, share of total employment (2007-2012)"
+if (region_to_report == "REU") caption_text <- "Employment in agriculture, share of total employment (2007-2012)"
+if (region_to_report == "RNE") caption_text <- "Employment in agriculture, share of total employment (2007-2012)"
+if (region_to_report == "GLO") caption_text <- "Employment in agriculture, share of total employment (2007-2012)"
+@
 
 
 
@@ -516,9 +740,230 @@ if (region_to_report == "GLO") caption_text <- "Value added in agriculture, shar
 
 
 
+<<P1inputTEXT, eval=P1input, short_text_ChartPage=P1input>>=
+spread_title <- "Inputs"
+short_text <- "Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. Throughout Asia and in parts of Latin America, expanding seed and fertilizer use has been accompanied by investments in irrigation, rural roads, marketing infrastructure and financial services, paving the way for dynamic commercial input markets. In other regions, such as sub-Saharan Africa, the uptake of agricultural inputs is relatively low because it is often cheaper to expand cropland to have higher production."
+@
+
+<<P1inputData,results='hide'>>=
 
 
+@
 
+
+<<P1inputTOPRIGHT, eval=P1input, top_right_plot=P1input, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+dat <- filter(syb.df, Year %in% 2002:2012) %>% select(FAOST_CODE,
+                                                      Year,
+                                                 RF.FERT.NI.TN.NO,
+                                                 RF.FERT.PH.TN.NO,
+                                                 RF.FERT.PO.TN.NO,
+                                                 RL.AREA.ARBLPRMN.HA.NO)
+
+# Add region key and subset
+dat <- join(dat,region_key)
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- gather(dat, variable, value, 3:5)
+dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
+dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
+dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
+
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+# AGREGATE
+dat_plot <- dat_plot %>% group_by(Year,fill) %>% 
+              summarise(value  = sum(value, na.rm=TRUE)*1000,
+                        area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>% 
+              mutate(share = value / area) %>% ungroup()
+
+p <- ggplot(dat_plot, aes(x=Year, y=share, fill=fill))
+p <- p + geom_area(stat="identity", position="stack")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + labs(x="",y="kg/haś")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p
+
+# Caption
+caption_text <- "Fertilizer consumption in nutrients per ha of arable land"
+if (region_to_report == "RAF") caption_text <- "Fertilizer consumption in nutrients per ha of arable land in RAF"
+if (region_to_report == "RAP") caption_text <- "Fertilizer consumption in nutrients per ha of arable land in RAP"
+if (region_to_report == "REU") caption_text <- "Fertilizer consumption in nutrients per ha of arable land in REU"
+if (region_to_report == "RNE") caption_text <- "Fertilizer consumption in nutrients per ha of arable land in RNE"
+if (region_to_report == "GLO") caption_text <- "Fertilizer consumption in nutrients per ha of arable land in GLO"
+@
+
+
+<<P1inputLEFT, eval=P1input, left_plot=P1input, fig.height=left_plot_height, fig.width=left_plot_width>>=
+dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.NI.TN.SH")]
+
+dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
+# Add region key and subset
+dat <- join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -RF.FERT.NI.TN.SH)
+top20 <- dat %>% slice(1:20) %>% mutate(color = "2012")
+
+
+dat_plot <- top20
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.NI.TN.SH),y=RF.FERT.NI.TN.SH))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="kg/ha")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "RAF") caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "RAP") caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "REU") caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "RNE") caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "GLO") caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+
+@
+
+<<P1inputRIGHT, eval=P1input ,right_plot=P1input, fig.height=right_plot_height, fig.width=right_plot_width>>=
+
+dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.PH.TN.SH")]
+
+dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
+# Add region key and subset
+dat <- join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -RF.FERT.PH.TN.SH)
+dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2012")
+
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="kg/ha")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+
+caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "RAF") caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "RAP") caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "REU") caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "RNE") caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+if (region_to_report == "GLO") caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+
+@
+
+
+<<P1inputBOTTOM, eval=P1input, bottom_plot=P1input, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
+                                                 RF.FERT.NI.TN.NO,
+                                                 RF.FERT.PH.TN.NO,
+                                                 RF.FERT.PO.TN.NO,
+                                                 RL.AREA.ARBLPRMN.HA.NO)
+
+# Add region key and subset
+dat <- join(dat,region_key)
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- gather(dat, variable, value, 2:4)
+dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
+dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
+dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
+
+# DEFAULT GROUPING
+df <- subgrouping(region_to_report = region_to_report)
+
+# merge data with the region info
+dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+
+# AGREGATE
+dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% 
+              summarise(value  = sum(value, na.rm=TRUE)*1000,
+                        area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>% 
+              mutate(share = value / area) %>% ungroup()
+
+# reorder regions by the share of agricultural land
+dat_plot$subgroup <- factor(dat_plot$subgroup,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Nitrogen",],-value)$subgroup )
+
+p <- ggplot(dat_plot, aes(x=subgroup, y=share, fill=fill))
+p <- p + geom_bar(stat="identity", position="stack")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + labs(x="",y="percent")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p
+
+# Caption
+caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+if (region_to_report == "RAF") caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+if (region_to_report == "RAP") caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+if (region_to_report == "REU") caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+if (region_to_report == "RNE") caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+if (region_to_report == "GLO") caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+
+@
+
+
+<<P1inputMAP, eval=P1input, map_plot=P1input, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>% 
+        group_by(FAOST_CODE) %>%  summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
+
+# dat <- dat[dat$FAOST_CODE != 41,]
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
+# set Robinson projection
+map.plot <- left_join(dat,map.df)
+
+# Subset
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RP.PEST.TOT.TN.SH")]
+cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5)
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "kg/ha"
+
+# graticule
+grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
+gr_rob <- fortify(grat_robin)
+# crop the grid
+if (region_to_report != "GLO") {
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
+} else gr_rob <- gr_rob
+
+create_map_here() 
+
+# Caption
+caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+if (region_to_report == "RAF") caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+if (region_to_report == "RAP") caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+if (region_to_report == "REU") caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+if (region_to_report == "RNE") caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+if (region_to_report == "GLO") caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+@
 
 
 
@@ -532,5 +977,216 @@ if (region_to_report == "GLO") caption_text <- "Value added in agriculture, shar
                                                                           
 
 
+
+<<P1investTEXT, eval=P1invest, short_text_ChartPage=P1invest>>=
+spread_title <- "Investments"
+short_text <- "Investing in agriculture is one of the most effective strategies for reducing poverty and hunger, and promoting sustainability. The regions of the world where hunger and extreme poverty are most widespread today – South Asia and sub-Saharan Africa – have seen flat or declining rates of investment per worker in agriculture over the past thirty years. Farmers tend to be the largest investors in developing country agriculture, and therefore their investment decisions are paramount for any strategy aimed at improving agricultural investment."
+@
+
+<<P1investData,results='hide', cache=TRUE>>=
+
+
+
+@
+
+
+<<P1investTOPRIGHT, eval=P1invest, top_right_plot=P1invest, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+
+dat <- read_excel(paste0(data.dir,"/Data/Raw/InvestmentDataforStatPocketbook_28May2015.xlsx"))
+dat <- dat[1:3]
+names(dat) <- c("Year","agriculture_broad","agriculture_narrow")
+
+dat$Year <- factor(dat$Year)
+dat$Year <- as.numeric(levels(dat$Year))[dat$Year]
+
+dat <- dat[dat$Year >= 1995,]
+
+dat <- gather(dat, variable, value, 2:3)
+dat$variable <- as.character(dat$variable)
+dat$variable[dat$variable == "agriculture_narrow"] <- "Agriculture, narrow"
+dat$variable[dat$variable == "agriculture_broad"] <- "Agriculture, broad"
+
+# print data for technical report
+#datatable(dat)
+dat_plot <- dat
+
+# Draw the plot
+p <- ggplot(dat, aes(x = Year, y = value, color=variable))
+p <- p + geom_line()
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + labs(x="",y="percent")
+p
+
+# Caption
+caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+if (region_to_report == "RAF") caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+if (region_to_report == "RAP") caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+if (region_to_report == "REU") caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+if (region_to_report == "RNE") caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+if (region_to_report == "GLO") caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+
+@
+
+
+<<P1investLEFT, eval=P1invest, left_plot=P1invest, fig.height=left_plot_height, fig.width=left_plot_width>>=
+# data
+gg <- read.csv(paste0(data.dir, "/Data/Raw/credit_to_agriculture.csv"))
+gg <- gg[gg$ElementName == "Value US$",] 
+gg <- gg[gg$ItemName == "Total Credit",] 
+# into millions
+names(gg)[names(gg)=="AreaCode"] <- "FAOST_CODE"
+
+dat1 <- gg %>%  filter(Year %in% c(1999:2001)) %>% group_by(FAOST_CODE) %>% dplyr::summarise(value = mean(Value, na.rm=TRUE)/1000000) %>% 
+  mutate(Year = 2000)
+dat2 <- gg %>%  filter(Year %in% c(2010:2012)) %>% group_by(FAOST_CODE) %>% dplyr::summarise(value = mean(Value, na.rm=TRUE)/1000000) %>% 
+  mutate(Year = 2011)
+
+dat <- rbind(dat1,dat2)
+
+dat <- join(dat,region_key)
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- arrange(dat, -Year, -value)
+top2010 <- dat %>% slice(1:20) %>% mutate(color = "2010−2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2010$FAOST_CODE, Year == 2000) %>% mutate(color = "1999−2001")
+dat_plot <- rbind(top2010,top2000)
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, value),y=value))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="kcal/cap/day")
+p <- p + guides(color = guide_legend(nrow = 1))
+p
+
+# Caption
+caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+if (region_to_report == "RAF") caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+if (region_to_report == "RAP") caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+if (region_to_report == "REU") caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+if (region_to_report == "RNE") caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+if (region_to_report == "GLO") caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+
+@
+
+<<P1investRIGHT, eval=P1invest ,right_plot=P1invest, fig.height=right_plot_height, fig.width=right_plot_width>>=
+
+# data
+gg <- read_excel(paste0(data.dir,"/Data/Raw/investments/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
+gg <- gg[c(3,5)]
+gg$Year <- 2010
+names(gg)[names(gg)=="AOI average (2008-2012)"] <- "agri_orientation_index"
+names(gg)[names(gg)=="countrycode"] <- "FAOST_CODE"
+
+
+# Add region key and subset
+dat <- join(gg,region_key)
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- arrange(dat, -agri_orientation_index)
+top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+dat_plot <- rbind(top10,bot10)
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, agri_orientation_index),y=agri_orientation_index))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="index")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Agri-Orientation Index, highest and lowest values (average 2008-2012)"
+if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "RNE") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+
+@
+
+
+<<P1investBOTTOM, eval=P1invest, bottom_plot=P1invest, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+# data
+dat <- read_excel(paste0(data.dir,"/Data/Raw/InvestmentDataforStatPocketbook_28May2015.xlsx"), sheet=2, skip=3)
+dat <- dat[1:3]
+names(dat) <- c("Year","Bilateral","Multilateral")
+
+
+dat$Year <- str_replace_all(dat$Year, "\\*", "")
+
+dat$Year <- factor(dat$Year)
+dat$Year <- as.numeric(levels(dat$Year))[dat$Year]
+
+dat <- dat[dat$Year >= 1995,]
+dat <- dat[!is.na(dat$Year),]
+
+dat <- gather(dat, variable, value, 2:3)
+dat$variable <- as.character(dat$variable)
+
+dat_plot <- dat
+
+p <- ggplot(dat_plot, aes(x=Year, y=value, fill=variable))
+p <- p + geom_area(stat="identity", position="stack")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + labs(x="",y="million constant US$")
+p
+
+# Caption
+caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+if (region_to_report == "RAF") caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+if (region_to_report == "RAP") caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+if (region_to_report == "REU") caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+if (region_to_report == "RNE") caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+if (region_to_report == "GLO") caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+
+@
+
+<<p1investMAPdata, results='hide', cache=TRUE>>=
+dat <- getFAOtoSYB(domainCode = "IG", 
+                   elementCode = 6111,
+                   itemCode = 23101)
+dat <- dat[["aggregates"]]
+dat <- dat %>% filter(Year %in% 2008:2012) %>% group_by(FAOST_CODE) %>% mutate(maxyear = max(Year)) %>% ungroup () %>% filter(Year == maxyear)
+@
+
+
+
+<<P1investMAP, eval=P1invest, map_plot=P1invest, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+map.plot <- right_join(dat,map.df)
+
+# Add region key and subset
+
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IG_23101_6111")]
+cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks")
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "Percent"
+
+# graticule
+grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
+gr_rob <- fortify(grat_robin)
+# crop the grid
+if (region_to_report != "GLO") {
+  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
+} else gr_rob <- gr_rob
+
+create_map_here()
+
+# Caption
+caption_text <- "This is the default caption if no region spesific is defined"
+if (region_to_report == "RAF") caption_text <- "Rural population, share of total population (2014)"
+if (region_to_report == "RAP") caption_text <- "Rural population, share of total population (2014)"
+if (region_to_report == "REU") caption_text <- "Rural population, share of total population (2014)"
+if (region_to_report == "RNE") caption_text <- "Rural population, share of total population (2014)"
+if (region_to_report == "GLO") caption_text <- "Rural population, share of total population (2014)"
+@
                
 

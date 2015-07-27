@@ -17,22 +17,22 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 ## Chapters to include
 regionS_to_report <- c(
-#                       "GLO" # Global
-#                              "RAP" # Asia and the Pacific
-#                              ,"RAF"  # Africa
-#                               ,"REU" # Europe and Central Asia
-#                                ,"RNE" # Near East and North Africa
-#                                ,"LAC" # Latin America and the Caribbean
-                      "COF" # Coffee
+                      "GLO" # Global
+                            , "RAP" # Asia and the Pacific
+                             ,"RAF"  # Africa
+                              ,"REU" # Europe and Central Asia
+                               ,"RNE" # Near East and North Africa
+                               ,"LAC" # Latin America and the Caribbean
+                      # "COF" # Coffee
                       )
 
-include_part1 <- F
-include_part2 <- F
-include_part3 <- F
-include_part4 <- F
-include_part5 <- T
-include_part6 <- T
-include_part7 <- T
+include_part1 <- T
+include_part2 <- T
+include_part3 <- T
+include_part4 <- T
+include_part5 <- F
+include_part6 <- F
+include_part7 <- F
 include_country_profiles <- F
 include_metadata <- F
 
@@ -54,6 +54,7 @@ region_to_report <- "RAF"
 
 
 library(readr)
+library(readxl)
 library(magrittr)
 library(xtable)
 library(lazyeval)
@@ -1343,7 +1344,7 @@ setwd(paste0(root.dir,"output/process"))
 #  |_____|\___/  \___/ | .__/  |_.__/  \___| \__, ||_||_| |_||___/
 #                      |_|                   |___/                
 
-
+# 
 for (region_to_report in regionS_to_report) {
   
   # region_to_report <- regionS_to_report[1]

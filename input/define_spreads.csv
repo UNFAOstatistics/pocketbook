@@ -1,9 +1,9 @@
 SPREAD,TITLE,GLO,RAF,RAP,REU,RNE,LAC,COF
 P1over,Overview,1,1,1,1,1,1,0
 P1econ,Economy,1,1,1,1,1,1,0
-P1labo,Labour,1,0,0,0,0,0,0
-P1input,Inputs,1,0,0,0,0,0,0
-P1invest,Investment,1,0,0,0,0,0,0
+P1labo,Labour,1,1,1,1,1,1,0
+P1input,Inputs,1,1,1,1,1,1,0
+P1invest,Investment,1,1,1,1,1,1,0
 P2undernu,Undernourishment,1,1,1,1,1,1,0
 P2availab,Availability,1,0,0,0,0,0,0
 P2access,Access,1,0,0,0,0,0,0
