@@ -23,21 +23,24 @@ regionS_to_report <- c(
                               ,"REU" # Europe and Central Asia
                                ,"RNE" # Near East and North Africa
                                ,"LAC" # Latin America and the Caribbean
-                      # "COF" # Coffee
+                      ,"COF" # Coffee
                       )
 
 include_part1 <- T
 include_part2 <- T
 include_part3 <- T
 include_part4 <- T
-include_part5 <- F
-include_part6 <- F
-include_part7 <- F
+include_part5 <- T
+include_part6 <- T
+include_part7 <- T
 include_country_profiles <- F
 include_metadata <- F
 
 # To be uploaded for comments or not
 upload_to_server <- T
+
+# Upgrade the comparison tables
+broke_into_images <- T
 
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -1313,12 +1316,14 @@ fao_world <- spCbind(fao_world, dat2)
 
 # -- delete output/ -folder recursively
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE)
+unlink(paste0(root.dir,"/output/jpg"), recursive = TRUE)
 
 # -- Create output folder if not exists --- #
 if (!file.exists(paste0(root.dir,"/output"))) dir.create(paste0(root.dir,"/output"))
 if (!file.exists(paste0(root.dir,"/output/process"))) dir.create(paste0(root.dir,"/output/process"))
 if (!file.exists(paste0(root.dir,"/output/pdf"))) dir.create(paste0(root.dir,"/output/pdf"))
 if (!file.exists(paste0(root.dir,"/output/html"))) dir.create(paste0(root.dir,"/output/html"))
+if (!file.exists(paste0(root.dir,"/output/jpg"))) dir.create(paste0(root.dir,"/output/jpg"))
 
 ## Copy .Rnw files into process/-folder
 flist <- list.files(paste0(root.dir,"input/"), 
@@ -1332,6 +1337,14 @@ flist <- list.files(paste0(root.dir,"input/templates"),
                     include.dirs = TRUE, 
                     full.names = TRUE)
 file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
+
+
+## Copy .md into jpg folder
+flist <- list.files(paste0(root.dir,"input/templates/jpg_comparison"), 
+                    "+[.]md$", 
+                    full.names = TRUE)
+file.copy(flist, paste0(root.dir,"/output/jpg"), overwrite = TRUE)
+
 
 setwd(paste0(root.dir,"output/process"))
 
@@ -1363,6 +1376,7 @@ for (region_to_report in regionS_to_report) {
   
   # remove figures from previous region
   unlink(paste0(root.dir,"/output/process/figure"), recursive = TRUE)
+  
 
   knitr::knit("syb_main.Rnw")
   # Embed fonts
@@ -1382,6 +1396,9 @@ for (region_to_report in regionS_to_report) {
   # Technical report
 #   knitr::purl("syb_part1.Rnw","syb_part1.R")
 #   knitr::spin("syb_part1.R")
+  
+  # create jpg's for web comparisons
+  if (broke_into_images) system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
   
   # knitr::purl("syb_part2.Rnw","syb_part2.R")
   # knitr::spin("syb_part2.R")
@@ -1412,37 +1429,52 @@ flist <- list.files(paste0(root.dir,"output/process"),
                     "+[.]html$", 
                     full.names = TRUE)
 
-file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
+if (broke_into_images)  file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
 
+
+# convert the index.md into html in jpog comparison
+if (broke_into_images) system(paste0("pandoc ",root.dir,"output/jpg/index.md -o ",root.dir,"output/jpg/index.html"))
 
 if (upload_to_server) {
   
-#   pdftk GSPB15.pdf cat 19-20 output undernourishment.pdf
-#   pdftk GSPB15.pdf cat 15-16 output investment.pdf
-#   pdftk GSPB15.pdf cat 43-44 output energy.pdf
-#   pdftk GSPB15.pdf cat 60-61 output tables.pdf
-#   pdftk GSPB15.pdf cat 51-232 output tables_all.pdf
-#   pdftk GSPB15.pdf cat 1-50 output spreads.pdf
-#   pdftk GSPB15.pdf cat 134 output table.pdf
-#   pdftk GSPB15.pdf cat 233-end output definitions.pdf
-#   convert -density 200 table.pdf table.jpg
-#   pdftk GSPB15.pdf cat 179 output table2.pdf
-#   convert -density 200 table2.pdf table2.jpg
-#   
-#   pandoc comment_charts.md -o comment_charts.html
-#   pandoc comment_tables.md -o comment_tables.html
-#   pandoc comment_captions.md -o comment_captions.html
-#   pandoc comment_definitions.md -o comment_definitions.html
+
   
 #  upload the output pdf to kapsi
   pdfs <- list.files(paste0(root.dir,"output/pdf"), full.names = TRUE)
   system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
+  
+  comparison <- list.files(paste0(root.dir,"output/jpg"), full.names = TRUE)
+  if (broke_into_images)   system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
+  
 
 }
 
 
+# if (broke_into_images){
+#   
+# #     pdftk GSPB15.pdf cat 19-20 output undernourishment.pdf
+# #     pdftk GSPB15.pdf cat 15-16 output investment.pdf
+# #     pdftk GSPB15.pdf cat 43-44 output energy.pdf
+# #     pdftk GSPB15.pdf cat 60-61 output tables.pdf
+# #     pdftk GSPB15.pdf cat 51-232 output tables_all.pdf
+# #     pdftk GSPB15.pdf cat 1-50 output spreads.pdf
+# #     pdftk GSPB15.pdf cat 134 output table.pdf
+# #     pdftk GSPB15.pdf cat 233-end output definitions.pdf
+#      
+# #     pdftk GSPB15.pdf cat 179 output table2.pdf
+# #     convert -density 200 table2.pdf table2.jpg
+#     
+# #     pandoc comment_charts.md -o comment_charts.html
+# #     pandoc comment_tables.md -o comment_tables.html
+# #     pandoc comment_captions.md -o comment_captions.html
+# #     pandoc comment_definitions.md -o comment_definitions.html
+#   
+#   
+# }
 
-#!/bin/bash
+
+
+
 
 
 

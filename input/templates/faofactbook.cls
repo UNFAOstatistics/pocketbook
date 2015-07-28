@@ -66,7 +66,8 @@ left=1cm, right=1cm, twoside}{geometry}
 }
 \renewcommand\footnotesize{\small}
 \renewcommand\scriptsize{\@setfontsize\scriptsize\@vpt\@vipt}
-\renewcommand\tiny{\@setfontsize\tiny\@ivpt\@vpt}
+%\renewcommand\tiny{\@setfontsize\tiny\@ivpt\@vpt}
+\renewcommand\tiny{\@setfontsize\tiny{3}{3}}
 \renewcommand\large{\@setfontsize\large\@viipt\@viiipt}
 \renewcommand\Large{\@setfontsize\Large\@xipt{13}} % Section are size large
 \renewcommand\LARGE{\@setfontsize\LARGE\@xivpt{16}}

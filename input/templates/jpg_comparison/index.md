@@ -1,0 +1,33 @@
+|      Global     |      Africa     | Asia and the Pacific | Europe and Central Asia | North Africa and Near East |      Coffee     |
+|-----------------|-----------------|----------------------|-------------------------|----------------------------|-----------------|
+| ![](GLO-0.jpg)  | ![](RAF-0.jpg)  | ![](RAP-0.jpg)       | ![](REU-0.jpg)          | ![](RNE-0.jpg)             | ![](COF-0.jpg)  |
+| ![](GLO-1.jpg)  | ![](RAF-1.jpg)  | ![](RAP-1.jpg)       | ![](REU-1.jpg)          | ![](RNE-1.jpg)             | ![](COF-1.jpg)  |
+| ![](GLO-2.jpg)  | ![](RAF-2.jpg)  | ![](RAP-2.jpg)       | ![](REU-2.jpg)          | ![](RNE-2.jpg)             | ![](COF-2.jpg)  |
+| ![](GLO-3.jpg)  | ![](RAF-3.jpg)  | ![](RAP-3.jpg)       | ![](REU-3.jpg)          | ![](RNE-3.jpg)             | ![](COF-3.jpg)  |
+| ![](GLO-4.jpg)  | ![](RAF-4.jpg)  | ![](RAP-4.jpg)       | ![](REU-4.jpg)          | ![](RNE-4.jpg)             | ![](COF-4.jpg)  |
+| ![](GLO-5.jpg)  | ![](RAF-5.jpg)  | ![](RAP-5.jpg)       | ![](REU-5.jpg)          | ![](RNE-5.jpg)             | ![](COF-5.jpg)  |
+| ![](GLO-6.jpg)  | ![](RAF-6.jpg)  | ![](RAP-6.jpg)       | ![](REU-6.jpg)          | ![](RNE-6.jpg)             | ![](COF-6.jpg)  |
+| ![](GLO-7.jpg)  | ![](RAF-7.jpg)  | ![](RAP-7.jpg)       | ![](REU-7.jpg)          | ![](RNE-7.jpg)             | ![](COF-7.jpg)  |
+| ![](GLO-8.jpg)  | ![](RAF-8.jpg)  | ![](RAP-8.jpg)       | ![](REU-8.jpg)          | ![](RNE-8.jpg)             | ![](COF-8.jpg)  |
+| ![](GLO-9.jpg)  | ![](RAF-9.jpg)  | ![](RAP-9.jpg)       | ![](REU-9.jpg)          | ![](RNE-9.jpg)             | ![](COF-9.jpg)  |
+| ![](GLO-10.jpg) | ![](RAF-10.jpg) | ![](RAP-10.jpg)      | ![](REU-10.jpg)         | ![](RNE-10.jpg)            | ![](COF-10.jpg) |
+| ![](GLO-11.jpg) | ![](RAF-11.jpg) | ![](RAP-11.jpg)      | ![](REU-11.jpg)         | ![](RNE-11.jpg)            | ![](COF-11.jpg) |
+| ![](GLO-12.jpg) | ![](RAF-12.jpg) | ![](RAP-12.jpg)      | ![](REU-12.jpg)         | ![](RNE-12.jpg)            | ![](COF-12.jpg) |
+| ![](GLO-13.jpg) | ![](RAF-13.jpg) | ![](RAP-13.jpg)      | ![](REU-13.jpg)         | ![](RNE-13.jpg)            | ![](COF-13.jpg) |
+| ![](GLO-14.jpg) | ![](RAF-14.jpg) | ![](RAP-14.jpg)      | ![](REU-14.jpg)         | ![](RNE-14.jpg)            | ![](COF-14.jpg) |
+| ![](GLO-15.jpg) | ![](RAF-15.jpg) | ![](RAP-15.jpg)      | ![](REU-15.jpg)         | ![](RNE-15.jpg)            | ![](COF-15.jpg) |
+| ![](GLO-16.jpg) | ![](RAF-16.jpg) | ![](RAP-16.jpg)      | ![](REU-16.jpg)         | ![](RNE-16.jpg)            | ![](COF-16.jpg) |
+| ![](GLO-17.jpg) | ![](RAF-17.jpg) | ![](RAP-17.jpg)      | ![](REU-17.jpg)         | ![](RNE-17.jpg)            | ![](COF-17.jpg) |
+| ![](GLO-18.jpg) | ![](RAF-18.jpg) | ![](RAP-18.jpg)      | ![](REU-18.jpg)         | ![](RNE-18.jpg)            | ![](COF-18.jpg) |
+| ![](GLO-19.jpg) | ![](RAF-19.jpg) | ![](RAP-19.jpg)      | ![](REU-19.jpg)         | ![](RNE-19.jpg)            | ![](COF-19.jpg) |
+| ![](GLO-20.jpg) | ![](RAF-20.jpg) | ![](RAP-20.jpg)      | ![](REU-20.jpg)         | ![](RNE-20.jpg)            | ![](COF-20.jpg) |
+| ![](GLO-21.jpg) | ![](RAF-21.jpg) | ![](RAP-21.jpg)      | ![](REU-21.jpg)         | ![](RNE-21.jpg)            | ![](COF-21.jpg) |
+| ![](GLO-22.jpg) | ![](RAF-22.jpg) | ![](RAP-22.jpg)      | ![](REU-22.jpg)         | ![](RNE-22.jpg)            | ![](COF-22.jpg) |
+| ![](GLO-23.jpg) | ![](RAF-23.jpg) | ![](RAP-23.jpg)      | ![](REU-23.jpg)         | ![](RNE-23.jpg)            | ![](COF-23.jpg) |
+| ![](GLO-24.jpg) | ![](RAF-24.jpg) | ![](RAP-24.jpg)      | ![](REU-24.jpg)         | ![](RNE-24.jpg)            | ![](COF-24.jpg) |
+| ![](GLO-25.jpg) | ![](RAF-25.jpg) | ![](RAP-25.jpg)      | ![](REU-25.jpg)         | ![](RNE-25.jpg)            | ![](COF-25.jpg) |
+| ![](GLO-26.jpg) | ![](RAF-26.jpg) | ![](RAP-26.jpg)      | ![](REU-26.jpg)         | ![](RNE-26.jpg)            | ![](COF-26.jpg) |
+| ![](GLO-27.jpg) | ![](RAF-27.jpg) | ![](RAP-27.jpg)      | ![](REU-27.jpg)         | ![](RNE-27.jpg)            | ![](COF-27.jpg) |
+| ![](GLO-28.jpg) | ![](RAF-28.jpg) | ![](RAP-28.jpg)      | ![](REU-28.jpg)         | ![](RNE-28.jpg)            | ![](COF-28.jpg) |
+| ![](GLO-29.jpg) | ![](RAF-29.jpg) | ![](RAP-29.jpg)      | ![](REU-29.jpg)         | ![](RNE-29.jpg)            | ![](COF-29.jpg) |
+| ![](GLO-30.jpg) | ![](RAF-30.jpg) | ![](RAP-30.jpg)      | ![](REU-30.jpg)         | ![](RNE-30.jpg)            | ![](COF-30.jpg) |

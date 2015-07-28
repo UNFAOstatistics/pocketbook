@@ -905,6 +905,7 @@ source(paste0(root.dir,"./input/code/plot/theme.R"))
 \clearpage
 %\begin{landscape}
 
+
 <<overview_table, eval=TRUE, results='asis'>>=
 
 # Add region key and subset
@@ -958,7 +959,7 @@ print(
   type = "latex", table.placement = NULL, 
   booktabs = TRUE, 
   include.rownames = FALSE, 
-  size = "scriptsize", 
+  size = "tiny", 
   caption.placement = "top", 
   add.to.row = list(pos = as.list(rws), command = col),
   sanitize.colnames.function=bold
@@ -966,7 +967,6 @@ print(
 
 if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 @
-
 
 
 
