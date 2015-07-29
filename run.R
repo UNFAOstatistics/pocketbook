@@ -20,19 +20,19 @@ regionS_to_report <- c(
                       "GLO" # Global
                             , "RAP" # Asia and the Pacific
                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                               ,"RNE" # Near East and North Africa
-                               ,"LAC" # Latin America and the Caribbean
-                      ,"COF" # Coffee
+                             ,"REU" # Europe and Central Asia
+                             ,"RNE" # Near East and North Africa
+                             ,"LAC" # Latin America and the Caribbean
+                                ,"COF" # Coffee
                       )
 
 include_part1 <- T
 include_part2 <- T
 include_part3 <- T
 include_part4 <- T
-include_part5 <- T
-include_part6 <- T
-include_part7 <- T
+include_part5 <- F
+include_part6 <- F
+include_part7 <- F
 include_country_profiles <- F
 include_metadata <- F
 

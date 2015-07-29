@@ -5,21 +5,21 @@ P1labo,Labour,1,1,1,1,1,1,0
 P1input,Inputs,1,1,1,1,1,1,0
 P1invest,Investment,1,1,1,1,1,1,0
 P2undernu,Undernourishment,1,1,1,1,1,1,0
-P2availab,Availability,1,0,0,0,0,0,0
-P2access,Access,1,0,0,0,0,0,0
-P2stabil,Stability,1,0,0,0,0,0,0
-P2utiliza,Utilization,1,0,0,0,0,0,0
+P2availab,Availability,1,1,1,1,1,1,0
+P2access,Access,1,1,1,1,1,1,0
+P2stability,Stability,1,1,1,1,1,1,0
+P2utiliza,Utilization,1,1,1,1,1,1,0
 P3des,Dietary energy supply,1,1,1,1,1,1,0
-P3cropgrowth,Growth in crop production,1,0,0,0,0,0,0
-P3croptrend,Crop sector,1,0,0,0,0,0,0
-P3livestoc,Livestock sector,1,0,0,0,0,0,0
-P3fisheries,Fisheries sector,1,0,0,0,0,0,0
-P3trade,Trade,1,0,0,0,0,0,0
+P3croppro,Growth in crop production,1,1,1,1,1,1,0
+P3crop,Crop sector,1,1,1,1,1,1,0
+P3livestock,Livestock sector,1,1,1,1,1,1,0
+P3fisheries,Fisheries sector,1,1,1,1,1,1,0
+P3trade,Trade,1,1,1,1,1,1,0
 P4land,Land,1,1,1,1,1,1,0
-P4water,Water,1,0,0,0,0,0,0
-P4energy,Energy,1,0,0,0,0,0,0
-P4forestry,Forestry,1,0,0,0,0,0,0
-P4climate,Climate change,1,0,0,0,0,0,0
+P4water,Water,1,1,1,1,1,1,0
+P4energy,Energy,1,1,1,1,1,1,0
+P4forestry,Forestry,1,1,1,1,1,1,0
+P4climate,Climate change,1,1,1,1,1,1,0
 P5extra1,Extra1,1,1,1,1,1,1,1
 P5coffee,Coffee,0,0,0,0,0,0,1
 P6coffee,Coffee,0,0,0,0,0,0,1
