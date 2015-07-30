@@ -30,9 +30,9 @@ include_part1 <- T
 include_part2 <- T
 include_part3 <- T
 include_part4 <- T
-include_part5 <- F
-include_part6 <- F
-include_part7 <- F
+include_part5 <- T
+include_part6 <- T
+include_part7 <- T
 include_country_profiles <- F
 include_metadata <- F
 

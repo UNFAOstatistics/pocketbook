@@ -1,3 +1,5 @@
+ <body bgcolor="#669999">
+
 | Global          | Africa          | Asia and the Pacific | Europe and Central Asia | North Africa and Near East | Coffee          |
 |-----------------|-----------------|----------------------|-------------------------|----------------------------|-----------------|
 | ![](GLO-0.jpg)  | ![](RAF-0.jpg)  | ![](RAP-0.jpg)       | ![](REU-0.jpg)          | ![](RNE-0.jpg)             | ![](COF-0.jpg)  |
@@ -62,3 +64,6 @@
 | ![](GLO-59.jpg) | ![](RAF-59.jpg) | ![](RAP-59.jpg)      | ![](REU-59.jpg)         | ![](RNE-59.jpg)            | ![](COF-59.jpg) |
 | ![](GLO-60.jpg) | ![](RAF-60.jpg) | ![](RAP-60.jpg)      | ![](REU-60.jpg)         | ![](RNE-60.jpg)            | ![](COF-60.jpg) |
 
+
+
+</body>

@@ -16,223 +16,96 @@ source(paste0(root.dir,"./input/code/plot/theme.R"))
 source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 @
 
+%    ____            __    __                   _                        _        
+%   / ___|   ___    / _|  / _|   ___    ___    | |_   _ __    __ _    __| |   ___ 
+%  | |      / _ \  | |_  | |_   / _ \  / _ \   | __| | '__|  / _` |  / _` |  / _ \
+%  | |___  | (_) | |  _| |  _| |  __/ |  __/   | |_  | |    | (_| | | (_| | |  __/
+%   \____|  \___/  |_|   |_|    \___|  \___|    \__| |_|     \__,_|  \__,_|  \___|
+%                                                                                 
 
 
-
-% 
-%    ____         __   __              _ 
-%   / ___| ___   / _| / _|  ___   ___ / |
-%  | |    / _ \ | |_ | |_  / _ \ / _ \| |
-%  | |___| (_) ||  _||  _||  __/|  __/| |
-%   \____|\___/ |_|  |_|   \___| \___||_|
-%                                        
-% 
-
-
-
-
-<<P6coffeeTEXT, eval=P6coffee, short_text_ChartPage=P6coffee>>=
-spread_title <- "Coffee consumption"
-short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+<<P6coffeetradeTEXT, eval=P6coffeetrade, short_text_ChartPage=P6coffeetrade>>=
+spread_title <- "Coffee trade"
+short_text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas risus at lobortis lacinia. Mauris a nunc eleifend, sodales magna ut, congue arcu. Fusce in odio nunc. Mauris vehicula faucibus eros a blandit. Aenean ut tempus ipsum, eu faucibus lorem. Maecenas pretium nibh sit amet nulla accumsan, eu auctor massa facilisis. In malesuada nisl quis sem dapibus iaculis. Ut fermentum leo turpis, convallis luctus elit auctor sed. Quisque nec vestibulum augue. Praesent suscipit finibus tellus, ut semper quam fermentum luctus. "
 @
 
-<<P6coffeeData,results='hide'>>=
+
+<<P6coffeetradeData, cache=TRUE,results='hide', eval=P6coffeetrade>>=
 
 
 @
 
 
-<<P6coffeeTOPRIGHT, eval=P6coffee, top_right_plot=P6coffee, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 RL.AREA.AGR.HA.SH,
-                                                 RL.AREA.FOR.HA.SH,
-                                                 RL.AREA.OTH.HA.SH)
 
-# Add region key and subset
-dat <- join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+<<P6coffeetradeTOPRIGHT, eval=P6coffeetrade, top_right_plot=P6coffeetrade, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 
-dat <- gather(dat, variable, value, 2:4)
-dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
-dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
-dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
+plot(cars)
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$subgroup )
-
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
-p <- p + geom_bar(stat="identity", position="stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
-p <- p + theme(axis.text.x = element_text(angle=45))
-p
 
 # Caption
-if (region_to_report == "COF") caption_text <- "Land area COFFEE"
-if (region_to_report == "RAF") caption_text <- "Land area"
-if (region_to_report == "RAP") caption_text <- "Land area"
-if (region_to_report == "REU") caption_text <- "Land area"
-if (region_to_report == "RNE") caption_text <- "Land area"
-if (region_to_report == "GLO") caption_text <- "Land area"
+caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "RAF") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "RAP") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "REU") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "RNE") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "GLO") caption_text <- "Countries with the lowest renewable water resources per capita"
 @
 
 
-<<P6coffeeLEFT, eval=P6coffee, left_plot=P6coffee, fig.height=left_plot_height, fig.width=left_plot_width>>=
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RL.AREA.ARBL.HA.SHP")]
+<<P6coffeetradeLEFT, eval=P6coffeetrade, left_plot=P6coffeetrade, fig.height=left_plot_height, fig.width=left_plot_width>>=
 
-dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
-# Add region key and subset
-dat <- join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# top for this plot
-dat <- arrange(dat, -RL.AREA.ARBL.HA.SHP)
-top20 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-# bottom for the next plot
-dat <- arrange(dat, RL.AREA.ARBL.HA.SHP)
-bottom20 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-
-dat_plot <- top20
-
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-p <- p + theme(legend.position = "none") # hide legend as only one year plotted
-p <- p + coord_flip()
-p <- p + labs(x="",y="ha/cap")
-p <- p + guides(color = guide_legend(nrow = 2))
-p
+plot(cars)
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "COF") caption_text <- "Arable land per capita COFFEE"
-if (region_to_report == "RAF") caption_text <- "Arable land per capita, top 20 African countries"
-if (region_to_report == "RAP") caption_text <- "Arable land per capita, top 20 Asian and the Pacific countries"
-if (region_to_report == "REU") caption_text <- "Arable land per capita, top 20 European and Central Asian countries"
-if (region_to_report == "RNE") caption_text <- "Arable land per capita, top 20 North Africa and Near East countries"
-if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 countries"
+caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "RAF") caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "RAP") caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "REU") caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "RNE") caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "GLO") caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
 
 @
 
-<<P6coffeeRIGHT, eval=P6coffee ,right_plot=P6coffee, fig.height=right_plot_height, fig.width=right_plot_width>>=
-dat_plot <- bottom20
+<<P6coffeetradeRIGHT, eval=P6coffeetrade ,right_plot=P6coffeetrade, fig.height=right_plot_height, fig.width=right_plot_width>>=
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-p <- p + theme(legend.position = "none") # hide legend as only one year plotted
-p <- p + coord_flip()
-p <- p + labs(x="",y="ha/cap")
-p <- p + guides(color = guide_legend(nrow = 2))
-p
+plot(cars)
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "COF") caption_text <- "Arable land per capita COFFEE"
-if (region_to_report == "RAF") caption_text <- "Arable land per capita, bottom 20 African countries"
-if (region_to_report == "RAP") caption_text <- "Arable land per capita, bottom 20 Asian and the Pacific countries"
-if (region_to_report == "REU") caption_text <- "Arable land per capita, bottom 20 European and Central Asian countries"
-if (region_to_report == "RNE") caption_text <- "Arable land per capita, bottom 20 North Africa and Near East countries"
-if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 20 countries"
+caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "RAF") caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "RAP") caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "REU") caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "RNE") caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+if (region_to_report == "GLO") caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
 
 @
 
 
-<<P6coffeeBOTTOM, eval=P6coffee, bottom_plot=P6coffee, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
+<<P6coffeetradeBOTTOM, eval=P6coffeetrade, bottom_plot=P6coffeetrade, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 
-# Add region key and subset
-dat <- join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
-
-dat <- gather(dat, variable, value, 2:4)
-dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
-dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
-dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$subgroup )
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
-p <- p + geom_bar(stat="identity", position="stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
-p <- p + theme(axis.text.x = element_text(angle=45))
-p
+plot(cars)
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "COF") caption_text <- "Arable land per capita COFFEE"
-if (region_to_report == "RAF") caption_text <- "Agricultural area"
-if (region_to_report == "RAP") caption_text <- "Agricultural area"
-if (region_to_report == "REU") caption_text <- "Agricultural area"
-if (region_to_report == "RNE") caption_text <- "Agricultural area"
-if (region_to_report == "GLO") caption_text <- "Agricultural area"
+caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "RAF") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "RAP") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "REU") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "RNE") caption_text <- "Countries with the lowest renewable water resources per capita"
+if (region_to_report == "GLO") caption_text <- "Countries with the lowest renewable water resources per capita"
+
 
 @
 
 
-<<P6coffeeMAP, eval=P6coffee, map_plot=P6coffee, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                                    RL.AREA.ARBLPRMN.HA.SH)
-
-# dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-
-# set Robinson projection
-map.plot <- left_join(dat,map.df)
-
-# Subset
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RL.AREA.ARBLPRMN.HA.SH")]
-cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5)
-
-map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-
-# define map unit
-map_unit <- "Percent"
-
-# graticule
-grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
-gr_rob <- fortify(grat_robin)
-
-
-create_map_here() 
+<<P6coffeetradeMAP, eval=P6coffeetrade, map_plot=P6coffeetrade, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+plot(cars)
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "COF") caption_text <- "Arable land per capita COFFEE"
-if (region_to_report == "RAF") caption_text <- "Cropland per capita, ha/cap"
-if (region_to_report == "RAP") caption_text <- "Cropland per capita, ha/cap"
-if (region_to_report == "REU") caption_text <- "Cropland per capita, ha/cap"
-if (region_to_report == "RNE") caption_text <- "Cropland per capita, ha/cap"
-if (region_to_report == "GLO") caption_text <- "Cropland per capita, ha/cap"
+caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+if (region_to_report == "RAF") caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+if (region_to_report == "RAP") caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+if (region_to_report == "REU") caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+if (region_to_report == "RNE") caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+if (region_to_report == "GLO") caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
 @
-
 

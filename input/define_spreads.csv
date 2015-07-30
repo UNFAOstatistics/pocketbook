@@ -1,15 +1,16 @@
 SPREAD,TITLE,GLO,RAF,RAP,REU,RNE,LAC,COF
-P1over,Overview,1,1,1,1,1,1,0
-P1econ,Economy,1,1,1,1,1,1,0
+P1over,Demographics,1,1,1,1,1,1,1
+P1econ,Economy,1,1,1,1,1,1,1
 P1labo,Labour,1,1,1,1,1,1,0
 P1input,Inputs,1,1,1,1,1,1,0
 P1invest,Investment,1,1,1,1,1,1,0
+P1poverty,Poverty,0,0,0,0,0,0,1
 P2undernu,Undernourishment,1,1,1,1,1,1,0
 P2availab,Availability,1,1,1,1,1,1,0
 P2access,Access,1,1,1,1,1,1,0
 P2stability,Stability,1,1,1,1,1,1,0
 P2utiliza,Utilization,1,1,1,1,1,1,0
-P3des,Dietary energy supply,1,1,1,1,1,1,0
+P3des,Dietary energy supply,1,1,1,1,1,1,1
 P3croppro,Growth in crop production,1,1,1,1,1,1,0
 P3crop,Crop sector,1,1,1,1,1,1,0
 P3livestock,Livestock sector,1,1,1,1,1,1,0
@@ -21,6 +22,6 @@ P4energy,Energy,1,1,1,1,1,1,0
 P4forestry,Forestry,1,1,1,1,1,1,0
 P4climate,Climate change,1,1,1,1,1,1,0
 P5extra1,Extra1,1,1,1,1,1,1,1
-P5coffee,Coffee,0,0,0,0,0,0,1
-P6coffee,Coffee,0,0,0,0,0,0,1
-P7coffee,Coffee,0,0,0,0,0,0,1
+P5coffeeprod,Coffee production,0,0,0,0,0,0,1
+P6coffeetrade,Coffee trade,0,0,0,0,0,0,1
+P7coffeeprices,Coffee prices,0,0,0,0,0,0,1
