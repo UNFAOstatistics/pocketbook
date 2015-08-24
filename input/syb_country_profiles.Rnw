@@ -421,9 +421,17 @@ cat("\\normalsize\n",
     file = fileOut, append = TRUE)
 for (i in 1:nrow(M49countries)) {
   ## header
-  cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}
-      \\rowcolors{1}{FAOblue!10}{white}
-      \\begin{tabular}{L{3.9cm} R{1cm} R{1cm} R{1cm}}
+  
+  # conditional row colors ------------------------------
+  row_color <- "FAOblue"
+  if (region_to_report == "COF") row_color <- "part5"
+  define_row_color <- paste0("\\rowcolors{1}{",row_color,"!10}{white}")
+  # conditional row colors ------------------------------
+  
+  
+  cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
+      define_row_color,
+      "\\begin{tabular}{L{3.9cm} R{1cm} R{1cm} R{1cm}}
       \\toprule
       \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
       \\midrule\n",
@@ -436,7 +444,7 @@ for (i in 1:nrow(M49countries)) {
     if (part %in% c(4,5)) {
       cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
-      } else cat("\t\\multicolumn{4}{l}{\\textcolor{FAOblue}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+      } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
     subindicators.df = indicators.df[indicators.df[, "PART"] == unique(indicators.df$PART)[part], ]
     for (j in 1:nrow(subindicators.df)) {
@@ -588,7 +596,12 @@ syb.df <- temp
 @
 
 \newpage
-\pagecolor{FAOblue}
+% If coffee book lets put here some nice brown color
+<<define_empty_page_color, echo=FALSE, results='asis', eval=TRUE>>=
+  empty_page_color <- "FAOblue"
+  if (region_to_report == "COF") empty_page_color <- "part5"
+  cat(paste0("\\pagecolor{",empty_page_color,"}"))
+  @
 \thispagestyle{empty}
 \mbox{}
 \newpage
@@ -598,7 +611,11 @@ syb.df <- temp
 \pagecolor{white}
 
 %%% COUNTRY DATA
-\newpart{FAOblue}
+<<define_new_part_color, echo=FALSE, results='asis', eval=TRUE>>=
+  empty_page_color <- "FAOblue"
+  if (region_to_report == "COF") empty_page_color <- "part5"
+  cat(paste0("\\newpart{",empty_page_color,"}"))
+  @
 \phantomsection
 \addcontentsline{toc}{section}{Country Profiles}
 \faoset{bgcolor=white}\selectcolor
