@@ -6,10 +6,10 @@ rm(list=ls(all=TRUE))
 gc()
 
 # set root directory
-root.dir <- "~/btsync/fao_sync/pocketbooks/regional15/"
+root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
 setwd(root.dir)
 # set data directory
-data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
+data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
 
 # Stuff you DO edit
 # ----------------------------------------------------------------------------------
@@ -17,13 +17,13 @@ data.dir <- "~/btsync/fao_sync/pocketbooks/GSPB15/database/"
 
 ## Chapters to include
 regionS_to_report <- c(
-                      "GLO" # Global
-                            , "RAP" # Asia and the Pacific
-                             ,"RAF"  # Africa
-                             ,"REU" # Europe and Central Asia
-                             ,"RNE" # Near East and North Africa
-                             ,"LAC" # Latin America and the Caribbean
-                                ,"COF" # Coffee
+                      # "GLO" # Global
+#                             , "RAP" # Asia and the Pacific
+#                              ,"RAF"  # Africa
+#                              ,"REU" # Europe and Central Asia
+#                              ,"RNE" # Near East and North Africa
+#                              ,"LAC" # Latin America and the Caribbean
+                                 "COF" # Coffee
                       )
 
 include_part1 <- T
@@ -33,14 +33,14 @@ include_part4 <- T
 include_part5 <- T
 include_part6 <- T
 include_part7 <- T
-include_country_profiles <- F
-include_metadata <- F
+include_country_profiles <- T
+include_metadata <- T
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # Upgrade the comparison tables
-broke_into_images <- T
+broke_into_images <- F
 
 # just for troubleshooting
 region_to_report <- "RAF"

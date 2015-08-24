@@ -1167,7 +1167,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 % 
 
 
-<<metadata, child = if (include_metadata) 'metadata.Rnw'>>=
+<<metadata, child = if (include_metadata) 'syb_metadata.Rnw'>>=
 @
 
 
