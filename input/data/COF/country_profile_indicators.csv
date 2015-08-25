@@ -1,41 +1,39 @@
-PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS,,
-Overview,1,OA.TPBS.POP.PPL.NO,,,"Population, total (mln)",1000000,0,,"Population, total (mln)"
-Overview,2,,,,"Population, rural (mln)",1000000,0,,
-Overview,3,,,,GDP per capita (current US$),,0,,
-Overview,4,,,,Poverty headcount ratio at $1.25 a day (PPP) (% of population),,1,,
-Overview,5,,,,Poverty headcount ratio at national poverty lines (% of population),,1,,
-Overview,6,,,, Rural poverty headcount ratio at national poverty lines (% of rural population),,1,,
-Overview,7,,,,"Life expectancy at birth, total (years)",,0,,
-Overview,8,,,,"Primary completion rate, total (% of relevant age group)",,1,,
-Overview,9,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1,,
-Overview,10,,,,Improved sanitation facilities (% pop),,1,,
-Overview,11,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1,,
-Overview,12,,,,Number of people undernourished (mln),1000000,0,,
-Macroeconomics,13,,,,"Agriculture, value added (% of GDP)",,1,,
-Macroeconomics,14,,,,Food exports (mln US$),1000000,0,,
-Macroeconomics,15,,,,Food imports (mln US$),1000000,0,,
-Macroeconomics,16,,,,"Exports, coffee:",,,,
-Macroeconomics,17,,,,Green,1000000,0,,
-Macroeconomics,18,,,,Roasted,1000000,0,,
-Macroeconomics,19,,,,Extracts,1000000,0,,
-Macroeconomics,20,,,,"Imports, coffee:",,,,
-Macroeconomics,21,,,,Green,1000000,0,,
-Macroeconomics,22,,,,Roasted,1000000,0,,
-Macroeconomics,23,,,,Extracts,1000000,0,,
-Macroeconomics,24,,,,"Consumer prices, coffee",,2,,
-Macroeconomics,25,,,,"Producer prices, green coffee (US$ per tonne)",,2,,
-Macroeconomics,26,,,,Producer price index (2004-06=100),,0,,
-Production and consumption,27,,,,Food production value (constant 2004-06 1000 l$),,0,,
-Production and consumption,28,,,,Food production index (2004-2006=100),,0,,
-Production and consumption,29,,,,"Area harvested, coffee (ha)",1000000,0,,
-Production and consumption,30,,,,"Yield, coffee (hg/ha)",,0,,
-Production and consumption,31,,,,"Production quantity, coffee (mln tonnes)",1000000,0,,
-Production and consumption,32,,,,Dietary energy supply (kcal/cap/day),,0,,
-Production and consumption,33,,,,Vegetal (crop) products (kcal/cap/day),,0,,
-Production and consumption,34,,,,Animal products (kcal/cap/day),,0,,
-Environment,35,,,,Renewable water res withdrawan (% total),,1,,
-Environment,36,,,,Terrestrial protected areas (% total land area),,1,,
-Environment,37,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1,,
-Environment,38,,,,Water withdrawal by agriculture (% total),,1,,
-Environment,39,GHG.AFOLU.TOT.ECO2EQ.NO,,,"GHG emissions from ag (Co2 eq, gigagrams)",,0,,
-Environment,40,,,,GHG emissions from coffee (% of total),,1,,
+PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS
+Overview,1,OA.TPBS.POP.PPL.NO,,,"Population, total (mln)",,1
+Overview,2,OA.TPR.POP.PPL.NO,,,"Population, rural (mln)",,1
+Overview,3,NY.GDP.PCAP.PP.KD,,,GDP per capita (current US$),,0
+Overview,4,missing,,,Poverty headcount ratio at $1.25 a day (PPP) (% of population),,0
+Overview,5,missing,,,Poverty headcount ratio at national poverty lines (% of population),,0
+Overview,6,missing,,, Rural poverty headcount ratio at national poverty lines (% of rural population),,0
+Overview,7,SP.DYN.LE00.IN,,,"Life expectancy at birth, total (years)",,1
+Overview,8,missing,,,"Primary completion rate, total (% of relevant age group)",,0
+Overview,9,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,0
+Overview,10,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,0
+Overview,11,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
+Overview,12,FS.OA.NOU.P3D1,,,Number of people undernourished (mln),,0
+Macroeconomics,13,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% of GDP)",,
+Macroeconomics,14,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$),1000000,0
+Macroeconomics,15,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$),1000000,0
+Macroeconomics,24,missing,,,"Consumer prices, coffee",,2
+Macroeconomics,25,missing,,,"Producer prices, green coffee (US$ per tonne)",,2
+Macroeconomics,26,missing,,,Producer price index (2004-06=100),,0
+"Exports, coffee:",17,missing,,,Green,,0
+"Exports, coffee:",18,missing,,,Roasted,,0
+"Exports, coffee:",19,missing,,,Extracts,,0
+"Imports, coffee:",21,missing,,,Green,,0
+"Imports, coffee:",22,missing,,,Roasted,,0
+"Imports, coffee:",23,missing,,,Extracts,,0
+Production and consumption,27,QV.NPV.FOOD.ID.NO,,,Food production value (constant 2004-06 1000 l$),1000000,0
+Production and consumption,28,QI.NPIN.FOOD.IN.NO,,,Food production index (2004-2006=100),,1
+Production and consumption,29,missing,,,"Area harvested, coffee (ha)",,0
+Production and consumption,30,missing,,,"Yield, coffee (hg/ha)",,0
+Production and consumption,31,missing,,,"Production quantity, coffee (mln tonnes)",,0
+Production and consumption,32,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/cap/day),,0
+Production and consumption,33,missing,,,Vegetal (crop) products (kcal/cap/day),,0
+Production and consumption,34,missing,,,Animal products (kcal/cap/day),,0
+Environment,35,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawan (% total),,1
+Environment,36,ER.LND.PTLD.ZS,,,Terrestrial protected areas (% total land area),,1
+Environment,37,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1
+Environment,38,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% total),,1
+Environment,39,GHG.AFOLU.TOT.ECO2EQ.NO,,,"GHG emissions from ag (Co2 eq, gigagrams)",1000,0
+Environment,40,missing,,,GHG emissions from coffee (% of total),,1

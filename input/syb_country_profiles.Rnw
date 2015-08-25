@@ -101,7 +101,8 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
       return(result)
     }
 
-
+## -------------------------------------------------------------------------------------
+# Variables in common
 
 # merge latest FSI data from Filippo
 
@@ -413,7 +414,7 @@ year1 = 1992
 year2 = 2002
 year3 = 2014
 ## This script creates the latex file
-cat("\\renewcommand{\\arraystretch}{1.1}\n",
+cat("\\renewcommand{\\arraystretch}{1.22}\n",
     file = fileOut, append = TRUE)
 cat("\\setlength{\\tabcolsep}{4pt}\n",
     file = fileOut, append = TRUE) ## Reduce the space between columns
@@ -431,7 +432,7 @@ for (i in 1:nrow(M49countries)) {
   
   cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
       define_row_color,
-      "\\begin{tabular}{L{3.9cm} R{1cm} R{1cm} R{1cm}}
+      "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
       \\toprule
       \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
       \\midrule\n",
@@ -441,7 +442,7 @@ for (i in 1:nrow(M49countries)) {
   for (part in 1:length(unique(indicators.df[, "PART"]))) {
 #     cat("\t\\multicolumn{4}{l}{\\textcolor{",paste0("part", part),"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
 #         file = fileOut, append = TRUE, sep = "")
-    if (part %in% c(4,5)) {
+    if (part %in% c(3,4)) {
       cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
       } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
