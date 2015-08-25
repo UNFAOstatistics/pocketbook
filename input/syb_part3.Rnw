@@ -88,14 +88,14 @@ d$var[d$var == "FBS.SDES.MEB.PCT3D"] <- "Veg. oils and\nanimal fats"
 d$FAOST_CODE <- factor(d$FAOST_CODE)
 d$FAOST_CODE <- as.numeric(levels(d$FAOST_CODE))[d$FAOST_CODE]
 
-dat <- join(d,region_key)
+dat <- left_join(d,region_key)
 
 ## option 1
 pop <- syb.df %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO) %>%  group_by(FAOST_CODE) %>% filter(Year == 2014)
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- join(dat[c("FAOST_CODE","var","mean")],pop)
+dat <- left_join(dat[c("FAOST_CODE","var","mean")],pop)
 dat <- dat[!is.na(dat$mean),]
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
 
@@ -151,7 +151,7 @@ dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -186,7 +186,7 @@ dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -222,7 +222,7 @@ dat <- df[df$Year %in%  c(2000:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -278,7 +278,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -321,7 +321,7 @@ short_text <- "The majority of people in developing countries live in rural area
 load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 @
 
@@ -346,7 +346,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QV.
 
 dat <- dat[!is.na(dat$QV.NPCPV.CRPS.ID.SHP),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -383,7 +383,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QV.
 
 dat <- dat[!is.na(dat$QV.GPCPV.FOOD.ID.SHP),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -421,7 +421,7 @@ dat <- syb.df %>% filter(Year >= 2000) %>%
                          QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -483,7 +483,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -530,7 +530,7 @@ short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and 
 load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 @
 
@@ -573,7 +573,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QC.
 
 dat <- dat[!is.na(dat$QC.PRD.RICE.TN.SHP),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -610,7 +610,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QC.
 
 dat <- dat[!is.na(dat$QC.PRD.WHT.TN.SHP),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -648,7 +648,7 @@ dat <- syb.df %>% filter(Year >= 2000) %>%
          OA.TPBS.POP.PPL.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -704,7 +704,7 @@ map_unit <- "tonne/cap"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -752,7 +752,7 @@ short_text <- "The world food economy is being increasingly driven by the shift 
 load(paste0(data.dir,"/Data/Raw/Production_Livestock_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 @
 
@@ -793,7 +793,7 @@ print.xtable(xtable(gg, caption = "Live animal production, top 5 in 2013 (thousa
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.MILK.TN.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[!is.na(dat$QL.PRD.MILK.TN.NO),]
 
@@ -827,7 +827,7 @@ if (region_to_report == "GLO") caption_text <- "Total milk production, top and b
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[!is.na(dat$QL.PRD.EGG.TN.NO),]
 
@@ -862,7 +862,7 @@ if (region_to_report == "GLO") caption_text <- "Total egg production, top and bo
 load(paste0(data.dir,"Data/Raw/Production_Livestock_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 # DEFAULT GROUPING
@@ -935,7 +935,7 @@ map_unit <- "head/ha"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -1275,7 +1275,7 @@ dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","
 
 dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -1314,7 +1314,7 @@ dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","
 
 dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -1355,7 +1355,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  RL.AREA.ARBLPRMN.HA.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
@@ -1422,7 +1422,7 @@ map_unit <- "kg/ha"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -1477,7 +1477,7 @@ df <- rbind(dat1,dat2)
 
 <<P3tradeTOPRIGHT, eval=P3trade, top_right_minitable=P3trade>>=
 # Add region key and subset
-dat <- join(df,region_key)
+dat <- left_join(df,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 df <- subgrouping(region_to_report = region_to_report)
@@ -1508,7 +1508,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.
 
 dat <- dat[!is.na(dat$TP.IMVAL.FOOD.USD.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -1545,7 +1545,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.
 
 dat <- dat[!is.na(dat$TP.EXVAL.FOOD.USD.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -1582,7 +1582,7 @@ dat <- syb.df %>% filter(Year %in% 2000:2012) %>%
          TP.EXVAL.CRLS.USD.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -1639,7 +1639,7 @@ map_unit <- "index"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob

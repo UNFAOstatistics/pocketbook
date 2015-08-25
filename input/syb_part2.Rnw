@@ -93,7 +93,7 @@ dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year
 
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -145,7 +145,7 @@ dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year
 
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -210,7 +210,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob

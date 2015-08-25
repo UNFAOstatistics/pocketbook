@@ -37,7 +37,7 @@ include_country_profiles <- T
 include_metadata <- T
 
 # To be uploaded for comments or not
-upload_to_server <- F
+upload_to_server <- T
 
 # Upgrade the comparison tables
 broke_into_images <- F
@@ -55,26 +55,21 @@ region_to_report <- "RAF"
 #  |_|_|_.__/|_|  \__,_|_|  |_|\___||___/
 #                                       
 
-
 library(readr)
 library(readxl)
 library(magrittr)
-library(xtable)
 library(lazyeval)
+library(FAOSTAT)
+library(dplyr)
+#library(plyr) # to run certain computations using ddply. Should get rid of this
 library(tidyr)
 library(stringr)
+library(rgdal)
+library(gisfao)
+library(grid)
 library(scales)
 library(ggplot2)
-library(grid)
-library(DT)
-library(gisfao)
-require(grid)
-library(plyr)
-library(dplyr)
-library(rgdal)
-library(ggplot2)
-library(gisfao)
-library(FAOSTAT)
+library(xtable)
 library(extrafont)
 loadfonts()
 
@@ -133,7 +128,7 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 # h(f,40)
 
 # load SYB data
-load(paste0(data.dir,"Data/Processed/SYB.RData"))
+load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
 syb.df <- SYB.df; rm(SYB.df)
 
 syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], by = "FAOST_CODE", all.x = TRUE)

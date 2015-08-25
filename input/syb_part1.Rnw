@@ -2,7 +2,6 @@
 
 
 <<part1_setup, eval=include_part1>>=
-
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
 syb_part <- 1
@@ -71,7 +70,7 @@ df <- gather(dat, variable, value, 3:4)
 # 
 
 dat <- df %>% select(FAOST_CODE,Year,variable,value)
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat$variable <- as.character(dat$variable)
@@ -112,7 +111,7 @@ dat <- filter(syb.df, Year %in%
 dat <- ungroup(dat)
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.GR10),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[which(dat[[region_to_report]]),]
 
@@ -146,7 +145,7 @@ dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
 dat <- dat[!is.na(dat$SP.DYN.LE00.IN),]
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SP.DYN.LE00.IN)
@@ -232,7 +231,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -270,7 +269,7 @@ dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
                                                  NV.SRV.TETC.ZS)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
@@ -314,7 +313,7 @@ dat <- syb.df[syb.df$Year %in%  2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","
 
 dat <- dat[!is.na(dat$EA.PRD.AGRI.KD),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -352,12 +351,12 @@ dat <- syb.df %>% filter(Year %in% c(2003:2013)) %>% select(FAOST_CODE,SHORT_NAM
 dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 top10 <- dat %>% arrange(FAOST_CODE,Year) %>%  
-              #mutate(Growth=NV.AGR.TOTL.KD/lag(NV.AGR.TOTL.KD)-1) %>% # dplyr_group does not give NA for first years of groups... hence
-              ddply("FAOST_CODE",transform,Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>% 
+              group_by(FAOST_CODE) %>% dplyr::mutate(Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>% 
+              #ddply("FAOST_CODE",transform,Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>% 
               group_by(SHORT_NAME) %>% 
               dplyr::summarise(growth_NV.AGR.TOTL.KD = mean(Growth, na.rm = TRUE)*100) %>% 
               arrange(-growth_NV.AGR.TOTL.KD) %>% 
@@ -365,8 +364,7 @@ top10 <- dat %>% arrange(FAOST_CODE,Year) %>%
               mutate(color = "Countries with highest values")
 
 bot10 <- dat %>% arrange(FAOST_CODE,Year) %>%  
-              #mutate(Growth=NV.AGR.TOTL.KD/lag(NV.AGR.TOTL.KD)-1) %>% # dplyr_group does not give NA for first years of groups... hence
-              ddply("FAOST_CODE",transform,Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>% 
+              group_by(FAOST_CODE) %>% dplyr::mutate(Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>% 
               group_by(SHORT_NAME) %>% 
               dplyr::summarise(growth_NV.AGR.TOTL.KD = mean(Growth, na.rm = TRUE)*100) %>% 
               arrange(growth_NV.AGR.TOTL.KD) %>% 
@@ -472,7 +470,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -512,7 +510,7 @@ dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
                                                  OA.TPBS.POP.PPL.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:3)
@@ -555,7 +553,7 @@ dat <- syb.df[syb.df$Year %in%  2012 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR
 
 dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -591,7 +589,7 @@ dat <- syb.df[syb.df$Year %in%  2012 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR
 
 dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -710,7 +708,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -761,7 +759,7 @@ dat <- filter(syb.df, Year %in% 2002:2012) %>% select(FAOST_CODE,
                                                  RL.AREA.ARBLPRMN.HA.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 3:5)
@@ -803,7 +801,7 @@ dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","
 
 dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -842,7 +840,7 @@ dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","
 
 dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -883,7 +881,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  RL.AREA.ARBLPRMN.HA.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
@@ -950,7 +948,7 @@ map_unit <- "kg/ha"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
@@ -1044,7 +1042,7 @@ dat2 <- gg %>%  filter(Year %in% c(2010:2012)) %>% group_by(FAOST_CODE) %>% dply
 
 dat <- rbind(dat1,dat2)
 
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[which(dat[[region_to_report]]),]
 
@@ -1082,7 +1080,7 @@ names(gg)[names(gg)=="countrycode"] <- "FAOST_CODE"
 
 
 # Add region key and subset
-dat <- join(gg,region_key)
+dat <- left_join(gg,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -agri_orientation_index)
@@ -1174,7 +1172,7 @@ map_unit <- "Percent"
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 # crop the grid
-if (region_to_report != "GLO") {
+if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob

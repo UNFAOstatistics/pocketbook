@@ -363,6 +363,13 @@ dat1 <- dat$aggregates
 syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
 # Area harvested, coffee (ha)
+dat <- getFAOtoSYB(domainCode = "QC",
+                   elementCode = 5312,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+
 # Yield, coffee (hg/ha)
 
 dat <- getFAOtoSYB(domainCode = "QC",
@@ -478,7 +485,7 @@ M49countries <-
 # Subset countries per region -----------------------
 
 # Add region key and subset
-M49countries <- join(M49countries,region_key)
+M49countries <- left_join(M49countries,region_key)
 
 M49countries <- M49countries[which(M49countries[[region_to_report]]),]
 

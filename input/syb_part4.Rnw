@@ -47,7 +47,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  RL.AREA.OTH.HA.SH)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
@@ -91,7 +91,7 @@ dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -153,7 +153,7 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
@@ -286,7 +286,7 @@ g$FAO_TABLE_NAME[g$FAO_TABLE_NAME == "United Kingdom"] <- "the United Kingdom of
 g$FAO_TABLE_NAME[g$FAO_TABLE_NAME == "United Republic of Tanzania"] <- "the United Republic of Tanzania"
 g$FAO_TABLE_NAME[g$FAO_TABLE_NAME == "United States of America"] <- "the United States of America"
 
-gg <- join(g,region_key)
+gg <- left_join(g,region_key)
 @
 
 
@@ -331,7 +331,7 @@ dat <- dat[!is.na(dat$new_var),]
 dat$FAOST_CODE[dat$FAOST_CODE == 357] <- 351
 #
 
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 
@@ -368,7 +368,7 @@ dat <- dat[!is.na(dat$new_var),]
 dat$FAOST_CODE[dat$FAOST_CODE == 357] <- 351
 #
 
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 
@@ -607,7 +607,7 @@ dat <- syb.df %>% select(FAOST_CODE,Year,
 
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 3:5)
@@ -651,7 +651,7 @@ dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.EXVAL.
 
 dat <- dat[!is.na(dat$FO.EXVAL.TOT.USD.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -690,7 +690,7 @@ dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.IMVAL.
 
 dat <- dat[!is.na(dat$FO.IMVAL.TOT.USD.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -731,7 +731,7 @@ dat <- syb.df %>%  filter(Year %in% 2010) %>% select(FAOST_CODE,
          GFRA.TOT.ONRF.HA.NO = GFRA.TOT.ONRF.HA.NO / 1000000)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
@@ -846,7 +846,7 @@ dat <- filter(syb.df, Year %in% 2000:2012) %>% select(FAOST_CODE,Year,
 
 dat <- dat[!is.na(dat$GHG.TOT.ALL.GG.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 # DEFAULT GROUPING
@@ -883,7 +883,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,GHG
 
 dat <- dat[!is.na(dat$GHG.TOT.ALL.GG.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -919,7 +919,7 @@ dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,GL.
 
 dat <- dat[!is.na(dat$GL.LU.TOT.NERCO2EQ.NO),]
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
@@ -959,7 +959,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
                                                  GL.FL.F.NERCO2EQ.NO)
 
 # Add region key and subset
-dat <- join(dat,region_key)
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:6)
