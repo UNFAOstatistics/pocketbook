@@ -6,7 +6,7 @@ Overview,4,SI.POV.DDAY,,,Poverty headcount ratio at $1.25 a day (PPP) (% pop),,1
 Overview,5,SI.POV.NAHC,,,Poverty headcount ratio at national poverty lines (% pop),,1
 Overview,6,SI.POV.RUHC,,, Rural poverty headcount ratio at national poverty lines (% rural pop),,1
 Overview,7,SP.DYN.LE00.IN,,,"Life expectancy at birth, total (years)",,1
-Overview,8,missing,,,Primary completion rate (% relevant age group),,0
+Overview,8,SE.PRM.CMPT.ZS,,,Primary completion rate (% relevant age group),,0
 Overview,9,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,0
 Overview,10,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,0
 Overview,11,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
@@ -29,8 +29,8 @@ Production and consumption,29,missing,,,"Area harvested, coffee (ha)",,0
 Production and consumption,30,QC_656_5419,,,"Yield, coffee (hg/ha)",,0
 Production and consumption,31,QC_656_5510,,,"Production quantity, coffee (mln tonnes)",1000,0
 Production and consumption,32,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/cap/day),,0
-Production and consumption,33,missing,,,Vegetal (crop) products (kcal/cap/day),,0
-Production and consumption,34,missing,,,Animal products (kcal/cap/day),,0
+Production and consumption,33,CC_2903_664,,,Vegetal (crop) products (kcal/cap/day),,0
+Production and consumption,34,CL_2941_664,,,Animal products (kcal/cap/day),,0
 Environment,35,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawan (% total),,1
 Environment,36,ER.LND.PTLD.ZS,,,Terrestrial protected areas (% total land area),,1
 Environment,37,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1
