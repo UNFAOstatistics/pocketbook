@@ -302,23 +302,87 @@ syb.df <- merge(syb.df,water_vars.df,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
 
 
-
-
 # Producer prices, green coffee (US$ per tonne)
+dat <- getFAOtoSYB(domainCode = "PP",
+                   elementCode = 5532,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
 # Producer price index (2004-06=100)
-# Green
-# Roasted
-# Extracts
-# Green
-# Roasted
-# Extracts
-# 
+dat <- getFAOtoSYB(domainCode = "PP",
+                   elementCode = 5539,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+
+# Exports, coffee:
+## Green
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5922,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+## Roasted
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5922,
+                   itemCode = 657)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+## Extracts
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5922,
+                   itemCode = 659)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+
+# Imports, coffee:
+## Green
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5622,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+## Roasted
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5622,
+                   itemCode = 657)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+## Extracts
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5622,
+                   itemCode = 659)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
 # Area harvested, coffee (ha)
 # Yield, coffee (hg/ha)
+
+dat <- getFAOtoSYB(domainCode = "QC",
+                   elementCode = 5419,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+
 # Production quantity, coffee (mln tonnes)
-# 
+dat <- getFAOtoSYB(domainCode = "QC",
+                   elementCode = 5510,
+                   itemCode = 656)
+dat1 <- dat$aggregates
+syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
 # 
 # Vegetal (crop) products (kcal/cap/day)
+
+
+
 # Animal products (kcal/cap/day)
 # 
 # GHG emissions from coffee (% of total)
