@@ -292,6 +292,39 @@ syb.df <- syb.df[!myvars]
 syb.df <- merge(syb.df,water_vars.df,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
 
+#####################################################################################
+##                                                                                 ##
+## Coffee book variables                                                           ##
+##                                                                                 ##
+#####################################################################################
+
+# Consumer prices, coffee
+
+
+
+
+
+# Producer prices, green coffee (US$ per tonne)
+# Producer price index (2004-06=100)
+# Green
+# Roasted
+# Extracts
+# Green
+# Roasted
+# Extracts
+# 
+# Area harvested, coffee (ha)
+# Yield, coffee (hg/ha)
+# Production quantity, coffee (mln tonnes)
+# 
+# 
+# Vegetal (crop) products (kcal/cap/day)
+# Animal products (kcal/cap/day)
+# 
+# GHG emissions from coffee (% of total)
+
+
+
 
 # Countries ---------------------------------------------------------------
 
