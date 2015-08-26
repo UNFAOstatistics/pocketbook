@@ -662,10 +662,33 @@ LAC <- c(LAC_Caribbean,
 #   
 
 
-# cat(paste(country_data$M49_Europe, collapse=","))
-# cat(paste(faost_code_data$M49_Europe, collapse=","))
+GLO_Europe <- REU
+GLO_Asia <- RAP
+GLO_Africa <- RAF
+GLO_North_Africa_and_Middle_East <- RNE
+GLO_Latin_America_and_the_Caribbean <- LAC
 
-GLO_Europe <- c(284,	 # Åland Islands
+GLO <- c(GLO_Europe,
+         GLO_Asia,
+         GLO_Africa,
+         GLO_North_Africa_and_Middle_East,
+         GLO_Latin_America_and_the_Caribbean
+#          GLO_Oceania,
+#          GLO_Americas
+         )
+
+
+
+
+# __  __  _  _    ___  
+# |  \/  || || |  / _ \ 
+# | |\/| || || |_| (_) |
+# | |  | ||__   _|\__, |
+# |_|  |_|   |_|    /_/ 
+#   
+  
+
+M49_Europe <- c(284,	 # Åland Islands
                 3,	 # Albania
                 6,	 # Andorra
                 11,	 # Austria
@@ -727,7 +750,7 @@ GLO_Europe <- c(284,	 # Åland Islands
 # cat(paste(country_data$M49_Asia, collapse=","))
 # cat(paste(faost_code_data$M49_Asia, collapse=","))
 
-GLO_Asia <- c(2,	 # Afghanistan
+M49_Asia <- c(2,	 # Afghanistan
               1,	 # Armenia
               52,	 # Azerbaijan
               13,	 # Bahrain
@@ -783,7 +806,7 @@ GLO_Asia <- c(2,	 # Afghanistan
 # cat(paste(country_data$M49_Africa, collapse=","))
 # cat(paste(faost_code_data$M49_Africa, collapse=","))
 
-GLO_Africa <- c(4,	 # Algeria
+M49_Africa <- c(4,	 # Algeria
                 7,	 # Angola
                 53,	 # Benin
                 20,	 # Botswana
@@ -848,7 +871,7 @@ GLO_Africa <- c(4,	 # Algeria
 # cat(paste(country_data$M49_Oceania, collapse=","))
 # cat(paste(faost_code_data$M49_Oceania, collapse=","))
 
-GLO_Oceania <- c(5,	 # American Samoa
+M49_Oceania <- c(5,	 # American Samoa
                  10,	 # Australia
                  47,	 # the Cook Islands
                  66,	 # Fiji
@@ -880,7 +903,7 @@ GLO_Oceania <- c(5,	 # American Samoa
 # cat(paste(country_data$M49_Americas, collapse=","))
 # cat(paste(faost_code_data$M49_Americas, collapse=",")
 
-GLO_Americas <- c(258,	 # Anguilla
+M49_Americas <- c(258,	 # Anguilla
                   8,	 # Antigua and Barbuda
                   9,	 # Argentina
                   22,	 # Aruba
@@ -937,22 +960,9 @@ GLO_Americas <- c(258,	 # Anguilla
                   234,	 # Uruguay
                   236	 # Venezuela (Bolivarian Republic of)
 )
+  
 
 
-GLO_Europe <- REU
-GLO_Asia <- RAP
-GLO_Africa <- RAF
-GLO_North_Africa_and_Middle_East <- RNE
-GLO_Latin_America_and_the_Caribbean <- LAC
-
-GLO <- c(GLO_Europe,
-         GLO_Asia,
-         GLO_Africa,
-         GLO_North_Africa_and_Middle_East,
-         GLO_Latin_America_and_the_Caribbean
-#          GLO_Oceania,
-#          GLO_Americas
-         )
 
 
 
@@ -1164,13 +1174,18 @@ COF_nonmembers_developed <- c(COF_Nonmember_countries_Europe,
 
 
 
-COF <- c(COF_Coffee_producers_April,
-         COF_Coffee_producers_July,
-         COF_Coffee_producers_October,
-         COF_nonmembers_underdeveloped,
-         COF_nonmembers_developed
-)
+# COF <- c(COF_Coffee_producers_April,
+#          COF_Coffee_producers_July,
+#          COF_Coffee_producers_October,
+#          COF_nonmembers_underdeveloped,
+#          COF_nonmembers_developed
+# )
 
+COF <- c(M49_Americas,
+         M49_Oceania,
+         M49_Africa,
+         M49_Asia,
+         M49_Europe)
 
 
 ##########################################################################################################
@@ -1237,16 +1252,21 @@ region_key$GLO_Europe      <- ifelse(region_key$FAOST_CODE %in% GLO_Europe, TRUE
 region_key$GLO_North_Africa_and_Middle_East <- ifelse(region_key$FAOST_CODE %in% GLO_North_Africa_and_Middle_East, TRUE, FALSE)
 region_key$GLO_Latin_America_and_the_Caribbean <- ifelse(region_key$FAOST_CODE %in% GLO_Latin_America_and_the_Caribbean, TRUE, FALSE)
 
-region_key$COF                          <- ifelse(region_key$FAOST_CODE %in% COF, TRUE, FALSE)
-region_key$COF_Coffee_producers_April   <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_April, TRUE, FALSE)
-region_key$COF_Coffee_producers_July    <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_July, TRUE, FALSE)
-region_key$COF_Coffee_producers_October <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_October, TRUE, FALSE)
+# region_key$COF                          <- ifelse(region_key$FAOST_CODE %in% COF, TRUE, FALSE)
+# region_key$COF_Coffee_producers_April   <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_April, TRUE, FALSE)
+# region_key$COF_Coffee_producers_July    <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_July, TRUE, FALSE)
+# region_key$COF_Coffee_producers_October <- ifelse(region_key$FAOST_CODE %in% COF_Coffee_producers_October, TRUE, FALSE)
+# 
+# region_key$COF_nonmembers_underdeveloped <- ifelse(region_key$FAOST_CODE %in% COF_nonmembers_underdeveloped, TRUE, FALSE)
+# region_key$COF_nonmembers_developed <- ifelse(region_key$FAOST_CODE %in% COF_nonmembers_developed, TRUE, FALSE)
+# 
 
-region_key$COF_nonmembers_underdeveloped <- ifelse(region_key$FAOST_CODE %in% COF_nonmembers_underdeveloped, TRUE, FALSE)
-region_key$COF_nonmembers_developed <- ifelse(region_key$FAOST_CODE %in% COF_nonmembers_developed, TRUE, FALSE)
-
-
-
+region_key$COF          <- ifelse(region_key$FAOST_CODE %in% COF,          TRUE, FALSE)
+region_key$COF_Americas <- ifelse(region_key$FAOST_CODE %in% M49_Americas, TRUE, FALSE)
+region_key$COF_Oceania  <- ifelse(region_key$FAOST_CODE %in% M49_Oceania,  TRUE, FALSE)
+region_key$COF_Africa   <- ifelse(region_key$FAOST_CODE %in% M49_Africa,   TRUE, FALSE)
+region_key$COF_Asia     <- ifelse(region_key$FAOST_CODE %in% M49_Asia,     TRUE, FALSE)
+region_key$COF_Europe   <- ifelse(region_key$FAOST_CODE %in% M49_Europe,   TRUE, FALSE)
 
 
 # Replace the ad-hoc regional grouping with the one we have created
