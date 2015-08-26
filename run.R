@@ -26,7 +26,7 @@ regionS_to_report <- c(
                                  "COF" # Coffee
                       )
 
-include_part1 <- F
+include_part1 <- T
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
