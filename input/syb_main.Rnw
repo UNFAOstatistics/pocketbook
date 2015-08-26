@@ -811,92 +811,48 @@ col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"./input/code/plot/theme.R"))
 
-#if (region_to_report != "COF"){
-  
-    # Create the plot
-    p <- ggplot(data=overview.df, aes(long,lat,group=group))
-    #  ---- grid below the countries ------------------------
-    p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
-                  linetype = "solid", color = col.main2, alpha=.1)
-    # Grey for the non-data regions
-    p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
-    p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
-    p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
-    p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
-    #p <- p + geom_text(data=cnames, aes(long, lat, label = ADM0_NAME, group=ADM0_NAME), size=2, color="black")
-    
-    p <- p + theme(legend.position = c(0.05,0.05), 
-                              legend.justification=c(0,0),
-                              legend.key.size=unit(6,'mm'),
-                              legend.direction = "vertical",
-                              legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
-                              #legend.background=element_rect(colour=NA, fill=NA),
-                              legend.text=element_text(size=12), 
-                              legend.title=element_text(size=12), 
-                              title=element_text(size=16), 
-                              panel.background = element_blank(), 
-                              plot.background = element_blank(),
-                              panel.grid.minor = element_blank(),
-                              panel.grid.major = element_blank(),
-                              axis.text = element_blank(), 
-                              axis.title = element_blank(), 
-                              axis.ticks = element_blank())
-    p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
-                                         title.position = "top", 
-                                         title.hjust=0))
-    p <- p + guides(colour=FALSE)
-    p
-  
-#}
-# if (region_to_report == "COF") {
-#   
-#     syb_part <- 6
-#     colPart = plot_colors(part = syb_part, 12)
-#     mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
-#     
-#     nCol = length(unique(overview.df$subgroup))
-#     tmpCol = mapColFun(nCol)[2]
-#     mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
-#     mapColors = mapColFun(nCol)
-#     
-#     source(paste0(root.dir,"./input/code/plot/theme.R"))
-# 
-#     # Create the plot
-#     p <- ggplot(data=overview.df, aes(long,lat,group=group))
-#     #  ---- grid below the countries ------------------------
-#     p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
-#                   linetype = "solid", color = col.main2, alpha=.1)
-#     # Grey for the non-data regions
-#     p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
-#     p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
-#     p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
-#     #p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
-#     p <- p + scale_fill_manual(values=mapColors) # no data to think about
-#     #p <- p + geom_text(data=cnames, aes(long, lat, label = ADM0_NAME, group=ADM0_NAME), size=2, color="black")
-#     
-#     p <- p + theme(legend.position = c(0.05,0.05), 
-#                               legend.justification=c(0,0),
-#                               legend.key.size=unit(6,'mm'),
-#                               legend.direction = "vertical",
-#                               legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
-#                               #legend.background=element_rect(colour=NA, fill=NA),
-#                               legend.text=element_text(size=12), 
-#                               legend.title=element_text(size=12), 
-#                               title=element_text(size=16), 
-#                               panel.background = element_blank(), 
-#                               plot.background = element_blank(),
-#                               panel.grid.minor = element_blank(),
-#                               panel.grid.major = element_blank(),
-#                               axis.text = element_blank(), 
-#                               axis.title = element_blank(), 
-#                               axis.ticks = element_blank())
-#     p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
-#                                          title.position = "top", 
-#                                          title.hjust=0))
-#     p <- p + guides(colour=FALSE)
-#     p
-#   
-# }
+
+
+
+
+# Create the plot
+p <- ggplot(data=overview.df, aes(long,lat,group=group))
+#  ---- grid below the countries ------------------------
+p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
+              linetype = "solid", color = col.main2, alpha=.1)
+# Grey for the non-data regions
+p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
+p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
+p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
+# p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
+p <- p + scale_fill_manual(values=c("#964B00", # Brown
+                                    "#A52A2A", # Red-Brown
+                                    "#9F8170", # Beaver
+                                    "#C3B091", # Khaki
+                                    "#F0DC82")) # Buff
+
+p <- p + theme(legend.position = c(0.05,0.05), 
+                          legend.justification=c(0,0),
+                          legend.key.size=unit(6,'mm'),
+                          legend.direction = "vertical",
+                          legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
+                          #legend.background=element_rect(colour=NA, fill=NA),
+                          legend.text=element_text(size=12), 
+                          legend.title=element_text(size=12), 
+                          title=element_text(size=16), 
+                          panel.background = element_blank(), 
+                          plot.background = element_blank(),
+                          panel.grid.minor = element_blank(),
+                          panel.grid.major = element_blank(),
+                          axis.text = element_blank(), 
+                          axis.title = element_blank(), 
+                          axis.ticks = element_blank())
+p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
+                                     title.position = "top", 
+                                     title.hjust=0))
+p <- p + guides(colour=FALSE)
+p
+
 
 
 @
@@ -938,7 +894,9 @@ overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data
 
 library(xtable)
 rws <- seq(0, (nrow(overview_data)), by = 2)
-col <- rep("\\rowcolor[gray]{0.95}", length(rws))
+#col <- rep("\\rowcolor[part6]{0.95}", length(rws))
+col <- rep("\\rowcolor{part5!10}", length(rws))
+
 bold <- function(x) {paste('{\\textbf{',x,'}}', sep ='')}
 
 if(length(unique(overview.df$subgroup)) == 2) alignment <- "lp{1.1in}p{1.1in}"
@@ -959,7 +917,8 @@ print(
   type = "latex", table.placement = NULL, 
   booktabs = TRUE, 
   include.rownames = FALSE, 
-  size = "tiny", 
+  #size = "tiny", 
+  size = "scriptsize", 
   caption.placement = "top", 
   add.to.row = list(pos = as.list(rws), command = col),
   sanitize.colnames.function=bold
