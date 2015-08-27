@@ -25,13 +25,12 @@ regionS_to_report <- c(
 #                              ,"LAC" # Latin America and the Caribbean
                                  "COF" # Coffee
                       )
-
-include_part1 <- T
+include_part1 <- F
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
-include_part5 <- F
-include_part6 <- F
+include_part5 <- T
+include_part6 <- T
 include_part7 <- F
 include_country_profiles <- F
 include_metadata <- F

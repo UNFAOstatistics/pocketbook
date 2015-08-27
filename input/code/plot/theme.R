@@ -49,7 +49,9 @@ theme_update(
   #   strip.text.y = element_text(),
 #   plot.background = element_rect(fill = col.main2, colour = col.main2,
 #                                  size = NULL, linetype = NULL),
-    plot.background = element_blank(),
+  plot.background = element_blank(),
+  #plot.background = element_rect(fill=NA,colour = "grey90",size=1,linetype="solid"),
   plot.title =  element_blank(),
   plot.margin = unit(rep(0.1, 4), "line")
+  
 )
