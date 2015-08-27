@@ -134,6 +134,7 @@ knit_hooks$set(bottom_plot = function(before, options, envir) {
      } else {
        
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage}"))
+      # return(paste0("\\end{chart}} \n \\end{ChartPage}"))
     }
 })
 
@@ -146,6 +147,7 @@ knit_hooks$set(bottom_plot2 = function(before, options, envir) {
      } else {
        
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage2}"))
+      #return(paste0("\\end{chart}} \n \\end{ChartPage2}"))
     }
 })
 
@@ -455,8 +457,8 @@ p
 \definecolor{part2}{cmyk}{0,0.54,0.96,0.10}
 \definecolor{part3}{cmyk}{0.18,0.90,0.75,0.31}
 \definecolor{part4}{cmyk}{0.73,0.10,0.97,0.29}
-\definecolor{part5}{cmyk}{0,0.30,0.51,0.57}
-\definecolor{part6}{cmyk}{0,0.26,0.45,0.35}
+\definecolor{part5}{cmyk}{0,0.26,0.45,0.35}
+\definecolor{part6}{cmyk}{0,0.30,0.51,0.57}
 \definecolor{part7}{cmyk}{0,0.28,0.56,0.71}
 
 
