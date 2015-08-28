@@ -627,7 +627,7 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 \large
 
 
-<<>>=
+<<foreword_chunk>>=
 
   if (region_to_report != "COF"){
     cat(

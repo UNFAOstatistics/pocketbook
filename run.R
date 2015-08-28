@@ -29,14 +29,14 @@ include_part1 <- F
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
-include_part5 <- F
+include_part5 <- T
 include_part6 <- T
 include_part7 <- F
-include_country_profiles <- T
-include_metadata <- T
+include_country_profiles <- F
+include_metadata <- F
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # Upgrade the comparison tables
 broke_into_images <- F
