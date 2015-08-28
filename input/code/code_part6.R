@@ -34,7 +34,7 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 
 
 
-## ---- P6coffeeprodData, cache=TRUE,results='hide', eval=P6coffeeprod ---- 
+## ---- P6coffeeprodData ---- 
 
 # Area harvested, coffee (ha)
 dat <- getFAOtoSYB(domainCode = "QC",
@@ -139,7 +139,7 @@ map.plot <- full_join(dat,map.df)
 
 # Add region key and subset
 
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QC_656_5312")]
 cat_data$value_cat <- categories(x=cat_data$QC_656_5312, n=5, method="jenks")
@@ -382,7 +382,7 @@ map.plot <- full_join(dat,map.df)
 
 # Add region key and subset
 
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","import_per_capita")]
 cat_data$value_cat <- categories(x=cat_data$import_per_capita, n=5, method="jenks")

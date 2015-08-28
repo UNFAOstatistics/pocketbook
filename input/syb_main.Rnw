@@ -274,153 +274,6 @@ if (region_to_report == "COF") map.fig.height  <- 8
 if (region_to_report == "COF") map.out.width  <- "1.7\\columnwidth"
 if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
-
-# Fortify the global map for each maps!!
-
-# set Robinson projection
-shape <- spTransform(fao_world, CRS("+proj=robin"))
-
-# Fortify the shape
-shape$id <- rownames(shape@data)
-map.points <- fortify(shape, region = "id")
-map.df <- merge(map.points, shape, by = "id")
-map.df$FAOST_CODE[map.df$FAOST_CODE %in% 41] <- 351
-
-
-# Function for subgroups
-
-#` This is a bit complicated one. However, the idea is construct a data.frame
-# with FAOST_CODE and subgroup columns that tells into which subgroup a particular country
-# belongs to. If a country belongs to multiple groups, you want something like
-# gather = TRUE
-# Russia | Asia and the Pacific
-# Russia | Europe and the Central Asia
-# Or gather = FALSE
-# Russia | Asia and the Pacific AND Europe and the Central Asia
-
-subgrouping <- function(region_to_report, gather=TRUE){
-  df <- region_key[c("FAOST_CODE","SHORT_NAME",names(region_key)[grep(region_to_report, names(region_key))])]
-  df <- df[which(df[[region_to_report]]),]
-  # subregions for this region
-  subregion <- names(df)[grep(paste0(region_to_report,"_"), names(df))]
-  n_subregion <- length(subregion)
-  # create n_subregions number of empty vars
-  if (n_subregion >= 1) df$subgroup1 <- ""
-  if (n_subregion >= 2) df$subgroup2 <- ""
-  if (n_subregion >= 3) df$subgroup3 <- ""
-  if (n_subregion >= 4) df$subgroup4 <- ""
-  if (n_subregion >= 5) df$subgroup5 <- ""
-  if (n_subregion >= 6) df$subgroup6 <- ""
-  if (n_subregion >= 7) df$subgroup7 <- ""
-  if (n_subregion >= 8) df$subgroup8 <- ""
-  if (n_subregion >= 9) df$subgroup9 <- ""
-  if (n_subregion >= 10) df$subgroup10 <- ""
-  if (n_subregion >= 11) df$subgroup11 <- ""
-  if (n_subregion >= 12) df$subgroup12 <- ""
-  if (n_subregion >= 13) df$subgroup13 <- ""
-  if (n_subregion >= 14) df$subgroup14 <- ""
-  if (n_subregion >= 15) df$subgroup15 <- ""
-  if (n_subregion >= 16) stop("more than 16 subregions. Current code cannot handle it!")
-  
-  for (i in 1:n_subregion) {
-        df[[paste0("subgroup",i)]] <- ifelse(df[[subregion[i]]] & df[[paste0("subgroup",i)]] == "",
-                                             subregion[i],
-                                             df[[paste0("subgroup",i)]]) 
-  }
-  for (i in 1:n_subregion) {
-          df[[paste0("subgroup",i)]] <- str_replace_all(df[[paste0("subgroup",i)]], paste0(region_to_report,"_"), "")
-          df[[paste0("subgroup",i)]] <- str_replace_all(df[[paste0("subgroup",i)]], "_", " ")
-  }
-  df$subgroup <- ""
-  if (gather){
-    df_x <- data.frame()
-    for (i in 1:n_subregion) {
-          FAOST_CODE <- ifelse(df[[paste0("subgroup",i)]] != "",df$FAOST_CODE, NA)
-          subgroup <- ifelse(df[[paste0("subgroup",i)]] != "",df[[paste0("subgroup",i)]], NA)
-          df_x <- rbind(df_x,data.frame(FAOST_CODE,subgroup))
-    }
-    df <- na.omit(df_x)
-  } else {
-      for (i in 1:n_subregion) {
-          df$subgroup <- paste(df$subgroup, df[[paste0("subgroup",i)]], sep="+")
-        }
-        df$subgroup <- str_trim(df$subgroup)
-        df$subgroup <- str_replace_all(df$subgroup, "^\\++", "")
-        df$subgroup <- str_replace_all(df$subgroup, "\\++$", "")
-        df$subgroup <- str_replace_all(df$subgroup, "\\++", " AND ")
-    }
-  
-  if (region_to_report == "RNE") {
-    df$subgroup[df$subgroup %in% "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\nCouncil States\nand Yemen"
-    df$subgroup[df$subgroup %in% "Other Near East countries"] <- "Other Near East\ncountries"
-  }
-  
-  df[c("FAOST_CODE","subgroup")]
-}
-
-
-
-
-
-
-# function plotting maps!
-
-create_map_here <- function(){
-
-  colPart = plot_colors(part = syb_part, 12)
-  mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
-  
-  if ("No Data" %in% unique(cat_data$value_cat)) {
-    nCol = length(levels(cat_data$value_cat)) -1
-    tmpCol = mapColFun(nCol)[2]
-    mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
-    mapColors = mapColFun(nCol)
-    mapColors <- c("grey70", mapColors)
-  } 
-  if (!("No Data" %in% unique(cat_data$value_cat))){
-    nCol = length(levels(cat_data$value_cat))
-    tmpCol = mapColFun(nCol)[2]
-    mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
-    mapColors = mapColFun(nCol)
-  }
-
-
-  # Create the plot
-p <- ggplot(data=map.plot, aes(long,lat,group=group))
-#  ---- grid below the countries ------------------------
-p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
-              linetype = "solid", color = col.main2, alpha=.1)
-# Grey for the non-data regions
-p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
-p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
-p <- p + scale_fill_manual(values=mapColors) # no data to think about
-p <- p + theme(legend.position = c(0.05,0.05), 
-                          legend.justification=c(0,0),
-                          legend.key.size=unit(6,'mm'),
-                          legend.direction = "vertical",
-                          legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
-                          #legend.background=element_rect(colour=NA, fill=NA),
-                          legend.text=element_text(size=12), 
-                          legend.title=element_text(size=12), 
-                          title=element_text(size=16), 
-                          panel.background = element_blank(), 
-                          plot.background = element_blank(),
-                          panel.grid.minor = element_blank(),
-                          panel.grid.major = element_blank(),
-                          axis.text = element_blank(), 
-                          axis.title = element_blank(), 
-                          axis.ticks = element_blank())
-if (region_to_report == "REU") p <- p + coord_cartesian(xlim=c(-4290114,13198767,ylim=c(1965387,8184223)))
-if (region_to_report == "RNE") p <- p + coord_cartesian(xlim=c(-4078415,1783566,ylim=c(29258,6247852)))
-if (region_to_report == "LAC") p <- p + coord_cartesian(xlim=c(-14078415,-1078415,ylim=c(29258,0)))
-p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
-                                     title.position = "top", 
-                                     title.hjust=0))
-p <- p + guides(colour=FALSE)
-p
-}
-
-
 @
 
 
@@ -747,38 +600,6 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 
 
-%   _         _                    _               _    _               
-%  (_) _ __  | |_  _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __  
-%  | || '_ \ | __|| '__|/ _ \  / _` || | | | / __|| __|| | / _ \ | '_ \ 
-%  | || | | || |_ | |  | (_) || (_| || |_| || (__ | |_ | || (_) || | | |
-%  |_||_| |_| \__||_|   \___/  \__,_| \__,_| \___| \__||_| \___/ |_| |_|
-%                                                                       
-
-
-
-% \section{Introduction}
-
-% \bigskip
-% \bigskip
-
-% Overcoming malnutrition in all of its forms – caloric undernourishment, micronutrient deficiencies and obesity – requires a combination of interventions in different areas that guarantee the availability of and access to healthy diets. Among the key areas, interventions are required in food systems, public health systems and the provision of safe water and sanitation. This pocketbook not only focuses on indicators of food security and nutritional outcomes but also on the determinants that contribute to healthy lives. 
-
-% The pocketbook is structured in two sections: 
-% \begin{itemize}
-% \item Thematic spreads related to food security and nutrition, including detailed food consumption data collected from national household budget surveys,
-% \item Comprehensive country and regional profiles with indicators categorized by anthropometry, nutritional deficiencies, supplementation, dietary energy supplies, preceded by their "setting".
-% \end{itemize}
-
-% \textit{The setting} provides demographic indicators as well as health status indicators based on mortality patterns and the provision of safe water and sanitation. 
-
-% \textit{Anthropometry} indicators provide information not only on the prevalence of acute and chronic forms of under-nutrition but also on the prevalence of obesity. Their co-existence is often referred to as the double burden of malnutrition. 
-
-% \textit{Nutritional deficiency} indicators reveal food security issues at the national level based on the adequacy of energy supplies; they also reveal the prevalence of micronutrient deficiencies, often referred to as “hidden hunger”. Combined with anthropometric measurements, they allow for the identification of the triple burden of malnutrition (under-nutrition, obesity and hidden hunger). Regarding hidden hunger, indicators concerning iodine and vitamin A have been selected.
-
-% \textit{Dietary} indicators are based on national food supplies and inform on the overall quality of diets. Focus is also on the importance of diets during the first 1\,000 days of an infant’s life, with indicators selected on the quality of breastfeeding, dietary diversity and meal frequency. 
-
-% The choice of indicators was guided by the following criteria: relevance to health, food security and nutrition, comparability over time, and availability, in particular for low-income countries. But the criteria were relaxed for several indicators given their importance and the lack of available substitutes. It is hoped that the presence of data gaps will bring about greater efforts to collect the necessary information because only with timely and reliable data can interventions be designed and targeted towards those in most need. Wherever available, disaggregated data by gender have been provided. Such data are indeed key to mainstreaming gender in policies and programmes.
-
 \clearpage
 
 <<overview_map, eval=TRUE, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
@@ -792,6 +613,7 @@ df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 # merge data with the region info
 overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 overview.df <- arrange(overview.df, order)
+overview.df <- merge(overview.df,FAOcountryProfile,by="FAOST_CODE")
 
 # define map unit
 map_unit <- ""
@@ -867,8 +689,8 @@ p
 <<overview_table, eval=TRUE, results='asis'>>=
 
 # Add region key and subset
-if (region_to_report != "GLO") overview.df <- overview.df[which(overview.df[[region_to_report]]),]
-if (region_to_report == "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
+if (!(region_to_report %in% c("GLO","COF"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
+if (region_to_report %in% "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
 if (region_to_report == "COF") overview.df <- overview.df
 
 if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}"))
@@ -1077,30 +899,6 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 <<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
 @
 
-
-
-
-%   ____               _   _____ 
-%  |  _ \  __ _  _ __ | |_|___  |
-%  | |_) |/ _` || '__|| __|  / / 
-%  |  __/| (_| || |   | |_  / /  
-%  |_|    \__,_||_|    \__|/_/   
-%                                
-% 
-
-                                 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PART7 - Coffee book!
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newpart{part7}
-\rowcolors{1}{part7!10}{white}
-\clearpage
-
-<<part7, child = if (include_part7) 'syb_part7.Rnw'>>=
-@
 
 
 % 

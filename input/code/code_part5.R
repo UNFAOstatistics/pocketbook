@@ -48,18 +48,6 @@ df <- gather(dat, variable, value, 3:4)
 
 
 ## ---- P5overTOPRIGHT ----
-
-# old way
-
-# Subset data
-# if (region_to_report == "RAF") dat <- df[df$FAOST_CODE == 5100,]
-# if (region_to_report == "RAP") dat <- df[df$FAOST_CODE == 5500,]
-# if (region_to_report == "REU") dat <- df[df$FAOST_CODE == 5400,]
-# if (region_to_report == "RNE") dat <- df[df$FAOST_CODE == 5300,]
-# if (region_to_report == "GLO") dat <- df[df$FAOST_CODE == 5000,]
-# if (region_to_report == "COF") dat <- df[df$FAOST_CODE == 5000,]
-# 
-
 dat <- df %>% select(FAOST_CODE,Year,variable,value)
 dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
@@ -84,13 +72,7 @@ p
 # Caption
 
 caption_text <- "rural and urban population"
-if (region_to_report == "RAF") caption_text <- "Africa rural and urban population"
-if (region_to_report == "RAP") caption_text <- "Asia and Pacific rural and urban population"
-if (region_to_report == "REU") caption_text <- "Europe and Central Asia rural and urban population"
-if (region_to_report == "RNE") caption_text <- "North Africa and Near East rural and urban population"
-if (region_to_report == "GLO") caption_text <- "World rural and urban population"
-#if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
- # --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 
 ## ---- P5overLEFT ----
@@ -121,11 +103,6 @@ p
 
 # Caption
 caption_text <- "Population, average annual growth (2004-2014)"
-if (region_to_report == "RAF") caption_text <- "Population, average annual growth (2004-2014)"
-if (region_to_report == "RAP") caption_text <- "Population, average annual growth (2004-2014)"
-if (region_to_report == "REU") caption_text <- "Population, average annual growth (2004-2014)"
-if (region_to_report == "RNE") caption_text <- "Population, average annual growth (2004-2014)"
-if (region_to_report == "GLO") caption_text <- "Population, average annual growth (2004-2014)"
  # --------------------------------------------------------------- #
 
 ## ---- P5overRIGHT ----
@@ -153,13 +130,6 @@ p
 
 # Caption
 caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "RNE") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-#if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
-
  # --------------------------------------------------------------- #
 
 
@@ -191,13 +161,7 @@ p
 
 # Caption
 caption_text <- "Total economically active population (2000 to 2014)"
-if (region_to_report == "RAF") caption_text <- "Total economically active population in Africa (2000 to 2014)"
-if (region_to_report == "RAP") caption_text <- "Total economically active population in Asia (2000 to 2014)"
-if (region_to_report == "REU") caption_text <- "Total economically active population in Europe and Central Asia (2000 to 2014)"
-if (region_to_report == "RNE") caption_text <- "Total economically active population in North Africa and Near East (2000 to 2014)"
-if (region_to_report == "GLO") caption_text <- "Total economically active population in Asia (2000 to 2014)"
-
- # --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 
 ## ---- P5overMAP ----
@@ -206,8 +170,7 @@ dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_COD
 map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
-
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+#map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","OA.TPR.POP.PPL.SHP")]
 cat_data$value_cat <- categories(x=cat_data$OA.TPR.POP.PPL.SHP, n=5, method="jenks")
@@ -230,12 +193,7 @@ create_map_here()
 
 # Caption
 caption_text <- "Rural population, share of total population (2014)"
-if (region_to_report == "RAF") caption_text <- "Rural population, share of total population (2014)"
-if (region_to_report == "RAP") caption_text <- "Rural population, share of total population (2014)"
-if (region_to_report == "REU") caption_text <- "Rural population, share of total population (2014)"
-if (region_to_report == "RNE") caption_text <- "Rural population, share of total population (2014)"
-if (region_to_report == "GLO") caption_text <- "Rural population, share of total population (2014)"
- # --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 
 #   _____                                                    
@@ -290,12 +248,7 @@ p
 
 # Caption
 caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-if (region_to_report == "RAF") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-if (region_to_report == "RAP") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-if (region_to_report == "REU") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-if (region_to_report == "RNE") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-if (region_to_report == "GLO") caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
- # --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 
 ## ---- P5econLEFT, eval=P5econ, left_plot=P5econ, fig.height=left_plot_height, fig.width=left_plot_width ----
@@ -326,13 +279,7 @@ p
 
 # Caption
 caption_text <- "Agriculture value added per worker, countries with the highest values"
-if (region_to_report == "RAF") caption_text <- "Agriculture value added per worker, countries with the highest values"
-if (region_to_report == "RAP") caption_text <- "Agriculture value added per worker, countries with the highest values"
-if (region_to_report == "REU") caption_text <- "Agriculture value added per worker, countries with the highest values"
-if (region_to_report == "RNE") caption_text <- "Agriculture value added per worker, countries with the highest values"
-if (region_to_report == "GLO") caption_text <- "Agriculture value added per worker, countries with the highest values"
-
- # --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 ## ---- P5econRIGHT, eval=P5econ ,right_plot=P5econ, fig.height=right_plot_height, fig.width=right_plot_width ----
 
@@ -372,11 +319,6 @@ p
 
 # Caption
 caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "RAF") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "RAP") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "REU") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "RNE") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-if (region_to_report == "GLO") caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
 #if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
 
  # --------------------------------------------------------------- #
@@ -426,13 +368,6 @@ p
 
 # Caption
 caption_text <- "Value added in agriculture as share of GDP"
-if (region_to_report == "RAF") caption_text <- "Value added in agriculture as share of GDP"
-if (region_to_report == "RAP") caption_text <- "Value added in agriculture as share of GDP"
-if (region_to_report == "REU") caption_text <- "Value added in agriculture as share of GDP"
-if (region_to_report == "RNE") caption_text <- "Value added in agriculture as share of GDP"
-if (region_to_report == "GLO") caption_text <- "Value added in agriculture as share of GDP"
-#if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
-
  # --------------------------------------------------------------- #
 
 
@@ -445,8 +380,7 @@ dat <- syb.df %>% filter(Year %in% c(2010:2013), FAOST_CODE < 5000) %>%
 map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
-
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","NV.AGR.TOTL.ZS")]
 cat_data$value_cat <- categories(x=cat_data$NV.AGR.TOTL.ZS, n=5, method="jenks")
@@ -469,11 +403,6 @@ create_map_here()
 
 # Caption
 caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-if (region_to_report == "RAF") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-if (region_to_report == "RAP") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-if (region_to_report == "REU") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-if (region_to_report == "RNE") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-if (region_to_report == "GLO") caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
  # --------------------------------------------------------------- #
 
 
@@ -647,8 +576,7 @@ dat <- syb.df %>% filter(Year %in% 2007:2012, FAOST_CODE < 5000) %>%
 map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
-
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","SI.POV.DDAY")]
 cat_data$value_cat <- categories(x=cat_data$SI.POV.DDAY, n=5, method="jenks")
@@ -793,13 +721,7 @@ p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "RAF") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-if (region_to_report == "RAP") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-if (region_to_report == "REU") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-if (region_to_report == "RNE") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-if (region_to_report == "GLO") caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-
+caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
  # --------------------------------------------------------------- #
 
 ## ---- P5desLEFT, eval=P5des, left_plot=P5des, fig.height=left_plot_height, fig.width=left_plot_width ----
@@ -830,13 +752,8 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "RAF") caption_text <- "Dietary energy supply, top 20 countries in 2015"
-if (region_to_report == "RAP") caption_text <- "Dietary energy supply, top 20 countries in 2015"
-if (region_to_report == "REU") caption_text <- "Dietary energy supply, top 20 countries in 2015"
-if (region_to_report == "RNE") caption_text <- "Dietary energy supply, top 20 countries in 2015"
-if (region_to_report == "GLO") caption_text <- "Dietary energy supply, top 20 countries in 2015"
- # --------------------------------------------------------------- #
+caption_text <- "Dietary energy supply, top 20 countries in 2015"
+# --------------------------------------------------------------- #
 
 ## ---- P5desRIGHT, eval=P5des ,right_plot=P5des, fig.height=right_plot_height, fig.width=right_plot_width ----
 
@@ -865,14 +782,8 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "RAF") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
-if (region_to_report == "RAP") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
-if (region_to_report == "REU") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
-if (region_to_report == "RNE") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
-if (region_to_report == "GLO") caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
-
- # --------------------------------------------------------------- #
+caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
+# --------------------------------------------------------------- #
 
 
 ## ---- P5desBOTTOM, eval=P5des, bottom_plot=P5des, fig.height=bottom_plot_height, fig.width=bottom_plot_width ----
@@ -885,8 +796,7 @@ dat <- left_join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-
-dat <- dat[which(dat[[region_to_report]]),]
+#dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
@@ -900,17 +810,12 @@ p <- p + labs(x="",y="kcal/cap/day")
 p
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "RAF") caption_text <- "Dietary energy supply"
-if (region_to_report == "RAP") caption_text <- "Dietary energy supply"
-if (region_to_report == "REU") caption_text <- "Dietary energy supply"
-if (region_to_report == "RNE") caption_text <- "Dietary energy supply"
-if (region_to_report == "GLO") caption_text <- "Dietary energy supply"
+caption_text <- "Dietary energy supply"
 #if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE == 5000,]
  # --------------------------------------------------------------- #
 
 
-## ---- P5desMAP, eval=P5des, map_plot=P5des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra ----
+## ---- P5desMAP ----
 
 dat <- df[df$Year %in%  2015 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.DA.ADESA.PCT3D")]
 
@@ -921,7 +826,7 @@ map.plot <- left_join(dat,map.df)
 
 # Add region key and subset
 
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.DA.ADESA.PCT3D")]
@@ -944,13 +849,7 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here() 
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "RAF") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "RAP") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "REU") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "RNE") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "GLO") caption_text <- "Average dietary energy supply adequacy"
-
- # --------------------------------------------------------------- #
+ caption_text <- "This is the default caption if no region spesific is defined"
+# --------------------------------------------------------------- #
 
 

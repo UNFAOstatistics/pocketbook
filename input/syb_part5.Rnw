@@ -31,6 +31,9 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 <<P5overLEFT, eval=P5over, left_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
 @
 
+<<P5overRIGHT, eval=P5over, right_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
 
 <<P5overBOTTOM, eval=P5over, bottom_plot=P5over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 @
