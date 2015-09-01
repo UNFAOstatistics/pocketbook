@@ -64,13 +64,13 @@ QC_656_5510 <- dat$aggregates
 #   group_by(FAOST_CODE,SHORT_NAME) %>%
 #   select(FAOST_CODE,Year,SI.POV.DDAY,OA.TPBS.POP.PPL.NO) %>%
 #   mutate(no_of_poor = OA.TPBS.POP.PPL.NO * (SI.POV.DDAY/100))
-#
+# 
 # dat <- dat[!is.na(dat$no_of_poor),]
-# # Add region key and subset
-#
-# # DEFAULT GROUPING
+# Add region key and subset
+
+# DEFAULT GROUPING
 # df <- subgrouping(region_to_report = region_to_report)
-#
+# 
 # # merge data with the region info
 # dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 #
@@ -90,11 +90,17 @@ QC_656_5510 <- dat$aggregates
 #
 # names(dw) <- c("","1999-2001","2009-2011")
 
-dw <- head(cars)
-dw$nro <- 200:205
+rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013) %>% group_by(FAOST_CODE) %>% 
+  dplyr::mutate(Growth=c(NA,exp(diff(log(QC_656_5510)))-1)) %>%
+  dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
+  arrange(-mean_growth) %>% slice(1:5) 
+rcc <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
+rcc <- rcc[c(3,2)]
 
-print.xtable(xtable(dw, caption = " A coffee production table X", digits = c(0,0,0,0),
-                    align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
+names(rcc) <- c("","%")
+
+print.xtable(xtable(rcc, caption = "Fastest growing coffee producers based on quantities (average annual growth rate, 2000 to 2013)", digits = c(0,0,0),
+                    align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = "latex", table.placement = NULL,
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
 
@@ -120,6 +126,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="mln tonnes")
+p <- p + scale_y_continuous(labels = space)
 p
 
 # Caption
@@ -129,7 +136,7 @@ caption_text <- "Countries with the highest coffee production quantities in 2013
 
 ## ---- P6coffeeprodRIGHT ----
 
-dat <- QC_656_5419[!is.na(QC_656_5419$QC_656_5419),]
+dat <- QC_656_5312[!is.na(QC_656_5312$QC_656_5312),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -138,34 +145,47 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -QC_656_5419)
+dat <- arrange(dat, -Year, -QC_656_5312) %>% mutate(QC_656_5312 = QC_656_5312 / 1000)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC_656_5419),y=QC_656_5419))
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC_656_5312),y=QC_656_5312))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="hg/ha")
+p <- p + labs(x="",y="1 000 ha")
+p <- p + scale_y_continuous(labels = space)
 p
 # Caption
-caption_text <- "Countries with the highest coffee yield in 2013"
+caption_text <- "Area harvested, coffee"
 
 
 
 
 ## ---- P6coffeeprodBOTTOM ----
 
-plot(cars)
-# Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+top5_codes <- QC_656_5510 %>% filter(Year == 2013, FAOST_CODE < 5000) %>% arrange(-QC_656_5510) %>% slice(1:5)
+
+rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013, FAOST_CODE %in% top5_codes$FAOST_CODE) %>%  mutate(value = QC_656_5510/1000)
+
+dat_plot <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
+
+p <- ggplot(dat_plot, aes(x=Year, y=value, color=SHORT_NAME))
+p <- p + geom_line()
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
+p <- p + labs(x="",y="1 000 mln tonnes")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels = space)
+p <- p + scale_x_continuous(breaks = c(2000,2005,2010,2013))
+p
 
 
+caption_text <- "Production quantities of top 5 coffee producers 2000 - 2013"
 
 
 ## ---- P6coffeeprodMAP ----
-dat <- QC_656_5312 %>% filter(Year %in% 2013, FAOST_CODE < 5000)
+dat <- QC_656_5419 %>% filter(Year %in% 2013, FAOST_CODE < 5000)
 
 map.plot <- full_join(dat,map.df)
 
@@ -173,13 +193,13 @@ map.plot <- full_join(dat,map.df)
 
 # map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QC_656_5312")]
-cat_data$value_cat <- categories(x=cat_data$QC_656_5312, n=5, method="jenks")
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QC_656_5419")]
+cat_data$value_cat <- categories(x=cat_data$QC_656_5419, n=5, method="jenks")
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "ha"
+map_unit <- "Hg/Ha"
 
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
@@ -193,7 +213,7 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here()
 
 # Caption
-caption_text <- "Area harvested, coffee (ha)"
+caption_text <- "Coffee yield (2013)"
 
 
 
@@ -261,41 +281,20 @@ TP_659_5622 <- dat$aggregates
 
 ## ---- P6coffeetradeTOPRIGHT ----
 
-dat <- left_join(TP_656_5622,TP_657_5622)
-dat <- left_join(dat,TP_659_5622)
+rc <- TP_656_5922 %>%  filter(Year %in% 2000:2012, FAOST_CODE < 5000) %>% group_by(FAOST_CODE) %>% 
+  dplyr::mutate(Growth=c(NA,exp(diff(log(TP_656_5922)))-1)) %>%
+  dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
+  arrange(-mean_growth) %>% slice(1:5) 
+rcc <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
+rcc$SHORT_NAME[rcc$FAOST_CODE == 128] <- "China, Macao SAR"
+rcc <- rcc[c(3,2)]
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+names(rcc) <- c("","%")
 
-dat <- gather(dat, variable, value, 3:5)
-dat$fill[dat$variable == "TP_656_5622"] <- "Coffee, green"
-dat$fill[dat$variable == "TP_657_5622"] <- "Coffee, roasted"
-dat$fill[dat$variable == "TP_659_5622"] <- "Coffee, extracts"
-
-dat <- dat[!is.na(dat$value),]
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(Year,fill) %>%
-          dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
-
-p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
-p <- p + geom_line()
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="1 000 US$")
-p <- p + theme(axis.text.x = element_text(angle=45))
-p <- p + guides(color = guide_legend(nrow = 2))
-p
-
-# Caption
-caption_text <- "Imports of coffee"
-
+print.xtable(xtable(rcc, caption = "Fastest growing coffee exporters based on export value (average annual growth rate, 2000 to 2013)", digits = c(0,0,0),
+                    align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
+             type = "latex", table.placement = NULL,
+             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
 
 
 
@@ -321,6 +320,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="mln tonnes")
+p <- p + scale_y_continuous(labels = space)
 p
 
 # Caption
@@ -349,6 +349,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="mln tonnes")
+p <- p + scale_y_continuous(labels = space)
 p
 
 # Caption
@@ -361,17 +362,19 @@ caption_text <- "Top 20 coffee importers in 2012"
 ## ---- P6coffeetradeBOTTOM ----
 
 
-dat <- left_join(TP_656_5922,TP_657_5922)
-dat <- left_join(dat,TP_659_5922)
+dat <- left_join(TP_656_5622,TP_657_5622)
+dat <- left_join(dat,TP_659_5622)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 3:5)
-dat$fill[dat$variable == "TP_656_5922"] <- "Coffee, green"
-dat$fill[dat$variable == "TP_657_5922"] <- "Coffee, roasted"
-dat$fill[dat$variable == "TP_659_5922"] <- "Coffee, extracts"
+dat$fill[dat$variable == "TP_656_5622"] <- "Coffee, green"
+dat$fill[dat$variable == "TP_657_5622"] <- "Coffee, roasted"
+dat$fill[dat$variable == "TP_659_5622"] <- "Coffee, extracts"
+
+dat$value <- dat$value / 1000 # reporting million US$
 
 dat <- dat[!is.na(dat$value),]
 
@@ -388,13 +391,13 @@ dat_plot <- dat_plot %>% group_by(Year,fill) %>%
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="1 000 US$")
-p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + labs(x="",y="mln US$")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels = space)
 p
 
 # Caption
-caption_text <- "Exports of coffee"
+caption_text <- "Value of coffee imports"
 
 
 
@@ -434,7 +437,7 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here()
 
 # Caption
-caption_text <- "Value of coffee imports in 2012"
+caption_text <- "Per capita value of coffee imports in 2012"
 
 
 
@@ -479,11 +482,31 @@ PI_656_5539 <- dat$aggregates
 
 ## ---- P6coffeepricesTOPRIGHT ----
 
-plot(cars)
+if (file.exists(paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"))) {
+  dd <- read_excel(paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"), sheet = 4, skip = 8)
+  
+} else {
+  download.file("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1304428586133/pink_data_a.xlsx", destfile = paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"))
+  dd <- read_excel(paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"), sheet = 4, skip = 8)
+}
+names(dd)[1] <- "Year"
+
+ddd <- dd %>%  filter(Year > 1960) %>% select(Year,KCOFFEE_ARABIC,KCOFFEE_ROBUS)
+dat_plot <- gather(ddd, type, value, 2:3)
+dat_plot$variety[dat_plot$type == "KCOFFEE_ARABIC"] <- "Coffee, arabica"
+dat_plot$variety[dat_plot$type == "KCOFFEE_ROBUS"] <- "Coffee, robusta"
+
+p <- ggplot(dat_plot, aes(x=Year, y=value, color=variety))
+p <- p + geom_line()
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + labs(x="",y="$/kg")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels = space)
+p
 
 
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+caption_text <- "Annual coffee prices, 1960 to present, real 2010 US dollars"
 
 
 
@@ -507,30 +530,62 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532),y=PP_656_5532))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="mln tonnes")
+p <- p + labs(x="",y="US$ per tonne")
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2013, Top 20 countries"
+caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2013, top 20 countries"
 
 
 
 ## ---- P6coffeepricesRIGHT ----
 
-plot(cars)
+dat <- PP_656_5532[!is.na(PP_656_5532$PP_656_5532),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- arrange(dat, -Year, PP_656_5532)
+top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+dat_plot <- rbind(top15,top91)
+#
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532),y=PP_656_5532))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="US$ per tonne")
+p <- p + scale_y_continuous(labels = space)
+p
 
 # Caption
-caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
-
+caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2013, bottom 20 countries"
 
 
 
 ## ---- P6coffeepricesBOTTOM ----
 
-plot(cars)
+top5 <- QC_656_5510 %>% filter(Year == 2013, FAOST_CODE < 5000 ) %>%  arrange(-QC_656_5510) %>%  slice(1:5)
+
+dat_plot <- PP_656_5532 %>% filter(Year > 2000, FAOST_CODE %in% top5$FAOST_CODE) 
+
+dat_plot <- left_join(dat_plot,region_key[c("FAOST_CODE","SHORT_NAME")])
+
+p <- ggplot(dat_plot, aes(x=Year, y=PP_656_5532, color=SHORT_NAME))
+p <- p + geom_line()
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
+p <- p + labs(x="",y="US$ per tonne")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels = space)
+p
 
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+caption_text <- "Producer prices, green coffee, top 5 coffee producers"
 
 
 
