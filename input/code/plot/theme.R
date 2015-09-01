@@ -30,7 +30,7 @@ theme_update(
   #   legend.text.align = NULL,
   legend.title = element_blank(),
   #   legend.title.align = NULL,
-  legend.position = "bottom",
+  legend.position = "top",
   legend.direction = "horizontal",
   legend.key.height = unit(5,"mm"),
   legend.key.width = unit(4,"mm"),
@@ -53,5 +53,6 @@ theme_update(
   #plot.background = element_rect(fill=NA,colour = "grey90",size=1,linetype="solid"),
   plot.title =  element_blank(),
   plot.margin = unit(rep(0.1, 4), "line")
+
   
 )

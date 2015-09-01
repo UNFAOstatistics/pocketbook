@@ -310,7 +310,7 @@ dat1 <- dat$aggregates
 syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
 # Producer price index (2004-06=100)
-dat <- getFAOtoSYB(domainCode = "PP",
+dat <- getFAOtoSYB(domainCode = "PI",
                    elementCode = 5539,
                    itemCode = 656)
 dat1 <- dat$aggregates

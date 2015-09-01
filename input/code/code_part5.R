@@ -642,7 +642,7 @@ dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
 dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
 dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
 
-df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
+df.fsi <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 # For despie graphs icn2.df
 load(paste0(root.dir,"../ICN2PB14/Data/Processed/icn2.RData"))
@@ -688,16 +688,6 @@ dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
 dat_s <- dat %>% group_by(var) %>%  dplyr::summarise(wmean = weighted.mean(mean, OA.TPBS.POP.PPL.NO, na.rm=FALSE)) %>% 
              mutate(mean = wmean/sum(wmean)*100)
 
-## option old
-
-# Subset data
-# if (region_to_report == "RAF") dat <- dat[dat$FAOST_CODE %in% 5100,]
-# if (region_to_report == "RAP") dat <- dat[dat$FAOST_CODE %in% 5500,]
-# if (region_to_report == "REU") dat <- dat[dat$FAOST_CODE %in% 5400,]
-# if (region_to_report == "RNE") dat <- dat[dat$FAOST_CODE %in% 5300,]
-# if (region_to_report == "GLO") dat <- dat[dat$FAOST_CODE %in% 5000,]
-# if (region_to_report == "COF") dat <- dat[dat$FAOST_CODE %in% 5000,]
-
 dat_plot <- dat_s  %>% mutate(sum = sum(mean)) 
 
 p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = var, width = sum))
@@ -727,7 +717,7 @@ caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
 ## ---- P5desLEFT ----
 # data
 
-dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
+dat <- df.fsi[df.fsi$Year %in%  c(2000,2015) & df.fsi$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
 # Add region key and subset
@@ -757,7 +747,7 @@ caption_text <- "Dietary energy supply, top 20 countries in 2015"
 
 ## ---- P5desRIGHT ----
 
-dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
+dat <- df.fsi[df.fsi$Year %in%  c(2000,2015) & df.fsi$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
 # Add region key and subset
@@ -787,23 +777,32 @@ caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
 
 
 ## ---- P5desBOTTOM ----
-dat <- df[df$Year %in%  c(2000:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
+#dat <- df.fsi[df.fsi$Year %in%  c(2000:2015) & df.fsi$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
-dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+# dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
+# # Add region key and subset
+# dat <- left_join(dat,region_key)
+# 
+# dat <- dat[dat$FAOST_CODE != 348,]
+# dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+# 
+# df <- subgrouping(region_to_report = region_to_report)
+# 
+# # merge data with the region info
+# dat2 <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+# 
+# dat <- syb.df %>% filter(Year %in% c(2000:2015)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
+# dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
+# 
+# dat3 <- left_join(dat2,dat)
+# 
+# # AGREGATE
+# dat_plot <- dat3 %>% group_by(subgroup,Year) %>% dplyr::summarise(value = weighted.mean(FBS.PCS.PDES.KCD3D, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+dat_plot <- df.fsi[df.fsi$Year %in%  c(2000:2015) & df.fsi$FAOST_CODE %in% c(5000,5100,5205,5300,5500),
+              c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
-#dat <- dat[which(dat[[region_to_report]]),]
-
-dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
-top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
-dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
-
-
-p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
+p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=FAO_TABLE_NAME))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day")
@@ -817,7 +816,7 @@ caption_text <- "Dietary energy supply"
 
 ## ---- P5desMAP ----
 
-dat <- df[df$Year %in%  2015 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.DA.ADESA.PCT3D")]
+dat <- df.fsi[df.fsi$Year %in%  2015 & df.fsi$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.DA.ADESA.PCT3D")]
 
 dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
@@ -849,7 +848,7 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here() 
 
 # Caption
- caption_text <- "This is the default caption if no region spesific is defined"
+ caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
 # --------------------------------------------------------------- #
 
 

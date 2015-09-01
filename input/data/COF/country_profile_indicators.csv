@@ -16,7 +16,7 @@ Macroeconomics,14,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$),1000000,0
 Macroeconomics,15,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$),1000000,0
 Macroeconomics,24,missing,,,"Consumer prices, coffee",,2
 Macroeconomics,25,PP_656_5532,,,"Producer prices, green coffee (US$ per tonne)",,2
-Macroeconomics,26,PP_656_5539,,,Producer price index (2004-06=100),,0
+Macroeconomics,26,PI_656_5539,,,Producer price index (2004-06=100),,0
 "Exports, coffee",17,TP_656_5922,,,Green (1 000 US$),,0
 "Exports, coffee",18,TP_657_5922,,,Roasted (1 000 US$),,0
 "Exports, coffee",19,TP_659_5922,,,Extracts (1 000 US$),,0
