@@ -2,6 +2,8 @@
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
+options(scipen=999)
+
 syb_part <- 5
 
 ## Part 5
@@ -275,6 +277,7 @@ p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="US$")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -429,42 +432,23 @@ short_text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasell
 
 
 ## ---- P5povertyTOPRIGHT, eval=P5poverty, top_right_minitable=P5poverty ----
-dat <- filter(syb.df, Year %in%
-                   c(1999:2014)) %>% 
-                    group_by(FAOST_CODE,SHORT_NAME) %>% 
-                    select(FAOST_CODE,Year,SI.POV.DDAY,OA.TPBS.POP.PPL.NO) %>% 
-                    mutate(no_of_poor = OA.TPBS.POP.PPL.NO * (SI.POV.DDAY/100))
 
-dat <- dat[!is.na(dat$no_of_poor),]
-# Add region key and subset
+# These figures come from the World Bank WDI 2015 page 35
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dw <- data_frame(region <- c("East Asia & Pacific","Europe & Central Asia",
+                             "Lat Amer & Caribbean","Mid East & N Africa",
+                             "South Asia","Sub-Saharan Africa","World"),
+                 Y1990 <- c(939,7,53,13,620,290,1923),
+                 Y2015 <- c(86,1 ,27,7 ,311,403,836))
 
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-dat_2000 <- dat %>% group_by(subgroup) %>% 
-  filter(Year %in% 1999:2001) %>% 
-  summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>% 
-  mutate(no_of_poor = round(no_of_poor,0)) %>% 
-  ungroup()
-
-dat_2010 <- dat %>% group_by(subgroup) %>% 
-  filter(Year %in% 2009:2011) %>% 
-  summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>% 
-  mutate(no_of_poor = round(no_of_poor,0)) %>% 
-  ungroup()
-
-dw <- merge(dat_2000,dat_2010,by="subgroup")
-
-names(dw) <- c("","1999-2001","2009-2011")
+names(dw) <- c("","1990","2015 forecast")
 
 # dw <- head(cars)
 # dw$names <- "hahahaha"
 
-print.xtable(xtable(dw, caption = " Population living on less than US 1.25 a day", digits = c(0,0,0,0),
-                    align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
+print.xtable(xtable(dw, caption = "Pople living on less than 2005 PPP \\$1.25 a day (mln)", digits = c(0,0,0,0),
+                    align= "l{\raggedright\arraybackslash}p{2.0cm}rr"),
              type = "latex", table.placement = NULL, 
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
 
@@ -552,15 +536,92 @@ dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 # AGREGATE
 dat_plot <- dat %>% group_by(subgroup,Year) %>% summarise(value = weighted.mean(SI.POV.DDAY, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
 
-p <- ggplot(dat_plot, aes(x=Year,y=value,color=subgroup))
+
+# These figures come from the World Bank WDI 2015 page 35
+
+
+dw <- data_frame(region = c("East Asia & Pacific","Europe & Central Asia",
+                             "Lat Amer & Caribbean","Mid East & N Africa",
+                             "South Asia","Sub-Saharan Africa","World"),
+                 Y1990 = c(57,
+                            1.5,
+                            12.2,
+                            5.8,
+                            54.1,
+                            56.6,
+                            36.4),
+                 Y1993 = c(51.7,
+                            2.9,
+                            11.9,
+                            5.3,
+                            52.1,
+                            60.9,
+                            35.1),
+                 Y1996 = c(38.3,
+                            4.3,
+                            10.5,
+                            4.8,
+                            45.0,
+                            59.7,
+                            30.4),
+                 Y1999 = c(35.9,
+                            3.8,
+                            11.0,
+                            4.8,
+                            45.0,
+                            59.3,
+                            29.1),
+                 Y2002 = c(27.3,
+                            2.1,
+                            10.2,
+                            3.8,
+                            44.1,
+                            57.1,
+                            26.1),
+                 Y2005 = c(16.7,
+                            1.3,
+                            7.3,
+                            3.0,
+                            39.3,
+                            52.8,
+                            21.1),
+                 Y2008 = c(13.7,
+                            0.5,
+                            5.4,
+                            2.1,
+                            34.1,
+                            49.7,
+                            18.6),
+                 Y2011 = c(7.9,
+                            0.5,
+                            4.6,
+                            1.7,
+                            24.5,
+                            46.8,
+                            14.5),
+                 Y2015 = c(4.1,
+                            0.3,
+                            4.3,
+                            2.0,
+                            18.1,
+                            40.9,
+                            11.5))
+ddw <- gather(dw, Year, value, 2:10)
+
+ddw$Year <- str_replace_all(ddw$Year, "Y", "")
+
+ddw$Year <- factor(ddw$Year)
+ddw$Year <- as.numeric(levels(ddw$Year))[ddw$Year]
+
+p <- ggplot(ddw, aes(x=Year,y=value,color=region,group=region))
 p <- p + geom_point() + geom_line()
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(ddw$region)))[["Sub"]])
 p <- p + labs(x="",y="% of population")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Share on population living less than US\\$ 1.25 per day"
+caption_text <- "Share of population living on less than 2005 PPP \\$1.25 a day (\\%)"
 
 
  # --------------------------------------------------------------- #
@@ -739,6 +800,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -769,6 +831,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -806,6 +869,7 @@ p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=FAO_TABLE_NAME))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day")
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
