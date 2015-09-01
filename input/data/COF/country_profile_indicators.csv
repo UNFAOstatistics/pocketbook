@@ -14,7 +14,6 @@ Overview,12,FS.OA.NOU.P3D1,,,Number of people undernourished (mln),,0
 Macroeconomics,13,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% of GDP)",,
 Macroeconomics,14,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$),1000000,0
 Macroeconomics,15,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$),1000000,0
-Macroeconomics,24,missing,,,"Consumer prices, coffee",,2
 Macroeconomics,25,PP_656_5532,,,"Producer prices, green coffee (US$ per tonne)",,2
 Macroeconomics,26,PI_656_5539,,,Producer price index (2004-06=100),,0
 "Exports, coffee",17,TP_656_5922,,,Green (1 000 US$),,0
@@ -36,4 +35,3 @@ Environment,36,ER.LND.PTLD.ZS,,,Terrestrial protected areas (% total land area),
 Environment,37,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1
 Environment,38,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% total),,1
 Environment,39,GHG.AFOLU.TOT.ECO2EQ.NO,,,"GHG emissions from ag (Co2 eq, gigagrams)",1000,0
-Environment,40,missing,,,GHG emissions from coffee (% of total),,1

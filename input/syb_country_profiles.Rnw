@@ -529,7 +529,7 @@ year1 = 1992
 year2 = 2002
 year3 = 2014
 ## This script creates the latex file
-cat("\\renewcommand{\\arraystretch}{1.22}\n",
+cat("\\renewcommand{\\arraystretch}{1.42}\n",
     file = fileOut, append = TRUE)
 cat("\\setlength{\\tabcolsep}{4pt}\n",
     file = fileOut, append = TRUE) ## Reduce the space between columns
