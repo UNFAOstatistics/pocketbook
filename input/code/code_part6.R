@@ -30,7 +30,7 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 
 ## ---- P6coffeeprodTEXT ---- 
 spread_title <- "Coffee production"
-short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+short_text <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas risus at lobortis lacinia. Mauris a nunc eleifend, sodales magna ut, congue arcu. Fusce in odio nunc. Mauris vehicula faucibus eros a blandit. Aenean ut tempus ipsum, eu faucibus lorem. Maecenas pretium nibh sit amet nulla accumsan, eu auctor massa facilisis. In malesuada nisl quis sem dapibus iaculis. Ut fermentum leo turpis, convallis luctus elit auctor sed. Quisque nec vestibulum augue. Praesent suscipit finibus tellus, ut semper quam fermentum luctus."
 
 
 
@@ -59,10 +59,44 @@ QC_656_5510 <- dat$aggregates
 
 
 ## ---- P6coffeeprodTOPRIGHT ---- 
-plot(cars)
-# Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+# dat <- filter(syb.df, Year %in%
+#                 c(1999:2014)) %>% 
+#   group_by(FAOST_CODE,SHORT_NAME) %>% 
+#   select(FAOST_CODE,Year,SI.POV.DDAY,OA.TPBS.POP.PPL.NO) %>% 
+#   mutate(no_of_poor = OA.TPBS.POP.PPL.NO * (SI.POV.DDAY/100))
+# 
+# dat <- dat[!is.na(dat$no_of_poor),]
+# # Add region key and subset
+# 
+# # DEFAULT GROUPING
+# df <- subgrouping(region_to_report = region_to_report)
+# 
+# # merge data with the region info
+# dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+# 
+# dat_2000 <- dat %>% group_by(subgroup) %>% 
+#   filter(Year %in% 1999:2001) %>% 
+#   summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>% 
+#   mutate(no_of_poor = round(no_of_poor,0)) %>% 
+#   ungroup()
+# 
+# dat_2010 <- dat %>% group_by(subgroup) %>% 
+#   filter(Year %in% 2009:2011) %>% 
+#   summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>% 
+#   mutate(no_of_poor = round(no_of_poor,0)) %>% 
+#   ungroup()
+# 
+# dw <- merge(dat_2000,dat_2010,by="subgroup")
+# 
+# names(dw) <- c("","1999-2001","2009-2011")
 
+dw <- head(cars)
+dw$nro <- 200:205
+
+print.xtable(xtable(dw, caption = " A coffee production table X", digits = c(0,0,0,0),
+                    align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
+             type = "latex", table.placement = NULL, 
+             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
 
 
 
@@ -178,7 +212,7 @@ caption_text <- "Area harvested, coffee (ha)"
 
 ## ---- P6coffeetradeTEXT ---- 
 spread_title <- "Coffee trade"
-short_text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas risus at lobortis lacinia. Mauris a nunc eleifend, sodales magna ut, congue arcu. Fusce in odio nunc. Mauris vehicula faucibus eros a blandit. Aenean ut tempus ipsum, eu faucibus lorem. Maecenas pretium nibh sit amet nulla accumsan, eu auctor massa facilisis. In malesuada nisl quis sem dapibus iaculis. Ut fermentum leo turpis, convallis luctus elit auctor sed. Quisque nec vestibulum augue. Praesent suscipit finibus tellus, ut semper quam fermentum luctus. "
+short_text <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas risus at lobortis lacinia. Mauris a nunc eleifend, sodales magna ut, congue arcu. Fusce in odio nunc. Mauris vehicula faucibus eros a blandit. Aenean ut tempus ipsum, eu faucibus lorem. Maecenas pretium nibh sit amet nulla accumsan, eu auctor massa facilisis. In malesuada nisl quis sem dapibus iaculis. Ut fermentum leo turpis, convallis luctus elit auctor sed. Quisque nec vestibulum augue. Praesent suscipit finibus tellus, ut semper quam fermentum luctus."
 
 
 
@@ -404,7 +438,7 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here()
 
 # Caption
-caption_text <- "Coffee imports in 2012"
+caption_text <- "Value of coffee imports in 2012"
 
 
 

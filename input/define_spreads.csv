@@ -5,10 +5,10 @@ P1labo,Labour,1,1,1,1,1,1,0
 P1input,Inputs,1,1,1,1,1,1,0
 P1invest,Investment,1,1,1,1,1,1,0
 P2undernu,Undernourishment,1,1,1,1,1,1,0
-P2availab,Availability,1,1,1,1,1,1,0
+P2availab,Availability,0,1,1,1,1,1,0
 P2access,Access,1,1,1,1,1,1,0
-P2stability,Stability,1,1,1,1,1,1,0
-P2utiliza,Utilization,1,1,1,1,1,1,0
+P2stability,Stability,0,1,1,1,1,1,0
+P2utiliza,Utilization,0,1,1,1,1,1,0
 P3des,Dietary energy supply,1,1,1,1,1,1,0
 P3croppro,Growth in crop production,1,1,1,1,1,1,0
 P3crop,Crop sector,1,1,1,1,1,1,0

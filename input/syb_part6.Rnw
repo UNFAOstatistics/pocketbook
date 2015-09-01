@@ -27,7 +27,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 
 
 
-<<P6coffeeprodTOPRIGHT, eval=P6coffeeprod, top_right_plot=P6coffeeprod, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+<<P6coffeeprodTOPRIGHT, eval=P6coffeeprod, top_right_minitable=P6coffeeprod>>=
 @
 
 

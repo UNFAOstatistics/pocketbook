@@ -424,7 +424,7 @@ short_text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasell
 ## ---- P5povertyData, cache=TRUE,results='hide', eval=P5poverty ----
 
 
- # --------------------------------------------------------------- #
+# --------------------------------------------------------------- #
 
 
 
@@ -471,7 +471,7 @@ print.xtable(xtable(dw, caption = " Population living on less than US 1.25 a day
  # --------------------------------------------------------------- #
 
 
-## ---- P5povertyLEFT, eval=P5poverty, left_plot=P5poverty, fig.height=left_plot_height, fig.width=left_plot_width ----
+## ---- P5povertyLEFT ----
 dat <- filter(syb.df, Year %in%
                    c(2010:2014)) %>% 
                   group_by(FAOST_CODE,SHORT_NAME) %>% 
@@ -501,7 +501,7 @@ p
 caption_text <- "Income share held by highest 20 (percent) (2010-2014)"
  # --------------------------------------------------------------- #
 
-## ---- P5povertyRIGHT, eval=P5poverty ,right_plot=P5poverty, fig.height=right_plot_height, fig.width=right_plot_width ----
+## ---- P5povertyRIGHT ----
 
 dat <- filter(syb.df, Year %in%
                    c(2010:2014)) %>% 
@@ -533,7 +533,7 @@ caption_text <- "Poverty headcount ratio at national poverty line (population sh
  # --------------------------------------------------------------- #
 
 
-## ---- P5povertyBOTTOM, eval=P5poverty, bottom_plot=P5poverty, fig.height=bottom_plot_height, fig.width=bottom_plot_width ----
+## ---- P5povertyBOTTOM ----
 
 
 dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>% 
@@ -566,7 +566,7 @@ caption_text <- "Share on population living less than US\\$ 1.25 per day"
  # --------------------------------------------------------------- #
 
 
-## ---- P5povertyMAP, eval=P5poverty, map_plot=P5poverty, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra ----
+## ---- P5povertyMAP ----
 
 dat <- syb.df %>% filter(Year %in% 2007:2012, FAOST_CODE < 5000) %>%
                   select(FAOST_CODE,SHORT_NAME,SI.POV.DDAY) %>% 
@@ -612,7 +612,7 @@ caption_text <- "Share of population living less than US\\$ 1.25 per day (2007 -
 #                                    |___/                           |___/  |___/              |_|    |_|        |___/ 
 
 
-## ---- P5desTEXT, eval=P5des, short_text_ChartPage=P5des ----
+## ---- P5desTEXT ----
 spread_title <- "Dietary energy supply"
 short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
  # --------------------------------------------------------------- #
@@ -650,7 +650,7 @@ load(paste0(root.dir,"../ICN2PB14/Data/Processed/icn2.RData"))
  # --------------------------------------------------------------- #
 
 
-## ---- P5desTOPRIGHT, eval=P5des, top_right_plot=P5des, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
+## ---- P5desTOPRIGHT ----
 
 
 ## Plot
@@ -724,7 +724,7 @@ p
 caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
  # --------------------------------------------------------------- #
 
-## ---- P5desLEFT, eval=P5des, left_plot=P5des, fig.height=left_plot_height, fig.width=left_plot_width ----
+## ---- P5desLEFT ----
 # data
 
 dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
@@ -755,7 +755,7 @@ p
 caption_text <- "Dietary energy supply, top 20 countries in 2015"
 # --------------------------------------------------------------- #
 
-## ---- P5desRIGHT, eval=P5des ,right_plot=P5des, fig.height=right_plot_height, fig.width=right_plot_width ----
+## ---- P5desRIGHT ----
 
 dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
@@ -786,7 +786,7 @@ caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
 # --------------------------------------------------------------- #
 
 
-## ---- P5desBOTTOM, eval=P5des, bottom_plot=P5des, fig.height=bottom_plot_height, fig.width=bottom_plot_width ----
+## ---- P5desBOTTOM ----
 dat <- df[df$Year %in%  c(2000:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
 dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
