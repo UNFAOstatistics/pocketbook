@@ -36,10 +36,10 @@ include_country_profiles <- T
 include_metadata <- T
 
 # To be uploaded for comments or not
-upload_to_server <- T
+upload_to_server <- F
 
 # Upgrade the comparison tables
-broke_into_images <- T
+broke_into_images <- F
 
 # just for troubleshooting
 region_to_report <- "RAF"

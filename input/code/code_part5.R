@@ -794,7 +794,10 @@ top2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FBS.PCS.PDES.KCD3D),y=FBS.PCS.PDES.KCD3D))
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top2015[order(top2015$FBS.PCS.PDES.KCD3D),]$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
+#p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -825,7 +828,9 @@ bottom2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
 bottom2000 <- dat %>% filter(FAOST_CODE %in% bottom2015$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(bottom2015,bottom2000)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FBS.PCS.PDES.KCD3D),y=FBS.PCS.PDES.KCD3D))
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=bottom2015[order(bottom2015$FBS.PCS.PDES.KCD3D),]$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()

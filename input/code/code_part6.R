@@ -90,12 +90,34 @@ QC_656_5510 <- dat$aggregates
 #
 # names(dw) <- c("","1999-2001","2009-2011")
 
-rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013) %>% group_by(FAOST_CODE) %>% 
-  dplyr::mutate(Growth=c(NA,exp(diff(log(QC_656_5510)))-1)) %>%
-  dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
-  arrange(-mean_growth) %>% slice(1:5) 
+
+
+growth <- data.frame()
+
+gr_dat <- QC_656_5510 %>% filter(Year %in% 2000:2013,FAOST_CODE < 5000)
+gr_dat <- gr_dat[!is.na(gr_dat$QC_656_5510),]
+for (fs in unique(gr_dat$FAOST_CODE)){
+  d <- gr_dat[gr_dat$FAOST_CODE %in% fs,]
+  if (sum(d$QC_656_5510) == 0) next
+  d <- d[d$QC_656_5510 > 0,]
+  grate <- as.numeric((exp(coef(lm(log(d$QC_656_5510) ~ Year, d))[2]) - 1) * 100)
+  row <- data.frame(FAOST_CODE = fs,
+                    growth_rate = grate)
+  growth <- rbind(growth,row)
+}
+rc <- growth %>% arrange(-growth_rate) %>% slice(1:5) 
+
 rcc <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
+rcc$SHORT_NAME[rcc$FAOST_CODE == 41] <- "China"
 rcc <- rcc[c(3,2)]
+
+# rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013) %>% group_by(FAOST_CODE) %>% 
+#   dplyr::mutate(Growth=c(NA,exp(diff(log(QC_656_5510)))-1)) %>%
+#   dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
+#   arrange(-mean_growth) %>% slice(1:5) 
+# rcc <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
+# rcc <- rcc[c(3,2)]
+
 
 names(rcc) <- c("","%")
 
@@ -120,8 +142,11 @@ dat <- arrange(dat, -Year, -QC_656_5510) %>% mutate(QC_656_5510 = QC_656_5510/10
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
+
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$QC_656_5510),]$SHORT_NAME)
+
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC_656_5510),y=QC_656_5510))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC_656_5510))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -149,8 +174,11 @@ dat <- arrange(dat, -Year, -QC_656_5312) %>% mutate(QC_656_5312 = QC_656_5312 / 
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
+
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$QC_656_5312),]$SHORT_NAME)
+
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC_656_5312),y=QC_656_5312))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC_656_5312))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -281,13 +309,34 @@ TP_659_5622 <- dat$aggregates
 
 ## ---- P6coffeetradeTOPRIGHT ----
 
-rc <- TP_656_5922 %>%  filter(Year %in% 2000:2012, FAOST_CODE < 5000) %>% group_by(FAOST_CODE) %>% 
-  dplyr::mutate(Growth=c(NA,exp(diff(log(TP_656_5922)))-1)) %>%
-  dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
-  arrange(-mean_growth) %>% slice(1:5) 
+#(exp(coef(lm(log(x[(i - n):(i)]) ~ t))[2]) - 1) * 100
+
+
+growth <- data.frame()
+
+gr_dat <- TP_656_5922 %>% filter(Year %in% 2000:2012,FAOST_CODE < 5000)
+gr_dat <- gr_dat[!is.na(gr_dat$TP_656_5922),]
+for (fs in unique(gr_dat$FAOST_CODE)){
+  d <- gr_dat[gr_dat$FAOST_CODE %in% fs,]
+  if (sum(d$TP_656_5922) == 0) next
+  d <- d[d$TP_656_5922 > 0,]
+  grate <- as.numeric((exp(coef(lm(log(d$TP_656_5922) ~ Year, d))[2]) - 1) * 100)
+  row <- data.frame(FAOST_CODE = fs,
+                    growth_rate = grate)
+  growth <- rbind(growth,row)
+}
+rc <- growth %>% arrange(-growth_rate) %>% slice(1:5) 
+
 rcc <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
-rcc$SHORT_NAME[rcc$FAOST_CODE == 128] <- "China, Macao SAR"
 rcc <- rcc[c(3,2)]
+
+# rc <- TP_656_5922 %>%  filter(Year %in% 2000:2012, FAOST_CODE < 5000) %>% group_by(FAOST_CODE) %>% 
+#   dplyr::mutate(Growth=c(NA,exp(diff(log(TP_656_5922)))-1)) %>%
+#   dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
+#   arrange(-mean_growth) %>% slice(1:5) 
+# rcc <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
+# rcc$SHORT_NAME[rcc$FAOST_CODE == 128] <- "China, Macao SAR"
+# rcc <- rcc[c(3,2)]
 
 names(rcc) <- c("","%")
 
@@ -314,8 +363,11 @@ dat <- arrange(dat, -Year, -TP_656_5922)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2012")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
+
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$TP_656_5922),]$SHORT_NAME)
+
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP_656_5922),y=TP_656_5922))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP_656_5922))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -343,8 +395,11 @@ dat <- arrange(dat, -Year, -TP_656_5622)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2012")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
+
+
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$TP_656_5622),]$SHORT_NAME)
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP_656_5622),y=TP_656_5622))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP_656_5622))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -525,8 +580,11 @@ dat <- arrange(dat, -Year, -PP_656_5532)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
+
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$PP_656_5532),]$SHORT_NAME)
+
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532),y=PP_656_5532))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=PP_656_5532))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -554,8 +612,12 @@ dat <- arrange(dat, -Year, PP_656_5532)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
+
+
+dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$PP_656_5532),]$SHORT_NAME)
+
 #
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532),y=PP_656_5532))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=PP_656_5532))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -621,3 +683,4 @@ create_map_here()
 
 # Caption
 caption_text <- "Producer Price Index (2004-2006 = 100) (2012)"
+
