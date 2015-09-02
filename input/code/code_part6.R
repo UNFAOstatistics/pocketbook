@@ -30,7 +30,7 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 
 ## ---- P6coffeeprodTEXT ----
 spread_title <- "Coffee production"
-short_text <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas risus at lobortis lacinia. Mauris a nunc eleifend, sodales magna ut, congue arcu. Fusce in odio nunc. Mauris vehicula faucibus eros a blandit. Aenean ut tempus ipsum, eu faucibus lorem. Maecenas pretium nibh sit amet nulla accumsan, eu auctor massa facilisis. In malesuada nisl quis sem dapibus iaculis. Ut fermentum leo turpis, convallis luctus elit auctor sed. Quisque nec vestibulum augue. Praesent suscipit finibus tellus, ut semper quam fermentum luctus."
+short_text <- "Production: Over the past 50 years, coffee production has risen considerably. Total production of green coffee has doubled from 4.5 million tonnes in 1961 to 8.9 million tonnes in 2013. Some coffee producing countries have seen considerable benefits through higher yields and growing volumes of sales. But many are also facing growing challenges stemming from climate change and more difficult natural growing conditions."
 
 
 
