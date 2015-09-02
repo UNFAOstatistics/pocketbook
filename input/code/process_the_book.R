@@ -126,6 +126,7 @@ if (broke_into_images)  file.copy(flist, paste0(root.dir,"/output/html"), overwr
 
 # convert the index.md into html in jpog comparison
 if (broke_into_images) system(paste0("pandoc ",root.dir,"output/jpg/index.md -o ",root.dir,"output/jpg/index.html"))
+if (broke_into_images) system(paste0("pandoc ",root.dir,"output/jpg/coffee_comparison.md -o ",root.dir,"output/jpg/coffee_comparison.html"))
 
 if (upload_to_server) {
   
