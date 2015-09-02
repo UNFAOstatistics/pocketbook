@@ -576,24 +576,21 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -PP_656_5532)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$PP_656_5532),]$SHORT_NAME)
+dat <- dat %>%  filter(Year == 2000) %>%  arrange( -PP_656_5532)
+dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2000")
 
 #
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=PP_656_5532))
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532) ,y=PP_656_5532))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="US$ per tonne")
 p <- p + scale_y_continuous(labels=space)
+p <- p + theme(legend.position="none")
 p
 
 # Caption
-caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2013, top 20 countries"
+caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2000, top 20 countries"
 
 
 
@@ -608,25 +605,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, PP_656_5532)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-
-dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$PP_656_5532),]$SHORT_NAME)
+dat <- dat %>%  filter(Year == 2013) %>%  arrange( -PP_656_5532)
+dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
 
 #
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=PP_656_5532))
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532) ,y=PP_656_5532))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="US$ per tonne")
-p <- p + scale_y_continuous(labels = space)
+p <- p + scale_y_continuous(labels=space)
+p <- p + theme(legend.position="none")
 p
 
 # Caption
-caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2013, bottom 20 countries"
+caption_text <- "Producer prices, green coffee (US\\$ per tonne) in 2013, top 20 countries"
+
 
 
 
