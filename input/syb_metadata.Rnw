@@ -88,7 +88,7 @@ Expresses the Dietary Energy Supply (DES) as a percentage of the Average Dietary
 \end{metadata}
 
 \begin{metadata}{Average protein supply of animal origin (g/capita/day)} {}
-Includes the following groups: meat; offals; animal fats and products; milk and products; eggs, fish, seafood and products; and aquatic products, other. 
+Includes the following groups: meat; offals; animal fats and products; milk and products; eggs, fish, seafood and products; and aquatic products, other.
 \source{ FAO, Statistics Division }
 \owner{ FAO }
 \end{metadata}
@@ -219,7 +219,7 @@ Gross domestic product converted to international dollars using purchasing power
 \end{metadata}
 
 \begin{metadata}{Government expenditure on agriculture (\% total outlays)} {}
-Refers to Core Areas of Government Functions Relevant to the Agriculture Sector based on the Classification of Functions of Government (COFOG) as outlined in the IMFs Government Finance Statistics Manual, 2001 (GFSM 2001). Statistics on expenditures in agriculture, forestry and fisheries and on environmental protection can be used to study the effectiveness of government programs that support an enabling environment for essential public goods with high economic and social returns. 
+Refers to Core Areas of Government Functions Relevant to the Agriculture Sector based on the Classification of Functions of Government (COFOG) as outlined in the IMFs Government Finance Statistics Manual, 2001 (GFSM 2001). Statistics on expenditures in agriculture, forestry and fisheries and on environmental protection can be used to study the effectiveness of government programs that support an enabling environment for essential public goods with high economic and social returns.
 \source{ FAO, Statistics Division  (FAOSTAT) }
 \owner{ FAO and IMF }
 \end{metadata}
@@ -273,7 +273,7 @@ The sum of exports and imports of goods and services.Forest area (\%): The land 
 \end{metadata}
 
 \begin{metadata}{Official Development Assistance (ODA)} {}
-Consists of disbursements of loans made on concessional terms (net of repayments of principal) and grants by official agencies of the members of the Development Assistance Committee (DAC), by multilateral institutions, and by non-DAC countries to promote economic development and welfare in countries and territories in the DAC list of ODA recipients. It includes loans with a grant element of at least 25 percent (calculated at a rate of discount of 10 percent). 
+Consists of disbursements of loans made on concessional terms (net of repayments of principal) and grants by official agencies of the members of the Development Assistance Committee (DAC), by multilateral institutions, and by non-DAC countries to promote economic development and welfare in countries and territories in the DAC list of ODA recipients. It includes loans with a grant element of at least 25 percent (calculated at a rate of discount of 10 percent).
 \source{ World Bank }
 \owner{ Development Assistance Committee of the Organisation for Economic Co-operation and Development, Geographical Distribution of Financial Flows to Developing Countries, Development Co-operation Report, and International Development Statistics database. }
 \end{metadata}
@@ -303,7 +303,7 @@ Corresponds to the variability of the "food supply in kcal/caput/day" as dissemi
 \end{metadata}
 
 \begin{metadata}{Pesticides} {}
-Refer to insecticides, fungicides, herbicides, disinfectants and any substance or mixture of substances intended for preventing, destroying or controlling any pest, including vectors of human or animal disease, unwanted species of plants or animals causing harm during or otherwise interfering with the production, processing, storage, transport or marketing of food, agricultural commodities, wood and wood products or animal feedstuffs, or substances which may be administered to animals for the control of insects, arachnids or other pests in or on their bodies. The term includes substances intended for use as a plant growth regulator, defoliant, desiccant or agent for thinning fruit or preventing the premature fall of fruit, and substances applied to crops either before or after harvest to protect the commodity from deterioration during storage and transport. Pesticides use data refers to quantities of pesticides applied to crops and seeds in the agriculture sector. Figures are expressed in metric tons of active ingredients. However, due to some country reporting practices, the data may be reported by: use in formulated product; sales; distribution or imports for use in the agricultural sector. 
+Refer to insecticides, fungicides, herbicides, disinfectants and any substance or mixture of substances intended for preventing, destroying or controlling any pest, including vectors of human or animal disease, unwanted species of plants or animals causing harm during or otherwise interfering with the production, processing, storage, transport or marketing of food, agricultural commodities, wood and wood products or animal feedstuffs, or substances which may be administered to animals for the control of insects, arachnids or other pests in or on their bodies. The term includes substances intended for use as a plant growth regulator, defoliant, desiccant or agent for thinning fruit or preventing the premature fall of fruit, and substances applied to crops either before or after harvest to protect the commodity from deterioration during storage and transport. Pesticides use data refers to quantities of pesticides applied to crops and seeds in the agriculture sector. Figures are expressed in metric tons of active ingredients. However, due to some country reporting practices, the data may be reported by: use in formulated product; sales; distribution or imports for use in the agricultural sector.
 \source{ FAO, Statistics Division }
 \owner{ FAO }
 \end{metadata}
@@ -463,7 +463,7 @@ In addition:
 \begin{itemize}
 \item <5.0 proportion less than 5 percent
 \item <0.1 less than 100\,000 people
-\item ns not statistically significant 
+\item ns not statistically significant
 \end{itemize}
 
 Two types of aggregations are used in the book: sum and weighted mean. Two restrictions are imposed when computing the aggregation: i) the sufficiency condition – the aggregation is computed only when sufficient countries have reported data, and the current threshold is set at 50 percent of the variable and the weighting variable, if present; and ii) the comparability condition – as aggregations are usually computed over time, this condition is designed to ensure that the number of countries is comparable over several years; under the current restriction the number of countries may not vary by more than 15 over time.
