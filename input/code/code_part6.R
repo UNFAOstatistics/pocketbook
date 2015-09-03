@@ -30,7 +30,7 @@ source(paste0(root.dir,'./input/code/plot/map_categories.R'))
 
 ## ---- P6coffeeprodTEXT ----
 spread_title <- "Coffee production"
-short_text <- "Production: Over the past 50 years, coffee production has risen considerably. Total production of green coffee has doubled from 4.5 million tonnes in 1961 to 8.9 million tonnes in 2013. Some coffee producing countries have seen considerable benefits through higher yields and growing volumes of sales. But many are also facing growing challenges stemming from climate change and more difficult natural growing conditions."
+short_text <- "Over the past 50 years, both production and consumption of coffee have risen considerably. Consumers have reaped some of the benefits through a greater variety of coffee products, improved quality products and lower real prices.  Some coffee producing countries have seen considerable benefits through higher yields and growing volumes of sales. But many are also facing growing challenges stemming from climate change and more difficult natural growing conditions."
 
 
 
