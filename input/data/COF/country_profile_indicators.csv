@@ -2,11 +2,11 @@ PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS
 Overview,1,OA.TPBS.POP.PPL.NO,,,"Population, total (mln)",,1
 Overview,2,OA.TPR.POP.PPL.NO,,,"Population, rural (mln)",,1
 Overview,3,NY.GDP.PCAP.PP.KD,,,GDP per capita (current US$),,0
-Overview,4,SI.POV.DDAY,,,Poverty headcount ratio at $1.25 a day (PPP) (% pop),,1
-Overview,5,SI.POV.NAHC,,,Poverty headcount ratio at national poverty lines (% pop),,1
-Overview,6,SI.POV.RUHC,,, Rural poverty headcount ratio at national poverty lines (% rural pop),,1
+Overview,4,SI.POV.DDAY,,,Poverty headcount ratio at $1.25 a day (% pop),,1
+Overview,5,SI.POV.NAHC,,,"Poverty headcount ratio at nat'l poverty lines (% pop)",,1
+Overview,6,SI.POV.RUHC,,, Rural pov headcount ratio at nat'l poverty lines (% rural pop),,1
 Overview,7,SP.DYN.LE00.IN,,,"Life expectancy at birth, total (years)",,1
-Overview,8,SE.PRM.CMPT.ZS,,,Primary completion rate (% relevant age group),,0
+Overview,8,SE.PRM.CMPT.ZS,,,Primary completion rate (% age group),,0
 Overview,9,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,0
 Overview,10,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,0
 Overview,11,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1

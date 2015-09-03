@@ -2,7 +2,6 @@
 
 source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
-options(scipen=999)
 
 syb_part <- 5
 
@@ -50,18 +49,25 @@ df <- gather(dat, variable, value, 3:4)
 
 
 ## ---- P5overTOPRIGHT ----
-dat <- df %>% select(FAOST_CODE,Year,variable,value)
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
-dat$variable <- as.character(dat$variable)
-dat$variable[dat$variable == "OA_3010_551"] <- "Urban population"
-dat$variable[dat$variable == "OA_3010_561"] <- "Rural population"
+if (region_to_report != "COF"){
+  dat <- df %>% select(FAOST_CODE,Year,variable,value)
+  dat <- left_join(dat,region_key)
+  dat <- dat[which(dat[[region_to_report]]),]
+  
+  dat$variable <- as.character(dat$variable)
+  dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
+  dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
+  dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
+}
 
-dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
-
-# print data for technical report
-#datatable(dat)
+if (region_to_report == "COF"){
+  dat <- df[df$FAOST_CODE == 5000,]
+  dat$variable <- as.character(dat$variable)
+  dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
+  dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
+  dat$value <- dat$value /1000000
+}
 
 # Draw the plot
 p <- ggplot(dat, aes(x = Year, y = value))
@@ -158,7 +164,8 @@ p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=subgroup))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(x="",y="million people")
-p <- p + guides(color = guide_legend(nrow = 2))
+#p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -224,7 +231,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
-dat$fill[dat$variable == "NV.IND.TOTL.ZS"] <- "Indurstry"
+dat$fill[dat$variable == "NV.IND.TOTL.ZS"] <- "Industry"
 dat$fill[dat$variable == "NV.SRV.TETC.ZS"] <- "Services"
 
 
@@ -366,7 +373,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgro
 p <- p + geom_line()
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+#p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -442,15 +449,20 @@ dw <- data_frame(region <- c("East Asia & Pacific","Europe & Central Asia",
                  Y2015 <- c(86,1 ,27,7 ,311,403,836))
 
 
-names(dw) <- c("","1990","2015 forecast")
+names(dw) <- c("","1990","2015*")
+# Thousand separator for poverty table
+dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
+dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
+
 
 # dw <- head(cars)
 # dw$names <- "hahahaha"
 
-print.xtable(xtable(dw, caption = "Pople living on less than 2005 PPP \\$1.25 a day (mln)", digits = c(0,0,0,0),
-                    align= "l{\raggedright\arraybackslash}p{2.0cm}rr"),
+print.xtable(xtable(dw, caption = "People living on less than 2005 PPP \\$1.25 a day (mln)", digits = c(0,0,0,0),
+                    align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
              type = "latex", table.placement = NULL, 
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
+cat("\\footnotesize{* forecast}")
 
  # --------------------------------------------------------------- #
 

@@ -146,10 +146,10 @@ if (!("area_harvested" %in% names(syb.df))) {
     filter(data, Year %in% years) %>% group_by_("CountryCode") %>% summarise_(value = interp(~max(varname, na.rm = TRUE), varname = as.name(varname)))
   }
   
-  df92 <- group_means(dat,"Value",1992)
-  df92$Year <- 1992
-  df02 <- group_means(dat,"Value",2002)
-  df02$Year <- 2002
+  df92 <- group_means(dat,"Value",1990)
+  df92$Year <- 1990
+  df02 <- group_means(dat,"Value",2000)
+  df02$Year <- 2000
   df14 <- group_means(dat,"Value",2013)
   df14$Year <- 2014
   
@@ -175,8 +175,8 @@ if (!("share_of_des_cereals_roots_tubers" %in% names(syb.df))) {
   
   table(dat$Year)
   dat$Year2[dat$Year %in% "2013-2015"] <- 2014
-  dat$Year2[dat$Year %in% "2001-2003"] <- 2002
-  dat$Year2[dat$Year %in% "1991-1993"] <- 1992
+  dat$Year2[dat$Year %in% "1999-2001"] <- 2000
+  dat$Year2[dat$Year %in% "1989-1991"] <- 1990
   dat <- dat[!is.na(dat$Year2),]
   dat$Year <- dat$Year2
   dat$Year2 <- NULL
@@ -525,8 +525,8 @@ for (name in names(CountryProfile.df)) {
 # TeX file ----------------------------------------------------------------
 
 ## Years to be shown in the country profile
-year1 = 1992
-year2 = 2002
+year1 = 1990
+year2 = 2000
 year3 = 2014
 ## This script creates the latex file
 cat("\\renewcommand{\\arraystretch}{1.42}\n",

@@ -5,6 +5,8 @@
 rm(list=ls(all=TRUE)) 
 gc()
 
+#options(scipen=999) # disable scientific number formatting
+
 # set root directory
 root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
 setwd(root.dir)
@@ -26,6 +28,7 @@ regionS_to_report <- c(
 #                              ,"LAC" # Latin America and the Caribbean
                                  "COF" # Coffee
                       )
+include_foreword <- F
 include_part1 <- F
 include_part2 <- F
 include_part3 <- F

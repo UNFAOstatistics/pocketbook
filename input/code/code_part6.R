@@ -265,6 +265,7 @@ short_text <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellu
 ## ---- P6coffeetradeData ----
 
 # Exports, coffee:
+## VALUE
 ## Green
 dat <- getFAOtoSYB(domainCode = "TP",
                    elementCode = 5922,
@@ -282,8 +283,29 @@ dat <- getFAOtoSYB(domainCode = "TP",
                    elementCode = 5922,
                    itemCode = 659)
 TP_659_5922 <- dat$aggregates
+## QUENTITY
+## Green
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5910,
+                   itemCode = 656)
+TP_656_5910 <- dat$aggregates
+
+## Roasted
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5910,
+                   itemCode = 657)
+TP_657_5910 <- dat$aggregates
+
+## Extracts
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5910,
+                   itemCode = 659)
+TP_659_5910 <- dat$aggregates
+
+
 
 # Imports, coffee:
+## VALUE
 ## Green
 dat <- getFAOtoSYB(domainCode = "TP",
                    elementCode = 5622,
@@ -303,6 +325,26 @@ dat <- getFAOtoSYB(domainCode = "TP",
                    itemCode = 659)
 TP_659_5622 <- dat$aggregates
 
+## QUANTITY
+## Green
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5610,
+                   itemCode = 656)
+TP_656_5610 <- dat$aggregates
+
+
+## Roasted
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5610,
+                   itemCode = 657)
+TP_657_5610 <- dat$aggregates
+
+## Extracts
+dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5610,
+                   itemCode = 659)
+TP_659_5610 <- dat$aggregates
+
 
 
 
@@ -310,7 +352,6 @@ TP_659_5622 <- dat$aggregates
 ## ---- P6coffeetradeTOPRIGHT ----
 
 #(exp(coef(lm(log(x[(i - n):(i)]) ~ t))[2]) - 1) * 100
-
 
 growth <- data.frame()
 
@@ -359,6 +400,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+dat$TP_656_5922 <- dat$TP_656_5922 / 1000 # into millions dollars
 dat <- arrange(dat, -Year, -TP_656_5922)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2012")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
@@ -371,7 +413,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP_656_5922))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="mln tonnes")
+p <- p + labs(x="",y="1 000 000 US$")
 p <- p + scale_y_continuous(labels = space)
 p
 
@@ -391,6 +433,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+dat$TP_656_5622 <- dat$TP_656_5622 / 1000 # into millions dollars
 dat <- arrange(dat, -Year, -TP_656_5622)
 top15 <- dat %>% slice(1:20) %>% mutate(color = "2012")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
@@ -403,7 +446,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP_656_5622))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="mln tonnes")
+p <- p + labs(x="",y="1 000 000 US$")
 p <- p + scale_y_continuous(labels = space)
 p
 
@@ -459,12 +502,20 @@ caption_text <- "Value of coffee imports"
 
 ## ---- P6coffeetradeMAP ----
 
-dat <- TP_656_5622 %>% filter(Year %in% 2012, FAOST_CODE < 5000)
-pop <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,OA.TPBS.POP.PPL.NO)
+# old per capita
+# dat <- TP_656_5622 %>% filter(Year %in% 2012, FAOST_CODE < 5000)
+# pop <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>% select(FAOST_CODE,OA.TPBS.POP.PPL.NO)
+# 
+# dat <- left_join(dat,pop)
+# 
+# dat <- dat %>% mutate(import_per_capita = (TP_656_5622 * 1000) / OA.TPBS.POP.PPL.NO)
 
-dat <- left_join(dat,pop)
-
-dat <- dat %>% mutate(import_per_capita = (TP_656_5622 * 1000) / OA.TPBS.POP.PPL.NO)
+# new net trade
+dat1 <- TP_656_5622 %>% filter(Year %in% 2012, FAOST_CODE < 5000)
+dat2 <- TP_656_5922 %>% filter(Year %in% 2012, FAOST_CODE < 5000)
+dat <- left_join(dat1,dat2)
+dat$net_trade <- dat$TP_656_5922 - dat$TP_656_5622
+dat$net_trade <- dat$net_trade / 1000 # into million USD
 
 map.plot <- full_join(dat,map.df)
 
@@ -472,13 +523,14 @@ map.plot <- full_join(dat,map.df)
 
 # map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","import_per_capita")]
-cat_data$value_cat <- categories(x=cat_data$import_per_capita, n=5, method="jenks")
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","net_trade")]
+cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=TRUE, manual_breaks = c(-10000,-2000,-50,50,5000,10000))
+#cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=FALSE)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "US$ per capita"
+map_unit <- "1 000 000 US$"
 
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
@@ -489,10 +541,10 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+create_map_here(manualPalette=TRUE,manual_palette=c("grey70","#d7191c","#fdae61","#ffffbf","#a6d96a","#1a9641"))
 
 # Caption
-caption_text <- "Per capita value of coffee imports in 2012"
+caption_text <- "Net trade of coffee in 2012"
 
 
 
@@ -561,7 +613,7 @@ p
 
 
 # Caption
-caption_text <- "Annual coffee prices, 1960 to present, real 2010 US dollars"
+caption_text <- "Annual coffee prices, 1960 to present, real 2010 US\\$"
 
 
 

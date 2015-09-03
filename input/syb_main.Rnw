@@ -20,7 +20,6 @@
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
 
 library(knitr)
-options(scipen = 999)
 
 #pdf.options(useDingbats = TRUE)
 
@@ -111,7 +110,7 @@ knit_hooks$set(left_plot = function(before, options, envir) {
        return("\\LeftChart{\\begin{chart} \n")
      } else {
        
-      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
+      return(paste0("\\vspace{.6mm} \n","\\caption{",caption_text,"}","\\end{chart}} \n"))
     }
 })
 
@@ -122,7 +121,7 @@ knit_hooks$set(right_plot = function(before, options, envir) {
        return("\\RightChart{\\begin{chart} \n")
      } else {
        
-      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
+      return(paste0("\\vspace{.6mm} \n","\\caption{",caption_text,"}","\\end{chart}} \n"))
     }
 })
 
@@ -471,20 +470,21 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 
 
 
-\Large{Foreword}
 
-\bigskip
-\bigskip
-\bigskip
-
-\large
-
-
-<<foreword_chunk>>=
+<<foreword_chunk, eval=include_foreword>>=
 
   if (region_to_report != "COF"){
     cat(
-"This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
+"
+\\Large{Foreword}
+
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\large
+
+This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
 
 This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 72 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
 
@@ -524,17 +524,20 @@ FAO is deeply committed to helping countries strengthen their statistical system
     
     cat(
 "
-Coffee is a brownish color that is a representation of the color of an unroasted coffee bean. Different types of coffee beans have different colors when unroasted--the color coffee represents an average.
+\\Large{Foreword}
 
-The first recorded use of coffee as a color name in English was in 1695.
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\large
+
 
 {\\textbf{\\color{part5} The Coffee}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
 
 {\\textbf{\\color{part6} The Café au Lait}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
 
 {\\textbf{\\color{part7} The Café Noir}} is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
-
-FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
 
 
 \\bigskip
@@ -556,8 +559,9 @@ FAO is deeply committed to helping countries strengthen their statistical system
 @
 
 
-
-
+\Large(Just a placeholder)
+\large
+\clearpage
 
 
 % 
@@ -726,7 +730,10 @@ bold <- function(x) {paste('{\\textbf{',x,'}}', sep ='')}
 if(length(unique(overview.df$subgroup)) == 2) alignment <- "lp{1.1in}p{1.1in}"
 if(length(unique(overview.df$subgroup)) == 3) alignment <- "lp{.9in}p{.9in}p{.9in}"
 if(length(unique(overview.df$subgroup)) == 4) alignment <- "lp{.7in}p{.7in}p{.7in}p{.7in}"
-if(length(unique(overview.df$subgroup)) == 5) alignment <- "lp{.5in}p{.6in}p{.5in}p{.5in}p{.5in}"
+#if(length(unique(overview.df$subgroup)) == 5) alignment <- "lp{.5in}p{.5in}p{.6in}p{.5in}p{.5in}"
+
+if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}llll"
+
 if(length(unique(overview.df$subgroup)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
 if(length(unique(overview.df$subgroup)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 8) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
@@ -736,8 +743,9 @@ if(length(unique(overview.df$subgroup)) == 11) alignment <- "lp{.5in}p{.5in}p{.5
 if(length(unique(overview.df$subgroup)) == 12) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 
 print(
-  xtable(overview_data, caption = "Countries included", 
-         align= alignment), 
+  xtable(overview_data, caption = "Countries included",align= alignment
+         ),
+  floating=FALSE,
   type = "latex", table.placement = NULL, 
   booktabs = TRUE, 
   include.rownames = FALSE, 
