@@ -35,17 +35,17 @@ include_part3 <- F
 include_part4 <- F
 include_part5 <- T
 include_part6 <- T
-include_country_profiles <- F
+include_country_profiles <- T
 include_definitions <- T
 
 # To be uploaded for comments or not
-upload_to_server <- F
+upload_to_server <- T
 
 # Upgrade the comparison tables
 broke_into_images <- F
 
 # just for troubleshooting
-region_to_report <- "RAF"
+region_to_report <- "COF"
 
 ############################################################
 ############################################################

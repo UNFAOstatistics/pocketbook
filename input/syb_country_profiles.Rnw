@@ -29,6 +29,7 @@ library(ggplot2)
 library(readxl)
 library(zoo)
 
+syb.df$NV.AGR.TOTL.ZS[is.na(syb.df$NV.AGR.TOTL.ZS)]
 
 ##' Sanitize the expression for Latex code
 ##'
@@ -400,7 +401,6 @@ dat <- getFAOtoSYB(domainCode = "CL",
                    itemCode = 2941)
 dat1 <- dat$aggregates
 syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
 
 # 
 # GHG emissions from coffee (% of total)
