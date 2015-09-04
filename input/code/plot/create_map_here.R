@@ -60,7 +60,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
                                       title.position = "top", 
                                       title.hjust=0))
-  p <- p + scale_fill_manual(values=mapColors,labels = comma) # no data to think about
+  p <- p + scale_fill_manual(values=mapColors) # no data to think about
   p <- p + guides(colour=FALSE)
   p
 }
