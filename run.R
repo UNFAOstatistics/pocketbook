@@ -36,7 +36,7 @@ include_part4 <- F
 include_part5 <- T
 include_part6 <- T
 include_country_profiles <- F
-include_definitions <- F
+include_definitions <- T
 
 # To be uploaded for comments or not
 upload_to_server <- F
