@@ -720,6 +720,7 @@ for (col in 1:ncol(overview_data)){
 overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data), ]
 # 
 
+
 library(xtable)
 rws <- seq(0, (nrow(overview_data)), by = 2)
 #col <- rep("\\rowcolor[part6]{0.95}", length(rws))
@@ -732,7 +733,8 @@ if(length(unique(overview.df$subgroup)) == 3) alignment <- "lp{.9in}p{.9in}p{.9i
 if(length(unique(overview.df$subgroup)) == 4) alignment <- "lp{.7in}p{.7in}p{.7in}p{.7in}"
 #if(length(unique(overview.df$subgroup)) == 5) alignment <- "lp{.5in}p{.5in}p{.6in}p{.5in}p{.5in}"
 
-if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}llll"
+if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}"
+#if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}"
 
 if(length(unique(overview.df$subgroup)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
 if(length(unique(overview.df$subgroup)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
