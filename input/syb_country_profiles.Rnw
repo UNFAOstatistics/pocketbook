@@ -13,7 +13,7 @@
 
 if (!exists("syb.df$missing")) {
   
-  syb.df$missing <- "not in db"
+  syb.df$missing <- "not def"
   
   }
 
@@ -227,6 +227,27 @@ if (!("aqua_culture_share" %in% names(syb.df))) {
   
   syb.df$aqua_culture_share <- syb.df$FI.PRD.AQ.TN.NO / (syb.df$FI.PRD.AQ.TN.NO + syb.df$FI.PRD.CAPT.TN.NO) *100
 }
+
+
+
+if (!("rural_pop_share" %in% names(syb.df))) {
+  
+  syb.df$rural_pop_share <- syb.df$OA.TPR.POP.PPL.NO / syb.df$OA.TPBS.POP.PPL.NO *100
+}
+
+
+if (!("agricultural_exports_share" %in% names(syb.df))) {
+  
+  dat <- getFAOtoSYB(domainCode = "TP",
+                   elementCode = 5922,
+                   itemCode = 1882)
+  dat1 <- dat$aggregates
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  #syb.df$agricultural_exports_share <- syb.df$TP_1882_5922 / (syb.df$NY.GDP.MKTP.CD*1000)  *100
+  syb.df$agricultural_exports_share <- syb.df$TP_1882_5922*1000 / syb.df$NY.GDP.MKTP.CD  * 100
+}
+
 
 
 ## FISHFISHFISH
@@ -569,11 +590,23 @@ for (i in 1:nrow(M49countries)) {
   for (part in 1:length(unique(indicators.df[, "PART"]))) {
 #     cat("\t\\multicolumn{4}{l}{\\textcolor{",paste0("part", part),"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
 #         file = fileOut, append = TRUE, sep = "")
-    if (part %in% c(3,4)) {
+
+    if (region_to_report == "COF"){
+      if (part %in% c(3,4)) {
       cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
       } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
+    }
+    if (region_to_report == "RAF"){
+      if (part %in% c(4,5)) {
+      cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+      } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+    }
+    
+    
     subindicators.df = indicators.df[indicators.df[, "PART"] == unique(indicators.df$PART)[part], ]
     for (j in 1:nrow(subindicators.df)) {
       y1 = tmp[tmp[, "Year"] == year1, subindicators.df[j, "INDICATOR1"]]

@@ -21,10 +21,10 @@ data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
 #                       "GLO" # Global
-                               "RAP" # Asia and the Pacific
-                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                              ,"RNE" # Near East and North Africa
+                               # "RAP" # Asia and the Pacific
+                              "RAF"  # Africa
+#                               ,"REU" # Europe and Central Asia
+#                               ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
@@ -32,7 +32,7 @@ include_foreword <- T
 include_overview <- T
 include_part1 <- F
 include_part2 <- F
-include_part3 <- F
+include_part3 <- T
 include_part4 <- F
 include_part5 <- F
 include_part6 <- F
