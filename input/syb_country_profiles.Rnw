@@ -249,6 +249,21 @@ if (!("agricultural_exports_share" %in% names(syb.df))) {
 }
 
 
+if (!("improved_water_source_rural" %in% names(syb.df))){
+  
+  dat <- getWDItoSYB(name = "improved_water_source_rural", indicator = "SH.H2O.SAFE.RU.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","improved_water_source_rural")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$improved_water_source_rural),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+}
+
+
+
+
 
 ## FISHFISHFISH
 
@@ -555,7 +570,7 @@ year3 = 2014
 
 tbl_row_height <- 1.12
 if (region_to_report == "COF") tbl_row_height <- 1.42
-if (region_to_report == "RAF") tbl_row_height <- 0.92
+if (region_to_report == "RAF") tbl_row_height <- 1.12
 if (region_to_report == "RAP") tbl_row_height <- 1.12
 if (region_to_report == "REU") tbl_row_height <- 0.92
 if (region_to_report == "RNE") tbl_row_height <- 1.12
