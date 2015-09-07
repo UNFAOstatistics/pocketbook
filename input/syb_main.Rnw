@@ -571,8 +571,8 @@ FAO is deeply committed to helping countries strengthen their statistical system
 <<foreword_placeholder, eval=!include_foreword >>=
 
 cat("
-  \\Large(Just a placeholder)
-  \large
+  \\Large{Just a placeholder}
+  \\large
   \\clearpage
   ")
   

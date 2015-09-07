@@ -114,7 +114,8 @@ left=1cm, right=1cm, twoside}{geometry}
   \phantomsection
   \addcontentsline{loc}{country}{#1}%
   \index{#1}%
-  \colorbox{part6}{\parbox{\dimexpr\columnwidth-2ex}{\Large\color{white}\hypertarget{#1}{#1}}}\par}
+  % \colorbox{part6}{\parbox{\dimexpr\columnwidth-2ex}{\Large\color{white}\hypertarget{#1}{#1}}}\par} % for coffee book
+  \colorbox{FAOblue}{\parbox{\dimexpr\columnwidth-2ex}{\Large\color{white}\hypertarget{#1}{#1}}}\par}
 % ---------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------
 % Define the DataUnit environment
