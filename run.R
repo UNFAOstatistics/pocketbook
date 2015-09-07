@@ -42,7 +42,7 @@ include_definitions <- T
 upload_to_server <- T
 
 # Upgrade the comparison tables
-broke_into_images <- F
+broke_into_images <- T
 
 # just for troubleshooting
 region_to_report <- "COF"
