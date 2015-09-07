@@ -481,7 +481,16 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 \\bigskip
 \\bigskip
 \\bigskip
+")
 
+if (region_to_report == "RAF") cat("\\textbf{Africa pockebook spefific entry for the foreword}")
+if (region_to_report == "RAP") cat("\\textbf{Asia and the Pacific pockebook spefific entry for the foreword}")
+if (region_to_report == "REU") cat("\\textbf{Europe and Central Asia pockebook spefific entry for the foreword}")
+if (region_to_report == "RNE") cat("\\textbf{Near East and North Africa pockebook spefific entry for the foreword}")
+if (region_to_report == "LAC") cat("\\textbf{Latin America and pockebook spefific entry for the foreword}")
+if (region_to_report == "COF") cat("\\textbf{Coffee and Coffee pockebook spefific entry for the foreword}")
+
+cat("
 \\large
 
 This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
@@ -559,9 +568,20 @@ FAO is deeply committed to helping countries strengthen their statistical system
 @
 
 
-\Large(Just a placeholder)
-\large
-\clearpage
+<<foreword_placeholder, eval=!include_foreword >>=
+
+cat("
+  \\Large(Just a placeholder)
+  \large
+  \\clearpage
+  ")
+  
+
+  
+@
+
+
+
 
 
 % 
@@ -606,7 +626,7 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 \clearpage
 
-<<overview_map, eval=TRUE, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
+<<overview_map, eval=include_overview, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
 
 #<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
 
@@ -641,6 +661,14 @@ source(paste0(root.dir,"./input/code/plot/theme.R"))
 
 
 
+# fill colors for the map
+# colPart = plot_colors(part = 1, 12)
+# mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
+# nCol = length(unique(overview.df$subgroup))
+# tmpCol = mapColFun(nCol)[2]
+# mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][2]))
+# mapColors = mapColFun(nCol)
+
 
 
 # Create the plot
@@ -658,7 +686,8 @@ p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FAL
 #                                     "#9F8170", # Beaver
 #                                     "#C3B091", # Khaki
 #                                     "#F0DC82")) # Buff
-p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
+if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
+if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
@@ -690,7 +719,7 @@ p
 %\begin{landscape}
 
 
-<<overview_table, eval=TRUE, results='asis'>>=
+<<overview_table, eval=include_overview, results='asis'>>=
 
 # Add region key and subset
 if (!(region_to_report %in% c("GLO","COF"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
@@ -744,6 +773,14 @@ if(length(unique(overview.df$subgroup)) == 10) alignment <- "lp{.5in}p{.5in}p{.5
 if(length(unique(overview.df$subgroup)) == 11) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 12) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 
+
+tbl_font_size <- "scriptsize"
+if (region_to_report == "RAF") tbl_font_size <- "footnotesize"
+if (region_to_report == "RNE") tbl_font_size <- "footnotesize"
+if (region_to_report == "REU") tbl_font_size <- "footnotesize"
+if (region_to_report == "RAF") tbl_font_size <- "footnotesize"
+
+
 print(
   xtable(overview_data, caption = "Countries included",align= alignment
          ),
@@ -751,8 +788,7 @@ print(
   type = "latex", table.placement = NULL, 
   booktabs = TRUE, 
   include.rownames = FALSE, 
-  #size = "tiny", 
-  size = "scriptsize", 
+  size = tbl_font_size,
   caption.placement = "top", 
   add.to.row = list(pos = as.list(rws), command = col),
   sanitize.colnames.function=bold
