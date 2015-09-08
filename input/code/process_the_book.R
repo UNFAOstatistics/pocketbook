@@ -90,7 +90,20 @@ for (region_to_report in regionS_to_report) {
   #   knitr::spin("syb_part1.R")
 
   # create jpg's for web comparisons
-  if (broke_into_images) system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
+  if (broke_into_images){
+
+    if (broke_only_tables){
+
+      if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
+      if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 17 output table_pic.pdf") # Bangladesh
+      if (region_to_report == "RNE") system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Saudi-Arabia
+      if (region_to_report == "REU") system("pdftk syb_main.pdf cat 27 output table_pic.pdf") # Finland
+
+      system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
+
+    } else system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
+
+  }
 
   # knitr::purl("syb_part2.Rnw","syb_part2.R")
   # knitr::spin("syb_part2.R")
