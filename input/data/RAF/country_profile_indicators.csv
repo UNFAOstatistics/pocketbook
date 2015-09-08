@@ -29,7 +29,7 @@ Food supply,27,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% of GDP)",,1
 Production quantities (1 000 tonnes),28,QC.PRD.CRLS.TN.NO,,,Cereals (thousand tonnes),1000,0
 Production quantities (1 000 tonnes),29,QL.PRD.TOT.TN.NO,,,Meat (thousand tonnes),1000,0
 Production quantities (1 000 tonnes),30,QC.PRD.RTTB.TN.NO,,,Roots and tubers (thousand tonnes),1000,0
-Production quantities (1 000 tonnes),31,total_fish_production,,,Fish (thousand tonnes),1000,0
+Production quantities (1 000 tonnes),31,total_fish_production,,,Fish (thousand tonnes),,0
 Production quantities (1 000 tonnes),32,QL.PRD.MILK.TN.NO,,,Milk (thousand tonnes),1000,0
 Production quantities (1 000 tonnes),33,QC.YIELD.CRLS.HG.NO,,,Cereal yield (tonnes per ha),,0
 Production indices (2004-06=100),34,QI.NPIN.FOOD.IN.NO,,,Net food,,0

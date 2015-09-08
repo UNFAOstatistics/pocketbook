@@ -571,7 +571,7 @@ year3 = 2014
 tbl_row_height <- 1.12
 if (region_to_report == "COF") tbl_row_height <- 1.42
 if (region_to_report == "RAF") tbl_row_height <- 1.12
-if (region_to_report == "RAP") tbl_row_height <- 1.12
+if (region_to_report == "RAP") tbl_row_height <- 1.02
 if (region_to_report == "REU") tbl_row_height <- 0.92
 if (region_to_report == "RNE") tbl_row_height <- 1.12
 
@@ -614,6 +614,13 @@ for (i in 1:nrow(M49countries)) {
         file = fileOut, append = TRUE, sep = "")
     }
     if (region_to_report == "RAF"){
+      if (part %in% c(4,5)) {
+      cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+      } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+    }
+    if (region_to_report == "RAP"){
       if (part %in% c(4,5)) {
       cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
