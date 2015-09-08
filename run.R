@@ -32,7 +32,7 @@ include_foreword <- T
 include_overview <- T
 include_part1 <- F
 include_part2 <- F
-include_part3 <- T
+include_part3 <- F
 include_part4 <- F
 include_part5 <- F
 include_part6 <- F
@@ -156,7 +156,7 @@ syb.df[syb.df[, "FAOST_CODE"] %in% c(214), "Area"] <- "Taiwan"
 syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "West Bank and\nGaza Strip"
 syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
 
-
+source(paste0(root.dir,"input/code/process_fisheries_data.R"))
 #  __  __                     _         _         
 # |  \/  |  __ _  _ __     __| |  __ _ | |_  __ _ 
 # | |\/| | / _` || '_ \   / _` | / _` || __|/ _` |
