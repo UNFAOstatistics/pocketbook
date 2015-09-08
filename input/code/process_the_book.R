@@ -95,7 +95,7 @@ for (region_to_report in regionS_to_report) {
     if (broke_only_tables){
 
       if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
-      if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 17 output table_pic.pdf") # Bangladesh
+      if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 18 output table_pic.pdf") # Bangladesh
       if (region_to_report == "RNE") system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Saudi-Arabia
       if (region_to_report == "REU") system("pdftk syb_main.pdf cat 27 output table_pic.pdf") # Finland
 

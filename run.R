@@ -40,11 +40,11 @@ include_country_profiles <- T
 include_definitions <- F
 
 # To be uploaded for comments or not
-upload_to_server <- F
+upload_to_server <- T
 
 # Upgrade the comparison tables
-broke_into_images <- F
-broke_only_tables <- F
+broke_into_images <- T
+broke_only_tables <- T
 
 # just for troubleshooting
 region_to_report <- "RAF"
