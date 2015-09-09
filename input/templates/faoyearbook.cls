@@ -6,7 +6,7 @@
 %%
 %% faoyearbook.dtx  (with options: `class')
 %% Copyright (c) 2011, Food and Agriculture Organization of the  United Nations
-%% 
+%%
 %% All rights reserved.
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -45,7 +45,7 @@
 \DeclareOption{web}{\printfalse}
 \DeclareOption{print}{\printtrue
   \if@factbook
-  \PassOptionsToPackage{papersize={12cm,21cm},layoutsize={10cm,19cm},
+  \PassOptionsToPackage{papersize={12cm,23cm},layoutsize={10cm,21cm},
     layouthoffset=1cm,layoutvoffset=1cm,twoside}{geometry}%
   \else
   \PassOptionsToPackage{papersize={230mm,317mm},layout=a4paper,
@@ -157,7 +157,7 @@
 \urlstyle{sf}
 \if@factbook
 \AtBeginDocument{%
-  \geometry{layoutsize={10cm,19cm},
+  \geometry{layoutsize={10cm,21cm},
   left=1cm,right=1cm,bottom=1cm,top=1cm,twoside}%
   \setlength\columnsep{10pt}%
 \savegeometry{standard}\@twosidetrue}
@@ -179,6 +179,25 @@
 \fi\fi\fi
 \setlength\parindent\z@
 \setlength\parskip{6\p@ plus 6\p@ minus 4\p@}
+% ------- Crop marks --------------
+% \AtBeginDocument{\ifprint
+%   \AtBeginShipout{%
+%     \AtBeginShipoutUpperLeftForeground{%
+%       \color{orange}%
+%       \@tempdima=\Gm@layouthoffset
+%       \@tempdimb=\Gm@layoutvoffset
+%       \put(\@tempdima,-\@tempdimb+6\p@){\line(0,1){50}}%
+%       \put(\@tempdima-6\p@,-\@tempdimb){\line(-1,0){50}}%
+%       \advance\@tempdima by \Gm@layoutwidth
+%       \put(\@tempdima,-\@tempdimb+6\p@){\line(0,1){50}}%
+%       \put(\@tempdima+6\p@,-\@tempdimb){\line(1,0){50}}%
+%       \advance\@tempdimb by \Gm@layoutheight
+%       \put(\@tempdima,-\@tempdimb-6\p@){\line(0,-1){50}}%
+%       \put(\@tempdima+6\p@,-\@tempdimb){\line(1,0){50}}%
+%       \advance\@tempdima by -\Gm@layoutwidth
+%       \put(\@tempdima-6\p@,-\@tempdimb){\line(-1,0){50}}%
+%       \put(\@tempdima,-\@tempdimb-6\p@){\line(0,-1){50}}%
+%     }}\fi}
 \AtBeginDocument{\ifprint
   \AtBeginShipout{%
     \AtBeginShipoutUpperLeftForeground{%
@@ -197,6 +216,8 @@
       \put(\@tempdima-6\p@,-\@tempdimb){\line(-1,0){50}}%
       \put(\@tempdima,-\@tempdimb-6\p@){\line(0,-1){50}}%
     }}\fi}
+
+% ------------------------------------------------------
 \AtBeginDocument{\ifDraft
   \AtBeginShipout{%
     \AtBeginShipoutUpperLeftForeground{%

@@ -6,7 +6,7 @@
 %%
 %% faofactbook.dtx  (with options: `class')
 %% Copyright (c) 2011, Food and Agriculture Organization of the  United Nations
-%% 
+%%
 %% All rights reserved.
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -26,7 +26,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{faofactbook}
 [2012/03/25 v0.14 Typesetting FAO Factbook]
-\PassOptionsToPackage{papersize={10cm,21cm},top=1cm,bottom=1cm,
+\PassOptionsToPackage{papersize={12cm,23cm},top=1cm,bottom=1cm,
 left=1cm, right=1cm, twoside}{geometry}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{faoyearbook}}
 \ProcessOptions\relax
@@ -43,7 +43,7 @@ left=1cm, right=1cm, twoside}{geometry}
 }
 % ---------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------
-% New Font sizes 
+% New Font sizes
 % ---------------------------------------------------------------------------------
 \renewcommand\normalsize{%
    \@setfontsize\normalsize{6\p@}{7}% Affects caption sizes and texts size within Chatpage environments
@@ -74,7 +74,7 @@ left=1cm, right=1cm, twoside}{geometry}
 \renewcommand\huge{\@setfontsize\huge\@xvpt{18}}
 \renewcommand\Huge{\@setfontsize\Huge\@xviipt{20}}
 \setlength\parskip{\z@}
-\AtBeginDocument{\geometry{papersize={10cm,21cm}, layoutsize={10cm,21cm},
+\AtBeginDocument{\geometry{papersize={12cm,23cm}, layoutsize={10cm,21cm},
   left=1cm,right=1cm,bottom=1cm,top=1cm,twoside}%
   \setlength\columnsep{20pt}%
 \savegeometry{standard}}
@@ -87,22 +87,22 @@ left=1cm, right=1cm, twoside}{geometry}
 % ---------------------------------------------------------------------------------
 \fancypagestyle{plain}{%
   \fancyhf{}%
-  
+
   \fancyfoot[RO,LE]{\thepage}%
   \fancyhead[LO]{%
     \begin{picture}(0,0)%
-      \put(268,-162){\raisebox{-0.729\Gm@layoutheight}{%
+      \put(268,-175){\raisebox{-0.729\Gm@layoutheight}{%
           \color{@bgcolor}\hspace*{-\@stripwidth}%
           \rule{\@stripwidth}{1.05\Gm@layoutheight}}}%
     \end{picture}}
   \fancyhead[LE]{%
     \begin{picture}(0,0)%
-      \put(-39,-162){\raisebox{-0.729\Gm@layoutheight}{%
+      \put(-39,-175){\raisebox{-0.729\Gm@layoutheight}{%
           \color{@bgcolor}\rule{\@stripwidth}{1.05\Gm@layoutheight}}}%
     \end{picture}}
   \renewcommand{\headrulewidth}{\z@}%
   \renewcommand{\footrulewidth}{\z@}}
-  
+
 \AtBeginDocument{\pagestyle{plain}}
 \footskip15\p@
 \definecolor{FAOblue}{cmyk}{0.69,0.34,0,0}
@@ -139,7 +139,7 @@ left=1cm, right=1cm, twoside}{geometry}
 % ---------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------
 % Define the Table of Contents
-% ---------------------------------------------------------------------------------                                   
+% ---------------------------------------------------------------------------------
 
 \def\newpart#1{\clearpage
   \arrayrulecolor{#1}%
@@ -174,7 +174,7 @@ left=1cm, right=1cm, twoside}{geometry}
 % define the page number in toc
      %\parindent \z@ \rightskip -100pt % commenting this line and
      \parindent \z@ \rightskip \@pnumwidth  % adding this line fixed the page numbers!
-      \parfillskip  - \@pnumwidth 
+      \parfillskip  - \@pnumwidth
 % ------------------------------------------------------------
       {\leavevmode\strut
        #1\hfil \hb@xt@\@pnumwidth{\hss #2}}
