@@ -58,3 +58,4 @@ Environment,56,AQ.WAT.WWAGR.MC.SH,,,Share of renewable water resources (%),,1
 Environment,57,BP.TP.GP.TJ.NO,,,Biofuel production (thousand kt of oil eq.),1000,0
 Environment,58,FO.WP.PQ.TN.NO,,,Wood pellet prod. (min tonnes),1000,0
 Environment,59,GHG.AFOLU.TOT.ECO2EQ.NO,,,"GHG emissions from ag (Co2 eq, gigagrams)",1000,0
+Environment,60,missing,,,A new indicator,,0

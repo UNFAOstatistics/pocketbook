@@ -329,7 +329,7 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 % First page background graphics
 \usepackage{eso-pic}
 \newcommand\taustaeka{%
-\put(0,0){%
+\put(-30,0){%
 \parbox[b][\paperheight]{\paperwidth}{%
 \vfill
 \centering
@@ -343,7 +343,7 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
 
 \newcommand\taustatoka{%
-\put(0,0){%
+\put(-30,0){%
 \parbox[b][\paperheight]{\paperwidth}{%
 \vfill
 \centering

@@ -90,20 +90,21 @@ for (region_to_report in regionS_to_report) {
   #   knitr::spin("syb_part1.R")
 
   # create jpg's for web comparisons
-  if (broke_into_images){
 
-    if (broke_only_tables){
 
-      if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
-      if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 18 output table_pic.pdf") # Bangladesh
-      if (region_to_report == "RNE") system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Saudi-Arabia
-      if (region_to_report == "REU") system("pdftk syb_main.pdf cat 27 output table_pic.pdf") # Finland
+if (broke_only_tables_into_images){
 
-      system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
+    if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
+    if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 18 output table_pic.pdf") # Bangladesh
+    if (region_to_report == "RNE") system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Saudi-Arabia
+    if (region_to_report == "REU") system("pdftk syb_main.pdf cat 27 output table_pic.pdf") # Finland
 
-    } else system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
+    system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
 
-  }
+}
+if (broke_all_into_images) system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
+
+
 
   # knitr::purl("syb_part2.Rnw","syb_part2.R")
   # knitr::spin("syb_part2.R")
@@ -131,7 +132,8 @@ file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
 
 
 
-if (broke_into_images){
+
+if (broke_all_into_images | broke_only_tables_into_images){
 
   # copy the output -html's into the output/html-folder
   flist <- list.files(paste0(root.dir,"output/process"),
@@ -148,18 +150,18 @@ if (broke_into_images){
 
 
 
-if (upload_to_server) {
+if (upload_pdfs_to_server) {
 
   #  upload the output pdf to kapsi
   pdfs <- list.files(paste0(root.dir,"output/pdf"), full.names = TRUE)
   system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
+}
 
 
-  if (broke_into_images) {
+if (upload_images_to_server) {
     comparison <- list.files(paste0(root.dir,"output/jpg"), full.names = TRUE)
     system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
-  }
-
 }
+
 
 setwd(root.dir)
