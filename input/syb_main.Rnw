@@ -279,9 +279,9 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
 %% Global Pocket Yearbook class
  % \documentclass[print, Draft]{faofactbook}
-\documentclass[print]{faofactbook}
+% \documentclass[print]{faofactbook}
 % \documentclass[web, Draft]{faofactbook}
-% \documentclass[twoside,web]{faofactbook}
+\documentclass[twoside,web]{faofactbook}
 
 %% Other packages to be loaded
 \usepackage{lipsum,textcomp}

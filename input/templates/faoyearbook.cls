@@ -27,6 +27,16 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{faoyearbook}
 [2013/03/23 v1.11 Typesetting FAO Yearbook]
+
+% IF FOR THE PRINT
+% \PassOptionsToPackage{papersize={12cm,23cm},top=1cm,bottom=1cm,
+% left=1cm, right=1cm, twoside}{geometry}
+
+% IF FOR THE WEB
+\PassOptionsToPackage{papersize={10cm,21cm},top=1cm,bottom=1cm,
+left=1cm, right=1cm, twoside}{geometry}
+
+
 \newif\if@factbook
 \@ifclassloaded{faofactbook}{\@factbooktrue}{\@factbookfalse}
 \if@factbook\else
