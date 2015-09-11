@@ -39,31 +39,51 @@ short_text <- "A combination of declining mortality rates, prolonged life expect
 
 ## ---- P1overData ----
 # Retrieve data
-library(FAOSTAT)
-dat <- getFAOtoSYB(domainCode = "OA",
-                   elementCode = 551,
-                   itemCode = 3010)
-dat1 <- dat$aggregates
-dat <- getFAOtoSYB(domainCode = "OA",
-                   elementCode = 561,
-                   itemCode = 3010)
-dat2 <- dat$aggregates
-dat <- left_join(dat1,dat2)
-df <- gather(dat, variable, value, 3:4)
+# library(FAOSTAT)
+# dat <- getFAOtoSYB(domainCode = "OA",
+#                    elementCode = 551,
+#                    itemCode = 3010)
+# dat1 <- dat$aggregates
+# dat <- getFAOtoSYB(domainCode = "OA",
+#                    elementCode = 561,
+#                    itemCode = 3010)
+# dat2 <- dat$aggregates
+# dat <- left_join(dat1,dat2)
+# df <- gather(dat, variable, value, 3:4)
 
 
 
 ## ---- P1overTOPRIGHT ----
 
-dat <- df %>% select(FAOST_CODE,Year,variable,value)
+
+# If you could aggrate the population by summing up the countries you would do it like this
+# dat <- df %>% select(FAOST_CODE,Year,variable,value)
+# dat <- left_join(dat,region_key)
+# dat <- dat[which(dat[[region_to_report]]),]
+# dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
+
+# But as you cant in the case of population at least, we need to use the specific aggregates from FAOSTAT
+
+dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPU.POP.PPL.NO,OA.TPR.POP.PPL.NO)
+dat <- dat[!is.na(dat$OA.TPR.POP.PPL.NO),]
 dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+
+
+if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% c(5400, # Europe
+                                                                        5301 # Central Asia
+                                                                        ))
+if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% c(5100 # Africa
+                                                                        ))
+if (region_to_report == "RNE")  dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAP")  dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- gather(dat, variable, value, 3:4)
 
 dat$variable <- as.character(dat$variable)
-dat$variable[dat$variable == "OA_3010_551"] <- "Urban population"
-dat$variable[dat$variable == "OA_3010_561"] <- "Rural population"
+dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
+dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
 
-dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
+dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000000)
 
 # print data for technical report
 #datatable(dat)
