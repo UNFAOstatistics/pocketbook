@@ -64,6 +64,7 @@ dl <- gather(dat,
              3:26)
 # keep selected columns
 names(dl)[names(dl)=="Country (Country)"] <- "UN_CODE"
+dl <- dl[-2]
 dl$Year <- factor(dl$Year)
 dl$Year <- as.numeric(levels(dl$Year))[dl$Year]
 tot_prod <- dl

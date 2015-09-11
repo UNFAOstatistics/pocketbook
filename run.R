@@ -30,22 +30,22 @@ regionS_to_report <- c(
                       )
 include_foreword <- T
 include_overview <- T
-include_part1 <- F
+include_part1 <- T
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
 include_part5 <- F
 include_part6 <- F
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions <- F
 
 # To be uploaded for comments or not
 upload_pdfs_to_server <- F
-upload_images_to_server <- T
+upload_images_to_server <- F
 
 # Upgrade the comparison tables
 broke_all_into_images <- F
-broke_only_tables_into_images <- T
+broke_only_tables_into_images <- F
 
 # just for troubleshooting
 region_to_report <- "RAF"
