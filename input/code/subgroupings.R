@@ -59,7 +59,9 @@ subgrouping <- function(region_to_report, gather=TRUE){
     df$subgroup <- str_replace_all(df$subgroup, "^\\++", "")
     df$subgroup <- str_replace_all(df$subgroup, "\\++$", "")
     df$subgroup <- str_replace_all(df$subgroup, "\\++", " AND ")
+    
   }
+  df$subgroup <- as.character(df$subgroup)
   
   if (region_to_report == "RNE") {
     df$subgroup[df$subgroup %in% "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\nCouncil States\nand Yemen"

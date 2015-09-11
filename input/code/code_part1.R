@@ -282,7 +282,7 @@ caption_text <- "Value added in agriculture, industry and services, share of GDP
 
 
 ## ---- P1econLEFT ----
-dat <- syb.df[syb.df$Year %in%  2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","EA.PRD.AGRI.KD")]
+dat <- syb.df[syb.df$Year %in%  2003:2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","EA.PRD.AGRI.KD")]
 
 dat <- dat[!is.na(dat$EA.PRD.AGRI.KD),]
 # Add region key and subset
@@ -295,8 +295,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
-dat <- arrange(dat, -EA.PRD.AGRI.KD)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-EA.PRD.AGRI.KD) %>% slice(1:20) %>% mutate(color = "2013")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EA.PRD.AGRI.KD),y=EA.PRD.AGRI.KD))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -308,7 +307,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Agriculture value added per worker, countries with the highest values"
+caption_text <- "Agriculture value added per worker, countries with the highest values (2003-2013*)"
 
 ## ---- P1econRIGHT ----
 
@@ -347,7 +346,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
+caption_text <- "Value added in agriculture, average annual growth (2003-2013)"
 
 
 ## ---- P1econBOTTOM_data ----
@@ -486,7 +485,7 @@ caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
 
 
 ## ---- P1laboLEFT ----
-dat <- syb.df[syb.df$Year %in%  2012 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
+dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
 
 dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
 # Add region key and subset
@@ -498,9 +497,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 #and subset
 dat <- dat[which(dat[[region_to_report]]),]
 
-# top for this plot
-dat <- arrange(dat, -SL.AGR.EMPL.FE.ZS)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SL.AGR.EMPL.FE.ZS) %>% slice(1:20) %>% mutate(color = "2013")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SL.AGR.EMPL.FE.ZS),y=SL.AGR.EMPL.FE.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -512,10 +509,10 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Female employment in agriculture, share of female employment (2013)"
+caption_text <- "Female employment in agriculture, share of female employment (2003-2013*)"
 
 ## ---- P1laboRIGHT ----
-dat <- syb.df[syb.df$Year %in%  2012 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
+dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
 
 dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
 # Add region key and subset
@@ -527,9 +524,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 #and subset
 dat <- dat[which(dat[[region_to_report]]),]
 
-# top for this plot
-dat <- arrange(dat, -SL.AGR.EMPL.MA.ZS)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SL.AGR.EMPL.MA.ZS) %>% slice(1:20) %>% mutate(color = "2013")
+
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SL.AGR.EMPL.MA.ZS),y=SL.AGR.EMPL.MA.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -541,7 +537,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Male employment in agriculture, share of Male employment (2013)"
+caption_text <- "Male employment in agriculture, share of Male employment (2003 - 2013*)"
 
 
 ## ---- P1laboBOTTOM_data ----
@@ -685,11 +681,11 @@ p <- ggplot(dat_plot, aes(x=Year, y=share, fill=fill))
 p <- p + geom_area(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="kg/haś")
-p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + scale_x_continuous(breaks=c(2002,2004,2006,2008,2010,2012))
 p
 
 # Caption
-caption_text <- "Fertilizer consumption in nutrients per ha of arable land"
+caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002 to 2012)"
 
 
 ## ---- P1inputLEFT ----
@@ -721,7 +717,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land (2012)"
 
 
 ## ---- P1inputRIGHT ----
@@ -752,7 +748,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land (2012)"
 
 
 ## ---- P1inputBOTTOM ----
@@ -781,16 +777,15 @@ dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
               summarise(value  = sum(value, na.rm=TRUE)*1000,
                         area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>%
-              mutate(share = value / area) %>% ungroup()
+              mutate(share = value / area) %>% mutate(sum = sum(share)) %>%  ungroup()
 
 # reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Nitrogen",],-value)$subgroup )
+dat_plot$subgroup <- factor(dat_plot$subgroup, levels=unique(arrange(dat_plot, -sum)$subgroup))
 
 p <- ggplot(dat_plot, aes(x=subgroup, y=share, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="kg/ha")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
@@ -799,8 +794,12 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012
 
 
 ## ---- P1inputMAP ----
-dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>%
-        group_by(FAOST_CODE) %>%  summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
+dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%  mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH*1000)
+
+dat <- dat[!is.na(dat$RP.PEST.TOT.TN.SH),]
+  
+dat <- dat %>% group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ungroup()
+
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -817,7 +816,7 @@ cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "kg/ha"
+map_unit <- "g/ha"
 
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
@@ -851,7 +850,7 @@ short_text <- "Investing in agriculture is one of the most effective strategies 
 
 ## ---- P1investTOPRIGHT ----
 
-dat <- read_excel(paste0(data.dir,"/Data/Raw/InvestmentDataforStatPocketbook_28May2015.xlsx"))
+dat <- read_excel(paste0(data.dir,"/database/Data/Raw/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
 dat <- dat[1:3]
 names(dat) <- c("Year","agriculture_broad","agriculture_narrow")
 
