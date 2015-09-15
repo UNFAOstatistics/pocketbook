@@ -219,6 +219,11 @@ if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
   syb.df$phosphate_tonnes_per_ha <- syb.df$phosphate_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$potash_tonnes_per_ha <- syb.df$potash_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$nitrogen_tonnes_per_ha <- syb.df$nitrogen_tonnes / syb.df$RL.AREA.AGR.HA.NO
+  syb.df$total_nutrients_tonnes_per_ha <- (syb.df$phosphate_tonnes +
+                                           syb.df$potash_tonnes +
+                                           syb.df$nitrogen_tonnes) / syb.df$RL.AREA.AGR.HA.NO
+  
+  
 }
 
 
@@ -337,9 +342,9 @@ syb.df <- merge(syb.df,water_vars.df,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
 # Consumer prices, coffee
 
-
-
-# Producer prices, green coffee (US$ per tonne)
+if (region_to_report == "COF"){
+  
+  # Producer prices, green coffee (US$ per tonne)
 dat <- getFAOtoSYB(domainCode = "PP",
                    elementCode = 5532,
                    itemCode = 656)
@@ -437,10 +442,142 @@ dat <- getFAOtoSYB(domainCode = "CL",
                    itemCode = 2941)
 dat1 <- dat$aggregates
 syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+}
+
+
 
 # 
 # GHG emissions from coffee (% of total)
 
+
+#########################################################
+#                                                       #
+#    RAP regional book vars                             #
+#                                                       #
+#########################################################
+
+# Droughts, floods, extreme temperatures (% of population, average 1990-2009) 
+
+if (!("droughts_floods_temperature" %in% names(syb.df)) & region_to_report == "RAP"){
+  
+  dat <- getWDItoSYB(name = "droughts_floods_temperature", indicator = "EN.CLC.MDAT.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","droughts_floods_temperature")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$droughts_floods_temperature),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+}
+
+
+#########################################################
+#                                                       #
+#    REU regional book vars                             #
+#                                                       #
+#########################################################
+
+
+if (!("malnutrition_prevalence" %in% names(syb.df)) & region_to_report == "REU"){
+  
+  # malnutrition_prevalence, height for age
+  
+  dat <- getWDItoSYB(name = "malnutrition_prevalence", indicator = "SH.STA.STNT.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","malnutrition_prevalence")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$malnutrition_prevalence),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  # Prevalence of wasting (% of children under 5)
+  
+  dat <- getWDItoSYB(name = "wasting_prevalence", indicator = "SH.STA.WAST.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","wasting_prevalence")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$wasting_prevalence),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  # Prevalence of overweight (% of children under 5)
+  
+  dat <- getWDItoSYB(name = "overweigth_prevalence", indicator = "SH.STA.OWGH.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","overweigth_prevalence")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$overweigth_prevalence),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  
+  # Health expenditure, total: WDI
+  dat <- getWDItoSYB(name = "health_expenditure_total", indicator = "SH.XPD.TOTL.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","health_expenditure_total")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$health_expenditure_total),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  
+  # Health expenditure per capita PPP: WDI 
+  dat <- getWDItoSYB(name = "health_expenditure_per_capita", indicator = "SH.XPD.PCAP")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","health_expenditure_per_capita")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$health_expenditure_per_capita),]
+  dat1
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  
+  # Overweight
+  dat1 <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_25A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$COUNTRY, "iso3c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","YEAR","Numeric")]
+  names(dat1) <- c("FAOST_CODE","Year","overweight")
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$overweight),]
+  dat1 <- dat1[!duplicated(dat1[c("FAOST_CODE","Year")]),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  
+  dat1 <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_30A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$COUNTRY, "iso3c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","YEAR","Numeric")]
+  names(dat1) <- c("FAOST_CODE","Year","obesity")
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$obesity),]
+  dat1 <- dat1[!duplicated(dat1[c("FAOST_CODE","Year")]),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+  
+  
+}
+
+
+
+
+
+
+
+
+# Stunting: WDI, called Malnutrition prevalence, height for age
+# Wasting: WDI, called Prevalence of wasting (% of children under 5)
+# Overweight, children: WDI, Prevalence of overweight (% of children under 5)
+# Obesity, children under 19: ???
+# Overweight, adults:  WHO, http://apps.who.int/gho/data/node.main.A896?lang=en
+# Obesity: WHO, http://apps.who.int/gho/data/node.main.A896?lang=en
+# Vitamin A deficiency, children: ??
+# Vitamin A deficiency, total pop: FSI
+# Anemia, children under 5: FSI
+# Anemia, women in reproductive age: We do not have this. Instead we have Prevalence of anemia among pregnant women, FSI
+# Iodine deficiency, children: ??
+# Iodine deficiency, total pop: FSI
+# Health expenditure, total: WDI
+# Health expenditure per capita PPP: WDI 
 
 
 
@@ -572,7 +709,7 @@ tbl_row_height <- 1.12
 if (region_to_report == "COF") tbl_row_height <- 1.42
 if (region_to_report == "RAF") tbl_row_height <- 1.12
 if (region_to_report == "RAP") tbl_row_height <- 1.02
-if (region_to_report == "REU") tbl_row_height <- 0.92
+if (region_to_report == "REU") tbl_row_height <- 1.12
 if (region_to_report == "RNE") tbl_row_height <- 1.12
 
 cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),

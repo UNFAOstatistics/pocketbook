@@ -10,10 +10,10 @@ The setting,8,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1000 ha),1000,0
 The setting,9,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (%),,1
 The setting,10,SL.AGR.EMPL.ZS,,,Employment in agriculture (%),,1
 The setting,11,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
-The setting,12,missing,,,Total Fertilizers N/P/K (tonnes/ha),,1
-The setting,13,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (nutrients per ha)",0.001,1
-The setting,14,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (nutrients per ha)",0.001,1
-The setting,15,potash_tonnes_per_ha,,,"Fertilizers, Potash (nutrients per ha)",0.001,1
+The setting,12,total_nutrients_tonnes_per_ha,,,Total Fertilizers N/P/K (tonnes/ha),,1
+The setting,13,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (kg of nutrients per ha)",0.001,1
+The setting,14,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (kg of nutrients per ha)",0.001,1
+The setting,15,potash_tonnes_per_ha,,,"Fertilizers, Potash (kg nutrients per ha)",0.001,1
 The setting,16,missing,,,Energy use intensity in agriculture (mj/I$),,0
 The setting,17,missing,,,Average farm size (ha),,0
 The setting,18,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),1000,1
@@ -26,7 +26,7 @@ Hunger dimensions,24,missing,,,Change in food CPI,,
 Hunger dimensions,25,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,1
 Hunger dimensions,26,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
 Hunger dimensions,27,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,1
-Hunger dimensions,28,missing,,,"Pop affec by droughts, floods, extr temp (%)",,
+Hunger dimensions,28,droughts_floods_temperature,,,"Pop affec by droughts, floods, extr temp (%)",,1
 Food Supply,29,missing,,,Growth value of food production,,
 Food Supply,30,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,0
 Food Supply,31,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
