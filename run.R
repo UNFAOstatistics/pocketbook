@@ -21,10 +21,10 @@ data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
 #                       "GLO" # Global
-                              "RAP" # Asia and the Pacific
-                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                               ,"RNE" # Near East and North Africa
+                              # "RAP" # Asia and the Pacific
+                              # ,"RAF"  # Africa
+                              "REU" # Europe and Central Asia
+                               # ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
@@ -41,11 +41,11 @@ include_definitions <- F
 
 # Upgrade the comparison tables
 broke_all_into_images <- F
-broke_only_tables_into_images <- T
+broke_only_tables_into_images <- F
 
 # To be uploaded for comments or not
 upload_pdfs_to_server <- F
-upload_images_to_server <- T
+upload_images_to_server <- F
 
 # just for troubleshooting
 region_to_report <- "RAF"

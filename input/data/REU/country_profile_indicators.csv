@@ -1,6 +1,6 @@
 PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS
 The setting,1,tot_pop_male_female,,,"Population, total (M/F, mln)",,0
-The setting,2,OA.TPR.POP.PPL.NO,,,"Population, rural (M/F, % total population)",,1
+The setting,2,rural_pop_gender_shares,,,"Population, rural (M/F, % total population)",,1
 The setting,3,IG.AFFH.STOCGG.USD.SH,,,Govt expenditure on ag (% total outlays),,1
 The setting,4,area_harvested,,,Area harvested (mln ha),1000000,0
 The setting,5,cropping_intensity_ratio,,,Cropping intensity ratio (%),,1
