@@ -532,25 +532,59 @@ if (!("malnutrition_prevalence" %in% names(syb.df)) & region_to_report == "REU")
   dat1
   syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
   
+  # MALE FEMALE STUFF
   
   # Overweight
   dat1 <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_25A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
   dat1$FAOST_CODE <- countrycode::countrycode(dat1$COUNTRY, "iso3c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","YEAR","Numeric")]
+  dat1 <- dat1 %>%  filter(SEX != "BTSX") %>%  select(FAOST_CODE,YEAR,SEX,Numeric) %>%  mutate(Numeric = round(Numeric,0))
+  dat1 <- spread(dat1, SEX, Numeric)
+  dat1 <- dat1 %>% mutate(overweight = paste(MLE,FMLE, sep="/")) %>% select(FAOST_CODE,YEAR,overweight)
   names(dat1) <- c("FAOST_CODE","Year","overweight")
   dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
   dat1 <- dat1[!is.na(dat1$overweight),]
-  dat1 <- dat1[!duplicated(dat1[c("FAOST_CODE","Year")]),]
   syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
   
-  
+  # Obesity
   dat1 <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_30A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
   dat1$FAOST_CODE <- countrycode::countrycode(dat1$COUNTRY, "iso3c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","YEAR","Numeric")]
+  dat1 <- dat1 %>%  filter(SEX != "BTSX") %>%  select(FAOST_CODE,YEAR,SEX,Numeric) %>%  mutate(Numeric = round(Numeric,0))
+  dat1 <- spread(dat1, SEX, Numeric)
+  dat1 <- dat1 %>% mutate(obesity = paste(MLE,FMLE, sep="/")) %>% select(FAOST_CODE,YEAR,obesity)
   names(dat1) <- c("FAOST_CODE","Year","obesity")
   dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
   dat1 <- dat1[!is.na(dat1$obesity),]
-  dat1 <- dat1[!duplicated(dat1[c("FAOST_CODE","Year")]),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+  # tot_pop_male_female
+  dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPM.POP.PPL.NO,OA.TPF.POP.PPL.NO)
+  dat <- dat[!is.na(dat$OA.TPF.POP.PPL.NO),]
+  dat <- dat[!is.na(dat$OA.TPM.POP.PPL.NO),]
+  dat$OA.TPF.POP.PPL.NO <- round(dat$OA.TPF.POP.PPL.NO / 1000000,1)
+  dat$OA.TPM.POP.PPL.NO <- round(dat$OA.TPM.POP.PPL.NO / 1000000,1)
+  dat$tot_pop_male_female <- paste(dat$OA.TPM.POP.PPL.NO,dat$OA.TPF.POP.PPL.NO,sep="/")
+  dat1 <- dat[c("FAOST_CODE","Year","tot_pop_male_female")]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  # # rur_pop_share_male_female
+  # dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPM.POP.PPL.NO,OA.TPF.POP.PPL.NO)
+  # dat <- dat[!is.na(dat$OA.TPF.POP.PPL.NO),]
+  # dat <- dat[!is.na(dat$OA.TPM.POP.PPL.NO),]
+  # dat$OA.TPF.POP.PPL.NO <- dat$OA.TPF.POP.PPL.NO / 1000000
+  # dat$OA.TPM.POP.PPL.NO <- dat$OA.TPM.POP.PPL.NO / 1000000
+  # dat$tot_pop_male_female <- paste(dat$OA.TPM.POP.PPL.NO,dat$OA.TPM.POP.PPL.NO,sep="/")
+  # dat1 <- dat[c("FAOST_CODE","Year","tot_pop_male_female")]
+  # syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+  # agr_employment_male_female
+  dat <- syb.df %>% select(FAOST_CODE,Year,SL.AGR.EMPL.FE.ZS,SL.AGR.EMPL.MA.ZS)
+  dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
+  dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
+  
+  dat$agr_employment_male_female <- paste(round(dat$SL.AGR.EMPL.MA.ZS,1),
+                                          round(dat$SL.AGR.EMPL.FE.ZS,1)
+                                          ,sep="/")
+  dat1 <- dat[c("FAOST_CODE","Year","agr_employment_male_female")]
   syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
   
@@ -558,26 +592,27 @@ if (!("malnutrition_prevalence" %in% names(syb.df)) & region_to_report == "REU")
 }
 
 
+#########################################################
+#                                                       #
+#    RNE regional book vars                             #
+#                                                       #
+#########################################################
+
+# Droughts, floods, extreme temperatures (% of population, average 1990-2009) 
+
+if (!("current_account_balance" %in% names(syb.df)) & region_to_report == "RNE"){
+  
+  dat <- getWDItoSYB(name = "current_account_balance", indicator = "BN.CAB.XOKA.GD.ZS")
+  dat1 <- dat$aggregates
+  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
+  dat1 <- dat1[c("FAOST_CODE","Year","current_account_balance")]
+  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
+  dat1 <- dat1[!is.na(dat1$current_account_balance),]
+  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  
+}
 
 
-
-
-
-
-# Stunting: WDI, called Malnutrition prevalence, height for age
-# Wasting: WDI, called Prevalence of wasting (% of children under 5)
-# Overweight, children: WDI, Prevalence of overweight (% of children under 5)
-# Obesity, children under 19: ???
-# Overweight, adults:  WHO, http://apps.who.int/gho/data/node.main.A896?lang=en
-# Obesity: WHO, http://apps.who.int/gho/data/node.main.A896?lang=en
-# Vitamin A deficiency, children: ??
-# Vitamin A deficiency, total pop: FSI
-# Anemia, children under 5: FSI
-# Anemia, women in reproductive age: We do not have this. Instead we have Prevalence of anemia among pregnant women, FSI
-# Iodine deficiency, children: ??
-# Iodine deficiency, total pop: FSI
-# Health expenditure, total: WDI
-# Health expenditure per capita PPP: WDI 
 
 
 
@@ -707,10 +742,10 @@ year3 = 2014
 
 tbl_row_height <- 1.12
 if (region_to_report == "COF") tbl_row_height <- 1.42
-if (region_to_report == "RAF") tbl_row_height <- 1.12
-if (region_to_report == "RAP") tbl_row_height <- 1.02
-if (region_to_report == "REU") tbl_row_height <- 1.12
-if (region_to_report == "RNE") tbl_row_height <- 1.12
+if (region_to_report == "RAF") tbl_row_height <- 1.18
+if (region_to_report == "RAP") tbl_row_height <- 1.12
+if (region_to_report == "REU") tbl_row_height <- 1.22
+if (region_to_report == "RNE") tbl_row_height <- 1.32
 
 cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),
     file = fileOut, append = TRUE)
