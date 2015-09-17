@@ -765,7 +765,7 @@ tbl_row_height <- 1.12
 if (region_to_report == "COF") tbl_row_height <- 1.42
 if (region_to_report == "RAF") tbl_row_height <- 1.18
 if (region_to_report == "RAP") tbl_row_height <- 1.12
-if (region_to_report == "REU") tbl_row_height <- 1.22
+if (region_to_report == "REU") tbl_row_height <- 1.18
 if (region_to_report == "RNE") tbl_row_height <- 1.32
 
 cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),

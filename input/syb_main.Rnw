@@ -637,7 +637,7 @@ df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 # merge data with the region info
 overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 overview.df <- arrange(overview.df, order)
-overview.df <- merge(overview.df,FAOcountryProfile,by="FAOST_CODE")
+#overview.df <- merge(overview.df,FAOcountryProfile,by="FAOST_CODE")
 
 # define map unit
 map_unit <- ""

@@ -21,26 +21,26 @@ data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
 
 regionS_to_report <- c(
 #                       "GLO" # Global
-                              # "RAP" # Asia and the Pacific
-                              # ,"RAF"  # Africa
-                              "REU" # Europe and Central Asia
-                               # ,"RNE" # Near East and North Africa
+                              "RAP" # Asia and the Pacific
+                              ,"RAF"  # Africa
+                              ,"REU" # Europe and Central Asia
+                               ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
 include_foreword <- T
 include_overview <- T
-include_part1 <- F
+include_part1 <- T
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
 include_part5 <- F
 include_part6 <- F
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions <- F
 
 # Upgrade the comparison tables
-broke_all_into_images <- F
+broke_all_into_images <- T
 broke_only_tables_into_images <- F
 
 # To be uploaded for comments or not
@@ -160,6 +160,16 @@ syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.d
 syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
 
 source(paste0(root.dir,"input/code/process_fisheries_data.R"))
+
+#   ____          __  _                                  _                    
+#  |  _ \   ___  / _|(_) _ __    ___   _ __  ___   __ _ (_)  ___   _ __   ___ 
+#  | | | | / _ \| |_ | || '_ \  / _ \ | '__|/ _ \ / _` || | / _ \ | '_ \ / __|
+#  | |_| ||  __/|  _|| || | | ||  __/ | |  |  __/| (_| || || (_) || | | |\__ \
+#  |____/  \___||_|  |_||_| |_| \___| |_|   \___| \__, ||_| \___/ |_| |_||___/
+#                                                 |___/                       
+
+source(paste0(root.dir,"input/code/define_regions.R"))
+
 #  __  __                     _         _         
 # |  \/  |  __ _  _ __     __| |  __ _ | |_  __ _ 
 # | |\/| | / _` || '_ \   / _` | / _` || __|/ _` |
@@ -175,17 +185,8 @@ shape$id <- rownames(shape@data)
 map.points <- fortify(shape, region = "id")
 map.df <- merge(map.points, shape, by = "id")
 map.df$FAOST_CODE[map.df$FAOST_CODE %in% 41] <- 351
-
-
-#   ____          __  _                                  _                    
-#  |  _ \   ___  / _|(_) _ __    ___   _ __  ___   __ _ (_)  ___   _ __   ___ 
-#  | | | | / _ \| |_ | || '_ \  / _ \ | '__|/ _ \ / _` || | / _ \ | '_ \ / __|
-#  | |_| ||  __/|  _|| || | | ||  __/ | |  |  __/| (_| || || (_) || | | |\__ \
-#  |____/  \___||_|  |_||_| |_| \___| |_|   \___| \__, ||_| \___/ |_| |_||___/
-#                                                 |___/                       
-
-source(paste0(root.dir,"input/code/define_regions.R"))
-
+map.df <- map.df[-22:-72]
+map.df <- left_join(map.df,region_key)
 
 ##############################################################
 ##############################################################
