@@ -1,4 +1,4 @@
-categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL) {
+categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL,decimals=0) {
   
   library(stringr)
   library(classInt)
@@ -21,11 +21,11 @@ categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL) 
   levs$upper <- gsub(".*,","", levs$mod)
   
   levs$lower <- factor(levs$lower)
-  levs$lower <- round(as.numeric(levels(levs$lower))[levs$lower],0)
+  levs$lower <- round(as.numeric(levels(levs$lower))[levs$lower],decimals)
   levs$lower <- prettyNum(levs$lower, big.mark=" ")
   
   levs$upper <- factor(levs$upper)
-  levs$upper <- round(as.numeric(levels(levs$upper))[levs$upper],0)
+  levs$upper <- round(as.numeric(levels(levs$upper))[levs$upper],decimals)
   levs$upper <- prettyNum(levs$upper, big.mark=" ")
   
   levs$labs <- paste(levs$lower,levs$upper, sep=" ~< ")

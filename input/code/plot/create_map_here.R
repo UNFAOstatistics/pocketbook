@@ -35,7 +35,10 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   #  ---- grid below the countries ------------------------
   p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
                      linetype = "solid", color = col.main2, alpha=.1)
-  # Grey for the non-data regions
+  # #  ---- whole region in grey  ------------------------
+  # p <- p + geom_polygon(data=map.df[which(map.df[[region_to_report]]),],
+  #                       fill = "grey70", colour = NA)
+  #  ---- grid below the countries ------------------------
   p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
   p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
   p <- p + theme(legend.position = c(0.05,0.05), 

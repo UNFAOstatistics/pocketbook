@@ -98,12 +98,12 @@ p
 
 # Caption
 
-caption_text <- "rural and urban population"
-if (region_to_report == "RAF") caption_text <- "Africa rural and urban population"
-if (region_to_report == "RAP") caption_text <- "Asia and Pacific rural and urban population"
-if (region_to_report == "REU") caption_text <- "Europe and Central Asia rural and urban population"
-if (region_to_report == "RNE") caption_text <- "North Africa and Near East rural and urban population"
-if (region_to_report == "GLO") caption_text <- "World rural and urban population"
+caption_text <- "rural and urban population (1985 to 2016)"
+if (region_to_report == "RAF") caption_text <- "Africa rural and urban population (1985 to 2016)"
+if (region_to_report == "RAP") caption_text <- "Asia and Pacific rural and urban population (1985 to 2016)"
+if (region_to_report == "REU") caption_text <- "Europe and Central Asia rural and urban population (1985 to 2016)"
+if (region_to_report == "RNE") caption_text <- "North Africa and Near East rural and urban population (1985 to 2016)"
+if (region_to_report == "GLO") caption_text <- "World rural and urban population (1985 to 2016)"
 
 
 
@@ -197,7 +197,7 @@ caption_text <- "Total economically active population (2000 to 2014)"
 ## ---- P1overMAP ----
 dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
 
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -400,7 +400,7 @@ dat <- syb.df %>% filter(Year %in% c(2010:2013), FAOST_CODE < 5000) %>%
                 group_by(FAOST_CODE) %>% dplyr::summarise(NV.AGR.TOTL.ZS = max(NV.AGR.TOTL.ZS)) %>%
                 ungroup()
 
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -458,6 +458,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- gather(dat, variable, value, 2:3)
 dat$fill[dat$variable == "SL.TLF.CACT.MA.ZS"] <- "Male"
 dat$fill[dat$variable == "SL.TLF.CACT.FE.ZS"] <- "Female"
+dat$fill <- factor(dat$fill, levels=c("Male","Female"))
 
 # DEFAULT GROUPING
 df <- subgrouping(region_to_report = region_to_report)
@@ -509,7 +510,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Female employment in agriculture, share of female employment (2003-2013*)"
+caption_text <- "Female employment in agriculture, share of female employment (percent 2003-2013*)"
 
 ## ---- P1laboRIGHT ----
 dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
@@ -537,7 +538,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Male employment in agriculture, share of Male employment (2003 - 2013*)"
+caption_text <- "Male employment in agriculture, share of Male employment (percent 2003 - 2013*)"
 
 
 ## ---- P1laboBOTTOM_data ----
@@ -600,7 +601,7 @@ dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
                 #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
                 ungroup()
 
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -626,7 +627,7 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here()
 
 # Caption
-caption_text <- "Employment in agriculture, share of total employment"
+caption_text <- "Employment in agriculture, share of total employment (percent, 2007 to 2012*)"
 
 
 
@@ -797,7 +798,7 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012
 dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%  mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH*1000)
 
 dat <- dat[!is.na(dat$RP.PEST.TOT.TN.SH),]
-  
+
 dat <- dat %>% group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ungroup()
 
 
@@ -805,7 +806,7 @@ dat <- dat %>% group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ung
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
@@ -847,25 +848,30 @@ short_text <- "Investing in agriculture is one of the most effective strategies 
 
 ## ---- P1investData ----
 
+d1 <- read_excel(paste0(data.dir,"Data/Raw/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
+d1 <- d1[2:26,1:3]
+names(d1) <- c("Year","oda_share_agriculture","share_of_agriculture_forestry_fishing")
+# d1$Year <- as.character(d1$Year)
+# d1$Year[d1$Year == "2013*"] <- "2013"
+
+d1$oda_share_agriculture <- factor(d1$oda_share_agriculture)
+d1$oda_share_agriculture <- as.numeric(levels(d1$oda_share_agriculture))[d1$oda_share_agriculture]
+
+d1$share_of_agriculture_forestry_fishing <- factor(d1$share_of_agriculture_forestry_fishing)
+d1$share_of_agriculture_forestry_fishing <- as.numeric(levels(d1$share_of_agriculture_forestry_fishing))[d1$share_of_agriculture_forestry_fishing]
+
+d1$Year <- factor(d1$Year)
+d1$Year <- as.numeric(levels(d1$Year))[d1$Year]
+d1$FAOST_CODE <- 5000
+
+dat <- gather(d1, variable, value, 2:3)
+dat$variable <- as.character(dat$variable)
+dat$variable[dat$variable == "share_of_agriculture_forestry_fishing"] <- "Agriculture, narrow"
+dat$variable[dat$variable == "oda_share_agriculture"] <- "Agriculture, broad"
+dat <- dat[dat$Year >= 1995,]
 
 ## ---- P1investTOPRIGHT ----
 
-dat <- read_excel(paste0(data.dir,"/database/Data/Raw/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
-dat <- dat[1:3]
-names(dat) <- c("Year","agriculture_broad","agriculture_narrow")
-
-dat$Year <- factor(dat$Year)
-dat$Year <- as.numeric(levels(dat$Year))[dat$Year]
-
-dat <- dat[dat$Year >= 1995,]
-
-dat <- gather(dat, variable, value, 2:3)
-dat$variable <- as.character(dat$variable)
-dat$variable[dat$variable == "agriculture_narrow"] <- "Agriculture, narrow"
-dat$variable[dat$variable == "agriculture_broad"] <- "Agriculture, broad"
-
-# print data for technical report
-#datatable(dat)
 dat_plot <- dat
 
 # Draw the plot
@@ -876,7 +882,7 @@ p <- p + labs(x="",y="percent")
 p
 
 # Caption
-caption_text <- "Aid flows to agriculture, share of total aid (1995-2013)"
+caption_text <- "Aid flows to agriculture, share of total aid (1995-2013) - NO COUNTRY LEVEL DATA???"
 
 ## ---- P1investLEFT ----
 # data
@@ -898,8 +904,8 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -value)
-top2010 <- dat %>% slice(1:20) %>% mutate(color = "2010−2012")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2010$FAOST_CODE, Year == 2000) %>% mutate(color = "1999−2001")
+top2010 <- dat %>% slice(1:20) %>% mutate(color = "2010-2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2010$FAOST_CODE, Year == 2000) %>% mutate(color = "1999-2001")
 dat_plot <- rbind(top2010,top2000)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, value),y=value))
@@ -945,16 +951,21 @@ caption_text <- "Agri-Orientation Index, highest and lowest values (average 2008
 
 
 ## ---- P1investBOTTOM ----
-# data
-dat <- read_excel(paste0(data.dir,"/Data/Raw/InvestmentDataforStatPocketbook_28May2015.xlsx"), sheet=2, skip=3)
-dat <- dat[1:3]
-names(dat) <- c("Year","Bilateral","Multilateral")
 
+d1 <- read_excel(paste0(data.dir,"/Data/Raw/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=2, skip=2)
+d1 <- d1[1:2,]
+names(d1)[1] <- "variable"
 
-dat$Year <- str_replace_all(dat$Year, "\\*", "")
+d2 <- gather(d1, Year, Value, 2:20)
+d2 <- spread(d2, variable, Value)
 
-dat$Year <- factor(dat$Year)
-dat$Year <- as.numeric(levels(dat$Year))[dat$Year]
+d2$Bilateral <- as.character(d2$Bilateral)
+d2$Bilateral <- str_replace_all(d2$Bilateral, ",", "")
+d2$Bilateral <- as.factor(d2$Bilateral)
+d2$Bilateral <- as.numeric(levels(d2$Bilateral))[d2$Bilateral]
+d2$Year <- factor(d2$Year)
+d2$Year <- as.numeric(levels(d2$Year))[d2$Year]
+dat <- d2
 
 dat <- dat[dat$Year >= 1995,]
 dat <- dat[!is.na(dat$Year),]
@@ -978,20 +989,21 @@ dat <- getFAOtoSYB(domainCode = "IG",
                    elementCode = 6111,
                    itemCode = 23101)
 dat <- dat[["aggregates"]]
+dat <- dat[!is.na(dat$IG_23101_6111),]
 dat <- dat %>% filter(Year %in% 2008:2012) %>% group_by(FAOST_CODE) %>% mutate(maxyear = max(Year)) %>% ungroup () %>% filter(Year == maxyear)
 
 
 
 
 ## ---- P1investMAP ----
-map.plot <- right_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IG_23101_6111")]
-cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks")
+cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks",decimals=2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -1010,4 +1022,4 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 create_map_here()
 
 # Caption
-caption_text <- "Rural population, share of total population (2014)"
+caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"
