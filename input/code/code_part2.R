@@ -166,15 +166,7 @@ dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 #dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
 
-# set Robinson projection
-shape <- spTransform(fao_world, CRS("+proj=robin"))
-
-# Fortify the shape
-shape$id <- rownames(shapedata)
-map.points <- fortify(shape, region = "id")
-map.df <- merge(map.points, shape, by = "id")
-
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat)
 
 # Add region key and subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]

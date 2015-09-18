@@ -31,7 +31,7 @@ regionS_to_report <- c(
 include_foreword <- T
 include_overview <- T
 include_part1 <- T
-include_part2 <- F
+include_part2 <- T
 include_part3 <- F
 include_part4 <- F
 include_part5 <- F
@@ -45,7 +45,7 @@ broke_only_tables_into_images <- F
 
 # To be uploaded for comments or not
 upload_pdfs_to_server <- F
-upload_images_to_server <- F
+upload_images_to_server <- T
 
 # just for troubleshooting
 region_to_report <- "RAF"
