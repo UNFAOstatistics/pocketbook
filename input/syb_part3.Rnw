@@ -61,6 +61,8 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3cropproData,results='hide', cache=TRUE, eval=P3croppro>>=
 @
 
+<<P3cropproTOPRIGHT, eval=P3croppro, top_right_minitable=P3croppro>>=
+@
 
 <<P3cropproLEFT, eval=P3croppro, left_plot=P3croppro, fig.height=left_plot_height, fig.width=left_plot_width>>=
 @
