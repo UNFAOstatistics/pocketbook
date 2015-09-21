@@ -97,10 +97,10 @@ dat <- left_join(dat[c("FAOST_CODE","var","mean")],pop)
 dat <- dat[!is.na(dat$mean),]
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
 
-dat <- dat %>% group_by(var) %>%  summarise(wmean = weighted.mean(mean, OA.TPBS.POP.PPL.NO, na.rm=FALSE)) %>%
-             mutate(mean = wmean/sum(wmean)*100)
+dat <- dat %>% group_by(var) %>%  dplyr::summarise(wmean = weighted.mean(mean, OA.TPBS.POP.PPL.NO, na.rm=FALSE)) %>%
+             dplyr::mutate(mean = wmean/sum(wmean)*100)
 
-dat_plot <- dat  %>% mutate(sum = sum(mean))
+dat_plot <- dat  %>% dplyr::mutate(sum = sum(mean))
 
 p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = var, width = sum))
 p <- p + geom_bar(position="fill", stat="identity")
@@ -141,8 +141,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
-top2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top2015 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2015")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FBS.PCS.PDES.KCD3D),y=FBS.PCS.PDES.KCD3D))
@@ -170,8 +170,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, FBS.PCS.PDES.KCD3D)
-bottom2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
-bottom2000 <- dat %>% filter(FAOST_CODE %in% bottom2015$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+bottom2015 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2015")
+bottom2000 <- dat %>% filter(FAOST_CODE %in% bottom2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(bottom2015,bottom2000)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FBS.PCS.PDES.KCD3D),y=FBS.PCS.PDES.KCD3D))
@@ -220,7 +220,7 @@ dat <- df[df$Year %in%  2015 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.DA
 dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -274,18 +274,40 @@ load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+
 
 
 
 ## ---- P3cropproTOPRIGHT ----
-rc <- dat %>%  filter(Year >= 2000, Element == "Production") %>% group_by(Item,Year) %>% dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
-  dplyr::mutate(Growth=c(NA,exp(diff(log(Value)))-1)) %>%
-  dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
-  arrange(-mean_growth) %>% slice(1:5) %>% select(Item,mean_growth)
+# rc <- dat %>%  filter(Year >= 2000, Element == "Production") %>% group_by(Item,Year) %>% dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
+#   dplyr::mutate(Growth=c(NA,exp(diff(log(Value)))-1)) %>%
+#   dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100) %>%  filter(!is.infinite(mean_growth)) %>%
+#   arrange(-mean_growth) %>% slice(1:5) %>% select(Item,mean_growth)
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+growth <- data.frame()
+
+gr_dat <- dat %>% filter(Year >= 2000,Element == "Production")
+gr_dat <- gr_dat[!is.na(gr_dat$Value),]
+gr_dat$Item <- as.character(gr_dat$Item)
+for (fs in unique(gr_dat$Item)){
+  d <- gr_dat[gr_dat$Item %in% fs,]
+  if (sum(d$Value) == 0) next
+  d <- d[d$Value > 0,]
+  grate <- as.numeric((exp(coef(lm(log(d$Value) ~ Year, d))[2]) - 1) * 100)
+  row <- data.frame(FAOST_CODE = fs,
+                    growth_rate = grate)
+  growth <- rbind(growth,row)
+}
+# items to exclude
+growth <- growth[growth[[1]] != "Fruit, pome nes",] # leave the 1st, Fruit, pome nes , out from the table as pointed by Amy sep 18, 2015
+rc <- growth %>% arrange(-growth_rate) %>% slice(1:5) 
+
+
 names(rc) <- c("","%")
 
-print.xtable(xtable(rc, caption = "Fastest growing products based on quantities (average anual growth rate, 2000 to 2013)", digits = c(0,0,0),
+print.xtable(xtable(rc, caption = "Fastest growing products based on quantities (average anual growth rate, 2000 to 2013) (COMPUTE NEW RATES!!)", digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = "latex", table.placement = NULL, booktabs = TRUE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
@@ -306,8 +328,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -QV.NPCPV.CRPS.ID.SHP)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QV.NPCPV.CRPS.ID.SHP),y=QV.NPCPV.CRPS.ID.SHP))
@@ -337,8 +359,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -QV.GPCPV.FOOD.ID.SHP)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QV.GPCPV.FOOD.ID.SHP),y=QV.GPCPV.FOOD.ID.SHP))
@@ -397,7 +419,7 @@ caption_text <- "Number of people undernourished, top 5 countries from region"
 ## ---- P3cropproMAP ----
 dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
                                                     QV.NPCPV.CRPS.ID.SHP)
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -447,11 +469,11 @@ load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
 
 
 ## ---- P3cropTOPRIGHT ----
+dat <- dat[which(dat[[region_to_report]]),]
 d13 <- dat %>%  filter(Year == 2013, Element == "Production", FAOST_CODE < 5000) %>%
   filter(!grepl("Total",Item)) %>%
   group_by(Item) %>%
@@ -497,8 +519,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -QC.PRD.RICE.TN.SHP)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC.PRD.RICE.TN.SHP),y=QC.PRD.RICE.TN.SHP))
@@ -528,8 +550,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -QC.PRD.WHT.TN.SHP)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC.PRD.WHT.TN.SHP),y=QC.PRD.WHT.TN.SHP))
@@ -567,7 +589,7 @@ dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
-dat_plot <- dat %>% group_by(subgroup,Year) %>% summarise(value = weighted.mean(QC.YIELD.CRLS.HG.NO, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
+dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(value = weighted.mean(QC.YIELD.CRLS.HG.NO, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=subgroup,color=subgroup))
 p <- p + geom_line()
@@ -583,7 +605,7 @@ caption_text <- "Cereals, yield"
 ## ---- P3cropMAP ----
 dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
                                                     QC.PRD.CRLS.TN.SHP)
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -632,11 +654,11 @@ load(paste0(data.dir,"/Data/Raw/Production_Livestock_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
 
 
 ## ---- P3livestockTOPRIGHT ----
+dat <- dat[which(dat[[region_to_report]]),]
 d13 <- dat %>%  filter(Year %in% 2013, Unit %in% "Head") %>%
   filter(!grepl("Total",Item)) %>%
   group_by(Item) %>%
@@ -679,8 +701,8 @@ dat <- dat[!is.na(dat$QL.PRD.MILK.TN.NO),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -QL.PRD.MILK.TN.NO)
-top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK.TN.NO))
@@ -706,8 +728,8 @@ dat <- dat[!is.na(dat$QL.PRD.EGG.TN.NO),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -QL.PRD.EGG.TN.NO)
-top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.TN.NO))
@@ -736,13 +758,13 @@ df <- subgrouping(region_to_report = region_to_report)
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 d <- dat %>% filter(Item == "Pigs", Year %in% c(2000,2013)) %>% group_by(Year,subgroup) %>%
-  summarise(Value = sum(Value)) %>%
-  mutate(sum = sum(Value)) %>%
-  mutate(share = round(Value/sum*100,0)) %>%
+  dplyr::summarise(Value = sum(Value)) %>%
+  dplyr::mutate(sum = sum(Value)) %>%
+  dplyr::mutate(share = round(Value/sum*100,0)) %>%
   ungroup() %>%
-  mutate(subgroup = str_replace_all(subgroup, "\\ \\+\\ \\(Total\\)","")) %>%
+  dplyr::mutate(subgroup = str_replace_all(subgroup, "\\ \\+\\ \\(Total\\)","")) %>%
   group_by(Year) %>%
-  mutate(pos = cumsum(share)- share/2)
+  dplyr::mutate(pos = cumsum(share)- share/2)
 
 p <- ggplot(d, aes(x=sum/2, y = share, fill = subgroup, width = sum))
 p <- p + geom_bar(position="fill", stat="identity")
@@ -773,14 +795,14 @@ caption_text <- "Pig production (heads)"
 ## ---- P3livestockMAP ----
 dat <- syb.df %>% filter(Year %in% 2012) %>% select(FAOST_CODE,
                                                     QA.STCK.CB.HD.SHL)
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QA.STCK.CB.HD.SHL")]
-cat_data$value_cat <- categories(x=cat_data$QA.STCK.CB.HD.SHL, n=5, method="jenks")
+cat_data$value_cat <- categories(x=cat_data$QA.STCK.CB.HD.SHL, n=5, method="jenks",decimals = 1)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -872,7 +894,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RF.FERT.NI.TN.SH)
-top20 <- dat %>% slice(1:20) %>% mutate(color = "2012")
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 
 dat_plot <- top20
@@ -905,7 +927,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RF.FERT.PH.TN.SH)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2012")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
@@ -946,13 +968,13 @@ dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
 dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
-              summarise(value  = sum(value, na.rm=TRUE)*1000,
+              dplyr::summarise(value  = sum(value, na.rm=TRUE)*1000,
                         area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>%
-              mutate(share = value / area) %>% ungroup()
+  dplyr::mutate(share = value / area) %>% dplyr::mutate(sum = sum(share)) %>%  ungroup() 
 
 # reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Nitrogen",],-value)$subgroup )
+dat_plot$subgroup <- factor(dat_plot$subgroup, 
+                                  levels=unique(arrange(dat_plot,-sum)$subgroup))
 
 p <- ggplot(dat_plot, aes(x=subgroup, y=share, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
@@ -968,19 +990,19 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012
 
 ## ---- P3fisheriesMAP ----
 dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>%
-        group_by(FAOST_CODE) %>%  summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
+        group_by(FAOST_CODE) %>%  dplyr::summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RP.PEST.TOT.TN.SH")]
-cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5)
+cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5,decimals = 1)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -1046,13 +1068,16 @@ df <- subgrouping(region_to_report = region_to_report)
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 dat <- dat %>% filter(Year == 2012) %>% group_by(subgroup,variable) %>%
-          summarise(value = sum(value, na.rm = TRUE)) %>%
-          mutate(value = value/1000000)
+  dplyr::summarise(value = sum(value, na.rm = TRUE)) %>%
+  dplyr::mutate(value = value/1000000)
 
 dw <- spread(dat, variable, value)
 dw <- dw[order(-dw$'Import value'),]
 
 names(dw) <- c("","Export value", "Import value")
+
+# Only top 4 not to break the pagination (whole table to be changed though!!)
+dw <- head(dw, 4)
 
 print.xtable(xtable(dw, caption = " Exports and Imports of food, million US\\$ (2012)", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
@@ -1076,8 +1101,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -TP.IMVAL.FOOD.USD.NO)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP.IMVAL.FOOD.USD.NO),y=TP.IMVAL.FOOD.USD.NO))
@@ -1106,8 +1131,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -TP.EXVAL.FOOD.USD.NO)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP.EXVAL.FOOD.USD.NO),y=TP.EXVAL.FOOD.USD.NO))
@@ -1144,8 +1169,8 @@ dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
 dat_plot <- dat %>% group_by(subgroup,Year) %>%
-  summarise(value = sum(TP.EXVAL.CRLS.USD.NO, na.rm=TRUE)) %>%
-  mutate(value = value/1000000000)
+  dplyr::summarise(value = sum(TP.EXVAL.CRLS.USD.NO, na.rm=TRUE)) %>%
+  dplyr::mutate(value = value/1000000000)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=subgroup,color=subgroup))
 p <- p + geom_line()
@@ -1160,7 +1185,7 @@ caption_text <- "Exports of cereals"
 ## ---- P3tradeMAP ----
 dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,
                                                     TI.IMVAL.FOOD.IN.NO)
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 

@@ -98,8 +98,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2014-2016")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% mutate(color = "1990-1992")
+top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014-2016")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
 dat_plot <- rbind(top15,top91)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))

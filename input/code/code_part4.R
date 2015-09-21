@@ -61,7 +61,7 @@ df <- subgrouping(region_to_report = region_to_report)
 dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
+dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% dplyr::mutate(sum = sum(value)) %>% ungroup()
 
 # reorder regions by the share of agricultural land
 dat_plot$subgroup <- factor(dat_plot$subgroup,
@@ -93,10 +93,10 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RL.AREA.ARBL.HA.SHP)
-top20 <- dat %>% slice(1:20) %>% mutate(color = "2012")
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 # bottom for the next plot
 dat <- arrange(dat, RL.AREA.ARBL.HA.SHP)
-bottom20 <- dat %>% slice(1:20) %>% mutate(color = "2012")
+bottom20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 dat_plot <- top20
 
@@ -160,7 +160,7 @@ df <- subgrouping(region_to_report = region_to_report)
 dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
+dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
 
 # reorder regions by the share of agricultural land
 dat_plot$subgroup <- factor(dat_plot$subgroup,
@@ -179,20 +179,19 @@ caption_text <- "Agricultural area"
 
 
 ## ---- P4landMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                                    RL.AREA.ARBLPRMN.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RL.AREA.ARBLPRMN.HA.SH")]
-cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5)
+cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5,decimals = 2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -307,7 +306,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 
 dat <- arrange(dat, -new_var)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, new_var),y=new_var))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -338,7 +337,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 
 dat <- arrange(dat, -new_var)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, new_var),y=new_var))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -379,7 +378,7 @@ caption_text <- "Countries with the lowest renewable water resources per capita"
 ## ---- P4waterMAP ----
 dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
                 select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
-                group_by(FAOST_CODE) %>% summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
+                group_by(FAOST_CODE) %>% dplyr::summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
                 #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
                 ungroup()
 
@@ -387,7 +386,7 @@ water <- syb.df[c("FAOST_CODE","Year","AQ.WAT.RFRWAGR.MC.SH")]
 water <- water[!is.na(water$AQ.WAT.RFRWAGR.MC.SH),]
 dat <- water %>% group_by(FAOST_CODE) %>% dplyr::summarise(pooled.freshwater = mean(AQ.WAT.RFRWAGR.MC.SH, na.rm = TRUE))
 
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
@@ -494,7 +493,7 @@ dat <- syb.df %>% select(FAOST_CODE,Year,
                          FO.PRD.RP.M3.NO,
                          FO.PRD.WP.M3.NO,
                          FO.PRD.PPB.M3.NO) %>%
-  mutate(FO.PRD.RP.M3.NO = FO.PRD.RP.M3.NO / 1000000,
+  dplyr::mutate(FO.PRD.RP.M3.NO = FO.PRD.RP.M3.NO / 1000000,
          FO.PRD.WP.M3.NO = FO.PRD.WP.M3.NO / 1000000,
          FO.PRD.PPB.M3.NO = FO.PRD.PPB.M3.NO / 1000000)
 
@@ -518,7 +517,7 @@ dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
 dat_plot <- dat_plot %>% group_by(Year,fill) %>%
-          summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
+          dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line()
@@ -534,7 +533,7 @@ caption_text <- "Production of selected forest products"
 
 ## ---- P4forestryLEFT ----
 dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.EXVAL.TOT.USD.NO) %>%
-  mutate(FO.EXVAL.TOT.USD.NO = FO.EXVAL.TOT.USD.NO / 1000000 )
+  dplyr::mutate(FO.EXVAL.TOT.USD.NO = FO.EXVAL.TOT.USD.NO / 1000000 )
 
 dat <- dat[!is.na(dat$FO.EXVAL.TOT.USD.NO),]
 # Add region key and subset
@@ -547,7 +546,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -FO.EXVAL.TOT.USD.NO)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2012")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FO.EXVAL.TOT.USD.NO),y=FO.EXVAL.TOT.USD.NO))
@@ -565,7 +564,7 @@ caption_text <- "Top 20 exporters of forest products (2012)"
 ## ---- P4forestryRIGHT ----
 
 dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.IMVAL.TOT.USD.NO) %>%
-  mutate(FO.IMVAL.TOT.USD.NO = FO.IMVAL.TOT.USD.NO / 1000000 )
+  dplyr::mutate(FO.IMVAL.TOT.USD.NO = FO.IMVAL.TOT.USD.NO / 1000000 )
 
 dat <- dat[!is.na(dat$FO.IMVAL.TOT.USD.NO),]
 # Add region key and subset
@@ -578,7 +577,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -FO.IMVAL.TOT.USD.NO)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2012")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FO.IMVAL.TOT.USD.NO),y=FO.IMVAL.TOT.USD.NO))
@@ -594,48 +593,52 @@ caption_text <- "Top 20 importers of forest products (2012)"
 
 
 ## ---- P4forestryBOTTOM ----
-dat <- syb.df %>%  filter(Year %in% 2010) %>% select(FAOST_CODE,
-                                             GFRA.TOT.PF.HA.NO,
-                                             GFRA.TOT.PLF.HA.NO,
-                                             GFRA.TOT.ONRF.HA.NO) %>%
-  mutate(GFRA.TOT.PF.HA.NO   = GFRA.TOT.PF.HA.NO   / 1000000,
-         GFRA.TOT.PLF.HA.NO  = GFRA.TOT.PLF.HA.NO  / 1000000,
-         GFRA.TOT.ONRF.HA.NO = GFRA.TOT.ONRF.HA.NO / 1000000)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+# Forestry characteristics data is not available
+# dat <- syb.df %>%  filter(Year %in% 2010) %>% select(FAOST_CODE,
+#                                              GFRA.TOT.PF.HA.NO,
+#                                              GFRA.TOT.PLF.HA.NO,
+#                                              GFRA.TOT.ONRF.HA.NO) %>%
+#   dplyr::mutate(GFRA.TOT.PF.HA.NO   = GFRA.TOT.PF.HA.NO   / 1000000,
+#          GFRA.TOT.PLF.HA.NO  = GFRA.TOT.PLF.HA.NO  / 1000000,
+#          GFRA.TOT.ONRF.HA.NO = GFRA.TOT.ONRF.HA.NO / 1000000)
+# 
+# # Add region key and subset
+# dat <- left_join(dat,region_key)
+# dat <- dat[which(dat[[region_to_report]]),]
+# 
+# dat <- gather(dat, variable, value, 2:4)
+# dat$fill[dat$variable == "GFRA.TOT.PF.HA.NO"] <- "primary forest"
+# dat$fill[dat$variable == "GFRA.TOT.PLF.HA.NO"] <- "planted forest"
+# dat$fill[dat$variable == "GFRA.TOT.ONRF.HA.NO"] <- "other naturally regenerated forest"
 
-dat <- gather(dat, variable, value, 2:4)
-dat$fill[dat$variable == "GFRA.TOT.PF.HA.NO"] <- "primary forest"
-dat$fill[dat$variable == "GFRA.TOT.PLF.HA.NO"] <- "planted forest"
-dat$fill[dat$variable == "GFRA.TOT.ONRF.HA.NO"] <- "other naturally regenerated forest"
+# dat <- dat[!is.na(dat$value),]
+# 
+# # DEFAULT GROUPING
+# df <- subgrouping(region_to_report = region_to_report)
+# 
+# # merge data with the region info
+# dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+# 
+# # AGREGATE
+# dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
+#           dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>% ungroup()
+# 
+# # reorder regions by the share of agricultural land
+# dat_plot$subgroup <- factor(dat_plot$subgroup,
+#                               levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$subgroup )
+# 
+# p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+# p <- p + geom_bar(stat="identity", position="stack")
+# p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+# p <- p + labs(x="",y="percent")
+# p <- p + theme(axis.text.x = element_text(angle=45))
+# p
 
-dat <- dat[!is.na(dat$value),]
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
-          summarise(value  = sum(value, na.rm=TRUE)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                              levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$subgroup )
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
-p <- p + geom_bar(stat="identity", position="stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
-p <- p + theme(axis.text.x = element_text(angle=45))
-p
+plot(cars)
 
 # Caption
-caption_text <- "Forest characteristics (2010)"
+caption_text <- "Forest characteristics (2010) - Forestry characteristics data is not available"
 
 
 ## ---- P4forestryMAP ----
@@ -645,7 +648,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH)
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
@@ -705,8 +708,8 @@ dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
 dat_plot <- dat_plot %>% group_by(Year,subgroup) %>%
-  summarise(GHG.TOT.ALL.GG.NO = sum(GHG.TOT.ALL.GG.NO, na.rm=TRUE)) %>%
-  mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO /1000)
+  dplyr::summarise(GHG.TOT.ALL.GG.NO = sum(GHG.TOT.ALL.GG.NO, na.rm=TRUE)) %>%
+  dplyr::mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO /1000)
 
 p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=subgroup))
 p <- p + geom_line()
@@ -721,7 +724,7 @@ caption_text <- "Greenhouse gas emissions in agriculture"
 
 ## ---- P4climateLEFT ----
 dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,GHG.TOT.ALL.GG.NO) %>%
-  mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO / 1000)
+  dplyr::mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO / 1000)
 
 dat <- dat[!is.na(dat$GHG.TOT.ALL.GG.NO),]
 # Add region key and subset
@@ -733,8 +736,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -GHG.TOT.ALL.GG.NO)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, GHG.TOT.ALL.GG.NO),y=GHG.TOT.ALL.GG.NO))
@@ -752,7 +755,7 @@ caption_text <- "Greehouse gas emissions in agriculture, highest 20 countries in
 
 ## ---- P4climateRIGHT ----
 dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,GL.LU.TOT.NERCO2EQ.NO) %>%
-  mutate(GL.LU.TOT.NERCO2EQ.NO = GL.LU.TOT.NERCO2EQ.NO / 1000)
+  dplyr::mutate(GL.LU.TOT.NERCO2EQ.NO = GL.LU.TOT.NERCO2EQ.NO / 1000)
 
 dat <- dat[!is.na(dat$GL.LU.TOT.NERCO2EQ.NO),]
 # Add region key and subset
@@ -764,8 +767,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -GL.LU.TOT.NERCO2EQ.NO)
-top12 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, GL.LU.TOT.NERCO2EQ.NO),y=GL.LU.TOT.NERCO2EQ.NO))
@@ -802,7 +805,7 @@ dat$fill[dat$variable == "GL.FL.F.NERCO2EQ.NO"] <- "Forest"
 
 
 # AGREGATE
-dat_plot <- dat %>% group_by(fill) %>% summarise(value  = mean(value, na.rm=TRUE) / 1000) %>% ungroup()
+dat_plot <- dat %>% group_by(fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE) / 1000) %>% ungroup()
 
 
 p <- ggplot(dat_plot, aes(x=reorder(fill, -value), y=value, fill=fill))
@@ -824,7 +827,7 @@ dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
-map.plot <- left_join(dat,map.df)
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
