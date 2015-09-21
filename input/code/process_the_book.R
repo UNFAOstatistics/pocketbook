@@ -94,10 +94,10 @@ for (region_to_report in regionS_to_report) {
 
 if (broke_only_tables_into_images){
 
-    if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
-    if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 18 output table_pic.pdf") # Bangladesh
+    if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 29 output table_pic.pdf") # Ethiopia
+    if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 17 output table_pic.pdf") # Bangladesh
     if (region_to_report == "RNE") system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Saudi-Arabia
-    if (region_to_report == "REU") system("pdftk syb_main.pdf cat 63 output table_pic.pdf") # Turkey
+    if (region_to_report == "REU") system("pdftk syb_main.pdf cat 62 output table_pic.pdf") # Turkey
 
     system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
 

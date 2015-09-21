@@ -10,7 +10,6 @@ The setting,8,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1000 ha),1000,0
 The setting,9,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (%),,1
 The setting,10,SL.AGR.EMPL.ZS,,,Employment in agriculture (%),,1
 The setting,11,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
-The setting,12,total_nutrients_tonnes_per_ha,,,Total Fertilizers N/P/K (tonnes/ha),,1
 The setting,13,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (kg of nutrients per ha)",0.001,1
 The setting,14,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (kg of nutrients per ha)",0.001,1
 The setting,15,potash_tonnes_per_ha,,,"Fertilizers, Potash (kg nutrients per ha)",0.001,1
