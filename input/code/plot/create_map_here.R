@@ -27,6 +27,18 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
 #    }
   }
   
+  grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
+  gr_rob <- fortify(grat_robin)
+  # crop the grid
+  if (region_to_report %in% c("RAF","RAP","REU")) {
+    gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+    gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
+  } 
+  if (region_to_report %in% c("RNE")) { # these are values from RAF data as we want to show the outline of RAF map here
+    gr_rob <- gr_rob[gr_rob$lat >= -3716253 & gr_rob$lat <= 3988108,]
+    gr_rob <- gr_rob[gr_rob$long >= -1608244 & gr_rob$long <= 5355556,]
+  }
+  
   
   
   
@@ -37,8 +49,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
                      # linetype = "solid", color = col.main2, alpha=.1)
                      linetype = "solid", color = "grey80", size = 0.5)
   # #  ---- whole region in grey  ------------------------
-  # p <- p + geom_polygon(data=map.df[which(map.df[[region_to_report]]),],
-  #                       fill = "grey70", colour = NA)
+  if (region_to_report == "RNE") p <- p + geom_polygon(data=map.df[which(map.df[["RAF"]]),], fill = "grey95", colour = alpha("white", 1/2))
   #  ---- grid below the countries ------------------------
   p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
   p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
@@ -59,7 +70,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
                  axis.title = element_blank(), 
                  axis.ticks = element_blank())
   if (region_to_report == "REU") p <- p + coord_cartesian(xlim=c(-4290114,13198767,ylim=c(1965387,8184223)))
-  if (region_to_report == "RNE") p <- p + coord_cartesian(xlim=c(-4078415,1783566,ylim=c(29258,6247852)))
+  # if (region_to_report == "RNE") p <- p + coord_cartesian(xlim=c(-4078415,1783566,ylim=c(29258,6247852)))
   if (region_to_report == "LAC") p <- p + coord_cartesian(xlim=c(-14078415,-1078415,ylim=c(29258,0)))
   p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
                                       title.position = "top", 

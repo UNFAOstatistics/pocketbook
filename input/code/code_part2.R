@@ -95,7 +95,7 @@ dat <- left_join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-dat <- dat[which(dat[[region_to_report]]),]
+#dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014-2016")
@@ -106,7 +106,43 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="million people")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+caption_text <- "Countries with the highest number of undernourished in 2014-16"
+
+
+## ---- P2undernuRIGHT ----
+
+dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+
+dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
+
+# limit the nro of printed for REU/RNE countries
+if (region_to_report %in% c("REU","RNE")){
+  max_nro_countries <- 6
+} else max_nro_countries <- 20 
+
+
+top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-2016")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
+dat_plot <- rbind(top15,top91)
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="million people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -119,19 +155,11 @@ if (region_to_report == "RNE") caption_text <- "North Aftican and Near East coun
 if (region_to_report == "GLO") caption_text <- "Countries with the highest number of undernourished in 2014-16"
 
 
-## ---- P2undernuRIGHT ----
-
-p
-# Caption
-caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
-
-
-
 ## ---- P2undernuBOTTOM ----
 
-dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.POU.PCT3D1")]
 
-dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
+dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -140,20 +168,20 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
+dat <- arrange(dat, -Year, -FS.OA.POU.PCT3D1)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
-p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.NOU.P3D1,color=SHORT_NAME))
+p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.POU.PCT3D1,color=SHORT_NAME))
 p <- p + geom_point() + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
-p <- p + labs(x="",y="million people")
+p <- p + labs(x="",y="percent")
 p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
                             labels = c("1990-92", "1999-2001", "2004-06", "2009-11", "2014-16"))
 p
 
 # Caption
-caption_text <- "Number of people undernourished, top 5 countries"
+caption_text <- "Prevalence of undernourishment, top 5 countries"
 
 
 ## ---- P2undernuMAP ----
@@ -179,14 +207,6 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "Percent"
 
-# graticule
-grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
-gr_rob <- fortify(grat_robin)
-# crop the grid
-if (!(region_to_report %in% c("GLO","COF"))) {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
-} else gr_rob <- gr_rob
 
 create_map_here()
 

@@ -249,9 +249,9 @@ if (region_to_report == "REU") map.out.width  <- "2\\columnwidth"
 if (region_to_report == "REU") map.out.extra  <- 'angle=90'
 
 # RNE
-if (region_to_report == "RNE") map.fig.width  <- 7
-if (region_to_report == "RNE") map.fig.height  <- 4
-if (region_to_report == "RNE") map.out.height  <- ".6\\columnwidth"
+if (region_to_report == "RNE") map.fig.width  <- 6
+if (region_to_report == "RNE") map.fig.height  <- 8
+if (region_to_report == "RNE") map.out.height  <- "1.5\\columnwidth"
 if (region_to_report == "RNE") map.out.extra  <- 'angle=0'
 
 # LAC

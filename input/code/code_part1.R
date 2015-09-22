@@ -211,15 +211,6 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "Percent"
 
-# graticule
-grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
-gr_rob <- fortify(grat_robin)
-# crop the grid
-if (!(region_to_report %in% c("GLO","COF"))) {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
-} else gr_rob <- gr_rob
-
 create_map_here()
 
 # Caption
@@ -615,15 +606,6 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "Percent"
 
-# graticule
-grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
-gr_rob <- fortify(grat_robin)
-# crop the grid
-if (!(region_to_report %in% c("GLO","COF"))) {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
-} else gr_rob <- gr_rob
-
 create_map_here()
 
 # Caption
@@ -819,15 +801,6 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "g/ha"
 
-# graticule
-grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
-gr_rob <- fortify(grat_robin)
-# crop the grid
-if (!(region_to_report %in% c("GLO","COF"))) {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
-} else gr_rob <- gr_rob
-
 create_map_here()
 
 # Caption
@@ -1009,15 +982,6 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "Percent"
-
-# graticule
-grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
-gr_rob <- fortify(grat_robin)
-# crop the grid
-if (!(region_to_report %in% c("GLO","COF"))) {
-  gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
-  gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
-} else gr_rob <- gr_rob
 
 create_map_here()
 
