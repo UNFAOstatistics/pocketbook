@@ -181,8 +181,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-
-<<P2utilizaTOPRIGHT, eval=P2utiliza, top_right_plot=P2utiliza, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+<<P2utilizaTOPRIGHT, eval=P2utiliza, top_right_minitable=P2utiliza>>=
 @
 
 
