@@ -438,11 +438,32 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 
 %% Disclamer
 \thispagestyle{empty}
-\ifprint
-\includepdf[width=\paperwidth,height=\paperheight, offset=-30 -100]{./I4691E_disclaimer.pdf}
-\else
-\includepdf[width=\paperwidth,height=\paperheight, offset=-10 -50]{./I4691E_disclaimer.pdf}
-\fi
+
+<<define_disclaimer, echo=FALSE, results='asis', eval=TRUE>>=
+  if (region_to_report == "COF"){
+  cat("
+    \\ifprint
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-30 -100]{./I4985E_Disclaimer_coffee.pdf}
+    \\else
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-10 -50]{./I4985E_Disclaimer_coffee.pdf}
+    \\fi
+  ")
+    if (region_to_report != "COF"){
+      cat("
+    \\ifprint
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-30 -100]{./I4691E_disclaimer.pdf}
+    \\else
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-10 -50]{./I4691E_disclaimer.pdf}
+    \\fi
+  ")
+    }
+  }
+  @
+
+
+
+
+
 
 
 %% To be commented if we want to show the List of countries
