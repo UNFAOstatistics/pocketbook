@@ -68,14 +68,10 @@ dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPU.POP.PPL.NO,OA.TPR.POP.PPL.NO)
 dat <- dat[!is.na(dat$OA.TPR.POP.PPL.NO),]
 dat <- left_join(dat,region_key)
 
-
-if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% c(5400, # Europe
-                                                                        5301 # Central Asia
-                                                                        ))
-if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% c(5100 # Africa
-                                                                        ))
-if (region_to_report == "RNE")  dat <- dat[which(dat[[region_to_report]]),]
-if (region_to_report == "RAP")  dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000)
+if (region_to_report == "RAP")  dat <- dat %>% filter(FAOST_CODE %in% 13000)
+if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
+if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
 
 dat <- gather(dat, variable, value, 3:4)
 
@@ -165,25 +161,35 @@ caption_text <- "Life expectancy at birth, countries with the highest and lowest
 
 ## ---- P1overBOTTOM ----
 # data
-dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>%
-  select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
-dat <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
-dat <- dat[!is.na(dat$SHORT_NAME),]
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13005) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
 
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat_plot <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
 
-# AGREGATE
-dat_plot <- dat %>% group_by(subgroup,Year) %>%
-  dplyr::summarise(OA.TEAPT.POP.PPL.NO = sum(OA.TEAPT.POP.PPL.NO, na.rm=TRUE)) %>%
-  dplyr::mutate(OA.TEAPT.POP.PPL.NO = OA.TEAPT.POP.PPL.NO / 1000000)
+dat_plot$OA.TEAPT.POP.PPL.NO <- dat_plot$OA.TEAPT.POP.PPL.NO / 1000000
 
-p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=subgroup))
+# dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>%
+#   select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+# dat <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
+# dat <- dat[!is.na(dat$SHORT_NAME),]
+# 
+# # DEFAULT GROUPING
+# df <- subgrouping(region_to_report = region_to_report)
+# 
+# # merge data with the region info
+# dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+# 
+# # AGREGATE
+# dat_plot <- dat %>% group_by(subgroup,Year) %>%
+#   dplyr::summarise(OA.TEAPT.POP.PPL.NO = sum(OA.TEAPT.POP.PPL.NO, na.rm=TRUE)) %>%
+#   dplyr::mutate(OA.TEAPT.POP.PPL.NO = OA.TEAPT.POP.PPL.NO / 1000000)
+
+p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
 p <- p + geom_point() + geom_line()
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people")
 p <- p + guides(color = guide_legend(nrow = 3))
 p
@@ -233,35 +239,23 @@ short_text <- "While some sectors have been hard hit, agriculture has demonstrat
 
 
 ## ---- P1econTOPRIGHT ----
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
-                                                 NV.AGR.TOTL.ZS,
-                                                 NV.IND.TOTL.ZS,
-                                                 NV.SRV.TETC.ZS)
+
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005) %>% select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13005) %>% select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007) %>% select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003) %>% select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+
+dat <- filter(dat, Year %in% 2013) %>% select(SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
 
 # Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- gather(dat, variable, value, 2:4)
-dat$fill[dat$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
-dat$fill[dat$variable == "NV.IND.TOTL.ZS"] <- "Indurstry"
-dat$fill[dat$variable == "NV.SRV.TETC.ZS"] <- "Services"
+dat_plot <- gather(dat, variable, value, 2:4)
+dat_plot$fill[dat_plot$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
+dat_plot$fill[dat_plot$variable == "NV.IND.TOTL.ZS"] <- "Indurstry"
+dat_plot$fill[dat_plot$variable == "NV.SRV.TETC.ZS"] <- "Services"
 
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$subgroup )
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -437,35 +431,23 @@ short_text <- "A strong labour market is the foundation of sustained well-being 
 
 
 ## ---- P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
-                                                 SL.TLF.CACT.MA.ZS,
-                                                 SL.TLF.CACT.FE.ZS,
-                                                 OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13005, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:3)
 dat$fill[dat$variable == "SL.TLF.CACT.MA.ZS"] <- "Male"
 dat$fill[dat$variable == "SL.TLF.CACT.FE.ZS"] <- "Female"
 dat$fill <- factor(dat$fill, levels=c("Male","Female"))
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
-dat_plot <- dat %>% group_by(subgroup,fill) %>% dplyr::summarise(value = weighted.mean(value, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
-
+dat_plot <- dat
 # reorder
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Female",],-value)$subgroup )
+dat_plot$subgroup <- factor(dat_plot$SHORT_NAME,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Female",],-value)$SHORT_NAME)
 
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -562,22 +544,19 @@ datx <- left_join(dat,dat4)
 
 
 ## ---- P1laboBOTTOM ----
-dat <- datx %>%  filter(Year %in% 2000:2014) %>% select(-OA_3010_592,-OA_3010_602)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13005, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
 
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat$share <- dat$OA.TEAPFA.POP.PPL.NO / dat$OA.TEAPF.POP.PPL.NO * 100
 
-dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(sum_593 = sum(OA_3010_593, na.rm=TRUE),
-                                                          sum_603 = sum(OA_3010_603, na.rm=TRUE)) %>%
-                                                dplyr::mutate(share = sum_603 / sum_593 * 100) %>%
-                                                ungroup()
+dat_plot <- dat
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgroup))
+p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line()
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
@@ -632,33 +611,19 @@ short_text <- "Adequate access to inputs, including land, pesticides and fertili
 
 
 ## ---- P1inputTOPRIGHT ----
-dat <- filter(syb.df, Year %in% 2002:2012) %>% select(FAOST_CODE,
-                                                      Year,
-                                                 RF.FERT.NI.TN.NO,
-                                                 RF.FERT.PH.TN.NO,
-                                                 RF.FERT.PO.TN.NO,
-                                                 RL.AREA.ARBLPRMN.HA.NO)
-
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
 
 dat <- gather(dat, variable, value, 3:5)
 dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
 dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
 dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(Year,fill) %>%
-              dplyr::summarise(value  = sum(value, na.rm=TRUE)*1000,
-                        area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>%
-              dplyr::mutate(share = value / area) %>% ungroup()
+dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year, y=share, fill=fill))
 p <- p + geom_area(stat="identity", position="stack")
@@ -735,37 +700,22 @@ caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable
 
 
 ## ---- P1inputBOTTOM ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 RF.FERT.NI.TN.NO,
-                                                 RF.FERT.PH.TN.NO,
-                                                 RF.FERT.PO.TN.NO,
-                                                 RL.AREA.ARBLPRMN.HA.NO)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
 dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
 dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat_plot <- dat
 
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
-              dplyr::summarise(value  = sum(value, na.rm=TRUE)*1000,
-                        area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>%
-              dplyr::mutate(share = value / area) %>% dplyr::mutate(sum = sum(share)) %>%  ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup, levels=unique(arrange(dat_plot, -sum)$subgroup))
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=share, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=share, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="kg/ha")
