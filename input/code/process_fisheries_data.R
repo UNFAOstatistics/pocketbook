@@ -69,7 +69,7 @@ dl$Year <- factor(dl$Year)
 dl$Year <- as.numeric(levels(dl$Year))[dl$Year]
 tot_prod <- dl
 
-rm(dat2)
+# rm(dat2)
 dat2 <- merge(aqua_prod,captu_prod,by=c("UN_CODE","Year"))
 dat2 <- merge(dat2,tot_prod,by=c("UN_CODE","Year"))
 
@@ -167,8 +167,8 @@ dat2$prod_100 <- NULL
 #   coord_cartesian(xlim=c(1985,2020)) +
 #   geom_text(data=d[d$Year == 2013,], aes(x=Year, y = production_quantity_index, label=FAO_TABLE_NAME), size=2) +
 #   theme(legend.position="none")
-# 
-# 
+#
+#
 # ggplot(d, aes(x=Year,y=production_quantity_index,color=FAO_TABLE_NAME)) +
 #   geom_point() + geom_line() +
 #   coord_cartesian(ylim=c(0,1000),xlim=c(1985,2020)) +
