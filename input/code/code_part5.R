@@ -682,7 +682,7 @@ dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.P
 df.fsi <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 # For despie graphs icn2.df
-load(paste0(root.dir,"../ICN2PB14/Data/Processed/icn2.RData"))
+load(paste0(data.dir,"/icn2.RData"))
 
  # --------------------------------------------------------------- #
 
