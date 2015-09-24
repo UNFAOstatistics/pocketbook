@@ -524,8 +524,8 @@ map.plot <- full_join(dat,map.df)
 # map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","net_trade")]
-cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=TRUE, manual_breaks = c(-10000,-2000,-50,50,5000,10000))
-#cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=FALSE)
+# cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=TRUE, manual_breaks = c(-10000,-2000,-50,50,5000,10000))
+cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=FALSE)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -541,7 +541,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here(manualPalette=TRUE,manual_palette=c("grey70","#d7191c","#fdae61","#ffffbf","#a6d96a","#1a9641"))
+# create_map_here(manualPalette=TRUE,manual_palette=c("grey70","#d7191c","#fdae61","#ffffbf","#a6d96a","#1a9641"))
+create_map_here()
 
 # Caption
 caption_text <- "Net trade of coffee in 2012"

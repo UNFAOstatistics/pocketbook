@@ -27,13 +27,13 @@ regionS_to_report <- c(
                               # "RAP" # Asia and the Pacific
                               # ,"RAF"  # Africa
                               # ,"REU" # Europe and Central Asia
-                              #  ,"RNE" # Near East and North Africa
+                               # ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
                                  "COF" # Coffee
                       )
 include_foreword <- T
 include_overview <- T
-include_part1 <- F
+include_part1 <- T
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
@@ -47,7 +47,7 @@ broke_all_into_images <- F
 broke_only_tables_into_images <- F
 
 # To be uploaded for comments or not
-upload_pdfs_to_server <-   F
+upload_pdfs_to_server <-   T
 upload_images_to_server <- F
 
 # just for troubleshooting
@@ -142,7 +142,7 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
-load(paste0(data.dir,"/SYB2015-09-23.RData"))
+load(paste0(data.dir,"/SYB2015-09-24.RData"))
 # load("../../database/Data/Processed/SYB2015-09-23.RData")
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -159,12 +159,22 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFNorthAfrica"]    <- 12003
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFSouthernAfrica"] <- 12004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFWestAfrica"]     <- 12005
 
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPregion"]         <- 13000
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPEastAsia"]       <- 13001
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPacificIslands"] <- 13002
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSoutheastAsia"]  <- 13003
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPregion"]             <- 13000
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPEastAsia"]           <- 13001
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPacificIslands"]     <- 13002
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSoutheastAsia"]      <- 13003
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPCentralAsia"]    <- 13005
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPCentralAsia"]        <- 13005
+
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMelanesia"]          <- 13008
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMicronesia"]         <- 13009
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPolynesia"]          <- 13010
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPRussianFederation"]  <- 13011
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthernAsia"]       <- 13012
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPUnitedStates"]       <- 13013
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPWesternAsia"]        <- 13014
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDeveloped"]          <- 13100
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDevelopedCountries"] <- 13200
