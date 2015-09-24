@@ -109,7 +109,7 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
 
 if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
   
-  dat <- read.csv(paste0(data.dir,"Data/Raw/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
+  dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
   dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
   dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
   # SOFI to M49 conversions
@@ -141,7 +141,7 @@ if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
 if (!("area_harvested" %in% names(syb.df))) {
   
   ## Area harvested
-  load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
+  load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
   
   group_means <- function(data,varname,years) {
     filter(data, Year %in% years) %>% group_by_("CountryCode") %>% summarise_(value = interp(~max(varname, na.rm = TRUE), varname = as.name(varname)))
@@ -169,7 +169,7 @@ if (!("share_of_des_cereals_roots_tubers" %in% names(syb.df))) {
   ## Area harvested
   # dat <- read.csv("./database/Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).csv")
   # save(dat, file="./database/Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).RData"))
+  load(paste0(data.dir,"/Food_Security_Data_E_All_Data_(Norm).RData"))
   
   dat <- dat[dat$Item == "Share of dietary energy supply derived from cereals, roots and tubers (%) (3-year average)",c("Country.Code","Year","Value")]
   names(dat) <- c("FAOST_CODE","Year","share_of_des_cereals_roots_tubers")
@@ -192,7 +192,7 @@ if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
   ## 
   # dat <- read.csv("~/fao_temp/pocketbook_temp/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).csv", stringsAsFactors = FALSE)
   # save(dat, file="./database/Data/Raw/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"Data/Raw/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).RData"))
+  load(paste0(data.dir,"/Inputs_Fertilizers_E_All_Data_(Norm).RData"))
   
   dat <- dat[dat$Item %in% c("Phosphate Fertilizers (P205 total nutrients)",
                              "Potash Fertilizers (K20 total nutrients)",
@@ -288,7 +288,7 @@ if (!("Sugar.raw" %in% names(syb.df))) {
 
   # dat <- read.csv("./database/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).csv")
   # save(dat, file="./database/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).RData"))
+  load(paste0(data.dir,"/Production_Indices_E_All_Data_(Norm).RData"))
   
   dat <- dat[dat$Item %in% c("Roots and Tubers,Total",
                              "Vegetables and Fruit Primary",
@@ -311,7 +311,7 @@ if (!("Sugar.raw" %in% names(syb.df))) {
 
 if (!("energy.for.power.irrigation" %in% names(syb.df))) {
   #library(gdata)
-  dat <- read.csv(paste0(data.dir,"Data/Raw/pellets/energy_consumption_for_power_irrigation.csv"), stringsAsFactors = FALSE)
+  dat <- read.csv(paste0(data.dir,"/energy_consumption_for_power_irrigation.csv"), stringsAsFactors = FALSE)
   dat <- dat[c("AreaCode","Year","Value")]
   names(dat) <- c("FAOST_CODE","Year","energy.for.power.irrigation")
   dat$FAOST_CODE <- as.numeric(dat$FAOST_CODE)

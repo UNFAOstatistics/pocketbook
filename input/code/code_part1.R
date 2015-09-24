@@ -1,5 +1,5 @@
 ## ---- part1_setup ----
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 syb_part <- 1
 
@@ -9,7 +9,7 @@ col.main1 <- colPart1[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart1[["Main"]][2]
 
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,"/input/code/plot/theme.R"))
 
 nCol <- 5
 colPart = plot_colors(part = syb_part, 12)
@@ -19,7 +19,7 @@ mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
 mapColors = mapColFun(nCol)
 
 # map functions
-source(paste0(root.dir,'./input/code/plot/map_categories.R'))
+source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 
 
@@ -771,7 +771,7 @@ short_text <- "Investing in agriculture is one of the most effective strategies 
 
 ## ---- P1investData ----
 
-d1 <- read_excel(paste0(data.dir,"Data/Raw/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
+d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
 d1 <- d1[2:26,1:3]
 names(d1) <- c("Year","oda_share_agriculture","share_of_agriculture_forestry_fishing")
 # d1$Year <- as.character(d1$Year)
@@ -809,7 +809,7 @@ caption_text <- "Aid flows to agriculture, share of total aid (1995-2013) - NO C
 
 ## ---- P1investLEFT ----
 # data
-gg <- read.csv(paste0(data.dir, "/Data/Raw/credit_to_agriculture.csv"))
+gg <- read.csv(paste0(data.dir, "/credit_to_agriculture.csv"))
 gg <- gg[gg$ElementName == "Value US$",]
 gg <- gg[gg$ItemName == "Total Credit",]
 # into millions
@@ -845,7 +845,7 @@ caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and
 ## ---- P1investRIGHT ----
 
 # data
-gg <- read_excel(paste0(data.dir,"/Data/Raw/investments/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
+gg <- read_excel(paste0(data.dir,"/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
 gg <- gg[c(3,5)]
 gg$Year <- 2010
 names(gg)[names(gg)=="AOI average (2008-2012)"] <- "agri_orientation_index"
@@ -875,7 +875,7 @@ caption_text <- "Agri-Orientation Index, highest and lowest values (average 2008
 
 ## ---- P1investBOTTOM ----
 
-d1 <- read_excel(paste0(data.dir,"/Data/Raw/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=2, skip=2)
+d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=2, skip=2)
 d1 <- d1[1:2,]
 names(d1)[1] <- "variable"
 

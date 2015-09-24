@@ -1,6 +1,6 @@
 ## ---- part4_setup ----
 
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 syb_part <- 4
 
@@ -10,10 +10,10 @@ col.main1 <- colPart4[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart4[["Main"]][2]
 
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,"/input/code/plot/theme.R"))
 
 # map functions
-source(paste0(root.dir,'./input/code/plot/map_categories.R'))
+source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 
 
@@ -222,7 +222,7 @@ short_text <- "Global demand for water has risen sharply over the last century. 
 
 
 ## ---- P4waterData, cache=TRUE,results='hide', eval=P4water ----
-g <- read_excel(paste0(data.dir,"/Data/Raw/UPDATEDWATER_WR_Capita_2000-2010.xlsx"))
+g <- read_excel(paste0(data.dir,"/UPDATEDWATER_WR_Capita_2000-2010.xlsx"))
 names(g) <- c("FAO_TABLE_NAME","Year2000","Year2010")
 g <- gather(g, "Year", "per_capita_water_resources", 2:3)
 g$Year <- as.character(g$Year)

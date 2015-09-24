@@ -1,6 +1,6 @@
 ## ---- part3_setup ----
 
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 syb_part <- 3
 
@@ -10,10 +10,10 @@ col.main1 <- colPart3[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart3[["Main"]][2]
 
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,"/input/code/plot/theme.R"))
 
 # map functions
-source(paste0(root.dir,'./input/code/plot/map_categories.R'))
+source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 
 
@@ -32,8 +32,8 @@ short_text <- "The dietary energy supply (DES) is the food available for human c
 
 ## ---- P3desData ----
 # Retrieve data
-dat <- read.csv(paste0(data.dir,"/Data/Raw/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-metdat <- read.csv(paste0(data.dir,"Data/Raw/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
+dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
+metdat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
 dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
 dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
 # SOFI to M49 conversions
@@ -261,7 +261,7 @@ short_text <- "The majority of people in developing countries live in rural area
 ## ---- P3cropproData ----
 
 # This should be thought twice how to produce it for regional books!
-load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
+load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -447,7 +447,7 @@ short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and 
 ## ---- P3cropData ----
 
 # This should be thought twice how to produce it for regional books!
-load(paste0(data.dir,"/Data/Raw/Production_Crops_E_All_Data.RData"))
+load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -623,7 +623,7 @@ short_text <- "The world food economy is being increasingly driven by the shift 
 ## ---- P3livestockData ----
 
 # This should be thought twice how to produce it for regional books!
-load(paste0(data.dir,"/Data/Raw/Production_Livestock_E_All_Data.RData"))
+load(paste0(data.dir,"/Production_Livestock_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -718,7 +718,7 @@ caption_text <- "Total egg production, top and bottom 10 countries (2012)"
 
 
 ## ---- P3livestockBOTTOM ----
-load(paste0(data.dir,"Data/Raw/Production_Livestock_E_All_Data.RData"))
+load(paste0(data.dir,"/Production_Livestock_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -817,7 +817,7 @@ short_text <- "Fish is an important component in people’s diets, providing abo
 
 
 ## ---- P3fisheriesTOPRIGHT ----
-dat <- read_excel(paste0(data.dir,"Data/Raw/FISH_percapita_production2015.xlsx"))
+dat <- read_excel(paste0(data.dir,"/FISH_percapita_production2015.xlsx"))
 dat[[1]] <- as.character(dat[[1]])
 dat[1,] <- c("Year",1990:2013)
 names(dat) <- dat[1,]

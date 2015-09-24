@@ -17,13 +17,13 @@ if (!file.exists(paste0(root.dir,"/output/html"))) dir.create(paste0(root.dir,"/
 if (!file.exists(paste0(root.dir,"/output/jpg"))) dir.create(paste0(root.dir,"/output/jpg"))
 
 ## Copy .Rnw files into process/-folder
-flist <- list.files(paste0(root.dir,"input/"),
+flist <- list.files(paste0(root.dir,"/input/"),
                     "+[.]Rnw$",
                     full.names = TRUE)
 file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
 ## Copy everything from templates/-folder into process/folder
-flist <- list.files(paste0(root.dir,"input/templates"),
+flist <- list.files(paste0(root.dir,"/input/templates"),
                     recursive = TRUE,
                     include.dirs = TRUE,
                     full.names = TRUE)
@@ -31,13 +31,13 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
 
 ## Copy .md into jpg folder
-flist <- list.files(paste0(root.dir,"input/templates/jpg_comparison"),
+flist <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
                     "+[.]md$",
                     full.names = TRUE)
 file.copy(flist, paste0(root.dir,"/output/jpg"), overwrite = TRUE)
 
 
-setwd(paste0(root.dir,"output/process"))
+setwd(paste0(root.dir,"/output/process"))
 
 
 ###################################################################################3
@@ -136,7 +136,7 @@ file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
 if (broke_all_into_images | broke_only_tables_into_images){
 
   # copy the output -html's into the output/html-folder
-  flist <- list.files(paste0(root.dir,"output/process"),
+  flist <- list.files(paste0(root.dir,"/output/process"),
                       "+[.]html$",
                       full.names = TRUE)
   file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
@@ -153,13 +153,13 @@ if (broke_all_into_images | broke_only_tables_into_images){
 if (upload_pdfs_to_server) {
 
   #  upload the output pdf to kapsi
-  pdfs <- list.files(paste0(root.dir,"output/pdf"), full.names = TRUE)
+  pdfs <- list.files(paste0(root.dir,"/output/pdf"), full.names = TRUE)
   system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
 }
 
 
 if (upload_images_to_server) {
-    comparison <- list.files(paste0(root.dir,"output/jpg"), full.names = TRUE)
+    comparison <- list.files(paste0(root.dir,"/output/jpg"), full.names = TRUE)
     system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
 }
 

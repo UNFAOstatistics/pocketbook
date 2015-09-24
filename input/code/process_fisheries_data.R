@@ -16,7 +16,7 @@
 # load("./database/Data/Processed/FAOcountryProfile.RData") # comment if not spinning!!
 
 #### AQUACULTURE
-dat <- read_excel(paste0(data.dir,"Data/Raw/fishery2015/Fisheries_bycountry_1990-2013.xlsx"), sheet=1, skip=1)
+dat <- read_excel(paste0(data.dir,"/Fisheries_bycountry_1990-2013.xlsx"), sheet=1, skip=1)
 
 # select vars to drop
 drops <- names(dat)[grepl("^Symbol", names(dat))]
@@ -34,7 +34,7 @@ dl$Year <- as.numeric(levels(dl$Year))[dl$Year]
 aqua_prod <- dl
 
 #### CAPTURE
-dat <- read_excel(paste0(data.dir,"Data/Raw/fishery2015/Fisheries_bycountry_1990-2013.xlsx"), sheet=2, skip=1)
+dat <- read_excel(paste0(data.dir,"/Fisheries_bycountry_1990-2013.xlsx"), sheet=2, skip=1)
 
 # select vars to drop
 drops <- names(dat)[grepl("^Symbol", names(dat))]
@@ -52,7 +52,7 @@ dl$Year <- as.numeric(levels(dl$Year))[dl$Year]
 captu_prod <- dl
 
 # TOTAL
-dat <- read_excel(paste0(data.dir,"Data/Raw/fishery2015/Fisheries_bycountry_1990-2013.xlsx"), sheet=3, skip=1)
+dat <- read_excel(paste0(data.dir,"/Fisheries_bycountry_1990-2013.xlsx"), sheet=3, skip=1)
 
 # select vars to drop
 drops <- names(dat)[grepl("^Symbol", names(dat))]
@@ -179,7 +179,7 @@ syb.df <- merge(syb.df,dat2,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
 #' # Net fish trade
 
-dat <- read_excel(paste0(data.dir,"Data/Raw/Trade1990_2012_ESSJun2015.xlsx"), sheet=1, skip = 1)
+dat <- read_excel(paste0(data.dir,"/Trade1990_2012_ESSJun2015.xlsx"), sheet=1, skip = 1)
 kable(head(dat))
 
 # select vars to drop

@@ -8,10 +8,13 @@ gc()
 #options(scipen=999) # disable scientific number formatting
 
 # set root directory
-root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
+root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
+# root.dir <- "~/regional15/" # Amy
+
 setwd(root.dir)
 # set data directory
-data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
+# data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
+data.dir <- paste0(root.dir,"/input/data/database/")
 
 # Stuff you DO edit
 # ----------------------------------------------------------------------------------
@@ -31,13 +34,13 @@ regionS_to_report <- c(
 include_foreword <- T
 include_overview <- T
 include_part1 <- T
-include_part2 <- F
-include_part3 <- F
-include_part4 <- F
+include_part2 <- T
+include_part3 <- T
+include_part4 <- T
 include_part5 <- F
 include_part6 <- F
-include_country_profiles <- F
-include_definitions <- F
+include_country_profiles <- T
+include_definitions <- T
 
 # Upgrade the comparison tables
 broke_all_into_images <- F
@@ -84,8 +87,8 @@ loadfonts()
 
 # Source functions
 
-source(paste0(root.dir,"input/code/subgroupings.R"))
-source(paste0(root.dir,"input/code/plot/create_map_here.R"))
+source(paste0(root.dir,"/input/code/subgroupings.R"))
+source(paste0(root.dir,"/input/code/plot/create_map_here.R"))
 
 
 # _                 _       _       _
@@ -98,7 +101,7 @@ source(paste0(root.dir,"input/code/plot/create_map_here.R"))
 ## ---- load_data ----
 
 # load FAOcountryprofile data
-FAOcountryProfile <- read_csv(paste0(root.dir,"./input/data/FAOcountryProfile.csv"))
+FAOcountryProfile <- read_csv(paste0(root.dir,"/input/data/FAOcountryProfile.csv"))
 
 # Recode the Short Name Variables
 ## Abbreviate names
@@ -139,7 +142,8 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
-load("../../database/Data/Processed/SYB2015-09-23.RData")
+load(paste0(data.dir,"/SYB2015-09-23.RData"))
+# load("../../database/Data/Processed/SYB2015-09-23.RData")
 syb.df <- SYB.df; rm(SYB.df)
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "LACregion"]         <- 11000
@@ -202,7 +206,7 @@ syb.df[syb.df[, "FAOST_CODE"] %in% c(214), "Area"] <- "Taiwan"
 syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "West Bank and\nGaza Strip"
 syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
 
-source(paste0(root.dir,"input/code/process_fisheries_data.R"))
+source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
 
 #   ____          __  _                                  _
 #  |  _ \   ___  / _|(_) _ __    ___   _ __  ___   __ _ (_)  ___   _ __   ___
@@ -211,7 +215,7 @@ source(paste0(root.dir,"input/code/process_fisheries_data.R"))
 #  |____/  \___||_|  |_||_| |_| \___| |_|   \___| \__, ||_| \___/ |_| |_||___/
 #                                                 |___/
 
-source(paste0(root.dir,"input/code/define_regions.R"))
+source(paste0(root.dir,"/input/code/define_regions.R"))
 
 #  __  __                     _         _
 # |  \/  |  __ _  _ __     __| |  __ _ | |_  __ _
@@ -249,4 +253,4 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 
 
-source(paste0(root.dir,"input/code/process_the_book.R"))
+source(paste0(root.dir,"/input/code/process_the_book.R"))

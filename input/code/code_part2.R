@@ -1,5 +1,5 @@
 ## ---- part2_setup ----
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 syb_part <- 2
 
@@ -9,10 +9,10 @@ col.main1 <- colPart2[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart2[["Main"]][2]
 
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,"/input/code/plot/theme.R"))
 
 # map functions
-source(paste0(root.dir,'./input/code/plot/map_categories.R'))
+source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 
 
@@ -31,8 +31,8 @@ short_text <- "Undernourishment is a state, lasting for at least one year, of in
 
 ## ---- P2undernuData ----
 # Retrieve data
-dat <- read.csv(paste0(data.dir,"/Data/Raw/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-metdat <- read.csv(paste0(data.dir,"Data/Raw/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
+dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
+metdat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
 dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
 dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
 # SOFI to M49 conversions
