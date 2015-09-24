@@ -20,7 +20,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 <<P5overTEXT, eval=P5over, short_text_ChartPage=P5over>>=
 @
 
-<<P5overData,results='hide', cache=TRUE>>=
+<<P5overData,results='hide', cache=FALSE>>=
 @
 
 
@@ -66,7 +66,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 @
 
 
-<<P5econBOTTOM_data, cache=TRUE>>=
+<<P5econBOTTOM_data, cache=FALSE>>=
 @
 
 
@@ -92,7 +92,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 @
 
 
-<<P5povertyData, cache=TRUE,results='hide', eval=P5poverty>>=
+<<P5povertyData, cache=FALSE,results='hide', eval=P5poverty>>=
 @
 
 
@@ -128,7 +128,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 <<P5desTEXT, eval=P5des, short_text_ChartPage=P5des>>=
 @
 
-<<P5desData,results='hide', cache=TRUE, eval=P5des>>=
+<<P5desData,results='hide', cache=FALSE, eval=P5des>>=
 @
 
 

@@ -22,7 +22,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 @
 
 
-<<P6coffeeprodData, cache=TRUE,results='hide', eval=P6coffeeprod>>=
+<<P6coffeeprodData, cache=FALSE,results='hide', eval=P6coffeeprod>>=
 @
 
 
@@ -60,7 +60,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 @
 
 
-<<P6coffeetradeData, cache=TRUE,results='hide', eval=P6coffeetrade>>=
+<<P6coffeetradeData, cache=FALSE,results='hide', eval=P6coffeetrade>>=
 @
 
 
@@ -100,7 +100,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 @
 
 
-<<P6coffeepricesData, cache=TRUE,results='hide', eval=P6coffeeprices>>=
+<<P6coffeepricesData, cache=FALSE,results='hide', eval=P6coffeeprices>>=
 @
 
 
