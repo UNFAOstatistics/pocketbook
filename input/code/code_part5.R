@@ -1,6 +1,6 @@
 ## ---- part5_setup ----
 
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 
 syb_part <- 5
@@ -11,10 +11,10 @@ col.main1 <- colPart5[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart5[["Main"]][2]
 
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,"/input/code/plot/theme.R"))
 
 # map functions
-source(paste0(root.dir,'./input/code/plot/map_categories.R'))
+source(paste0(root.dir,'/input/code/plot/map_categories.R'))
  # --------------------------------------------------------------- #
 
 
@@ -58,7 +58,7 @@ if (region_to_report != "COF"){
   dat$variable <- as.character(dat$variable)
   dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
   dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
-  dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
+  dat <- dat %>% group_by(Year,variable) %>%  dplyr::summarise(value = sum(value, na.rm=TRUE)/1000000)
 }
 
 if (region_to_report == "COF"){
@@ -97,8 +97,8 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -OA.TPBS.POP.PPL.GR10)
-top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.POP.PPL.GR10))
@@ -124,8 +124,8 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SP.DYN.LE00.IN)
-top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
@@ -138,31 +138,23 @@ p
 
 # Caption
 caption_text <- "Life expectancy at birth, countries with the highest and lowest values (2013)"
- # --------------------------------------------------------------- #
+
 
 
 ## ---- P5overBOTTOM ----
 # data
-dat <- syb.df %>% filter(Year %in% c(2000:2014)) %>% 
-  select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+dat <- syb.df %>% filter(Year %in% c(2000:2014), FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
 dat <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat$OA.TEAPT.POP.PPL.NO <- dat$OA.TEAPT.POP.PPL.NO / 1000000
 
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat_plot <- dat
 
-# AGREGATE
-dat_plot <- dat %>% group_by(subgroup,Year) %>% 
-  summarise(OA.TEAPT.POP.PPL.NO = sum(OA.TEAPT.POP.PPL.NO, na.rm=TRUE)) %>% 
-  mutate(OA.TEAPT.POP.PPL.NO = OA.TEAPT.POP.PPL.NO / 1000000)
-
-p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=subgroup))
+p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
 p <- p + geom_point() + geom_line()
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people")
 #p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space) 
@@ -220,35 +212,20 @@ short_text <- "While some sectors have been hard hit, agriculture has demonstrat
  # --------------------------------------------------------------- #
 
 ## ---- P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,
-                                                 NV.AGR.TOTL.ZS,
-                                                 NV.IND.TOTL.ZS,
-                                                 NV.SRV.TETC.ZS)
-
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+dat <- syb.df %>% filter(Year %in% 2013, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>% select(SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "NV.AGR.TOTL.ZS"] <- "Agriculture"
 dat$fill[dat$variable == "NV.IND.TOTL.ZS"] <- "Industry"
 dat$fill[dat$variable == "NV.SRV.TETC.ZS"] <- "Services"
 
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
+dat_plot <- dat
 
 # reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$subgroup )
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
+                                  levels=arrange(dat_plot[dat_plot$fill == "Agriculture",],-value)$SHORT_NAME )
 
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -275,7 +252,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -EA.PRD.AGRI.KD)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EA.PRD.AGRI.KD),y=EA.PRD.AGRI.KD))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -308,7 +285,7 @@ top10 <- dat %>% arrange(FAOST_CODE,Year) %>%
               dplyr::summarise(growth_NV.AGR.TOTL.KD = mean(Growth, na.rm = TRUE)*100) %>% 
               arrange(-growth_NV.AGR.TOTL.KD) %>% 
               slice(1:10) %>% 
-              mutate(color = "Countries with highest values")
+              dplyr::mutate(color = "Countries with highest values")
 
 bot10 <- dat %>% arrange(FAOST_CODE,Year) %>%  
               group_by(FAOST_CODE) %>% dplyr::mutate(Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>% 
@@ -316,7 +293,7 @@ bot10 <- dat %>% arrange(FAOST_CODE,Year) %>%
               dplyr::summarise(growth_NV.AGR.TOTL.KD = mean(Growth, na.rm = TRUE)*100) %>% 
               arrange(growth_NV.AGR.TOTL.KD) %>% 
               slice(1:10) %>% 
-              mutate(color = "Countries with lowest values")
+              dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
   
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, growth_NV.AGR.TOTL.KD),y=growth_NV.AGR.TOTL.KD))
@@ -352,26 +329,13 @@ nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
 
 ## ---- P5econBOTTOM, eval=P5econ, bottom_plot=P5econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width ----
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>% select(SHORT_NAME,Year,NV.AGR.TOTL.ZS)
 
-# merge data with the region info
-dat <- merge(dl,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat_plot <- dat
 
-#dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(constant_gdp = sum(NY.GDP.MKTP.KD,na.rm=TRUE))
-
-dat <- merge(nomin,dat,by=c("FAOST_CODE","Year"))
-
-dat_plot <- dat %>%  group_by(subgroup,Year) %>% 
-    summarise(constant_gdp    = sum(NY.GDP.MKTP.KD,na.rm=TRUE),
-              agr_value_added = sum(NV.AGR.TOTL.KD,na.rm=TRUE)) %>% 
-    mutate(share = agr_value_added/constant_gdp*100) %>% 
-    ungroup() %>%  
-    arrange(-share)
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgroup))
+p <- ggplot(data = dat_plot, aes(x = Year, y = NV.AGR.TOTL.ZS,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line()
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 #p <- p + guides(color = guide_legend(nrow = 2))
 p
@@ -480,8 +444,8 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SI.DST.05TH.20)
-top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SI.DST.05TH.20),y=SI.DST.05TH.20))
@@ -511,8 +475,8 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SI.POV.NAHC)
-top10 <- dat %>% slice(1:10) %>% mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SI.POV.NAHC),y=SI.POV.NAHC))
@@ -546,7 +510,7 @@ df <- subgrouping(region_to_report = region_to_report)
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
-dat_plot <- dat %>% group_by(subgroup,Year) %>% summarise(value = weighted.mean(SI.POV.DDAY, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
+dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(value = weighted.mean(SI.POV.DDAY, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
 
 
 # These figures come from the World Bank WDI 2015 page 35
@@ -644,7 +608,7 @@ caption_text <- "Share of population living on less than 2005 PPP \\$1.25 a day 
 dat <- syb.df %>% filter(Year %in% 2007:2012, FAOST_CODE < 5000) %>%
                   select(FAOST_CODE,SHORT_NAME,SI.POV.DDAY) %>% 
                   group_by(FAOST_CODE) %>% 
-                  summarise(SI.POV.DDAY = mean(SI.POV.DDAY, na.rm=TRUE)) 
+                  dplyr::summarise(SI.POV.DDAY = mean(SI.POV.DDAY, na.rm=TRUE)) 
 
 map.plot <- left_join(dat,map.df)
 
@@ -692,8 +656,8 @@ short_text <- "The dietary energy supply (DES) is the food available for human c
 
 ## ---- P5desData,results='hide', cache=TRUE, eval=P5des ----
 # Retrieve data
-dat <- read.csv(paste0(data.dir,"/Data/Raw/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-metdat <- read.csv(paste0(data.dir,"Data/Raw/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
+dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
+metdat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
 dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
 dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
 # SOFI to M49 conversions
@@ -759,9 +723,9 @@ dat <- dat[!is.na(dat$mean),]
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
 
 dat_s <- dat %>% group_by(var) %>%  dplyr::summarise(wmean = weighted.mean(mean, OA.TPBS.POP.PPL.NO, na.rm=FALSE)) %>% 
-             mutate(mean = wmean/sum(wmean)*100)
+             dplyr::mutate(mean = wmean/sum(wmean)*100)
 
-dat_plot <- dat_s  %>% mutate(sum = sum(mean)) 
+dat_plot <- dat_s  %>% dplyr::mutate(sum = sum(mean)) 
 
 p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = var, width = sum))
 p <- p + geom_bar(position="fill", stat="identity") 
@@ -802,8 +766,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
-top2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top2015 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2015")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 
 dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top2015[order(top2015$FBS.PCS.PDES.KCD3D),]$SHORT_NAME)
@@ -836,8 +800,8 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, FBS.PCS.PDES.KCD3D)
-bottom2015 <- dat %>% slice(1:20) %>% mutate(color = "2015")
-bottom2000 <- dat %>% filter(FAOST_CODE %in% bottom2015$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+bottom2015 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2015")
+bottom2000 <- dat %>% filter(FAOST_CODE %in% bottom2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(bottom2015,bottom2000)
 
 dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=bottom2015[order(bottom2015$FBS.PCS.PDES.KCD3D),]$SHORT_NAME)

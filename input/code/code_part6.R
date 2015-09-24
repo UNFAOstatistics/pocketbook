@@ -1,6 +1,6 @@
 ## ---- part6_setup ------
 
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 syb_part <- 6
 
@@ -10,10 +10,10 @@ col.main1 <- colPart6[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart6[["Main"]][2]
 
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,"/input/code/plot/theme.R"))
 
 # map functions
-source(paste0(root.dir,'./input/code/plot/map_categories.R'))
+source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 
 #
@@ -63,7 +63,7 @@ QC_656_5510 <- dat$aggregates
 #                 c(1999:2014)) %>%
 #   group_by(FAOST_CODE,SHORT_NAME) %>%
 #   select(FAOST_CODE,Year,SI.POV.DDAY,OA.TPBS.POP.PPL.NO) %>%
-#   mutate(no_of_poor = OA.TPBS.POP.PPL.NO * (SI.POV.DDAY/100))
+#   dplyr::mutate(no_of_poor = OA.TPBS.POP.PPL.NO * (SI.POV.DDAY/100))
 # 
 # dat <- dat[!is.na(dat$no_of_poor),]
 # Add region key and subset
@@ -76,14 +76,14 @@ QC_656_5510 <- dat$aggregates
 #
 # dat_2000 <- dat %>% group_by(subgroup) %>%
 #   filter(Year %in% 1999:2001) %>%
-#   summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>%
-#   mutate(no_of_poor = round(no_of_poor,0)) %>%
+#   dplyr::summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>%
+#   dplyr::mutate(no_of_poor = round(no_of_poor,0)) %>%
 #   ungroup()
 #
 # dat_2010 <- dat %>% group_by(subgroup) %>%
 #   filter(Year %in% 2009:2011) %>%
-#   summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>%
-#   mutate(no_of_poor = round(no_of_poor,0)) %>%
+#   dplyr::summarise(no_of_poor = sum(no_of_poor, na.rm=TRUE)/1000000) %>%
+#   dplyr::mutate(no_of_poor = round(no_of_poor,0)) %>%
 #   ungroup()
 #
 # dw <- merge(dat_2000,dat_2010,by="subgroup")
@@ -138,9 +138,9 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -QC_656_5510) %>% mutate(QC_656_5510 = QC_656_5510/1000)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+dat <- arrange(dat, -Year, -QC_656_5510) %>% dplyr::mutate(QC_656_5510 = QC_656_5510/1000)
+top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
 
 dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$QC_656_5510),]$SHORT_NAME)
@@ -170,9 +170,9 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -QC_656_5312) %>% mutate(QC_656_5312 = QC_656_5312 / 1000)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2013")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+dat <- arrange(dat, -Year, -QC_656_5312) %>% dplyr::mutate(QC_656_5312 = QC_656_5312 / 1000)
+top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
 
 dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$QC_656_5312),]$SHORT_NAME)
@@ -195,7 +195,7 @@ caption_text <- "Area harvested, coffee"
 
 top5_codes <- QC_656_5510 %>% filter(Year == 2013, FAOST_CODE < 5000) %>% arrange(-QC_656_5510) %>% slice(1:5)
 
-rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013, FAOST_CODE %in% top5_codes$FAOST_CODE) %>%  mutate(value = QC_656_5510/1000)
+rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013, FAOST_CODE %in% top5_codes$FAOST_CODE) %>%  dplyr::mutate(value = QC_656_5510/1000)
 
 dat_plot <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
 
@@ -402,8 +402,8 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat$TP_656_5922 <- dat$TP_656_5922 / 1000 # into millions dollars
 dat <- arrange(dat, -Year, -TP_656_5922)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
 
 dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$TP_656_5922),]$SHORT_NAME)
@@ -435,8 +435,8 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat$TP_656_5622 <- dat$TP_656_5622 / 1000 # into millions dollars
 dat <- arrange(dat, -Year, -TP_656_5622)
-top15 <- dat %>% slice(1:20) %>% mutate(color = "2012")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% mutate(color = "2000")
+top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top15,top91)
 
 
@@ -508,7 +508,7 @@ caption_text <- "Value of coffee imports"
 # 
 # dat <- left_join(dat,pop)
 # 
-# dat <- dat %>% mutate(import_per_capita = (TP_656_5622 * 1000) / OA.TPBS.POP.PPL.NO)
+# dat <- dat %>% dplyr::mutate(import_per_capita = (TP_656_5622 * 1000) / OA.TPBS.POP.PPL.NO)
 
 # new net trade
 dat1 <- TP_656_5622 %>% filter(Year %in% 2012, FAOST_CODE < 5000)
@@ -629,7 +629,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- dat %>%  filter(Year == 2000) %>%  arrange( -PP_656_5532)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2000")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2000")
 
 #
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532) ,y=PP_656_5532))
@@ -658,7 +658,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- dat %>%  filter(Year == 2013) %>%  arrange( -PP_656_5532)
-dat_plot <- dat %>% slice(1:20) %>% mutate(color = "2013")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 #
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, PP_656_5532) ,y=PP_656_5532))
