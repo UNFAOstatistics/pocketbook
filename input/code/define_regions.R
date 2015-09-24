@@ -1079,29 +1079,34 @@ region_key$COF_Asia     <- ifelse(region_key$FAOST_CODE %in% M49_Asia,     TRUE,
 region_key$COF_Europe   <- ifelse(region_key$FAOST_CODE %in% M49_Europe,   TRUE, FALSE)
 
 
-# Replace the ad-hoc regional grouping with the one we have created
-myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
-fao_world@data <- fao_world@data[!myvars]
+if (!(exists("run_only_regions"))){
+  
+  # Replace the ad-hoc regional grouping with the one we have created
+  myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
+  fao_world@data <- fao_world@data[!myvars]
+  
+  # View(region_key[!(region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE),])
+  fao_world$FAOST_CODE[fao_world$FAOST_CODE %in% 41] <- 351
+  
+  attribute_data <- region_key[region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE,]
+  
+  
+  FAOST_CODE <- as.character(fao_world$FAOST_CODE)
+  VarX <- rep(NA, length(FAOST_CODE))
+  dat <- data.frame(FAOST_CODE,VarX)
+  # then we shall merge this with region_key data.frame
+  dat2 <- merge(dat,attribute_data,by="FAOST_CODE", all.x=TRUE)
+  ## merge this manipulated attribute data with the spatialpolygondataframe
+  ## rownames
+  row.names(dat2) <- dat2$FAOST_CODE
+  row.names(fao_world) <- as.character(fao_world$FAOST_CODE)
+  ## order data
+  dat2 <- dat2[order(row.names(dat2)), ]
+  fao_world <- fao_world[order(row.names(fao_world)), ]
+  ## join
+  library(maptools)
+  dat2$FAOST_CODE <- NULL
+  fao_world <- spCbind(fao_world, dat2)
+  
+}
 
-# View(region_key[!(region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE),])
-fao_world$FAOST_CODE[fao_world$FAOST_CODE %in% 41] <- 351
-
-attribute_data <- region_key[region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE,]
-
-
-FAOST_CODE <- as.character(fao_world$FAOST_CODE)
-VarX <- rep(NA, length(FAOST_CODE))
-dat <- data.frame(FAOST_CODE,VarX)
-# then we shall merge this with region_key data.frame
-dat2 <- merge(dat,attribute_data,by="FAOST_CODE", all.x=TRUE)
-## merge this manipulated attribute data with the spatialpolygondataframe
-## rownames
-row.names(dat2) <- dat2$FAOST_CODE
-row.names(fao_world) <- as.character(fao_world$FAOST_CODE)
-## order data
-dat2 <- dat2[order(row.names(dat2)), ]
-fao_world <- fao_world[order(row.names(fao_world)), ]
-## join
-library(maptools)
-dat2$FAOST_CODE <- NULL
-fao_world <- spCbind(fao_world, dat2)
