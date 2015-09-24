@@ -8,8 +8,8 @@ gc()
 #options(scipen=999) # disable scientific number formatting
 
 # set root directory
-root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
-# root.dir <- "~/regional15/" # Amy
+# root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
+root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
@@ -38,9 +38,9 @@ include_part2 <- F
 include_part3 <- F
 include_part4 <- F
 include_part5 <- F
-include_part6 <- F
-include_country_profiles <- T
-include_definitions <- T
+include_part6 <- T
+include_country_profiles <- F
+include_definitions <- F
 
 # Upgrade the comparison tables
 broke_all_into_images <- F
@@ -79,6 +79,7 @@ library(rgdal)
 library(gisfao)
 library(grid)
 library(scales)
+library(WDI)
 library(ggplot2)
 library(wesanderson)
 library(xtable)
