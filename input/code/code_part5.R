@@ -29,7 +29,7 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P5overTEXT ----
 spread_title <- "Overview"
-short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
+short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, more people have lived in cities than in rural areas."
  # --------------------------------------------------------------- #
 
 ## ---- P5overData ----
@@ -208,7 +208,7 @@ caption_text <- "Rural population, share of total population (2014)"
 
 ## ---- P5econTEXT ----
 spread_title <- "Economy"
-short_text <- "While some sectors have been hard hit, agriculture has demonstrated resilience during the recent economic downturn.  Changes in the wider economy, including growing global integration, affect the performance of the agriculture sector.  Higher overall economic growth also raises consumers’ incomes and hence food demand. Changing interest rates influence capital investments, land values and storage levels, while inflation affects input prices, revenues and credit costs. Fluctuations in exchange rates have an important bearing on international competitiveness and trade flows."
+short_text <- "Changes in the wider economy, including growing global integration – and therefore trade, currency movements and international prices – affect the performance of commodities in the agricultural sector, such as coffee. During the recent economic downturn, some sectors were hard hit. Agriculture, including the coffee sector, demonstrated resilience. Since 2008, the value of coffee production has grown at over two percent per year, on par with overall growth in agricultural production."
  # --------------------------------------------------------------- #
 
 ## ---- P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
@@ -391,7 +391,7 @@ caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013
 
 ## ---- P5povertyTEXT, eval=P5poverty, short_text_ChartPage=P5poverty ----
 spread_title <- "Poverty"
-short_text <- " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas risus at lobortis lacinia. Mauris a nunc eleifend, sodales magna ut, congue arcu. Fusce in odio nunc. Mauris vehicula faucibus eros a blandit. Aenean ut tempus ipsum, eu faucibus lorem. Maecenas pretium nibh sit amet nulla accumsan, eu auctor massa facilisis. In malesuada nisl quis sem dapibus iaculis. Ut fermentum leo turpis, convallis luctus elit auctor sed. Quisque nec vestibulum augue. Praesent suscipit finibus tellus, ut semper quam fermentum luctus. "
+short_text <- "Most coffee is produced in developing countries. Yet the benefits from the expansion of the coffee industry in recent years have not necessarily trickled down to the poorest. Among the largest coffee producing countries, many still have more than 10 percent of their populations living below US\\$1.25 a day. Changes are occurring, however, even for the smallest – and often the poorest – farmers, to help them climb out of poverty. By adapting new technologies or by switching plant varieties, crop yields can improve. Farmers’ access to markets can also make a difference."
  # --------------------------------------------------------------- #
 
 
@@ -651,7 +651,7 @@ caption_text <- "Share of population living less than US\\$ 1.25 per day (2007 -
 
 ## ---- P5desTEXT ----
 spread_title <- "Dietary energy supply"
-short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
+short_text <- "TThe dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and consisted primarily of a base of staple grains, and meat and dairy products. Consumers of coffee have traditionally come from high-income countries but now include the growing middle classes in developing countries. In terms of calories, coffee and other stimulants still make up a very small part of food available for consumption."
  # --------------------------------------------------------------- #
 
 ## ---- P5desData,results='hide', cache=TRUE, eval=P5des ----
