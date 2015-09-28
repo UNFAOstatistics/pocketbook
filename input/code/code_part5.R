@@ -73,9 +73,13 @@ if (region_to_report == "COF"){
 p <- ggplot(dat, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + theme(axis.text.x = element_text(angle = 45))
 p <- p + labs(x="",y="billion people")
+p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
+p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
+
+cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
+cat("\\vspace{1mm}")
 
 # Caption
 
@@ -334,7 +338,7 @@ dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% c(5100,5200,5300,5
 dat_plot <- dat
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = NV.AGR.TOTL.ZS,group=SHORT_NAME,color=SHORT_NAME))
-p <- p + geom_line()
+p <- p + geom_line() + geom_point()
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 #p <- p + guides(color = guide_legend(nrow = 2))
