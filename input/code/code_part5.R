@@ -79,7 +79,7 @@ p
 
 # Caption
 
-caption_text <- "rural and urban population"
+caption_text <- "Rural and urban population"
 # --------------------------------------------------------------- #
 
 
