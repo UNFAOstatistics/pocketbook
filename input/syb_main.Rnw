@@ -563,22 +563,25 @@ FAO is deeply committed to helping countries strengthen their statistical system
 \\large
 
 
-{\\textbf{\\color{part5} The Coffee}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
+Today more than ever, people are consuming coffee. As the middle classes of the developing world continues to grow, they are enjoying the beverage more frequently, and in a larger number of countries. On the other side of the supply chain are the producers. Coffee has proven to be an important economic driver for many smallholders, who provide most of the world’s beans. Today, annual output is almost nine million tonnes, one million tonnes more than a decade ago. The gross production value of green coffee now exceeds US\\$16 billion, and its export value reached US\\$24 billion in 2012. 
 
-{\\textbf{\\color{part6} The Café au Lait}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
+Coffee growers can face headwinds due to inadequate access to credit, to price volatility, or to currency or interest-rate fluctuations, all of which can exclude them from some of the gains of an expanding market. Roasters and importers also experience losses as a result, but the impact is strongest further up the chain. Climate change and its impact on weather conditions also create uncertainty and may just be one of the most important threats to coffee production.
 
-{\\textbf{\\color{part7} The Café Noir}} is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
+This Coffee Pocketbook, which is part of the FAO Statistical Yearbook suite of products, focuses on indicators related to coffee production and consumption, but also on other factors that are directly or indirectly related to the coffee market, including poverty and broader economic trends.  The publication contains two sections: thematic spreads with data-driven visualizations, and comprehensive country and regional profiles. 
+
+FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. It is also committed to improving the livelihoods of people along the various stages of the coffee production chain.
+
 
 
 \\bigskip
 \\bigskip
 
 \\hspace*{\\fill}
-        Pietro Gennari
+        Josef Schmidhuber
 \\hspace*{\\fill}
 
 \\hspace*{\\fill}
-        \\textit{Chief Statistician and Director, Statistics Division}
+        \\textit{Deputy Director, Statistics Division}
 \\hspace*{\\fill}
 ")
     
