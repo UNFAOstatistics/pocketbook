@@ -8,8 +8,8 @@ gc()
 #options(scipen=999) # disable scientific number formatting
 
 # set root directory
-root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
-# root.dir <- "~/FAO/regional15/" # Amy
+# root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
+root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
