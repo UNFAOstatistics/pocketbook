@@ -413,7 +413,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP_656_5922))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="1 000 000 US$")
+p <- p + labs(x="",y="million US$")
 p <- p + scale_y_continuous(labels = space)
 p
 
@@ -446,7 +446,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP_656_5622))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="1 000 000 US$")
+p <- p + labs(x="",y="million US$")
 p <- p + scale_y_continuous(labels = space)
 p
 
@@ -530,7 +530,7 @@ cat_data$value_cat <- categories(x=cat_data$net_trade, n=5, manual=FALSE)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "1 000 000 US$"
+map_unit <- "million US$"
 
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
