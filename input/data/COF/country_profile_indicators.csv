@@ -22,7 +22,7 @@ Macroeconomics,26,PI_656_5539,,,Producer price index (2004-06=100),,0
 "Imports, coffee",21,TP_656_5622,,,Green (1 000 US$),,0
 "Imports, coffee",22,TP_657_5622,,,Roasted (1 000 US$),,0
 "Imports, coffee",23,TP_659_5622,,,Extracts (1 000 US$),,0
-Production and consumption,27,QV.GPV.FOOD.ID.NO,,,"Food prod value, gross (constant 2004-06 1000 l$)",1000000,0
+Production and consumption,27,QV.GPV.FOOD.ID.NO,,,"Food prod value, gross (constant 2004-06 1 000 l$)",1000000,0
 Production and consumption,28,QI.NPIN.FOOD.IN.NO,,,Food prod index (2004-2006=100),,0
 Production and consumption,29,QC_656_5312,,,"Area harvested, coffee (ha)",,0
 Production and consumption,30,QC_656_5419,,,"Yield, coffee (hg/ha)",,0
