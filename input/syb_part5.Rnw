@@ -4,7 +4,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 
 
 
-<<part5_setup, eval=include_part5>>=
+<<part5_setup, eval=include_part5, cache=cache_part5>>=
 @
 
 
@@ -17,29 +17,29 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 
 
 
-<<P5overTEXT, eval=P5over, short_text_ChartPage=P5over>>=
+<<P5overTEXT, eval=P5over, short_text_ChartPage=P5over, cache=cache_part5>>=
 @
 
-<<P5overData,results='hide', cache=FALSE>>=
-@
-
-
-<<P5overTOPRIGHT, eval=P5over, top_right_plot=P5over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+<<P5overData,results='hide', cache=cache_part5>>=
 @
 
 
-<<P5overLEFT, eval=P5over, left_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
-@
-
-<<P5overRIGHT, eval=P5over, right_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+<<P5overTOPRIGHT, eval=P5over, top_right_plot=P5over, fig.height=top_right_plot_height, fig.width=top_right_plot_width, cache=cache_part5>>=
 @
 
 
-<<P5overBOTTOM, eval=P5over, bottom_plot=P5over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P5overLEFT, eval=P5over, left_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width, cache=cache_part5>>=
+@
+
+<<P5overRIGHT, eval=P5over, right_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width, cache=cache_part5>>=
 @
 
 
-<<P5overMAP, eval=P5over, map_plot=P5over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+<<P5overBOTTOM, eval=P5over, bottom_plot=P5over, fig.height=bottom_plot_height, fig.width=bottom_plot_width, cache=cache_part5>>=
+@
+
+
+<<P5overMAP, eval=P5over, map_plot=P5over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, cache=cache_part5>>=
 @
 
 
@@ -52,30 +52,30 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 % 
 
 
-<<P5econTEXT, eval=P5econ, short_text_ChartPage=P5econ>>=
+<<P5econTEXT, eval=P5econ, short_text_ChartPage=P5econ, cache=cache_part5>>=
 @
 
-<<P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-@
-
-
-<<P5econLEFT, eval=P5econ, left_plot=P5econ, fig.height=left_plot_height, fig.width=left_plot_width>>=
-@
-
-<<P5econRIGHT, eval=P5econ ,right_plot=P5econ, fig.height=right_plot_height, fig.width=right_plot_width>>=
+<<P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width, cache=cache_part5>>=
 @
 
 
-<<P5econBOTTOM_data, cache=FALSE>>=
+<<P5econLEFT, eval=P5econ, left_plot=P5econ, fig.height=left_plot_height, fig.width=left_plot_width, cache=cache_part5>>=
+@
+
+<<P5econRIGHT, eval=P5econ ,right_plot=P5econ, fig.height=right_plot_height, fig.width=right_plot_width, cache=cache_part5>>=
+@
+
+
+<<P5econBOTTOM_data, cache=cache_part5>>=
 @
 
 
 
-<<P5econBOTTOM, eval=P5econ, bottom_plot=P5econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P5econBOTTOM, eval=P5econ, bottom_plot=P5econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width, cache=cache_part5>>=
 @
 
 
-<<P5econMAP, eval=P5econ, map_plot=P5econ, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+<<P5econMAP, eval=P5econ, map_plot=P5econ, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, cache=cache_part5>>=
 @
 
 
@@ -88,31 +88,31 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 %                                               |___/ 
 
 
-<<P5povertyTEXT, eval=P5poverty, short_text_ChartPage=P5poverty>>=
+<<P5povertyTEXT, eval=P5poverty, short_text_ChartPage=P5poverty, cache=cache_part5>>=
 @
 
 
-<<P5povertyData, cache=FALSE,results='hide', eval=P5poverty>>=
+<<P5povertyData,results='hide', eval=P5poverty, cache=cache_part5>>=
 @
 
 
 
-<<P5povertyTOPRIGHT, eval=P5poverty, top_right_minitable=P5poverty>>=
+<<P5povertyTOPRIGHT, eval=P5poverty, top_right_minitable=P5poverty, cache=cache_part5>>=
 @
 
 
-<<P5povertyLEFT, eval=P5poverty, left_plot=P5poverty, fig.height=left_plot_height, fig.width=left_plot_width>>=
+<<P5povertyLEFT, eval=P5poverty, left_plot=P5poverty, fig.height=left_plot_height, fig.width=left_plot_width, cache=cache_part5>>=
 @
 
-<<P5povertyRIGHT, eval=P5poverty ,right_plot=P5poverty, fig.height=right_plot_height, fig.width=right_plot_width>>=
-@
-
-
-<<P5povertyBOTTOM, eval=P5poverty, bottom_plot=P5poverty, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P5povertyRIGHT, eval=P5poverty ,right_plot=P5poverty, fig.height=right_plot_height, fig.width=right_plot_width, cache=cache_part5>>=
 @
 
 
-<<P5povertyMAP, eval=P5poverty, map_plot=P5poverty, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+<<P5povertyBOTTOM, eval=P5poverty, bottom_plot=P5poverty, fig.height=bottom_plot_height, fig.width=bottom_plot_width, cache=cache_part5>>=
+@
+
+
+<<P5povertyMAP, eval=P5poverty, map_plot=P5poverty, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, cache=cache_part5>>=
 @
 
 
@@ -125,28 +125,28 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 %                                    |___/                           |___/  |___/              |_|    |_|        |___/ 
 
 
-<<P5desTEXT, eval=P5des, short_text_ChartPage=P5des>>=
+<<P5desTEXT, eval=P5des, short_text_ChartPage=P5des, cache=cache_part5>>=
 @
 
-<<P5desData,results='hide', cache=FALSE, eval=P5des>>=
-@
-
-
-<<P5desTOPRIGHT, eval=P5des, top_right_plot=P5des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
-@
-
-<<P5desLEFT, eval=P5des, left_plot=P5des, fig.height=left_plot_height, fig.width=left_plot_width>>=
-@
-
-<<P5desRIGHT, eval=P5des ,right_plot=P5des, fig.height=right_plot_height, fig.width=right_plot_width>>=
+<<P5desData,results='hide', eval=P5des, cache=cache_part5>>=
 @
 
 
-<<P5desBOTTOM, eval=P5des, bottom_plot=P5des, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+<<P5desTOPRIGHT, eval=P5des, top_right_plot=P5des, fig.height=top_right_plot_height, fig.width=top_right_plot_width, cache=cache_part5>>=
+@
+
+<<P5desLEFT, eval=P5des, left_plot=P5des, fig.height=left_plot_height, fig.width=left_plot_width, cache=cache_part5>>=
+@
+
+<<P5desRIGHT, eval=P5des ,right_plot=P5des, fig.height=right_plot_height, fig.width=right_plot_width, cache=cache_part5>>=
 @
 
 
-<<P5desMAP, eval=P5des, map_plot=P5des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+<<P5desBOTTOM, eval=P5des, bottom_plot=P5des, fig.height=bottom_plot_height, fig.width=bottom_plot_width, cache=cache_part5>>=
+@
+
+
+<<P5desMAP, eval=P5des, map_plot=P5des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, cache=cache_part5>>=
 @
 
 
