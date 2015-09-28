@@ -30,7 +30,7 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P6coffeeprodTEXT ----
 spread_title <- "Coffee production"
-short_text <- "Over the past 50 years, both production and consumption of coffee have risen considerably. Consumers have reaped some of the benefits through a greater variety of coffee products, improved quality and lower real prices. Now over 70 countries produce coffee, and  over 50 percent comes from just three countries. Some coffee producing countries have seen considerable benefits through higher yields and growing volumes of sales. But many – especially smallholders, who produce the majority of the world’s coffee – are also facing growing challenges stemming from climate change and more difficult natural growing conditions."
+short_text <- "Over the past 50 years, both production and consumption of coffee have risen considerably. Consumers have reaped some of the benefits through a greater variety of coffee products, improved quality and lower real prices. Now over 70 countries produce coffee, and over 50 percent comes from just three countries. Some coffee producing countries have seen considerable benefits through higher yields and growing volumes of sales. But many, especially smallholders, who produce the majority of the world’s coffee, are also facing growing challenges from climate change and more difficult natural growing conditions."
 
 
 
@@ -260,7 +260,7 @@ caption_text <- "Coffee yield (2013)"
 
 ## ---- P6coffeetradeTEXT ----
 spread_title <- "Coffee trade"
-short_text <- "Exports of coffee in various forms vary significantly from year to year, from arabica and robusta, to roasted, to instant and solubles. Coffee trade assists the flow of these products from the exporting country to the roaster and continues to be an important commodity in the world economy. In 2012, it accounted for US\\$24 billion in agricultural exports and consisted of over 7 million tonnes. Just 10 years ago, the value was just US\\$5.1, billion for a total of 5.5 million tonnes. For many countries, revenue from coffee exports contributes significantly to foreign exchange earnings and also to GDP."
+short_text <- "Coffee is not only traded in large quantities, it also comes in a multitude of different qualities, varieties and forms. These include arabica and robusta, roasted or green, as well as instant and solubles. Coffee exports are also a key source of foreign exchange and national income for many developing countries. In 2012, total exports of 7 million tonnes accounted for a value of US\\$24 billion. Just 10 years ago, the value was only US\\$5.1 billion for a total of 5.5 million tonnes."
 
 
 
@@ -568,7 +568,7 @@ caption_text <- "Net trade of coffee in 2012"
 
 ## ---- P6coffeepricesTEXT ----
 spread_title <- "Coffee prices"
-short_text <- "Approximately 60 percent of the world’s coffee production is arabica, while the other 40 percent is robusta. The former is generally considered of superior quality and has higher prices. The latter tends to be hardier and has a bitter taste. In developing countries, including China and Indonesia, robusta is now the bean of choice. Up until 2013, prices of arabica were declining, primarily due to the availability of the cheaper robusta beans on the market. Between 2013 and 2014, however, prices per kg of both types increased, arabica from US\\$2.90 to US\\$4.18 and robusta from US\\$1.96 to US\\$2.09."
+short_text <- "Approximately 60 percent of the world’s coffee production is arabica, while the other 40 percent is robusta. The former is generally considered of superior quality and fetches a higher price. The latter tends to be hardier and has a bitter taste. In developing countries, including China and Indonesia, robusta is now the bean of choice. Up until 2013, prices of arabica were declining, primarily due to the growing availability of the cheaper robusta beans on world markets. Between 2013 and 2014, however, prices of both types rose, arabica from US\\$2.90 to US\\$4.18 and robusta from US\\$1.96 to US\\$2.09."
 
 
 

@@ -29,7 +29,7 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P5overTEXT ----
 spread_title <- "Overview"
-short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, more people have lived in cities than in rural areas."
+short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to continuous, albeit declining population growth in the world. While rates continue to slow, the world’s population has nevertheless doubled since the late 1960s, to over 7 billion people today. Generally, population growth is high where income levels are low. This is especially true in cities. Since 2008, more people live in cities than in rural areas."
  # --------------------------------------------------------------- #
 
 ## ---- P5overData ----
@@ -212,7 +212,7 @@ caption_text <- "Rural population, share of total population (2014)"
 
 ## ---- P5econTEXT ----
 spread_title <- "Economy"
-short_text <- "Changes in the wider economy, including growing global integration – and therefore trade, currency movements and international prices – affect the performance of commodities in the agricultural sector, such as coffee. During the recent economic downturn, some sectors were hard hit. Agriculture, including the coffee sector, demonstrated resilience. Since 2008, the value of coffee production has grown at over two percent per year, on par with overall growth in agricultural production."
+short_text <- "Changes in the wider economy, including growing global integration – and therefore trade, currency movements and international prices – affect the performance of commodities in the agricultural sector, including coffee production. During the global economic downturn of the last decade, some sectors were particularly hard hit. Agriculture was affected too, but the coffee sector has demonstrated remarkable resilience. Since 2008, the value of coffee production has grown at over 3.5 percent per year, which is greater than 2.5 percent overall growth in agricultural production."
  # --------------------------------------------------------------- #
 
 ## ---- P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
@@ -395,7 +395,7 @@ caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013
 
 ## ---- P5povertyTEXT, eval=P5poverty, short_text_ChartPage=P5poverty ----
 spread_title <- "Poverty"
-short_text <- "Most coffee is produced in developing countries. Yet the benefits from the expansion of the coffee industry in recent years have not necessarily trickled down to the poorest. Among the largest coffee producing countries, many still have more than 10 percent of their populations living below US\\$1.25 a day. Changes are occurring, however, even for the smallest – and often the poorest – farmers, to help them climb out of poverty. By adapting new technologies or by switching plant varieties, crop yields can improve. Farmers’ access to markets can also make a difference."
+short_text <- "Most coffee is produced in developing countries. Yet the benefits from the expansion of the coffee industry in recent years have not always trickled down to the poorest. Among the largest coffee producing countries, many still have more than 10 percent of their populations living below US\\$1.25 a day. However, change is on the way, and coffee plays a pivotal role in this process. Coffee production and the proceeds from it have allowed a growing number of small and poor farmers to escape the poverty trap. By adapting new technologies or by switching to better varieties, many now harvest higher crops of better quality beans."
  # --------------------------------------------------------------- #
 
 
