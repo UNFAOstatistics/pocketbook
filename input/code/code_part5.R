@@ -426,7 +426,7 @@ dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 # dw <- head(cars)
 # dw$names <- "hahahaha"
 
-print.xtable(xtable(dw, caption = "People living on less than 2005 PPP \\$1.25 a day (mln)", digits = c(0,0,0,0),
+print.xtable(xtable(dw, caption = "\\large{People living on less than 2005 PPP \\$1.25 a day (mln)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
              type = "latex", table.placement = NULL, 
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")

@@ -121,7 +121,9 @@ rcc <- rcc[c(3,2)]
 
 names(rcc) <- c("","%")
 
-print.xtable(xtable(rcc, caption = "Fastest growing coffee producers based on quantities (average annual growth rate, 2000 to 2013)", digits = c(0,0,0),
+
+
+print.xtable(xtable(rcc, caption = "\\large{Fastest growing coffee producers based on quantities (average annual growth rate, 2000 to 2013)}", digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = "latex", table.placement = NULL,
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
@@ -381,7 +383,7 @@ rcc <- rcc[c(3,2)]
 
 names(rcc) <- c("","%")
 
-print.xtable(xtable(rcc, caption = "Fastest growing coffee exporters based on export value (average annual growth rate, 2000 to 2013)", digits = c(0,0,0),
+print.xtable(xtable(rcc, caption = "\\large{Fastest growing coffee exporters based on export value (average annual growth rate, 2000 to 2013)}", digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = "latex", table.placement = NULL,
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
