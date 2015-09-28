@@ -979,7 +979,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part5!10}{white}
 \clearpage
 
-<<part5, child = if (include_part5) 'syb_part5.Rnw'>>=
+<<part5, child = if (include_part5) 'syb_part5.Rnw', cache=cache_part5>>=
 @
 
 
@@ -1003,7 +1003,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part6!10}{white}
 \clearpage
 
-<<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
+<<part6, child = if (include_part6) 'syb_part6.Rnw', cache=cache_part6>>=
 @
 
 
