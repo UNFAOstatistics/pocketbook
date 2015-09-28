@@ -37,20 +37,34 @@ include_part1 <- F
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
-include_part5 <- F
-include_part6 <- F
+include_part5 <- T
+include_part6 <- T
 include_country_profiles <- T
 include_definitions <- T
 
 # Upgrade the comparison tables
-broke_all_into_images <- F
+broke_all_into_images <- T
 broke_only_tables_into_images <- F
 
 # To be uploaded for comments or not
-upload_pdfs_to_server <-   F
-upload_images_to_server <- F
+upload_pdfs_to_server <-   T
+upload_images_to_server <- T
 # just for troubleshooting
 region_to_report <- "RAF"
+
+
+# CACHE
+cache_foreword <- T
+cache_overview <- T
+cache_part1 <- F
+cache_part2 <- F
+cache_part3 <- F
+cache_part4 <- F
+cache_part5 <- F
+cache_part6 <- F
+cache_country_profiles <- F
+cache_definitions <- F
+
 
 ############################################################
 ############################################################

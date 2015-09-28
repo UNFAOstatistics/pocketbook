@@ -84,10 +84,12 @@ knit_hooks$set(top_right_plot = function(before, options, envir) {
        return("\\RightText{\\begin{chart} \n")
      } else {
 
+      # return(paste0("\\caption{\\renewcommand\\normalsize{\\fontsize{6.6}{7}}% \\normalsize ",caption_text,"}","\\end{chart}} \n"))
       return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
     }
 })
 
+# \\caption{\\renewcommand\\normalsize{\\fontsize{6.6}{7}}%\n              \\normalsize test}\\end{chart}} \n
 
 knit_hooks$set(top_right_minitable = function(before, options, envir) {
   
