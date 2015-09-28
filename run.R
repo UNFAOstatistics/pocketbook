@@ -9,7 +9,7 @@ gc()
 
 # set root directory
 # root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
-root.dir <- "~/FAO/regional15/" # Amy
+# root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
@@ -43,14 +43,28 @@ include_country_profiles <- F
 include_definitions <- F
 
 # Upgrade the comparison tables
-broke_all_into_images <- F
+broke_all_into_images <- T
 broke_only_tables_into_images <- F
 
 # To be uploaded for comments or not
-upload_pdfs_to_server <-   F
-upload_images_to_server <- F
+upload_pdfs_to_server <-   T
+upload_images_to_server <- T
 # just for troubleshooting
 region_to_report <- "RAF"
+
+
+# CACHE
+cache_foreword <- T
+cache_overview <- T
+cache_part1 <- F
+cache_part2 <- F
+cache_part3 <- F
+cache_part4 <- F
+cache_part5 <- F
+cache_part6 <- F
+cache_country_profiles <- F
+cache_definitions <- F
+
 
 ############################################################
 ############################################################
