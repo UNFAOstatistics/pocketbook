@@ -186,7 +186,7 @@ p <- p + labs(x="",y="1 000 ha")
 p <- p + scale_y_continuous(labels = space)
 p
 # Caption
-caption_text <- "Area harvested, coffee"
+caption_text <- "Countries with the highest harvested area of coffee in 2013"
 
 
 
@@ -614,7 +614,7 @@ p
 
 
 # Caption
-caption_text <- "Annual coffee prices, 1960 to present, real 2010 US\\$"
+caption_text <- "Annual coffee prices, 1960 to 2014, real 2010 US\\$"
 
 
 
@@ -691,6 +691,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="US$ per tonne")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels = space)
+p <- p + scale_x_continuous(breaks=c(2001,2005,2010,2013))
 p
 
 # Caption
