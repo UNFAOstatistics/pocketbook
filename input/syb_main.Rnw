@@ -85,7 +85,7 @@ knit_hooks$set(top_right_plot = function(before, options, envir) {
      } else {
 
       # return(paste0("\\caption{\\renewcommand\\normalsize{\\fontsize{6.6}{7}}% \\normalsize ",caption_text,"}","\\end{chart}} \n"))
-      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n"))
+      return(paste0("\\caption{\\large{",caption_text,"}}","\\end{chart}} \n"))
     }
 })
 
@@ -112,7 +112,7 @@ knit_hooks$set(left_plot = function(before, options, envir) {
        return("\\LeftChart{\\begin{chart} \n")
      } else {
        
-      return(paste0("\\vspace{.6mm} \n","\\caption{",caption_text,"}","\\end{chart}} \n"))
+      return(paste0("\\vspace{.6mm} \n","\\caption{\\large{",caption_text,"}}","\\end{chart}} \n"))
     }
 })
 
@@ -123,7 +123,7 @@ knit_hooks$set(right_plot = function(before, options, envir) {
        return("\\RightChart{\\begin{chart} \n")
      } else {
        
-      return(paste0("\\vspace{.6mm} \n","\\caption{",caption_text,"}","\\end{chart}} \n"))
+      return(paste0("\\vspace{.6mm} \n","\\caption{\\large{",caption_text,"}}","\\end{chart}} \n"))
     }
 })
 
@@ -134,7 +134,7 @@ knit_hooks$set(bottom_plot = function(before, options, envir) {
        return("\\BottomChart{\\begin{chart} \n")
      } else {
        
-      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage}"))
+      return(paste0("\\caption{\\large{",caption_text,"}}","\\end{chart}} \n \\end{ChartPage}"))
       # return(paste0("\\end{chart}} \n \\end{ChartPage}"))
     }
 })
@@ -147,7 +147,7 @@ knit_hooks$set(bottom_plot2 = function(before, options, envir) {
        return("\\BottomChart{\\begin{chart} \n")
      } else {
        
-      return(paste0("\\caption{",caption_text,"}","\\end{chart}} \n \\end{ChartPage2}"))
+      return(paste0("\\caption{\\large{",caption_text,"}}","\\end{chart}} \n \\end{ChartPage2}"))
       #return(paste0("\\end{chart}} \n \\end{ChartPage2}"))
     }
 })
@@ -169,7 +169,7 @@ knit_hooks$set(map_plot = function(before, options, envir) {
        return("\\begin{figure} \n")
      } else {
        
-      return(paste0("\\caption{",caption_text,"} \n","\\end{figure}"))
+      return(paste0("\\caption{\\large{",caption_text,"}} \n","\\end{figure}"))
     }
 
 })
@@ -511,7 +511,7 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
 
 
 
-<<foreword_chunk, eval=include_foreword>>=
+<<foreword_chunk, eval=include_foreword, cache=cache_foreword>>=
 
   if (region_to_report != "COF"){
     cat(
@@ -769,7 +769,7 @@ p
 %\begin{landscape}
 
 
-<<overview_table, eval=include_overview_table, results='asis'>>=
+<<overview_table, eval=include_overview_table, results='asis', cache=cache_overview_table>>=
 
 # Add region key and subset
 if (!(region_to_report %in% c("GLO","COF"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
