@@ -157,7 +157,7 @@ dat$OA.TEAPT.POP.PPL.NO <- dat$OA.TEAPT.POP.PPL.NO / 1000000
 dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people")
 #p <- p + guides(color = guide_legend(nrow = 2))
@@ -338,7 +338,7 @@ dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% c(5100,5200,5300,5
 dat_plot <- dat
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = NV.AGR.TOTL.ZS,group=SHORT_NAME,color=SHORT_NAME))
-p <- p + geom_line() + geom_point()
+p <- p + geom_line()
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 #p <- p + guides(color = guide_legend(nrow = 2))
@@ -594,7 +594,7 @@ ddw$Year <- factor(ddw$Year)
 ddw$Year <- as.numeric(levels(ddw$Year))[ddw$Year]
 
 p <- ggplot(ddw, aes(x=Year,y=value,color=region,group=region))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(ddw$region)))[["Sub"]])
 p <- p + labs(x="",y="% of population")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -851,7 +851,7 @@ dat_plot <- df.fsi[df.fsi$Year %in%  c(2000:2015) & df.fsi$FAOST_CODE %in% c(500
               c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
 p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=FAO_TABLE_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + scale_y_continuous(labels=space) 
