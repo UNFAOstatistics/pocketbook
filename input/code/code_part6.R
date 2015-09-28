@@ -610,8 +610,8 @@ p <- ggplot(dat_plot, aes(x=Year, y=value, color=variety))
 p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="$/kg")
-p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels = space)
+p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + coord_cartesian(ylim=c(0,12))
 p
 
 

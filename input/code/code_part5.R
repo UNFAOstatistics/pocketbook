@@ -783,7 +783,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space, breaks=c(2500,3000,3500)) 
 p
 
 # Caption
@@ -816,7 +816,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space, breaks=c(1800,2000,2200)) 
 p
 
 # Caption
