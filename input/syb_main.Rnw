@@ -401,7 +401,23 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 \vspace*{100pt}
 
 \begin{center}
-\Huge{FAO Statistical Pocketbook}
+
+
+<<define_maintitle, echo=FALSE, results='asis', eval=TRUE>>=
+  
+if (region_to_report == "RAF") maintitle <- "FAO Statistical Pocketbook"
+if (region_to_report == "RAP") maintitle <- "FAO Statistical Pocketbook"
+if (region_to_report == "REU") maintitle <- "FAO Statistical Pocketbook"
+if (region_to_report == "RNE") maintitle <- "FAO Statistical Pocketbook"
+if (region_to_report == "LAC") maintitle <- "FAO Statistical Pocketbook"
+if (region_to_report == "COF") maintitle <- "FAO Coffee Pocketbook"
+if (region_to_report == "GLO") maintitle <- "FAO Statistical Pocketbook"
+
+  cat(paste0("\\Huge{",maintitle,"}"))
+  @
+
+
+
 \end{center}
 
 \vspace*{10pt}
@@ -420,7 +436,8 @@ if (region_to_report == "RAP") subtitle <- "Asia and the Pacific \n\n Food and A
 if (region_to_report == "REU") subtitle <- "Europe and Central Asia \n\n Food and Agriculture"
 if (region_to_report == "RNE") subtitle <- "Near East and North Africa \n\n Food and Agriculture"
 if (region_to_report == "LAC") subtitle <- "Latin America and \n\n the Caribbean"
-if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
+# if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
+if (region_to_report == "COF") subtitle <- ""
 if (region_to_report == "GLO") subtitle <- ""
 
   cat(paste0("\\Huge{",subtitle,"}"))
@@ -447,7 +464,7 @@ Food and Agriculture Organization of the United Nations, Rome, 2015
     \\ifprint
     \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-30 -100]{./I4985E_Disclaimer_coffee.pdf}
     \\else
-    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-10 -50]{./I4985E_Disclaimer_coffee.pdf}
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-10 -10]{./I4985E_Disclaimer_coffee.pdf}
     \\fi
   ")
     if (region_to_report != "COF"){
@@ -511,7 +528,7 @@ if (region_to_report == "RAP") cat("\\textbf{Asia and the Pacific pockebook spef
 if (region_to_report == "REU") cat("\\textbf{Europe and Central Asia pockebook spefific entry for the foreword}")
 if (region_to_report == "RNE") cat("\\textbf{Near East and North Africa pockebook spefific entry for the foreword}")
 if (region_to_report == "LAC") cat("\\textbf{Latin America and pockebook spefific entry for the foreword}")
-if (region_to_report == "COF") cat("\\textbf{Coffee and Coffee pockebook spefific entry for the foreword}")
+# if (region_to_report == "COF") cat("\\textbf{Coffee and Coffee pockebook spefific entry for the foreword}")
 
 cat("
 \\large
@@ -562,15 +579,13 @@ FAO is deeply committed to helping countries strengthen their statistical system
 \\bigskip
 \\bigskip
 \\bigskip
-\\bigskip
-
 
 \\large
-
 
 Today more than ever, people are consuming coffee. As the middle classes of the developing world continues to grow, they are enjoying the beverage more frequently, and in a larger number of countries. On the other side of the supply chain are the producers. Coffee has proven to be an important economic driver for many smallholders, who provide most of the world’s beans. Today, annual output is almost nine million tonnes, one million tonnes more than a decade ago. The gross production value of green coffee now exceeds US\\$16 billion, and its export value reached US\\$24 billion in 2012. 
 
 \\vspace{3mm}
+
 
 Coffee growers can face headwinds due to inadequate access to credit, to price volatility, or to currency or interest-rate fluctuations, all of which can exclude them from some of the gains of an expanding market. Roasters and importers also experience losses as a result, but the impact is strongest further up the chain. Climate change and its impact on weather conditions also create uncertainty and may just be one of the most important threats to coffee production.
 
@@ -583,7 +598,7 @@ This Coffee Pocketbook, which is part of the FAO Statistical Yearbook suite of p
 FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. It is also committed to improving the livelihoods of people along the various stages of the coffee production chain.
 
 
-
+\\bigskip
 \\bigskip
 \\bigskip
 
@@ -661,7 +676,7 @@ cat("
 
 \clearpage
 
-<<overview_map, eval=include_overview, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
+<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
 
 #<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
 
@@ -754,7 +769,7 @@ p
 %\begin{landscape}
 
 
-<<overview_table, eval=include_overview, results='asis'>>=
+<<overview_table, eval=include_overview_table, results='asis'>>=
 
 # Add region key and subset
 if (!(region_to_report %in% c("GLO","COF"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
