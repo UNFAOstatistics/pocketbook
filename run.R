@@ -37,10 +37,10 @@ include_part1 <- F
 include_part2 <- F
 include_part3 <- F
 include_part4 <- F
-include_part5 <- T
-include_part6 <- T
-include_country_profiles <- T
-include_definitions <- T
+include_part5 <- F
+include_part6 <- F
+include_country_profiles <- F
+include_definitions <- F
 
 # Upgrade the comparison tables
 broke_all_into_images <- T

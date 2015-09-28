@@ -237,7 +237,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
+caption_text <- "Value added, share of GDP (2013)"
 # --------------------------------------------------------------- #
 
 
