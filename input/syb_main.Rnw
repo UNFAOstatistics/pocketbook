@@ -450,8 +450,18 @@ if (region_to_report == "GLO") subtitle <- ""
 Food and Agriculture Organization of the United Nations, Rome, 2015
 \end{center}
 
-\Huge{Generated at} \\ 
-\Sexpr{Sys.time()}
+<<timestamp, eval=include_timestamp>>=
+time_generated <- Sys.time()
+
+cat(
+  paste0("\\Huge{Generated at} \n",time_generated)
+)
+  
+@
+
+
+
+
 
 \newpage
 
@@ -677,7 +687,7 @@ cat("
 
 \clearpage
 
-<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Regions and countries in the book">>=
+<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
 
 #<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
 
@@ -770,7 +780,7 @@ p
 %\begin{landscape}
 
 
-<<overview_table, eval=include_overview_table, results='asis', cache=cache_overview_table>>=
+<<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
 # Add region key and subset
 if (!(region_to_report %in% c("GLO","COF"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
