@@ -73,9 +73,13 @@ if (region_to_report == "COF"){
 p <- ggplot(dat, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + theme(axis.text.x = element_text(angle = 45))
 p <- p + labs(x="",y="billion people")
+p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
+p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
+
+cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
+cat("\\vspace{1mm}")
 
 # Caption
 
@@ -153,7 +157,7 @@ dat$OA.TEAPT.POP.PPL.NO <- dat$OA.TEAPT.POP.PPL.NO / 1000000
 dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people")
 #p <- p + guides(color = guide_legend(nrow = 2))
@@ -590,7 +594,7 @@ ddw$Year <- factor(ddw$Year)
 ddw$Year <- as.numeric(levels(ddw$Year))[ddw$Year]
 
 p <- ggplot(ddw, aes(x=Year,y=value,color=region,group=region))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(ddw$region)))[["Sub"]])
 p <- p + labs(x="",y="% of population")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -847,7 +851,7 @@ dat_plot <- df.fsi[df.fsi$Year %in%  c(2000:2015) & df.fsi$FAOST_CODE %in% c(500
               c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
 
 p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=FAO_TABLE_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line()
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + scale_y_continuous(labels=space) 
