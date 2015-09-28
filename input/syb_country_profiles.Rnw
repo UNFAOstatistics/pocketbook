@@ -785,14 +785,24 @@ for (i in 1:nrow(M49countries)) {
   define_row_color <- paste0("\\rowcolors{1}{",row_color,"!10}{white}")
   # conditional row colors ------------------------------
   
-  
-  cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
+if (region_to_report == "COF"){
+    cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
+      define_row_color,
+      "\\begin{tabular}{L{4.6cm} R{0.9cm} R{0.9cm} R{0.9cm}}
+      \\toprule
+      \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
+      \\midrule\n",
+      file = fileOut, append = TRUE)
+} else{
+    cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
       define_row_color,
       "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
       \\toprule
       \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
       \\midrule\n",
       file = fileOut, append = TRUE)
+}
+
   ## data
   tmp = CountryProfile.df[CountryProfile.df[, "FAOST_CODE"] == M49countries[i, "FAOST_CODE"], ]
   for (part in 1:length(unique(indicators.df[, "PART"]))) {
