@@ -58,7 +58,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
                  legend.key.height=unit(7,'mm'),
                  legend.key.width=unit(4,'mm'),
                  legend.direction = "vertical",
-                 legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
+                 legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
                  #legend.background=element_rect(colour=NA, fill=NA),
                  legend.text=element_text(size=14), 
                  legend.title=element_text(size=14), 

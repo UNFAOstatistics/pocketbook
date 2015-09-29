@@ -639,34 +639,36 @@ if (!("current_account_balance" %in% names(syb.df)) & region_to_report == "RNE")
 
 # Countries ---------------------------------------------------------------
 
+if (region_to_report == "COF"){
+  M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","SHORT_NAME")]
+  M49countries <- as.data.frame(M49countries)
+} else {
 M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>% 
   select(FAOST_CODE, SHORT_NAME) %>%  arrange(SHORT_NAME) %>%  na.omit()
+M49countries <- as.data.frame(M49countries)  
+}
 
-
-## Sanitize the country names
-# This is odd now
-#M49countries[, "SHORT_NAME"] <- sanitizeToLatex(M49countries[, "SHORT_NAME"]) 
 ## Remove old countries
-OldCountries <- 
+OldCountries <-
   data.frame(FAOST_CODE = c(15,51,62,151,164,186,228,206,247,246,248,
                             17,83,196,191),
              COUNTRY_NAME = c("Belgium-Luxembourg", "Czechoslovakia",
                               "Ethiopia PDR", "Netherlands Antilles",
                               "Pacific Islands",
                               "Serbia and Montenegro", "Soviet Union",
-                              "Sudan (former)", "Yemen (former)", 
+                              "Sudan (former)", "Yemen (former)",
                               "Yemen (old)", "Yugoslav SFR",
                               "Bermuda","Kiribati","Seychelles","Saint Vincent and the Grenadines "),
              stringsAsFactors = FALSE)
-M49countries <- 
-  M49countries[!M49countries[, "FAOST_CODE"] %in% 
+M49countries <-
+  M49countries[!M49countries[, "FAOST_CODE"] %in%
                  OldCountries[, "FAOST_CODE"],]
-## Remove the countries we do not want to show: , 
+## Remove the countries we do not want to show: ,
 tbr.df <-
   data.frame(COUNTRY_NAME = c("Aland Island", "American Samoa", "Andorra",
                             "Anguilla", "Antigua and Barbuda", "Aruba",
                             "Bahamas", "Bonaire", "British Virgin Islands",
-                            "Cayman", "Cook Islands", "Curacao", "Dominica", 
+                            "Cayman", "Cook Islands", "Curacao", "Dominica",
                             "Equatorial Guinea", "Falkland Islands (Malvinas)",
                             "Faroe", "French Guiana",
                             "French Polynesia", "Gibraltar", "Greenland",
@@ -692,32 +694,28 @@ tbr.df <-
                               190,192,285,281,280,200,260,218,219,224,227,
                               240,243,205),
              stringsAsFactors = FALSE)
-M49countries <- 
-  M49countries[!M49countries[, "FAOST_CODE"] %in% 
-                 tbr.df[, "FAOST_CODE"],]
+M49countries <-
+  M49countries[!M49countries[, "FAOST_CODE"] %in% tbr.df[, "FAOST_CODE"],]
 ## Occupied Palestinian Territory
 M49countries[M49countries[, "FAOST_CODE"] == 299, "SHORT_NAME"] <-
   "West Bank and Gaza Strip"
 ## Chinas
-M49countries <- 
+M49countries <-
   M49countries[!M49countries[, "FAOST_CODE"] %in% c(41,128,96,357,214),]
 ## Add aggregates NOT
-M49countries <- 
-  rbind(data.frame(FAOST_CODE = c(5000,5100,5300,5205,5500),
-                   SHORT_NAME = c("World",
-                                      "Africa", "Asia", 
-                                      "Latin America and the Caribbean",
-                                      "Oceania"),
-                   stringsAsFactors = FALSE),
-        M49countries)
+# M49countries <-
+#   rbind(data.frame(FAOST_CODE = c(5000,5100,5300,5205,5500),
+#                    SHORT_NAME = c("World",
+#                                       "Africa", "Asia",
+#                                       "Latin America and the Caribbean",
+#                                       "Oceania"),
+#                    stringsAsFactors = FALSE),
+#         M49countries)
 
 # Subset countries per region -----------------------
 
 # Add region key and subset
-M49countries <- left_join(M49countries,region_key)
 
-M49countries <- M49countries[which(M49countries[[region_to_report]]),]
-dim(M49countries)
 
 # Indicators --------------------------------------------------------------
 
