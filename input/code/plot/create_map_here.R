@@ -1,7 +1,7 @@
 create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc27d","#f5f5f5","#80cdc1","#018571")){
   
   if (!(manualPalette)) {
-    colPart = plot_colors(part = syb_part, 12)
+    colPart = plot_colors(part = syb_part, 6)
     mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
     
     if ("No Data" %in% unique(cat_data$value_cat)) {
@@ -55,7 +55,8 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
   p <- p + theme(legend.position = c(0.05,0.05), 
                  legend.justification=c(0,0),
-                 legend.key.size=unit(7,'mm'),
+                 legend.key.height=unit(7,'mm'),
+                 legend.key.width=unit(4,'mm'),
                  legend.direction = "vertical",
                  legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
                  #legend.background=element_rect(colour=NA, fill=NA),

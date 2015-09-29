@@ -32,7 +32,7 @@ theme_update(
   #   legend.title.align = NULL,
   legend.position = "top",
   legend.direction = "horizontal",
-  legend.key.height = unit(5,"mm"),
+  legend.key.height = unit(4,"mm"),
   legend.key.width = unit(4,"mm"),
   #   legend.justification = "center",
   legend.box = NULL,

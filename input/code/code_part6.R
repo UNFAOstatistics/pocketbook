@@ -5,7 +5,7 @@ source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 syb_part <- 6
 
 ## Part 4
-colPart6 <- plot_colors(part = syb_part, 12)
+colPart6 <- plot_colors(part = syb_part, 8)
 col.main1 <- colPart6[["Main"]][1]
 ## color for the grid
 col.main2 <- colPart6[["Main"]][2]
@@ -202,7 +202,7 @@ rc <- QC_656_5510 %>%  filter(Year %in% 2000:2013, FAOST_CODE %in% top5_codes$FA
 dat_plot <- left_join(rc,region_key[c("FAOST_CODE","SHORT_NAME")])
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=SHORT_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size = 1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="1 000 mln tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -489,7 +489,7 @@ dat_plot <- dat_plot %>% group_by(Year,fill) %>%
           dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
-p <- p + geom_line()
+p <- p + geom_line(size = 1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="mln US$")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -607,7 +607,7 @@ dat_plot$variety[dat_plot$type == "KCOFFEE_ARABIC"] <- "Coffee, arabica"
 dat_plot$variety[dat_plot$type == "KCOFFEE_ROBUS"] <- "Coffee, robusta"
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=variety))
-p <- p + geom_line()
+p <- p + geom_line(size = 1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="$/kg")
 p <- p + guides(color = guide_legend(nrow = 1))
@@ -688,7 +688,7 @@ dat_plot <- PP_656_5532 %>% filter(Year > 2000, FAOST_CODE %in% top5$FAOST_CODE)
 dat_plot <- left_join(dat_plot,region_key[c("FAOST_CODE","SHORT_NAME")])
 
 p <- ggplot(dat_plot, aes(x=Year, y=PP_656_5532, color=SHORT_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size = 1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="US$ per tonne")
 p <- p + guides(color = guide_legend(nrow = 2))

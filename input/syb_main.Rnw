@@ -689,8 +689,6 @@ cat("
 
 <<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
 
-#<<overview_map, eval=print_overview_map, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra, fig.cap="Regions and countries in the book">>=
-
 the_whole   <- map.df # for mapping the grey areas
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
@@ -708,17 +706,15 @@ grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 
 
-source(paste0(root.dir,'./input/code/plot/plot_color.R'))
-
-syb_part <- 1
-
-## Part 1
-colPart1 <- plot_colors(part = syb_part, 12)
-col.main1 <- colPart1[["Main"]][1]
-## color for the grid
-col.main2 <- colPart1[["Main"]][2]
-
-source(paste0(root.dir,"./input/code/plot/theme.R"))
+# source(paste0(root.dir,'./input/code/plot/plot_color.R'))
+# 
+# syb_part <- 1
+# 
+# ## Part 1
+# colPart1 <- plot_colors(part = syb_part, 6)
+# col.main1 <- colPart1[["Main"]][1]
+# 
+# source(paste0(root.dir,"./input/code/plot/theme.R"))
 
 
 
@@ -736,7 +732,7 @@ source(paste0(root.dir,"./input/code/plot/theme.R"))
 p <- ggplot(data=overview.df, aes(long,lat,group=group))
 #  ---- grid below the countries ------------------------
 p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
-              linetype = "solid", color = col.main2, alpha=.1)
+              linetype = "solid", color = "grey80", alpha=.5)
 # Grey for the non-data regions
 p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
 p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
@@ -747,8 +743,9 @@ p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FAL
 #                                     "#9F8170", # Beaver
 #                                     "#C3B091", # Khaki
 #                                     "#F0DC82")) # Buff
-if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
-if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
+# if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
+if (region_to_report == "COF")p <- p + scale_fill_manual(values = c("#8c510a","#d8b365","#f6e8c3","#c7eae5","#5ab4ac","#01665e"))
+# if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
@@ -979,7 +976,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part5!10}{white}
 \clearpage
 
-<<part5, child = if (include_part5) 'syb_part5.Rnw', cache=cache_part5>>=
+<<part5, child = if (include_part5) 'syb_part5.Rnw'>>=
 @
 
 
@@ -1003,7 +1000,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part6!10}{white}
 \clearpage
 
-<<part6, child = if (include_part6) 'syb_part6.Rnw', cache=cache_part6>>=
+<<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
 @
 
 
