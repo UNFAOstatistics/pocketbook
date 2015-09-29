@@ -212,7 +212,7 @@ caption_text <- "Rural population, share of total population (2014)"
 
 ## ---- P5econTEXT ----
 spread_title <- "Economy"
-short_text <- "Changes in the wider economy, including growing global integration – and therefore trade, currency movements and international prices – affect the performance of commodities in the agricultural sector, including coffee production. During the global economic downturn of the last decade, some sectors were particularly hard hit. Agriculture was affected too, but the coffee sector has demonstrated remarkable resilience. Since 2008, the value of coffee production has grown at over 3.5 percent per year, which is greater than 2.5 percent overall growth in agricultural production."
+short_text <- "Changes in the wider economy, including growing global integration – and therefore trade, currency movements and international prices – affect the performance of commodities in the agricultural sector, including coffee production. During the global economic downturn of the last decade, some sectors were particularly hard hit. Agriculture was affected too, but the coffee sector has demonstrated remarkable resilience. Since 2008, the value of coffee production has grown at over 3.5 percent per year, which is faster than 2.5 percent overall growth in agriculture."
  # --------------------------------------------------------------- #
 
 ## ---- P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
