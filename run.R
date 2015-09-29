@@ -9,12 +9,12 @@ gc()
 
 # set root directory
 # root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
-root.dir <- "~/FAO/regional15/" # Amy
+ root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
 # data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
-data.dir <- paste0(root.dir,"/input/data/database/")
+ data.dir <- paste0(root.dir,"/input/data/database/")
 
 # Stuff you DO edit
 # ----------------------------------------------------------------------------------
