@@ -747,7 +747,8 @@ p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FAL
 #                                     "#9F8170", # Beaver
 #                                     "#C3B091", # Khaki
 #                                     "#F0DC82")) # Buff
-if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
+# if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
+if (region_to_report == "COF")p <- p + scale_fill_manual(values = c("#8c510a","#d8b365","#f6e8c3","#c7eae5","#5ab4ac","#01665e"))
 if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
@@ -979,7 +980,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part5!10}{white}
 \clearpage
 
-<<part5, child = if (include_part5) 'syb_part5.Rnw', cache=cache_part5>>=
+<<part5, child = if (include_part5) 'syb_part5.Rnw'>>=
 @
 
 
@@ -1003,7 +1004,7 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part6!10}{white}
 \clearpage
 
-<<part6, child = if (include_part6) 'syb_part6.Rnw', cache=cache_part6>>=
+<<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
 @
 
 
