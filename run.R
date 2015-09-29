@@ -9,13 +9,9 @@ start_time <- Sys.time()
 #options(scipen=999) # disable scientific number formatting
 
 # set root directory
-<<<<<<< HEAD
 # root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
  root.dir <- "~/FAO/regional15/" # Amy
-=======
-root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
-# root.dir <- "~/FAO/regional15/" # Amy
->>>>>>> 14e6e38018b28e26be1dbd9af05013848ce8fb82
+
 
 setwd(root.dir)
 # set data directory
