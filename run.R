@@ -5,12 +5,11 @@
 rm(list=ls(all=TRUE))
 gc()
 
-start_time <- Sys.time()
 #options(scipen=999) # disable scientific number formatting
 
 # set root directory
-root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
-# root.dir <- "~/FAO/regional15/" # Amy
+# root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
+root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
@@ -45,18 +44,17 @@ include_part2        <- F
 include_part3        <- F
 include_part4        <- F
 include_part5        <- T
-include_part6        <- F
+include_part6        <- T
 # -------------------------------
 include_country_profiles <- F
-include_definitions  <- F
-# -------------------------------
+include_definitions      <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images <- F
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server <-   F
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"

@@ -734,7 +734,7 @@ p <- ggplot(data=overview.df, aes(long,lat,group=group))
 p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
               linetype = "solid", color = "grey80", alpha=.5)
 # Grey for the non-data regions
-p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
+p <- p + geom_polygon(data=the_whole, fill="grey50", colour = alpha("white", 1/2), size=.4, guide = FALSE)
 p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
 p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
 # p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])
