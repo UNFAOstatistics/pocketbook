@@ -173,7 +173,7 @@ top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
 p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.POU.PCT3D1,color=SHORT_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
@@ -237,7 +237,7 @@ dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  sele
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -349,7 +349,7 @@ dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  sele
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -413,7 +413,7 @@ dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  sele
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="kcal/cap/day", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -525,7 +525,7 @@ dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  sele
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -586,7 +586,7 @@ dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  sele
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DEA.PCFPV.IDD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="index", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -881,7 +881,7 @@ dat_plot$variable[dat_plot$variable == "SH.STA.ACSN"] <- "Sanitation facilities"
 
 
 p <- ggplot(dat_plot, aes(x=Year,y=value,color=variable))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y="percent of population")
 p <- p + scale_x_continuous(breaks=c(2000,2005,2010))

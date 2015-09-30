@@ -502,7 +502,7 @@ dat_plot <- dat_plot %>% group_by(Year,fill) %>%
           dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million tonnes")
 p <- p + theme(axis.text.x = element_text(angle=45))
@@ -685,7 +685,7 @@ dat_plot <- dat_plot %>% group_by(Year,subgroup) %>%
   dplyr::mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO /1000)
 
 p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=subgroup))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 p <- p + theme(axis.text.x = element_text(angle=45))

@@ -188,7 +188,7 @@ dat_plot$OA.TEAPT.POP.PPL.NO <- dat_plot$OA.TEAPT.POP.PPL.NO / 1000000
 #   dplyr::mutate(OA.TEAPT.POP.PPL.NO = OA.TEAPT.POP.PPL.NO / 1000000)
 
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -370,7 +370,7 @@ dat_plot <- dat %>%  group_by(subgroup,Year) %>%
     arrange(-share)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgroup))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -555,7 +555,7 @@ dat$share <- dat$OA.TEAPFA.POP.PPL.NO / dat$OA.TEAPF.POP.PPL.NO * 100
 dat_plot <- dat
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -799,7 +799,7 @@ dat_plot <- dat
 
 # Draw the plot
 p <- ggplot(dat, aes(x = Year, y = value, color=variable))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p

@@ -30,7 +30,7 @@ Production and consumption,31,QC_656_5510,,,"Production quantity, coffee (mln to
 Production and consumption,32,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/cap/day),,0
 Production and consumption,33,CC_2903_664,,,Vegetal (crop) products (kcal/cap/day),,0
 Production and consumption,34,CL_2941_664,,,Animal products (kcal/cap/day),,0
-Environment,35,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawan (% total),,1
+Environment,35,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% total),,1
 Environment,36,ER.LND.PTLD.ZS,,,Terrestrial protected areas (% total land area),,1
 Environment,37,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1
 Environment,38,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% total),,1

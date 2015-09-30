@@ -205,7 +205,7 @@ dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
 
 p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day")
 p
@@ -549,7 +549,7 @@ caption_text <- "Top 20 wheat producing countries, per capita"
 
 
 ## ---- P3cropBOTTOM ----
-dat <- syb.df %>% filter(Year >= 2000) %>%
+dat <- syb.df %>% filter(Year %in% 2000:2013) %>%
   select(FAOST_CODE,
          Year,
          QC.YIELD.CRLS.HG.NO,
@@ -574,10 +574,10 @@ dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
 dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(value = weighted.mean(QC.YIELD.CRLS.HG.NO, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=subgroup,color=subgroup))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="tonnes/cap", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 3))
 p
 
 # Caption
@@ -1137,7 +1137,7 @@ dat_plot <- dat %>% group_by(subgroup,Year) %>%
   dplyr::mutate(value = value/1000000000)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=subgroup,color=subgroup))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="billion constant 2005 US$", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
