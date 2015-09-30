@@ -1,22 +1,12 @@
 %%% METADATA
 \newpart{white}
-\part{}
-%\section{Definitions}
 \phantomsection
 \addcontentsline{toc}{section}{Definitions}
 
-% Pasting GSYPB2015 metdata here
-
-% should put the potential metadata into a csv and create a suitable one on the fly here!
-
-%\input{Metadata.tex}
-
-\begin{MetadataCollection} {}
+\begin{MetadataCollection}
 
 \twocolumn
-
 \LARGE
-
 \textbf{Definitions}
 
 \footnotesize
@@ -26,14 +16,14 @@
 <<print_definitions>>=
 
 
-# 
-# 
-#   ____      _    _____       _       __     
-#  |  _ \    / \  |  ___|   __| | ___ / _|___ 
+#
+#
+#   ____      _    _____       _       __
+#  |  _ \    / \  |  ___|   __| | ___ / _|___
 #  | |_) |  / _ \ | |_     / _` |/ _ \ |_/ __|
 #  |  _ <  / ___ \|  _|   | (_| |  __/  _\__ \
 #  |_| \_\/_/   \_\_|      \__,_|\___|_| |___/
-#                                             
+#
 
 definitions_to_print_RAF <- c("agricultural_area",
                               "agricultural_production_indices",
@@ -63,14 +53,7 @@ definitions_to_print_RAF <- c("agricultural_area",
                               "coffee_export_green",
                               "coffee_export_roasted",
                               "coffee_export_extracts",
-                              "coffee_import_green",
-                              "coffee_import_roasted",
-                              "coffee_import_extracts",
                               "coffee_producer_prices",
-                              "coffee_area_harvested",
-                              "coffee_yield",
-                              "coffee_production_quantity",
-                              "coffee_production_value",
                               "coffeebook_vegetal_(crop)_products",
                               "coffeebook_animal_products_(kcal_cap_day)",
                               "crop_production",
@@ -134,24 +117,30 @@ definitions_to_print_RAF <- c("agricultural_area",
                               "the_depth_of_the_food_deficit_(pros)",
                               "total_land_area",
                               "underweight._children_under_5_(pros)",
-                              "value_added_from_agriculture_(pros_gdp)",
+                              "value_added_agriculture",
+                              "value_added_industry",
+                              "value_added_services",
                               "value_of_food_(excluding_fish)_imports_over_total_merchandise_exports",
                               "water_resources_per_capita_(m3_person_year)",
                               "water_withdrawal._agriculture_(pros_of_total)",
                               "water_withdrawal._industrial_(pros_of_total_water_withdrawal)",
                               "wheat",
                               "vitamin_A_deficiency_total_pop_(pros)",
-                              "wood_pellet_production_(thousand_tonnes)")
+                              "wood_pellet_production_(thousand_tonnes)",
+                              "yield_crops",
+                              "food_production_index",
+                              "food_production_value_(gross)"
+                              )
 
 
-# 
-# 
-#   ____      _    ____        _       __     
-#  |  _ \    / \  |  _ \    __| | ___ / _|___ 
+#
+#
+#   ____      _    ____        _       __
+#  |  _ \    / \  |  _ \    __| | ___ / _|___
 #  | |_) |  / _ \ | |_) |  / _` |/ _ \ |_/ __|
 #  |  _ <  / ___ \|  __/  | (_| |  __/  _\__ \
 #  |_| \_\/_/   \_\_|      \__,_|\___|_| |___/
-#                                             
+#
 
 definitions_to_print_RAP <- c("agricultural_area",
                               "agricultural_production_indices",
@@ -181,14 +170,7 @@ definitions_to_print_RAP <- c("agricultural_area",
                               "coffee_export_green",
                               "coffee_export_roasted",
                               "coffee_export_extracts",
-                              "coffee_import_green",
-                              "coffee_import_roasted",
-                              "coffee_import_extracts",
                               "coffee_producer_prices",
-                              "coffee_area_harvested",
-                              "coffee_yield",
-                              "coffee_production_quantity",
-                              "coffee_production_value",
                               "coffeebook_vegetal_(crop)_products",
                               "coffeebook_animal_products_(kcal_cap_day)",
                               "crop_production",
@@ -252,22 +234,28 @@ definitions_to_print_RAP <- c("agricultural_area",
                               "the_depth_of_the_food_deficit_(pros)",
                               "total_land_area",
                               "underweight._children_under_5_(pros)",
-                              "value_added_from_agriculture_(pros_gdp)",
+                              "value_added_agriculture",
+                              "value_added_industry",
+                              "value_added_services",
                               "value_of_food_(excluding_fish)_imports_over_total_merchandise_exports",
                               "water_resources_per_capita_(m3_person_year)",
                               "water_withdrawal._agriculture_(pros_of_total)",
                               "water_withdrawal._industrial_(pros_of_total_water_withdrawal)",
                               "wheat",
                               "vitamin_A_deficiency_total_pop_(pros)",
-                              "wood_pellet_production_(thousand_tonnes)")
+                              "wood_pellet_production_(thousand_tonnes)",
+                              "yield_crops",
+                              "food_production_index",
+                              "food_production_value_(gross)"
+                              )
 
-# 
-#   ____  _____ _   _       _       __     
-#  |  _ \| ____| | | |   __| | ___ / _|___ 
+#
+#   ____  _____ _   _       _       __
+#  |  _ \| ____| | | |   __| | ___ / _|___
 #  | |_) |  _| | | | |  / _` |/ _ \ |_/ __|
 #  |  _ <| |___| |_| | | (_| |  __/  _\__ \
 #  |_| \_\_____|\___/   \__,_|\___|_| |___/
-#                                          
+#
 
 definitions_to_print_REU <- c("agricultural_area",
                               "agricultural_production_indices",
@@ -297,14 +285,7 @@ definitions_to_print_REU <- c("agricultural_area",
                               "coffee_export_green",
                               "coffee_export_roasted",
                               "coffee_export_extracts",
-                              "coffee_import_green",
-                              "coffee_import_roasted",
-                              "coffee_import_extracts",
                               "coffee_producer_prices",
-                              "coffee_area_harvested",
-                              "coffee_yield",
-                              "coffee_production_quantity",
-                              "coffee_production_value",
                               "coffeebook_vegetal_(crop)_products",
                               "coffeebook_animal_products_(kcal_cap_day)",
                               "crop_production",
@@ -368,141 +349,29 @@ definitions_to_print_REU <- c("agricultural_area",
                               "the_depth_of_the_food_deficit_(pros)",
                               "total_land_area",
                               "underweight._children_under_5_(pros)",
-                              "value_added_from_agriculture_(pros_gdp)",
+                              "value_added_agriculture",
+                              "value_added_industry",
+                              "value_added_services",
                               "value_of_food_(excluding_fish)_imports_over_total_merchandise_exports",
                               "water_resources_per_capita_(m3_person_year)",
                               "water_withdrawal._agriculture_(pros_of_total)",
                               "water_withdrawal._industrial_(pros_of_total_water_withdrawal)",
                               "wheat",
                               "vitamin_A_deficiency_total_pop_(pros)",
-                              "wood_pellet_production_(thousand_tonnes)")
-
-
-# 
-#   ____  _   _ _____       _       __     
-#  |  _ \| \ | | ____|   __| | ___ / _|___ 
-#  | |_) |  \| |  _|    / _` |/ _ \ |_/ __|
-#  |  _ <| |\  | |___  | (_| |  __/  _\__ \
-#  |_| \_\_| \_|_____|  \__,_|\___|_| |___/
-#                                          
-
-
-definitions_to_print_RNE <- c("agricultural_area",
-                              "agricultural_production_indices",
-                              "agriculture_orientation_index",
-                              "agriculture_value_added_per_worker",
-                              "anemia_among_children_under_5_years_of_age._prevalence_(pros)",
-                              "anemia_women_in_reproductive_age_(pros)",
-                              "aquaculture_fish_production",
-                              "arable_land",
-                              "area_equipped_for_irrigation",
-                              "area_harvested",
-                              "area_irrigated_(pros)",
-                              "average_dietary_energy_supply_adequacy_(pros)",
-                              "average_farm_size_(ha)",
-                              "average_protein_supply_of_animal_origin_(g_capita_day)",
-                              "bioenergy_consumption_in_agriculture",
-                              "total_bioenergy_consumption",
-                              "total_energy_consumption_for_power_irrigation",
-                              "biofuel_production_(thousand_kt_of_oil_eq.)",
-                              "capture_fish_production",
-                              "cattle",
-                              "cereal_import_dependency_ratio",
-                              "cereals",
-                              "change_in_food_CPI",
-                              "children_under_5_years_of_age_affected_by_wasting_(pros)",
-                              "children_under_5_years_of_age_who_are_stunted_(pros)",
-                              "coffee_export_green",
-                              "coffee_export_roasted",
-                              "coffee_export_extracts",
-                              "coffee_import_green",
-                              "coffee_import_roasted",
-                              "coffee_import_extracts",
-                              "coffee_producer_prices",
-                              "coffee_area_harvested",
-                              "coffee_yield",
-                              "coffee_production_quantity",
-                              "coffee_production_value",
-                              "coffeebook_vegetal_(crop)_products",
-                              "coffeebook_animal_products_(kcal_cap_day)",
-                              "crop_production",
-                              "cropland",
-                              "cropping_intensity_ratio",
-                              "current_account_balance_(pros_GDP)",
-                              "dietary_energy_supply_(kcal_pc_day)",
-                              "dietary_energy_supply._cereals._roots_and_tubers_(pros)",
-                              "domestic_food_price_level_index",
-                              "domestic_food_price_volatility",
-                              "employment_in_agriculture_(pros)",
-                              "energy_use_intensity_in_agriculture_(mj_Idollar)",
-                              "fertilizers_(kg_ha)",
-                              "food_imports_and_exports_(mln_usdollar)",
-                              "food_production._average_value",
-                              "forestry_production",
-                              "forest_area_pros",
-                              "gdp_per_capita_(usdollar._ppp)",
-                              "government_expenditure_on_agriculture_(pros_total_outlays)",
-                              "greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)",
-                              "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
-                              "growth_value_of_food_production",
-                              "health_expenditure_total_(pros_of_GDP)",
-                              "health_expenditure_per_capita_PPP_(dollar)",
-                              "import_value_index_(2004_2006_=_100)",
-                              "improved_water_source_(pros)",
-                              "income_share_held_by_highest_20percent_(percent)",
-                              "iodine_deficiency_total_pop_(pros)",
-                              "labour_force_participation_rate",
-                              "life_expectancy_at_birth_(years)",
-                              "livestock_primary_production",
-                              "milk",
-                              "net_trade",
-                              "obesity_adults(pros)",
-                              "official_development_assistance_(oda)",
-                              "organic_area_(pros)",
-                              "other_naturally_regenerated_forest",
-                              "overweight_adults_(pros)",
-                              "per_capita_food_production_variability_(constant_2004_2006_thousand_intdollar_per_capita)",
-                              "per_capita_food_supply_variability_(kcal_capita_day)",
-                              "pesticides",
-                              "planted_forest",
-                              "political_stability_and_absence_of_violence_terrorism_(index)",
-                              "population_with_access_to_sanitation_facilities_(pros)",
-                              "population._rural",
-                              "population._total",
-                              "population_growth_(pros)",
-                              "pop_affec_by_droughts_floods_extr_temp_(pros)",
-                              "poverty_headcount_ratio_at_dollar1.25_a_day_PPP_(percent_of_population)",
-                              "poverty_headcount_ratio_at_national_poverty_line_(percent_of_population)",
-                              "poverty_headcount_ratio_at_rural_poverty_line_(percent_of_rural_population)",
-                              "prevalence_of_undernourishment",
-                              "primary_forest",
-                              "primary_completion_rate._total_(percent of relevant age group)",
-                              "renewable_water_resources_withdrawn_(pros_of_total)",
-                              "rice",
-                              "road_density_(per_100_sq_km_of_land_area)",
-                              "roundwood_production_(mln_m3)",
-                              "share_of_food_expenditure(pros)",
-                              "terrestrial_protected_areas_(pros_total_land_area)",
-                              "the_depth_of_the_food_deficit_(pros)",
-                              "total_land_area",
-                              "underweight._children_under_5_(pros)",
-                              "value_added_from_agriculture_(pros_gdp)",
-                              "value_of_food_(excluding_fish)_imports_over_total_merchandise_exports",
-                              "water_resources_per_capita_(m3_person_year)",
-                              "water_withdrawal._agriculture_(pros_of_total)",
-                              "water_withdrawal._industrial_(pros_of_total_water_withdrawal)",
-                              "wheat",
-                              "vitamin_A_deficiency_total_pop_(pros)",
-                              "wood_pellet_production_(thousand_tonnes)")
+                              "wood_pellet_production_(thousand_tonnes)",
+                              "yield_crops",
+                              "food_production_index",
+                              "food_production_value_(gross)"
+                              )
 
 
 
- #   ____ ___  _____       _       __     
- #  / ___/ _ \|  ___|   __| | ___ / _|___ 
+ #   ____ ___  _____       _       __
+ #  / ___/ _ \|  ___|   __| | ___ / _|___
  # | |  | | | | |_     / _` |/ _ \ |_/ __|
  # | |__| |_| |  _|   | (_| |  __/  _\__ \
  #  \____\___/|_|      \__,_|\___|_| |___/
- #                                        
+ #
 
 
 
@@ -598,7 +467,7 @@ definitions_to_print_RNE <- c("agricultural_area",
 # #                           "wheat",
 # #                           "wood_pellet_production_(thousand_tonnes)"
 #                           )
-# 
+#
 
 
 
@@ -712,7 +581,7 @@ definitions_to_print_COF <- c(#"agricultural_area",
                                 # "vitamin_A_deficiency_total_pop_(pros)",
                                 # "wood_pellet_production_(thousand_tonnes)",
                                 # "yield_crops",
-                                
+
 )
 
 
@@ -731,7 +600,7 @@ if (region_to_report == "COF") definitions_to_print <- definitions_to_print_COF
 d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
 
 for (i in definitions_to_print){
-  
+
 #   i <- "bioenergy_consumption_in_agriculture"
 #   i <- "arable_land"
   item <- d[d$id %in% i,]
@@ -743,8 +612,8 @@ for (i in definitions_to_print){
   if (nchar(item[["owner"]]) != 0){
     owner_line <- paste0("\\owner{ ",item[["owner"]]," } \n")
   } else owner_line <- "\n"
-  
-    
+
+
   cat(paste0("\\begin{metadata}{",item[["name"]],"}{} \n",
              item[["description"]],"\n",
              source_line,
@@ -758,64 +627,4 @@ for (i in definitions_to_print){
 
 
 
-\onecolumn
-
-
-\newpart{white}
-\phantomsection
-\addcontentsline{toc}{section}{Notes}
-
-% manually pasting notes here!!
-
-% \input{./Notes.tex}
-
-\onecolumn
-\LARGE
-\textbf{Notes}
-
-\bigskip
-
-\footnotesize
-The country classification adopted in this publication is based on the United Nations M49 classification \\* (\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). The country names have been abbreviated for the purpose of this publication. The official FAO names can be found at \url{http://termportal.fao.org/faonocs/appl/}.
-
-%\vspace{2mm}
-
-%Following the creation of the Republic of South Sudan in July 2011, the M49 classification considered the Sudan as part of the Northern Africa region, and South Sudan as part of Eastern Africa. In this report, data for the Sudan are therefore included in the Northern Africa region.
-
-\vspace{2mm}
-
-The asterisk in charts and maps indicates the most recent year available in the specified time interval. In the country profiles, when the country data have not been reported for the reference year, data in italics indicate that the value for the most recent year available is shown.
-
-\vspace{2mm}
-
-In the tables, a blank means not applicable or, for an aggregate, not analytically meaningful. A 0 or 0.0 means zero or a number that is small enough to round to zero at the displayed number of decimal places.
-
-\vspace{2mm}
-
-The \textasciitilde{} in the maps refers to the range specified in the class intervals.
-
-In addition:
-\begin{itemize}
-\item <5.0 proportion less than 5 percent
-\item <0.1 less than 100\,000 people
-\item ns not statistically significant
-\end{itemize}
-
-\vspace{2mm}
-
-Two types of aggregations are used in the book: sum and weighted mean. Two restrictions are imposed when computing the aggregation: i) the sufficiency condition – the aggregation is computed only when sufficient countries have reported data, and the current threshold is set at 50 percent of the variable and the weighting variable, if present; and ii) the comparability condition – as aggregations are usually computed over time, this condition is designed to ensure that the number of countries is comparable over several years; under the current restriction the number of countries may not vary by more than 15 over time.
-
-\vspace{2mm}
-
-This publication was carried out under the direction of Pietro Gennari (Chief Statistician and Director, ESS) . It was prepared by the Statistics Division (Amy Heyman and Markus Kainu). A special thanks the team leaders for their input and to Nicola Selleri (ESS) for the cover design.
-
-
-
-
-\clearpage
-
 \end{MetadataCollection}
-
-
-
-\clearpage

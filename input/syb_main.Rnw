@@ -296,7 +296,7 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 \usepackage{booktabs}
 \usepackage{lscape}
 %\usepackage[document]{ragged2e}
-
+\usepackage{pdfpages}
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -319,44 +319,6 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 %% Set the strip width
 \faoset{stripwidth=7.2mm}
 
-%% Trying to control the TOC
-% \usepackage{tocloft}
-% \renewcommand\cftchapfont{\normalsize\bfseries}
-% \renewcommand\cftsecfont{\normalsize}
-
-%\usepackage{titlesec}
-% \titleformat*{\section}{\Large\bfseries}
-
-
-% First page background graphics
-\usepackage{eso-pic}
-\newcommand\taustaeka{%
-\put(-30,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,%
-<<define_front_cover, echo=FALSE, results='asis', eval=TRUE>>=
-  cover_name <- paste0("front_cover_",region_to_report,".pdf")
-  cat(paste0("keepaspectratio]{",cover_name,"}"))
-  @
-\vfill
-}}}
-
-
-\newcommand\taustatoka{%
-\put(-30,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,%
-<<define_back_cover, echo=FALSE, results='asis', eval=TRUE>>=
-  cover_name <- paste0("back_cover_",region_to_report,".pdf")
-  cat(paste0("keepaspectratio]{",cover_name,"}"))
-  @
-\vfill
-}}}
-
 
 % 
 %    __                     _                       _    _              
@@ -373,25 +335,18 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 \faoset{bgcolor=white}\selectcolor
 \twocolumn
 
+% Front cover
 
-%% Cover (just in the web version)
 \ifprint\addtocounter{page}{1}\else
-% \begin{picture}(0,0)
-% \put(-28,-502){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/front_cover_2015.png}}
-% \end{picture}
-% \input{./Tables/CountryProfiles.tex}
 
-% \newpage
+<<define_front_cover, echo=FALSE, results='asis', eval=include_covers>>=
+  cover_name <- paste0("front_cover_",region_to_report,".pdf")
+  if (region_to_report != "COF") cat(paste0("\\includepdf[offset=-25 35, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report == "COF") cat(paste0("\\includepdf[offset=-28 29, noautoscale=true]{",cover_name,"}"))
+  @
 
-\AddToShipoutPicture*{\taustaeka}
-
-% \thispagestyle{empty}
-% \mbox{}
-% \clearpage
 \newpage
 \thispagestyle{empty}
-\mbox{}
-\clearpage
 \fi
 
 \onecolumn
@@ -491,15 +446,6 @@ cat(
 
 
 
-
-
-
-
-%% To be commented if we want to show the List of countries
-% \thispagestyle{empty}
-% \mbox{}
-% \clearpage
-
 %% New part - Introduction
 \newpart{white}
 %\addtocounter{page}{1}
@@ -594,31 +540,30 @@ FAO is deeply committed to helping countries strengthen their statistical system
 
 
 
-Today, more people are consuming more coffee than ever before. As the middle classes of the developing world continue to swell, as their incomes rise and coffee remains affordable, the luxury of the occasional coffee has become a daily habit in an ever-growing number of countries. The rising demand has also afforded producers with new options and opportunities. Coffee has become an important contributor to cash income for many smallholders, who produce most of the world’s beans. Today, the annual output has reached almost nine million tonnes, one million tonnes more than a decade ago. The gross value of production of green coffee now exceeds US\\$16 billion, its export value reached US\\$24 billion in 2012. 
+Today, more people are consuming more coffee than ever before. As the middle classes of the developing world continue to swell, as their incomes rise and coffee remains affordable, the luxury of the occasional coffee has become a daily habit in an ever-growing number of countries. The rising demand has also afforded producers with new options and opportunities. Coffee has become an important contributor to cash income for many smallholders, who produce most of the world’s beans. The annual output has now reached almost nine million tonnes, one million tonnes more than a decade ago. The gross value of production of green coffee now exceeds US\\$16 billion, and its export value reached US\\$24 billion in 2012. 
 
 \\vspace{3mm}
 
-While rising demand offers unprecedented opportunities to growers, they also have to live up to a growing set of challenges. Many are confronted with inadequate access to credit, high price volatility, bureaucratic hurdles at home and market barriers abroad. And they are operating in a global value chain where a vast and often unorganized number of growers are exposed to the market power of a small number of traders and roasters. As if that were not enough, many smallholders find it hard to cope with the vagaries of weather from year to year and the deteriorating growing conditions brought about by climate change over the longer-term. 
-
-
-\\vspace{3mm}
-
-This Coffee Pocketbook puts numbers to these developments, assesses short-term changes and long-term trends in production, consumption, trade and prices, and provides useful background information on related shifts in poverty, health and rural development. It is part of the FAO Statistical Yearbook suite of products and is organized around two major sections: thematic spreads with data-driven visualizations, and comprehensive country and regional profiles. 
+While rising demand offers unprecedented opportunities to growers, they also have to live up to a growing set of challenges. Many are confronted with inadequate access to credit, high price volatility, as well as bureaucratic hurdles at home and market barriers abroad. And, they are operating in a global value chain where a vast and often unorganized number of small coffee growers are exposed to the market power of a few, large traders and roasters. In addition, many smallholders find it hard to cope with the vagaries of weather in the short-run and the deteriorating growing conditions brought about by climate change over the longer-term. 
 
 \\vspace{3mm}
 
-FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. This includes a commitment to improving the livelihoods of people along the various stages of the coffee production chain.
+This Pocketbook puts numbers to these developments, assesses short-term changes and long-term trends in production, consumption, trade and prices, and provides useful background information on related shifts in poverty, health and rural development. It is part of the FAO Statistical Yearbook suite of products and is organized around two major sections: thematic spreads with data-driven visualizations, and comprehensive country and regional profiles. 
+
+\\vspace{3mm}
+
+FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. This includes a commitment to improve and broaden the information necessary to support evidence-based decision making by all stakeholders in the coffee value chain.
 
 \\bigskip
 \\bigskip
 \\bigskip
 
 \\hspace*{\\fill}
-        Josef Schmidhuber
+         Pietro Gennari
 \\hspace*{\\fill}
 
 \\hspace*{\\fill}
-        \\textit{Deputy Director, Statistics Division}
+        \\textit{Chief Statistician and Director, ESS}
 \\hspace*{\\fill}
 ")
     
@@ -656,11 +601,9 @@ cat("
 % 
 
 
+
 %% Prelims
 \tableofcontents
-% \clearpage % commented because of the font size issue
-
-% \clearpage
 
 %% List of countries
 % \phantomsection
@@ -677,12 +620,6 @@ cat("
 % \phantomsection
 % \addcontentsline{toc}{section}{List of Charts}
 % \listoffigures
-
-% \thispagestyle{empty}
-% \mbox{}
-
-% \newpage
-
 
 
 \clearpage
@@ -705,26 +642,30 @@ map_unit <- ""
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 
+if (region_to_report != "COF"){
+  
+source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
-# source(paste0(root.dir,'./input/code/plot/plot_color.R'))
-# 
-# syb_part <- 1
-# 
-# ## Part 1
-# colPart1 <- plot_colors(part = syb_part, 6)
-# col.main1 <- colPart1[["Main"]][1]
-# 
-# source(paste0(root.dir,"./input/code/plot/theme.R"))
+syb_part <- 1
 
+## Part 1
+colPart1 <- plot_colors(part = syb_part, 6)
+col.main1 <- colPart1[["Main"]][1]
 
+source(paste0(root.dir,"./input/code/plot/theme.R"))
 
 # fill colors for the map
-# colPart = plot_colors(part = 1, 12)
-# mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
-# nCol = length(unique(overview.df$subgroup))
-# tmpCol = mapColFun(nCol)[2]
-# mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][2]))
-# mapColors = mapColFun(nCol)
+colPart = plot_colors(part = 1, 12)
+mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
+nCol = length(unique(overview.df$subgroup))
+tmpCol = mapColFun(nCol)[2]
+mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][2]))
+mapColors = mapColFun(nCol)
+  
+  
+}
+
+
 
 
 
@@ -745,7 +686,7 @@ p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FAL
 #                                     "#F0DC82")) # Buff
 # if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
 if (region_to_report == "COF")p <- p + scale_fill_manual(values = c("#8c510a","#d8b365","#f6e8c3","#c7eae5","#5ab4ac","#01665e"))
-# if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
+if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
 p <- p + theme(legend.position = c(0.05,0.05), 
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
@@ -774,8 +715,6 @@ p
 
 
 \clearpage
-%\begin{landscape}
-
 
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
@@ -810,8 +749,8 @@ overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data
 
 library(xtable)
 rws <- seq(0, (nrow(overview_data)), by = 2)
-#col <- rep("\\rowcolor[part6]{0.95}", length(rws))
-col <- rep("\\rowcolor{part5!10}", length(rws))
+if (region_to_report == "COF") col <- rep("\\rowcolor[part6]{0.95}", length(rws))
+if (region_to_report != "COF") col <- rep("\\rowcolor{part1!10}", length(rws))
 
 bold <- function(x) {paste('{\\textbf{',x,'}}', sep ='')}
 
@@ -856,8 +795,6 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 @
 
 
-
-%\end{landscape}
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
 
@@ -1038,6 +975,17 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 @
 
 
+ %  _   _       _            
+ % | \ | | ___ | |_ ___  ___ 
+ % |  \| |/ _ \| __/ _ \/ __|
+ % | |\  | (_) | ||  __/\__ \
+ % |_| \_|\___/ \__\___||___/
+ %                           
+
+
+<<notes, child = if (include_notes) 'syb_notes.Rnw'>>=
+@
+
 
 
 
@@ -1048,29 +996,16 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 %  |____/  \__,_| \___||_|\_\\___|\___/  \_/  \___||_|   
 %                                                        
 
-
-
-\newpage
-
-\thispagestyle{empty}
-\AddToShipoutPicture*{\taustatoka}
-
-\mbox{}
+\nopagecolor
 
 \ifprint\else
-\begin{picture}(0,0)
 
 
-%\put(-58,-472){\includegraphics[width=\paperwidth,height=\paperheight]{back_cover_2015.png}}
-%\put(-58,-432){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover.pdf}}
-%\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover_2015.png}
-\end{picture}
-
-\newpage
-
-\thispagestyle{empty}
-
-\newpage
+<<define_back_cover, echo=FALSE, results='asis', eval=include_covers>>=
+  cover_name <- paste0("back_cover_",region_to_report,".pdf")
+  if (region_to_report %in% c("RAP","RAF","REU")) cat(paste0("\\includepdf[offset=28 28, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report %in% c("COF","RNE"))       cat(paste0("\\includepdf[offset=-28 28, noautoscale=true]{",cover_name,"}"))
+  @
 
 \fi
 
