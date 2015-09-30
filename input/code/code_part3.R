@@ -263,6 +263,7 @@ short_text <- "The majority of people in developing countries live in rural area
 # This should be thought twice how to produce it for regional books!
 load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
+dat <- dat[dat$Year > 1999,]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -449,6 +450,8 @@ short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and 
 # This should be thought twice how to produce it for regional books!
 load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
 names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
+dat <- dat[dat$Year > 1999,]
+
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
