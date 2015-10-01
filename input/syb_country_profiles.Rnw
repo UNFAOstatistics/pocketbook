@@ -706,6 +706,59 @@ M49countries <-
   # M49countries <- head(M49countries)
 
 ## Add aggregates NOT
+
+if (region_to_report == "RAF"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = 12000:12005,
+                   SHORT_NAME = c("Regional Office for Africa","Central Africa","Eastern Africa",
+                                  "Northern Africa","Southern Africa","Western Africa"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+}
+if (region_to_report == "RAP"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = c(13000,13001,13003,13005,13005,13007,13008,13009,13010,13011,13012,13013,13014),
+                   SHORT_NAME = c("Regional Office for Asia and the Pacific",
+                                  "East Asia",
+                                  "Southeast Asia",
+                                  "Central Asia",
+                                  "Australia and New Zealand",
+                                  "France",
+                                  "Melanesia",
+                                  "Micronesia",
+                                  "Polynesia",
+                                  "Russian Federation",
+                                  "Southern Asia",
+                                  "United States",
+                                  "Western Asia"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+} 
+if (region_to_report == "REU"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = c(14000,14001,14003,14004,14005,14006,14007),
+                   SHORT_NAME = c("Regional Office for Europe and Central Asia",
+                                  "Caucasus and Turkey",
+                                  "Central Eastern Europe",
+                                  "CIS Europe",
+                                  "Israel",
+                                  "Other and EFTA",
+                                  "South Eastern Europe"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+} 
+if (region_to_report == "RNE"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = 15000:15003,
+                   SHORT_NAME = c("Regional Office for the Near East",
+                                  "Gulf Cooperation\n Council States\n and Yemen",
+                                  "North Africa",
+                                  "Other Near\n East countries"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+} 
+
+
 # M49countries <-
 #   rbind(data.frame(FAOST_CODE = c(5000,5100,5300,5205,5500),
 #                    SHORT_NAME = c("World",
