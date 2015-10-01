@@ -5,7 +5,7 @@
 rm(list=ls(all=TRUE))
 gc()
 
-#options(scipen=999) # disable scientific number formatting
+options(scipen=999) # disable scientific number formatting
 
 # set root directory
 root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
@@ -35,11 +35,11 @@ regionS_to_report <- c(
 ############################################################
 # Parts to include/exclude
 # -------------------------------
-include_covers       <- T
+include_covers       <- F
 include_timestamp    <- T
 include_foreword     <- T
 include_overview_map <- T
-include_overview_tbl <- F # do not include for coffee book
+include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
 include_part2        <- T
@@ -53,12 +53,12 @@ include_definitions      <- T
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
 upload_pdfs_to_server   <- T
-upload_images_to_server <- F
+upload_images_to_server <- T
 # just for troubleshooting
 region_to_report <- "RAF"
 
@@ -223,7 +223,6 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEome"]    <- 15003
 syb.df$FAOST_CODE <- factor(syb.df$FAOST_CODE)
 syb.df$FAOST_CODE <- as.numeric(levels(syb.df$FAOST_CODE))[syb.df$FAOST_CODE]
 
-
 syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], by = "FAOST_CODE", all.x = TRUE)
 
 # Fill missing values in SHORT_NAME with FAO_TABLE_NAME
@@ -241,6 +240,10 @@ syb.df[syb.df[, "FAOST_CODE"] %in% c(214), "Area"] <- "Taiwan"
 ## Occupied Palestinian Territory
 syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "West Bank and\nGaza Strip"
 syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
+
+syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\n Council States\n and Yemen"
+syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Near\n East countries"
+
 
 source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
 
