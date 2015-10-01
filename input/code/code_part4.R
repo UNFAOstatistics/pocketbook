@@ -40,35 +40,41 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 
 
 ## ---- P4landTOPRIGHT ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 RL.AREA.AGR.HA.SH,
-                                                 RL.AREA.FOR.HA.SH,
-                                                 RL.AREA.OTH.HA.SH)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>% 
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>% 
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>% 
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>% 
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+dat <- na.omit(dat)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% dplyr::mutate(sum = sum(value)) %>% ungroup()
-
 # reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$subgroup )
+# dat_plot$subgroup <- factor(dat_plot$subgroup,
+#                                   levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$subgroup )
 
+dat_plot <- dat
 
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -142,31 +148,37 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 
 
 ## ---- P4landBOTTOM ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>% 
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>% 
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>% 
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>% 
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+dat <- na.omit(dat)
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
 dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
 dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat_plot <- dat
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$subgroup )
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -665,30 +677,31 @@ short_text <- "The severity and speed of climate change is presenting an unprece
 
 
 ## ---- P4climateTOPRIGHT ----
-dat <- filter(syb.df, Year %in% 2000:2012) %>% select(FAOST_CODE,Year,
-                                                 GHG.TOT.ALL.GG.NO)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+dat <- na.omit(dat)
 
-dat <- dat[!is.na(dat$GHG.TOT.ALL.GG.NO),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+dat$GHG.TOT.ALL.GG.NO <- dat$GHG.TOT.ALL.GG.NO /1000
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat_plot <- dat
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(Year,subgroup) %>%
-  dplyr::summarise(GHG.TOT.ALL.GG.NO = sum(GHG.TOT.ALL.GG.NO, na.rm=TRUE)) %>%
-  dplyr::mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO /1000)
-
-p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=subgroup))
+p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
 
 # Caption
@@ -758,16 +771,10 @@ caption_text <- "Land use total emissions, highest 20 countries in 2012"
 
 
 ## ---- P4climateBOTTOM ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 GHG.TOT.ALL.GG.NO,
-                                                 GL.FL.NFC.NERCO2EQ.NO,
-                                                 GLI.CHPF.TOT.ECO2EQ.NO,
-                                                 GHG.BS.TECO2EQ.GG.NO,
-                                                 GL.FL.F.NERCO2EQ.NO)
-
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
 
 dat <- gather(dat, variable, value, 2:6)
 dat$fill[dat$variable == "GHG.TOT.ALL.GG.NO"]   <- "All GHG agricultural sectors"
@@ -776,16 +783,14 @@ dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and 
 dat$fill[dat$variable == "GHG.BS.TECO2EQ.GG.NO"] <- "Burning savanna"
 dat$fill[dat$variable == "GL.FL.F.NERCO2EQ.NO"] <- "Forest"
 
-
-# AGREGATE
-dat_plot <- dat %>% group_by(fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE) / 1000) %>% ungroup()
-
+dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=reorder(fill, -value), y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
-p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + theme(axis.text.x = element_blank())
+p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 # Caption

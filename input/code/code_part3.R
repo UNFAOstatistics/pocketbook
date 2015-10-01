@@ -123,7 +123,7 @@ p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
+caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
 
 
 ## ---- P3desLEFT ----
@@ -211,7 +211,7 @@ p <- p + labs(x="",y="kcal/cap/day")
 p
 
 # Caption
-caption_text <- "Dietary energy supply"
+caption_text <- "Dietary energy supply in top 5 countries"
 
 ## ---- P3desMAP ----
 
@@ -238,12 +238,12 @@ map_unit <- "Percent"
 create_map_here()
 
 # Caption
-caption_text <- "This is the default caption if no region spesific is defined"
-if (region_to_report == "RAF") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "RAP") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "REU") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "RNE") caption_text <- "Average dietary energy supply adequacy"
-if (region_to_report == "GLO") caption_text <- "Average dietary energy supply adequacy"
+caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
+if (region_to_report == "RAF") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
+if (region_to_report == "RAP") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
+if (region_to_report == "REU") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
+if (region_to_report == "RNE") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
+if (region_to_report == "GLO") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
 
 #    ____                                             _               _    _
 #   / ___| _ __  ___   _ __    _ __   _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __
@@ -299,7 +299,7 @@ rc <- growth %>% arrange(-growth_rate) %>% slice(1:5)
 
 names(rc) <- c("","%")
 
-print.xtable(xtable(rc, caption = "Fastest growing products based on quantities (average anual growth rate, 2000 to 2013) (COMPUTE NEW RATES!!)", digits = c(0,0,0),
+print.xtable(xtable(rc, caption = "\\large{Fastest growing products based on quantities (average anual growth rate, 2000 to 2013)}", digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = "latex", table.placement = NULL, booktabs = TRUE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
@@ -367,11 +367,26 @@ p
 caption_text <- "Top 20 food producing countries in 2012 based on net food per capita production value"
 
 ## ---- P3cropproBOTTOM ----
-dat <- syb.df %>% filter(Year >= 2000) %>%
-  select(FAOST_CODE,Area,Year,
-                         QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
-                         QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
-                         QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>% 
+  select(FAOST_CODE,Area,Year, 
+         QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
+         QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
+         QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 13000) %>% 
+  select(FAOST_CODE,Area,Year, 
+         QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
+         QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
+         QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 14000) %>% 
+  select(FAOST_CODE,Area,Year, 
+         QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
+         QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
+         QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 15000) %>% 
+  select(FAOST_CODE,Area,Year, 
+         QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
+         QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
+         QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -379,25 +394,32 @@ dat <- left_join(dat,region_key)
 dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
-dat <- dat[which(dat[[region_to_report]]),]
-
 dat <- gather(dat,
                 variable,
                 value,
                 4:6)
-dat <- dat %>% filter(!is.na(value)) %>% arrange(Year,variable)
+dat <- dat %>% filter(!is.na(value)) %>% arrange(variable,Year) %>% select(FAOST_CODE,Year,variable,value)
 
-dat_plot <- dat %>% group_by(variable,Year) %>% dplyr::summarise(value = sum(value, na.rm = TRUE)) %>%
-  dplyr::mutate(Growth=c(NA,exp(diff(log(value)))-1)) %>%
-  dplyr::summarise(mean_growth = mean(Growth, na.rm = TRUE)*100)
+dat$variable <- as.character(dat$variable)
 
-dat_plot$variable <- as.character(dat_plot$variable)
+dat$grate <- as.numeric((exp(coef(lm(log(dat$value) ~ Year, dat))[2]) - 1) * 100)
+
+dat_plot <- data.frame()
+for (fs in unique(dat$variable)){
+  d <- dat[dat$variable %in% fs,]
+  if (sum(dat$value) == 0) next
+  d <- d[d$value > 0,]
+  grate <- as.numeric((exp(coef(lm(log(d$value) ~ Year, d))[2]) - 1) * 100)
+  row <- data.frame(variable = fs,
+                    growth_rate = grate,stringsAsFactors = FALSE)
+  dat_plot <- rbind(dat_plot,row)
+}
 
 dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Production"
 dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Harvested area"
 dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Yield"
 
-p <- ggplot(dat_plot, aes(x=variable,y=mean_growth,fill=variable))
+p <- ggplot(dat_plot, aes(x=variable,y=growth_rate,fill=variable))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$variable)))[["Sub"]])
 p <- p + labs(x="",y="percent")
@@ -405,7 +427,7 @@ p <- p + theme(legend.position = "none")
 p
 
 # Caption
-caption_text <- "Number of people undernourished, top 5 countries from region"
+caption_text <- "Average annual growth in cereals production (2000-13)"
 
 
 ## ---- P3cropproMAP ----
@@ -481,7 +503,7 @@ gg[[3]] <- round(gg[[3]],0)
 gg[[2]]<- prettyNum(gg[[2]], big.mark=" ")
 gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
-print(xtable(gg, caption = "Top five items produced in 2013, thousand tonnes", digits = c(0,0,0,0),
+print(xtable(gg, caption = "\\large{Top five items produced in 2013, thousand tonnes}", digits = c(0,0,0,0),
              align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
       type = "latex", table.placement = NULL,
       booktabs = TRUE, include.rownames = FALSE,
@@ -657,7 +679,7 @@ gg[[3]] <- round(gg[[3]],0)
 gg[[2]]<- prettyNum(gg[[2]], big.mark=" ")
 gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
-print.xtable(xtable(gg, caption = "Live animal production, top 5 in 2013 (thousand heads)", digits = c(0,0,0,0),
+print.xtable(xtable(gg, caption = "\\large{Live animal production, top 5 in 2013 (thousand heads)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
              type = "latex", table.placement = NULL, booktabs = TRUE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
@@ -756,7 +778,8 @@ p <- p + theme(panel.grid.minor = element_blank())
 p <- p + theme(panel.grid.major = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(d$subgroup)))[["Sub"]])
 p <- p + theme(legend.title = element_blank())
-p <- p + theme(legend.key.size = unit(3, "mm"))
+p <- p + theme(legend.key.height = unit(6, "mm"))
+p <- p + theme(legend.key.width = unit(4, "mm"))
 p <- p + labs(x=NULL, y=NULL)
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p <- p + guides(fill = guide_legend(nrow = 2))
@@ -857,138 +880,111 @@ caption_text <- "Per capita fish food supply ONLY GLOBAL LEVEL DATA"
 
 
 ## ---- P3fisheriesLEFT ----
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.NI.TN.SH")]
+# dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.NI.TN.SH")]
+# 
+# dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
+# # Add region key and subset
+# dat <- left_join(dat,region_key)
+# 
+# dat <- dat[dat$FAOST_CODE != 348,]
+# dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+# 
+# dat <- dat[which(dat[[region_to_report]]),]
+# 
+# # top for this plot
+# dat <- arrange(dat, -RF.FERT.NI.TN.SH)
+# top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+# 
+# 
+# dat_plot <- top20
+# 
+# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.NI.TN.SH),y=RF.FERT.NI.TN.SH))
+# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+# p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+# p <- p + coord_flip()
+# p <- p + labs(x="",y="kg/ha")
+# p <- p + guides(color = guide_legend(nrow = 2))
+# p
+# 
 
-dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# top for this plot
-dat <- arrange(dat, -RF.FERT.NI.TN.SH)
-top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-
-
-dat_plot <- top20
-
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.NI.TN.SH),y=RF.FERT.NI.TN.SH))
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-p <- p + theme(legend.position = "none") # hide legend as only one year plotted
-p <- p + coord_flip()
-p <- p + labs(x="",y="kg/ha")
-p <- p + guides(color = guide_legend(nrow = 2))
-p
+plot(cars)
 
 # Caption
-caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable land"
+caption_text <- "20 countries with highest value of capture production (2013)"
 
 
 ## ---- P3fisheriesRIGHT ----
 
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.PH.TN.SH")]
+# dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.PH.TN.SH")]
+# 
+# dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
+# # Add region key and subset
+# dat <- left_join(dat,region_key)
+# 
+# dat <- dat[dat$FAOST_CODE != 348,]
+# dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+# 
+# dat <- dat[which(dat[[region_to_report]]),]
+# 
+# # top for this plot
+# dat <- arrange(dat, -RF.FERT.PH.TN.SH)
+# dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+# 
+# 
+# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
+# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+# p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+# p <- p + coord_flip()
+# p <- p + labs(x="",y="kg/ha")
+# p <- p + guides(color = guide_legend(nrow = 2))
+# p
 
-dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# top for this plot
-dat <- arrange(dat, -RF.FERT.PH.TN.SH)
-dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-
-
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-p <- p + theme(legend.position = "none") # hide legend as only one year plotted
-p <- p + coord_flip()
-p <- p + labs(x="",y="kg/ha")
-p <- p + guides(color = guide_legend(nrow = 2))
-p
+plot(cars)
 
 # Caption
 
-caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable land"
+caption_text <- "20 countries with highest value of aquaculture production (2013)"
 
 
 ## ---- P3fisheriesBOTTOM ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 RF.FERT.NI.TN.NO,
-                                                 RF.FERT.PH.TN.NO,
-                                                 RF.FERT.PO.TN.NO,
-                                                 RL.AREA.ARBLPRMN.HA.NO)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+plot(cars)
 
-dat <- gather(dat, variable, value, 2:4)
-dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
-dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
-dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
-              dplyr::summarise(value  = sum(value, na.rm=TRUE)*1000,
-                        area  = sum(RL.AREA.ARBLPRMN.HA.NO, na.rm=TRUE)) %>%
-  dplyr::mutate(share = value / area) %>% dplyr::mutate(sum = sum(share)) %>%  ungroup() 
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup, 
-                                  levels=unique(arrange(dat_plot,-sum)$subgroup))
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=share, fill=fill))
-p <- p + geom_bar(stat="identity", position="stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
-p <- p + theme(axis.text.x = element_text(angle=45))
-p
 
 # Caption
-caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012)"
+caption_text <- "State of the world’s fishery stocks (1974 - 2011)"
 
 
 
 ## ---- P3fisheriesMAP ----
-dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>%
-        group_by(FAOST_CODE) %>%  dplyr::summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
+# dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>%
+#         group_by(FAOST_CODE) %>%  dplyr::summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
+# 
+# # dat <- dat[dat$FAOST_CODE != 41,]
+# dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+# 
+# # set Robinson projection
+# map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+# 
+# # Subset
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# 
+# cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RP.PEST.TOT.TN.SH")]
+# cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5,decimals = 1)
+# 
+# map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+# 
+# # define map unit
+# map_unit <- "kg/ha"
+# 
+# create_map_here()
 
-# dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-
-# set Robinson projection
-map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
-
-# Subset
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RP.PEST.TOT.TN.SH")]
-cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5,decimals = 1)
-
-map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-
-# define map unit
-map_unit <- "kg/ha"
-
-create_map_here()
+plot(cars)
 
 # Caption
-caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+caption_text <- "Fish production index (2004-06=100, 2013)"
 
 
 #      _                 _               _  _                       _   _                    _
@@ -1006,52 +1002,62 @@ short_text <- "Most of the food consumed worldwide is grown locally. Where there
 
 ## ---- P3tradeData ----
 # This should be thought twice how to produce it for regional books!
-# Retrieve data
-library(FAOSTAT)
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5622,
-                   itemCode = 1883)
-dat1 <- dat$aggregates
-names(dat1) <- c("FAOST_CODE","Year","value")
-dat1$variable <- "Import value"
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5922,
-                   itemCode = 1883)
-dat2 <- dat$aggregates
-names(dat2) <- c("FAOST_CODE","Year","value")
-dat2$variable <- "Export value"
-df <- rbind(dat1,dat2)
+# # Retrieve data
+# library(FAOSTAT)
+# dat <- getFAOtoSYB(domainCode = "TP",
+#                    elementCode = 5622,
+#                    itemCode = 1883)
+# dat1 <- dat$aggregates
+# names(dat1) <- c("FAOST_CODE","Year","value")
+# dat1$variable <- "Import value"
+# dat <- getFAOtoSYB(domainCode = "TP",
+#                    elementCode = 5922,
+#                    itemCode = 1883)
+# dat2 <- dat$aggregates
+# names(dat2) <- c("FAOST_CODE","Year","value")
+# dat2$variable <- "Export value"
+# df <- rbind(dat1,dat2)
 
 
 
 ## ---- P3tradeTOPRIGHT ----
-# Add region key and subset
-dat <- left_join(df,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
-df <- subgrouping(region_to_report = region_to_report)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2012, FAOST_CODE %in% 12001:12005) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.FOOD.USD.NO,   # food export value
+         TP.IMVAL.FOOD.USD.NO) # food import value
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 13001:13014) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.FOOD.USD.NO,   # food export value
+         TP.IMVAL.FOOD.USD.NO) # food import value
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 14001:14007) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.FOOD.USD.NO,   # food export value
+         TP.IMVAL.FOOD.USD.NO) # food import value
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 15001:15003) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.FOOD.USD.NO,   # food export value
+         TP.IMVAL.FOOD.USD.NO) # food import value
+dw <- na.omit(dat)
 
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dw$TP.EXVAL.FOOD.USD.NO <- dw$TP.EXVAL.FOOD.USD.NO / 1000000000
+dw$TP.IMVAL.FOOD.USD.NO <- dw$TP.IMVAL.FOOD.USD.NO / 1000000000
 
-dat <- dat %>% filter(Year == 2012) %>% group_by(subgroup,variable) %>%
-  dplyr::summarise(value = sum(value, na.rm = TRUE)) %>%
-  dplyr::mutate(value = value/1000000)
+dw <- dw[order(-dw$TP.IMVAL.FOOD.USD.NO),c("SHORT_NAME","TP.EXVAL.FOOD.USD.NO","TP.IMVAL.FOOD.USD.NO")]
 
-dw <- spread(dat, variable, value)
-dw <- dw[order(-dw$'Import value'),]
+dw <- head(dw, 5) # to work with RAP too
 
 names(dw) <- c("","Export value", "Import value")
 
-# Only top 4 not to break the pagination (whole table to be changed though!!)
-dw <- head(dw, 4)
+dw[[2]] <- round(dw[[2]],0)
+dw[[3]] <- round(dw[[3]],0)
+dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
+dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 
-print.xtable(xtable(dw, caption = " Exports and Imports of food, million US\\$ (2012)", digits = c(0,0,0,0),
+print.xtable(xtable(dw, caption = "\\large{Exports and Imports of food, million US\\$ (2012)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
              type = "latex", table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
              size = "footnotesize", caption.placement = "top")
-
-
 
 
 ## ---- P3tradeLEFT ----
@@ -1115,39 +1121,32 @@ caption_text <- "Top food exporting countries in 2012"
 
 
 ## ---- P3tradeBOTTOM ----
-dat <- syb.df %>% filter(Year %in% 2000:2012) %>%
-  select(FAOST_CODE,
-         Year,
-         TP.EXVAL.CRLS.USD.NO)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.CRLS.USD.NO)   # cereal export value
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.CRLS.USD.NO)   # cereal export value
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.CRLS.USD.NO)   # cereal export value
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+  select(SHORT_NAME,Area,Year, 
+         TP.EXVAL.CRLS.USD.NO)   # cereal export value
+dat_plot <- na.omit(dat)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
+dat_plot$value <- dat_plot$TP.EXVAL.CRLS.USD.NO / 1000000000
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat %>% group_by(subgroup,Year) %>%
-  dplyr::summarise(value = sum(TP.EXVAL.CRLS.USD.NO, na.rm=TRUE)) %>%
-  dplyr::mutate(value = value/1000000000)
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=subgroup,color=subgroup))
+p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="billion constant 2005 US$", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2012))
 p
 
 # Caption
-caption_text <- "Exports of cereals"
+caption_text <- "Cereal exports"
 
 ## ---- P3tradeMAP ----
 dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,
