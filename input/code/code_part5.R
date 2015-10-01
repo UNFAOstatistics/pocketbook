@@ -78,7 +78,7 @@ p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
 
-cat("\\footnotesize{\\textit{Data after 2014 are projections}}")
+cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
 cat("\\vspace{1mm}")
 
 # Caption
