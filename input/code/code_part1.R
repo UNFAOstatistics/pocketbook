@@ -88,9 +88,14 @@ dat <- dat %>% group_by(Year,variable) %>%  dplyr::summarise(value = sum(value, 
 p <- ggplot(dat, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + theme(axis.text.x = element_text(angle = 45))
 p <- p + labs(x="",y="billion people")
+p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
+p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
+
+
+cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
+cat("\\vspace{1mm}")
 
 # Caption
 

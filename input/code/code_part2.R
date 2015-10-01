@@ -76,7 +76,7 @@ names(dw) <- c("","1990-92","2014-16")
 
 #dw <- dw[c(7,3,4,1,2,5,6),]
 # Chiaras comments
-print.xtable(xtable(dw, caption = " Prevalence of undernourishment (percent)", digits = c(0,0,0,0),
+print.xtable(xtable(dw, caption = "\\large{Prevalence of undernourishment (percent)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
              type = "latex", table.placement = NULL,
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
@@ -346,6 +346,7 @@ if (region_to_report == "GLO") caption_text <- "Average protein supply, top 20 c
 
 dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
 
+dat_plot <- dat_plot[!is.na(dat_plot$FBS.PPCS.AO.GCD3D),]
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
@@ -465,12 +466,12 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RAF") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RAP") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "REU") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RNE") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "GLO") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
+caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RAF") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RAP") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "REU") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RNE") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "GLO") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
 
 
 
@@ -509,13 +510,14 @@ p <- p + labs(x="",y="percent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
 # Caption
 caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
-if (region_to_report == "RAF") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RAP") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "REU") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RNE") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "GLO") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RAF") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "RAP") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "REU") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "RNE") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "GLO") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
 
 
 ## ---- P2accessBOTTOM ----
@@ -769,7 +771,7 @@ tbl <- left_join(tbl,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")])
 tbl <- tbl[c(5,2,4)]
 names(tbl) <- c("","Year","%")
 
-print.xtable(xtable(tbl, caption = "Countries with highest share of children under 5 who are underweight, percent", digits = c(0,0,0,1),
+print.xtable(xtable(tbl, caption = "\\large{Countries with highest share of children under 5 who are underweight}, percent", digits = c(0,0,0,1),
                     align= "l{\raggedright\arraybackslash}p{1.6cm}rr"),
              type = "latex", table.placement = NULL, booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
 
@@ -815,11 +817,11 @@ p
 
 # Caption
 caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
-if (region_to_report == "RAF") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "RAP") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "REU") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "RNE") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "GLO") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
+if (region_to_report == "RAF") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "RAP") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "REU") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "RNE") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "GLO") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
 
 ## ---- P2utilizaRIGHT ----
 dat <- df[df$Year %in%  2006:2014 & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","SH.STA.WAST.ZS")]
@@ -887,7 +889,7 @@ p <- p + labs(x=NULL,y="percent of population")
 p <- p + scale_x_continuous(breaks=c(2000,2005,2010))
 p
 
-caption_text <- "Value of food imports as a share of total merchandise exports (3 year averages)"
+caption_text <- "Access to improved water source and sanitation facilities"
 
 ## ---- P2utilizaMAP ----
 
