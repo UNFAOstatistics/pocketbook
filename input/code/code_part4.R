@@ -425,45 +425,196 @@ short_text <- "Energy is an important input for the agri-food chain and is used 
 
 
 ## ---- P4energyData ----
-
-
-
-
-
+# Retrieve data
+library(FAOSTAT)
+## Bioenergy production
+dat <- getFAOtoSYB(domainCode = "EE",
+                   elementCode = 72041,
+                   itemCode = 6740)
+#EE_6740_72041 <- dat$entity
+EE_6740_72041 <- dat$aggregates
+## Energy use in agriculture and forestry
+dat <- getFAOtoSYB(domainCode = "EE",
+                   elementCode = 72040,
+                   itemCode = 6741)
+# EE_6741_72040 <- dat$entity
+EE_6741_72040 <- dat$aggregates
+## Energy consumption for power irrigation
+dat <- getFAOtoSYB(domainCode = "GN",
+                   elementCode = 72182,
+                   itemCode = 6808)
+# EE_6741_72040 <- dat$entity
+GN_6808_72182 <- dat$aggregates
 
 ## ---- P4energyTOPRIGHT ----
+# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# dat <- na.omit(dat)
+dat <- EE_6740_72041 %>% filter(FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500))
 
-plot(cars)
+dat$SHORT_NAME[dat$FAOST_CODE == 5000] <- "World"
+dat$SHORT_NAME[dat$FAOST_CODE == 5100] <- "Africa"
+dat$SHORT_NAME[dat$FAOST_CODE == 5200] <- "Americas"
+dat$SHORT_NAME[dat$FAOST_CODE == 5300] <- "Asia"
+dat$SHORT_NAME[dat$FAOST_CODE == 5400] <- "Europe"
+dat$SHORT_NAME[dat$FAOST_CODE == 5500] <- "Oceania"
+
+dat_plot <- dat
+
+p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + labs(x="",y="% of tot energy production")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + guides(color = guide_legend(nrow = 3))
+p
+
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+caption_text <- "Bioenergy production, share of total energy production"
+
+
 
 
 ## ---- P4energyLEFT ----
 
-plot(cars)
+dat <- EE_6740_72041 %>% filter(Year == 2009, FAOST_CODE < 5000)
+
+dat <- dat[!is.na(dat$EE_6740_72041),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -EE_6740_72041)
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+
+dat_plot <- top20
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6740_72041),y=EE_6740_72041))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="% of tot energy production")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
 # Caption
-caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+caption_text <- "Bioenergy production, share of total energy production, top 20 countries 2009"
 
 
 ## ---- P4energyRIGHT ----
 
-plot(cars)
+dat <- EE_6741_72040 %>% filter(Year == 2009, FAOST_CODE < 5000)
+
+dat <- dat[!is.na(dat$EE_6741_72040),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -EE_6741_72040)
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+
+dat_plot <- top20
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6741_72040),y=EE_6741_72040))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+
 # Caption
-caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+caption_text <- "Energy use in agriculture and forestry, share of total energy consumption, top 20 countries 2009"
 
 
 ## ---- P4energyBOTTOM ----
+# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+#   select(SHORT_NAME,Year,
+#          GHG.TOT.ALL.GG.NO)
+# dat <- na.omit(dat)
+dat <- EE_6741_72040 %>% filter(FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500))
 
-plot(cars)
+dat$SHORT_NAME[dat$FAOST_CODE == 5000] <- "World"
+dat$SHORT_NAME[dat$FAOST_CODE == 5100] <- "Africa"
+dat$SHORT_NAME[dat$FAOST_CODE == 5200] <- "Americas"
+dat$SHORT_NAME[dat$FAOST_CODE == 5300] <- "Asia"
+dat$SHORT_NAME[dat$FAOST_CODE == 5400] <- "Europe"
+dat$SHORT_NAME[dat$FAOST_CODE == 5500] <- "Oceania"
+
+dat_plot <- dat
+
+p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + labs(x="",y="% of tot energy production")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + guides(color = guide_legend(nrow = 3))
+p
+
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
-
+caption_text <- "Energy use in agriculture and forestry, share of total energy consumption"
 
 ## ---- P4energyMAP ----
 
-plot(cars)
+dat <- GN_6808_72182 %>%  filter(Year >= 2008) %>% arrange(-Year)
+
+
+dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>%  ungroup()
+
+
+# dat <- dat[dat$FAOST_CODE != 41,]
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
+# set Robinson projection
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+
+# Subset
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","GN_6808_72182")]
+cat_data$value_cat <- categories(x=cat_data$GN_6808_72182, n=3,decimals = 1)
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "million kWh"
+
+create_map_here()
+
 # Caption
-caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
 
 
 #   _____                               _
