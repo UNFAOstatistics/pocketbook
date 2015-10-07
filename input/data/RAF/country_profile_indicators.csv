@@ -21,7 +21,6 @@ Hunger dimensions,19,SI.POV.DDAY,,,Poverty at 1.25 USD a day (% pop),,1
 Hunger dimensions,20,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
 Hunger dimensions,21,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,0
 Hunger dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,1
-Hunger dimensions,23,missing,,,Food price inflation (%),,1
 Hunger dimensions,24,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
 Hunger dimensions,25,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
 Hunger dimensions,26,improved_water_source_rural,,,"Improved water source, rural (% pop)",,1
