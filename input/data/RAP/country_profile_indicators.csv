@@ -26,7 +26,7 @@ Hunger dimensions,25,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,1
 Hunger dimensions,26,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
 Hunger dimensions,27,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,1
 Hunger dimensions,28,droughts_floods_temperature,,,"Pop affec by droughts, floods, extr temp (%)",,1
-Food Supply,29,missing,,,Growth value of food production,,
+Food Supply,29,QV.NPV.FOOD.ID.NO,,,"Food production value, (2004-2006 mln I$)",1000000,0
 Food Supply,30,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,0
 Food Supply,31,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
 Food Supply,32,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
