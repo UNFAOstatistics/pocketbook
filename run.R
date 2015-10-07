@@ -25,40 +25,40 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 regionS_to_report <- c(
 #                       "GLO" # Global
-                              "RAP" # Asia and the Pacific
-                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                              ,"RNE" # Near East and North Africa
+                              # "RAP" # Asia and the Pacific
+                              # ,"RAF"  # Africa
+                              # "REU" # Europe and Central Asia
+                              # ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
-                                 # "COF" # Coffee
+                                 "COF" # Coffee
                       )
 ############################################################
 # Parts to include/exclude
 # -------------------------------
 include_covers       <- F
 include_timestamp    <- T
-include_foreword     <- T
-include_overview_map <- T
-include_overview_tbl <- T # do not include for coffee book
+include_foreword     <- F
+include_overview_map <- F
+include_overview_tbl <- F # do not include for coffee book
 # -------------------------------
-include_part1        <- T
-include_part2        <- T
-include_part3        <- T
-include_part4        <- T
+include_part1        <- F
+include_part2        <- F
+include_part3        <- F
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # -------------------------------
 include_country_profiles <- T
-include_definitions      <- T
-include_notes            <- T
+include_definitions      <- F
+include_notes            <- F
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- T
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
-upload_images_to_server <- T
+upload_pdfs_to_server   <- F
+upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"
 
@@ -168,7 +168,8 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
-load(paste0(data.dir,"/SYB2015-09-24.RData"))
+# load(paste0(data.dir,"/SYB2015-09-24.RData"))
+load(paste0(data.dir,"/SYB2015-10-07.RData"))
 # load("../../database/Data/Processed/SYB2015-09-23.RData")
 syb.df <- SYB.df; rm(SYB.df)
 
