@@ -23,7 +23,7 @@ Hunger dimensions,21,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,0
 Hunger dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,1
 Hunger dimensions,24,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
 Hunger dimensions,25,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
-Hunger dimensions,26,improved_water_source_rural,,,"Improved water source, rural (% pop)",,1
+Hunger dimensions,26,SH.H2O.SAFE.RU.ZS,,,"Improved water source, rural (% pop)",,1
 Food supply,27,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% of GDP)",,1
 Production quantities (1 000 tonnes),28,QC.PRD.CRLS.TN.NO,,,Cereals (thousand tonnes),1000,0
 Production quantities (1 000 tonnes),29,QL.PRD.TOT.TN.NO,,,Meat (thousand tonnes),1000,0
