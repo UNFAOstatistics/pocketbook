@@ -740,54 +740,37 @@ caption_text <- "Top 20 importers of forest products (2012)"
 
 
 ## ---- P4forestryBOTTOM ----
-download.file("http://www.fao.org/fileadmin/user_upload/FRA/spreadsheet/FRA_data/BULK.zip",
-              paste0(root.dir,'/output/fra.zip'))
-unzip(paste0(root.dir,'/output/fra.zip'),exdir = paste0(root.dir,'/output/fra'))
 
-dat <- read.csv(paste0(root.dir,'/output/fra/1.FOREST AREA AND CHARACTERISTICS.csv'), stringsAsFactors = FALSE)
-dat <- dat %>% select(Country,Year,PrimFor,PlantFor,NatRegFor) %>% filter(Year == 2015) %>% na.omit()
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 12001:12005) %>% 
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 13001:13014) %>% 
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 14001:14007) %>% 
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 15001:15003) %>% 
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+dat <- na.omit(dat)
 
-dat$FAOST_CODE <- countrycode(dat$Country, "iso3c", "fao")
 
-dat <- dat[c("FAOST_CODE","PrimFor","PlantFor","NatRegFor")]
-
-# Forestry characteristics data is not available
-# dat <- syb.df %>%  filter(Year %in% 2010) %>% select(FAOST_CODE,
-#                                              GFRA.TOT.PF.HA.NO,
-#                                              GFRA.TOT.PLF.HA.NO,
-#                                              GFRA.TOT.ONRF.HA.NO) %>%
-#   dplyr::mutate(GFRA.TOT.PF.HA.NO   = GFRA.TOT.PF.HA.NO   / 1000000,
-#          GFRA.TOT.PLF.HA.NO  = GFRA.TOT.PLF.HA.NO  / 1000000,
-#          GFRA.TOT.ONRF.HA.NO = GFRA.TOT.ONRF.HA.NO / 1000000)
-# 
-# # Add region key and subset
-dat <- left_join(dat,region_key)
-# dat <- dat[which(dat[[region_to_report]]),]
-# 
-dat <- gather(dat, variable, value, 2:4)
+dat <- gather(dat, variable, value, 3:5)
 dat$fill[dat$variable == "PrimFor"] <- "primary forest"
 dat$fill[dat$variable == "PlantFor"] <- "planted forest"
 dat$fill[dat$variable == "NatRegFor"] <- "other naturally regenerated forest"
 
 dat$value <- dat$value / 1000000
 
-# dat <- dat[!is.na(dat$value),]
-# 
-# # DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-# 
-# # merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-# 
+dat_plot <- dat
+
 # # AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
-          dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>% ungroup()
-# 
 # # reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                              levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$subgroup )
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
+                              levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$SHORT_NAME )
 # 
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million ha")
@@ -800,7 +783,7 @@ caption_text <- "Forest characteristics (2015)"
 
 
 ## ---- P4forestryMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH * 100)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
