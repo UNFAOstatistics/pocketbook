@@ -213,7 +213,7 @@ caption_text <- "Total economically active population (2000 to 2014)"
 
 
 ## ---- P1overMAP ----
-dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
+dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP) %>%  mutate(OA.TPR.POP.PPL.SHP = OA.TPR.POP.PPL.SHP*100)
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
