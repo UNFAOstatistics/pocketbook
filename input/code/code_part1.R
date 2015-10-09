@@ -39,28 +39,28 @@ short_text <- "A combination of declining mortality rates, prolonged life expect
 
 ## ---- P1overData ----
 # Retrieve data
-# library(FAOSTAT)
-# dat <- getFAOtoSYB(domainCode = "OA",
-#                    elementCode = 551,
-#                    itemCode = 3010)
-# dat1 <- dat$aggregates
-# dat <- getFAOtoSYB(domainCode = "OA",
-#                    elementCode = 561,
-#                    itemCode = 3010)
-# dat2 <- dat$aggregates
-# dat <- left_join(dat1,dat2)
-# df <- gather(dat, variable, value, 3:4)
-
+library(FAOSTAT)
+dat <- getFAOtoSYB(domainCode = "OA",
+                   elementCode = 551,
+                   itemCode = 3010)
+dat1 <- dat$aggregates
+dat <- getFAOtoSYB(domainCode = "OA",
+                   elementCode = 561,
+                   itemCode = 3010)
+dat2 <- dat$aggregates
+dat <- left_join(dat1,dat2)
+dfX <- gather(dat, variable, value, 3:4)
+datX <- dfX %>% select(FAOST_CODE,Year,variable,value)
 
 
 ## ---- P1overTOPRIGHT ----
 
 
 # If you could aggrate the population by summing up the countries you would do it like this
-# dat <- df %>% select(FAOST_CODE,Year,variable,value)
-# dat <- left_join(dat,region_key)
-# dat <- dat[which(dat[[region_to_report]]),]
-# dat <- dat %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
+# datX <- dfX %>% select(FAOST_CODE,Year,variable,value)
+# datX <- left_join(datX,region_key)
+# datX <- datX[which(datX[[region_to_report]]),]
+# datX <- datX %>% group_by(Year,variable) %>%  summarise(value = sum(value, na.rm=TRUE)/1000000)
 
 # But as you cant in the case of population at least, we need to use the specific aggregates from FAOSTAT
 
@@ -70,7 +70,6 @@ dat <- left_join(dat,region_key)
 
 if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000)
 if (region_to_report == "RAP")  dat <- dat %>% filter(FAOST_CODE %in% 13000)
-if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
 if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
 
 dat <- gather(dat, variable, value, 3:4)
@@ -78,6 +77,14 @@ dat <- gather(dat, variable, value, 3:4)
 dat$variable <- as.character(dat$variable)
 dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
 dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
+
+if (region_to_report == "REU"){
+  dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>% group_by(variable,Year) %>%  dplyr::summarise(value = sum(value, na.rm=TRUE))
+  dat$variable <- as.character(dat$variable)
+  dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
+  dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
+}  
+
 
 dat <- dat %>% group_by(Year,variable) %>%  dplyr::summarise(value = sum(value, na.rm=TRUE)/1000000000)
 
