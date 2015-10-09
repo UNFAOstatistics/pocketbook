@@ -27,8 +27,10 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P3desTEXT ----
 spread_title <- "Dietary energy supply"
-short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
-
+if (region_to_report == "RAF") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
+if (region_to_report == "RAP") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
+if (region_to_report == "REU") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
+if (region_to_report == "RNE") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
 
 ## ---- P3desData ----
 # Retrieve data
@@ -98,7 +100,7 @@ dat <- dat[!is.na(dat$mean),]
 dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
 
 dat <- dat %>% group_by(var) %>%  dplyr::summarise(wmean = weighted.mean(mean, OA.TPBS.POP.PPL.NO, na.rm=FALSE)) %>%
-             dplyr::mutate(mean = wmean/sum(wmean)*100)
+  dplyr::mutate(mean = wmean/sum(wmean)*100)
 
 dat_plot <- dat  %>% dplyr::mutate(sum = sum(mean))
 
@@ -255,8 +257,10 @@ if (region_to_report == "GLO") caption_text <- "Average dietary energy supply ad
 
 ## ---- P3cropproTEXT ----
 spread_title <- "Crop production"
-short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
-
+if (region_to_report == "RAF") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
+if (region_to_report == "RAP") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
+if (region_to_report == "REU") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
+if (region_to_report == "RNE") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
 
 ## ---- P3cropproData ----
 
@@ -294,7 +298,7 @@ for (fs in unique(gr_dat$Item)){
 }
 # items to exclude
 growth <- growth[growth[[1]] != "Fruit, pome nes",] # leave the 1st, Fruit, pome nes , out from the table as pointed by Amy sep 18, 2015
-rc <- growth %>% arrange(-growth_rate) %>% slice(1:5) 
+rc <- growth %>% arrange(-growth_rate) %>% slice(1:5)
 
 
 names(rc) <- c("","%")
@@ -320,11 +324,19 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -QV.NPCPV.CRPS.ID.SHP)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+
+nro_latest_cases <- nrow(dat[dat$Year == 2012,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
+
+top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QV.NPCPV.CRPS.ID.SHP),y=QV.NPCPV.CRPS.ID.SHP))
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QV.NPCPV.CRPS.ID.SHP)$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QV.NPCPV.CRPS.ID.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -350,12 +362,19 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+nro_latest_cases <- nrow(dat[dat$Year == 2012,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
+
 dat <- arrange(dat, -Year, -QV.GPCPV.FOOD.ID.SHP)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QV.GPCPV.FOOD.ID.SHP),y=QV.GPCPV.FOOD.ID.SHP))
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QV.GPCPV.FOOD.ID.SHP)$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QV.GPCPV.FOOD.ID.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -367,23 +386,23 @@ p
 caption_text <- "Top 20 food producing countries in 2012 based on net food per capita production value"
 
 ## ---- P3cropproBOTTOM ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>% 
-  select(FAOST_CODE,Area,Year, 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>%
+  select(FAOST_CODE,Area,Year,
          QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
          QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
          QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 13000) %>% 
-  select(FAOST_CODE,Area,Year, 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 13000) %>%
+  select(FAOST_CODE,Area,Year,
          QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
          QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
          QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 14000) %>% 
-  select(FAOST_CODE,Area,Year, 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 14000) %>%
+  select(FAOST_CODE,Area,Year,
          QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
          QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
          QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 15000) %>% 
-  select(FAOST_CODE,Area,Year, 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 15000) %>%
+  select(FAOST_CODE,Area,Year,
          QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
          QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
          QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
@@ -395,9 +414,9 @@ dat <- dat[dat$FAOST_CODE != 348,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- gather(dat,
-                variable,
-                value,
-                4:6)
+              variable,
+              value,
+              4:6)
 dat <- dat %>% filter(!is.na(value)) %>% arrange(variable,Year) %>% select(FAOST_CODE,Year,variable,value)
 
 dat$variable <- as.character(dat$variable)
@@ -464,8 +483,10 @@ caption_text <- "Crops, gross per capita production index (2004-06 = 100, 2013)"
 
 ## ---- P3cropTEXT ----
 spread_title <- "Crop"
-short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
-
+if (region_to_report == "RAF") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
+if (region_to_report == "RAP") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
+if (region_to_report == "REU") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
+if (region_to_report == "RNE") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
 
 ## ---- P3cropData ----
 
@@ -525,12 +546,20 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+nro_latest_cases <- nrow(dat[dat$Year == 2012,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
+
+
 dat <- arrange(dat, -Year, -QC.PRD.RICE.TN.SHP)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC.PRD.RICE.TN.SHP),y=QC.PRD.RICE.TN.SHP))
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QC.PRD.RICE.TN.SHP)$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC.PRD.RICE.TN.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -556,12 +585,20 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+nro_latest_cases <- nrow(dat[dat$Year == 2012,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
+
 dat <- arrange(dat, -Year, -QC.PRD.WHT.TN.SHP)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QC.PRD.WHT.TN.SHP),y=QC.PRD.WHT.TN.SHP))
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QC.PRD.WHT.TN.SHP)$SHORT_NAME)
+
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC.PRD.WHT.TN.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -642,8 +679,10 @@ caption_text <- "Cereal production, tonnes/cap (2013)"
 
 ## ---- P3livestockTEXT ----
 spread_title <- "Livestock"
-short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
-
+if (region_to_report == "RAF") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
+if (region_to_report == "RAP") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
+if (region_to_report == "REU") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
+if (region_to_report == "RNE") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
 
 ## ---- P3livestockData ----
 
@@ -832,8 +871,10 @@ caption_text <- "Cattle and buffaloes per ha of agricultural area, heads per ha 
 
 ## ---- P3fisheriesTEXT ----
 spread_title <- "Fisheries"
-short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
-
+if (region_to_report == "RAF") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
+if (region_to_report == "RAP") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
+if (region_to_report == "REU") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
+if (region_to_report == "RNE") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
 
 ## ---- P3fisheriesData ----
 
@@ -881,23 +922,23 @@ caption_text <- "Per capita fish food supply ONLY GLOBAL LEVEL DATA"
 
 ## ---- P3fisheriesLEFT ----
 # dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.NI.TN.SH")]
-# 
+#
 # dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
 # # Add region key and subset
 # dat <- left_join(dat,region_key)
-# 
+#
 # dat <- dat[dat$FAOST_CODE != 348,]
 # dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-# 
+#
 # dat <- dat[which(dat[[region_to_report]]),]
-# 
+#
 # # top for this plot
 # dat <- arrange(dat, -RF.FERT.NI.TN.SH)
 # top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-# 
-# 
+#
+#
 # dat_plot <- top20
-# 
+#
 # p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.NI.TN.SH),y=RF.FERT.NI.TN.SH))
 # p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 # p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -906,7 +947,7 @@ caption_text <- "Per capita fish food supply ONLY GLOBAL LEVEL DATA"
 # p <- p + labs(x="",y="kg/ha")
 # p <- p + guides(color = guide_legend(nrow = 2))
 # p
-# 
+#
 
 plot(cars)
 
@@ -917,21 +958,21 @@ caption_text <- "20 countries with highest value of capture production (2013)"
 ## ---- P3fisheriesRIGHT ----
 
 # dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.PH.TN.SH")]
-# 
+#
 # dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
 # # Add region key and subset
 # dat <- left_join(dat,region_key)
-# 
+#
 # dat <- dat[dat$FAOST_CODE != 348,]
 # dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-# 
+#
 # dat <- dat[which(dat[[region_to_report]]),]
-# 
+#
 # # top for this plot
 # dat <- arrange(dat, -RF.FERT.PH.TN.SH)
 # dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-# 
-# 
+#
+#
 # p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
 # p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 # p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -961,24 +1002,24 @@ caption_text <- "State of the world’s fishery stocks (1974 - 2011)"
 ## ---- P3fisheriesMAP ----
 # dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>%
 #         group_by(FAOST_CODE) %>%  dplyr::summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
-# 
+#
 # # dat <- dat[dat$FAOST_CODE != 41,]
 # dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-# 
+#
 # # set Robinson projection
 # map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
-# 
+#
 # # Subset
 # map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-# 
+#
 # cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RP.PEST.TOT.TN.SH")]
 # cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5,decimals = 1)
-# 
+#
 # map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-# 
+#
 # # define map unit
 # map_unit <- "kg/ha"
-# 
+#
 # create_map_here()
 
 plot(cars)
@@ -997,8 +1038,10 @@ caption_text <- "Fish production index (2004-06=100, 2013)"
 
 ## ---- P3tradeTEXT ----
 spread_title <- "Agricultural trade"
-short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
-
+if (region_to_report == "RAF") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
+if (region_to_report == "RAP") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
+if (region_to_report == "REU") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
+if (region_to_report == "RNE") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
 
 ## ---- P3tradeData ----
 # This should be thought twice how to produce it for regional books!
@@ -1022,20 +1065,20 @@ short_text <- "Most of the food consumed worldwide is grown locally. Where there
 
 ## ---- P3tradeTOPRIGHT ----
 
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2012, FAOST_CODE %in% 12001:12005) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 13001:13014) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 14001:14007) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 15001:15003) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
 dw <- na.omit(dat)
@@ -1121,17 +1164,17 @@ caption_text <- "Top food exporting countries in 2012"
 
 
 ## ---- P3tradeBOTTOM ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
-  select(SHORT_NAME,Area,Year, 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
 dat_plot <- na.omit(dat)
 

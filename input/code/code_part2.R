@@ -26,8 +26,10 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P2undernuTEXT ----
 spread_title <- "Undernourishment"
-short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
-
+if (region_to_report == "RAF") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
+if (region_to_report == "RAP") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
+if (region_to_report == "REU") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
+if (region_to_report == "RNE") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
 
 ## ---- P2undernuData ----
 # Retrieve data
@@ -131,7 +133,7 @@ dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-2016")
@@ -223,8 +225,10 @@ caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
 
 ## ---- P2availabTEXT ----
 spread_title <- "Food availability"
-short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
-
+if (region_to_report == "RAF") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "RAP") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "REU") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "RNE") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
 
 
 ## ---- P2availabData ----
@@ -269,7 +273,7 @@ dat <- arrange(dat, -Year, -FBS.PCSS.CSR.PCT3D)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
@@ -314,7 +318,7 @@ dat <- arrange(dat, -Year, -FBS.PPCS.GT.GCD3D)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
@@ -400,8 +404,10 @@ caption_text <- "Average value of food production, constant 2004-2006 I\\$ per p
 
 ## ---- P2accessTEXT ----
 spread_title <- "Food access"
-short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
-
+if (region_to_report == "RAF") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
+if (region_to_report == "RAP") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
+if (region_to_report == "REU") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
+if (region_to_report == "RNE") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
 
 
 ## ---- P2accessData ----
@@ -448,7 +454,7 @@ dat <- arrange(dat, -Year, -FS.DEA.DFPLI.IND)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014")
@@ -493,7 +499,7 @@ dat <- arrange(dat, -Year, -FS.OA.POU.PCT3D1)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-16")
@@ -576,8 +582,10 @@ caption_text <- "Road density, per 100 square km of land area (2007 to 2011*)"
 
 ## ---- P2stabilityTEXT ----
 spread_title <- "Economic and political stability"
-short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
-
+if (region_to_report == "RAF") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
+if (region_to_report == "RAP") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
+if (region_to_report == "REU") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
+if (region_to_report == "RNE") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
 
 ## ---- P2stabilityData ----
 
@@ -619,7 +627,7 @@ dat <- arrange(dat, -Year, -FS.DS.PCFSV.KCDD)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2011")
@@ -662,7 +670,7 @@ dat <- arrange(dat, -Year, -FS.DEA.DFPLIV.IND)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2011")
@@ -747,8 +755,10 @@ caption_text <- "Political stability and absence of violence/terrorism, index (2
 
 ## ---- P2utilizaTEXT ----
 spread_title <- "Food utilization"
-short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
-
+if (region_to_report == "RAF") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
+if (region_to_report == "RAP") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
+if (region_to_report == "REU") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
+if (region_to_report == "RNE") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
 
 ## ---- P2utilizaData ----
 
@@ -765,7 +775,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-tbl <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>% ungroup() 
+tbl <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>% ungroup()
 tbl <- arrange(tbl, -SH.STA.MALN.ZS)[1:5,]
 tbl <- left_join(tbl,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")])
 tbl <- tbl[c(5,2,4)]
@@ -796,7 +806,7 @@ dat <- arrange(dat, -Year, -SH.STA.STNT.ZS)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
@@ -842,7 +852,7 @@ dat <- arrange(dat, -Year, -SH.STA.WAST.ZS)
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- 8
-} else max_nro_countries <- 20 
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")

@@ -31,8 +31,10 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P4landTEXT ----
 spread_title <- "Land"
-short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
-
+if (region_to_report == "RAF") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+if (region_to_report == "RAP") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+if (region_to_report == "REU") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+if (region_to_report == "RNE") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
 
 ## ---- P4landData ----
 
@@ -40,22 +42,22 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 
 
 ## ---- P4landTOPRIGHT ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>% 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>% 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>% 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>% 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
@@ -149,22 +151,22 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 
 ## ---- P4landBOTTOM ----
 
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>% 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>% 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>% 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>% 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
@@ -229,8 +231,10 @@ caption_text <- "Cropland per capita, ha/cap"
 
 ## ---- P4waterTEXT ----
 spread_title <- "Water"
-short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
-
+if (region_to_report == "RAF") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
+if (region_to_report == "RAP") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
+if (region_to_report == "REU") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
+if (region_to_report == "RNE") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
 
 
 ## ---- P4waterData, cache=TRUE,results='hide', eval=P4water ----
@@ -420,8 +424,10 @@ caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-20
 
 ## ---- P4energyTEXT ----
 spread_title <- "Energy"
-short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
-
+if (region_to_report == "RAF") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
+if (region_to_report == "RAP") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
+if (region_to_report == "REU") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
+if (region_to_report == "RNE") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
 
 
 ## ---- P4energyData ----
@@ -447,16 +453,16 @@ dat <- getFAOtoSYB(domainCode = "GN",
 GN_6808_72182 <- dat$aggregates
 
 ## ---- P4energyTOPRIGHT ----
-# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
 # dat <- na.omit(dat)
@@ -551,16 +557,16 @@ caption_text <- "Energy use in agriculture and forestry, share of total energy c
 
 
 ## ---- P4energyBOTTOM ----
-# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
 #   select(SHORT_NAME,Year,
 #          GHG.TOT.ALL.GG.NO)
 # dat <- na.omit(dat)
@@ -626,8 +632,10 @@ caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011
 
 ## ---- P4forestryTEXT ----
 spread_title <- "Forestry"
-short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
-
+if (region_to_report == "RAF") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
+if (region_to_report == "RAP") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
+if (region_to_report == "REU") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
+if (region_to_report == "RNE") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
 
 ## ---- P4forestryData ----
 
@@ -741,16 +749,16 @@ caption_text <- "Top 20 importers of forest products (2012)"
 
 ## ---- P4forestryBOTTOM ----
 
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 12001:12005) %>% 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Year,
          PrimFor,PlantFor,NatRegFor)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 13001:13014) %>% 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Year,
          PrimFor,PlantFor,NatRegFor)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 14001:14007) %>% 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Year,
          PrimFor,PlantFor,NatRegFor)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 15001:15003) %>% 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Year,
          PrimFor,PlantFor,NatRegFor)
 dat <- na.omit(dat)
@@ -769,7 +777,7 @@ dat_plot <- dat
 # # reorder regions by the share of agricultural land
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
                               levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$SHORT_NAME )
-# 
+#
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
@@ -817,23 +825,25 @@ caption_text <- "Forest area as share of total land area"
 
 ## ---- P4climateTEXT ----
 spread_title <- "Climate change"
-short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
-
+if (region_to_report == "RAF") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
+if (region_to_report == "RAP") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
+if (region_to_report == "REU") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
+if (region_to_report == "RNE") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
 
 ## ---- P4climateData ----
 
 
 ## ---- P4climateTOPRIGHT ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>% 
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>% 
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>% 
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>% 
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
 dat <- na.omit(dat)
