@@ -11,13 +11,13 @@
 ## Country profiles
 ###########################################################################
 
+temp <- syb.df
+
 if (!exists("syb.df$missing")) {
 
   syb.df$missing <- "not def"
 
   }
-
-temp <- syb.df
 
 library(dplyr)
 library(xtable)
@@ -28,8 +28,6 @@ library(scales)
 library(ggplot2)
 library(readxl)
 library(zoo)
-
-syb.df$NV.AGR.TOTL.ZS[is.na(syb.df$NV.AGR.TOTL.ZS)]
 
 ##' Sanitize the expression for Latex code
 ##'
@@ -138,93 +136,23 @@ if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
 
 
 
-if (!("area_harvested" %in% names(syb.df))) {
+if (!("cropping_intensity_ratio" %in% names(syb.df))) {
 
-  ## Area harvested
-  load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
-
-  group_means <- function(data,varname,years) {
-    filter(data, Year %in% years) %>% group_by_("CountryCode") %>% summarise_(value = interp(~max(varname, na.rm = TRUE), varname = as.name(varname)))
-  }
-
-  df92 <- group_means(dat,"Value",1990)
-  df92$Year <- 1990
-  df02 <- group_means(dat,"Value",2000)
-  df02$Year <- 2000
-  df14 <- group_means(dat,"Value",2013)
-  df14$Year <- 2014
-
-  df_area_harvested <- rbind(df92,df02,df14)
-  names(df_area_harvested) <- c("FAOST_CODE","area_harvested","Year")
-
-
-  syb.df <- merge(syb.df,df_area_harvested,by=c("FAOST_CODE","Year"), all.x=TRUE)
   syb.df$cropping_intensity_ratio <- syb.df$area_harvested / syb.df$RL.AREA.AGR.HA.NO
 }
 
-## Food security
-
-if (!("share_of_des_cereals_roots_tubers" %in% names(syb.df))) {
-
-  ## Area harvested
-  # dat <- read.csv("./database/Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).csv")
-  # save(dat, file="./database/Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Food_Security_Data_E_All_Data_(Norm).RData"))
-
-  dat <- dat[dat$Item == "Share of dietary energy supply derived from cereals, roots and tubers (%) (3-year average)",c("Country.Code","Year","Value")]
-  names(dat) <- c("FAOST_CODE","Year","share_of_des_cereals_roots_tubers")
-
-  table(dat$Year)
-  dat$Year2[dat$Year %in% "2013-2015"] <- 2014
-  dat$Year2[dat$Year %in% "1999-2001"] <- 2000
-  dat$Year2[dat$Year %in% "1989-1991"] <- 1990
-  dat <- dat[!is.na(dat$Year2),]
-  dat$Year <- dat$Year2
-  dat$Year2 <- NULL
-
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"), all.x=TRUE)
-}
 
 ## Fertilisers
 
 if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
-
-  ##
-  # dat <- read.csv("~/fao_temp/pocketbook_temp/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).csv", stringsAsFactors = FALSE)
-  # save(dat, file="./database/Data/Raw/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Inputs_Fertilizers_E_All_Data_(Norm).RData"))
-
-  dat <- dat[dat$Item %in% c("Phosphate Fertilizers (P205 total nutrients)",
-                             "Potash Fertilizers (K20 total nutrients)",
-                             "Nitrogen Fertilizers (N total nutrients)") &
-               dat$Element == "Consumption in nutrients" &
-               dat$Unit == "tonnes of nutrients",
-             c("Country.Code","Year","Value","Item")]
-
-  names(dat) <- c("FAOST_CODE","Year","value","Item")
-  dat$Item <- as.character(dat$Item)
-  dat$Item[dat$Item == "Phosphate Fertilizers (P205 total nutrients)"] <- "phosphate_tonnes"
-  dat$Item[dat$Item == "Potash Fertilizers (K20 total nutrients)"] <- "potash_tonnes"
-  dat$Item[dat$Item == "Nitrogen Fertilizers (N total nutrients)"] <- "nitrogen_tonnes"
-
-  dat <- spread(dat, Item, value)
-
-  for (i in 1:ncol(dat)) {
-    dat[[i]] <- as.numeric(dat[[i]])
-  }
-
-  dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"), all.x=TRUE)
+ 
   syb.df$phosphate_tonnes_per_ha <- syb.df$phosphate_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$potash_tonnes_per_ha <- syb.df$potash_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$nitrogen_tonnes_per_ha <- syb.df$nitrogen_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$total_nutrients_tonnes_per_ha <- (syb.df$phosphate_tonnes +
                                            syb.df$potash_tonnes +
                                            syb.df$nitrogen_tonnes) / syb.df$RL.AREA.AGR.HA.NO
-
-
-}
+  }
 
 
 
@@ -240,63 +168,12 @@ if (!("rural_pop_share" %in% names(syb.df))) {
   syb.df$rural_pop_share <- syb.df$OA.TPR.POP.PPL.NO / syb.df$OA.TPBS.POP.PPL.NO *100
 }
 
-
-if (!("agricultural_exports_share" %in% names(syb.df))) {
-
-  dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5922,
-                   itemCode = 1882)
-  dat1 <- dat$aggregates
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-  #syb.df$agricultural_exports_share <- syb.df$TP_1882_5922 / (syb.df$NY.GDP.MKTP.CD*1000)  *100
-  syb.df$agricultural_exports_share <- syb.df$TP_1882_5922*1000 / syb.df$NY.GDP.MKTP.CD  * 100
-}
-
-
-## FISHFISHFISH
-
-# Add note on “Food” – Amy will check whether food trade and food production include fish. If not, add end note, indicating the exclusion of fish from food – After the dissemination of pocketbook, ESS/FIPS will seek the way to include fish into FAO “food” statistics
-
-# "Second, I want to keep fish production comparable with other food component as much as possible. It is not possible to provide value of fish production.
-# However, at least, it will be preferable to normalize to the base period 2004-06. In the other words, taking average production quantity of 2004-06 as 100.
-# This way, all food components would show the relative changes within the period, without referring relative contribution among different components."
-
-# These are now computed within the fisheriesn section in plots and maps
-
-
-
-# New production indices computed by Amanda
-
-if (!("Sugar.raw" %in% names(syb.df))) {
-
-  # dat <- read.csv("./database/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).csv")
-  # save(dat, file="./database/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Production_Indices_E_All_Data_(Norm).RData"))
-
-  dat <- dat[dat$Item %in% c("Roots and Tubers,Total",
-                             "Vegetables and Fruit Primary",
-                             "Sugar, raw",
-                             "Oilcrops Primary",
-                             "Meat indigenous, total",
-                             "Milk,Total") &
-               dat$Element == "Net Production Index Number (2004-2006 = 100)",
-             c("Country.Code","Year","Value","Item")]
-
-  names(dat) <- c("FAOST_CODE","Year","value","Item")
-  dat <- spread(dat, # data
-               Item, # class-var
-               value) # amount
-  names(dat) <- str_replace_all(names(dat), " ", ".")
-  names(dat) <- str_replace_all(names(dat), ",", ".")
-  names(dat) <- str_replace_all(names(dat), "\\.\\.", ".")
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"), all.x=TRUE)
-}
-
-
+syb.df$agricultural_exports_share <- syb.df$TP_5922_1882 / syb.df$NY.GDP.MKTP.CD  * 100
 
 
 ## Water indicators for China
+
+# Markus, please describe this
 
 water_vars <- names(syb.df)[grep("^AQ.", names(syb.df))]
 water_vars_plus <- c("Year","FAOST_CODE",water_vars)
@@ -326,6 +203,8 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
   syb.df$obesity <- paste(round(syb.df$obesity_MLE,1),round(syb.df$obesity_FMLE,1), sep="/")
   syb.df$obesity[syb.df$obesity %in% "NA/NA"] <- NA
   
+  syb.df$tot_pop_male_female <- paste(round((syb.df$OA.TPM.POP.PPL.NO/1000000),0),round((syb.df$OA.TPF.POP.PPL.NO/1000000),0),sep="/")
+  
   syb.df$rural_pop_gender_shares <- paste(round(syb.df$rural_male_share,1),round(syb.df$rural_female_share,1), sep="/")
   syb.df$rural_pop_gender_shares[syb.df$rural_pop_gender_shares %in% "NA/NA"] <- NA
   
@@ -333,28 +212,6 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
   syb.df$agr_employment_male_female[syb.df$agr_employment_male_female %in% "NA/NA"] <- NA
 
 }
-
-
-#########################################################
-#                                                       #
-#    RNE regional book vars                             #
-#                                                       #
-#########################################################
-
-# Droughts, floods, extreme temperatures (% of population, average 1990-2009)
-
-if (!("current_account_balance" %in% names(syb.df)) & region_to_report == "RNE"){
-
-  dat <- getWDItoSYB(name = "current_account_balance", indicator = "BN.CAB.XOKA.GD.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","current_account_balance")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$current_account_balance),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-}
-
 
 
 
@@ -698,7 +555,6 @@ if (region_to_report == "COF"){
 # -- in case we need footnotes under each of the country profile table
 # sed -i 's#{ 2014 }#{ 2014* }#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\*We can add a footnote for each table like this..\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
 # sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
-
 
 syb.df <- temp
 
