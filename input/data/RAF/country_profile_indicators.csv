@@ -33,16 +33,16 @@ Production quantities (1 000 tonnes),32,QL.PRD.MILK.TN.NO,,,Milk (thousand tonne
 Production quantities (1 000 tonnes),33,QC.YIELD.CRLS.HG.NO,,,Cereal yield (tonnes per ha),,0
 Production indices (2004-06=100),34,QI.NPIN.FOOD.IN.NO,,,Net food,,0
 Production indices (2004-06=100),35,QI.NPIN.CRLS.IN.NO,,,Cereal,,0
-Production indices (2004-06=100),36,Roots.and.Tubers.Total,,,Roots and tubers,,0
-Production indices (2004-06=100),37,Vegetables.and.Fruit.Primary,,,Fruits and vegetables,,0
+Production indices (2004-06=100),36,prod_ind_Roots.and.Tubers.Total,,,Roots and tubers,,0
+Production indices (2004-06=100),37,prod_ind_Vegetables.and.Fruit.Primary,,,Fruits and vegetables,,0
 Production indices (2004-06=100),38,QI.NPIN.LVSTCK.IN.NO,,,Livestock,,0
-Production indices (2004-06=100),39,Milk.Total,,,Milk,,0
-Production indices (2004-06=100),40,Meat.indigenous.total,,,Meat,,0
+Production indices (2004-06=100),39,prod_ind_Milk.Total,,,Milk,,0
+Production indices (2004-06=100),40,prod_ind_Meat.indigenous.total,,,Meat,,0
 Production indices (2004-06=100),41,production_quantity_index,,,Fish ,,0
-Net trade (min US\$),42,agricultural_exports_share,,,Agricultural exports (% GDP),,2
+Net trade (min US\$),42,agricultural_exports_share,,,Agricultural exports (% GDP),,1
 Net trade (min US\$),43,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
 Net trade (min US\$),44,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
-Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),,0
+Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
 Environment,46,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,0
 Environment,47,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,0
 Environment,48,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% of total),,0
