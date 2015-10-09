@@ -94,12 +94,25 @@ for (region_to_report in regionS_to_report) {
 
 if (broke_only_tables_into_images){
 
-    if (region_to_report == "RAF") system("pdftk syb_main.pdf cat 29 output table_pic.pdf") # Ethiopia
-    if (region_to_report == "RAP") system("pdftk syb_main.pdf cat 17 output table_pic.pdf") # Bangladesh
-    if (region_to_report == "RNE") system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Saudi-Arabia
-    if (region_to_report == "REU") system("pdftk syb_main.pdf cat 62 output table_pic.pdf") # Turkey
+    if (region_to_report == "RAF"){
+      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
+      system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
+    } 
+    if (region_to_report == "RAP"){
+      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
+      system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Bangladesh
+    } 
+    if (region_to_report == "RNE"){
+      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
+      system("pdftk syb_main.pdf cat 22 output table_pic.pdf") # Saudi-Arabia
+    } 
+    if (region_to_report == "REU"){
+      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
+      system("pdftk syb_main.pdf cat 59 output table_pic.pdf") # Turkey
+    } 
 
-    system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
+  system(paste0("convert -density 150 agg_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_agg",".jpg"))  
+  system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
 
 }
 if (broke_all_into_images) system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
