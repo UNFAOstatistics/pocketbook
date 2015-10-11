@@ -23,9 +23,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
 #                       "GLO" # Global
                               "RAP" # Asia and the Pacific
-                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                              ,"RNE" # Near East and North Africa
+                              # ,"RAF"  # Africa
+                              # ,"REU" # Europe and Central Asia
+                              # ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
@@ -166,7 +166,7 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
 # load(paste0(data.dir,"/SYB2015-09-24.RData"))
-load(paste0(data.dir,"/SYB2015-10-08.RData"))
+load(paste0(data.dir,"/SYB2015-10-09.RData"))
 # load("../../database/Data/Processed/SYB2015-09-23.RData")
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -247,7 +247,7 @@ syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Gulf Cooperation Council States and Yeme
 syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Near\n East countries"
 
 
-source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
+# source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
 
 #   ____          __  _                                  _
 #  |  _ \   ___  / _|(_) _ __    ___   _ __  ___   __ _ (_)  ___   _ __   ___
