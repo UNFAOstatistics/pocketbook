@@ -142,17 +142,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+nro_latest_cases <- nrow(dat[dat$Year == 2015,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
+
 dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
-top2015 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2015")
+
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FBS.PCS.PDES.KCD3D),y=FBS.PCS.PDES.KCD3D))
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,FBS.PCS.PDES.KCD3D)$SHORT_NAME)
+
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -171,17 +181,26 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, FBS.PCS.PDES.KCD3D)
-bottom2015 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2015")
-bottom2000 <- dat %>% filter(FAOST_CODE %in% bottom2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(bottom2015,bottom2000)
+nro_latest_cases <- nrow(dat[dat$Year == 2015,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FBS.PCS.PDES.KCD3D),y=FBS.PCS.PDES.KCD3D))
+dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
+
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,FBS.PCS.PDES.KCD3D)$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -210,6 +229,7 @@ p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day")
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -340,8 +360,9 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QV.NPCPV.CRPS.ID.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="constant 2004 - 2006 international $")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -378,8 +399,9 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QV.GPCPV.FOOD.ID.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="constant 2004 - 2006 international $")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -535,7 +557,7 @@ print(xtable(gg, caption = "\\large{Top five items produced in 2013, thousand to
 
 ## ---- P3cropLEFT ----
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QC.PRD.RICE.TN.SHP)
+dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QC.PRD.RICE.TN.SHP) %>% mutate(QC.PRD.RICE.TN.SHP = QC.PRD.RICE.TN.SHP * 1000)
 
 dat <- dat[!is.na(dat$QC.PRD.RICE.TN.SHP),]
 # Add region key and subset
@@ -551,7 +573,6 @@ if (nro_latest_cases < 20) {
   ncases <- nro_latest_cases
 } else ncases <- 20
 
-
 dat <- arrange(dat, -Year, -QC.PRD.RICE.TN.SHP)
 top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
@@ -563,8 +584,9 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC.PRD.RICE.TN.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="tonnes per capita")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -574,7 +596,7 @@ caption_text <- "Top 20 rice producing countries, per capita"
 ## ---- P3cropRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QC.PRD.WHT.TN.SHP)
+dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QC.PRD.WHT.TN.SHP)  %>% mutate(QC.PRD.WHT.TN.SHP = QC.PRD.WHT.TN.SHP * 1000)
 
 dat <- dat[!is.na(dat$QC.PRD.WHT.TN.SHP),]
 # Add region key and subset
@@ -602,8 +624,9 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC.PRD.WHT.TN.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="tonnes per capita")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -647,8 +670,7 @@ caption_text <- "Cereals, yield"
 
 
 ## ---- P3cropMAP ----
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
-                                                    QC.PRD.CRLS.TN.SHP)
+dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,QC.PRD.CRLS.TN.SHP)
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
@@ -656,7 +678,7 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QC.PRD.CRLS.TN.SHP")]
-cat_data$value_cat <- categories(x=cat_data$QC.PRD.CRLS.TN.SHP, n=5, method="jenks")
+cat_data$value_cat <- categories(x=cat_data$QC.PRD.CRLS.TN.SHP, n=5, method="jenks",decimals = 2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -728,7 +750,7 @@ print.xtable(xtable(gg, caption = "\\large{Live animal production, top 5 in 2013
 
 ## ---- P3livestockLEFT ----
 # data
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.MILK.TN.NO)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.MILK.TN.NO) %>%  mutate(QL.PRD.MILK.TN.NO = QL.PRD.MILK.TN.NO / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -746,8 +768,9 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="million tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -755,7 +778,7 @@ caption_text <- "Total milk production, top and bottom 10 countries (2012)"
 
 ## ---- P3livestockRIGHT ----
 
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO) %>%  mutate(QL.PRD.EGG.TN.NO = QL.PRD.EGG.TN.NO / 1000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -773,8 +796,9 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.T
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="1 000 tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -884,72 +908,63 @@ if (region_to_report == "RNE") short_text <- "Fish is an important component in 
 
 
 ## ---- P3fisheriesTOPRIGHT ----
-dat <- read_excel(paste0(data.dir,"/FISH_percapita_production2015.xlsx"))
-dat[[1]] <- as.character(dat[[1]])
-dat[1,] <- c("Year",1990:2013)
-names(dat) <- dat[1,]
-dat <- dat[-1,]
-dl <- gather(dat,
-             "Year1",
-             "capture",
-             2:25)
-dl <- spread(dl, Year, capture)
-names(dl) <- c("Year","per_capita_aquaculture","per_capita_catch")
-dl[[2]] <- factor(dl[[2]])
-dl[[3]] <- factor(dl[[3]])
-dl[[1]] <- as.numeric(levels(dl[[1]]))[dl[[1]]]
-dl[[2]] <- as.numeric(levels(dl[[2]]))[dl[[2]]]
-dl[[3]] <- as.numeric(levels(dl[[3]]))[dl[[3]]]
+if (region_to_report == "RAF") dat <- syb.df %>% filter(FAOST_CODE %in% 12000) %>%
+  select(SHORT_NAME,Year,
+         capture_fish_production,aquaculture_fish_production)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(FAOST_CODE %in% 13000) %>%
+  select(SHORT_NAME,Year,
+         capture_fish_production,aquaculture_fish_production)
+if (region_to_report == "REU") dat <- syb.df %>% filter(FAOST_CODE %in% 14000) %>%
+  select(SHORT_NAME,Year,
+         capture_fish_production,aquaculture_fish_production)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(FAOST_CODE %in% 15000) %>%
+  select(SHORT_NAME,Year,
+         capture_fish_production,aquaculture_fish_production)
+dat <- na.omit(dat)
 
-dat <- gather(dl, variable, value, 2:3)
+# Add region key and subset
 
-dat$variable <- as.character(dat$variable)
-dat$variable[dat$variable == "per_capita_aquaculture"] <- "From aquaculture"
-dat$variable[dat$variable == "per_capita_catch"] <- "From capture fisheries"
+dat <- gather(dat, variable, value, 3:4)
+dat$fill[dat$variable == "capture_fish_production"] <- "From capture fishing"
+dat$fill[dat$variable == "aquaculture_fish_production"] <- "From aquaculture"
 
-# Draw the plot
-p <- ggplot(dat, aes(x = Year, y = value))
-p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + theme(axis.text.x = element_text(angle = 45))
-p <- p + labs(y="kg/cap")
-p <- p + scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2013))
+dat_plot <- dat
+
+p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + labs(x="",y="million tonnes")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- "Per capita fish food supply ONLY GLOBAL LEVEL DATA"
+caption_text <- "Fish production for aquaculture and capture fishing"
 
 
 ## ---- P3fisheriesLEFT ----
-# dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.NI.TN.SH")]
-#
-# dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
-# # Add region key and subset
-# dat <- left_join(dat,region_key)
-#
-# dat <- dat[dat$FAOST_CODE != 348,]
-# dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-#
-# dat <- dat[which(dat[[region_to_report]]),]
-#
-# # top for this plot
-# dat <- arrange(dat, -RF.FERT.NI.TN.SH)
-# top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-#
-#
-# dat_plot <- top20
-#
-# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.NI.TN.SH),y=RF.FERT.NI.TN.SH))
-# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-# p <- p + theme(legend.position = "none") # hide legend as only one year plotted
-# p <- p + coord_flip()
-# p <- p + labs(x="",y="kg/ha")
-# p <- p + guides(color = guide_legend(nrow = 2))
-# p
-#
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,capture_fish_production)
 
-plot(cars)
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[!is.na(dat$capture_fish_production),]
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- arrange(dat, -capture_fish_production)
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+dat_plot <- rbind(top10,bot10)
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=capture_fish_production))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="million tonnes")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
+p
 
 # Caption
 caption_text <- "20 countries with highest value of capture production (2013)"
@@ -957,32 +972,28 @@ caption_text <- "20 countries with highest value of capture production (2013)"
 
 ## ---- P3fisheriesRIGHT ----
 
-# dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.PH.TN.SH")]
-#
-# dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
-# # Add region key and subset
-# dat <- left_join(dat,region_key)
-#
-# dat <- dat[dat$FAOST_CODE != 348,]
-# dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-#
-# dat <- dat[which(dat[[region_to_report]]),]
-#
-# # top for this plot
-# dat <- arrange(dat, -RF.FERT.PH.TN.SH)
-# dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-#
-#
-# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
-# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-# p <- p + theme(legend.position = "none") # hide legend as only one year plotted
-# p <- p + coord_flip()
-# p <- p + labs(x="",y="kg/ha")
-# p <- p + guides(color = guide_legend(nrow = 2))
-# p
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,aquaculture_fish_production)
 
-plot(cars)
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[!is.na(dat$aquaculture_fish_production),]
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat <- arrange(dat, -aquaculture_fish_production)
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+dat_plot <- rbind(top10,bot10)
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=aquaculture_fish_production))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="million tonnes")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space) 
+p
 
 # Caption
 
@@ -990,42 +1001,58 @@ caption_text <- "20 countries with highest value of aquaculture production (2013
 
 
 ## ---- P3fisheriesBOTTOM ----
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Area,Year,
+         production_quantity_index)   # fish
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Area,Year,
+         production_quantity_index)   # cereal export value
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Area,Year,
+         production_quantity_index)   # cereal export value
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Area,Year,
+         production_quantity_index)   # cereal export value
+dat_plot <- na.omit(dat)
 
-plot(cars)
-
+p <- ggplot(data = dat_plot, aes(x = Year, y = production_quantity_index,group=SHORT_NAME,color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(y="index", x="")
+p <- p + guides(color = guide_legend(nrow = 3))
+p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
+p
 
 # Caption
-caption_text <- "State of the world’s fishery stocks (1974 - 2011)"
+caption_text <- "Fish production indices (2004-06=100)"
 
 
 
 ## ---- P3fisheriesMAP ----
-# dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, RP.PEST.TOT.TN.SH) %>%
-#         group_by(FAOST_CODE) %>%  dplyr::summarise(RP.PEST.TOT.TN.SH = mean(RP.PEST.TOT.TN.SH, na.rm=TRUE))
-#
-# # dat <- dat[dat$FAOST_CODE != 41,]
-# dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-#
-# # set Robinson projection
-# map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
-#
-# # Subset
-# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-#
-# cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","RP.PEST.TOT.TN.SH")]
-# cat_data$value_cat <- categories(x=cat_data$RP.PEST.TOT.TN.SH, n=5,decimals = 1)
-#
-# map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-#
-# # define map unit
-# map_unit <- "kg/ha"
-#
-# create_map_here()
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,net_fish_trade) %>%  mutate(net_fish_trade = net_fish_trade/ 1000000)
+dat <- dat[!is.na(dat$net_fish_trade),]
 
-plot(cars)
+# dat <- dat[dat$FAOST_CODE != 41,]
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
+# set Robinson projection
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+
+# Subset
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","net_fish_trade")]
+cat_data$value_cat <- categories(x=cat_data$net_fish_trade, n=5,decimals = 2)
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "million US$"
+
+create_map_here()
 
 # Caption
-caption_text <- "Fish production index (2004-06=100, 2013)"
+caption_text <- "Net trade of fish in 2012"
 
 
 #      _                 _               _  _                       _   _                    _
@@ -1105,7 +1132,7 @@ print.xtable(xtable(dw, caption = "\\large{Exports and Imports of food, million 
 
 ## ---- P3tradeLEFT ----
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.IMVAL.FOOD.USD.NO)
+dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.IMVAL.FOOD.USD.NO) %>% mutate(TP.IMVAL.FOOD.USD.NO = TP.IMVAL.FOOD.USD.NO / 1000000000)
 
 dat <- dat[!is.na(dat$TP.IMVAL.FOOD.USD.NO),]
 # Add region key and subset
@@ -1116,16 +1143,23 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
+nro_latest_cases <- nrow(dat[dat$Year == 2012,])
+if (nro_latest_cases < 20) {
+  ncases <- nro_latest_cases
+} else ncases <- 20
+
 dat <- arrange(dat, -Year, -TP.IMVAL.FOOD.USD.NO)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP.IMVAL.FOOD.USD.NO),y=TP.IMVAL.FOOD.USD.NO))
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,TP.IMVAL.FOOD.USD.NO)$SHORT_NAME)
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP.IMVAL.FOOD.USD.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="billion US$")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -1135,7 +1169,7 @@ caption_text <- "Top food importing countries in 2012"
 ## ---- P3tradeRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.EXVAL.FOOD.USD.NO)
+dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.EXVAL.FOOD.USD.NO) %>% mutate(TP.EXVAL.FOOD.USD.NO = TP.EXVAL.FOOD.USD.NO / 1000000000)
 
 dat <- dat[!is.na(dat$TP.EXVAL.FOOD.USD.NO),]
 # Add region key and subset
@@ -1155,7 +1189,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP.EXVAL.FOOD.USD.NO),y=TP.EXVAL
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="billion US$")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
