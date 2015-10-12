@@ -431,58 +431,31 @@ if (region_to_report == "RNE") short_text <- "Energy is an important input for t
 
 
 ## ---- P4energyData ----
-# Retrieve data
-library(FAOSTAT)
-## Bioenergy production
-dat <- getFAOtoSYB(domainCode = "EE",
-                   elementCode = 72041,
-                   itemCode = 6740)
-#EE_6740_72041 <- dat$entity
-EE_6740_72041 <- dat$aggregates
-## Energy use in agriculture and forestry
-dat <- getFAOtoSYB(domainCode = "EE",
-                   elementCode = 72040,
-                   itemCode = 6741)
-# EE_6741_72040 <- dat$entity
-EE_6741_72040 <- dat$aggregates
-## Energy consumption for power irrigation
-dat <- getFAOtoSYB(domainCode = "GN",
-                   elementCode = 72182,
-                   itemCode = 6808)
-# EE_6741_72040 <- dat$entity
-GN_6808_72182 <- dat$aggregates
+
 
 ## ---- P4energyTOPRIGHT ----
-# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# dat <- na.omit(dat)
-dat <- EE_6740_72041 %>% filter(FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500))
-
-dat$SHORT_NAME[dat$FAOST_CODE == 5000] <- "World"
-dat$SHORT_NAME[dat$FAOST_CODE == 5100] <- "Africa"
-dat$SHORT_NAME[dat$FAOST_CODE == 5200] <- "Americas"
-dat$SHORT_NAME[dat$FAOST_CODE == 5300] <- "Asia"
-dat$SHORT_NAME[dat$FAOST_CODE == 5400] <- "Europe"
-dat$SHORT_NAME[dat$FAOST_CODE == 5500] <- "Oceania"
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+dat <- na.omit(dat)
 
 dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of tot energy production")
-p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
 # Caption
@@ -492,8 +465,7 @@ caption_text <- "Bioenergy production, share of total energy production"
 
 
 ## ---- P4energyLEFT ----
-
-dat <- EE_6740_72041 %>% filter(Year == 2009, FAOST_CODE < 5000)
+dat <- syb.df %>% filter(Year %in% 2009) %>% select(SHORT_NAME,Year,EE_6740_72041)
 
 dat <- dat[!is.na(dat$EE_6740_72041),]
 # Add region key and subset
@@ -524,8 +496,8 @@ caption_text <- "Bioenergy production, share of total energy production, top 20 
 
 
 ## ---- P4energyRIGHT ----
+dat <- syb.df %>% filter(Year %in% 2009) %>% select(SHORT_NAME,Year,EE_6741_72040)
 
-dat <- EE_6741_72040 %>% filter(Year == 2009, FAOST_CODE < 5000)
 
 dat <- dat[!is.na(dat$EE_6741_72040),]
 # Add region key and subset
@@ -557,50 +529,39 @@ caption_text <- "Energy use in agriculture and forestry, share of total energy c
 
 
 ## ---- P4energyBOTTOM ----
-# if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
-#   select(SHORT_NAME,Year,
-#          GHG.TOT.ALL.GG.NO)
-# dat <- na.omit(dat)
-dat <- EE_6741_72040 %>% filter(FAOST_CODE %in% c(5000,5100,5200,5300,5400,5500))
-
-dat$SHORT_NAME[dat$FAOST_CODE == 5000] <- "World"
-dat$SHORT_NAME[dat$FAOST_CODE == 5100] <- "Africa"
-dat$SHORT_NAME[dat$FAOST_CODE == 5200] <- "Americas"
-dat$SHORT_NAME[dat$FAOST_CODE == 5300] <- "Asia"
-dat$SHORT_NAME[dat$FAOST_CODE == 5400] <- "Europe"
-dat$SHORT_NAME[dat$FAOST_CODE == 5500] <- "Oceania"
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+dat <- na.omit(dat)
 
 dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="% of tot energy production")
-p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(x="",y="% of tot energy consumption")
 p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
 # Caption
 caption_text <- "Energy use in agriculture and forestry, share of total energy consumption"
 
 ## ---- P4energyMAP ----
-
-dat <- GN_6808_72182 %>%  filter(Year >= 2008) %>% arrange(-Year)
-
+dat <- syb.df %>% filter(Year >= 2008) %>% select(FAOST_CODE,Year,GN_6808_72182) %>% mutate(GN_6808_72182 = GN_6808_72182 / 1000000)
+dat <- na.omit(dat)
 
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>%  ungroup()
 
-
-# dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
@@ -610,7 +571,7 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","GN_6808_72182")]
-cat_data$value_cat <- categories(x=cat_data$GN_6808_72182, n=3,decimals = 1)
+cat_data$value_cat <- categories(x=cat_data$GN_6808_72182, n=3)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -854,12 +815,13 @@ dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
+
 
 # Caption
 caption_text <- "Greenhouse gas emissions in agriculture"

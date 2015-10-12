@@ -368,24 +368,18 @@ nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
 
 ## ---- P1econBOTTOM ----
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
 
-# merge data with the region info
-dat <- merge(dl,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-#dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(constant_gdp = sum(NY.GDP.MKTP.KD,na.rm=TRUE))
-
-dat <- merge(nomin,dat,by=c("FAOST_CODE","Year"))
-
-dat_plot <- dat %>%  group_by(subgroup,Year) %>%
-    dplyr::summarise(constant_gdp    = sum(NY.GDP.MKTP.KD,na.rm=TRUE),
-              agr_value_added = sum(NV.AGR.TOTL.KD,na.rm=TRUE)) %>%
-    dplyr::mutate(share = agr_value_added/constant_gdp*100) %>%
+dat_plot <- dat %>%  group_by(Year) %>%
+    dplyr::mutate(share = NV.AGR.TOTL.KD/NY.GDP.MKTP.KD*100) %>%
     ungroup() %>%
     arrange(-share)
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=subgroup))
+p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
 p <- p + labs(y="percent", x="")

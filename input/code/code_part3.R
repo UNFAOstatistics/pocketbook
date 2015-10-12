@@ -1071,22 +1071,6 @@ if (region_to_report == "REU") short_text <- "Most of the food consumed worldwid
 if (region_to_report == "RNE") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
 
 ## ---- P3tradeData ----
-# This should be thought twice how to produce it for regional books!
-# # Retrieve data
-# library(FAOSTAT)
-# dat <- getFAOtoSYB(domainCode = "TP",
-#                    elementCode = 5622,
-#                    itemCode = 1883)
-# dat1 <- dat$aggregates
-# names(dat1) <- c("FAOST_CODE","Year","value")
-# dat1$variable <- "Import value"
-# dat <- getFAOtoSYB(domainCode = "TP",
-#                    elementCode = 5922,
-#                    itemCode = 1883)
-# dat2 <- dat$aggregates
-# names(dat2) <- c("FAOST_CODE","Year","value")
-# dat2$variable <- "Export value"
-# df <- rbind(dat1,dat2)
 
 
 
