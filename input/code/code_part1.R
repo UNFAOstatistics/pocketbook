@@ -151,7 +151,6 @@ caption_text <- "Population, average annual growth (2004-2014)"
 
 # data
 dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
-dat <- syb.df %>%  select(FAOST_CODE,SP.DYN.LE00.IN)
 dat <- dat[!is.na(dat$SP.DYN.LE00.IN),]
 
 # Add region key and subset
@@ -354,12 +353,12 @@ caption_text <- "Value added in agriculture, average annual growth (2003-2013)"
 ## ---- P1econBOTTOM_data ----
 # data
 # Constant GDP from World Bank
-library(WDI)
-dl <- WDI(indicator = c("NY.GDP.MKTP.KD","iso3Code"), start=2000, end=2013)
-names(dl)[names(dl)=="year"] <- "Year"
-dl <- merge(dl,FAOcountryProfile[c("ISO2_WB_CODE","FAOST_CODE","UNSD_MACRO_REG_CODE","UNSD_SUB_REG_CODE")],
-            by.x="iso2c",by.y="ISO2_WB_CODE",all.x=TRUE)
-dl <- na.omit(dl)
+# library(WDI)
+# dl <- WDI(indicator = c("NY.GDP.MKTP.KD","iso3Code"), start=2000, end=2013)
+# names(dl)[names(dl)=="year"] <- "Year"
+# dl <- merge(dl,FAOcountryProfile[c("ISO2_WB_CODE","FAOST_CODE","UNSD_MACRO_REG_CODE","UNSD_SUB_REG_CODE")],
+#             by.x="iso2c",by.y="ISO2_WB_CODE",all.x=TRUE)
+# dl <- na.omit(dl)
 
 # nominator from syb FAOSTAT
 nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
@@ -369,10 +368,10 @@ nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
 
 ## ---- P1econBOTTOM ----
 
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2014) %>% select(SHORT_NAME,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
 
 
 dat_plot <- dat %>%  group_by(Year) %>%
@@ -380,9 +379,9 @@ dat_plot <- dat %>%  group_by(Year) %>%
     ungroup() %>%
     arrange(-share)
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=subgroup,color=SHORT_NAME))
+p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
