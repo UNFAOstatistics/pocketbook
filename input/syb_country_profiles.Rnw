@@ -174,7 +174,6 @@ syb.df$agricultural_exports_share <- syb.df$TP_5922_1882 / syb.df$NY.GDP.MKTP.CD
 ## Water indicators for China
 
 # Markus, please describe this
-
 water_vars <- names(syb.df)[grep("^AQ.", names(syb.df))]
 water_vars_plus <- c("Year","FAOST_CODE",water_vars)
 water_vars.df <- syb.df[water_vars_plus]
@@ -183,7 +182,8 @@ water_vars.df$FAOST_CODE[water_vars.df$FAOST_CODE == 357] <- 351
 
 myvars <- names(syb.df) %in% water_vars
 syb.df <- syb.df[!myvars]
-syb.df <- merge(syb.df,water_vars.df,by=c("FAOST_CODE","Year"), all.x=TRUE)
+
+syb.df <- dplyr::left_join(syb.df,water_vars.df)
 
 
 #########################################################
