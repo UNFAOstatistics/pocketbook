@@ -21,7 +21,7 @@ Hunger dimensions,20,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
 Hunger dimensions,21,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
 Hunger dimensions,22,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
 Hunger dimensions,23,FBS.PCSS.CSR.PCT3D,,,"Dietary en supp, cereals/roots/tubers (%)",,1
-Hunger dimensions,24,CP_7013_230123,,,Food CPI,,
+Hunger dimensions,24,CP_7013_230123,,,Food consumer price index (2000 = 100),,0
 Hunger dimensions,25,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,1
 Hunger dimensions,26,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
 Hunger dimensions,27,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0

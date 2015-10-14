@@ -150,7 +150,8 @@ caption_text <- "Population, average annual growth (2004-2014)"
 ## ---- P1overRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
+dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
+dat <- syb.df %>%  select(FAOST_CODE,SP.DYN.LE00.IN)
 dat <- dat[!is.na(dat$SP.DYN.LE00.IN),]
 
 # Add region key and subset
