@@ -41,7 +41,7 @@ Production indices (2004-06=100),41,production_quantity_index,,,Fish ,,0
 Net trade (min US\$),42,agricultural_exports_share,,,Agricultural exports (% GDP),,1
 Net trade (min US\$),43,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
 Net trade (min US\$),44,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
-Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
+Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),,1
 Environment,46,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,0
 Environment,47,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,0
 Environment,48,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% of total),,0
