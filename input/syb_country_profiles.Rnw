@@ -356,7 +356,7 @@ if (region_to_report == "RNE"){
 # Indicators --------------------------------------------------------------
 
 ## Load the indicators we want to show
-indicators.df <- read.csv(paste0(root.dir,"input/data/",region_to_report,"/country_profile_indicators.csv"), na.strings = "", stringsAsFactors = FALSE)
+indicators.df <- read.csv(paste0(root.dir,"input/data/country_profile_indicators_",region_to_report,".csv"), na.strings = "", stringsAsFactors = FALSE)
 
 
 # source(paste0(root.dir,"input/code/table/tableInfo.R"))
