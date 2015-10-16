@@ -390,7 +390,6 @@ if (region_to_report == "RAF") subtitle <- "Africa \n\n Food and Agriculture"
 if (region_to_report == "RAP") subtitle <- "Asia and the Pacific \n\n Food and Agriculture"
 if (region_to_report == "REU") subtitle <- "Europe and Central Asia \n\n Food and Agriculture"
 if (region_to_report == "RNE") subtitle <- "Near East and North Africa \n\n Food and Agriculture"
-if (region_to_report == "LAC") subtitle <- "Latin America and \n\n the Caribbean"
 # if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
 if (region_to_report == "COF") subtitle <- ""
 if (region_to_report == "GLO") subtitle <- ""
@@ -400,10 +399,64 @@ if (region_to_report == "GLO") subtitle <- ""
 
 \end{center}
 
+
 \vfill
 \begin{center}
-Food and Agriculture Organization of the United Nations, Rome, 2015
+
+<<define_print_location, echo=FALSE, results='asis', eval=TRUE>>=
+
+  if (region_to_report == "RAF"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Regional office for Africa, Accra, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+  if (region_to_report == "RAP"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Regional Office for Asia and the Pacific, Bangkok, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+  if (region_to_report == "REU"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            FAO Regional Office for Europe and Central Asia, Budapest, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+  if (region_to_report == "RNE"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            FAO Regional Office for the Near East and North Africa, Cairo, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+
+
+  @
+
 \end{center}
+
+
+
 
 <<timestamp, eval=include_timestamp>>=
 time_generated <- Sys.time()
