@@ -622,9 +622,11 @@ cat("
 % \listoffigures
 
 
+
+
 \clearpage
 
-<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
+<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
 
 the_whole   <- map.df # for mapping the grey areas
 
@@ -713,6 +715,26 @@ p
 
 @
 
+\footnotesize
+\textsuperscript{1} For purposes of comparison, based mainly on geographical criteria, while also taking into consideration, as much as possible, economic and population aspects, we have sub-divided the region of Europe and Central Asia into six sub-groups, which will be referred to in the book as “sub-regions”.
+
+\textsuperscript{2} Israel is represented in the maps and in the data tables. However, due to its geographical distance from the other countries in the region, and to its non-EU and EFTA membership, it has not been included in the following six sub-regions.
+
+\textsuperscript{3} Group abbreviated as ’C Asia’ in charts.
+
+\textsuperscript{4} Group abbreviated as ’Cauc \& Turk’ in charts.
+
+\textsuperscript{5} Group abbreviated as ’CIS Europe’ in charts.
+
+\textsuperscript{6} Group abbreviated as ’SE Europe’ in charts.
+
+\textsuperscript{7} Group abbreviated as ’EU CE’ in charts.
+
+\textsuperscript{8} Group abbreviated as ’EU Other’ in charts.
+
+\textsuperscript{9} Kosovo is not considered to be a part of Serbia in World Bank sourced data.
+
+\textsuperscript{1} Near East and North Africa Region in visualization is abbreviated as Regional Office for the Near East
 
 \clearpage
 
@@ -793,6 +815,8 @@ print(
 
 if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 @
+
+
 
 
 
