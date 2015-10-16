@@ -715,6 +715,7 @@ p
 
 @
 
+
 % \footnotesize
 % \textsuperscript{1} For purposes of comparison, based mainly on geographical criteria, while also taking into consideration, as much as possible, economic and population aspects, we have sub-divided the region of Europe and Central Asia into six sub-groups, which will be referred to in the book as “sub-regions”.
 % 
