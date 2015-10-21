@@ -698,15 +698,25 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 \makeatletter\clearpage\ifodd\c@page\hbox{}\newpage\fi\makeatother %% Remove the colored strip from the introduction page
 
-
-
-
-%   ____               _     _
-%  |  _ \  __ _  _ __ | |_  / |
-%  | |_) |/ _` || '__|| __| | |
-%  |  __/| (_| || |   | |_  | |
-%  |_|    \__,_||_|    \__| |_|
+                                                                                          
 %
+% PPPPPPPPPPPPPPPPP                                               tttt            1111111
+% P::::::::::::::::P                                           ttt:::t           1::::::1
+% P::::::PPPPPP:::::P                                          t:::::t          1:::::::1
+% PP:::::P     P:::::P                                         t:::::t          111:::::1
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt       1::::1
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t       1::::1
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t       1::::1
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt       1::::l
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t             1::::l
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t             1::::l
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t             1::::l
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt   1::::l
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t111::::::111
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t1::::::::::1
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt1::::::::::1
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt  111111111111
+
 
 
 %% PART1 - The Setting
@@ -909,14 +919,24 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 
 
 
-
-%   ____               _     ____
-%  |  _ \  __ _  _ __ | |_  |___ \
-%  | |_) |/ _` || '__|| __|   __) |
-%  |  __/| (_| || |   | |_   / __/
-%  |_|    \__,_||_|    \__| |_____|
 %
-
+% PPPPPPPPPPPPPPPPP                                               tttt           222222222222222
+% P::::::::::::::::P                                           ttt:::t          2:::::::::::::::22
+% P::::::PPPPPP:::::P                                          t:::::t          2::::::222222:::::2
+% PP:::::P     P:::::P                                         t:::::t          2222222     2:::::2
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt                2:::::2
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t                2:::::2
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t             2222::::2
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt        22222::::::22
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t            22::::::::222
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t           2:::::22222
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t          2:::::2
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt2:::::2
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t2:::::2       222222
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t2::::::2222222:::::2
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt2::::::::::::::::::2
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt  22222222222222222222
+%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1130,13 +1150,23 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 
 
 
-
-
-%   ____               _     _____
-%  |  _ \  __ _  _ __ | |_  |___ /
-%  | |_) |/ _` || '__|| __|   |_ \
-%  |  __/| (_| || |   | |_   ___) |
-%  |_|    \__,_||_|    \__| |____/
+%
+% PPPPPPPPPPPPPPPPP                                               tttt           333333333333333
+% P::::::::::::::::P                                           ttt:::t          3:::::::::::::::33
+% P::::::PPPPPP:::::P                                          t:::::t          3::::::33333::::::3
+% PP:::::P     P:::::P                                         t:::::t          3333333     3:::::3
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt                3:::::3
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t                3:::::3
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t        33333333:::::3
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt        3:::::::::::3
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t              33333333:::::3
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t                      3:::::3
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t                      3:::::3
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt            3:::::3
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t3333333     3:::::3
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t3::::::33333::::::3
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt3:::::::::::::::33
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt   333333333333333
 %
 
 
@@ -1376,14 +1406,24 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 @
 
 
-
-
-
-%   ____               _     _  _
-%  |  _ \  __ _  _ __ | |_  | || |
-%  | |_) |/ _` || '__|| __| | || |_
-%  |  __/| (_| || |   | |_  |__   _|
-%  |_|    \__,_||_|    \__|    |_|
+%
+% PPPPPPPPPPPPPPPPP                                               tttt             444444444
+% P::::::::::::::::P                                           ttt:::t            4::::::::4
+% P::::::PPPPPP:::::P                                          t:::::t           4:::::::::4
+% PP:::::P     P:::::P                                         t:::::t          4::::44::::4
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt   4::::4 4::::4
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t  4::::4  4::::4
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t 4::::4   4::::4
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt4::::444444::::444
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t      4::::::::::::::::4
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t      4444444444:::::444
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t                4::::4
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt      4::::4
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t      4::::4
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t    44::::::44
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt    4::::::::4
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt      4444444444
+%
 %
 
 

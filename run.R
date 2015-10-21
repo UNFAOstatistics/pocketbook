@@ -23,9 +23,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
 #                       "GLO" # Global
                               "RAP" # Asia and the Pacific
-                              # ,"RAF"  # Africa
-                              # ,"REU" # Europe and Central Asia
-                              # ,"RNE" # Near East and North Africa
+                              ,"RAF"  # Africa
+                              ,"REU" # Europe and Central Asia
+                              ,"RNE" # Near East and North Africa
 #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
@@ -38,8 +38,8 @@ include_foreword     <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
+include_part1        <- T
+include_part2        <- T
 include_part3        <- T
 include_part4        <- T
 include_part5        <- F
