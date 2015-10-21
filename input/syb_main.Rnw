@@ -968,8 +968,196 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part1!10}{white}
 \clearpage
 
-<<part1, child = if (include_part1) 'syb_part1.Rnw'>>=
+<<setup-code-part1>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 @
+
+
+<<part1_setup, eval=include_part1>>=
+@
+
+
+%    ___                                  _
+%   / _ \  __   __   ___   _ __  __   __ (_)   ___  __      __
+%  | | | | \ \ / /  / _ \ | '__| \ \ / / | |  / _ \ \ \ /\ / /
+%  | |_| |  \ V /  |  __/ | |     \ V /  | | |  __/  \ V  V /
+%   \___/    \_/    \___| |_|      \_/   |_|  \___|   \_/\_/
+%
+
+
+
+<<P1overTEXT, eval=P1over, short_text_ChartPage=P1over>>=
+@
+
+<<P1overData,results='hide', cache=TRUE>>=
+@
+
+
+<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1overLEFT, eval=P1over, left_plot=P1over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1overRIGHT, eval=P1over ,right_plot=P1over, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1overMAP, eval=P1over, map_plot=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%   _____
+%  | ____|   ___    ___    _ __     ___    _ __ ___    _   _
+%  |  _|    / __|  / _ \  | '_ \   / _ \  | '_ ` _ \  | | | |
+%  | |___  | (__  | (_) | | | | | | (_) | | | | | | | | |_| |
+%  |_____|  \___|  \___/  |_| |_|  \___/  |_| |_| |_|  \__, |
+%                                                      |___/
+%
+
+
+<<P1econTEXT, eval=P1econ, short_text_ChartPage=P1econ>>=
+@
+
+<<P1econTOPRIGHT, eval=P1econ, top_right_plot=P1econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1econLEFT, eval=P1econ, left_plot=P1econ, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1econRIGHT, eval=P1econ ,right_plot=P1econ, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1econBOTTOM_data, cache=TRUE>>=
+@
+
+
+
+<<P1econBOTTOM, eval=P1econ, bottom_plot=P1econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1econMAP, eval=P1econ, map_plot=P1econ, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%   _               _
+%  | |       __ _  | |__     ___    _   _   _ __
+%  | |      / _` | | '_ \   / _ \  | | | | | '__|
+%  | |___  | (_| | | |_) | | (_) | | |_| | | |
+%  |_____|  \__,_| |_.__/   \___/   \__,_| |_|
+%
+
+
+<<P1laboTEXT, eval=P1labo, short_text_ChartPage=P1labo>>=
+@
+
+<<P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1laboLEFT, eval=P1labo, left_plot=P1labo, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1laboRIGHT, eval=P1labo ,right_plot=P1labo, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1laboBOTTOM_data, cache=TRUE, results='hide'>>=
+@
+
+
+
+<<P1laboBOTTOM, eval=P1labo, bottom_plot=P1labo, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1laboMAP, eval=P1labo, map_plot=P1labo, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%   ___                           _
+%  |_ _|  _ __    _ __    _   _  | |_   ___
+%   | |  | '_ \  | '_ \  | | | | | __| / __|
+%   | |  | | | | | |_) | | |_| | | |_  \__ \
+%  |___| |_| |_| | .__/   \__,_|  \__| |___/
+%                |_|
+%
+
+
+<<P1inputTEXT, eval=P1input, short_text_ChartPage=P1input>>=
+@
+
+<<P1inputData,results='hide'>>=
+@
+
+
+<<P1inputTOPRIGHT, eval=P1input, top_right_plot=P1input, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1inputLEFT, eval=P1input, left_plot=P1input, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1inputRIGHT, eval=P1input ,right_plot=P1input, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1inputBOTTOM, eval=P1input, bottom_plot=P1input, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1inputMAP, eval=P1input, map_plot=P1input, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%   ___                                _                                _
+%  |_ _|  _ __   __   __   ___   ___  | |_   _ __ ___     ___   _ __   | |_
+%   | |  | '_ \  \ \ / /  / _ \ / __| | __| | '_ ` _ \   / _ \ | '_ \  | __|
+%   | |  | | | |  \ V /  |  __/ \__ \ | |_  | | | | | | |  __/ | | | | | |_
+%  |___| |_| |_|   \_/    \___| |___/  \__| |_| |_| |_|  \___| |_| |_|  \__|
+%
+
+
+<<P1investTEXT, eval=P1invest, short_text_ChartPage=P1invest>>=
+@
+
+<<P1investData,results='hide', cache=TRUE>>=
+@
+
+
+<<P1investTOPRIGHT, eval=P1invest, top_right_plot=P1invest, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1investLEFT, eval=P1invest, left_plot=P1invest, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1investRIGHT, eval=P1invest ,right_plot=P1invest, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1investBOTTOM, eval=P1invest, bottom_plot=P1invest, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+<<p1investMAPdata, results='hide', cache=TRUE>>=
+@
+
+
+
+<<P1investMAP, eval=P1invest, map_plot=P1invest, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
 
 
 
@@ -991,8 +1179,207 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part2!10}{white}
 \clearpage
 
-<<part2, child = if (include_part2) 'syb_part2.Rnw'>>=
+<<setup-code-part2>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
+
+
+
+<<part2_setup, eval=include_part2>>=
+@
+
+
+%   _   _             _                                         _       _                              _
+%  | | | | _ __    __| |  ___  _ __  _ __    ___   _   _  _ __ (_) ___ | |__   _ __ ___    ___  _ __  | |_
+%  | | | || '_ \  / _` | / _ \| '__|| '_ \  / _ \ | | | || '__|| |/ __|| '_ \ | '_ ` _ \  / _ \| '_ \ | __|
+%  | |_| || | | || (_| ||  __/| |   | | | || (_) || |_| || |   | |\__ \| | | || | | | | ||  __/| | | || |_
+%   \___/ |_| |_| \__,_| \___||_|   |_| |_| \___/  \__,_||_|   |_||___/|_| |_||_| |_| |_| \___||_| |_| \__|
+
+
+
+<<P2undernuTEXT, eval=P2undernu, short_text_ChartPage=P2undernu>>=
+@
+
+
+<<P2undernuData,results='hide', cache=TRUE>>=
+@
+
+
+
+<<P2undernuTOPRIGHT, eval=P2undernu, top_right_minitable=P2undernu>>=
+@
+
+
+<<P2undernuLEFT, eval=P2undernu, left_plot=P2undernu, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2undernuRIGHT, eval=P2undernu ,right_plot=P2undernu, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2undernuBOTTOM, eval=P2undernu, bottom_plot=P2undernu, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2undernuMAP, eval=P2undernu, map_plot=P2undernu, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%
+%   _____                       _                             _   _           _       _   _   _   _
+%  |  ___|   ___     ___     __| |     __ _  __   __   __ _  (_) | |   __ _  | |__   (_) | | (_) | |_   _   _
+%  | |_     / _ \   / _ \   / _` |    / _` | \ \ / /  / _` | | | | |  / _` | | '_ \  | | | | | | | __| | | | |
+%  |  _|   | (_) | | (_) | | (_| |   | (_| |  \ V /  | (_| | | | | | | (_| | | |_) | | | | | | | | |_  | |_| |
+%  |_|      \___/   \___/   \__,_|    \__,_|   \_/    \__,_| |_| |_|  \__,_| |_.__/  |_| |_| |_|  \__|  \__, |
+%                                                                                                       |___/
+%
+
+
+
+
+
+<<P2availabTEXT, eval=P2availab, short_text_ChartPage=P2availab>>=
+@
+
+
+<<P2availabData, cache=TRUE,results='hide', eval=P2availab>>=
+@
+
+
+
+<<P2availabTOPRIGHT, eval=P2availab, top_right_plot=P2availab, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P2availabLEFT, eval=P2availab, left_plot=P2availab, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2availabRIGHT, eval=P2availab ,right_plot=P2availab, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2availabBOTTOM, eval=P2availab, bottom_plot=P2availab, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2availabMAP, eval=P2availab, map_plot=P2availab, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%
+%   _____                       _
+%  |  ___|   ___     ___     __| |     __ _    ___    ___    ___   ___   ___
+%  | |_     / _ \   / _ \   / _` |    / _` |  / __|  / __|  / _ \ / __| / __|
+%  |  _|   | (_) | | (_) | | (_| |   | (_| | | (__  | (__  |  __/ \__ \ \__ \
+%  |_|      \___/   \___/   \__,_|    \__,_|  \___|  \___|  \___| |___/ |___/
+%
+
+
+
+
+
+<<P2accessTEXT, eval=P2access, short_text_ChartPage=P2access>>=
+@
+
+
+<<P2accessData, cache=TRUE,results='hide', eval=P2access>>=
+@
+
+
+
+<<P2accessTOPRIGHT, eval=P2access, top_right_plot=P2access, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P2accessLEFT, eval=P2access, left_plot=P2access, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2accessRIGHT, eval=P2access ,right_plot=P2access, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2accessBOTTOM, eval=P2access, bottom_plot=P2access, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2accessMAP, eval=P2access, map_plot=P2access, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%
+%   _____                       _           _             _       _   _   _   _
+%  |  ___|   ___     ___     __| |    ___  | |_    __ _  | |__   (_) | | (_) | |_   _   _
+%  | |_     / _ \   / _ \   / _` |   / __| | __|  / _` | | '_ \  | | | | | | | __| | | | |
+%  |  _|   | (_) | | (_) | | (_| |   \__ \ | |_  | (_| | | |_) | | | | | | | | |_  | |_| |
+%  |_|      \___/   \___/   \__,_|   |___/  \__|  \__,_| |_.__/  |_| |_| |_|  \__|  \__, |
+%                                                                                   |___/
+
+
+<<P2stabilityTEXT, eval=P2stability, short_text_ChartPage=P2stability>>=
+@
+
+
+<<P2stabilityData, cache=TRUE,results='hide', eval=P2stability>>=
+@
+
+
+
+<<P2stabilityTOPRIGHT, eval=P2stability, top_right_plot=P2stability, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P2stabilityLEFT, eval=P2stability, left_plot=P2stability, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2stabilityRIGHT, eval=P2stability ,right_plot=P2stability, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2stabilityBOTTOM, eval=P2stability, bottom_plot=P2stability, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2stabilityMAP, eval=P2stability, map_plot=P2stability, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%   _____                       _             _     _   _   _                 _     _
+%  |  ___|   ___     ___     __| |    _   _  | |_  (_) | | (_)  ____   __ _  | |_  (_)   ___    _ __
+%  | |_     / _ \   / _ \   / _` |   | | | | | __| | | | | | | |_  /  / _` | | __| | |  / _ \  | '_ \
+%  |  _|   | (_) | | (_) | | (_| |   | |_| | | |_  | | | | | |  / /  | (_| | | |_  | | | (_) | | | | |
+%  |_|      \___/   \___/   \__,_|    \__,_|  \__| |_| |_| |_| /___|  \__,_|  \__| |_|  \___/  |_| |_|
+%
+%
+
+<<P2utilizaTEXT, eval=P2utiliza, short_text_ChartPage=P2utiliza>>=
+@
+
+
+<<P2utilizaData, cache=TRUE,results='hide', eval=P2utiliza>>=
+@
+
+
+<<P2utilizaTOPRIGHT, eval=P2utiliza, top_right_minitable=P2utiliza>>=
+@
+
+
+<<P2utilizaLEFT, eval=P2utiliza, left_plot=P2utiliza, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2utilizaRIGHT, eval=P2utiliza ,right_plot=P2utiliza, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2utilizaBOTTOM, eval=P2utiliza, bottom_plot=P2utiliza, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2utilizaMAP, eval=P2utiliza, map_plot=P2utiliza, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
 
 
 
@@ -1014,8 +1401,232 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part3!10}{white}
 \clearpage
 
-<<part3, child = if (include_part3) 'syb_part3.Rnw'>>=
+<<setup-code-part3>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 @
+
+
+
+<<part3_setup, eval=include_part3>>=
+@
+
+
+%   ____   _        _                                                                                         _
+%  |  _ \ (_)  ___ | |_  __ _  _ __  _   _    ___  _ __    ___  _ __  __ _  _   _   ___  _   _  _ __   _ __  | | _   _
+%  | | | || | / _ \| __|/ _` || '__|| | | |  / _ \| '_ \  / _ \| '__|/ _` || | | | / __|| | | || '_ \ | '_ \ | || | | |
+%  | |_| || ||  __/| |_| (_| || |   | |_| | |  __/| | | ||  __/| |  | (_| || |_| | \__ \| |_| || |_) || |_) || || |_| |
+%  |____/ |_| \___| \__|\__,_||_|    \__, |  \___||_| |_| \___||_|   \__, | \__, | |___/ \__,_|| .__/ | .__/ |_| \__, |
+%                                    |___/                           |___/  |___/              |_|    |_|        |___/
+
+
+<<P3desTEXT, eval=P3des, short_text_ChartPage=P3des>>=
+@
+
+<<P3desData,results='hide', cache=TRUE, eval=P3des>>=
+@
+
+
+<<P3desTOPRIGHT, eval=P3des, top_right_plot=P3des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+<<P3desLEFT, eval=P3des, left_plot=P3des, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3desRIGHT, eval=P3des ,right_plot=P3des, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3desBOTTOM, eval=P3des, bottom_plot=P3des, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3desMAP, eval=P3des, map_plot=P3des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+
+%    ____                                             _               _    _
+%   / ___| _ __  ___   _ __    _ __   _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __
+%  | |    | '__|/ _ \ | '_ \  | '_ \ | '__|/ _ \  / _` || | | | / __|| __|| | / _ \ | '_ \
+%  | |___ | |  | (_) || |_) | | |_) || |  | (_) || (_| || |_| || (__ | |_ | || (_) || | | |
+%   \____||_|   \___/ | .__/  | .__/ |_|   \___/  \__,_| \__,_| \___| \__||_| \___/ |_| |_|
+%                     |_|     |_|
+%
+
+
+
+<<P3cropproTEXT, eval=P3croppro, short_text_ChartPage=P3croppro>>=
+@
+
+<<P3cropproData,results='hide', cache=TRUE, eval=P3croppro>>=
+@
+
+<<P3cropproTOPRIGHT, eval=P3croppro, top_right_minitable=P3croppro>>=
+@
+
+<<P3cropproLEFT, eval=P3croppro, left_plot=P3croppro, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3cropproRIGHT, eval=P3croppro ,right_plot=P3croppro, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3cropproBOTTOM, eval=P3croppro, bottom_plot=P3croppro, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3cropproMAP, eval=P3croppro, map_plot=P3croppro, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+%    ____
+%   / ___| _ __  ___   _ __
+%  | |    | '__|/ _ \ | '_ \
+%  | |___ | |  | (_) || |_) |
+%   \____||_|   \___/ | .__/
+%                     |_|
+%
+
+
+
+<<P3cropTEXT, eval=P3crop, short_text_ChartPage=P3crop>>=
+@
+
+<<P3cropData,results='hide',cache=TRUE,eval=P3crop>>=
+@
+
+
+<<P3cropTOPRIGHT, eval=P3crop, top_right_minitable=P3crop>>=
+@
+
+
+<<P3cropLEFT, eval=P3crop, left_plot=P3crop, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3cropRIGHT, eval=P3crop ,right_plot=P3crop, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3cropBOTTOM, eval=P3crop, bottom_plot=P3crop, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3cropMAP, eval=P3crop, map_plot=P3crop, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%
+%   _      _                   _                _
+%  | |    (_)__   __ ___  ___ | |_  ___    ___ | | __
+%  | |    | |\ \ / // _ \/ __|| __|/ _ \  / __|| |/ /
+%  | |___ | | \ V /|  __/\__ \| |_| (_) || (__ |   <
+%  |_____||_|  \_/  \___||___/ \__|\___/  \___||_|\_\
+%
+%
+
+
+
+<<P3livestockTEXT, eval=P3livestock, short_text_ChartPage=P3livestock>>=
+@
+
+<<P3livestockData,results='hide',cache=TRUE,eval=P3livestock>>=
+@
+
+
+<<P3livestockTOPRIGHT, eval=P3livestock, top_right_minitable=P3livestock>>=
+@
+
+
+<<P3livestockLEFT, eval=P3livestock, left_plot=P3livestock, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3livestockRIGHT, eval=P3livestock ,right_plot=P3livestock, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+
+<<P3livestockBOTTOM, eval=P3livestock, bottom_plot=P3livestock, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+
+
+<<P3livestockMAP, eval=P3crop, map_plot=P3crop, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%   _____  _       _                  _
+%  |  ___|(_) ___ | |__    ___  _ __ (_)  ___  ___
+%  | |_   | |/ __|| '_ \  / _ \| '__|| | / _ \/ __|
+%  |  _|  | |\__ \| | | ||  __/| |   | ||  __/\__ \
+%  |_|    |_||___/|_| |_| \___||_|   |_| \___||___/
+%
+
+<<P3fisheriesTEXT, eval=P3fisheries, short_text_ChartPage=P3fisheries>>=
+@
+
+<<P3fisheriesData,results='hide',cache=TRUE,eval=FALSE>>=
+@
+
+
+<<P3fisheriesTOPRIGHT, eval=P3fisheries, top_right_plot=P3fisheries, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P3fisheriesLEFT, eval=P3fisheries, left_plot=P3fisheries, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3fisheriesRIGHT, eval=P3fisheries ,right_plot=P3fisheries, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3fisheriesBOTTOM, eval=P3fisheries, bottom_plot=P3fisheries, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3fisheriesMAP, eval=P3fisheries, map_plot=P3fisheries, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%      _                 _               _  _                       _   _                    _
+%     / \    __ _  _ __ (_)  ___  _   _ | || |_  _   _  _ __  __ _ | | | |_  _ __  __ _   __| |  ___
+%    / _ \  / _` || '__|| | / __|| | | || || __|| | | || '__|/ _` || | | __|| '__|/ _` | / _` | / _ \
+%   / ___ \| (_| || |   | || (__ | |_| || || |_ | |_| || |  | (_| || | | |_ | |  | (_| || (_| ||  __/
+%  /_/   \_\\__, ||_|   |_| \___| \__,_||_| \__| \__,_||_|   \__,_||_|  \__||_|   \__,_| \__,_| \___|
+%           |___/
+
+
+
+<<P3tradeTEXT, eval=P3trade, short_text_ChartPage=P3trade>>=
+@
+
+<<P3tradeData,results='hide',cache=TRUE,eval=P3trade>>=
+@
+
+
+<<P3tradeTOPRIGHT, eval=P3trade, top_right_minitable=P3trade>>=
+@
+
+
+<<P3tradeLEFT, eval=P3trade, left_plot=P3trade, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3tradeRIGHT, eval=P3trade ,right_plot=P3trade, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3tradeBOTTOM, eval=P3trade, bottom_plot=P3trade, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3tradeMAP, eval=P3trade, map_plot=P3trade, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
 
 
 
@@ -1036,8 +1647,210 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part4!10}{white}
 \clearpage
 
-<<part4, child = if (include_part4) 'syb_part4.Rnw'>>=
+<<setup-code-part4>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
 @
+
+
+<<part4_setup, eval=include_part4>>=
+@
+
+
+
+%
+%   _                       _
+%  | |     __ _  _ __    __| |
+%  | |    / _` || '_ \  / _` |
+%  | |___| (_| || | | || (_| |
+%  |_____|\__,_||_| |_| \__,_|
+%
+%
+
+
+
+<<P4landTEXT, eval=P4land, short_text_ChartPage=P4land>>=
+@
+
+<<P4landData,results='hide'>>=
+@
+
+
+<<P4landTOPRIGHT, eval=P4land, top_right_plot=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4landLEFT, eval=P4land, left_plot=P4land, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4landRIGHT, eval=P4land ,right_plot=P4land, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4landBOTTOM, eval=P4land, bottom_plot=P4land, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4landMAP, eval=P4land, map_plot=P4land, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%
+%  __        __          _
+%  \ \      / /   __ _  | |_    ___   _ __
+%   \ \ /\ / /   / _` | | __|  / _ \ | '__|
+%    \ V  V /   | (_| | | |_  |  __/ | |
+%     \_/\_/     \__,_|  \__|  \___| |_|
+%
+
+
+
+
+<<P4waterTEXT, eval=P4water, short_text_ChartPage=P4water>>=
+@
+
+
+<<P4waterData, cache=TRUE,results='hide', eval=P4water>>=
+@
+
+
+
+<<P4waterTOPRIGHT, eval=P4water, top_right_plot=P4water, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4waterLEFT, eval=P4water, left_plot=P4water, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4waterRIGHT, eval=P4water ,right_plot=P4water, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4waterBOTTOM, eval=P4water, bottom_plot=P4water, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4waterMAP, eval=P4water, map_plot=P4water, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%   _____
+%  | ____|  _ __     ___   _ __    __ _   _   _
+%  |  _|   | '_ \   / _ \ | '__|  / _` | | | | |
+%  | |___  | | | | |  __/ | |    | (_| | | |_| |
+%  |_____| |_| |_|  \___| |_|     \__, |  \__, |
+%                                 |___/   |___/
+
+
+
+<<P4energyTEXT, eval=P4energy, short_text_ChartPage=P4energy>>=
+@
+
+
+<<P4energyData, cache=TRUE,results='hide', eval=P4energy>>=
+@
+
+
+
+<<P4energyTOPRIGHT, eval=P4energy, top_right_plot=P4energy, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4energyLEFT, eval=P4energy, left_plot=P4energy, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4energyRIGHT, eval=P4energy ,right_plot=P4energy, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4energyBOTTOM, eval=P4energy, bottom_plot=P4energy, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4energyMAP, eval=P4energy, map_plot=P4energy, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%   _____                               _
+%  |  ___|   ___    _ __    ___   ___  | |_   _ __   _   _
+%  | |_     / _ \  | '__|  / _ \ / __| | __| | '__| | | | |
+%  |  _|   | (_) | | |    |  __/ \__ \ | |_  | |    | |_| |
+%  |_|      \___/  |_|     \___| |___/  \__| |_|     \__, |
+%                                                    |___/
+
+
+
+
+
+<<P4forestryTEXT, eval=P4forestry, short_text_ChartPage=P4forestry>>=
+@
+
+<<P4forestryData,results='hide'>>=
+@
+
+
+<<P4forestryTOPRIGHT, eval=P4forestry, top_right_plot=P4forestry, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4forestryLEFT, eval=P4forestry, left_plot=P4forestry, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4forestryRIGHT, eval=P4forestry ,right_plot=P4forestry, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4forestryBOTTOM, eval=P4forestry, bottom_plot=P4forestry, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4forestryMAP, eval=P4forestry, map_plot=P4forestry, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%    ____   _   _                       _                     _
+%   / ___| | | (_)  _ __ ___     __ _  | |_    ___      ___  | |__     __ _   _ __     __ _    ___
+%  | |     | | | | | '_ ` _ \   / _` | | __|  / _ \    / __| | '_ \   / _` | | '_ \   / _` |  / _ \
+%  | |___  | | | | | | | | | | | (_| | | |_  |  __/   | (__  | | | | | (_| | | | | | | (_| | |  __/
+%   \____| |_| |_| |_| |_| |_|  \__,_|  \__|  \___|    \___| |_| |_|  \__,_| |_| |_|  \__, |  \___|
+%                                                                                     |___/
+
+
+<<P4climateTEXT, eval=P4climate, short_text_ChartPage=P4climate>>=
+@
+
+<<P4climateData,results='hide'>>=
+@
+
+
+<<P4climateTOPRIGHT, eval=P4climate, top_right_plot=P4climate, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4climateLEFT, eval=P4climate, left_plot=P4climate, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4climateRIGHT, eval=P4climate ,right_plot=P4climate, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4climateBOTTOM, eval=P4climate, bottom_plot=P4climate, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4climateMAP, eval=P4climate, map_plot=P4climate, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
 
 
 
@@ -1054,15 +1867,166 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PART5 - Custom stuff
+%% PART5 - Custom stuff for Coffee book
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpart{part5}
 \rowcolors{1}{part5!10}{white}
 \clearpage
 
-<<part5, child = if (include_part5) 'syb_part5.Rnw'>>=
+<<setup-code-part5>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 @
+
+
+
+<<part5_setup, eval=include_part5>>=
+@
+
+
+%    ___                                  _
+%   / _ \  __   __   ___   _ __  __   __ (_)   ___  __      __
+%  | | | | \ \ / /  / _ \ | '__| \ \ / / | |  / _ \ \ \ /\ / /
+%  | |_| |  \ V /  |  __/ | |     \ V /  | | |  __/  \ V  V /
+%   \___/    \_/    \___| |_|      \_/   |_|  \___|   \_/\_/
+%
+
+
+
+<<P5overTEXT, eval=P5over, short_text_ChartPage=P5over>>=
+@
+
+<<P5overData,results='hide', cache=cache_part5>>=
+@
+
+
+<<P5overTOPRIGHT, eval=P5over, top_right_plot=P5over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P5overLEFT, eval=P5over, left_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5overRIGHT, eval=P5over, right_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+
+<<P5overBOTTOM, eval=P5over, bottom_plot=P5over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5overMAP, eval=P5over, map_plot=P5over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%   _____
+%  | ____|   ___    ___    _ __     ___    _ __ ___    _   _
+%  |  _|    / __|  / _ \  | '_ \   / _ \  | '_ ` _ \  | | | |
+%  | |___  | (__  | (_) | | | | | | (_) | | | | | | | | |_| |
+%  |_____|  \___|  \___/  |_| |_|  \___/  |_| |_| |_|  \__, |
+%                                                      |___/
+%
+
+
+<<P5econTEXT, eval=P5econ, short_text_ChartPage=P5econ>>=
+@
+
+<<P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P5econLEFT, eval=P5econ, left_plot=P5econ, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5econRIGHT, eval=P5econ ,right_plot=P5econ, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P5econBOTTOM_data, eval=P5econ, cache=cache_part5>>=
+@
+
+
+
+<<P5econBOTTOM, eval=P5econ, bottom_plot=P5econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5econMAP, eval=P5econ, map_plot=P5econ, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+%   ____                                  _
+%  |  _ \    ___   __   __   ___   _ __  | |_   _   _
+%  | |_) |  / _ \  \ \ / /  / _ \ | '__| | __| | | | |
+%  |  __/  | (_) |  \ V /  |  __/ | |    | |_  | |_| |
+%  |_|      \___/    \_/    \___| |_|     \__|  \__, |
+%                                               |___/
+
+
+<<P5povertyTEXT, eval=P5poverty, short_text_ChartPage=P5poverty>>=
+@
+
+
+<<P5povertyData,results='hide', eval=P5poverty, cache=cache_part5>>=
+@
+
+
+
+<<P5povertyTOPRIGHT, eval=P5poverty, top_right_minitable=P5poverty>>=
+@
+
+
+<<P5povertyLEFT, eval=P5poverty, left_plot=P5poverty, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5povertyRIGHT, eval=P5poverty ,right_plot=P5poverty, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P5povertyBOTTOM, eval=P5poverty, bottom_plot=P5poverty, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5povertyMAP, eval=P5poverty, map_plot=P5poverty, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%   ____   _        _                                                                                         _
+%  |  _ \ (_)  ___ | |_  __ _  _ __  _   _    ___  _ __    ___  _ __  __ _  _   _   ___  _   _  _ __   _ __  | | _   _
+%  | | | || | / _ \| __|/ _` || '__|| | | |  / _ \| '_ \  / _ \| '__|/ _` || | | | / __|| | | || '_ \ | '_ \ | || | | |
+%  | |_| || ||  __/| |_| (_| || |   | |_| | |  __/| | | ||  __/| |  | (_| || |_| | \__ \| |_| || |_) || |_) || || |_| |
+%  |____/ |_| \___| \__|\__,_||_|    \__, |  \___||_| |_| \___||_|   \__, | \__, | |___/ \__,_|| .__/ | .__/ |_| \__, |
+%                                    |___/                           |___/  |___/              |_|    |_|        |___/
+
+
+<<P5desTEXT, eval=P5des, short_text_ChartPage=P5des>>=
+@
+
+<<P5desData,results='hide', eval=P5des, cache=cache_part5>>=
+@
+
+
+<<P5desTOPRIGHT, eval=P5des, top_right_plot=P5des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+<<P5desLEFT, eval=P5des, left_plot=P5des, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5desRIGHT, eval=P5des ,right_plot=P5des, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P5desBOTTOM, eval=P5des, bottom_plot=P5des, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5desMAP, eval=P5des, map_plot=P5des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
 
 
 
@@ -1078,16 +2042,137 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PART6 - Coffee book!
+%% PART6 - Coffee book coffee specific spreads!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpart{part6}
 \rowcolors{1}{part6!10}{white}
 \clearpage
 
-<<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
+<<setup-code-part6>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 @
 
+
+<<part6_setup, eval=include_part6>>=
+@
+
+%
+%    ____            __    __                                              _                  _     _
+%   / ___|   ___    / _|  / _|   ___    ___     _ __    _ __    ___     __| |  _   _    ___  | |_  (_)   ___    _ __
+%  | |      / _ \  | |_  | |_   / _ \  / _ \   | '_ \  | '__|  / _ \   / _` | | | | |  / __| | __| | |  / _ \  | '_ \
+%  | |___  | (_) | |  _| |  _| |  __/ |  __/   | |_) | | |    | (_) | | (_| | | |_| | | (__  | |_  | | | (_) | | | | |
+%   \____|  \___/  |_|   |_|    \___|  \___|   | .__/  |_|     \___/   \__,_|  \__,_|  \___|  \__| |_|  \___/  |_| |_|
+%                                              |_|
+%
+
+
+
+
+<<P6coffeeprodTEXT, eval=P6coffeeprod, short_text_ChartPage=P6coffeeprod>>=
+@
+
+
+<<P6coffeeprodData, cache=FALSE,results='hide', eval=P6coffeeprod, cache=cache_part6>>=
+@
+
+
+
+<<P6coffeeprodTOPRIGHT, eval=P6coffeeprod, top_right_minitable=P6coffeeprod>>=
+@
+
+
+<<P6coffeeprodLEFT, eval=P6coffeeprod, left_plot=P6coffeeprod, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P6coffeeprodRIGHT, eval=P6coffeeprod ,right_plot=P6coffeeprod, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P6coffeeprodBOTTOM, eval=P6coffeeprod, bottom_plot=P6coffeeprod, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P6coffeeprodMAP, eval=P6coffeeprod, map_plot=P6coffeeprod, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%    ____            __    __                   _                        _
+%   / ___|   ___    / _|  / _|   ___    ___    | |_   _ __    __ _    __| |   ___
+%  | |      / _ \  | |_  | |_   / _ \  / _ \   | __| | '__|  / _` |  / _` |  / _ \
+%  | |___  | (_) | |  _| |  _| |  __/ |  __/   | |_  | |    | (_| | | (_| | |  __/
+%   \____|  \___/  |_|   |_|    \___|  \___|    \__| |_|     \__,_|  \__,_|  \___|
+%
+
+
+<<P6coffeetradeTEXT, eval=P6coffeetrade, short_text_ChartPage=P6coffeetrade>>=
+@
+
+
+<<P6coffeetradeData, cache=FALSE,results='hide', eval=P6coffeetrade, cache=cache_part6>>=
+@
+
+
+<<P6coffeetradeTOPRIGHT, eval=P6coffeetrade, top_right_minitable=P6coffeetrade>>=
+@
+
+
+<<P6coffeetradeLEFT, eval=P6coffeetrade, left_plot=P6coffeetrade, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P6coffeetradeRIGHT, eval=P6coffeetrade ,right_plot=P6coffeetrade, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P6coffeetradeBOTTOM, eval=P6coffeetrade, bottom_plot=P6coffeetrade, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P6coffeetradeMAP, eval=P6coffeetrade, map_plot=P6coffeetrade, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%    ____         __   __                            _
+%   / ___| ___   / _| / _|  ___   ___   _ __   _ __ (_)  ___  ___  ___
+%  | |    / _ \ | |_ | |_  / _ \ / _ \ | '_ \ | '__|| | / __|/ _ \/ __|
+%  | |___| (_) ||  _||  _||  __/|  __/ | |_) || |   | || (__|  __/\__ \
+%   \____|\___/ |_|  |_|   \___| \___| | .__/ |_|   |_| \___|\___||___/
+%                                      |_|
+
+
+
+
+
+<<P6coffeepricesTEXT, eval=P6coffeeprices, short_text_ChartPage=P6coffeeprices>>=
+@
+
+
+<<P6coffeepricesData, cache=FALSE,results='hide', eval=P6coffeeprices, cache=cache_part6>>=
+@
+
+
+
+<<P6coffeepricesTOPRIGHT, eval=P6coffeeprices, top_right_plot=P6coffeeprices, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P6coffeepricesLEFT, eval=P6coffeeprices, left_plot=P6coffeeprices, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P6coffeepricesRIGHT, eval=P6coffeeprices ,right_plot=P6coffeeprices, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P6coffeepricesBOTTOM, eval=P6coffeeprices, bottom_plot=P6coffeeprices, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P6coffeepricesMAP, eval=P6coffeeprices, map_plot=P6coffeeprices, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
 
 
 %
@@ -1105,9 +2190,6 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 
 
-
-
-
 %   ____          __  _         _  _    _
 %  |  _ \   ___  / _|(_) _ __  (_)| |_ (_)  ___   _ __   ___
 %  | | | | / _ \| |_ | || '_ \ | || __|| | / _ \ | '_ \ / __|
@@ -1116,10 +2198,31 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 %
 
 
+<<print_definitions_texsnippets1, eval=include_definitions>>=
+
+cat("
+\\newpart{white}
+\\phantomsection
+\\addcontentsline{toc}{section}{Definitions}
+
+\\begin{MetadataCollection}
+\\twocolumn
+\\LARGE
+\\textbf{Definitions}
+
+\\footnotesize
+")
+@
+
+<<print_definitions, eval=include_definitions>>=
+source(paste0(root.dir,"input/code/code_definitions.R"))
+@
 
 
-
-<<definitions, child = if (include_definitions) 'syb_definitions.Rnw'>>=
+<<print_definitions_texsnippets2, eval=include_definitions>>=
+cat("
+\\end{MetadataCollection}
+")
 @
 
 
@@ -1131,10 +2234,73 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
  %
 
 
-<<notes, child = if (include_notes) 'syb_notes.Rnw'>>=
+
+<<notes1, eval=include_notes>>=
+ cat("
+ \\newpart{white}
+ \\phantomsection
+ \\addcontentsline{toc}{section}{Notes}
+
+
+ \\begin{MetadataCollection}
+
+ \\onecolumn
+ \\LARGE
+ \\textbf{Notes}
+
+ \\bigskip
+
+ \\footnotesize
+ The country classification adopted in this publication is based on the United Nations M49 classification \\\\* (\\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). The country names have been abbreviated for the purpose of this publication. The official FAO names can be found at \\url{http://termportal.fao.org/faonocs/appl/}.
+ ")
+
 @
 
 
+<<notes2, eval=include_notes>>=
+
+ if (region_to_report != "COF"){
+   cat("\\vspace{2mm}
+
+   Following the creation of the Republic of South Sudan in July 2011, the M49 classification considered the Sudan as part of the Northern Africa region, and South Sudan as part of Eastern Africa. In this report, data for the Sudan are therefore included in the Northern Africa region.")
+   } else cat("")
+
+@
+
+<<notes3, eval=include_notes>>=
+ cat("
+
+     \\vspace{1mm}
+
+       The asterisk in charts and maps indicates the most recent year available in the specified time interval. In the country profiles, when the country data have not been reported for the reference year, data in italics indicate that the value for the most recent year available is shown.
+
+       \\vspace{1mm}
+
+       In the tables, a blank means not applicable or, for an aggregate, not analytically meaningful. A 0 or 0.0 means zero or a number that is small enough to round to zero at the displayed number of decimal places.
+
+       \\vspace{1mm}
+
+       The \\textasciitilde{} in the maps refers to the range specified in the class intervals.
+
+       In addition:
+       \\begin{itemize}
+       \\item <5.0 proportion less than 5 percent
+       \\item <0.1 less than 100\\,000 people
+       \\item ns not statistically significant
+       \\end{itemize}
+
+       \\vspace{1mm}
+
+       Two types of aggregations are used in the book: sum and weighted mean. Two restrictions are imposed when computing the aggregation: i) the sufficiency condition – the aggregation is computed only when sufficient countries have reported data, and the current threshold is set at 50 percent of the variable and the weighting variable, if present; and ii) the comparability condition – as aggregations are usually computed over time, this condition is designed to ensure that the number of countries is comparable over several years; under the current restriction the number of countries may not vary by more than 15 over time.
+
+       \\vspace{1mm}
+
+       This publication was carried out under the direction of Pietro Gennari (Chief Statistician and Director, ESS) and Josef Schmidhuber (Deputy Director, ESS). It was prepared by the Statistics Division (Amy Heyman and Markus Kainu). A special thanks the team leaders for their input and to Nicola Selleri (ESS) for the cover design.
+
+
+       \\end{MetadataCollection}
+     ")
+@
 
 
 %   ____                _

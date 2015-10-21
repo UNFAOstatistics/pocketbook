@@ -58,12 +58,43 @@ for (region_to_report in regionS_to_report) {
   spreads <- read_csv(paste0(root.dir,"/input/define_spreads.csv"))
   # subset to particular regions colunm
   spreads <- spreads[c("SPREAD",region_to_report)]
+  
+  # lets incorporate both condition the include_partX and spread based on Px found in spread id.
+  spreadsP1  <- spreads[grep("P1",  spreads$SPREAD),]
+  spreadsP2  <- spreads[grep("P2",  spreads$SPREAD),]
+  spreadsP3  <- spreads[grep("P3",  spreads$SPREAD),]
+  spreadsP4  <- spreads[grep("P4",  spreads$SPREAD),]
+  spreadsP5  <- spreads[grep("P5",  spreads$SPREAD),]
+  spreadsP6  <- spreads[grep("P6",  spreads$SPREAD),]
+  # spreadsP7  <- spreads[grep("P7",  spreads$SPREAD),]
+  # spreadsP8  <- spreads[grep("P8",  spreads$SPREAD),]
+  # spreadsP9  <- spreads[grep("P9",  spreads$SPREAD),]
+  # spreadsP10 <- spreads[grep("P10", spreads$SPREAD),]
+  
+  # if part marked not included, them give value 0 for each spread
 
+  if (!include_part1) spreadsP1[2]   <- 0
+  if (!include_part2) spreadsP2[2]   <- 0
+  if (!include_part3) spreadsP3[2]   <- 0
+  if (!include_part4) spreadsP4[2]   <- 0
+  if (!include_part5) spreadsP5[2]   <- 0
+  if (!include_part6) spreadsP6[2]   <- 0
+  # if (!include_part7) spreadsP7[2]   <- 0
+  # if (!include_part8) spreadsP8[2]   <- 0
+  # if (!include_part9) spreadsP9[2]   <- 0
+  # if (!include_part10) spreadsP10[2] <- 0
+  
+  # Create logical objects for each spread to be given for EVAL
+  spreads_for_parts <- apropos("spreadsP")
   #
-  for (i in 1:nrow(spreads)) {
-    if (spreads[[i,2]] == 0) value <- FALSE
-    if (spreads[[i,2]] == 1) value <- TRUE
-    assign(spreads[[i,1]],value,envir = globalenv())
+  for (spr in spreads_for_parts){
+    
+    for (i in 1:nrow(get(spr))) {
+      if (get(spr)[[i,2]] == 0) value <- FALSE
+      if (get(spr)[[i,2]] == 1) value <- TRUE
+      assign(get(spr)[[i,1]],value,envir = globalenv())
+    }
+    
   }
 
   # remove figures from previous region

@@ -1,23 +1,4 @@
-%%% METADATA
-\newpart{white}
-\phantomsection
-\addcontentsline{toc}{section}{Definitions}
 
-\begin{MetadataCollection}
-
-\twocolumn
-\LARGE
-\textbf{Definitions}
-
-\footnotesize
-
-%% Comment/uncomment definitions here
-
-<<print_definitions>>=
-
-
-#
-#
 #   ____      _    _____       _       __
 #  |  _ \    / \  |  ___|   __| | ___ / _|___
 #  | |_) |  / _ \ | |_     / _` |/ _ \ |_/ __|
@@ -627,8 +608,3 @@ for (i in definitions_to_print){
              "\\end{metadata} \n"))
 
 }
-@
-
-
-
-\end{MetadataCollection}
