@@ -949,7 +949,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-<<P2undernuData,results='hide', cache=TRUE>>=
+<<P2undernuData,results='hide', cache=FALSE>>=
 @
 
 
@@ -993,7 +993,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-<<P2availabData, cache=TRUE,results='hide', eval=P2availab>>=
+<<P2availabData, cache=FALSE,results='hide', eval=P2availab>>=
 @
 
 

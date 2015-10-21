@@ -142,21 +142,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-nro_latest_cases <- nrow(dat[dat$Year == 2015,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
-
-dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
-
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FBS.PCS.PDES.KCD3D"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
 top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,FBS.PCS.PDES.KCD3D)$SHORT_NAME)
-
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -181,20 +182,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-nro_latest_cases <- nrow(dat[dat$Year == 2015,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
-
-dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
-
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FBS.PCS.PDES.KCD3D"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
 top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,FBS.PCS.PDES.KCD3D)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCS.PDES.KCD3D))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -343,25 +346,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -QV.NPCPV.CRPS.ID.SHP)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="QV.NPCPV.CRPS.ID.SHP"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-nro_latest_cases <- nrow(dat[dat$Year == 2012,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
-
-top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QV.NPCPV.CRPS.ID.SHP)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QV.NPCPV.CRPS.ID.SHP))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="constant 2004 - 2006 international $")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
 
@@ -383,24 +388,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-nro_latest_cases <- nrow(dat[dat$Year == 2012,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="QV.GPCPV.FOOD.ID.SHP"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-dat <- arrange(dat, -Year, -QV.GPCPV.FOOD.ID.SHP)
-top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QV.GPCPV.FOOD.ID.SHP)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QV.GPCPV.FOOD.ID.SHP))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="constant 2004 - 2006 international $")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
 
@@ -568,24 +576,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-nro_latest_cases <- nrow(dat[dat$Year == 2012,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="QC.PRD.RICE.TN.SHP"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-dat <- arrange(dat, -Year, -QC.PRD.RICE.TN.SHP)
-top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QC.PRD.RICE.TN.SHP)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC.PRD.RICE.TN.SHP))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="tonnes per capita")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
 
@@ -607,25 +618,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-nro_latest_cases <- nrow(dat[dat$Year == 2012,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="QC.PRD.WHT.TN.SHP"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-dat <- arrange(dat, -Year, -QC.PRD.WHT.TN.SHP)
-top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,QC.PRD.WHT.TN.SHP)$SHORT_NAME)
-
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC.PRD.WHT.TN.SHP))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="tonnes per capita")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
 
@@ -1127,24 +1140,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-nro_latest_cases <- nrow(dat[dat$Year == 2012,])
-if (nro_latest_cases < 20) {
-  ncases <- nro_latest_cases
-} else ncases <- 20
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="TP.IMVAL.FOOD.USD.NO"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-dat <- arrange(dat, -Year, -TP.IMVAL.FOOD.USD.NO)
-top12 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,TP.IMVAL.FOOD.USD.NO)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=TP.IMVAL.FOOD.USD.NO))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -1164,17 +1180,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -TP.EXVAL.FOOD.USD.NO)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="TP.EXVAL.FOOD.USD.NO"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, TP.EXVAL.FOOD.USD.NO),y=TP.EXVAL.FOOD.USD.NO))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption

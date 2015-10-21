@@ -104,7 +104,22 @@ top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014-2016")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
 dat_plot <- rbind(top15,top91)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.OA.NOU.P3D1"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -130,17 +145,22 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.OA.NOU.P3D1"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-2016")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
-dat_plot <- rbind(top15,top91)
-
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -268,21 +288,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FBS.PCSS.CSR.PCT3D)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FBS.PCSS.CSR.PCT3D"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2009-2011")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FBS.PCSS.CSR.PCT3D)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCSS.CSR.PCT3D))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -317,7 +338,7 @@ dat <- arrange(dat, -Year, -FBS.PPCS.GT.GCD3D)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
+  max_nro_countries <- nrow(dat)
 } else max_nro_countries <- 20
 
 
@@ -333,7 +354,8 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="g/cap/day")
-p <- p + guides(color = guide_legend(nrow = 2))
+#p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + theme(legend.position = "none")
 p
 
 # Caption
@@ -449,21 +471,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.DEA.DFPLI.IND)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.DEA.DFPLI.IND"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.DEA.DFPLI.IND)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.DEA.DFPLI.IND))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -494,21 +517,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.OA.POU.PCT3D1)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.OA.POU.PCT3D1"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-16")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.OA.POU.PCT3D1)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.OA.POU.PCT3D1))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -622,21 +646,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.DS.PCFSV.KCDD)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.DS.PCFSV.KCDD"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2011")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2011")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.DS.PCFSV.KCDD)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.DS.PCFSV.KCDD))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -665,21 +690,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.DEA.DFPLIV.IND)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.DEA.DFPLIV.IND"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2011")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2011")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.DEA.DFPLIV.IND)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.DEA.DFPLIV.IND))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -805,7 +831,7 @@ dat <- arrange(dat, -Year, -SH.STA.STNT.ZS)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
+  max_nro_countries <- nrow(dat)
 } else max_nro_countries <- 20
 
 
@@ -851,7 +877,7 @@ dat <- arrange(dat, -Year, -SH.STA.WAST.ZS)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
+  max_nro_countries <- nrow(dat)
 } else max_nro_countries <- 20
 
 
