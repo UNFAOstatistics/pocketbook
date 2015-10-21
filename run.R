@@ -38,10 +38,10 @@ include_foreword     <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part1        <- T
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -50,8 +50,8 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- T
-include_definitions      <- F
-include_notes            <- F
+include_definitions      <- T
+include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
@@ -170,22 +170,10 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
 # load(paste0(data.dir,"/SYB2015-09-24.RData"))
+# load(paste0(data.dir,"/SYB2015-10-14.RData"))
+# load(paste0(data.dir,"/SYB2015-10-15.RData"))
 load(paste0(data.dir,"/SYB2015-10-20.RData"))
 
-# wdi <- read.csv("/home/markus/btsync/faosync/database/Metadata2015.csv",stringsAsFactors = FALSE)
-# wdi <- wdi[nchar(wdi$WDINAME) > 1,]
-# indicators_to_replace <- unique(wdi$STS_ID)
-# 
-# load(paste0(data.dir,"/SYB2015-10-13.RData"))
-# 
-# myvars <- names(SYB.df) %in% indicators_to_replace
-# SYB.dfX <- SYB.df[!myvars]
-# 
-# load(paste0(data.dir,"/SYB2015-10-09.RData"))
-# wdi_vars <- SYB.df[,c(indicators_to_replace[-90])]
-# 
-# load(paste0(data.dir,"/SYB2015-10-13.RData"))
-# # load("../../database/Data/Processed/SYB2015-09-23.RData")
 syb.df <- SYB.df; rm(SYB.df)
 
 syb.df <- syb.df[!syb.df$FAOST_CODE %in% "",]
