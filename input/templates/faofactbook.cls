@@ -165,7 +165,7 @@ REPLACE_THIS _WITH_PROPER_COLOR
                                    {\normalfont\bfseries}}
 
 \def\tableofcontents{\cleardoublepage
-  \@makeschapterhead{Contents}%
+  \@makeschapterhead{\normalfont \LARGE Contents}%
   \@mkboth{\MakeUppercase\contentsname}%
   {\MakeUppercase\contentsname}%
   \@starttoc{toc}}

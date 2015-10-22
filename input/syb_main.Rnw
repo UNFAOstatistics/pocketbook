@@ -50,7 +50,19 @@ PLACE_PRINT_OR_WEB_HERE
 \usepackage{booktabs}
 \usepackage{lscape}
 %\usepackage[document]{ragged2e}
+
+
 \usepackage{pdfpages}
+
+% for inserting blank pages
+\usepackage{afterpage}
+\newcommand\blankpage{%
+    \null
+    %\thispagestyle{empty}%
+    % \addtocounter{page}{-1}%
+    \newpage}
+
+
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -124,12 +136,10 @@ PLACE_PRINT_OR_WEB_HERE
 @
 
 \newpage
-\thispagestyle{empty}
 \fi
 
 \onecolumn
-% \pagenumbering{roman}
-\thispagestyle{empty}
+\pagenumbering{roman}
 
 \vspace*{100pt}
 
@@ -268,9 +278,13 @@ cat(
 \newpage
 
 %% Disclamer
-\thispagestyle{empty}
+% \thispagestyle{empty}
 
-<<define_disclaimer, echo=FALSE, results='asis', eval=TRUE>>=
+\includepdf[width=\paperwidth,height=\paperheight, offset=-0 -30, pagecommand={}]{./I4691E_disclaimer.pdf}
+
+% \includegraphics{./I4691E_disclaimer_crop.pdf}
+
+<<define_disclaimer, echo=FALSE, results='asis', eval=include_disclaimer>>=
   if (region_to_report == "COF"){
   cat("
     \\ifprint
@@ -293,11 +307,55 @@ cat(
 
 
 
+%
+% TTTTTTTTTTTTTTTTTTTTTTT     OOOOOOOOO             CCCCCCCCCCCCC
+% T:::::::::::::::::::::T   OO:::::::::OO        CCC::::::::::::C
+% T:::::::::::::::::::::T OO:::::::::::::OO    CC:::::::::::::::C
+% T:::::TT:::::::TT:::::TO:::::::OOO:::::::O  C:::::CCCCCCCC::::C
+% TTTTTT  T:::::T  TTTTTTO::::::O   O::::::O C:::::C       CCCCCC
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O::::::O   O::::::O C:::::C       CCCCCC
+%       TT:::::::TT      O:::::::OOO:::::::O  C:::::CCCCCCCC::::C
+%       T:::::::::T       OO:::::::::::::OO    CC:::::::::::::::C
+%       T:::::::::T         OO:::::::::OO        CCC::::::::::::C
+%       TTTTTTTTTTT           OOOOOOOOO             CCCCCCCCCCCCC
+
+\large
+%% Prelims
+\tableofcontents
+
+%% List of countries
+% \phantomsection
+% \renewcommand{\indexname}{List of countries}
+% \addcontentsline{toc}{section}{List of countries}
+% \printindex
+
+% %%% List of tables
+% \phantomsection
+% \addcontentsline{toc}{section}{List of Tables}
+% \listoftables
+
+% %%% List of figrues
+% \phantomsection
+% \addcontentsline{toc}{section}{List of Charts}
+% \listoffigures
+
+% to add empty page
+% \afterpage{\blankpage}
+
+% to add empty page
+\afterpage{\blankpage}
+
 %% New part - Introduction
 \newpart{white}
 %\addtocounter{page}{1}
 %\cleardoublepage
-\pagenumbering{arabic}  %% Arabic page numbering
+
 \setlength{\parskip}{3pt plus 3pt minus 1pt}  %% Increasing the spacing in the introduction page
 
  %                                                                                                                            dddddddd
@@ -324,7 +382,7 @@ cat(
   if (region_to_report != "COF"){
     cat(
 "
-\\Large{Foreword}
+\\LARGE{Foreword}
 
 \\bigskip
 \\bigskip
@@ -490,10 +548,10 @@ FAO is strongly committed to helping countries strengthen their national statist
 ")
 
 }
-
-
-
 @
+
+
+
 
 
 <<foreword_placeholder, eval=!include_foreword >>=
@@ -508,43 +566,7 @@ cat("
 
 @
 
-%
-% TTTTTTTTTTTTTTTTTTTTTTT     OOOOOOOOO             CCCCCCCCCCCCC
-% T:::::::::::::::::::::T   OO:::::::::OO        CCC::::::::::::C
-% T:::::::::::::::::::::T OO:::::::::::::OO    CC:::::::::::::::C
-% T:::::TT:::::::TT:::::TO:::::::OOO:::::::O  C:::::CCCCCCCC::::C
-% TTTTTT  T:::::T  TTTTTTO::::::O   O::::::O C:::::C       CCCCCC
-%         T:::::T        O:::::O     O:::::OC:::::C
-%         T:::::T        O:::::O     O:::::OC:::::C
-%         T:::::T        O:::::O     O:::::OC:::::C
-%         T:::::T        O:::::O     O:::::OC:::::C
-%         T:::::T        O:::::O     O:::::OC:::::C
-%         T:::::T        O:::::O     O:::::OC:::::C
-%         T:::::T        O::::::O   O::::::O C:::::C       CCCCCC
-%       TT:::::::TT      O:::::::OOO:::::::O  C:::::CCCCCCCC::::C
-%       T:::::::::T       OO:::::::::::::OO    CC:::::::::::::::C
-%       T:::::::::T         OO:::::::::OO        CCC::::::::::::C
-%       TTTTTTTTTTT           OOOOOOOOO             CCCCCCCCCCCCC
 
-
-%% Prelims
-\tableofcontents
-
-%% List of countries
-% \phantomsection
-% \renewcommand{\indexname}{List of countries}
-% \addcontentsline{toc}{section}{List of countries}
-% \printindex
-
-% %%% List of tables
-% \phantomsection
-% \addcontentsline{toc}{section}{List of Tables}
-% \listoftables
-
-% %%% List of figrues
-% \phantomsection
-% \addcontentsline{toc}{section}{List of Charts}
-% \listoffigures
 
 
 %
@@ -756,14 +778,28 @@ if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}"))
 @
 
 
-
-
+% to add empty page
+% \afterpage{\blankpage}
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
 
 \normalsize
 
-\makeatletter\clearpage\ifodd\c@page\hbox{}\newpage\fi\makeatother %% Remove the colored strip from the introduction page
+% \makeatletter
+% \clearpage
+
+% \cleardoublepage
+% \pagenumbering{arabic}  %% Arabic page numbering
+% \setcounter{page}{1}
+
+% \ifodd\c@page\hbox{}
+% \newpage\fi
+\makeatother %% Remove the colored strip from the introduction page
+
+% \cleardoublepage
+% \pagenumbering{arabic}  %% Arabic page numbering
+% \setcounter{page}{0}
+% \thispagestyle{empty}
 
 
 %
@@ -791,7 +827,10 @@ if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}"))
 
 \newpart{part1}
 \rowcolors{1}{part1!10}{white}
-\clearpage
+% \clearpage
+\pagenumbering{arabic}  %% Arabic page numbering
+\setcounter{page}{2}
+
 
 <<setup-code-part1>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
@@ -808,7 +847,6 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 %  | |_| |  \ V /  |  __/ | |     \ V /  | | |  __/  \ V  V /
 %   \___/    \_/    \___| |_|      \_/   |_|  \___|   \_/\_/
 %
-
 
 
 <<P1overTEXT, eval=P1over, short_text_ChartPage=P1over>>=
@@ -2069,8 +2107,7 @@ cat("
 
 \\begin{MetadataCollection}
 \\twocolumn
-\\LARGE
-\\textbf{Definitions}
+\\normalfont \\LARGE Definitions
 
 \\footnotesize
 ")
@@ -2107,8 +2144,7 @@ cat("
  \\begin{MetadataCollection}
 
  \\onecolumn
- \\LARGE
- \\textbf{Notes}
+ \\normalfont \\LARGE Notes
 
  \\bigskip
 
