@@ -337,7 +337,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -Year, -FBS.PPCS.GT.GCD3D)
 
 # limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
+if (nrow(dat) < 20){
   max_nro_countries <- nrow(dat)
 } else max_nro_countries <- 20
 
@@ -491,7 +491,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -666,7 +666,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/capita/day")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -710,7 +710,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="index")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -848,7 +848,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="percent")
-p <- p + guides(color = guide_legend(nrow = 2))
+# p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -894,7 +894,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="percent")
-p <- p + guides(color = guide_legend(nrow = 2))
+# p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption

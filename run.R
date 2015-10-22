@@ -36,14 +36,15 @@ for_print <- F
 # -------------------------------
 include_covers       <- F
 include_timestamp    <- T
+include_disclaimer   <- T
 include_foreword     <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
+include_part1        <- T
 include_part2        <- T
-include_part3        <- F
-include_part4        <- F
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -60,7 +61,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"
