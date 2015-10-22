@@ -190,7 +190,11 @@ if (region_to_report == "GLO") subtitle <- ""
     \\hspace*{\\fill}
 
     \\hspace*{\\fill}
-            Regional office for Africa, Accra, 2015
+            Regional office for Africa
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Accra, 2015
     \\hspace*{\\fill}
     ")
     }
@@ -201,7 +205,11 @@ if (region_to_report == "GLO") subtitle <- ""
     \\hspace*{\\fill}
 
     \\hspace*{\\fill}
-            Regional Office for Asia and the Pacific, Bangkok, 2015
+            Regional Office for Asia and the Pacific
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Bangkok, 2015
     \\hspace*{\\fill}
     ")
     }
@@ -212,7 +220,11 @@ if (region_to_report == "GLO") subtitle <- ""
     \\hspace*{\\fill}
 
     \\hspace*{\\fill}
-            FAO Regional Office for Europe and Central Asia, Budapest, 2015
+            FAO Regional Office for Europe and Central Asia
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Budapest, 2015
     \\hspace*{\\fill}
     ")
     }
@@ -223,7 +235,11 @@ if (region_to_report == "GLO") subtitle <- ""
     \\hspace*{\\fill}
 
     \\hspace*{\\fill}
-            FAO Regional Office for the Near East and North Africa, Cairo, 2015
+            FAO Regional Office for the Near East and North Africa
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Cairo, 2015
     \\hspace*{\\fill}
     ")
     }
