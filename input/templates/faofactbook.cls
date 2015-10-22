@@ -117,8 +117,12 @@ left=1cm, right=1cm, twoside}{geometry}
   \index{#1}%
   % Coffeebook country profile tables
   % ---------------------------------------------------------------------------------
+
   % \colorbox{part6}{\parbox{\dimexpr\columnwidth+2ex}{\Large\color{white}\hypertarget{#1}{#1}}}\par} % uncomment for coffee book
-  \colorbox{FAOblue}{\parbox{\dimexpr\columnwidth-2ex}{\Large\color{white}\hypertarget{#1}{#1}}}\par} % uncomment for regional books
+  % \colorbox{FAOblue}{\parbox{\dimexpr\columnwidth-2ex}{\Large\color{white}\hypertarget{#1}{#1}}}\par} % uncomment for regional books
+
+REPLACE_THIS _WITH_PROPER_COLOR
+
 % ---------------------------------------------------------------------------------
 % ---------------------------------------------------------------------------------
 % Define the DataUnit environment
