@@ -653,6 +653,7 @@ p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="kg/ha")
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -835,7 +836,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="kcal/cap/day")
+p <- p + labs(x="",y="million US$")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -902,6 +903,7 @@ p <- ggplot(dat_plot, aes(x=Year, y=value, fill=variable))
 p <- p + geom_area(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="million constant US$")
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
