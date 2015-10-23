@@ -297,7 +297,7 @@ if (region_to_report == "RAF"){
 }
 if (region_to_report == "RAP"){
   M49countries <-
-  rbind(data.frame(FAOST_CODE = c(13000,13001,13003,13005,13005,13007,13008,13009,13010,13011,13012,13013,13014),
+  rbind(data.frame(FAOST_CODE = c(13000,13001,13003,13005,13006,13007,13008,13009,13010,13011,13012,13013,13014),
                    SHORT_NAME = c("Regional Office for Asia and the Pacific",
                                   "East Asia",
                                   "Southeast Asia",
