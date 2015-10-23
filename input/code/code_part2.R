@@ -211,9 +211,6 @@ caption_text <- "Prevalence of undernourishment, top 5 countries"
 
 dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
-
 #dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
 
 map.plot <- left_join(map.df,dat)
@@ -378,7 +375,7 @@ dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribb
 p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="g/cap/day", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
@@ -392,9 +389,6 @@ caption_text <- "Average supply of protein of animal origin"
 ## ---- P2availabMAP, eval=P2availab, map_plot=P2availab, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra ----
 
 dat <- df[df$Year %in%  2012 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","QV.PCNPV.FOOD.ID3D")]
-
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 map.plot <- left_join(map.df,dat)
 
@@ -559,7 +553,7 @@ dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribb
 p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="US$", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p
 
@@ -571,8 +565,6 @@ caption_text <- "GDP per capita, PPP, constant 2011 international \\$"
 ## ---- P2accessMAP ----
 dat <- df[df$Year %in%  2007:2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","IS.ROD.DNST.K2D")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 dat <- dat[!is.na(dat$IS.ROD.DNST.K2D),]
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
@@ -746,9 +738,6 @@ caption_text <- "Value of food imports as a share of total merchandise exports (
 ## ---- P2stabilityMAP ----
 dat <- df[df$Year %in%  2013 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","G.GD.PSAVT.IN")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
-
 dat <- dat[!is.na(dat$G.GD.PSAVT.IN),]
 
 map.plot <- left_join(map.df,dat)
@@ -757,7 +746,7 @@ map.plot <- left_join(map.df,dat)
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","G.GD.PSAVT.IN")]
-cat_data$value_cat <- categories(x=cat_data$G.GD.PSAVT.IN, n=5) # manualBreaks = c(0, 5, 15, 25, 35, 100),
+cat_data$value_cat <- categories(x=cat_data$G.GD.PSAVT.IN, n=5,decimals = 1) # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -929,9 +918,9 @@ caption_text <- "Access to improved water source and sanitation facilities"
 
 ## ---- P2utilizaMAP ----
 
-dat <- df[df$Year %in%  2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","SH.ANM.CHLD.ZS")]
+dat <- df[df$Year %in%  2008:2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","SH.ANM.CHLD.ZS")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
+# dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 dat <- dat[!is.na(dat$SH.ANM.CHLD.ZS),]
