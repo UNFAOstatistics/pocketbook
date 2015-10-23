@@ -15,19 +15,12 @@ source(paste0(root.dir,"/input/code/plot/theme.R"))
 # map functions
 source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
-
-
-
-#
 #   _                       _
 #  | |     __ _  _ __    __| |
 #  | |    / _` || '_ \  / _` |
 #  | |___| (_| || | | || (_| |
 #  |_____|\__,_||_| |_| \__,_|
 #
-#
-
-
 
 ## ---- P4landTEXT ----
 spread_title <- "Land"
@@ -81,6 +74,7 @@ p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
@@ -185,6 +179,7 @@ p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
@@ -193,7 +188,7 @@ caption_text <- "Agricultural area"
 
 
 ## ---- P4landMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH) #%>% mutate(RL.AREA.ARBLPRMN.HA.SH = RL.AREA.ARBLPRMN.HA.SH * 10000)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -210,7 +205,8 @@ cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5,decimals
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+# map_unit <- "m² per capita"
+map_unit <- "ha per capita"
 
 create_map_here()
 
@@ -375,6 +371,7 @@ p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 
@@ -671,6 +668,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
+p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
 p
 
 # Caption
@@ -702,6 +700,8 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
+p <- p + labs(x="",y="billion US$")
+p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
 p
 
 # Caption
@@ -752,7 +752,7 @@ caption_text <- "Forest characteristics (2015)"
 
 
 ## ---- P4forestryMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH * 100)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -774,7 +774,7 @@ map_unit <- "percent"
 create_map_here()
 
 # Caption
-caption_text <- "Forest area as share of total land area"
+caption_text <- "Forest area as share of total land area, percent (2012)"
 
 
 #    ____   _   _                       _                     _
@@ -902,6 +902,8 @@ dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and 
 dat$fill[dat$variable == "GHG.BS.TECO2EQ.GG.NO"] <- "Burning savanna"
 dat$fill[dat$variable == "GL.FL.F.NERCO2EQ.NO"] <- "Forest"
 
+dat$value <- dat$value / 1000 # into thousand gigagrams
+
 dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=reorder(fill, -value), y=value, fill=fill))
@@ -910,6 +912,7 @@ p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 p <- p + theme(axis.text.x = element_blank())
 p <- p + guides(fill = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -940,4 +943,4 @@ map_unit <- expression("thousand gigagrams CO"[2] * "eq")
 create_map_here()
 
 # Caption
-caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, gigagrams CO2 eq (2012)"
+caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, gigagrams CO\\textsubscript{2} eq (2012)"
