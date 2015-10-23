@@ -406,7 +406,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="constant 2004 - 2006 Int$")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
+# p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
 p
 
 # Caption
@@ -1051,7 +1051,7 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","net_fish_trade")]
-cat_data$value_cat <- categories(x=cat_data$net_fish_trade, n=5,decimals = 2)
+cat_data$value_cat <- categories(x=cat_data$net_fish_trade, n=5)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 

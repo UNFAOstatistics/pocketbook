@@ -547,7 +547,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHOR
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 3))
 p
 
 # Caption

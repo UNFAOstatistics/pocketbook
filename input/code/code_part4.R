@@ -668,7 +668,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
-p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
+# p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
 p
 
 # Caption
@@ -701,7 +701,7 @@ p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
 p <- p + labs(x="",y="billion US$")
-p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
+# p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
 p
 
 # Caption

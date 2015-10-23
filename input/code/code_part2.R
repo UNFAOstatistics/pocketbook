@@ -555,6 +555,7 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="US$", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -580,13 +581,13 @@ cat_data$value_cat <- categories(x=cat_data$IS.ROD.DNST.K2D, n=5) # manualBreaks
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "per 100 square km of land"
+map_unit <- "per 100 km² of land"
 
 
 create_map_here()
 
 # Caption
-caption_text <- "Road density, per 100 square km of land area (2007 to 2011*)"
+caption_text <- "Road density, per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
 
 
 #   _____                       _           _             _       _   _   _   _
