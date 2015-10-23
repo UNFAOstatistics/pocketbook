@@ -242,9 +242,6 @@ caption_text <- "Dietary energy supply in top 5 countries"
 
 dat <- df[df$Year %in%  2015 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.DA.ADESA.PCT3D")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
-
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
@@ -365,7 +362,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="constant 2004 - 2006 international $")
+p <- p + labs(x="",y="constant 2004 - 2006 Int$")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -407,9 +404,9 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="constant 2004 - 2006 international $")
+p <- p + labs(x="",y="constant 2004 - 2006 Int$")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
 p
 
 # Caption
@@ -482,6 +479,7 @@ caption_text <- "Average annual growth in cereals production (2000-13)"
 ## ---- P3cropproMAP ----
 dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
                                                     QV.NPCPV.CRPS.ID.SHP)
+
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
@@ -494,7 +492,7 @@ cat_data$value_cat <- categories(x=cat_data$QV.NPCPV.CRPS.ID.SHP, n=5, method="j
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "index"
 
 create_map_here()
 
@@ -512,7 +510,7 @@ caption_text <- "Crops, gross per capita production index (2004-06 = 100, 2013)"
 
 
 ## ---- P3cropTEXT ----
-spread_title <- "Crop"
+spread_title <- "Crops"
 if (region_to_report == "RAF") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
 if (region_to_report == "RAP") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
 if (region_to_report == "REU") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
@@ -595,7 +593,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="tonnes per capita")
+p <- p + labs(x="",y="kg per capita")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -637,7 +635,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="tonnes per capita")
+p <- p + labs(x="",y="kg per capita")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -647,35 +645,27 @@ caption_text <- "Top 20 wheat producing countries, per capita"
 
 
 ## ---- P3cropBOTTOM ----
-dat <- syb.df %>% filter(Year %in% 2000:2013) %>%
-  select(FAOST_CODE,
-         Year,
-         QC.YIELD.CRLS.HG.NO,
-         OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Area,Year,
+         QC.YIELD.CRLS.HG.NO)   
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Area,Year,
+         QC.YIELD.CRLS.HG.NO)   
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Area,Year,
+         QC.YIELD.CRLS.HG.NO)   
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Area,Year,
+         QC.YIELD.CRLS.HG.NO)   
+dat_plot <- na.omit(dat)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
-
-# merge data with the region info
-dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat <- dat[!is.na(dat$OA.TPBS.POP.PPL.NO),]
-dat_plot <- dat %>% group_by(subgroup,Year) %>% dplyr::summarise(value = weighted.mean(QC.YIELD.CRLS.HG.NO, OA.TPBS.POP.PPL.NO, na.rm=TRUE)) %>% ungroup()
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=subgroup,color=subgroup))
+p <- ggplot(data = dat_plot, aes(x = Year, y = QC.YIELD.CRLS.HG.NO,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$subgroup)))[["Sub"]])
-p <- p + labs(y="tonnes/cap", x="")
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(y="hg/capita", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
+p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
@@ -683,7 +673,11 @@ caption_text <- "Cereals, yield"
 
 
 ## ---- P3cropMAP ----
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,QC.PRD.CRLS.TN.SHP)
+dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,QC.PRD.CRLS.TN.SHP) %>% mutate(QC.PRD.CRLS.TN.SHP = QC.PRD.CRLS.TN.SHP * 1000)
+
+dat <- dat[dat$FAOST_CODE != 351,]
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
@@ -691,17 +685,17 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QC.PRD.CRLS.TN.SHP")]
-cat_data$value_cat <- categories(x=cat_data$QC.PRD.CRLS.TN.SHP, n=5, method="jenks",decimals = 2)
+cat_data$value_cat <- categories(x=cat_data$QC.PRD.CRLS.TN.SHP, n=5, method="jenks")
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "tonne/cap"
+map_unit <- "kg/cap"
 
 create_map_here()
 
 # Caption
-caption_text <- "Cereal production, tonnes/cap (2013)"
+caption_text <- "Cereal production, kg/cap (2013)"
 
 
 
@@ -858,7 +852,7 @@ p <- p + theme(legend.key.height = unit(6, "mm"))
 p <- p + theme(legend.key.width = unit(4, "mm"))
 p <- p + labs(x=NULL, y=NULL)
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
-p <- p + guides(fill = guide_legend(nrow = 2))
+p <- p + guides(fill = guide_legend(nrow = 3))
 p
 
 
@@ -941,6 +935,8 @@ dat <- gather(dat, variable, value, 3:4)
 dat$fill[dat$variable == "capture_fish_production"] <- "From capture fishing"
 dat$fill[dat$variable == "aquaculture_fish_production"] <- "From aquaculture"
 
+dat$value <- dat$value / 1000000
+
 dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
@@ -956,7 +952,7 @@ caption_text <- "Fish production for aquaculture and capture fishing"
 
 
 ## ---- P3fisheriesLEFT ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,capture_fish_production)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,capture_fish_production) %>% mutate(capture_fish_production = capture_fish_production / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -985,7 +981,7 @@ caption_text <- "20 countries with highest value of capture production (2013)"
 
 ## ---- P3fisheriesRIGHT ----
 
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,aquaculture_fish_production)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,aquaculture_fish_production) %>% mutate(aquaculture_fish_production = aquaculture_fish_production / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -1042,11 +1038,11 @@ caption_text <- "Fish production indices (2004-06=100)"
 
 
 ## ---- P3fisheriesMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,net_fish_trade) %>%  mutate(net_fish_trade = net_fish_trade/ 1000000)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,net_fish_trade) %>%  mutate(net_fish_trade = net_fish_trade/ 1000)
 dat <- dat[!is.na(dat$net_fish_trade),]
 
-# dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+# dat <- dat[dat$FAOST_CODE != 351,]
+# dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
 # set Robinson projection
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
@@ -1060,7 +1056,7 @@ cat_data$value_cat <- categories(x=cat_data$net_fish_trade, n=5,decimals = 2)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "million US$"
+map_unit <- "1 000 US$"
 
 create_map_here()
 
@@ -1228,7 +1224,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHOR
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="billion constant 2005 US$", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 3))
 p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2012))
 p
 
@@ -1238,6 +1234,10 @@ caption_text <- "Cereal exports"
 ## ---- P3tradeMAP ----
 dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,
                                                     TI.IMVAL.FOOD.IN.NO)
+
+dat <- dat[dat$FAOST_CODE != 351,]
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
