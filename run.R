@@ -26,7 +26,7 @@ regionS_to_report <- c(
                               ,"RAF"  # Africa
                               ,"REU" # Europe and Central Asia
                               ,"RNE" # Near East and North Africa
-#                              ,"LAC" # Latin America and the Caribbean
+# #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
 ############################################################
@@ -52,7 +52,7 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions      <- T
 include_notes            <- T
 # -------------------------------
@@ -61,7 +61,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -170,6 +170,10 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Kitts and Nevis"  
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Netherlands\nAntilles"
 #FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == ""                                            & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- ""
 
+# North Korea
+FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem Rep"
+
+
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
 # load(paste0(data.dir,"/SYB2015-09-24.RData"))
@@ -253,6 +257,7 @@ syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(s
 
 syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\n Council States\n and Yemen"
 syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Near\n East countries"
+
 
 
 # source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
