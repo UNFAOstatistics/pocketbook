@@ -220,8 +220,13 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
 # Countries ---------------------------------------------------------------
 
 # if (region_to_report == "COF"){
-  M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","SHORT_NAME")]
+  # M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","SHORT_NAME")]
+# this used to be short name as above, but we shall use fao_table_name instead. However, everything hereafter is hard 
+# coded for SHORT_NAME, so we just rename the FAO_TABLE_NAME into SHORT_NAME
+
+  M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","FAO_TABLE_NAME")]
   M49countries <- as.data.frame(M49countries)
+  names(M49countries)[names(M49countries)=="FAO_TABLE_NAME"] <- "SHORT_NAME"
 # } else {
 # M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>%
 #   select(FAOST_CODE, SHORT_NAME) %>%  arrange(SHORT_NAME) %>%  na.omit()
