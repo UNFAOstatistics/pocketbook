@@ -938,7 +938,7 @@ cat_data$value_cat <- categories(x=cat_data$GHG.AFOLU.TOT.ECO2EQ.NO, n=5)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- expression("thousand gigagrams CO"[2] * "eq")
+map_unit <- expression("1 000 gigagrams CO"[2] * "eq")
 
 create_map_here()
 
