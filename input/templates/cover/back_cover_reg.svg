@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r"
-   sodipodi:docname="front_cover_reg.svg">
+   sodipodi:docname="back_cover_reg.svg">
   <defs
      id="defs4">
     <filter
@@ -153,15 +153,15 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:126.63378906px;line-height:125%;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.30000026;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4324);stroke-miterlimit:4;stroke-dasharray:none"
-       x="37.253975"
-       y="726.98737"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:126.63378906px;line-height:125%;font-family:'PT Sans';-inkscape-font-specification:'PT Sans';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.30000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4324)"
+       x="59.477333"
+       y="724.96704"
        id="text4636"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4638"
-         x="37.253975"
-         y="726.98737"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:126.63388062px;line-height:125%;font-family:Bangers;-inkscape-font-specification:'Bangers, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:none;stroke:#000000;stroke-opacity:1;stroke-width:4.30000026;stroke-miterlimit:4;stroke-dasharray:none">Front</tspan></text>
+         x="59.477333"
+         y="724.96704"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:126.63388062px;line-height:125%;font-family:Bangers;-inkscape-font-specification:'Bangers, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:none;stroke:#000000;stroke-width:4.30000019;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">back</tspan></text>
   </g>
 </svg>
