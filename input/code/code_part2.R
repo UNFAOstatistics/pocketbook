@@ -105,18 +105,18 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
-  
+
   # As filippo stated in email on 22/10/15 that
   ## The aggregates in yellow have been created but not disseminated because
   ## they include developed countries. This means that you can use them but
   ## just for those statistics in which developed countries are shown
   ## (you can refer to the Food Security Indicators file for this). For example,
   ## you cannot show the Prevalence of Undernourishment for these aggregates.
-  
+S
   # -> so I am replacing values for those variables & those aggregates with NA
   # and they will appear empty in countryprofile tables
-  
-  aggregates_to_sencore <- c( 13006,  #	Australia New Zealand ??
+
+  aggregates_to_censore <- c( 13006,  #	Australia New Zealand ??
                               13008,  #	Melanesia ??
                               13009,  #	Micronesia ??
                               13010,  #	Polynesia ??
@@ -131,14 +131,25 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
                               14005,  # Israel
                               5400    # Europe
   )
-  variables_to_sencore <- c("FS.OA.POU.PCT3D1", # Average dietary energy supply adequacy (percent) (3 year averages)
-                            "FS.DA.ADESA.PCT3D" # Prevalence of undernourishment (percent) (3 year averages)
-  )
-  #
-  for (i in variables_to_sencore){
-    dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_sencore, NA, dat[[i]])
-  }
   
+  variables_to_censore <- c("FS.OA.POU.PCT3D1", # Prevalence of undernourishment (percent) (3 year averages)
+                            "FS.OA.SFEP.PCT",    #	Share of food expenditure of the poor (percent)
+                            "FS.OA.DOFD.KCD3D",	 # Depth of food decifit (kcal/capita/day) (3 year averages)
+                            "FS.OA.POFI.PCT3D1", # Prevalence of food inadequacy (percent) (3 year avearages)
+                            "SH.STA.WAST.ZS",    # Percentage of children under 5 years of age affected by wasting (percent)
+                            "SH.STA.STNT.ZS",    #	Percentage of children under 5 years of age who are stunted (percent)
+                            "SH.STA.MALN.ZS",	   #	Percentage of children under 5 years of age who are underweight (percent)
+                            "SH.STA.AMALN.ZS",	 # 	Percentage of adults who are underweight (percent)
+                            "FS.OU.VAD.PCT",     #	Prevalence of Vitamin A deficiency (%)
+                            "FS.OU.IODINE.PCT",	#	Prevalence of Iodine deficiency (%)
+                            "FS.OA.NOU.P3D1",	#	Number of people undernourished (millions) (3 year averages)
+                            "FBS.PCS.PDES.KCD3D" # Dietary energy supply (kcal/cap/day) (3 year averages)
+  )
+  # Replace existing value with NA
+  for (i in variables_to_censore){
+    dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_censore, NA, dat[[i]])
+  }
+
 
   save(dat, file=paste0(data.dir,"/fsi_data.RData"))
 }
