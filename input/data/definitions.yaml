@@ -1,13 +1,15 @@
-- id: anemia_women_in_reproductive_age_(pros)
-  name: Anemia, women in reproductive age (\%)
-  description: missing
-  source: missing
-  owner: missing
+- id: prevalence_of_anemia_among_pregnant_women_(pros)
+  name: Prevalence of anemia among pregnant women (\%)
+  description: The percentage of pregnant women whose hemoglobin level is smaller than 110 grams per liter at sea level. Anemia is a condition in which the number of red blood cells or their oxygen-carrying capacity is insufficient to meet physiologic needs, which vary by age, sex, altitude, smoking status, and pregnancy status. In its severe form it is associated with fatigue, weakness, dizziness, and drowsiness. Children under age 5 and pregnant women have the highest risk for anemia.
+  source: World Bank
+  owner: WHO
 - id: energy_consumption_for_power_irrigation
   name: Energy consumption for power irrigation
-  description: missing
-  source: missing
-  owner: missing
+  description: Irrigated area is the sum of "total area equipped for full control irrigation: sprinkler" and
+"total area equipped for full control irrigation: localized" taken from the FAO AQUASTAT database. Annual values in FAOSTAT are
+estimated by repeating the last-available value reported in AQUASTAT within the associated time interval.
+  source: FAO, Statistics Division
+  owner: FAO
 - id: bioenergy_production
   name: Bioenergy production
   description: missing
@@ -15,9 +17,17 @@
   owner: missing
 - id: energy_use_in_agriculture_and_forestry
   name: Energy use in agriculture and forestry
-  description: missing
-  source: missing
-  owner: missing
+  description: The sum of total energy use by agriculture, forestry and fishing and considers
+all fossil fuels and renewable energy carriers (i.e. animal waste, anthracite, aviation
+gasoline, biodiesel, biogases, biogasoline, brown coal, brown coal briquettes, charcoal,
+coke oven coke, coking coal, conventional crude oil, direct use of geothermal heat,
+direct use of solar thermal heat, fuel oil, fuelwood, gas oil/ diesel oil, gasworks gas, hard
+coal, heat, industrial waste, lignite, liquified petroleum gas, lubricants, motor gasoline,
+municipal wastes, natural gas including LNG, natural gas liquids, other kerosene, other liquid
+biofuels, other oil products, other vegetal material and residues, patent fuel, peat, peat
+products, petroleum coke) and electricity. It is measured in Joules.
+  source: FAO, Statistics Division
+  owner: FAO
 - id: pop_affec_by_droughts_floods_extr_temp_(pros)
   name: Pop affec by droughts, floods, extr temp (\%)
   description: missing
@@ -46,7 +56,7 @@
     of fabricated assets or depletion and degradation of natural resources. The origin
     of value added is determined by the International Standard Industrial Classification
     (ISIC), revision 3.
-  source: World Development Indicators, World Bank
+  source: World Bank
   owner: World Bank
 - id: roundwood_production_(mln_m3)
   name: Roundwood production (mln m3)
@@ -60,8 +70,8 @@
     aggregate comprising wood fuel, including wood for charcoal and industrial roundwood
     (wood in the rough). \nIt is reported in\ncubic metres solid volume underbark
     (i.e. excluding bark). "
-  source: FAO Statistics Division
-  owner: Forestry Department
+  source: FAO, Statistics Division
+  owner: FAO, Forestry Department
 - id: domestic_food_price_level_index
   name: Domestic food price level index
   description: An indicator of the relative price of food in a country. The indicator
@@ -83,14 +93,14 @@
     purposes. It includes renewable freshwater resources as well as over-abstraction
     of renewable groundwater or withdrawal of fossil groundwater, use of agricultural
     drainage water, (treated) wastewater and desalinated water.
-  source: Land and Water Division (AQUASTAT)
+  source: FAO, Land and Water Division (AQUASTAT)
   owner: FAO
 - id: area_equipped_for_irrigation
   name: Area equipped for irrigation
   description: Area equipped to provide water (via irrigation) to crops. It includes
     areas equipped for full/partial control irrigation, equipped lowland areas, and
     areas equipped for spate irrigation.
-  source: Land and Water Division (AQUASTAT)
+  source: FAO, Land and Water Division (AQUASTAT)
   owner: FAO
 - id: population_growth_(pros)
   name: Population, growth (\%)
@@ -98,7 +108,7 @@
     regardless of legal status or citizenship--except for refugees not permanently
     settled in the country of asylum, who are generally considered part of the population
     of the country of origin.
-  source: FAO Statistics Division
+  source: FAO, Statistics Division
   owner: UN Population Division
 - id: fertilizers_(kg_ha)
   name: Fertilizers (kg/ha)
@@ -161,8 +171,8 @@
     beverages group. These indices measure changes over time in the prices of food
     that households acquire for consumption. The country-level indices are originally
     compiled and disseminated by the International Labour Organisation (ILO). '
-  source: FAO Statistics Division
-  owner: International Labour Organisation (ILO)
+  source: FAO, Statistics Division
+  owner: ILO
 - id: health_expenditure_total_(pros_of_GDP)
   name: Health expenditure, total (\% of GDP)
   description: Data are broken down into public and private expenditures. In general,
@@ -263,7 +273,7 @@
   name: Growth value of food production
   description: 'Expresses the food net production value , as estimated by FAO and
     published by FAOSTAT, in per capita terms. '
-  source: FAO Statistics Division
+  source: FAO, Statistics Division
   owner: FAO
 - id: prevalence_of_undernourishment
   name: Prevalence of undernourishment
@@ -547,7 +557,7 @@
     of purchased food. Total consumption expenditures include both food and non-food
     expenditures, and exclude non-consumption expenditures such as taxes, insurances,
     etc.
-  source: FAO Statistics Division
+  source: FAO, Statistics Division
   owner: FAO
 - id: value_of_food_(excluding_fish)_imports_over_total_merchandise_exports
   name: Value of food (excluding fish) imports over total merchandise exports
@@ -841,7 +851,7 @@
   name: Vitamin A deficiency, total pop. (\%)
   description: 'The proportion of total population with serum retinol equal or lower
     than 0.70 μmol/l. '
-  source: FAO Statistics Division
+  source: FAO, Statistics Division
   owner: WHO
 - id: cropping_intensity_ratio
   name: Cropping Intensity Ratio
