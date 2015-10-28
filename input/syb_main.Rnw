@@ -545,7 +545,7 @@ cat("
 
 This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
 
-This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 72 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
+This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 73 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
 
 This year also marks the beginning of the new post-2015 Sustainable Development Agenda. Again the international community will unite around new priorities for the future.
 
@@ -734,7 +734,7 @@ p <- ggplot(data=overview.df, aes(long,lat,group=group))
 p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
               linetype = "solid", color = "grey80", alpha=.5)
 # Grey for the non-data regions
-p <- p + geom_polygon(data=the_whole, fill="grey80", colour = alpha("white", 1/2), size=.4, guide = FALSE)
+p <- p + geom_polygon(data=the_whole, fill="grey50", colour = alpha("white", 1/2), size=.4, guide = FALSE)
 p <- p + geom_polygon(aes(fill = subgroup), colour = NA)
 p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
 # p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(overview.df$subgroup)))[["Sub"]])

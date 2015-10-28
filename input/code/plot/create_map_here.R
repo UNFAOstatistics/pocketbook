@@ -9,7 +9,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
       tmpCol = mapColFun(nCol)[2]
       mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
       mapColors = mapColFun(nCol)
-      mapColors <- c("grey70", mapColors)
+      mapColors <- c("grey50", mapColors)
     } 
     if (!("No Data" %in% unique(cat_data$value_cat))){
       nCol = length(levels(cat_data$value_cat))
