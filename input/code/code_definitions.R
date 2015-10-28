@@ -57,7 +57,7 @@ definitions_to_print_RAF <- c("agricultural_area",
                                "gdp_per_capita_(usdollar._ppp)",
                                "government_expenditure_on_agriculture_(pros_total_outlays)",
                               "greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)",
-                              "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
+                              # "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
                               # "growth_value_of_food_production",
                               # "health_expenditure_total_(pros_of_GDP)",
                               # "health_expenditure_per_capita_PPP_(dollar)",
@@ -174,7 +174,7 @@ definitions_to_print_RAP <- c("agricultural_area",
                                "gdp_per_capita_(usdollar._ppp)",
                                "government_expenditure_on_agriculture_(pros_total_outlays)",
                               "greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)",
-                              "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
+                              # "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
                               # "growth_value_of_food_production", ---------------------------------------------!!!!!!!!!!!!!!!!!!!!!!!!
                               # "health_expenditure_total_(pros_of_GDP)",
                               # "health_expenditure_per_capita_PPP_(dollar)",
@@ -290,7 +290,7 @@ definitions_to_print_REU <- c("agricultural_area",
                                "gdp_per_capita_(usdollar._ppp)",
                                "government_expenditure_on_agriculture_(pros_total_outlays)",
                               "greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)",
-                              "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
+                              # "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
                               # "growth_value_of_food_production",
                               "health_expenditure_total_(pros_of_GDP)",
                               "health_expenditure_per_capita_PPP_(dollar)",
@@ -400,7 +400,7 @@ definitions_to_print_RNE <- c("agricultural_area",
                                "gdp_per_capita_(usdollar._ppp)",
                                "government_expenditure_on_agriculture_(pros_total_outlays)",
                               "greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)",
-                              "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
+                              # "GHG_emissions_(AFOLU)_GHG_(all_sectors)",
                               # "growth_value_of_food_production",
                               # "health_expenditure_total_(pros_of_GDP)",
                               # "health_expenditure_per_capita_PPP_(dollar)",
@@ -580,10 +580,15 @@ if (region_to_report == "RNE") definitions_to_print <- definitions_to_print_RNE
 if (region_to_report == "COF") definitions_to_print <- definitions_to_print_COF
 
 
+d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
+
+yml <- yaml::as.yaml(d, column.major = FALSE) # 1
+writeLines(yml,con = paste0(root.dir,"/input/data/definitions.yaml"))
+
 # d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
 # d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
 
-d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
+
 
 for (i in definitions_to_print){
 
