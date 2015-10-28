@@ -63,11 +63,9 @@ dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 
-# reorder regions by the share of agricultural land
-# dat_plot$subgroup <- factor(dat_plot$subgroup,
-#                                   levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$subgroup )
-
 dat_plot <- dat
+
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Agricultural") %>% arrange(-value))$SHORT_NAME)
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
@@ -173,6 +171,8 @@ dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
 dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
 
 dat_plot <- dat
+
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Arable") %>% arrange(-value))$SHORT_NAME)
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
@@ -451,7 +451,7 @@ p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of tot energy production")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
@@ -668,6 +668,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
+p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
 p
 
@@ -701,6 +702,7 @@ p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
 p <- p + labs(x="",y="billion US$")
+p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
 p
 
@@ -735,9 +737,7 @@ dat$value <- dat$value / 1000000
 dat_plot <- dat
 
 # # AGREGATE
-# # reorder regions by the share of agricultural land
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME,
-                              levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$SHORT_NAME )
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "primary forest") %>% arrange(-value))$SHORT_NAME)
 #
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
@@ -818,7 +818,7 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 p <- p + theme(axis.text.x = element_text(angle=45))
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
 
@@ -871,12 +871,20 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -GL.LU.TOT.NERCO2EQ.NO)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
+# give name Value for value-col
+names(dat)[names(dat)=="GL.LU.TOT.NERCO2EQ.NO"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, GL.LU.TOT.NERCO2EQ.NO),y=GL.LU.TOT.NERCO2EQ.NO))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()

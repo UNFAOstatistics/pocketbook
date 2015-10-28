@@ -255,6 +255,8 @@ dat_plot$fill[dat_plot$variable == "NV.IND.TOTL.ZS"] <- "Industry"
 dat_plot$fill[dat_plot$variable == "NV.SRV.TETC.ZS"] <- "Services"
 
 
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Agriculture") %>% arrange(-value))$SHORT_NAME)
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
@@ -360,7 +362,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHOR
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 3))
 p
 
 # Caption
@@ -433,8 +435,7 @@ dat$fill <- factor(dat$fill, levels=c("Male","Female"))
 
 dat_plot <- dat
 # reorder
-dat_plot$subgroup <- factor(dat_plot$SHORT_NAME,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Female",],-value)$SHORT_NAME)
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Male") %>% arrange(-value))$SHORT_NAME)
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
@@ -706,6 +707,8 @@ dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
 dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
 dat_plot <- dat
+
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Nitrogen") %>% arrange(-share))$SHORT_NAME)
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=share, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")

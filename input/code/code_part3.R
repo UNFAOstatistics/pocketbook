@@ -34,19 +34,7 @@ if (region_to_report == "RNE") short_text <- "The dietary energy supply (DES) is
 
 ## ---- P3desData ----
 # Retrieve data
-dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-metdat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
-dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
-dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
-# SOFI to M49 conversions
-# Asia
-dat$FAOST_CODE[dat$FAOST_CODE == 5853] <- 5300
-dat$FAOST_CODE[dat$FAOST_CODE == 5001] <- 5000
-
-# Add Area var from sybdata.df
-tmp <- syb.df[!duplicated(syb.df[c("FAOST_CODE","Area")]),]
-dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
-dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
+load(paste0(data.dir,"/fsi_data.RData")) # manipulated in code_part2.R
 # M49LatinAmericaAndCaribbean
 dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
 # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
@@ -1108,7 +1096,7 @@ dw$TP.IMVAL.FOOD.USD.NO <- dw$TP.IMVAL.FOOD.USD.NO / 1000000000
 
 dw <- dw[order(-dw$TP.IMVAL.FOOD.USD.NO),c("SHORT_NAME","TP.EXVAL.FOOD.USD.NO","TP.IMVAL.FOOD.USD.NO")]
 
-dw <- head(dw, 5) # to work with RAP too
+dw <- head(dw, 6) # to work with RAP too
 
 names(dw) <- c("","Export value", "Import value")
 
