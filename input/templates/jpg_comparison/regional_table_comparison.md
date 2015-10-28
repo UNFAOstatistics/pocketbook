@@ -5,6 +5,6 @@
 
 | Document | Comments |
 | -------- | -------- |
-| RAF </br> ![](RAF_tbl.jpg) </br> RAP </br> ![](RAP_tbl.jpg) </br> RNE </br> ![](RNE_tbl.jpg) </br> REU </br> ![](REU_tbl.jpg) </br> | <iframe name='embed_readwrite' src='https://pad.okfn.org/p/regional_table_comparison?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=600 height=5100></iframe>  |
+| RAF </br> ![](RAF_tbl.jpg) </br> RAP </br> ![](RAP_tbl.jpg) </br> RNE </br> ![](RNE_tbl.jpg) </br> REU </br> ![](REU_tbl.jpg) </br> RAF </br> ![](RAF_agg.jpg) </br> RAP </br> ![](RAP_agg.jpg) </br> RNE </br> ![](RNE_agg.jpg) </br> REU </br> ![](REU_agg.jpg) | <iframe name='embed_readwrite' src='https://pad.okfn.org/p/regional_table_comparison?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=600 height=10200></iframe>  |
 
 </body>

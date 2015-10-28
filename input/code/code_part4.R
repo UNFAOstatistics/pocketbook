@@ -15,24 +15,19 @@ source(paste0(root.dir,"/input/code/plot/theme.R"))
 # map functions
 source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
-
-
-
-#
 #   _                       _
 #  | |     __ _  _ __    __| |
 #  | |    / _` || '_ \  / _` |
 #  | |___| (_| || | | || (_| |
 #  |_____|\__,_||_| |_| \__,_|
 #
-#
-
-
 
 ## ---- P4landTEXT ----
 spread_title <- "Land"
-short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
-
+if (region_to_report == "RAF") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+if (region_to_report == "RAP") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+if (region_to_report == "REU") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
+if (region_to_report == "RNE") short_text <- "Land is necessary for sustainable agricultural development, essential ecosystem functions and food security. More than 1.5 billion hectares – about 12 percent of the world’s land area – are used for crop production. Although large amounts of land are potentially suitable for agriculture, much of it is covered by forests, protected for environmental reasons or are part of urban areas. Some 90 percent of agricultural land is in Latin America and sub-Saharan Africa. At the other extreme, there is almost none available for agricultural expansion in Southern Asia, the Western Asia and Northern Africa."
 
 ## ---- P4landData ----
 
@@ -40,39 +35,44 @@ short_text <- "Land is necessary for sustainable agricultural development, essen
 
 
 ## ---- P4landTOPRIGHT ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 RL.AREA.AGR.HA.SH,
-                                                 RL.AREA.FOR.HA.SH,
-                                                 RL.AREA.OTH.HA.SH)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,
+         RL.AREA.AGR.HA.SH,
+         RL.AREA.FOR.HA.SH,
+         RL.AREA.OTH.HA.SH)
+dat <- na.omit(dat)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat_plot <- dat
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Agricultural") %>% arrange(-value))$SHORT_NAME)
 
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% dplyr::mutate(sum = sum(value)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Agricultural",],-value)$subgroup )
-
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
@@ -142,35 +142,44 @@ if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 2
 
 
 ## ---- P4landBOTTOM ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBL.HA.SH,RL.AREA.PRMNCR.HA.SH,RL.AREA.PRMNMP.HA.SH)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,
+         RL.AREA.ARBL.HA.SH,
+         RL.AREA.PRMNCR.HA.SH,
+         RL.AREA.PRMNMP.HA.SH)
+dat <- na.omit(dat)
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
 dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
 dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat_plot <- dat
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Arable") %>% arrange(-value))$SHORT_NAME)
 
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(subgroup,fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE)) %>% ungroup()
-
-# reorder regions by the share of agricultural land
-dat_plot$subgroup <- factor(dat_plot$subgroup,
-                                  levels=arrange(dat_plot[dat_plot$fill == "Arable",],-value)$subgroup )
-
-p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
@@ -179,7 +188,7 @@ caption_text <- "Agricultural area"
 
 
 ## ---- P4landMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH) #%>% mutate(RL.AREA.ARBLPRMN.HA.SH = RL.AREA.ARBLPRMN.HA.SH * 10000)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -196,7 +205,8 @@ cat_data$value_cat <- categories(x=cat_data$RL.AREA.ARBLPRMN.HA.SH, n=5,decimals
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+# map_unit <- "m² per capita"
+map_unit <- "ha per capita"
 
 create_map_here()
 
@@ -217,8 +227,10 @@ caption_text <- "Cropland per capita, ha/cap"
 
 ## ---- P4waterTEXT ----
 spread_title <- "Water"
-short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
-
+if (region_to_report == "RAF") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
+if (region_to_report == "RAP") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
+if (region_to_report == "REU") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
+if (region_to_report == "RNE") short_text <- "Global demand for water has risen sharply over the last century. Total annual water withdrawal from agriculture, municipalities and industries rose from less than 580 km\\textsuperscript{3} in 1900 to more than 3 900 km\\textsuperscript{3} in 2010. Agriculture accounts for approximately 70 percent of total freshwater withdrawal in the world, mostly through irrigation. This has been crucial for gains in food production since irrigation reduces drought risk and encourages crop diversification, thus also enhancing rural incomes. While irrigated agriculture represents about 20 percent of the cultivated land, it contributes to 40 percent of global food production."
 
 
 ## ---- P4waterData, cache=TRUE,results='hide', eval=P4water ----
@@ -359,6 +371,7 @@ p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + scale_y_continuous(labels=space) 
 p
 
 
@@ -408,50 +421,164 @@ caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-20
 
 ## ---- P4energyTEXT ----
 spread_title <- "Energy"
-short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
-
+if (region_to_report == "RAF") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
+if (region_to_report == "RAP") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
+if (region_to_report == "REU") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
+if (region_to_report == "RNE") short_text <- "Energy is an important input for the agri-food chain and is used to power agricultural machinery, heat greenhouses, power irrigation systems, but also to manufacture equipment, fertilizers, pesticides and other agro-chemicals. The amount of energy consumed by agriculture is increasing worldwide as mechanization, especially in developing countries, increases. At the same time agriculture produces energy in the form of bioenergy. Bioenergy production increased sharply over the last years to meet the new demand for liquid biofuels for transport (e.g., ethanol and biodiesel) and solid biomass for power such as pellets or wood chips."
 
 
 ## ---- P4energyData ----
 
 
-
-
-
-
 ## ---- P4energyTOPRIGHT ----
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Year,
+         EE_6740_72041)
+dat <- na.omit(dat)
 
-plot(cars)
+dat_plot <- dat
+
+p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(x="",y="% of tot energy production")
+p <- p + guides(color = guide_legend(nrow = 5))
+p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
+p
+
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+caption_text <- "Bioenergy production, share of total energy production"
+
+
 
 
 ## ---- P4energyLEFT ----
+dat <- syb.df %>% filter(Year %in% 2009) %>% select(SHORT_NAME,Year,EE_6740_72041)
 
-plot(cars)
+dat <- dat[!is.na(dat$EE_6740_72041),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -EE_6740_72041)
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+
+dat_plot <- top20
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6740_72041),y=EE_6740_72041))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="% of tot energy production")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
 # Caption
-caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+caption_text <- "Bioenergy production, share of total energy production, top 20 countries 2009"
 
 
 ## ---- P4energyRIGHT ----
+dat <- syb.df %>% filter(Year %in% 2009) %>% select(SHORT_NAME,Year,EE_6741_72040)
 
-plot(cars)
+
+dat <- dat[!is.na(dat$EE_6741_72040),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+dat <- dat[which(dat[[region_to_report]]),]
+
+# top for this plot
+dat <- arrange(dat, -EE_6741_72040)
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+
+dat_plot <- top20
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6741_72040),y=EE_6741_72040))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+
 # Caption
-caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+caption_text <- "Energy use in agriculture and forestry, share of total energy consumption, top 20 countries 2009"
 
 
 ## ---- P4energyBOTTOM ----
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Year,
+         EE_6741_72040)
+dat <- na.omit(dat)
 
-plot(cars)
+dat_plot <- dat
+
+p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
+p
+
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
-
+caption_text <- "Energy use in agriculture and forestry, share of total energy consumption"
 
 ## ---- P4energyMAP ----
+dat <- syb.df %>% filter(Year >= 2008) %>% select(FAOST_CODE,Year,GN_6808_72182) %>% mutate(GN_6808_72182 = GN_6808_72182 / 1000000)
+dat <- na.omit(dat)
 
-plot(cars)
+dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>%  ungroup()
+
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
+# set Robinson projection
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+
+# Subset
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","GN_6808_72182")]
+cat_data$value_cat <- categories(x=cat_data$GN_6808_72182, n=3)
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "million kWh"
+
+create_map_here()
+
 # Caption
-caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
 
 
 #   _____                               _
@@ -463,10 +590,14 @@ caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-20
 
 ## ---- P4forestryTEXT ----
 spread_title <- "Forestry"
-short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
-
+if (region_to_report == "RAF") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
+if (region_to_report == "RAP") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
+if (region_to_report == "REU") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
+if (region_to_report == "RNE") short_text <- "Forests make vital contributions to biodiversity. They also sustain a range of economic activities and act as a source of food, medicine and fuel for more than a billion people. The latest estimate of the world’s total forest area is more than 4 billion hectares, corresponding to about 30 percent of total land area. But today forests face unprecedented pressures. Changes in land cover have caused the most pressing environmental issue in recent decades. The impact of deforestation and land use intensification, especially on soil degradation, have been significant."
 
 ## ---- P4forestryData ----
+
+
 
 
 ## ---- P4forestryTOPRIGHT ----
@@ -502,7 +633,7 @@ dat_plot <- dat_plot %>% group_by(Year,fill) %>%
           dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
 
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million tonnes")
 p <- p + theme(axis.text.x = element_text(angle=45))
@@ -537,6 +668,8 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
+p <- p + scale_y_continuous(labels=space)
+# p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
 p
 
 # Caption
@@ -568,6 +701,9 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="billion US$")
+p <- p + labs(x="",y="billion US$")
+p <- p + scale_y_continuous(labels=space)
+# p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
 p
 
 # Caption
@@ -576,55 +712,47 @@ caption_text <- "Top 20 importers of forest products (2012)"
 
 ## ---- P4forestryBOTTOM ----
 
-# Forestry characteristics data is not available
-# dat <- syb.df %>%  filter(Year %in% 2010) %>% select(FAOST_CODE,
-#                                              GFRA.TOT.PF.HA.NO,
-#                                              GFRA.TOT.PLF.HA.NO,
-#                                              GFRA.TOT.ONRF.HA.NO) %>%
-#   dplyr::mutate(GFRA.TOT.PF.HA.NO   = GFRA.TOT.PF.HA.NO   / 1000000,
-#          GFRA.TOT.PLF.HA.NO  = GFRA.TOT.PLF.HA.NO  / 1000000,
-#          GFRA.TOT.ONRF.HA.NO = GFRA.TOT.ONRF.HA.NO / 1000000)
-# 
-# # Add region key and subset
-# dat <- left_join(dat,region_key)
-# dat <- dat[which(dat[[region_to_report]]),]
-# 
-# dat <- gather(dat, variable, value, 2:4)
-# dat$fill[dat$variable == "GFRA.TOT.PF.HA.NO"] <- "primary forest"
-# dat$fill[dat$variable == "GFRA.TOT.PLF.HA.NO"] <- "planted forest"
-# dat$fill[dat$variable == "GFRA.TOT.ONRF.HA.NO"] <- "other naturally regenerated forest"
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Year,
+         PrimFor,PlantFor,NatRegFor)
+dat <- na.omit(dat)
 
-# dat <- dat[!is.na(dat$value),]
-# 
-# # DEFAULT GROUPING
-# df <- subgrouping(region_to_report = region_to_report)
-# 
-# # merge data with the region info
-# dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-# 
+
+dat <- gather(dat, variable, value, 3:5)
+dat$fill[dat$variable == "PrimFor"] <- "primary forest"
+dat$fill[dat$variable == "PlantFor"] <- "planted forest"
+dat$fill[dat$variable == "NatRegFor"] <- "other naturally regenerated forest"
+
+dat$value <- dat$value / 1000000
+
+dat_plot <- dat
+
 # # AGREGATE
-# dat_plot <- dat_plot %>% group_by(subgroup,fill) %>%
-#           dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>% ungroup()
-# 
-# # reorder regions by the share of agricultural land
-# dat_plot$subgroup <- factor(dat_plot$subgroup,
-#                               levels=arrange(dat_plot[dat_plot$fill == "primary forest",],-value)$subgroup )
-# 
-# p <- ggplot(dat_plot, aes(x=subgroup, y=value, fill=fill))
-# p <- p + geom_bar(stat="identity", position="stack")
-# p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-# p <- p + labs(x="",y="percent")
-# p <- p + theme(axis.text.x = element_text(angle=45))
-# p
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "primary forest") %>% arrange(-value))$SHORT_NAME)
+#
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
+p <- p + geom_bar(stat="identity", position="stack")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + labs(x="",y="million ha")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p
 
-plot(cars)
 
 # Caption
-caption_text <- "Forest characteristics (2010) - Forestry characteristics data is not available"
+caption_text <- "Forest characteristics (2015)"
 
 
 ## ---- P4forestryMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH)
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -646,7 +774,7 @@ map_unit <- "percent"
 create_map_here()
 
 # Caption
-caption_text <- "Forest area as share of total land area"
+caption_text <- "Forest area as share of total land area, percent (2012)"
 
 
 #    ____   _   _                       _                     _
@@ -658,38 +786,42 @@ caption_text <- "Forest area as share of total land area"
 
 ## ---- P4climateTEXT ----
 spread_title <- "Climate change"
-short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
-
+if (region_to_report == "RAF") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
+if (region_to_report == "RAP") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
+if (region_to_report == "REU") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
+if (region_to_report == "RNE") short_text <- "The severity and speed of climate change is presenting an unprecedented challenge. Current global surface temperatures are now about 0.6 degrees Celsius higher than the average for the last century. This increase is consistent with model predictions of the effects of rising atmospheric concentrations of carbon dioxide (CO\\textsubscript{2}) and other GHGs, which are a result of human activity. The poorest and most food-insecure regions around the globe are the most vulnerable. Already scarce land and water resources will likely become even more scarce, and insufficient technical and financial means will make adaptation to a changing climate very difficult."
 
 ## ---- P4climateData ----
 
 
 ## ---- P4climateTOPRIGHT ----
-dat <- filter(syb.df, Year %in% 2000:2012) %>% select(FAOST_CODE,Year,
-                                                 GHG.TOT.ALL.GG.NO)
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Year,
+         GHG.TOT.ALL.GG.NO)
+dat <- na.omit(dat)
 
-dat <- dat[!is.na(dat$GHG.TOT.ALL.GG.NO),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+dat$GHG.TOT.ALL.GG.NO <- dat$GHG.TOT.ALL.GG.NO /1000
 
-# DEFAULT GROUPING
-df <- subgrouping(region_to_report = region_to_report)
+dat_plot <- dat
 
-# merge data with the region info
-dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
-
-# AGREGATE
-dat_plot <- dat_plot %>% group_by(Year,subgroup) %>%
-  dplyr::summarise(GHG.TOT.ALL.GG.NO = sum(GHG.TOT.ALL.GG.NO, na.rm=TRUE)) %>%
-  dplyr::mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO /1000)
-
-p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=subgroup))
-p <- p + geom_line()
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + guides(color = guide_legend(nrow = 5))
+p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
+
 
 # Caption
 caption_text <- "Greenhouse gas emissions in agriculture"
@@ -739,12 +871,20 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -GL.LU.TOT.NERCO2EQ.NO)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top12,top00)
+# give name Value for value-col
+names(dat)[names(dat)=="GL.LU.TOT.NERCO2EQ.NO"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, GL.LU.TOT.NERCO2EQ.NO),y=GL.LU.TOT.NERCO2EQ.NO))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -758,16 +898,10 @@ caption_text <- "Land use total emissions, highest 20 countries in 2012"
 
 
 ## ---- P4climateBOTTOM ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,
-                                                 GHG.TOT.ALL.GG.NO,
-                                                 GL.FL.NFC.NERCO2EQ.NO,
-                                                 GLI.CHPF.TOT.ECO2EQ.NO,
-                                                 GHG.BS.TECO2EQ.GG.NO,
-                                                 GL.FL.F.NERCO2EQ.NO)
-
-# Add region key and subset
-dat <- left_join(dat,region_key)
-dat <- dat[which(dat[[region_to_report]]),]
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
 
 dat <- gather(dat, variable, value, 2:6)
 dat$fill[dat$variable == "GHG.TOT.ALL.GG.NO"]   <- "All GHG agricultural sectors"
@@ -776,16 +910,17 @@ dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and 
 dat$fill[dat$variable == "GHG.BS.TECO2EQ.GG.NO"] <- "Burning savanna"
 dat$fill[dat$variable == "GL.FL.F.NERCO2EQ.NO"] <- "Forest"
 
+dat$value <- dat$value / 1000 # into thousand gigagrams
 
-# AGREGATE
-dat_plot <- dat %>% group_by(fill) %>% dplyr::summarise(value  = mean(value, na.rm=TRUE) / 1000) %>% ungroup()
-
+dat_plot <- dat
 
 p <- ggplot(dat_plot, aes(x=reorder(fill, -value), y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
-p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + theme(axis.text.x = element_blank())
+p <- p + guides(fill = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -811,9 +946,9 @@ cat_data$value_cat <- categories(x=cat_data$GHG.AFOLU.TOT.ECO2EQ.NO, n=5)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- expression("thousand gigagrams CO"[2] * "eq")
+map_unit <- expression("1 000 gigagrams CO"[2] * "eq")
 
 create_map_here()
 
 # Caption
-caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, gigagrams CO2 eq (2012)"
+caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, gigagrams CO\\textsubscript{2} eq (2012)"

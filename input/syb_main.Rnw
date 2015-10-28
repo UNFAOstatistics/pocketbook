@@ -2,279 +2,30 @@
 %% Global Statistical Pocketbook 2015
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
-%   _          _ _             _                 _        
-%  | | ___ __ (_) |_ _ __     | |__   ___   ___ | | _____ 
+%   _          _ _             _                 _
+%  | | ___ __ (_) |_ _ __     | |__   ___   ___ | | _____
 %  | |/ / '_ \| | __| '__|____| '_ \ / _ \ / _ \| |/ / __|
 %  |   <| | | | | |_| | |_____| | | | (_) | (_) |   <\__ \
 %  |_|\_\_| |_|_|\__|_|       |_| |_|\___/ \___/|_|\_\___/
-%                                                         
+%
 
-
-
-% Asetetaan koko raportin laajuiset parametrit knitr:lle
-
+% Set document wide settings for knitr
 
 <<knitr_setup, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
-
-library(knitr)
-
-#pdf.options(useDingbats = TRUE)
-
-knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
-
-syb_pdf = function(file, width, height) {
-  pdf(file, width = width, height = height, pointsize = 10, family = "PT Sans")
-}
-
-
-opts_chunk$set(list(echo=FALSE,
-                    eval=TRUE,
-                    cache=FALSE,
-                    warning=FALSE,
-                    message=FALSE,
-                    cache.path="~/fao_cache/regional15/",
-                     dev="syb_pdf",
-                     fig.ext='pdf',
-                    results='asis')
-               )
-
-# Why we have to short_text_ChartPage and short_text_ChartPage2 hooks etc......
-
-knit_hooks$set(short_text_ChartPage = function(before, options, envir) {
-  
-  # challenge with hooks was that when eval=FALSE hook was still executed and produced error
-  # Added the following line for each hook that stops the function IF there is FALSE in eval either
-  # written directly or passed through the spread condition region gadget thing..
-  
-  if (options$short_text_ChartPage == FALSE) return()
-  # Set fig size
-  fig.width  =  3
-  fig.height =  10
-     if (!before) {
-       return(paste0("\\begin{ChartPage}{ ",spread_title," } \n",
-               "\\LeftText{",short_text,"} \n"))
-     }
-})
-
-knit_hooks$set(short_text_ChartPage2 = function(before, options, envir) {
-  
-  # challenge with hooks was that when eval=FALSE hook was still executed and produced error
-  # Added the following line for each hook that stops the function IF there is FALSE in eval either
-  # written directly or passed through the spread condition region gadget thing..
-  
-  if (options$short_text_ChartPage2 == FALSE) return()
-  # Set fig size
-  fig.width  =  3
-  fig.height =  10
-     if (!before) {
-       return(paste0("\\begin{ChartPage2}{ ",spread_title," } \n",
-               "\\LeftText{",short_text,"} \n"))
-     }
-})
-
-
-knit_hooks$set(top_right_plot = function(before, options, envir) {
-  
-     if (options$top_right_plot == FALSE) return()
-     
-  if (before) {
-       return("\\RightText{\\begin{chart} \n")
-     } else {
-
-      # return(paste0("\\caption{\\renewcommand\\normalsize{\\fontsize{6.6}{7}}% \\normalsize ",caption_text,"}","\\end{chart}} \n"))
-      return(paste0("\\caption{\\large{",caption_text,"}}","\\end{chart}} \n"))
-    }
-})
-
-# \\caption{\\renewcommand\\normalsize{\\fontsize{6.6}{7}}%\n              \\normalsize test}\\end{chart}} \n
-
-knit_hooks$set(top_right_minitable = function(before, options, envir) {
-  
-     if (options$top_right_minitable == FALSE) return()
-     
-  if (before) {
-       return("\\RightText{ \n")
-     } else {
-
-      return(paste0("} \n"))
-    }
-})
-
-
-
-knit_hooks$set(left_plot = function(before, options, envir) {
-
-  if (options$left_plot == FALSE) return()
-     if (before) {
-       return("\\LeftChart{\\begin{chart} \n")
-     } else {
-       
-      return(paste0("\\vspace{.6mm} \n","\\caption{\\large{",caption_text,"}}","\\end{chart}} \n"))
-    }
-})
-
-knit_hooks$set(right_plot = function(before, options, envir) {
-  
-  if (options$right_plot == FALSE) return()
-     if (before) {
-       return("\\RightChart{\\begin{chart} \n")
-     } else {
-       
-      return(paste0("\\vspace{.6mm} \n","\\caption{\\large{",caption_text,"}}","\\end{chart}} \n"))
-    }
-})
-
-knit_hooks$set(bottom_plot = function(before, options, envir) {
-  
-  if (options$bottom_plot == FALSE) return()
-     if (before) {
-       return("\\BottomChart{\\begin{chart} \n")
-     } else {
-       
-      return(paste0("\\caption{\\large{",caption_text,"}}","\\end{chart}} \n \\end{ChartPage}"))
-      # return(paste0("\\end{chart}} \n \\end{ChartPage}"))
-    }
-})
-
-
-knit_hooks$set(bottom_plot2 = function(before, options, envir) {
-  
-  if (options$bottom_plot2 == FALSE) return()
-     if (before) {
-       return("\\BottomChart{\\begin{chart} \n")
-     } else {
-       
-      return(paste0("\\caption{\\large{",caption_text,"}}","\\end{chart}} \n \\end{ChartPage2}"))
-      #return(paste0("\\end{chart}} \n \\end{ChartPage2}"))
-    }
-})
-
-
-
-# knit_hooks$set(end_chunk = function(before, options, envir) {
-#   
-#      if (!before) {
-#        return("\\end{ChartPage}")
-#     }
-# 
-# })
-
-knit_hooks$set(map_plot = function(before, options, envir) {
-  
-  if (options$map_plot == FALSE) return()
-     if (before) {
-       return("\\begin{figure} \n")
-     } else {
-       
-      return(paste0("\\caption{\\large{",caption_text,"}} \n","\\end{figure}"))
-    }
-
-})
-
-# remove all the kframe tags from all chunk outputs (as we are placing outputs in custom environments already!)
-local({
-  hook_chunk = knit_hooks$get('chunk')
-  knit_hooks$set(chunk = function(x, options) {
-    x = hook_chunk(x, options)
-    #if (options$results == 'asis' && !options$echo && options$fig.num == 0) {
-    if (options$results == 'asis') {
-      # remove all kframe's
-      gsub('\\\\(begin|end)\\{kframe\\}', '', x)
-    } else x
-  })
-})
-
-
-
-
-
+source(paste0(root.dir,"input/code/knitr_hooks.R"))
 @
 
-
-% 
-%          _         _                                                _                   
-%   _ __  | |  ___  | |_   _ __    __ _  _ __  __ _  _ __ ___    ___ | |_  ___  _ __  ___ 
+%
+%          _         _                                                _
+%   _ __  | |  ___  | |_   _ __    __ _  _ __  __ _  _ __ ___    ___ | |_  ___  _ __  ___
 %  | '_ \ | | / _ \ | __| | '_ \  / _` || '__|/ _` || '_ ` _ \  / _ \| __|/ _ \| '__|/ __|
 %  | |_) || || (_) || |_  | |_) || (_| || |  | (_| || | | | | ||  __/| |_|  __/| |   \__ \
 %  | .__/ |_| \___/  \__| | .__/  \__,_||_|   \__,_||_| |_| |_| \___| \__|\___||_|   |___/
-%  |_|                    |_|                                                             
-% 
-
-
+%  |_|                    |_|
+%
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
-
-# if (region_to_report == "GLO"){
-#   print_overview_map <- FALSE
-#   } else print_overview_map <- TRUE
-
-
-top_right_plot_height <- 2.5
-top_right_plot_width  <- 3
-
-left_plot_height  <- 6
-left_plot_width  <- 3.2
-
-right_plot_height <- 6
-right_plot_width <- 3.2
-
-bottom_plot_height <- 3
-bottom_plot_width  <- 6
-
-# defaults
-map.fig.width   <- NULL
-map.fig.height  <- NULL
-map.out.height  <- NULL
-map.out.width   <- NULL
-map.out.extra   <- NULL
-
-
-# RAF
-if (region_to_report == "RAF") map.fig.width  <- 6
-if (region_to_report == "RAF") map.fig.height  <- 8
-if (region_to_report == "RAF") map.out.height  <- "1.5\\columnwidth"
-if (region_to_report == "RAF") map.out.extra  <- 'angle=0'
-
-# RAP
-if (region_to_report == "RAP") map.fig.width  <- 12
-if (region_to_report == "RAP") map.fig.height  <- 8
-if (region_to_report == "RAP") map.out.width  <- "1.7\\columnwidth"
-if (region_to_report == "RAP") map.out.extra  <- 'angle=90'
-
-# REU
-if (region_to_report == "REU") map.fig.width  <- 12
-if (region_to_report == "REU") map.fig.height  <- 6
-if (region_to_report == "REU") map.out.width  <- "2\\columnwidth"
-if (region_to_report == "REU") map.out.extra  <- 'angle=90'
-
-# RNE
-if (region_to_report == "RNE") map.fig.width  <- 6
-if (region_to_report == "RNE") map.fig.height  <- 8
-if (region_to_report == "RNE") map.out.height  <- "1.5\\columnwidth"
-if (region_to_report == "RNE") map.out.extra  <- 'angle=0'
-
-# LAC
-if (region_to_report == "LAC") map.fig.width  <- 8
-if (region_to_report == "LAC") map.fig.height  <- 12
-if (region_to_report == "LAC") map.out.width  <- "1.2\\columnwidth"
-if (region_to_report == "LAC") map.out.extra  <- 'angle=0'
-
-
-# GLO
-if (region_to_report == "GLO") map.fig.width  <- 12
-if (region_to_report == "GLO") map.fig.height  <- 8
-if (region_to_report == "GLO") map.out.width  <- "1.7\\columnwidth"
-if (region_to_report == "GLO") map.out.extra  <- 'angle=90'
-
-# COF
-if (region_to_report == "COF") map.fig.width  <- 12
-if (region_to_report == "COF") map.fig.height  <- 8
-if (region_to_report == "COF") map.out.width  <- "1.7\\columnwidth"
-if (region_to_report == "COF") map.out.extra  <- 'angle=90'
-
+source(paste0(root.dir,"input/code/plot_parameters.R"))
 @
 
 
@@ -283,7 +34,10 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
  % \documentclass[print, Draft]{faofactbook}
 % \documentclass[print]{faofactbook}
 % \documentclass[web, Draft]{faofactbook}
-\documentclass[twoside,web]{faofactbook}
+% \documentclass[twoside,web]{faofactbook}
+
+PLACE_PRINT_OR_WEB_HERE
+
 
 %% Other packages to be loaded
 \usepackage{lipsum,textcomp}
@@ -296,6 +50,18 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 \usepackage{booktabs}
 \usepackage{lscape}
 %\usepackage[document]{ragged2e}
+
+
+\usepackage{pdfpages}
+
+% for inserting blank pages
+\usepackage{afterpage}
+\newcommand\blankpage{%
+    \null
+    %\thispagestyle{empty}%
+    % \addtocounter{page}{-1}%
+    \newpage}
+
 
 
 \usepackage{array}
@@ -319,84 +85,61 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 %% Set the strip width
 \faoset{stripwidth=7.2mm}
 
-%% Trying to control the TOC
-% \usepackage{tocloft}
-% \renewcommand\cftchapfont{\normalsize\bfseries}
-% \renewcommand\cftsecfont{\normalsize}
-
-%\usepackage{titlesec}
-% \titleformat*{\section}{\Large\bfseries}
-
-
-% First page background graphics
-\usepackage{eso-pic}
-\newcommand\taustaeka{%
-\put(-30,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,%
-<<define_front_cover, echo=FALSE, results='asis', eval=TRUE>>=
-  cover_name <- paste0("front_cover_",region_to_report,".pdf")
-  cat(paste0("keepaspectratio]{",cover_name,"}"))
-  @
-\vfill
-}}}
-
-
-\newcommand\taustatoka{%
-\put(-30,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering
-\includegraphics[width=\paperwidth,height=\paperheight,%
-<<define_back_cover, echo=FALSE, results='asis', eval=TRUE>>=
-  cover_name <- paste0("back_cover_",region_to_report,".pdf")
-  cat(paste0("keepaspectratio]{",cover_name,"}"))
-  @
-\vfill
-}}}
-
-
-% 
-%    __                     _                       _    _              
-%   / _| _ __  ___   _ __  | |_   _ __ ___    __ _ | |_ | |_  ___  _ __ 
-%  | |_ | '__|/ _ \ | '_ \ | __| | '_ ` _ \  / _` || __|| __|/ _ \| '__|
-%  |  _|| |  | (_) || | | || |_  | | | | | || (_| || |_ | |_|  __/| |   
-%  |_|  |_|   \___/ |_| |_| \__| |_| |_| |_| \__,_| \__| \__|\___||_|   
-%                                                                       
-
-      
-
+%
+%     ffffffffffffffff                                                                  tttt
+%    f::::::::::::::::f                                                              ttt:::t
+%   f::::::::::::::::::f                                                             t:::::t
+%   f::::::fffffff:::::f                                                             t:::::t
+%   f:::::f       ffffffrrrrr   rrrrrrrrr      ooooooooooo   nnnn  nnnnnnnn    ttttttt:::::ttttttt
+%   f:::::f             r::::rrr:::::::::r   oo:::::::::::oo n:::nn::::::::nn  t:::::::::::::::::t
+%  f:::::::ffffff       r:::::::::::::::::r o:::::::::::::::on::::::::::::::nn t:::::::::::::::::t
+%  f::::::::::::f       rr::::::rrrrr::::::ro:::::ooooo:::::onn:::::::::::::::ntttttt:::::::tttttt
+%  f::::::::::::f        r:::::r     r:::::ro::::o     o::::o  n:::::nnnn:::::n      t:::::t
+%  f:::::::ffffff        r:::::r     rrrrrrro::::o     o::::o  n::::n    n::::n      t:::::t
+%   f:::::f              r:::::r            o::::o     o::::o  n::::n    n::::n      t:::::t
+%   f:::::f              r:::::r            o::::o     o::::o  n::::n    n::::n      t:::::t    tttttt
+%  f:::::::f             r:::::r            o:::::ooooo:::::o  n::::n    n::::n      t::::::tttt:::::t
+%  f:::::::f             r:::::r            o:::::::::::::::o  n::::n    n::::n      tt::::::::::::::t
+%  f:::::::f             r:::::r             oo:::::::::::oo   n::::n    n::::n        tt:::::::::::tt
+%  fffffffff             rrrrrrr               ooooooooooo     nnnnnn    nnnnnn          ttttttttttt
+%
+%
+%                                              tttt               tttt
+%                                           ttt:::t            ttt:::t
+%                                           t:::::t            t:::::t
+%                                           t:::::t            t:::::t
+% mmmmmmm    mmmmmmm     aaaaaaaaaaaaa  ttttttt:::::tttttttttttttt:::::ttttttt        eeeeeeeeeeee    rrrrr   rrrrrrrrr
+% mm:::::::m  m:::::::mm   a::::::::::::a t:::::::::::::::::tt:::::::::::::::::t      ee::::::::::::ee  r::::rrr:::::::::r
+% m::::::::::mm::::::::::m  aaaaaaaaa:::::at:::::::::::::::::tt:::::::::::::::::t     e::::::eeeee:::::eer:::::::::::::::::r
+% m::::::::::::::::::::::m           a::::atttttt:::::::tttttttttttt:::::::tttttt    e::::::e     e:::::err::::::rrrrr::::::r
+% m:::::mmm::::::mmm:::::m    aaaaaaa:::::a      t:::::t            t:::::t          e:::::::eeeee::::::e r:::::r     r:::::r
+% m::::m   m::::m   m::::m  aa::::::::::::a      t:::::t            t:::::t          e:::::::::::::::::e  r:::::r     rrrrrrr
+% m::::m   m::::m   m::::m a::::aaaa::::::a      t:::::t            t:::::t          e::::::eeeeeeeeeee   r:::::r
+% m::::m   m::::m   m::::ma::::a    a:::::a      t:::::t    tttttt  t:::::t    tttttte:::::::e            r:::::r
+% m::::m   m::::m   m::::ma::::a    a:::::a      t::::::tttt:::::t  t::::::tttt:::::te::::::::e           r:::::r
+% m::::m   m::::m   m::::ma:::::aaaa::::::a      tt::::::::::::::t  tt::::::::::::::t e::::::::eeeeeeee   r:::::r
+% m::::m   m::::m   m::::m a::::::::::aa:::a       tt:::::::::::tt    tt:::::::::::tt  ee:::::::::::::e   r:::::r
+% mmmmmm   mmmmmm   mmmmmm  aaaaaaaaaa  aaaa         ttttttttttt        ttttttttttt      eeeeeeeeeeeeee   rrrrrrr
 
 \begin{document}
 \faoset{bgcolor=white}\selectcolor
 \twocolumn
 
+% Front cover
 
-%% Cover (just in the web version)
 \ifprint\addtocounter{page}{1}\else
-% \begin{picture}(0,0)
-% \put(-28,-502){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/front_cover_2015.png}}
-% \end{picture}
-% \input{./Tables/CountryProfiles.tex}
 
-% \newpage
+<<define_front_cover, echo=FALSE, results='asis', eval=include_covers>>=
+  cover_name <- paste0("front_cover_",region_to_report,".pdf")
+  if (region_to_report != "COF") cat(paste0("\\includepdf[offset=-25 35, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report == "COF") cat(paste0("\\includepdf[offset=-28 29, noautoscale=true]{",cover_name,"}"))
+@
 
-\AddToShipoutPicture*{\taustaeka}
-
-% \thispagestyle{empty}
-% \mbox{}
-% \clearpage
 \newpage
-\thispagestyle{empty}
-\mbox{}
-\clearpage
 \fi
 
 \onecolumn
-% \pagenumbering{roman}
-\thispagestyle{empty}
+\pagenumbering{roman}
 
 \vspace*{100pt}
 
@@ -404,7 +147,7 @@ if (region_to_report == "COF") map.out.extra  <- 'angle=90'
 
 
 <<define_maintitle, echo=FALSE, results='asis', eval=TRUE>>=
-  
+
 if (region_to_report == "RAF") maintitle <- "FAO Statistical Pocketbook"
 if (region_to_report == "RAP") maintitle <- "FAO Statistical Pocketbook"
 if (region_to_report == "REU") maintitle <- "FAO Statistical Pocketbook"
@@ -414,7 +157,7 @@ if (region_to_report == "COF") maintitle <- "FAO Coffee Pocketbook"
 if (region_to_report == "GLO") maintitle <- "FAO Statistical Pocketbook"
 
   cat(paste0("\\Huge{",maintitle,"}"))
-  @
+@
 
 
 
@@ -430,25 +173,94 @@ if (region_to_report == "GLO") maintitle <- "FAO Statistical Pocketbook"
 
 \begin{center}
 <<define_subtitle, echo=FALSE, results='asis', eval=TRUE>>=
-  
+
 if (region_to_report == "RAF") subtitle <- "Africa \n\n Food and Agriculture"
 if (region_to_report == "RAP") subtitle <- "Asia and the Pacific \n\n Food and Agriculture"
 if (region_to_report == "REU") subtitle <- "Europe and Central Asia \n\n Food and Agriculture"
 if (region_to_report == "RNE") subtitle <- "Near East and North Africa \n\n Food and Agriculture"
-if (region_to_report == "LAC") subtitle <- "Latin America and \n\n the Caribbean"
 # if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
 if (region_to_report == "COF") subtitle <- ""
 if (region_to_report == "GLO") subtitle <- ""
 
   cat(paste0("\\Huge{",subtitle,"}"))
-  @
+@
 
 \end{center}
+
 
 \vfill
 \begin{center}
-Food and Agriculture Organization of the United Nations, Rome, 2015
+
+<<define_print_location, echo=FALSE, results='asis', eval=TRUE>>=
+
+  if (region_to_report == "RAF"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Regional office for Africa
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Accra, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+  if (region_to_report == "RAP"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Regional Office for Asia and the Pacific
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Bangkok, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+  if (region_to_report == "REU"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            FAO Regional Office for Europe and Central Asia
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Budapest, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+  if (region_to_report == "RNE"){
+    cat("
+    \\hspace*{\\fill}
+            Food and Agriculture Organization of the United Nations
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            FAO Regional Office for the Near East and North Africa
+    \\hspace*{\\fill}
+
+    \\hspace*{\\fill}
+            Cairo, 2015
+    \\hspace*{\\fill}
+    ")
+    }
+
+
+@
+
 \end{center}
+
+
+
 
 <<timestamp, eval=include_timestamp>>=
 time_generated <- Sys.time()
@@ -456,7 +268,7 @@ time_generated <- Sys.time()
 cat(
   paste0("\\Huge{Generated at} \n",time_generated)
 )
-  
+
 @
 
 
@@ -466,9 +278,13 @@ cat(
 \newpage
 
 %% Disclamer
-\thispagestyle{empty}
+% \thispagestyle{empty}
 
-<<define_disclaimer, echo=FALSE, results='asis', eval=TRUE>>=
+\includepdf[width=\paperwidth,height=\paperheight, offset=-0 -30, pagecommand={}]{./I4691E_disclaimer.pdf}
+
+% \includegraphics{./I4691E_disclaimer_crop.pdf}
+
+<<define_disclaimer, echo=FALSE, results='asis', eval=include_disclaimer>>=
   if (region_to_report == "COF"){
   cat("
     \\ifprint
@@ -487,184 +303,35 @@ cat(
   ")
     }
   }
-  @
-
-
-
-
-
-
-
-%% To be commented if we want to show the List of countries
-% \thispagestyle{empty}
-% \mbox{}
-% \clearpage
-
-%% New part - Introduction
-\newpart{white}
-%\addtocounter{page}{1}
-%\cleardoublepage
-\pagenumbering{arabic}  %% Arabic page numbering
-\setlength{\parskip}{3pt plus 3pt minus 1pt}  %% Increasing the spacing in the introduction page
-
-
-
-% 
-%    __                                             _ 
-%   / _|  ___   _ __  ___ __      __ ___   _ __  __| |
-%  | |_  / _ \ | '__|/ _ \\ \ /\ / // _ \ | '__|/ _` |
-%  |  _|| (_) || |  |  __/ \ V  V /| (_) || |  | (_| |
-%  |_|   \___/ |_|   \___|  \_/\_/  \___/ |_|   \__,_|
-%                                                     
-% 
-
-
-
-
-<<foreword_chunk, eval=include_foreword, cache=cache_foreword>>=
-
-  if (region_to_report != "COF"){
-    cat(
-"
-\\Large{Foreword}
-
-\\bigskip
-\\bigskip
-\\bigskip
-")
-
-if (region_to_report == "RAF") cat("\\textbf{Africa pockebook spefific entry for the foreword}")
-if (region_to_report == "RAP") cat("\\textbf{Asia and the Pacific pockebook spefific entry for the foreword}")
-if (region_to_report == "REU") cat("\\textbf{Europe and Central Asia pockebook spefific entry for the foreword}")
-if (region_to_report == "RNE") cat("\\textbf{Near East and North Africa pockebook spefific entry for the foreword}")
-if (region_to_report == "LAC") cat("\\textbf{Latin America and pockebook spefific entry for the foreword}")
-# if (region_to_report == "COF") cat("\\textbf{Coffee and Coffee pockebook spefific entry for the foreword}")
-
-cat("
-\\large
-
-This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. 
-
-This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 73 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
-
-This year also marks the beginning of the new post-2015 Sustainable Development Agenda. Again the international community will unite around new priorities for the future.
-
-Clear indicators to measure progress towards these international goals is of paramount importance. Timely and robust statistics are the fundamental tool in monitoring the myriad efforts being made, both with an eye to early detection of problems and the recognition of success. The better the data, the better the policies that can be designed. And the better the data, the easier it is to measure the impact of policies or to hold stakeholders accountable for the pledges they make. 
-
-This publication presents selected key indicators related to agriculture and food security that stakeholders can use to prioritize their actions. It is divided into two main sections, one thematic and one country-specific. It presents a variety of dimensions of agriculture and food security along four main focus areas:
-
-
-{\\textbf{\\color{part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
-
-{\\textbf{\\color{part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
-
-{\\textbf{\\color{part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
-
-{\\textbf{\\color{part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
-
-This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community. 
-
-FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
-
-
-\\bigskip
-\\bigskip
-
-\\hspace*{\\fill}
-        Pietro Gennari
-\\hspace*{\\fill}
-
-\\hspace*{\\fill}
-        \\textit{Chief Statistician and Director, Statistics Division}
-\\hspace*{\\fill}
-")
-  } else {
-  
-    
-    cat(
-"
-\\Large{Foreword}
-
-\\bigskip
-\\bigskip
-\\bigskip
-\\bigskip
-
-\\large
-
-
-
-Today, more people are consuming more coffee than ever before. As the middle classes of the developing world continue to swell, as their incomes rise and coffee remains affordable, the luxury of the occasional coffee has become a daily habit in an ever-growing number of countries. The rising demand has also afforded producers with new options and opportunities. Coffee has become an important contributor to cash income for many smallholders, who produce most of the world’s beans. Today, the annual output has reached almost nine million tonnes, one million tonnes more than a decade ago. The gross value of production of green coffee now exceeds US\\$16 billion, its export value reached US\\$24 billion in 2012. 
-
-\\vspace{3mm}
-
-While rising demand offers unprecedented opportunities to growers, they also have to live up to a growing set of challenges. Many are confronted with inadequate access to credit, high price volatility, bureaucratic hurdles at home and market barriers abroad. And they are operating in a global value chain where a vast and often unorganized number of growers are exposed to the market power of a small number of traders and roasters. As if that were not enough, many smallholders find it hard to cope with the vagaries of weather from year to year and the deteriorating growing conditions brought about by climate change over the longer-term. 
-
-
-\\vspace{3mm}
-
-This Coffee Pocketbook puts numbers to these developments, assesses short-term changes and long-term trends in production, consumption, trade and prices, and provides useful background information on related shifts in poverty, health and rural development. It is part of the FAO Statistical Yearbook suite of products and is organized around two major sections: thematic spreads with data-driven visualizations, and comprehensive country and regional profiles. 
-
-\\vspace{3mm}
-
-FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. This includes a commitment to improving the livelihoods of people along the various stages of the coffee production chain.
-
-\\bigskip
-\\bigskip
-\\bigskip
-
-\\hspace*{\\fill}
-        Josef Schmidhuber
-\\hspace*{\\fill}
-
-\\hspace*{\\fill}
-        \\textit{Deputy Director, Statistics Division}
-\\hspace*{\\fill}
-")
-    
-}
-
-  
-  
-@
-
-
-<<foreword_placeholder, eval=!include_foreword >>=
-
-cat("
-  \\Large{Just a placeholder}
-  \\large
-  \\clearpage
-  ")
-  
-
-  
 @
 
 
 
+%
+% TTTTTTTTTTTTTTTTTTTTTTT     OOOOOOOOO             CCCCCCCCCCCCC
+% T:::::::::::::::::::::T   OO:::::::::OO        CCC::::::::::::C
+% T:::::::::::::::::::::T OO:::::::::::::OO    CC:::::::::::::::C
+% T:::::TT:::::::TT:::::TO:::::::OOO:::::::O  C:::::CCCCCCCC::::C
+% TTTTTT  T:::::T  TTTTTTO::::::O   O::::::O C:::::C       CCCCCC
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O:::::O     O:::::OC:::::C
+%         T:::::T        O::::::O   O::::::O C:::::C       CCCCCC
+%       TT:::::::TT      O:::::::OOO:::::::O  C:::::CCCCCCCC::::C
+%       T:::::::::T       OO:::::::::::::OO    CC:::::::::::::::C
+%       T:::::::::T         OO:::::::::OO        CCC::::::::::::C
+%       TTTTTTTTTTT           OOOOOOOOO             CCCCCCCCCCCCC
 
-
-% 
-%   _          _      _                 __                      _                _   
-%  | |_  __ _ | |__  | |  ___    ___   / _|   ___  ___   _ __  | |_  ___  _ __  | |_ 
-%  | __|/ _` || '_ \ | | / _ \  / _ \ | |_   / __|/ _ \ | '_ \ | __|/ _ \| '_ \ | __|
-%  | |_| (_| || |_) || ||  __/ | (_) ||  _| | (__| (_) || | | || |_|  __/| | | || |_ 
-%   \__|\__,_||_.__/ |_| \___|  \___/ |_|    \___|\___/ |_| |_| \__|\___||_| |_| \__|
-%                                                                                    
-% 
-% 
-
-
+\large
 %% Prelims
 \tableofcontents
-% \clearpage % commented because of the font size issue
-
-% \clearpage
 
 %% List of countries
 % \phantomsection
-% \renewcommand{\indexname}{List of countries} 
+% \renewcommand{\indexname}{List of countries}
 % \addcontentsline{toc}{section}{List of countries}
 % \printindex
 
@@ -678,16 +345,255 @@ cat("
 % \addcontentsline{toc}{section}{List of Charts}
 % \listoffigures
 
-% \thispagestyle{empty}
-% \mbox{}
+% to add empty page
+% \afterpage{\blankpage}
 
-% \newpage
+% to add empty page
+\afterpage{\blankpage}
+
+%% New part - Introduction
+\newpart{white}
+%\addtocounter{page}{1}
+%\cleardoublepage
+
+\setlength{\parskip}{3pt plus 3pt minus 1pt}  %% Increasing the spacing in the introduction page
+
+ %                                                                                                                            dddddddd
+ %    ffffffffffffffff                                                                                                        d::::::d
+ %   f::::::::::::::::f                                                                                                       d::::::d
+ %  f::::::::::::::::::f                                                                                                      d::::::d
+ %  f::::::fffffff:::::f                                                                                                      d:::::d
+ %  f:::::f       ffffffooooooooooo   rrrrr   rrrrrrrrr       eeeeeeeeeeee  wwwwwww           wwwww           wwwwwww ddddddddd:::::d
+ %  f:::::f           oo:::::::::::oo r::::rrr:::::::::r    ee::::::::::::ee w:::::w         w:::::w         w:::::wdd::::::::::::::d
+ % f:::::::ffffff    o:::::::::::::::or:::::::::::::::::r  e::::::eeeee:::::eew:::::w       w:::::::w       w:::::wd::::::::::::::::d
+ % f::::::::::::f    o:::::ooooo:::::orr::::::rrrrr::::::re::::::e     e:::::e w:::::w     w:::::::::w     w:::::wd:::::::ddddd:::::d
+ % f::::::::::::f    o::::o     o::::o r:::::r     r:::::re:::::::eeeee::::::e  w:::::w   w:::::w:::::w   w:::::w d::::::d    d:::::d
+ % f:::::::ffffff    o::::o     o::::o r:::::r     rrrrrrre:::::::::::::::::e    w:::::w w:::::w w:::::w w:::::w  d:::::d     d:::::d
+ %  f:::::f          o::::o     o::::o r:::::r            e::::::eeeeeeeeeee      w:::::w:::::w   w:::::w:::::w   d:::::d     d:::::d
+ %  f:::::f          o::::o     o::::o r:::::r            e:::::::e                w:::::::::w     w:::::::::w    d:::::d     d:::::d
+ % f:::::::f         o:::::ooooo:::::o r:::::r            e::::::::e                w:::::::w       w:::::::w     d::::::ddddd::::::dd
+ % f:::::::f         o:::::::::::::::o r:::::r             e::::::::eeeeeeee         w:::::w         w:::::w       d:::::::::::::::::d
+ % f:::::::f          oo:::::::::::oo  r:::::r              ee:::::::::::::e          w:::w           w:::w         d:::::::::ddd::::d
+ % fffffffff            ooooooooooo    rrrrrrr                eeeeeeeeeeeeee           www             www           ddddddddd   ddddd
+ %
+
+<<foreword_chunk, eval=include_foreword, cache=cache_foreword>>=
+
+  if (region_to_report != "COF"){
+    cat(
+"
+\\LARGE{Foreword}
+
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\large
+")
+
+if (region_to_report == "RAF"){
+  cat("\\textbf{Africa pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Africa pockebook ends}")
+  }
+if (region_to_report == "RAP"){
+  cat("\\textbf{Asia and the Pacific pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Asia and the Pacific pockebook ends}")
+  }
+if (region_to_report == "REU"){
+  cat("\\textbf{Europe and Central Asia pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Europe and Central Asia pockebook ends}")
+  }
+if (region_to_report == "RNE"){
+  cat("\\textbf{Near East and North Africa pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Near East and North Africa pockebook ends}")
+  }
 
 
+## -------------------------------------------------------------
+## The paragraphs below are same for each regional book until next ## ----
+
+
+
+
+cat("
+
+This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 73 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
+
+This year also marks the beginning of the new post-2015 Sustainable Development Agenda. Again the international community will unite around new priorities for the future.
+
+Clear indicators to measure progress towards these international goals is of paramount importance. Timely and robust statistics are the fundamental tool in monitoring the myriad efforts being made, both with an eye to early detection of problems and the recognition of success. The better the data, the better the policies that can be designed. And the better the data, the easier it is to measure the impact of policies or to hold stakeholders accountable for the pledges they make.
+
+This publication presents selected key indicators related to agriculture and food security that stakeholders can use to prioritize their actions. It is divided into two main sections, one thematic and one country-specific. It presents a variety of dimensions of agriculture and food security along four main focus areas:
+
+
+{\\textbf{\\color{part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
+
+{\\textbf{\\color{part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
+
+{\\textbf{\\color{part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
+
+{\\textbf{\\color{part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
+
+This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community.
+
+FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
+")
+
+## -------------------------------------------------------------
+## Regiona spesific statisticians
+
+if (region_to_report == "RAF"){
+  cat("\\bigskip
+
+  \\hspace*{\\fill}
+          Regional Statistician
+  \\hspace*{\\fill}
+
+  \\hspace*{\\fill}
+          \\textit{Statistician, Refional office for RAF}
+  \\hspace*{\\fill}
+  ")
+  }
+if (region_to_report == "RAP"){
+  cat("\\bigskip
+
+  \\hspace*{\\fill}
+          Regional Statistician
+  \\hspace*{\\fill}
+
+  \\hspace*{\\fill}
+          \\textit{Statistician, Refional office for RAP}
+  \\hspace*{\\fill}
+  ")
+  }
+if (region_to_report == "REU"){
+  cat("\\bigskip
+
+  \\hspace*{\\fill}
+          Regional Statistician
+  \\hspace*{\\fill}
+
+  \\hspace*{\\fill}
+          \\textit{Statistician, Refional office for REU}
+  \\hspace*{\\fill}
+  ")
+  }
+if (region_to_report == "RNE"){
+  cat("\\bigskip
+
+  \\hspace*{\\fill}
+          Regional Statistician
+  \\hspace*{\\fill}
+
+  \\hspace*{\\fill}
+          \\textit{Statistician, Refional office for RNE}
+  \\hspace*{\\fill}
+  ")
+  }
+
+cat("
+
+\\bigskip
+\\bigskip
+
+\\hspace*{\\fill}
+        Pietro Gennari
+\\hspace*{\\fill}
+
+\\hspace*{\\fill}
+        \\textit{Chief Statistician and Director, Statistics Division}
+\\hspace*{\\fill}
+\\bigskip
+
+
+")
+
+
+
+  }
+
+if (region_to_report == "COF") {
+
+    cat(
+"
+\\Large{Foreword}
+
+\\bigskip
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\large
+
+
+
+Today, more people are consuming more coffee than ever before. As the middle classes of the developing world continue to swell, as their incomes rise and coffee remains affordable, the luxury of the occasional coffee has become a daily habit in an ever-growing number of countries. The rising demand has also afforded producers with new options and opportunities. Coffee has become an important contributor to cash income for many smallholders, who produce most of the world’s beans. The annual output has now reached almost nine million tonnes, one million tonnes more than a decade ago. The gross value of production of green coffee now exceeds US\\$16 billion, and its export value reached US\\$24 billion in 2012.
+
+\\vspace{3mm}
+
+While rising demand offers unprecedented opportunities to growers, they also have to live up to a growing set of challenges. Many are confronted with inadequate access to credit, high price volatility, as well as bureaucratic hurdles at home and market barriers abroad. And, they are operating in a global value chain where a vast and often unorganized number of small coffee growers are exposed to the market power of a few, large traders and roasters. In addition, many smallholders find it hard to cope with the vagaries of weather in the short-run and the deteriorating growing conditions brought about by climate change over the longer-term.
+
+\\vspace{3mm}
+
+This Pocketbook puts numbers to these developments, assesses short-term changes and long-term trends in production, consumption, trade and prices, and provides useful background information on related shifts in poverty, health and rural development. It is part of the FAO Statistical Yearbook suite of products and is organized around two major sections: thematic spreads with data-driven visualizations, and comprehensive country and regional profiles.
+
+\\vspace{3mm}
+
+FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. This includes a commitment to improve and broaden the information necessary to support evidence-based decision making by all stakeholders in the coffee value chain.
+
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\hspace*{\\fill}
+         Pietro Gennari
+\\hspace*{\\fill}
+
+\\hspace*{\\fill}
+        \\textit{Chief Statistician and Director, ESS}
+\\hspace*{\\fill}
+")
+
+}
+@
+
+
+
+
+
+<<foreword_placeholder, eval=!include_foreword >>=
+
+cat("
+  \\Large{Just a placeholder}
+  \\large
+  \\clearpage
+  ")
+
+
+
+@
+
+
+
+
+%
+% MMMMMMMM               MMMMMMMM               AAA               PPPPPPPPPPPPPPPPP
+% M:::::::M             M:::::::M              A:::A              P::::::::::::::::P
+% M::::::::M           M::::::::M             A:::::A             P::::::PPPPPP:::::P
+% M:::::::::M         M:::::::::M            A:::::::A            PP:::::P     P:::::P
+% M::::::::::M       M::::::::::M           A:::::::::A             P::::P     P:::::P
+% M:::::::::::M     M:::::::::::M          A:::::A:::::A            P::::P     P:::::P
+% M:::::::M::::M   M::::M:::::::M         A:::::A A:::::A           P::::PPPPPP:::::P
+% M::::::M M::::M M::::M M::::::M        A:::::A   A:::::A          P:::::::::::::PP
+% M::::::M  M::::M::::M  M::::::M       A:::::A     A:::::A         P::::PPPPPPPPP
+% M::::::M   M:::::::M   M::::::M      A:::::AAAAAAAAA:::::A        P::::P
+% M::::::M    M:::::M    M::::::M     A:::::::::::::::::::::A       P::::P
+% M::::::M     MMMMM     M::::::M    A:::::AAAAAAAAAAAAA:::::A      P::::P
+% M::::::M               M::::::M   A:::::A             A:::::A   PP::::::PP
+% M::::::M               M::::::M  A:::::A               A:::::A  P::::::::P
+% M::::::M               M::::::M A:::::A                 A:::::A P::::::::P
+% MMMMMMMM               MMMMMMMMAAAAAAA                   AAAAAAAPPPPPPPPPP
+%
 
 \clearpage
 
-<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.7\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
+<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
 
 the_whole   <- map.df # for mapping the grey areas
 
@@ -705,33 +611,35 @@ map_unit <- ""
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
 
+if (region_to_report != "COF"){
 
-# source(paste0(root.dir,'./input/code/plot/plot_color.R'))
-# 
-# syb_part <- 1
-# 
-# ## Part 1
-# colPart1 <- plot_colors(part = syb_part, 6)
-# col.main1 <- colPart1[["Main"]][1]
-# 
-# source(paste0(root.dir,"./input/code/plot/theme.R"))
+source(paste0(root.dir,'./input/code/plot/plot_color.R'))
 
+syb_part <- 1
 
+## Part 1
+colPart1 <- plot_colors(part = syb_part, 6)
+col.main1 <- colPart1[["Main"]][1]
+
+source(paste0(root.dir,"./input/code/plot/theme.R"))
 
 # fill colors for the map
-# colPart = plot_colors(part = 1, 12)
-# mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
-# nCol = length(unique(overview.df$subgroup))
-# tmpCol = mapColFun(nCol)[2]
-# mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][2]))
-# mapColors = mapColFun(nCol)
+colPart = plot_colors(part = 1, 12)
+mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
+nCol = length(unique(overview.df$subgroup))
+tmpCol = mapColFun(nCol)[2]
+mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][2]))
+mapColors = mapColFun(nCol)
+}
+
+
 
 
 
 # Create the plot
 p <- ggplot(data=overview.df, aes(long,lat,group=group))
 #  ---- grid below the countries ------------------------
-p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
+p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL),
               linetype = "solid", color = "grey80", alpha=.5)
 # Grey for the non-data regions
 p <- p + geom_polygon(data=the_whole, fill="grey50", colour = alpha("white", 1/2), size=.4, guide = FALSE)
@@ -745,25 +653,25 @@ p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FAL
 #                                     "#F0DC82")) # Buff
 # if (region_to_report == "COF")p <- p + scale_fill_manual(values = wes_palette("Cavalcanti"))
 if (region_to_report == "COF")p <- p + scale_fill_manual(values = c("#8c510a","#d8b365","#f6e8c3","#c7eae5","#5ab4ac","#01665e"))
-# if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
-p <- p + theme(legend.position = c(0.05,0.05), 
+if (region_to_report != "COF")p <- p + scale_fill_manual(values=plot_colors(part = 1, length(unique(overview.df$subgroup)))[["Sub"]])
+p <- p + theme(legend.position = c(0.05,0.05),
                           legend.justification=c(0,0),
                           legend.key.size=unit(6,'mm'),
                           legend.direction = "vertical",
                           legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
                           #legend.background=element_rect(colour=NA, fill=NA),
-                          legend.text=element_text(size=12), 
-                          legend.title=element_text(size=12), 
-                          title=element_text(size=16), 
-                          panel.background = element_blank(), 
+                          legend.text=element_text(size=12),
+                          legend.title=element_text(size=12),
+                          title=element_text(size=16),
+                          panel.background = element_blank(),
                           plot.background = element_blank(),
                           panel.grid.minor = element_blank(),
                           panel.grid.major = element_blank(),
-                          axis.text = element_blank(), 
-                          axis.title = element_blank(), 
+                          axis.text = element_blank(),
+                          axis.title = element_blank(),
                           axis.ticks = element_blank())
 p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
-                                     title.position = "top", 
+                                     title.position = "top",
                                      title.hjust=0))
 p <- p + guides(colour=FALSE)
 p
@@ -773,9 +681,25 @@ p
 @
 
 
-\clearpage
-%\begin{landscape}
+%
+% TTTTTTTTTTTTTTTTTTTTTTTBBBBBBBBBBBBBBBBB   LLLLLLLLLLL
+% T:::::::::::::::::::::TB::::::::::::::::B  L:::::::::L
+% T:::::::::::::::::::::TB::::::BBBBBB:::::B L:::::::::L
+% T:::::TT:::::::TT:::::TBB:::::B     B:::::BLL:::::::LL
+% TTTTTT  T:::::T  TTTTTT  B::::B     B:::::B  L:::::L
+%         T:::::T          B::::B     B:::::B  L:::::L
+%         T:::::T          B::::BBBBBB:::::B   L:::::L
+%         T:::::T          B:::::::::::::BB    L:::::L
+%         T:::::T          B::::BBBBBB:::::B   L:::::L
+%         T:::::T          B::::B     B:::::B  L:::::L
+%         T:::::T          B::::B     B:::::B  L:::::L
+%         T:::::T          B::::B     B:::::B  L:::::L         LLLLLL
+%       TT:::::::TT      BB:::::BBBBBB::::::BLL:::::::LLLLLLLLL:::::L
+%       T:::::::::T      B:::::::::::::::::B L::::::::::::::::::::::L
+%       T:::::::::T      B::::::::::::::::B  L::::::::::::::::::::::L
+%       TTTTTTTTTTT      BBBBBBBBBBBBBBBBB   LLLLLLLLLLLLLLLLLLLLLLLL
 
+\clearpage
 
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
@@ -805,13 +729,14 @@ for (col in 1:ncol(overview_data)){
   overview_data[[col]][overview_data[[col]] %in% "empty"] <- NA
 }
 overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data), ]
-# 
+#
 
 
 library(xtable)
 rws <- seq(0, (nrow(overview_data)), by = 2)
-#col <- rep("\\rowcolor[part6]{0.95}", length(rws))
-col <- rep("\\rowcolor{part5!10}", length(rws))
+# if (region_to_report == "COF") col <- rep("\\rowcolor{part6!0.95}", length(rws))
+if (region_to_report == "COF") col <- rep("\\rowcolor{part6!10}", length(rws))
+if (region_to_report != "COF") col <- rep("\\rowcolor{part1!10}", length(rws))
 
 bold <- function(x) {paste('{\\textbf{',x,'}}', sep ='')}
 
@@ -843,37 +768,61 @@ print(
   xtable(overview_data, caption = "Countries included",align= alignment
          ),
   floating=FALSE,
-  type = "latex", table.placement = NULL, 
-  booktabs = TRUE, 
-  include.rownames = FALSE, 
+  type = "latex", table.placement = NULL,
+  booktabs = TRUE,
+  include.rownames = FALSE,
   size = tbl_font_size,
-  caption.placement = "top", 
+  caption.placement = "top",
   add.to.row = list(pos = as.list(rws), command = col),
   sanitize.colnames.function=bold
   )
 
-if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
+if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}"))
 @
 
 
-
-%\end{landscape}
+% to add empty page
+% \afterpage{\blankpage}
 
 \setlength{\parskip}{0pt}  %% Restoring the normal spacing
 
 \normalsize
 
-\makeatletter\clearpage\ifodd\c@page\hbox{}\newpage\fi\makeatother %% Remove the colored strip from the introduction page
+% \makeatletter
+% \clearpage
+
+% \cleardoublepage
+% \pagenumbering{arabic}  %% Arabic page numbering
+% \setcounter{page}{1}
+
+% \ifodd\c@page\hbox{}
+% \newpage\fi
+\makeatother %% Remove the colored strip from the introduction page
+
+% \cleardoublepage
+% \pagenumbering{arabic}  %% Arabic page numbering
+% \setcounter{page}{0}
+% \thispagestyle{empty}
 
 
+%
+% PPPPPPPPPPPPPPPPP                                               tttt            1111111
+% P::::::::::::::::P                                           ttt:::t           1::::::1
+% P::::::PPPPPP:::::P                                          t:::::t          1:::::::1
+% PP:::::P     P:::::P                                         t:::::t          111:::::1
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt       1::::1
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t       1::::1
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t       1::::1
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt       1::::l
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t             1::::l
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t             1::::l
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t             1::::l
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt   1::::l
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t111::::::111
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t1::::::::::1
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt1::::::::::1
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt  111111111111
 
-
-%   ____               _     _ 
-%  |  _ \  __ _  _ __ | |_  / |
-%  | |_) |/ _` || '__|| __| | |
-%  |  __/| (_| || |   | |_  | |
-%  |_|    \__,_||_|    \__| |_|
-%                              
 
 
 %% PART1 - The Setting
@@ -881,21 +830,221 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 \newpart{part1}
 \rowcolors{1}{part1!10}{white}
-\clearpage
+% \clearpage
+\pagenumbering{arabic}  %% Arabic page numbering
+\setcounter{page}{2}
 
-<<part1, child = if (include_part1) 'syb_part1.Rnw'>>=
+
+<<setup-code-part1>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
+@
+
+
+<<part1_setup, eval=include_part1>>=
+@
+
+
+%    ___                                  _
+%   / _ \  __   __   ___   _ __  __   __ (_)   ___  __      __
+%  | | | | \ \ / /  / _ \ | '__| \ \ / / | |  / _ \ \ \ /\ / /
+%  | |_| |  \ V /  |  __/ | |     \ V /  | | |  __/  \ V  V /
+%   \___/    \_/    \___| |_|      \_/   |_|  \___|   \_/\_/
+%
+
+
+<<P1overTEXT, eval=P1over, short_text_ChartPage=P1over>>=
+@
+
+<<P1overData,results='hide', cache=FALSE>>=
+@
+
+
+<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1overLEFT, eval=P1over, left_plot=P1over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1overRIGHT, eval=P1over ,right_plot=P1over, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1overBOTTOM, eval=P1over, bottom_plot=P1over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1overMAP, eval=P1over, map_plot=P1over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%   _____
+%  | ____|   ___    ___    _ __     ___    _ __ ___    _   _
+%  |  _|    / __|  / _ \  | '_ \   / _ \  | '_ ` _ \  | | | |
+%  | |___  | (__  | (_) | | | | | | (_) | | | | | | | | |_| |
+%  |_____|  \___|  \___/  |_| |_|  \___/  |_| |_| |_|  \__, |
+%                                                      |___/
+%
+
+
+<<P1econTEXT, eval=P1econ, short_text_ChartPage=P1econ>>=
+@
+
+<<P1econTOPRIGHT, eval=P1econ, top_right_plot=P1econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1econLEFT, eval=P1econ, left_plot=P1econ, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1econRIGHT, eval=P1econ ,right_plot=P1econ, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1econBOTTOM_data, cache=FALSE>>=
+@
+
+
+
+<<P1econBOTTOM, eval=P1econ, bottom_plot=P1econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1econMAP, eval=P1econ, map_plot=P1econ, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 @
 
 
 
 
-%   ____               _     ____  
-%  |  _ \  __ _  _ __ | |_  |___ \ 
-%  | |_) |/ _` || '__|| __|   __) |
-%  |  __/| (_| || |   | |_   / __/ 
-%  |_|    \__,_||_|    \__| |_____|
-%                                  
 
+%   _               _
+%  | |       __ _  | |__     ___    _   _   _ __
+%  | |      / _` | | '_ \   / _ \  | | | | | '__|
+%  | |___  | (_| | | |_) | | (_) | | |_| | | |
+%  |_____|  \__,_| |_.__/   \___/   \__,_| |_|
+%
+
+
+<<P1laboTEXT, eval=P1labo, short_text_ChartPage=P1labo>>=
+@
+
+<<P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1laboLEFT, eval=P1labo, left_plot=P1labo, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1laboRIGHT, eval=P1labo ,right_plot=P1labo, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1laboBOTTOM_data, cache=FALSE, results='hide'>>=
+@
+
+
+
+<<P1laboBOTTOM, eval=P1labo, bottom_plot=P1labo, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1laboMAP, eval=P1labo, map_plot=P1labo, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%   ___                           _
+%  |_ _|  _ __    _ __    _   _  | |_   ___
+%   | |  | '_ \  | '_ \  | | | | | __| / __|
+%   | |  | | | | | |_) | | |_| | | |_  \__ \
+%  |___| |_| |_| | .__/   \__,_|  \__| |___/
+%                |_|
+%
+
+
+<<P1inputTEXT, eval=P1input, short_text_ChartPage=P1input>>=
+@
+
+<<P1inputData,results='hide'>>=
+@
+
+
+<<P1inputTOPRIGHT, eval=P1input, top_right_plot=P1input, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1inputLEFT, eval=P1input, left_plot=P1input, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1inputRIGHT, eval=P1input ,right_plot=P1input, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1inputBOTTOM, eval=P1input, bottom_plot=P1input, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P1inputMAP, eval=P1input, map_plot=P1input, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%   ___                                _                                _
+%  |_ _|  _ __   __   __   ___   ___  | |_   _ __ ___     ___   _ __   | |_
+%   | |  | '_ \  \ \ / /  / _ \ / __| | __| | '_ ` _ \   / _ \ | '_ \  | __|
+%   | |  | | | |  \ V /  |  __/ \__ \ | |_  | | | | | | |  __/ | | | | | |_
+%  |___| |_| |_|   \_/    \___| |___/  \__| |_| |_| |_|  \___| |_| |_|  \__|
+%
+
+
+<<P1investTEXT, eval=P1invest, short_text_ChartPage=P1invest>>=
+@
+
+<<P1investData,results='hide', cache=FALSE>>=
+@
+
+
+<<P1investTOPRIGHT, eval=P1invest, top_right_plot=P1invest, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P1investLEFT, eval=P1invest, left_plot=P1invest, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P1investRIGHT, eval=P1invest ,right_plot=P1invest, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P1investBOTTOM, eval=P1invest, bottom_plot=P1invest, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+<<p1investMAPdata, results='hide', cache=FALSE>>=
+@
+
+
+
+<<P1investMAP, eval=P1invest, map_plot=P1invest, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%
+% PPPPPPPPPPPPPPPPP                                               tttt           222222222222222
+% P::::::::::::::::P                                           ttt:::t          2:::::::::::::::22
+% P::::::PPPPPP:::::P                                          t:::::t          2::::::222222:::::2
+% PP:::::P     P:::::P                                         t:::::t          2222222     2:::::2
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt                2:::::2
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t                2:::::2
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t             2222::::2
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt        22222::::::22
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t            22::::::::222
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t           2:::::22222
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t          2:::::2
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt2:::::2
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t2:::::2       222222
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t2::::::2222222:::::2
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt2::::::::::::::::::2
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt  22222222222222222222
+%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -906,18 +1055,227 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part2!10}{white}
 \clearpage
 
-<<part2, child = if (include_part2) 'syb_part2.Rnw'>>=
+<<setup-code-part2>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
+@
+
+
+
+<<part2_setup, eval=include_part2>>=
+@
+
+
+%   _   _             _                                         _       _                              _
+%  | | | | _ __    __| |  ___  _ __  _ __    ___   _   _  _ __ (_) ___ | |__   _ __ ___    ___  _ __  | |_
+%  | | | || '_ \  / _` | / _ \| '__|| '_ \  / _ \ | | | || '__|| |/ __|| '_ \ | '_ ` _ \  / _ \| '_ \ | __|
+%  | |_| || | | || (_| ||  __/| |   | | | || (_) || |_| || |   | |\__ \| | | || | | | | ||  __/| | | || |_
+%   \___/ |_| |_| \__,_| \___||_|   |_| |_| \___/  \__,_||_|   |_||___/|_| |_||_| |_| |_| \___||_| |_| \__|
+
+
+
+<<P2undernuTEXT, eval=P2undernu, short_text_ChartPage=P2undernu>>=
+@
+
+
+<<P2undernuData,results='hide', cache=FALSE>>=
+@
+
+
+
+<<P2undernuTOPRIGHT, eval=P2undernu, top_right_minitable=P2undernu>>=
+@
+
+
+<<P2undernuLEFT, eval=P2undernu, left_plot=P2undernu, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2undernuRIGHT, eval=P2undernu ,right_plot=P2undernu, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2undernuBOTTOM, eval=P2undernu, bottom_plot=P2undernu, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2undernuMAP, eval=P2undernu, map_plot=P2undernu, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 @
 
 
 
 
-%   ____               _     _____ 
-%  |  _ \  __ _  _ __ | |_  |___ / 
-%  | |_) |/ _` || '__|| __|   |_ \ 
-%  |  __/| (_| || |   | |_   ___) |
-%  |_|    \__,_||_|    \__| |____/ 
-%                                  
+
+%
+%   _____                       _                             _   _           _       _   _   _   _
+%  |  ___|   ___     ___     __| |     __ _  __   __   __ _  (_) | |   __ _  | |__   (_) | | (_) | |_   _   _
+%  | |_     / _ \   / _ \   / _` |    / _` | \ \ / /  / _` | | | | |  / _` | | '_ \  | | | | | | | __| | | | |
+%  |  _|   | (_) | | (_) | | (_| |   | (_| |  \ V /  | (_| | | | | | | (_| | | |_) | | | | | | | | |_  | |_| |
+%  |_|      \___/   \___/   \__,_|    \__,_|   \_/    \__,_| |_| |_|  \__,_| |_.__/  |_| |_| |_|  \__|  \__, |
+%                                                                                                       |___/
+%
+
+
+
+
+
+<<P2availabTEXT, eval=P2availab, short_text_ChartPage=P2availab>>=
+@
+
+
+<<P2availabData, cache=FALSE,results='hide', eval=P2availab>>=
+@
+
+
+
+<<P2availabTOPRIGHT, eval=P2availab, top_right_plot=P2availab, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P2availabLEFT, eval=P2availab, left_plot=P2availab, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2availabRIGHT, eval=P2availab ,right_plot=P2availab, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2availabBOTTOM, eval=P2availab, bottom_plot=P2availab, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2availabMAP, eval=P2availab, map_plot=P2availab, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%
+%   _____                       _
+%  |  ___|   ___     ___     __| |     __ _    ___    ___    ___   ___   ___
+%  | |_     / _ \   / _ \   / _` |    / _` |  / __|  / __|  / _ \ / __| / __|
+%  |  _|   | (_) | | (_) | | (_| |   | (_| | | (__  | (__  |  __/ \__ \ \__ \
+%  |_|      \___/   \___/   \__,_|    \__,_|  \___|  \___|  \___| |___/ |___/
+%
+
+
+
+
+
+<<P2accessTEXT, eval=P2access, short_text_ChartPage=P2access>>=
+@
+
+
+<<P2accessData, cache=FALSE,results='hide', eval=P2access>>=
+@
+
+
+
+<<P2accessTOPRIGHT, eval=P2access, top_right_plot=P2access, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P2accessLEFT, eval=P2access, left_plot=P2access, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2accessRIGHT, eval=P2access ,right_plot=P2access, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2accessBOTTOM, eval=P2access, bottom_plot=P2access, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2accessMAP, eval=P2access, map_plot=P2access, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%
+%   _____                       _           _             _       _   _   _   _
+%  |  ___|   ___     ___     __| |    ___  | |_    __ _  | |__   (_) | | (_) | |_   _   _
+%  | |_     / _ \   / _ \   / _` |   / __| | __|  / _` | | '_ \  | | | | | | | __| | | | |
+%  |  _|   | (_) | | (_) | | (_| |   \__ \ | |_  | (_| | | |_) | | | | | | | | |_  | |_| |
+%  |_|      \___/   \___/   \__,_|   |___/  \__|  \__,_| |_.__/  |_| |_| |_|  \__|  \__, |
+%                                                                                   |___/
+
+
+<<P2stabilityTEXT, eval=P2stability, short_text_ChartPage=P2stability>>=
+@
+
+
+<<P2stabilityData, cache=FALSE,results='hide', eval=P2stability>>=
+@
+
+
+
+<<P2stabilityTOPRIGHT, eval=P2stability, top_right_plot=P2stability, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P2stabilityLEFT, eval=P2stability, left_plot=P2stability, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2stabilityRIGHT, eval=P2stability ,right_plot=P2stability, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2stabilityBOTTOM, eval=P2stability, bottom_plot=P2stability, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2stabilityMAP, eval=P2stability, map_plot=P2stability, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%   _____                       _             _     _   _   _                 _     _
+%  |  ___|   ___     ___     __| |    _   _  | |_  (_) | | (_)  ____   __ _  | |_  (_)   ___    _ __
+%  | |_     / _ \   / _ \   / _` |   | | | | | __| | | | | | | |_  /  / _` | | __| | |  / _ \  | '_ \
+%  |  _|   | (_) | | (_) | | (_| |   | |_| | | |_  | | | | | |  / /  | (_| | | |_  | | | (_) | | | | |
+%  |_|      \___/   \___/   \__,_|    \__,_|  \__| |_| |_| |_| /___|  \__,_|  \__| |_|  \___/  |_| |_|
+%
+%
+
+<<P2utilizaTEXT, eval=P2utiliza, short_text_ChartPage=P2utiliza>>=
+@
+
+
+<<P2utilizaData, cache=FALSE,results='hide', eval=P2utiliza>>=
+@
+
+
+<<P2utilizaTOPRIGHT, eval=P2utiliza, top_right_minitable=P2utiliza>>=
+@
+
+
+<<P2utilizaLEFT, eval=P2utiliza, left_plot=P2utiliza, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P2utilizaRIGHT, eval=P2utiliza ,right_plot=P2utiliza, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P2utilizaBOTTOM, eval=P2utiliza, bottom_plot=P2utiliza, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P2utilizaMAP, eval=P2utiliza, map_plot=P2utiliza, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%
+% PPPPPPPPPPPPPPPPP                                               tttt           333333333333333
+% P::::::::::::::::P                                           ttt:::t          3:::::::::::::::33
+% P::::::PPPPPP:::::P                                          t:::::t          3::::::33333::::::3
+% PP:::::P     P:::::P                                         t:::::t          3333333     3:::::3
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt                3:::::3
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t                3:::::3
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t        33333333:::::3
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt        3:::::::::::3
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t              33333333:::::3
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t                      3:::::3
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t                      3:::::3
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt            3:::::3
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t3333333     3:::::3
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t3::::::33333::::::3
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt3:::::::::::::::33
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt   333333333333333
+%
 
 
 
@@ -929,18 +1287,252 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part3!10}{white}
 \clearpage
 
-<<part3, child = if (include_part3) 'syb_part3.Rnw'>>=
+<<setup-code-part3>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
+@
+
+
+
+<<part3_setup, eval=include_part3>>=
+@
+
+
+%   ____   _        _                                                                                         _
+%  |  _ \ (_)  ___ | |_  __ _  _ __  _   _    ___  _ __    ___  _ __  __ _  _   _   ___  _   _  _ __   _ __  | | _   _
+%  | | | || | / _ \| __|/ _` || '__|| | | |  / _ \| '_ \  / _ \| '__|/ _` || | | | / __|| | | || '_ \ | '_ \ | || | | |
+%  | |_| || ||  __/| |_| (_| || |   | |_| | |  __/| | | ||  __/| |  | (_| || |_| | \__ \| |_| || |_) || |_) || || |_| |
+%  |____/ |_| \___| \__|\__,_||_|    \__, |  \___||_| |_| \___||_|   \__, | \__, | |___/ \__,_|| .__/ | .__/ |_| \__, |
+%                                    |___/                           |___/  |___/              |_|    |_|        |___/
+
+
+<<P3desTEXT, eval=P3des, short_text_ChartPage=P3des>>=
+@
+
+<<P3desData,results='hide', cache=FALSE, eval=P3des>>=
+@
+
+
+<<P3desTOPRIGHT, eval=P3des, top_right_plot=P3des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+<<P3desLEFT, eval=P3des, left_plot=P3des, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3desRIGHT, eval=P3des ,right_plot=P3des, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3desBOTTOM, eval=P3des, bottom_plot=P3des, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3desMAP, eval=P3des, map_plot=P3des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 @
 
 
 
 
-%   ____               _     _  _   
-%  |  _ \  __ _  _ __ | |_  | || |  
-%  | |_) |/ _` || '__|| __| | || |_ 
-%  |  __/| (_| || |   | |_  |__   _|
-%  |_|    \__,_||_|    \__|    |_|  
-%                                   
+
+
+%    ____                                             _               _    _
+%   / ___| _ __  ___   _ __    _ __   _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __
+%  | |    | '__|/ _ \ | '_ \  | '_ \ | '__|/ _ \  / _` || | | | / __|| __|| | / _ \ | '_ \
+%  | |___ | |  | (_) || |_) | | |_) || |  | (_) || (_| || |_| || (__ | |_ | || (_) || | | |
+%   \____||_|   \___/ | .__/  | .__/ |_|   \___/  \__,_| \__,_| \___| \__||_| \___/ |_| |_|
+%                     |_|     |_|
+%
+
+
+
+<<P3cropproTEXT, eval=P3croppro, short_text_ChartPage=P3croppro>>=
+@
+
+<<P3cropproData,results='hide', cache=FALSE, eval=P3croppro>>=
+@
+
+<<P3cropproTOPRIGHT, eval=P3croppro, top_right_minitable=P3croppro>>=
+@
+
+<<P3cropproLEFT, eval=P3croppro, left_plot=P3croppro, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3cropproRIGHT, eval=P3croppro ,right_plot=P3croppro, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3cropproBOTTOM, eval=P3croppro, bottom_plot=P3croppro, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3cropproMAP, eval=P3croppro, map_plot=P3croppro, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+%    ____
+%   / ___| _ __  ___   _ __
+%  | |    | '__|/ _ \ | '_ \
+%  | |___ | |  | (_) || |_) |
+%   \____||_|   \___/ | .__/
+%                     |_|
+%
+
+
+
+<<P3cropTEXT, eval=P3crop, short_text_ChartPage=P3crop>>=
+@
+
+<<P3cropData,results='hide',cache=FALSE,eval=P3crop>>=
+@
+
+
+<<P3cropTOPRIGHT, eval=P3crop, top_right_minitable=P3crop>>=
+@
+
+
+<<P3cropLEFT, eval=P3crop, left_plot=P3crop, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3cropRIGHT, eval=P3crop ,right_plot=P3crop, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3cropBOTTOM, eval=P3crop, bottom_plot=P3crop, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3cropMAP, eval=P3crop, map_plot=P3crop, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%
+%   _      _                   _                _
+%  | |    (_)__   __ ___  ___ | |_  ___    ___ | | __
+%  | |    | |\ \ / // _ \/ __|| __|/ _ \  / __|| |/ /
+%  | |___ | | \ V /|  __/\__ \| |_| (_) || (__ |   <
+%  |_____||_|  \_/  \___||___/ \__|\___/  \___||_|\_\
+%
+%
+
+
+
+<<P3livestockTEXT, eval=P3livestock, short_text_ChartPage=P3livestock>>=
+@
+
+<<P3livestockData,results='hide',cache=FALSE,eval=P3livestock>>=
+@
+
+
+<<P3livestockTOPRIGHT, eval=P3livestock, top_right_minitable=P3livestock>>=
+@
+
+
+<<P3livestockLEFT, eval=P3livestock, left_plot=P3livestock, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3livestockRIGHT, eval=P3livestock ,right_plot=P3livestock, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+
+<<P3livestockBOTTOM, eval=P3livestock, bottom_plot=P3livestock, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+
+
+<<P3livestockMAP, eval=P3crop, map_plot=P3crop, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%   _____  _       _                  _
+%  |  ___|(_) ___ | |__    ___  _ __ (_)  ___  ___
+%  | |_   | |/ __|| '_ \  / _ \| '__|| | / _ \/ __|
+%  |  _|  | |\__ \| | | ||  __/| |   | ||  __/\__ \
+%  |_|    |_||___/|_| |_| \___||_|   |_| \___||___/
+%
+
+<<P3fisheriesTEXT, eval=P3fisheries, short_text_ChartPage=P3fisheries>>=
+@
+
+<<P3fisheriesData,results='hide',cache=FALSE,eval=FALSE>>=
+@
+
+
+<<P3fisheriesTOPRIGHT, eval=P3fisheries, top_right_plot=P3fisheries, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P3fisheriesLEFT, eval=P3fisheries, left_plot=P3fisheries, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3fisheriesRIGHT, eval=P3fisheries ,right_plot=P3fisheries, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3fisheriesBOTTOM, eval=P3fisheries, bottom_plot=P3fisheries, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3fisheriesMAP, eval=P3fisheries, map_plot=P3fisheries, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%      _                 _               _  _                       _   _                    _
+%     / \    __ _  _ __ (_)  ___  _   _ | || |_  _   _  _ __  __ _ | | | |_  _ __  __ _   __| |  ___
+%    / _ \  / _` || '__|| | / __|| | | || || __|| | | || '__|/ _` || | | __|| '__|/ _` | / _` | / _ \
+%   / ___ \| (_| || |   | || (__ | |_| || || |_ | |_| || |  | (_| || | | |_ | |  | (_| || (_| ||  __/
+%  /_/   \_\\__, ||_|   |_| \___| \__,_||_| \__| \__,_||_|   \__,_||_|  \__||_|   \__,_| \__,_| \___|
+%           |___/
+
+
+
+<<P3tradeTEXT, eval=P3trade, short_text_ChartPage=P3trade>>=
+@
+
+<<P3tradeData,results='hide',cache=FALSE,eval=P3trade>>=
+@
+
+
+<<P3tradeTOPRIGHT, eval=P3trade, top_right_minitable=P3trade>>=
+@
+
+
+<<P3tradeLEFT, eval=P3trade, left_plot=P3trade, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P3tradeRIGHT, eval=P3trade ,right_plot=P3trade, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P3tradeBOTTOM, eval=P3trade, bottom_plot=P3trade, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P3tradeMAP, eval=P3trade, map_plot=P3trade, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+% PPPPPPPPPPPPPPPPP                                               tttt             444444444
+% P::::::::::::::::P                                           ttt:::t            4::::::::4
+% P::::::PPPPPP:::::P                                          t:::::t           4:::::::::4
+% PP:::::P     P:::::P                                         t:::::t          4::::44::::4
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt   4::::4 4::::4
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t  4::::4  4::::4
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t 4::::4   4::::4
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt4::::444444::::444
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t      4::::::::::::::::4
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t      4444444444:::::444
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t                4::::4
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt      4::::4
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t      4::::4
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t    44::::::44
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt    4::::::::4
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt      4444444444
+%
+%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -951,68 +1543,549 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 \rowcolors{1}{part4!10}{white}
 \clearpage
 
-<<part4, child = if (include_part4) 'syb_part4.Rnw'>>=
+<<setup-code-part4>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
+@
+
+
+<<part4_setup, eval=include_part4>>=
+@
+
+
+
+%
+%   _                       _
+%  | |     __ _  _ __    __| |
+%  | |    / _` || '_ \  / _` |
+%  | |___| (_| || | | || (_| |
+%  |_____|\__,_||_| |_| \__,_|
+%
+%
+
+
+
+<<P4landTEXT, eval=P4land, short_text_ChartPage=P4land>>=
+@
+
+<<P4landData,results='hide'>>=
+@
+
+
+<<P4landTOPRIGHT, eval=P4land, top_right_plot=P4land, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4landLEFT, eval=P4land, left_plot=P4land, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4landRIGHT, eval=P4land ,right_plot=P4land, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4landBOTTOM, eval=P4land, bottom_plot=P4land, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4landMAP, eval=P4land, map_plot=P4land, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
 @
 
 
 
 
-% 
-%   ____               _    ____  
-%  |  _ \  __ _  _ __ | |_ | ___| 
-%  | |_) |/ _` || '__|| __||___ \ 
-%  |  __/| (_| || |   | |_  ___) |
-%  |_|    \__,_||_|    \__||____/ 
-%                                 
-% 
+%
+%  __        __          _
+%  \ \      / /   __ _  | |_    ___   _ __
+%   \ \ /\ / /   / _` | | __|  / _ \ | '__|
+%    \ V  V /   | (_| | | |_  |  __/ | |
+%     \_/\_/     \__,_|  \__|  \___| |_|
+%
 
 
+
+
+<<P4waterTEXT, eval=P4water, short_text_ChartPage=P4water>>=
+@
+
+
+<<P4waterData, cache=FALSE,results='hide', eval=P4water>>=
+@
+
+
+
+<<P4waterTOPRIGHT, eval=P4water, top_right_plot=P4water, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4waterLEFT, eval=P4water, left_plot=P4water, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4waterRIGHT, eval=P4water ,right_plot=P4water, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4waterBOTTOM, eval=P4water, bottom_plot=P4water, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4waterMAP, eval=P4water, map_plot=P4water, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%   _____
+%  | ____|  _ __     ___   _ __    __ _   _   _
+%  |  _|   | '_ \   / _ \ | '__|  / _` | | | | |
+%  | |___  | | | | |  __/ | |    | (_| | | |_| |
+%  |_____| |_| |_|  \___| |_|     \__, |  \__, |
+%                                 |___/   |___/
+
+
+
+<<P4energyTEXT, eval=P4energy, short_text_ChartPage=P4energy>>=
+@
+
+
+<<P4energyData, cache=FALSE,results='hide', eval=P4energy>>=
+@
+
+
+
+<<P4energyTOPRIGHT, eval=P4energy, top_right_plot=P4energy, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4energyLEFT, eval=P4energy, left_plot=P4energy, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4energyRIGHT, eval=P4energy ,right_plot=P4energy, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4energyBOTTOM, eval=P4energy, bottom_plot=P4energy, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4energyMAP, eval=P4energy, map_plot=P4energy, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%   _____                               _
+%  |  ___|   ___    _ __    ___   ___  | |_   _ __   _   _
+%  | |_     / _ \  | '__|  / _ \ / __| | __| | '__| | | | |
+%  |  _|   | (_) | | |    |  __/ \__ \ | |_  | |    | |_| |
+%  |_|      \___/  |_|     \___| |___/  \__| |_|     \__, |
+%                                                    |___/
+
+
+
+
+
+<<P4forestryTEXT, eval=P4forestry, short_text_ChartPage=P4forestry>>=
+@
+
+<<P4forestryData,results='hide'>>=
+@
+
+
+<<P4forestryTOPRIGHT, eval=P4forestry, top_right_plot=P4forestry, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4forestryLEFT, eval=P4forestry, left_plot=P4forestry, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4forestryRIGHT, eval=P4forestry ,right_plot=P4forestry, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4forestryBOTTOM, eval=P4forestry, bottom_plot=P4forestry, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4forestryMAP, eval=P4forestry, map_plot=P4forestry, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+
+%    ____   _   _                       _                     _
+%   / ___| | | (_)  _ __ ___     __ _  | |_    ___      ___  | |__     __ _   _ __     __ _    ___
+%  | |     | | | | | '_ ` _ \   / _` | | __|  / _ \    / __| | '_ \   / _` | | '_ \   / _` |  / _ \
+%  | |___  | | | | | | | | | | | (_| | | |_  |  __/   | (__  | | | | | (_| | | | | | | (_| | |  __/
+%   \____| |_| |_| |_| |_| |_|  \__,_|  \__|  \___|    \___| |_| |_|  \__,_| |_| |_|  \__, |  \___|
+%                                                                                     |___/
+
+
+<<P4climateTEXT, eval=P4climate, short_text_ChartPage=P4climate>>=
+@
+
+<<P4climateData,results='hide'>>=
+@
+
+
+<<P4climateTOPRIGHT, eval=P4climate, top_right_plot=P4climate, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P4climateLEFT, eval=P4climate, left_plot=P4climate, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P4climateRIGHT, eval=P4climate ,right_plot=P4climate, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P4climateBOTTOM, eval=P4climate, bottom_plot=P4climate, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P4climateMAP, eval=P4climate, map_plot=P4climate, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+%
+% PPPPPPPPPPPPPPPPP                                               tttt          555555555555555555
+% P::::::::::::::::P                                           ttt:::t          5::::::::::::::::5
+% P::::::PPPPPP:::::P                                          t:::::t          5::::::::::::::::5
+% PP:::::P     P:::::P                                         t:::::t          5:::::555555555555
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt    5:::::5
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t    5:::::5
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t    5:::::5555555555
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt    5:::::::::::::::5
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t          555555555555:::::5
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t                      5:::::5
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t                      5:::::5
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt5555555     5:::::5
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t5::::::55555::::::5
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t 55:::::::::::::55
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt   55:::::::::55
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt       555555555
+%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PART5 - Custom stuff
+%% PART5 - Custom stuff for Coffee book
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpart{part5}
 \rowcolors{1}{part5!10}{white}
 \clearpage
 
-<<part5, child = if (include_part5) 'syb_part5.Rnw'>>=
+<<setup-code-part5>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 @
 
 
 
+<<part5_setup, eval=include_part5>>=
+@
 
-%   ____               _     __   
-%  |  _ \  __ _  _ __ | |_  / /_  
-%  | |_) |/ _` || '__|| __|| '_ \ 
-%  |  __/| (_| || |   | |_ | (_) |
-%  |_|    \__,_||_|    \__| \___/ 
-%                                 
-% 
-                                 
 
+%    ___                                  _
+%   / _ \  __   __   ___   _ __  __   __ (_)   ___  __      __
+%  | | | | \ \ / /  / _ \ | '__| \ \ / / | |  / _ \ \ \ /\ / /
+%  | |_| |  \ V /  |  __/ | |     \ V /  | | |  __/  \ V  V /
+%   \___/    \_/    \___| |_|      \_/   |_|  \___|   \_/\_/
+%
+
+
+
+<<P5overTEXT, eval=P5over, short_text_ChartPage=P5over>>=
+@
+
+<<P5overData,results='hide', cache=cache_part5>>=
+@
+
+
+<<P5overTOPRIGHT, eval=P5over, top_right_plot=P5over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P5overLEFT, eval=P5over, left_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5overRIGHT, eval=P5over, right_plot=P5over, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+
+<<P5overBOTTOM, eval=P5over, bottom_plot=P5over, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5overMAP, eval=P5over, map_plot=P5over, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%   _____
+%  | ____|   ___    ___    _ __     ___    _ __ ___    _   _
+%  |  _|    / __|  / _ \  | '_ \   / _ \  | '_ ` _ \  | | | |
+%  | |___  | (__  | (_) | | | | | | (_) | | | | | | | | |_| |
+%  |_____|  \___|  \___/  |_| |_|  \___/  |_| |_| |_|  \__, |
+%                                                      |___/
+%
+
+
+<<P5econTEXT, eval=P5econ, short_text_ChartPage=P5econ>>=
+@
+
+<<P5econTOPRIGHT, eval=P5econ, top_right_plot=P5econ, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P5econLEFT, eval=P5econ, left_plot=P5econ, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5econRIGHT, eval=P5econ ,right_plot=P5econ, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P5econBOTTOM_data, eval=P5econ, cache=cache_part5>>=
+@
+
+
+
+<<P5econBOTTOM, eval=P5econ, bottom_plot=P5econ, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5econMAP, eval=P5econ, map_plot=P5econ, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+%   ____                                  _
+%  |  _ \    ___   __   __   ___   _ __  | |_   _   _
+%  | |_) |  / _ \  \ \ / /  / _ \ | '__| | __| | | | |
+%  |  __/  | (_) |  \ V /  |  __/ | |    | |_  | |_| |
+%  |_|      \___/    \_/    \___| |_|     \__|  \__, |
+%                                               |___/
+
+
+<<P5povertyTEXT, eval=P5poverty, short_text_ChartPage=P5poverty>>=
+@
+
+
+<<P5povertyData,results='hide', eval=P5poverty, cache=cache_part5>>=
+@
+
+
+
+<<P5povertyTOPRIGHT, eval=P5poverty, top_right_minitable=P5poverty>>=
+@
+
+
+<<P5povertyLEFT, eval=P5poverty, left_plot=P5poverty, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5povertyRIGHT, eval=P5poverty ,right_plot=P5poverty, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P5povertyBOTTOM, eval=P5poverty, bottom_plot=P5poverty, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5povertyMAP, eval=P5poverty, map_plot=P5poverty, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+%   ____   _        _                                                                                         _
+%  |  _ \ (_)  ___ | |_  __ _  _ __  _   _    ___  _ __    ___  _ __  __ _  _   _   ___  _   _  _ __   _ __  | | _   _
+%  | | | || | / _ \| __|/ _` || '__|| | | |  / _ \| '_ \  / _ \| '__|/ _` || | | | / __|| | | || '_ \ | '_ \ | || | | |
+%  | |_| || ||  __/| |_| (_| || |   | |_| | |  __/| | | ||  __/| |  | (_| || |_| | \__ \| |_| || |_) || |_) || || |_| |
+%  |____/ |_| \___| \__|\__,_||_|    \__, |  \___||_| |_| \___||_|   \__, | \__, | |___/ \__,_|| .__/ | .__/ |_| \__, |
+%                                    |___/                           |___/  |___/              |_|    |_|        |___/
+
+
+<<P5desTEXT, eval=P5des, short_text_ChartPage=P5des>>=
+@
+
+<<P5desData,results='hide', eval=P5des, cache=cache_part5>>=
+@
+
+
+<<P5desTOPRIGHT, eval=P5des, top_right_plot=P5des, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+<<P5desLEFT, eval=P5des, left_plot=P5des, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P5desRIGHT, eval=P5des ,right_plot=P5des, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P5desBOTTOM, eval=P5des, bottom_plot=P5des, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P5desMAP, eval=P5des, map_plot=P5des, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+% PPPPPPPPPPPPPPPPP                                               tttt                  66666666
+% P::::::::::::::::P                                           ttt:::t                 6::::::6
+% P::::::PPPPPP:::::P                                          t:::::t                6::::::6
+% PP:::::P     P:::::P                                         t:::::t               6::::::6
+%   P::::P     P:::::Paaaaaaaaaaaaa  rrrrr   rrrrrrrrr   ttttttt:::::ttttttt        6::::::6
+%   P::::P     P:::::Pa::::::::::::a r::::rrr:::::::::r  t:::::::::::::::::t       6::::::6
+%   P::::PPPPPP:::::P aaaaaaaaa:::::ar:::::::::::::::::r t:::::::::::::::::t      6::::::6
+%   P:::::::::::::PP           a::::arr::::::rrrrr::::::rtttttt:::::::tttttt     6::::::::66666
+%   P::::PPPPPPPPP      aaaaaaa:::::a r:::::r     r:::::r      t:::::t          6::::::::::::::66
+%   P::::P            aa::::::::::::a r:::::r     rrrrrrr      t:::::t          6::::::66666:::::6
+%   P::::P           a::::aaaa::::::a r:::::r                  t:::::t          6:::::6     6:::::6
+%   P::::P          a::::a    a:::::a r:::::r                  t:::::t    tttttt6:::::6     6:::::6
+% PP::::::PP        a::::a    a:::::a r:::::r                  t::::::tttt:::::t6::::::66666::::::6
+% P::::::::P        a:::::aaaa::::::a r:::::r                  tt::::::::::::::t 66:::::::::::::66
+% P::::::::P         a::::::::::aa:::ar:::::r                    tt:::::::::::tt   66:::::::::66
+% PPPPPPPPPP          aaaaaaaaaa  aaaarrrrrrr                      ttttttttttt       666666666
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PART6 - Coffee book!
+%% PART6 - Coffee book coffee specific spreads!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpart{part6}
 \rowcolors{1}{part6!10}{white}
 \clearpage
 
-<<part6, child = if (include_part6) 'syb_part6.Rnw'>>=
+<<setup-code-part6>>=
+knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
+@
+
+
+<<part6_setup, eval=include_part6>>=
+@
+
+%
+%    ____            __    __                                              _                  _     _
+%   / ___|   ___    / _|  / _|   ___    ___     _ __    _ __    ___     __| |  _   _    ___  | |_  (_)   ___    _ __
+%  | |      / _ \  | |_  | |_   / _ \  / _ \   | '_ \  | '__|  / _ \   / _` | | | | |  / __| | __| | |  / _ \  | '_ \
+%  | |___  | (_) | |  _| |  _| |  __/ |  __/   | |_) | | |    | (_) | | (_| | | |_| | | (__  | |_  | | | (_) | | | | |
+%   \____|  \___/  |_|   |_|    \___|  \___|   | .__/  |_|     \___/   \__,_|  \__,_|  \___|  \__| |_|  \___/  |_| |_|
+%                                              |_|
+%
+
+
+
+
+<<P6coffeeprodTEXT, eval=P6coffeeprod, short_text_ChartPage=P6coffeeprod>>=
+@
+
+
+<<P6coffeeprodData, cache=FALSE,results='hide', eval=P6coffeeprod, cache=cache_part6>>=
 @
 
 
 
-% 
-%    ____                      _                  ____                __  _  _            
-%   / ___| ___   _   _  _ __  | |_  _ __  _   _  |  _ \  _ __  ___   / _|(_)| |  ___  ___ 
+<<P6coffeeprodTOPRIGHT, eval=P6coffeeprod, top_right_minitable=P6coffeeprod>>=
+@
+
+
+<<P6coffeeprodLEFT, eval=P6coffeeprod, left_plot=P6coffeeprod, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P6coffeeprodRIGHT, eval=P6coffeeprod ,right_plot=P6coffeeprod, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P6coffeeprodBOTTOM, eval=P6coffeeprod, bottom_plot=P6coffeeprod, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P6coffeeprodMAP, eval=P6coffeeprod, map_plot=P6coffeeprod, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%    ____            __    __                   _                        _
+%   / ___|   ___    / _|  / _|   ___    ___    | |_   _ __    __ _    __| |   ___
+%  | |      / _ \  | |_  | |_   / _ \  / _ \   | __| | '__|  / _` |  / _` |  / _ \
+%  | |___  | (_) | |  _| |  _| |  __/ |  __/   | |_  | |    | (_| | | (_| | |  __/
+%   \____|  \___/  |_|   |_|    \___|  \___|    \__| |_|     \__,_|  \__,_|  \___|
+%
+
+
+<<P6coffeetradeTEXT, eval=P6coffeetrade, short_text_ChartPage=P6coffeetrade>>=
+@
+
+
+<<P6coffeetradeData, cache=FALSE,results='hide', eval=P6coffeetrade, cache=cache_part6>>=
+@
+
+
+<<P6coffeetradeTOPRIGHT, eval=P6coffeetrade, top_right_minitable=P6coffeetrade>>=
+@
+
+
+<<P6coffeetradeLEFT, eval=P6coffeetrade, left_plot=P6coffeetrade, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P6coffeetradeRIGHT, eval=P6coffeetrade ,right_plot=P6coffeetrade, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P6coffeetradeBOTTOM, eval=P6coffeetrade, bottom_plot=P6coffeetrade, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P6coffeetradeMAP, eval=P6coffeetrade, map_plot=P6coffeetrade, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+
+
+%    ____         __   __                            _
+%   / ___| ___   / _| / _|  ___   ___   _ __   _ __ (_)  ___  ___  ___
+%  | |    / _ \ | |_ | |_  / _ \ / _ \ | '_ \ | '__|| | / __|/ _ \/ __|
+%  | |___| (_) ||  _||  _||  __/|  __/ | |_) || |   | || (__|  __/\__ \
+%   \____|\___/ |_|  |_|   \___| \___| | .__/ |_|   |_| \___|\___||___/
+%                                      |_|
+
+
+
+
+
+<<P6coffeepricesTEXT, eval=P6coffeeprices, short_text_ChartPage=P6coffeeprices>>=
+@
+
+
+<<P6coffeepricesData, cache=FALSE,results='hide', eval=P6coffeeprices, cache=cache_part6>>=
+@
+
+
+
+<<P6coffeepricesTOPRIGHT, eval=P6coffeeprices, top_right_plot=P6coffeeprices, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
+@
+
+
+<<P6coffeepricesLEFT, eval=P6coffeeprices, left_plot=P6coffeeprices, fig.height=left_plot_height, fig.width=left_plot_width>>=
+@
+
+<<P6coffeepricesRIGHT, eval=P6coffeeprices ,right_plot=P6coffeeprices, fig.height=right_plot_height, fig.width=right_plot_width>>=
+@
+
+
+<<P6coffeepricesBOTTOM, eval=P6coffeeprices, bottom_plot=P6coffeeprices, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
+@
+
+
+<<P6coffeepricesMAP, eval=P6coffeeprices, map_plot=P6coffeeprices, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra>>=
+@
+
+
+%
+%    ____                      _                  ____                __  _  _
+%   / ___| ___   _   _  _ __  | |_  _ __  _   _  |  _ \  _ __  ___   / _|(_)| |  ___  ___
 %  | |    / _ \ | | | || '_ \ | __|| '__|| | | | | |_) || '__|/ _ \ | |_ | || | / _ \/ __|
 %  | |___| (_) || |_| || | | || |_ | |   | |_| | |  __/ | |  | (_) ||  _|| || ||  __/\__ \
 %   \____|\___/  \__,_||_| |_| \__||_|    \__, | |_|    |_|   \___/ |_|  |_||_| \___||___/
-%                                         |___/                                           
-% 
+%                                         |___/
+%
 
 
 <<country_profiles, child = if (include_country_profiles) 'syb_country_profiles.Rnw'>>=
@@ -1020,57 +2093,134 @@ if(length(unique(overview.df$subgroup)) >= 6) cat(paste("\\end{landscape}"))
 
 
 
-
-
-
-%   ____          __  _         _  _    _                    
-%  |  _ \   ___  / _|(_) _ __  (_)| |_ (_)  ___   _ __   ___ 
+%   ____          __  _         _  _    _
+%  |  _ \   ___  / _|(_) _ __  (_)| |_ (_)  ___   _ __   ___
 %  | | | | / _ \| |_ | || '_ \ | || __|| | / _ \ | '_ \ / __|
 %  | |_| ||  __/|  _|| || | | || || |_ | || (_) || | | |\__ \
 %  |____/  \___||_|  |_||_| |_||_| \__||_| \___/ |_| |_||___/
-%                                                            
+%
 
 
+<<print_definitions_texsnippets1, eval=include_definitions>>=
 
+cat("
+\\newpart{white}
+\\phantomsection
+\\addcontentsline{toc}{section}{Definitions}
 
+\\begin{MetadataCollection}
+\\twocolumn
+\\normalfont \\LARGE Definitions
 
-<<definitions, child = if (include_definitions) 'syb_definitions.Rnw'>>=
+\\footnotesize
+")
+@
+
+<<print_definitions, eval=include_definitions>>=
+source(paste0(root.dir,"input/code/code_definitions.R"))
 @
 
 
+<<print_definitions_texsnippets2, eval=include_definitions>>=
+cat("
+\\end{MetadataCollection}
+")
+@
+
+
+ %  _   _       _
+ % | \ | | ___ | |_ ___  ___
+ % |  \| |/ _ \| __/ _ \/ __|
+ % | |\  | (_) | ||  __/\__ \
+ % |_| \_|\___/ \__\___||___/
+ %
 
 
 
-%   ____                _                                
-%  | __ )   __ _   ___ | | __ ___  ___ __   __ ___  _ __ 
+<<notes1, eval=include_notes>>=
+ cat("
+ \\newpart{white}
+ \\phantomsection
+ \\addcontentsline{toc}{section}{Notes}
+
+
+ \\begin{MetadataCollection}
+
+ \\onecolumn
+ \\normalfont \\LARGE Notes
+
+ \\bigskip
+
+ \\footnotesize
+ The country classification adopted in this publication is based on the United Nations M49 classification \\\\* (\\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). The country names have been abbreviated for the purpose of this publication. The official FAO names can be found at \\url{http://termportal.fao.org/faonocs/appl/}.
+ ")
+
+@
+
+
+<<notes2, eval=include_notes>>=
+
+ if (region_to_report != "COF"){
+   cat("\\vspace{2mm}
+
+   Following the creation of the Republic of South Sudan in July 2011, the M49 classification considered the Sudan as part of the Northern Africa region, and South Sudan as part of Eastern Africa. In this report, data for the Sudan are therefore included in the Northern Africa region.")
+   } else cat("")
+
+@
+
+<<notes3, eval=include_notes>>=
+ cat("
+
+     \\vspace{1mm}
+
+       The asterisk in charts and maps indicates the most recent year available in the specified time interval. In the country profiles, when the country data have not been reported for the reference year, data in italics indicate that the value for the most recent year available is shown.
+
+       \\vspace{1mm}
+
+       In the tables, a blank means not applicable or, for an aggregate, not analytically meaningful. A 0 or 0.0 means zero or a number that is small enough to round to zero at the displayed number of decimal places.
+
+       \\vspace{1mm}
+
+       The \\textasciitilde{} in the maps refers to the range specified in the class intervals.
+
+       In addition:
+       \\begin{itemize}
+       \\item <5.0 proportion less than 5 percent
+       \\item <0.1 less than 100\\,000 people
+       \\item ns not statistically significant
+       \\end{itemize}
+
+       \\vspace{1mm}
+
+       Two types of aggregations are used in the book: sum and weighted mean. Two restrictions are imposed when computing the aggregation: i) the sufficiency condition – the aggregation is computed only when sufficient countries have reported data, and the current threshold is set at 50 percent of the variable and the weighting variable, if present; and ii) the comparability condition – as aggregations are usually computed over time, this condition is designed to ensure that the number of countries is comparable over several years; under the current restriction the number of countries may not vary by more than 15 over time.
+
+       \\vspace{1mm}
+
+       This publication was carried out under the direction of Pietro Gennari (Chief Statistician and Director, ESS) and Josef Schmidhuber (Deputy Director, ESS). It was prepared by the Statistics Division (Amy Heyman and Markus Kainu). A special thanks the team leaders for their input and to Nicola Selleri (ESS) for the cover design.
+
+
+       \\end{MetadataCollection}
+     ")
+@
+
+
+%   ____                _
+%  | __ )   __ _   ___ | | __ ___  ___ __   __ ___  _ __
 %  |  _ \  / _` | / __|| |/ // __|/ _ \\ \ / // _ \| '__|
-%  | |_) || (_| || (__ |   <| (__| (_) |\ V /|  __/| |   
-%  |____/  \__,_| \___||_|\_\\___|\___/  \_/  \___||_|   
-%                                                        
+%  | |_) || (_| || (__ |   <| (__| (_) |\ V /|  __/| |
+%  |____/  \__,_| \___||_|\_\\___|\___/  \_/  \___||_|
+%
 
-
-
-\newpage
-
-\thispagestyle{empty}
-\AddToShipoutPicture*{\taustatoka}
-
-\mbox{}
+\nopagecolor
 
 \ifprint\else
-\begin{picture}(0,0)
 
 
-%\put(-58,-472){\includegraphics[width=\paperwidth,height=\paperheight]{back_cover_2015.png}}
-%\put(-58,-432){\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover.pdf}}
-%\includegraphics[width=\paperwidth,height=\paperheight]{./cover/back_cover_2015.png}
-\end{picture}
-
-\newpage
-
-\thispagestyle{empty}
-
-\newpage
+<<define_back_cover, echo=FALSE, results='asis', eval=include_covers>>=
+  cover_name <- paste0("back_cover_",region_to_report,".pdf")
+  if (region_to_report %in% c("RAP","RAF","REU")) cat(paste0("\\includepdf[offset=28 28, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report %in% c("COF","RNE"))       cat(paste0("\\includepdf[offset=-28 28, noautoscale=true]{",cover_name,"}"))
+  @
 
 \fi
 

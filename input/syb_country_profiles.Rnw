@@ -11,13 +11,13 @@
 ## Country profiles
 ###########################################################################
 
-if (!exists("syb.df$missing")) {
-  
-  syb.df$missing <- "not def"
-  
-  }
-
 temp <- syb.df
+
+if (!exists("syb.df$missing")) {
+
+  syb.df$missing <- "not def"
+
+  }
 
 library(dplyr)
 library(xtable)
@@ -29,14 +29,12 @@ library(ggplot2)
 library(readxl)
 library(zoo)
 
-syb.df$NV.AGR.TOTL.ZS[is.na(syb.df$NV.AGR.TOTL.ZS)]
-
 ##' Sanitize the expression for Latex code
 ##'
 ##' The function sanitize an expression for the Latex code
 ##'
 ##' @param str A string to be sanitized
-##' @param html  
+##' @param html
 ##' @param type Specify whether the expression is for text or table
 ##' @export
 
@@ -45,7 +43,7 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
       type <- match.arg(type)
 
       result <- as.character(str)
-      
+
       result <- gsub("\\\\-","TEX.BACKSLASH",result)
       result <- gsub("\\\\","SANITIZE.BACKSLASH",result)
       result <- gsub("$","\\$",result,fixed=TRUE)
@@ -74,7 +72,7 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
       result <- gsub("?","\\'{i}",result,fixed=TRUE)
       result <- gsub("?","\\`{i}",result,fixed=TRUE)
       result <- gsub("?","\\'{I}",result,fixed=TRUE)
-      result <- gsub("?","\\`{I}",result,fixed=TRUE)      
+      result <- gsub("?","\\`{I}",result,fixed=TRUE)
       result <- gsub("?","\\r{A}",result,fixed=TRUE)
       result <- gsub("?","\\c{c}",result,fixed=TRUE)
       result <- gsub("?","\\'{a}",result,fixed=TRUE)
@@ -92,13 +90,13 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
       	dotSlash<-grepl("\\url\\{.*\\.}",result)
       	result[dotSlash] <- gsub("\\.\\}","\\}\\.",result[dotSlash])
       }
-      
+
       ## special expressions
       result <- gsub("km2", "km\\textsuperscript{2}", result, fixed = TRUE)
       result <- gsub("m3", "m\\textsuperscript{3}", result, fixed = TRUE)
       result <- gsub("CO2", "CO\\textsubscript{2}", result, fixed = TRUE)
-      
-      
+
+
       return(result)
     }
 
@@ -107,21 +105,11 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
 
 # merge latest FSI data from Filippo
 
-if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
-  
-  dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-  dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
-  dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
-  # SOFI to M49 conversions
-  # Asia
-  dat$FAOST_CODE[dat$FAOST_CODE == 5853] <- 5300
-  dat$FAOST_CODE[dat$FAOST_CODE == 5001] <- 5000
-  
-  # Add Area var from syb.df
-  tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
-  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
-  dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
 
+if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
+
+  load(paste0(data.dir,"/fsi_data.RData")) # manipulated in code_part2.R
+  
   dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
   vars_to_exclude <- names(syb.df)[names(syb.df) %in% names(dat)][c(-1:-4,-14)]
   myvars <- names(syb.df) %in% vars_to_exclude
@@ -130,199 +118,52 @@ if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
   vars_to_exclude <- c("FAO_TABLE_NAME","SHORT_NAME","Area")
   myvars <- names(dat) %in% vars_to_exclude
   dat <- dat[!myvars]
-  
-  
+
+
   syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"),all.x=TRUE)
 }
 
 
 
 
-if (!("area_harvested" %in% names(syb.df))) {
-  
-  ## Area harvested
-  load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
-  
-  group_means <- function(data,varname,years) {
-    filter(data, Year %in% years) %>% group_by_("CountryCode") %>% summarise_(value = interp(~max(varname, na.rm = TRUE), varname = as.name(varname)))
-  }
-  
-  df92 <- group_means(dat,"Value",1990)
-  df92$Year <- 1990
-  df02 <- group_means(dat,"Value",2000)
-  df02$Year <- 2000
-  df14 <- group_means(dat,"Value",2013)
-  df14$Year <- 2014
-  
-  df_area_harvested <- rbind(df92,df02,df14)
-  names(df_area_harvested) <- c("FAOST_CODE","area_harvested","Year")
-  
-  
-  syb.df <- merge(syb.df,df_area_harvested,by=c("FAOST_CODE","Year"), all.x=TRUE)
+if (!("cropping_intensity_ratio" %in% names(syb.df))) {
+
   syb.df$cropping_intensity_ratio <- syb.df$area_harvested / syb.df$RL.AREA.AGR.HA.NO
 }
 
-## Food security
-
-if (!("share_of_des_cereals_roots_tubers" %in% names(syb.df))) {
-  
-  ## Area harvested
-  # dat <- read.csv("./database/Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).csv")
-  # save(dat, file="./database/Data/Raw/food_security/Food_Security_Data_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Food_Security_Data_E_All_Data_(Norm).RData"))
-  
-  dat <- dat[dat$Item == "Share of dietary energy supply derived from cereals, roots and tubers (%) (3-year average)",c("Country.Code","Year","Value")]
-  names(dat) <- c("FAOST_CODE","Year","share_of_des_cereals_roots_tubers")
-  
-  table(dat$Year)
-  dat$Year2[dat$Year %in% "2013-2015"] <- 2014
-  dat$Year2[dat$Year %in% "1999-2001"] <- 2000
-  dat$Year2[dat$Year %in% "1989-1991"] <- 1990
-  dat <- dat[!is.na(dat$Year2),]
-  dat$Year <- dat$Year2
-  dat$Year2 <- NULL
-  
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"), all.x=TRUE)
-}
 
 ## Fertilisers
 
 if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
-  
-  ## 
-  # dat <- read.csv("~/fao_temp/pocketbook_temp/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).csv", stringsAsFactors = FALSE)
-  # save(dat, file="./database/Data/Raw/fertilizers/Inputs_Fertilizers_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Inputs_Fertilizers_E_All_Data_(Norm).RData"))
-  
-  dat <- dat[dat$Item %in% c("Phosphate Fertilizers (P205 total nutrients)",
-                             "Potash Fertilizers (K20 total nutrients)",
-                             "Nitrogen Fertilizers (N total nutrients)") &
-               dat$Element == "Consumption in nutrients" &
-               dat$Unit == "tonnes of nutrients",
-             c("Country.Code","Year","Value","Item")]
-  
-  names(dat) <- c("FAOST_CODE","Year","value","Item")
-  dat$Item <- as.character(dat$Item)
-  dat$Item[dat$Item == "Phosphate Fertilizers (P205 total nutrients)"] <- "phosphate_tonnes"
-  dat$Item[dat$Item == "Potash Fertilizers (K20 total nutrients)"] <- "potash_tonnes"
-  dat$Item[dat$Item == "Nitrogen Fertilizers (N total nutrients)"] <- "nitrogen_tonnes"
-  
-  dat <- spread(dat, Item, value)
-  
-  for (i in 1:ncol(dat)) {
-    dat[[i]] <- as.numeric(dat[[i]])
-  }
-  
-  dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-  
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"), all.x=TRUE)
+ 
   syb.df$phosphate_tonnes_per_ha <- syb.df$phosphate_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$potash_tonnes_per_ha <- syb.df$potash_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$nitrogen_tonnes_per_ha <- syb.df$nitrogen_tonnes / syb.df$RL.AREA.AGR.HA.NO
   syb.df$total_nutrients_tonnes_per_ha <- (syb.df$phosphate_tonnes +
                                            syb.df$potash_tonnes +
                                            syb.df$nitrogen_tonnes) / syb.df$RL.AREA.AGR.HA.NO
-  
-  
-}
+  }
 
 
 
 if (!("aqua_culture_share" %in% names(syb.df))) {
-  
+
   syb.df$aqua_culture_share <- syb.df$FI.PRD.AQ.TN.NO / (syb.df$FI.PRD.AQ.TN.NO + syb.df$FI.PRD.CAPT.TN.NO) *100
 }
 
 
 
 if (!("rural_pop_share" %in% names(syb.df))) {
-  
+
   syb.df$rural_pop_share <- syb.df$OA.TPR.POP.PPL.NO / syb.df$OA.TPBS.POP.PPL.NO *100
 }
 
-
-if (!("agricultural_exports_share" %in% names(syb.df))) {
-  
-  dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5922,
-                   itemCode = 1882)
-  dat1 <- dat$aggregates
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  #syb.df$agricultural_exports_share <- syb.df$TP_1882_5922 / (syb.df$NY.GDP.MKTP.CD*1000)  *100
-  syb.df$agricultural_exports_share <- syb.df$TP_1882_5922*1000 / syb.df$NY.GDP.MKTP.CD  * 100
-}
-
-
-if (!("improved_water_source_rural" %in% names(syb.df))){
-  
-  dat <- getWDItoSYB(name = "improved_water_source_rural", indicator = "SH.H2O.SAFE.RU.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","improved_water_source_rural")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$improved_water_source_rural),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-}
-
-
-
-
-
-## FISHFISHFISH
-
-# Add note on “Food” – Amy will check whether food trade and food production include fish. If not, add end note, indicating the exclusion of fish from food – After the dissemination of pocketbook, ESS/FIPS will seek the way to include fish into FAO “food” statistics
-
-# "Second, I want to keep fish production comparable with other food component as much as possible. It is not possible to provide value of fish production. 
-# However, at least, it will be preferable to normalize to the base period 2004-06. In the other words, taking average production quantity of 2004-06 as 100. 
-# This way, all food components would show the relative changes within the period, without referring relative contribution among different components."
-
-# These are now computed within the fisheriesn section in plots and maps
-
-
-
-# New production indices computed by Amanda
-
-if (!("Sugar.raw" %in% names(syb.df))) {
-
-  # dat <- read.csv("./database/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).csv")
-  # save(dat, file="./database/Data/Raw/production_indices/Production_Indices_E_All_Data_(Norm).RData")
-  load(paste0(data.dir,"/Production_Indices_E_All_Data_(Norm).RData"))
-  
-  dat <- dat[dat$Item %in% c("Roots and Tubers,Total",
-                             "Vegetables and Fruit Primary",
-                             "Sugar, raw",
-                             "Oilcrops Primary",
-                             "Meat indigenous, total",
-                             "Milk,Total") &
-               dat$Element == "Net Production Index Number (2004-2006 = 100)",
-             c("Country.Code","Year","Value","Item")]
-  
-  names(dat) <- c("FAOST_CODE","Year","value","Item")
-  dat <- spread(dat, # data
-               Item, # class-var
-               value) # amount
-  names(dat) <- str_replace_all(names(dat), " ", ".")
-  names(dat) <- str_replace_all(names(dat), ",", ".")
-  names(dat) <- str_replace_all(names(dat), "\\.\\.", ".")
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"), all.x=TRUE)
-}
-
-if (!("energy.for.power.irrigation" %in% names(syb.df))) {
-  #library(gdata)
-  dat <- read.csv(paste0(data.dir,"/energy_consumption_for_power_irrigation.csv"), stringsAsFactors = FALSE)
-  dat <- dat[c("AreaCode","Year","Value")]
-  names(dat) <- c("FAOST_CODE","Year","energy.for.power.irrigation")
-  dat$FAOST_CODE <- as.numeric(dat$FAOST_CODE)
-  dat$Year <- as.numeric(dat$Year)
-  dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
-  syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"),all.x=TRUE)
-}
+syb.df$agricultural_exports_share <- syb.df$TP_5922_1882 / syb.df$NY.GDP.MKTP.CD  * 100
 
 
 ## Water indicators for China
 
+# Markus, please describe this
 water_vars <- names(syb.df)[grep("^AQ.", names(syb.df))]
 water_vars_plus <- c("Year","FAOST_CODE",water_vars)
 water_vars.df <- syb.df[water_vars_plus]
@@ -331,145 +172,8 @@ water_vars.df$FAOST_CODE[water_vars.df$FAOST_CODE == 357] <- 351
 
 myvars <- names(syb.df) %in% water_vars
 syb.df <- syb.df[!myvars]
-syb.df <- merge(syb.df,water_vars.df,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
-
-#####################################################################################
-##                                                                                 ##
-## Coffee book variables                                                           ##
-##                                                                                 ##
-#####################################################################################
-
-# Consumer prices, coffee
-
-if (region_to_report == "COF"){
-  
-  # Producer prices, green coffee (US$ per tonne)
-dat <- getFAOtoSYB(domainCode = "PP",
-                   elementCode = 5532,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-# Producer price index (2004-06=100)
-dat <- getFAOtoSYB(domainCode = "PI",
-                   elementCode = 5539,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-
-# Exports, coffee:
-## Green
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5922,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-## Roasted
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5922,
-                   itemCode = 657)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-## Extracts
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5922,
-                   itemCode = 659)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-
-# Imports, coffee:
-## Green
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5622,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-## Roasted
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5622,
-                   itemCode = 657)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-## Extracts
-dat <- getFAOtoSYB(domainCode = "TP",
-                   elementCode = 5622,
-                   itemCode = 659)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-# Area harvested, coffee (ha)
-dat <- getFAOtoSYB(domainCode = "QC",
-                   elementCode = 5312,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-
-# Yield, coffee (hg/ha)
-
-dat <- getFAOtoSYB(domainCode = "QC",
-                   elementCode = 5419,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-
-# Production quantity, coffee (mln tonnes)
-dat <- getFAOtoSYB(domainCode = "QC",
-                   elementCode = 5510,
-                   itemCode = 656)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-# 
-# Vegetal (crop) products (kcal/cap/day)
-dat <- getFAOtoSYB(domainCode = "CC",
-                   elementCode = 664,
-                   itemCode = 2903)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-
-# Animal products (kcal/cap/day)
-dat <- getFAOtoSYB(domainCode = "CL",
-                   elementCode = 664,
-                   itemCode = 2941)
-dat1 <- dat$aggregates
-syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-}
-
-
-
-# 
-# GHG emissions from coffee (% of total)
-
-
-#########################################################
-#                                                       #
-#    RAP regional book vars                             #
-#                                                       #
-#########################################################
-
-# Droughts, floods, extreme temperatures (% of population, average 1990-2009) 
-
-if (!("droughts_floods_temperature" %in% names(syb.df)) & region_to_report == "RAP"){
-  
-  dat <- getWDItoSYB(name = "droughts_floods_temperature", indicator = "EN.CLC.MDAT.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","droughts_floods_temperature")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$droughts_floods_temperature),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-}
+syb.df <- dplyr::left_join(syb.df,water_vars.df)
 
 
 #########################################################
@@ -479,194 +183,67 @@ if (!("droughts_floods_temperature" %in% names(syb.df)) & region_to_report == "R
 #########################################################
 
 
-if (!("malnutrition_prevalence" %in% names(syb.df)) & region_to_report == "REU"){
-  
-  # malnutrition_prevalence, height for age
-  
-  dat <- getWDItoSYB(name = "malnutrition_prevalence", indicator = "SH.STA.STNT.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","malnutrition_prevalence")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$malnutrition_prevalence),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  # Prevalence of wasting (% of children under 5)
-  
-  dat <- getWDItoSYB(name = "wasting_prevalence", indicator = "SH.STA.WAST.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","wasting_prevalence")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$wasting_prevalence),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  # Prevalence of overweight (% of children under 5)
-  
-  dat <- getWDItoSYB(name = "overweigth_prevalence", indicator = "SH.STA.OWGH.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","overweigth_prevalence")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$overweigth_prevalence),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  
-  # Health expenditure, total: WDI
-  dat <- getWDItoSYB(name = "health_expenditure_total", indicator = "SH.XPD.TOTL.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","health_expenditure_total")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$health_expenditure_total),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  
-  # Health expenditure per capita PPP: WDI 
-  dat <- getWDItoSYB(name = "health_expenditure_per_capita", indicator = "SH.XPD.PCAP")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","health_expenditure_per_capita")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$health_expenditure_per_capita),]
-  dat1
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
+if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "REU"){
+
   # MALE FEMALE STUFF
-  
-  # Overweight
-  dat1 <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_25A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$COUNTRY, "iso3c", "fao")
-  dat1 <- dat1 %>%  filter(SEX != "BTSX") %>%  select(FAOST_CODE,YEAR,SEX,Numeric) %>%  mutate(Numeric = round(Numeric,0))
-  dat1 <- spread(dat1, SEX, Numeric)
-  dat1 <- dat1 %>% mutate(overweight = paste(MLE,FMLE, sep="/")) %>% select(FAOST_CODE,YEAR,overweight)
-  names(dat1) <- c("FAOST_CODE","Year","overweight")
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$overweight),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  # Obesity
-  dat1 <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_30A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$COUNTRY, "iso3c", "fao")
-  dat1 <- dat1 %>%  filter(SEX != "BTSX") %>%  select(FAOST_CODE,YEAR,SEX,Numeric) %>%  mutate(Numeric = round(Numeric,0))
-  dat1 <- spread(dat1, SEX, Numeric)
-  dat1 <- dat1 %>% mutate(obesity = paste(MLE,FMLE, sep="/")) %>% select(FAOST_CODE,YEAR,obesity)
-  names(dat1) <- c("FAOST_CODE","Year","obesity")
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$obesity),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
 
-  # tot_pop_male_female
-  dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPM.POP.PPL.NO,OA.TPF.POP.PPL.NO)
-  dat <- dat[!is.na(dat$OA.TPF.POP.PPL.NO),]
-  dat <- dat[!is.na(dat$OA.TPM.POP.PPL.NO),]
-  dat$OA.TPF.POP.PPL.NO <- round(dat$OA.TPF.POP.PPL.NO / 1000000,1)
-  dat$OA.TPM.POP.PPL.NO <- round(dat$OA.TPM.POP.PPL.NO / 1000000,1)
-  dat$tot_pop_male_female <- paste(dat$OA.TPM.POP.PPL.NO,dat$OA.TPF.POP.PPL.NO,sep="/")
-  dat1 <- dat[c("FAOST_CODE","Year","tot_pop_male_female")]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
+  syb.df$overweight <- paste(round(syb.df$overweight_MLE,1),round(syb.df$overweight_FMLE,1), sep="/")
+  syb.df$overweight[syb.df$overweight %in% "NA/NA"] <- NA
   
+  syb.df$obesity <- paste(round(syb.df$obesity_MLE,1),round(syb.df$obesity_FMLE,1), sep="/")
+  syb.df$obesity[syb.df$obesity %in% "NA/NA"] <- NA
   
+  syb.df$tot_pop_male_female <- paste(round((syb.df$OA.TPM.POP.PPL.NO/1000000),0),round((syb.df$OA.TPF.POP.PPL.NO/1000000),0),sep="/")
+  syb.df$tot_pop_male_female[syb.df$tot_pop_male_female %in% "NA/NA"] <- NA
   
-  # # rur_pop_share_male_female
-  dat <- read_csv(paste0(root.dir,"./input/data/REU/rur_rub_pocketbook_data.csv"))
-  dat <- dat[c(1,2,3,4,22)]
-  names(dat) <- c("SHORT_NAME","Year","Sex","Area","Total")
-  dat <- dat[!duplicated(dat[c("SHORT_NAME","Year","Sex","Area")]),]
-  dat <- merge(dat,FAOcountryProfile[c("SHORT_NAME","FAOST_CODE")],by="SHORT_NAME")
+  syb.df$rural_pop_gender_shares <- paste(round(syb.df$rural_male_share,1),round(syb.df$rural_female_share,1), sep="/")
+  syb.df$rural_pop_gender_shares[syb.df$rural_pop_gender_shares %in% "NA/NA"] <- NA
   
-  dat$Total <- str_replace_all(dat$Total, ",", "")
-  dat$Total <- factor(dat$Total)
-  dat$Total <- as.numeric(levels(dat$Total))[dat$Total]
-  
-  dat1 <- spread(dat, Sex, Total)
-  dat1$tot_pop <- dat1$Female + dat1$Male
+  syb.df$agr_employment_male_female <- paste(round(syb.df$SL.AGR.EMPL.MA.ZS,1),round(syb.df$SL.AGR.EMPL.FE.ZS,1),sep="/")
+  syb.df$agr_employment_male_female[syb.df$agr_employment_male_female %in% "NA/NA"] <- NA
 
-  dat2 <- dat1 %>% group_by(FAOST_CODE,Year) %>% mutate(total_pop = sum(tot_pop)) %>% 
-                                                  mutate(female_share = Female / total_pop * 100,
-                                                         male_share = Male / total_pop * 100)
-  
-  dat2r <- dat2 %>% filter(Area == "Rural") %>% select(FAOST_CODE,Year,female_share,male_share)
-  dat2u <- dat2 %>% filter(Area == "Urban") %>% select(FAOST_CODE,Year,female_share,male_share)
-  names(dat2r) <- c("FAOST_CODE","Year","rural_female_share","rural_male_share")
-  names(dat2u) <- c("FAOST_CODE","Year","urban_female_share","urban_male_share")
-  
-  dat3 <- left_join(dat2u,dat2r)
-  dat3$rural_pop_gender_shares <- paste(round(dat3$rural_male_share,1),round(dat3$rural_female_share,1), sep="/")
-  
-  dat3 <- dat3[c("FAOST_CODE","Year","rural_pop_gender_shares")]
-  syb.df <- merge(syb.df,dat3,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-  # agr_employment_male_female
-  dat <- syb.df %>% select(FAOST_CODE,Year,SL.AGR.EMPL.FE.ZS,SL.AGR.EMPL.MA.ZS)
-  dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
-  dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
-  
-  dat$agr_employment_male_female <- paste(round(dat$SL.AGR.EMPL.MA.ZS,1),
-                                          round(dat$SL.AGR.EMPL.FE.ZS,1)
-                                          ,sep="/")
-  dat1 <- dat[c("FAOST_CODE","Year","agr_employment_male_female")]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-
-  
-  
 }
-
-
-#########################################################
-#                                                       #
-#    RNE regional book vars                             #
-#                                                       #
-#########################################################
-
-# Droughts, floods, extreme temperatures (% of population, average 1990-2009) 
-
-if (!("current_account_balance" %in% names(syb.df)) & region_to_report == "RNE"){
-  
-  dat <- getWDItoSYB(name = "current_account_balance", indicator = "BN.CAB.XOKA.GD.ZS")
-  dat1 <- dat$aggregates
-  dat1$FAOST_CODE <- countrycode::countrycode(dat1$ISO2_WB_CODE, "iso2c", "fao")
-  dat1 <- dat1[c("FAOST_CODE","Year","current_account_balance")]
-  dat1 <- dat1[!is.na(dat1$FAOST_CODE),]
-  dat1 <- dat1[!is.na(dat1$current_account_balance),]
-  syb.df <- merge(syb.df,dat1,by=c("FAOST_CODE","Year"), all.x=TRUE)
-  
-}
-
 
 
 
 
 # Countries ---------------------------------------------------------------
 
-M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>% 
-  select(FAOST_CODE, SHORT_NAME) %>%  arrange(SHORT_NAME) %>%  na.omit()
+# if (region_to_report == "COF"){
+  # M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","SHORT_NAME")]
+# this used to be short name as above, but we shall use fao_table_name instead. However, everything hereafter is hard 
+# coded for SHORT_NAME, so we just rename the FAO_TABLE_NAME into SHORT_NAME
 
+  M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","FAO_TABLE_NAME")]
+  M49countries <- as.data.frame(M49countries)
+  names(M49countries)[names(M49countries)=="FAO_TABLE_NAME"] <- "SHORT_NAME"
+# } else {
+# M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>%
+#   select(FAOST_CODE, SHORT_NAME) %>%  arrange(SHORT_NAME) %>%  na.omit()
+# M49countries <- as.data.frame(M49countries)
+# }
 
-## Sanitize the country names
-# This is odd now
-#M49countries[, "SHORT_NAME"] <- sanitizeToLatex(M49countries[, "SHORT_NAME"]) 
 ## Remove old countries
-OldCountries <- 
+OldCountries <-
   data.frame(FAOST_CODE = c(15,51,62,151,164,186,228,206,247,246,248,
                             17,83,196,191),
              COUNTRY_NAME = c("Belgium-Luxembourg", "Czechoslovakia",
                               "Ethiopia PDR", "Netherlands Antilles",
                               "Pacific Islands",
                               "Serbia and Montenegro", "Soviet Union",
-                              "Sudan (former)", "Yemen (former)", 
+                              "Sudan (former)", "Yemen (former)",
                               "Yemen (old)", "Yugoslav SFR",
                               "Bermuda","Kiribati","Seychelles","Saint Vincent and the Grenadines "),
              stringsAsFactors = FALSE)
-M49countries <- 
-  M49countries[!M49countries[, "FAOST_CODE"] %in% 
+M49countries <-
+  M49countries[!M49countries[, "FAOST_CODE"] %in%
                  OldCountries[, "FAOST_CODE"],]
-## Remove the countries we do not want to show: , 
+## Remove the countries we do not want to show: ,
 tbr.df <-
   data.frame(COUNTRY_NAME = c("Aland Island", "American Samoa", "Andorra",
                             "Anguilla", "Antigua and Barbuda", "Aruba",
                             "Bahamas", "Bonaire", "British Virgin Islands",
-                            "Cayman", "Cook Islands", "Curacao", "Dominica", 
+                            "Cayman", "Cook Islands", "Curacao", "Dominica",
                             "Equatorial Guinea", "Falkland Islands (Malvinas)",
                             "Faroe", "French Guiana",
                             "French Polynesia", "Gibraltar", "Greenland",
@@ -692,37 +269,89 @@ tbr.df <-
                               190,192,285,281,280,200,260,218,219,224,227,
                               240,243,205),
              stringsAsFactors = FALSE)
-M49countries <- 
-  M49countries[!M49countries[, "FAOST_CODE"] %in% 
-                 tbr.df[, "FAOST_CODE"],]
+M49countries <-
+  M49countries[!M49countries[, "FAOST_CODE"] %in% tbr.df[, "FAOST_CODE"],]
 ## Occupied Palestinian Territory
 M49countries[M49countries[, "FAOST_CODE"] == 299, "SHORT_NAME"] <-
   "West Bank and Gaza Strip"
 ## Chinas
-M49countries <- 
+M49countries <-
   M49countries[!M49countries[, "FAOST_CODE"] %in% c(41,128,96,357,214),]
+
+  # M49countries <- head(M49countries)
+
 ## Add aggregates NOT
-M49countries <- 
-  rbind(data.frame(FAOST_CODE = c(5000,5100,5300,5205,5500),
-                   SHORT_NAME = c("World",
-                                      "Africa", "Asia", 
-                                      "Latin America and the Caribbean",
-                                      "Oceania"),
+
+if (region_to_report == "RAF"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = 12000:12005,
+                   SHORT_NAME = c("Regional Office for Africa","Central Africa","Eastern Africa",
+                                  "Northern Africa","Southern Africa","Western Africa"),
                    stringsAsFactors = FALSE),
         M49countries)
+}
+if (region_to_report == "RAP"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = c(13000,13001,13003,13005,13006,13007,13008,13009,13010,13011,13012,13013,13014),
+                   SHORT_NAME = c("Regional Office for Asia and the Pacific",
+                                  "East Asia",
+                                  "Southeast Asia",
+                                  "Central Asia",
+                                  "Australia and New Zealand",
+                                  "France",
+                                  "Melanesia",
+                                  "Micronesia",
+                                  "Polynesia",
+                                  "Russian Federation",
+                                  "Southern Asia",
+                                  "United States",
+                                  "Western Asia"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+}
+if (region_to_report == "REU"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = c(14000,14001,14003,14004,14005,14006,14007),
+                   SHORT_NAME = c("Regional Office for Europe and Central Asia",
+                                  "Caucasus and Turkey",
+                                  "Central Eastern Europe",
+                                  "CIS Europe",
+                                  "Israel",
+                                  "Other and EFTA",
+                                  "South Eastern Europe"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+}
+if (region_to_report == "RNE"){
+  M49countries <-
+  rbind(data.frame(FAOST_CODE = 15000:15003,
+                   SHORT_NAME = c("Regional Office for the Near East",
+                                  "Gulf Cooperation\n Council States\n and Yemen",
+                                  "North Africa",
+                                  "Other Near\n East countries"),
+                   stringsAsFactors = FALSE),
+        M49countries)
+}
+
+
+# M49countries <-
+#   rbind(data.frame(FAOST_CODE = c(5000,5100,5300,5205,5500),
+#                    SHORT_NAME = c("World",
+#                                       "Africa", "Asia",
+#                                       "Latin America and the Caribbean",
+#                                       "Oceania"),
+#                    stringsAsFactors = FALSE),
+#         M49countries)
 
 # Subset countries per region -----------------------
 
 # Add region key and subset
-M49countries <- left_join(M49countries,region_key)
 
-M49countries <- M49countries[which(M49countries[[region_to_report]]),]
-dim(M49countries)
 
 # Indicators --------------------------------------------------------------
 
 ## Load the indicators we want to show
-indicators.df <- read.csv(paste0(root.dir,"input/data/",region_to_report,"/country_profile_indicators.csv"), na.strings = "", stringsAsFactors = FALSE)
+indicators.df <- read.csv(paste0(root.dir,"input/data/country_profile_indicators_",region_to_report,".csv"), na.strings = "", stringsAsFactors = FALSE)
 
 
 # source(paste0(root.dir,"input/code/table/tableInfo.R"))
@@ -732,8 +361,8 @@ fileOut <- paste0(root.dir,"output/process/CountryProfiles.tex")
 if(file.exists(fileOut)) file.remove(fileOut)
 file.create(fileOut)
 ## Subset the dataset
-CountryProfile.df <- 
-  syb.df[, colnames(syb.df) %in% c("FAOST_CODE", "SHORT_NAME", "Year", 
+CountryProfile.df <-
+  syb.df[, colnames(syb.df) %in% c("FAOST_CODE", "SHORT_NAME", "Year",
                                      na.omit(indicators.df[, "INDICATOR1"]),
                                      na.omit(indicators.df[, "INDICATOR2"]),
                                      na.omit(indicators.df[, "INDICATOR3"]))]
@@ -765,8 +394,8 @@ tbl_row_height <- 1.12
 if (region_to_report == "COF") tbl_row_height <- 1.42
 if (region_to_report == "RAF") tbl_row_height <- 1.18
 if (region_to_report == "RAP") tbl_row_height <- 1.12
-if (region_to_report == "REU") tbl_row_height <- 1.18
-if (region_to_report == "RNE") tbl_row_height <- 1.32
+if (region_to_report == "REU") tbl_row_height <- 1.12
+if (region_to_report == "RNE") tbl_row_height <- 1.22
 
 cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),
     file = fileOut, append = TRUE)
@@ -778,13 +407,13 @@ cat("\\normalsize\n",
     file = fileOut, append = TRUE)
 for (i in 1:nrow(M49countries)) {
   ## header
-  
+
   # conditional row colors ------------------------------
   row_color <- "FAOblue"
   if (region_to_report == "COF") row_color <- "part7"
   define_row_color <- paste0("\\rowcolors{1}{",row_color,"!10}{white}")
   # conditional row colors ------------------------------
-  
+
 if (region_to_report == "COF"){
     cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
       define_row_color,
@@ -830,8 +459,22 @@ if (region_to_report == "COF"){
       } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
     }
-    
-    
+     if (region_to_report == "REU"){
+      if (part %in% c(4,5)) {
+      cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+      } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+        }
+     if (region_to_report == "RNE"){
+      if (part %in% c(4,5)) {
+      cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+      } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+    }
+
+
     subindicators.df = indicators.df[indicators.df[, "PART"] == unique(indicators.df$PART)[part], ]
     for (j in 1:nrow(subindicators.df)) {
       y1 = tmp[tmp[, "Year"] == year1, subindicators.df[j, "INDICATOR1"]]
@@ -908,7 +551,7 @@ if (region_to_report == "COF"){
       chunk3 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk3)
       cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
           file = fileOut, append = TRUE, sep = "")
-      
+
     }
   }
   ## tail
@@ -922,7 +565,6 @@ if (region_to_report == "COF"){
 # -- in case we need footnotes under each of the country profile table
 # sed -i 's#{ 2014 }#{ 2014* }#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\*We can add a footnote for each table like this..\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
 # sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
-
 
 syb.df <- temp
 
@@ -939,6 +581,7 @@ syb.df <- temp
   if (region_to_report == "COF") empty_page_color <- "part7"
   cat(paste0("\\pagecolor{",empty_page_color,"}"))
   @
+
 \thispagestyle{empty}
 \mbox{}
 \newpage
@@ -953,6 +596,7 @@ syb.df <- temp
   if (region_to_report == "COF") empty_page_color <- "part7"
   cat(paste0("\\newpart{",empty_page_color,"}"))
   @
+
 \phantomsection
 \addcontentsline{toc}{section}{Country Profiles}
 \faoset{bgcolor=white}\selectcolor
@@ -960,3 +604,5 @@ syb.df <- temp
 \parskip=\medskipamount
 \hangafter=-2
 \input{CountryProfiles.tex}
+
+\newpage

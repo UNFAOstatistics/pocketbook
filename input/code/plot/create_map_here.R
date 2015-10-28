@@ -53,23 +53,65 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   #  ---- grid below the countries ------------------------
   p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
   p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
-  p <- p + theme(legend.position = c(0.05,0.05), 
-                 legend.justification=c(0,0),
-                 legend.key.height=unit(7,'mm'),
-                 legend.key.width=unit(4,'mm'),
-                 legend.direction = "vertical",
-                 legend.background=element_rect(colour=NA, fill=alpha("white", 1/3)),
-                 #legend.background=element_rect(colour=NA, fill=NA),
-                 legend.text=element_text(size=14), 
-                 legend.title=element_text(size=14), 
-                 title=element_text(size=16), 
-                 panel.background = element_blank(), 
-                 plot.background = element_blank(),
-                 panel.grid.minor = element_blank(),
-                 panel.grid.major = element_blank(),
-                 axis.text = element_blank(), 
-                 axis.title = element_blank(), 
-                 axis.ticks = element_blank())
+  if (region_to_report %in% c("COF","RAP")){
+    p <- p + theme(legend.position = c(0.00,0.05), 
+                   legend.justification=c(0,0),
+                   legend.key.height=unit(8,'mm'),
+                   legend.key.width=unit(5,'mm'),
+                   legend.direction = "vertical",
+                   legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
+                   #legend.background=element_rect(colour=NA, fill=NA),
+                   legend.text=element_text(size=15), 
+                   legend.title=element_text(size=15), 
+                   title=element_text(size=17), 
+                   panel.background = element_blank(), 
+                   plot.background = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.grid.major = element_blank(),
+                   axis.text = element_blank(), 
+                   axis.title = element_blank(), 
+                   axis.ticks = element_blank())
+  }
+  if (region_to_report %in% c("REU")){
+    p <- p + theme(legend.position = c(0.00,0.1), 
+                   legend.justification=c(0,0),
+                   legend.key.height=unit(7,'mm'),
+                   legend.key.width=unit(4,'mm'),
+                   legend.direction = "vertical",
+                   legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
+                   #legend.background=element_rect(colour=NA, fill=NA),
+                   legend.text=element_text(size=14), 
+                   legend.title=element_text(size=14), 
+                   title=element_text(size=16), 
+                   panel.background = element_blank(), 
+                   plot.background = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.grid.major = element_blank(),
+                   axis.text = element_blank(), 
+                   axis.title = element_blank(), 
+                   axis.ticks = element_blank())
+  }
+  
+  if (region_to_report %in% c("RAF","RNE")){
+    p <- p + theme(legend.position = c(0.0,0.05), 
+                   legend.justification=c(0,0),
+                   legend.key.height=unit(6,'mm'),
+                   legend.key.width=unit(3.5,'mm'),
+                   legend.direction = "vertical",
+                   legend.background=element_rect(colour=NA, fill=alpha("white", 2/3)),
+                   # legend.background=element_rect(colour=NA, fill=NA),
+                   legend.text=element_text(size=13), 
+                   legend.title=element_text(size=13), 
+                   title=element_text(size=14), 
+                   panel.background = element_blank(), 
+                   plot.background = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.grid.major = element_blank(),
+                   axis.text = element_blank(), 
+                   axis.title = element_blank(), 
+                   axis.ticks = element_blank())
+  }
+  
   if (region_to_report == "REU") p <- p + coord_cartesian(xlim=c(-4290114,13198767,ylim=c(1965387,8184223)))
   # if (region_to_report == "RNE") p <- p + coord_cartesian(xlim=c(-4078415,1783566,ylim=c(29258,6247852)))
   if (region_to_report == "LAC") p <- p + coord_cartesian(xlim=c(-14078415,-1078415,ylim=c(29258,0)))

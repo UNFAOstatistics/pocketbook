@@ -1,61 +1,67 @@
 #################################################################################################
 # This is the main script used to control the production of FAO statistical pocketbook workflow #
-#
 ################################################################################################
-rm(list=ls(all=TRUE))
+
+rm(list=ls(all=TRUE)) # 
 gc()
 
-#options(scipen=999) # disable scientific number formatting
+options(scipen=999) # disable scientific number formatting
 
 # set root directory
 # root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
  root.dir <- "~/FAO/regional15/" # Amy
 
-
 setwd(root.dir)
 # set data directory
 # data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
- data.dir <- paste0(root.dir,"/input/data/database/")
+data.dir <- paste0(root.dir,"/input/data/database/")
 
 # Stuff you DO edit
 # ----------------------------------------------------------------------------------
 
 ## ---- chapters_to_include ----
-
-
 regionS_to_report <- c(
 #                       "GLO" # Global
-                              # "RAP" # Asia and the Pacific
-                              # ,"RAF"  # Africa
-                              # ,"REU" # Europe and Central Asia
-                              # ,"RNE" # Near East and North Africa
-#                              ,"LAC" # Latin America and the Caribbean
-                                 "COF" # Coffee
+                              "RAP" # Asia and the Pacific
+                              ,"RAF"  # Africa
+                              ,"REU" # Europe and Central Asia
+                              ,"RNE" # Near East and North Africa
+# #                              ,"LAC" # Latin America and the Caribbean
+                                 # "COF" # Coffee
                       )
 ############################################################
+# For print or for web
+for_print <- F
 # Parts to include/exclude
 # -------------------------------
+include_covers       <- T
 include_timestamp    <- T
+include_disclaimer   <- T
 include_foreword     <- T
 include_overview_map <- T
-include_overview_tbl <- F
+include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
-include_part5        <- T
-include_part6        <- T
+include_part1        <- T
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
+include_part5        <- F
+include_part6        <- F
+# include_part7        <- F # just a placeholder
+# include_part8        <- F # just a placeholder
+# include_part9        <- F # just a placeholder
+# include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
+include_country_profiles <- T
 include_definitions      <- T
+include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"
@@ -164,11 +170,21 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Kitts and Nevis"  
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Netherlands\nAntilles"
 #FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == ""                                            & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- ""
 
+# North Korea
+FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem Rep"
+
+
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
-load(paste0(data.dir,"/SYB2015-09-24.RData"))
-# load("../../database/Data/Processed/SYB2015-09-23.RData")
+# load(paste0(data.dir,"/SYB2015-09-24.RData"))
+# load(paste0(data.dir,"/SYB2015-10-14.RData"))
+# load(paste0(data.dir,"/SYB2015-10-15.RData"))
+load(paste0(data.dir,"/SYB2015-10-20.RData"))
+
 syb.df <- SYB.df; rm(SYB.df)
+
+syb.df <- syb.df[!syb.df$FAOST_CODE %in% "",]
+
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "LACregion"]         <- 11000
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "LACCaribbean"]      <- 11001
@@ -221,7 +237,6 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEome"]    <- 15003
 syb.df$FAOST_CODE <- factor(syb.df$FAOST_CODE)
 syb.df$FAOST_CODE <- as.numeric(levels(syb.df$FAOST_CODE))[syb.df$FAOST_CODE]
 
-
 syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], by = "FAOST_CODE", all.x = TRUE)
 
 # Fill missing values in SHORT_NAME with FAO_TABLE_NAME
@@ -240,7 +255,12 @@ syb.df[syb.df[, "FAOST_CODE"] %in% c(214), "Area"] <- "Taiwan"
 syb.df[syb.df[, "SHORT_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "SHORT_NAME"]), "SHORT_NAME"] <-   "West Bank and\nGaza Strip"
 syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(syb.df[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <-  "West Bank and Gaza Strip"
 
-source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
+syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\n Council States\n and Yemen"
+syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Near\n East countries"
+
+
+
+# source(paste0(root.dir,"/input/code/process_fisheries_data.R"))
 
 #   ____          __  _                                  _
 #  |  _ \   ___  / _|(_) _ __    ___   _ __  ___   __ _ (_)  ___   _ __   ___
@@ -285,6 +305,6 @@ map.df <- left_join(map.df,region_key)
 # na_countries <- na_countries[na_countries$Year %in% 2013,]
 # na_countries_FAOST_CODE <- unique(na_countries$FAOST_CODE)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
-
+# names(syb.df)
 
 source(paste0(root.dir,"/input/code/process_the_book.R"))

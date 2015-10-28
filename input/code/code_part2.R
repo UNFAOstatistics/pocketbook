@@ -26,24 +26,136 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P2undernuTEXT ----
 spread_title <- "Undernourishment"
-short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
-
+if (region_to_report == "RAF") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
+if (region_to_report == "RAP") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
+if (region_to_report == "REU") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
+if (region_to_report == "RNE") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
 
 ## ---- P2undernuData ----
-# Retrieve data
-dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-metdat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
-dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
-dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
-# SOFI to M49 conversions
-# Asia
-dat$FAOST_CODE[dat$FAOST_CODE == 5853] <- 5300
-dat$FAOST_CODE[dat$FAOST_CODE == 5001] <- 5000
 
-# Add Area var from sybdata.df
-tmp <- syb.df[!duplicated(syb.df[c("FAOST_CODE","Area")]),]
-dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
-dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
+if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
+  dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
+
+  # RAF
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRafReg"] <- "12000" # Regional Office for Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "5101"] <- 12002 # Eastern Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "5102"] <- 12001 # Middle Africa (sofi) - central africa (RAF)
+  dat$FAOST_CODE[dat$FAOST_CODE == "5104"] <- 12004 # Southern Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "5105"] <- 12005 # Western Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "421exclSudan"] <- 12003 # North Africa missing for SOFI
+
+  # RAP
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRapReg"] <- 13000  #  Regional Office for Asia and the Pacific
+  dat$FAOST_CODE[dat$FAOST_CODE == "5834"] <- 13001  #	East Asia
+  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13002  #	Pacific Islands
+  dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13003  #	Southeast Asia
+  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13004  #	South and Southwest Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "5857"] <- 13005  #	Central Asia - 'Caucasus and central Asia' in SOFI
+  # dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13006  #	Australia New Zealand ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "RAPDeveloped"] <- 13006  #	Australia New Zealand ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5502"] <- 13008  #	Melanesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5503"] <- 13009  #	Micronesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5504"] <- 13010  #	Polynesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5303"] <- 13012  #	Southern Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "5856"] <- 13014  #	Western Asia ??
+  ## RAP country level aggregates
+  new_rows <- dat[dat$FAOST_CODE == "68",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "68"] <- 13007  #	France
+  dat <- rbind(dat,new_rows)
+
+  new_rows <- dat[dat$FAOST_CODE == "185",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "185"] <- 13011  #	Russian Federation
+  dat <- rbind(dat,new_rows)
+
+  new_rows <- dat[dat$FAOST_CODE == "231",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "231"] <- 13013  #	United States
+  dat <- rbind(dat,new_rows)
+
+  # REU  - ALL MISSING FROM SOFI
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIReuReg"] <- 14000 # Regional Office for Europe and Central Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCaucAndTurkey"] <- 14001 # REU Caucasus and Turkey ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCentralAsia"] <- 14002 # REU Central Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCentralEasternEurope"] <- 14003 # REU Central Eastern Europe
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCISeurope"] <- 14004 # REU CIS Europe
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUOtherAndEFTA"] <- 14006 # REU Other and EFTA
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUSouthEasternEurope"] <- 14007 # REU South Eastern Europe
+  ## REU country level aggregates
+  new_rows <- dat[dat$FAOST_CODE == "105",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "105"] <- 14005 # Israel
+  dat <- rbind(dat,new_rows)
+
+  # RNE - ALL MISSING FROM SOFI
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRneReg"] <- 15000 # Regional Office for the Near East
+  dat$FAOST_CODE[dat$FAOST_CODE == "RNEgccsy"] <- 15001 # Gulf Cooperation Council States and Yemen
+  dat$FAOST_CODE[dat$FAOST_CODE == "RNEmaghreb"] <- 15002 # North Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "RNEmashreq"] <- 15003 # Other Near East countries
+
+  dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
+  dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
+
+  dat <- dat[!is.na(dat$FAOST_CODE),]
+  dat <- dat[!duplicated(dat[c("Year","FAOST_CODE")]),]
+
+  # Add Area var from syb.df
+  tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
+  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
+  dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
+
+  dat$FAO_TABLE_NAME <- str_replace_all(dat$FAO_TABLE_NAME, "SOFI Regional Office for ", "")
+  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
+  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
+  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
+
+  # As filippo stated in email on 22/10/15 that
+  ## The aggregates in yellow have been created but not disseminated because
+  ## they include developed countries. This means that you can use them but
+  ## just for those statistics in which developed countries are shown
+  ## (you can refer to the Food Security Indicators file for this). For example,
+  ## you cannot show the Prevalence of Undernourishment for these aggregates.
+S
+  # -> so I am replacing values for those variables & those aggregates with NA
+  # and they will appear empty in countryprofile tables
+
+  aggregates_to_censore <- c( 13006,  #	Australia New Zealand ??
+                              13008,  #	Melanesia ??
+                              13009,  #	Micronesia ??
+                              13010,  #	Polynesia ??
+                              13011,  #	Russian Federation
+                              13007,  #	France
+                              13013,  #	United States
+                              14007,  # REU South Eastern Europe
+                              14006,  # REU Other and EFTA
+                              14001,  # REU Caucasus and Turkey ??
+                              14004,  # REU CIS Europe
+                              14003,  # REU Central Eastern Europe
+                              14005,  # Israel
+                              5400    # Europe
+  )
+  
+  variables_to_censore <- c("FS.OA.POU.PCT3D1", # Prevalence of undernourishment (percent) (3 year averages)
+                            "FS.OA.SFEP.PCT",    #	Share of food expenditure of the poor (percent)
+                            "FS.OA.DOFD.KCD3D",	 # Depth of food decifit (kcal/capita/day) (3 year averages)
+                            "FS.OA.POFI.PCT3D1", # Prevalence of food inadequacy (percent) (3 year avearages)
+                            "SH.STA.WAST.ZS",    # Percentage of children under 5 years of age affected by wasting (percent)
+                            "SH.STA.STNT.ZS",    #	Percentage of children under 5 years of age who are stunted (percent)
+                            "SH.STA.MALN.ZS",	   #	Percentage of children under 5 years of age who are underweight (percent)
+                            "SH.STA.AMALN.ZS",	 # 	Percentage of adults who are underweight (percent)
+                            "FS.OU.VAD.PCT",     #	Prevalence of Vitamin A deficiency (%)
+                            "FS.OU.IODINE.PCT",	#	Prevalence of Iodine deficiency (%)
+                            "FS.OA.NOU.P3D1",	#	Number of people undernourished (millions) (3 year averages)
+                            "FBS.PCS.PDES.KCD3D" # Dietary energy supply (kcal/cap/day) (3 year averages)
+  )
+  # Replace existing value with NA
+  for (i in variables_to_censore){
+    dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_censore, NA, dat[[i]])
+  }
+
+
+  save(dat, file=paste0(data.dir,"/fsi_data.RData"))
+}
+
+load(paste0(data.dir,"/fsi_data.RData"))
+
 # M49LatinAmericaAndCaribbean
 dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
 # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
@@ -62,21 +174,18 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 # This should be thought twice how to produce it for regional books!
 
-tbl <- df[df$FAOST_CODE %in% c(5000,5852,5851,5100,5300,5205,5500),] # World
-tbl <- tbl[tbl$Year %in% c(1991,2015),]
-library(tidyr)
-tbl$Year <- paste0("X",tbl$Year)
-tbl <- tbl[c("Year","FAO_TABLE_NAME","FS.OA.POU.PCT3D1")]
-dw <- spread(tbl,
-             Year,
-             FS.OA.POU.PCT3D1)
+dw <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000),Year %in% c(1991,2015)) %>%
+  mutate(Year = paste0("X",Year)) %>%
+  select(Year,FAO_TABLE_NAME,FS.OA.POU.PCT3D1) %>%
+  spread(key = Year,value = FS.OA.POU.PCT3D1)
+
 dw$FAO_TABLE_NAME[dw$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
 dw$X2015[dw$X2015 == "20"] <- "20.0"
 names(dw) <- c("","1990-92","2014-16")
 
 #dw <- dw[c(7,3,4,1,2,5,6),]
 # Chiaras comments
-print.xtable(xtable(dw, caption = " Prevalence of undernourishment (percent)", digits = c(0,0,0,0),
+print.xtable(xtable(dw, caption = "\\large{Prevalence of undernourishment (percent)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
              type = "latex", table.placement = NULL,
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
@@ -85,7 +194,6 @@ print.xtable(xtable(dw, caption = " Prevalence of undernourishment (percent)", d
 
 ## ---- P2undernuLEFT ----
 # data
-
 dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
 
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
@@ -93,6 +201,8 @@ dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
+dat <- dat[dat$FAOST_CODE != 357,]
+dat <- dat[dat$FAOST_CODE != 41,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 #dat <- dat[which(dat[[region_to_report]]),]
@@ -102,7 +212,22 @@ top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014-2016")
 top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
 dat_plot <- rbind(top15,top91)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.OA.NOU.P3D1"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -128,17 +253,22 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.OA.NOU.P3D1"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-2016")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
-dat_plot <- rbind(top15,top91)
-
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FS.OA.NOU.P3D1),y=FS.OA.NOU.P3D1))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -173,7 +303,7 @@ top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
 p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.POU.PCT3D1,color=SHORT_NAME))
-p <- p + geom_point() + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="percent")
 p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
@@ -188,9 +318,6 @@ caption_text <- "Prevalence of undernourishment, top 5 countries"
 # dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
 
 dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
-
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 #dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
 
@@ -223,8 +350,10 @@ caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
 
 ## ---- P2availabTEXT ----
 spread_title <- "Food availability"
-short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
-
+if (region_to_report == "RAF") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "RAP") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "REU") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "RNE") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
 
 
 ## ---- P2availabData ----
@@ -232,17 +361,21 @@ short_text <- "Availability is an important dimension of food security. Supplyin
 
 
 ## ---- P2availabTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
 
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
-                     labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
+                            labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
 p
 
@@ -264,21 +397,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FBS.PCSS.CSR.PCT3D)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FBS.PCSS.CSR.PCT3D"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2009-2011")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FBS.PCSS.CSR.PCT3D)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PCSS.CSR.PCT3D))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -295,7 +429,7 @@ if (region_to_report == "RNE") caption_text <- "Energy supply derived from cerea
 if (region_to_report == "GLO") caption_text <- "Energy supply derived from cereals, roots and tubers, top 20 countries in 2009-2011"
 
 
-## ---- P2availabRIGHT, eval=P2availab ,right_plot=P2availab, fig.height=right_plot_height, fig.width=right_plot_width ----
+## ---- P2availabRIGHT ----
 
 
 dat <- df[df$Year %in%  c(2010) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PPCS.GT.GCD3D")]
@@ -312,9 +446,9 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -Year, -FBS.PPCS.GT.GCD3D)
 
 # limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
+if (nrow(dat) < 20){
+  max_nro_countries <- nrow(dat)
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
@@ -329,7 +463,8 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="g/cap/day")
-p <- p + guides(color = guide_legend(nrow = 2))
+#p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + theme(legend.position = "none")
 p
 
 # Caption
@@ -342,17 +477,24 @@ if (region_to_report == "GLO") caption_text <- "Average protein supply, top 20 c
 
 
 
-## ---- P2availabBOTTOM, eval=P2availab, bottom_plot=P2availab, fig.height=bottom_plot_height, fig.width=bottom_plot_width ----
+## ---- P2availabBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
 
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
+
+dat_plot <- dat_plot[!is.na(dat_plot$FBS.PPCS.AO.GCD3D),]
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + labs(y="g/cap/day", x="")
+p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
@@ -362,12 +504,9 @@ p
 caption_text <- "Average supply of protein of animal origin"
 
 
-## ---- P2availabMAP, eval=P2availab, map_plot=P2availab, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra ----
+## ---- P2availabMAP ----
 
 dat <- df[df$Year %in%  2012 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","QV.PCNPV.FOOD.ID3D")]
-
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 map.plot <- left_join(map.df,dat)
 
@@ -399,8 +538,10 @@ caption_text <- "Average value of food production, constant 2004-2006 I\\$ per p
 
 ## ---- P2accessTEXT ----
 spread_title <- "Food access"
-short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
-
+if (region_to_report == "RAF") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
+if (region_to_report == "RAP") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
+if (region_to_report == "REU") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
+if (region_to_report == "RNE") short_text <- "An adequate supply of food does not in itself guarantee household level food security. Access to food is primarily determined by incomes, food prices and the ability of households and individuals to obtain access to social support. Individuals’ access to food is also heavily influenced by social variables, including gender positioning and power hierarchies within households. In addition to economic affordability, physical access to food is also facilitated by adequate infrastructure, such as railway lines and paved roads."
 
 
 ## ---- P2accessData ----
@@ -408,12 +549,18 @@ short_text <- "An adequate supply of food does not in itself guarantee household
 
 
 ## ---- P2accessTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="kcal/cap/day", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -442,35 +589,36 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.DEA.DFPLI.IND)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.DEA.DFPLI.IND"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.DEA.DFPLI.IND)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.DEA.DFPLI.IND))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="percent")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RAF") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RAP") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "REU") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RNE") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "GLO") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
+caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RAF") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RAP") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "REU") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RNE") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "GLO") caption_text <- "Domestic food price level index, top 20 countries in 2014 (2000 to 2014)"
 
 
 
@@ -487,21 +635,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.OA.POU.PCT3D1)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.OA.POU.PCT3D1"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2014-16")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.OA.POU.PCT3D1)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.OA.POU.PCT3D1))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -509,26 +658,34 @@ p <- p + labs(x="",y="percent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
 # Caption
 caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
-if (region_to_report == "RAF") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RAP") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "REU") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "RNE") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
-if (region_to_report == "GLO") caption_text <- "Domestic food price level index (index), top 20 countries in 2014 (2000 to 2014)"
+if (region_to_report == "RAF") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "RAP") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "REU") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "RNE") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
+if (region_to_report == "GLO") caption_text <- "Prevalence of undernourishment, highest 20 countries in 2014-16 (3 year averages)"
 
 
 ## ---- P2accessBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + labs(y="US$", x="")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -539,8 +696,6 @@ caption_text <- "GDP per capita, PPP, constant 2011 international \\$"
 ## ---- P2accessMAP ----
 dat <- df[df$Year %in%  2007:2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","IS.ROD.DNST.K2D")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 dat <- dat[!is.na(dat$IS.ROD.DNST.K2D),]
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
@@ -556,13 +711,13 @@ cat_data$value_cat <- categories(x=cat_data$IS.ROD.DNST.K2D, n=5) # manualBreaks
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "per 100 square km of land"
+map_unit <- "per 100 km² of land"
 
 
 create_map_here()
 
 # Caption
-caption_text <- "Road density, per 100 square km of land area (2007 to 2011*)"
+caption_text <- "Road density, per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
 
 
 #   _____                       _           _             _       _   _   _   _
@@ -574,19 +729,27 @@ caption_text <- "Road density, per 100 square km of land area (2007 to 2011*)"
 
 ## ---- P2stabilityTEXT ----
 spread_title <- "Economic and political stability"
-short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
-
+if (region_to_report == "RAF") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
+if (region_to_report == "RAP") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
+if (region_to_report == "REU") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
+if (region_to_report == "RNE") short_text <- "Over the last ten years, food and agricultural markets have entered an unexpectedly turbulent phase, characterized by large supply shortfalls, price swings. Political and economic uncertainties, coupled with extreme weather conditions, can have direct and adverse impacts on food security. The poorer the household, the stronger the impact of external shocks, as poor households spend a proportionally higher share of their incomes on food."
 
 ## ---- P2stabilityData ----
 
 
 ## ---- P2stabilityTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DEA.PCFPV.IDD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="index", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -612,26 +775,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.DS.PCFSV.KCDD)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.DS.PCFSV.KCDD"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2011")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2011")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.DS.PCFSV.KCDD)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.DS.PCFSV.KCDD))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="kcal/capita/day")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -655,26 +819,27 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.DEA.DFPLIV.IND)
+# semi-standard data munging for two year dot-plots
+# give name Value for value-col
+names(dat)[names(dat)=="FS.DEA.DFPLIV.IND"] <- "Value"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+dat <- arrange(dat, -Year, -Value)
+# slice the data for both years
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2011")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+dat_plot <- rbind(top2015,top2000)
+# levels based on newest year
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+###############
 
-# limit the nro of printed for REU/RNE countries
-if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2011")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
-dat_plot <- rbind(top15,top91)
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FS.DEA.DFPLIV.IND)$SHORT_NAME)
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FS.DEA.DFPLIV.IND))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="index")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -686,7 +851,7 @@ if (region_to_report == "RNE") caption_text <- "Domestic food price volatility i
 if (region_to_report == "GLO") caption_text <- "Domestic food price volatility index, top 20 countriesin 2014"
 
 ## ---- P2stabilityBOTTOM ----
-dat <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
+dat <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
 
 dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
 
@@ -695,7 +860,7 @@ dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
 dat_plot$year_range[dat$Year == 2000] <- "1999-2001"
 dat_plot$year_range[dat$Year == 2010] <- "2009-2011"
 
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=(dat_plot %>% filter(year_range == "2009-2011") %>% arrange(-T.V.FEFS.PCT3D))$FAO_TABLE_NAME)
 
 p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME,y=T.V.FEFS.PCT3D,fill=year_range))
 p <- p + geom_bar(stat="identity",position="dodge")
@@ -710,9 +875,6 @@ caption_text <- "Value of food imports as a share of total merchandise exports (
 ## ---- P2stabilityMAP ----
 dat <- df[df$Year %in%  2013 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","G.GD.PSAVT.IN")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
-
 dat <- dat[!is.na(dat$G.GD.PSAVT.IN),]
 
 map.plot <- left_join(map.df,dat)
@@ -721,7 +883,7 @@ map.plot <- left_join(map.df,dat)
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","G.GD.PSAVT.IN")]
-cat_data$value_cat <- categories(x=cat_data$G.GD.PSAVT.IN, n=5) # manualBreaks = c(0, 5, 15, 25, 35, 100),
+cat_data$value_cat <- categories(x=cat_data$G.GD.PSAVT.IN, n=5,decimals = 1) # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -745,8 +907,10 @@ caption_text <- "Political stability and absence of violence/terrorism, index (2
 
 ## ---- P2utilizaTEXT ----
 spread_title <- "Food utilization"
-short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
-
+if (region_to_report == "RAF") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
+if (region_to_report == "RAP") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
+if (region_to_report == "REU") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
+if (region_to_report == "RNE") short_text <- "Utilization emphasizes the nutritional aspects of food security. It is commonly understood as the way the body makes the most of nutrients from food. Sufficient energy and nutrient intake includes nutritious and safe diets, a clean environment, access to health care, diversity of a diet and intra-household distribution of food. Poor utilization within a population can impose economic and social costs in countries at all economic levels."
 
 ## ---- P2utilizaData ----
 
@@ -763,13 +927,13 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-tbl <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>% ungroup() 
+tbl <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>% ungroup()
 tbl <- arrange(tbl, -SH.STA.MALN.ZS)[1:5,]
 tbl <- left_join(tbl,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")])
 tbl <- tbl[c(5,2,4)]
 names(tbl) <- c("","Year","%")
 
-print.xtable(xtable(tbl, caption = "Countries with highest share of children under 5 who are underweight, percent", digits = c(0,0,0,1),
+print.xtable(xtable(tbl, caption = "\\large{Countries with highest share of children under 5 who are underweight}, percent", digits = c(0,0,0,1),
                     align= "l{\raggedright\arraybackslash}p{1.6cm}rr"),
              type = "latex", table.placement = NULL, booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
 
@@ -793,8 +957,8 @@ dat <- arrange(dat, -Year, -SH.STA.STNT.ZS)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
+  max_nro_countries <- nrow(dat)
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
@@ -810,16 +974,16 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="percent")
-p <- p + guides(color = guide_legend(nrow = 2))
+# p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
-if (region_to_report == "RAF") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "RAP") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "REU") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "RNE") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
-if (region_to_report == "GLO") caption_text <- "Average protein supply, top 20 countries in 2009-2011"
+if (region_to_report == "RAF") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "RAP") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "REU") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "RNE") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
+if (region_to_report == "GLO") caption_text <- "Percentage of children under 5 who are stunted, highest 20 countries (2006 - 2014*)"
 
 ## ---- P2utilizaRIGHT ----
 dat <- df[df$Year %in%  2006:2014 & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","SH.STA.WAST.ZS")]
@@ -839,8 +1003,8 @@ dat <- arrange(dat, -Year, -SH.STA.WAST.ZS)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
-  max_nro_countries <- 8
-} else max_nro_countries <- 20 
+  max_nro_countries <- nrow(dat)
+} else max_nro_countries <- 20
 
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
@@ -856,7 +1020,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="percent")
-p <- p + guides(color = guide_legend(nrow = 2))
+# p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -881,19 +1045,19 @@ dat_plot$variable[dat_plot$variable == "SH.STA.ACSN"] <- "Sanitation facilities"
 
 
 p <- ggplot(dat_plot, aes(x=Year,y=value,color=variable))
-p <- p + geom_line()
+p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y="percent of population")
 p <- p + scale_x_continuous(breaks=c(2000,2005,2010))
 p
 
-caption_text <- "Value of food imports as a share of total merchandise exports (3 year averages)"
+caption_text <- "Access to improved water source and sanitation facilities"
 
 ## ---- P2utilizaMAP ----
 
-dat <- df[df$Year %in%  2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","SH.ANM.CHLD.ZS")]
+dat <- df[df$Year %in%  2008:2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","SH.ANM.CHLD.ZS")]
 
-dat <- dat[dat$FAOST_CODE != 41,]
+# dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 351] <- 41
 
 dat <- dat[!is.na(dat$SH.ANM.CHLD.ZS),]

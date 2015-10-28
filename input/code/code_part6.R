@@ -592,12 +592,12 @@ PI_656_5539 <- dat$aggregates
 
 ## ---- P6coffeepricesTOPRIGHT ----
 
-if (file.exists(paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"))) {
-  dd <- read_excel(paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"), sheet = 4, skip = 8)
+if (file.exists(paste0(root.dir,"/input/data/database/pink_data_a.xlsx"))) {
+  dd <- read_excel(paste0(root.dir,"/input/data/database/pink_data_a.xlsx"), sheet = 4, skip = 8)
   
 } else {
-  download.file("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1304428586133/pink_data_a.xlsx", destfile = paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"))
-  dd <- read_excel(paste0(root.dir,"/input/data/tmp/pink_data_a.xlsx"), sheet = 4, skip = 8)
+  download.file("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1304428586133/pink_data_a.xlsx", destfile = paste0(root.dir,"/input/data/database/pink_data_a.xlsx"))
+  dd <- read_excel(paste0(root.dir,"/input/data/database/pink_data_a.xlsx"), sheet = 4, skip = 8)
 }
 names(dd)[1] <- "Year"
 

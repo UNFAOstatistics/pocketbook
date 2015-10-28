@@ -1018,7 +1018,9 @@ COF <- c(M49_Americas,
 ##########################################################################################################
 # Create dummy vars 
 
-region_key <- FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME","SHORT_NAME")]
+if (!(exists("run_only_regions"))) region_key <- FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME","SHORT_NAME")]
+if (exists("run_only_regions")) region_key <- FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")]
+
 # include only countries listed above
 region_key <- region_key[region_key$FAOST_CODE %in% GLO,]
 
