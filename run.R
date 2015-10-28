@@ -23,9 +23,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
 #                       "GLO" # Global
                               "RAP" # Asia and the Pacific
-                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                              ,"RNE" # Near East and North Africa
+#                               ,"RAF"  # Africa
+#                               ,"REU" # Europe and Central Asia
+#                               ,"RNE" # Near East and North Africa
 # #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
