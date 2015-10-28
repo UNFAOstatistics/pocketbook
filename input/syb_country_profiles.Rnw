@@ -105,59 +105,11 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
 
 # merge latest FSI data from Filippo
 
+
 if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
 
-  dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-  dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
-  dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
+  load(paste0(data.dir,"/fsi_data.RData")) # manipulated in code_part2.R
   
-  # RAF
-  dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 12000 # Regional Office for Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == 5101] <- 12002 # Eastern Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == 5102] <- 12001 # Middle Africa (sofi) - central africa (RAF)
-  dat$FAOST_CODE[dat$FAOST_CODE == 5104] <- 12004 # Southern Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == 5105] <- 12005 # Western Africa
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 12003 # North Africa missing for SOFI
-  
-  # RAP
-  dat$FAOST_CODE[dat$FAOST_CODE == 5853] <- 13000  #  Regional Office for Asia and the Pacific
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13001  #	East Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13002  #	Pacific Islands
-  dat$FAOST_CODE[dat$FAOST_CODE == 5304] <- 13003  #	Southeast Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13004  #	South and Southwest Asia
-  dat$FAOST_CODE[dat$FAOST_CODE == 5857] <- 13005  #	Central Asia - 'Caucasus and central Asia' in SOFI 
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13006  #	Australia New Zealand
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13007  #	France
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13008  #	Melanesia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13009  #	Micronesia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13010  #	Polynesia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13011  #	Russian Federation
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13012  #	Southern Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13013  #	United States
-  dat$FAOST_CODE[dat$FAOST_CODE == 5856] <- 13014  #	Western Asia
-  
-  # REU  - ALL MISSING FROM SOFI
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14000 # Regional Office for Europe and Central Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14001 # REU Caucasus and Turkey
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14002 # REU Central Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14003 # REU Central Eastern Europe
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14004 # REU CIS Europe
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14005 # Israel
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14006 # REU Other and EFTA
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 14007 # REU South Eastern Europe
-  
-  # RNE - ALL MISSING FROM SOFI
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 15000 # Regional Office for the Near East
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 15001 # Gulf Cooperation Council States and Yemen
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 15002 # North Africa
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 15003 # Other Near East countries
-  
-  
-  # Add Area var from syb.df
-  tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
-  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
-  dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
-
   dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
   vars_to_exclude <- names(syb.df)[names(syb.df) %in% names(dat)][c(-1:-4,-14)]
   myvars <- names(syb.df) %in% vars_to_exclude

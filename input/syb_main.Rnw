@@ -852,7 +852,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 <<P1overTEXT, eval=P1over, short_text_ChartPage=P1over>>=
 @
 
-<<P1overData,results='hide', cache=TRUE>>=
+<<P1overData,results='hide', cache=FALSE>>=
 @
 
 
@@ -898,7 +898,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 @
 
 
-<<P1econBOTTOM_data, cache=TRUE>>=
+<<P1econBOTTOM_data, cache=FALSE>>=
 @
 
 
@@ -936,7 +936,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 @
 
 
-<<P1laboBOTTOM_data, cache=TRUE, results='hide'>>=
+<<P1laboBOTTOM_data, cache=FALSE, results='hide'>>=
 @
 
 
@@ -995,7 +995,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 <<P1investTEXT, eval=P1invest, short_text_ChartPage=P1invest>>=
 @
 
-<<P1investData,results='hide', cache=TRUE>>=
+<<P1investData,results='hide', cache=FALSE>>=
 @
 
 
@@ -1013,7 +1013,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 <<P1investBOTTOM, eval=P1invest, bottom_plot=P1invest, fig.height=bottom_plot_height, fig.width=bottom_plot_width>>=
 @
 
-<<p1investMAPdata, results='hide', cache=TRUE>>=
+<<p1investMAPdata, results='hide', cache=FALSE>>=
 @
 
 
@@ -1160,7 +1160,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-<<P2accessData, cache=TRUE,results='hide', eval=P2access>>=
+<<P2accessData, cache=FALSE,results='hide', eval=P2access>>=
 @
 
 
@@ -1196,7 +1196,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-<<P2stabilityData, cache=TRUE,results='hide', eval=P2stability>>=
+<<P2stabilityData, cache=FALSE,results='hide', eval=P2stability>>=
 @
 
 
@@ -1231,7 +1231,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-<<P2utilizaData, cache=TRUE,results='hide', eval=P2utiliza>>=
+<<P2utilizaData, cache=FALSE,results='hide', eval=P2utiliza>>=
 @
 
 
@@ -1305,7 +1305,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3desTEXT, eval=P3des, short_text_ChartPage=P3des>>=
 @
 
-<<P3desData,results='hide', cache=TRUE, eval=P3des>>=
+<<P3desData,results='hide', cache=FALSE, eval=P3des>>=
 @
 
 
@@ -1344,7 +1344,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3cropproTEXT, eval=P3croppro, short_text_ChartPage=P3croppro>>=
 @
 
-<<P3cropproData,results='hide', cache=TRUE, eval=P3croppro>>=
+<<P3cropproData,results='hide', cache=FALSE, eval=P3croppro>>=
 @
 
 <<P3cropproTOPRIGHT, eval=P3croppro, top_right_minitable=P3croppro>>=
@@ -1379,7 +1379,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3cropTEXT, eval=P3crop, short_text_ChartPage=P3crop>>=
 @
 
-<<P3cropData,results='hide',cache=TRUE,eval=P3crop>>=
+<<P3cropData,results='hide',cache=FALSE,eval=P3crop>>=
 @
 
 
@@ -1417,7 +1417,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3livestockTEXT, eval=P3livestock, short_text_ChartPage=P3livestock>>=
 @
 
-<<P3livestockData,results='hide',cache=TRUE,eval=P3livestock>>=
+<<P3livestockData,results='hide',cache=FALSE,eval=P3livestock>>=
 @
 
 
@@ -1454,7 +1454,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3fisheriesTEXT, eval=P3fisheries, short_text_ChartPage=P3fisheries>>=
 @
 
-<<P3fisheriesData,results='hide',cache=TRUE,eval=FALSE>>=
+<<P3fisheriesData,results='hide',cache=FALSE,eval=FALSE>>=
 @
 
 
@@ -1488,7 +1488,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3tradeTEXT, eval=P3trade, short_text_ChartPage=P3trade>>=
 @
 
-<<P3tradeData,results='hide',cache=TRUE,eval=P3trade>>=
+<<P3tradeData,results='hide',cache=FALSE,eval=P3trade>>=
 @
 
 
@@ -1604,7 +1604,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
 @
 
 
-<<P4waterData, cache=TRUE,results='hide', eval=P4water>>=
+<<P4waterData, cache=FALSE,results='hide', eval=P4water>>=
 @
 
 
@@ -1644,7 +1644,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
 @
 
 
-<<P4energyData, cache=TRUE,results='hide', eval=P4energy>>=
+<<P4energyData, cache=FALSE,results='hide', eval=P4energy>>=
 @
 
 

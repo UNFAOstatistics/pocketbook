@@ -580,10 +580,10 @@ if (region_to_report == "RNE") definitions_to_print <- definitions_to_print_RNE
 if (region_to_report == "COF") definitions_to_print <- definitions_to_print_COF
 
 
-d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
-d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
+# d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
+# d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
 
-# d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
+d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
 
 for (i in definitions_to_print){
 
