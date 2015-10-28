@@ -105,6 +105,40 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
+  
+  # As filippo stated in email on 22/10/15 that
+  ## The aggregates in yellow have been created but not disseminated because
+  ## they include developed countries. This means that you can use them but
+  ## just for those statistics in which developed countries are shown
+  ## (you can refer to the Food Security Indicators file for this). For example,
+  ## you cannot show the Prevalence of Undernourishment for these aggregates.
+  
+  # -> so I am replacing values for those variables & those aggregates with NA
+  # and they will appear empty in countryprofile tables
+  
+  aggregates_to_sencore <- c( 13006,  #	Australia New Zealand ??
+                              13008,  #	Melanesia ??
+                              13009,  #	Micronesia ??
+                              13010,  #	Polynesia ??
+                              13011,  #	Russian Federation
+                              13007,  #	France
+                              13013,  #	United States
+                              14007,  # REU South Eastern Europe
+                              14006,  # REU Other and EFTA
+                              14001,  # REU Caucasus and Turkey ??
+                              14004,  # REU CIS Europe
+                              14003,  # REU Central Eastern Europe
+                              14005,  # Israel
+                              5400    # Europe
+  )
+  variables_to_sencore <- c("FS.OA.POU.PCT3D1", # Average dietary energy supply adequacy (percent) (3 year averages)
+                            "FS.DA.ADESA.PCT3D" # Prevalence of undernourishment (percent) (3 year averages)
+  )
+  #
+  for (i in variables_to_sencore){
+    dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_sencore, NA, dat[[i]])
+  }
+  
 
   save(dat, file=paste0(data.dir,"/fsi_data.RData"))
 }
