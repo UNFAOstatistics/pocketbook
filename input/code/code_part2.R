@@ -32,20 +32,85 @@ if (region_to_report == "REU") short_text <- "Undernourishment is a state, lasti
 if (region_to_report == "RNE") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 795 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
 
 ## ---- P2undernuData ----
-# Retrieve data
-dat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationDataset.csv"), stringsAsFactors=FALSE)
-metdat <- read.csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"), stringsAsFactors=FALSE)
-dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
-dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
-# SOFI to M49 conversions
-# Asia
-dat$FAOST_CODE[dat$FAOST_CODE == 5853] <- 5300
-dat$FAOST_CODE[dat$FAOST_CODE == 5001] <- 5000
 
-# Add Area var from sybdata.df
-tmp <- syb.df[!duplicated(syb.df[c("FAOST_CODE","Area")]),]
-dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
-dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
+if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
+  dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
+
+  # RAF
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRafReg"] <- "12000" # Regional Office for Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "5101"] <- 12002 # Eastern Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "5102"] <- 12001 # Middle Africa (sofi) - central africa (RAF)
+  dat$FAOST_CODE[dat$FAOST_CODE == "5104"] <- 12004 # Southern Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "5105"] <- 12005 # Western Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "421exclSudan"] <- 12003 # North Africa missing for SOFI
+
+  # RAP
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRapReg"] <- 13000  #  Regional Office for Asia and the Pacific
+  dat$FAOST_CODE[dat$FAOST_CODE == "5834"] <- 13001  #	East Asia
+  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13002  #	Pacific Islands
+  dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13003  #	Southeast Asia
+  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13004  #	South and Southwest Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "5857"] <- 13005  #	Central Asia - 'Caucasus and central Asia' in SOFI
+  # dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13006  #	Australia New Zealand ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "RAPDeveloped"] <- 13006  #	Australia New Zealand ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5502"] <- 13008  #	Melanesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5503"] <- 13009  #	Micronesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5504"] <- 13010  #	Polynesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5303"] <- 13012  #	Southern Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "5856"] <- 13014  #	Western Asia ??
+  ## RAP country level aggregates
+  new_rows <- dat[dat$FAOST_CODE == "68",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "68"] <- 13007  #	France
+  dat <- rbind(dat,new_rows)
+
+  new_rows <- dat[dat$FAOST_CODE == "185",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "185"] <- 13011  #	Russian Federation
+  dat <- rbind(dat,new_rows)
+
+  new_rows <- dat[dat$FAOST_CODE == "231",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "231"] <- 13013  #	United States
+  dat <- rbind(dat,new_rows)
+
+  # REU  - ALL MISSING FROM SOFI
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIReuReg"] <- 14000 # Regional Office for Europe and Central Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCaucAndTurkey"] <- 14001 # REU Caucasus and Turkey ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCentralAsia"] <- 14002 # REU Central Asia
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCentralEasternEurope"] <- 14003 # REU Central Eastern Europe
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUCISeurope"] <- 14004 # REU CIS Europe
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUOtherAndEFTA"] <- 14006 # REU Other and EFTA
+  dat$FAOST_CODE[dat$FAOST_CODE == "REUSouthEasternEurope"] <- 14007 # REU South Eastern Europe
+  ## REU country level aggregates
+  new_rows <- dat[dat$FAOST_CODE == "105",]
+  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "105"] <- 14005 # Israel
+  dat <- rbind(dat,new_rows)
+
+  # RNE - ALL MISSING FROM SOFI
+  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRneReg"] <- 15000 # Regional Office for the Near East
+  dat$FAOST_CODE[dat$FAOST_CODE == "RNEgccsy"] <- 15001 # Gulf Cooperation Council States and Yemen
+  dat$FAOST_CODE[dat$FAOST_CODE == "RNEmaghreb"] <- 15002 # North Africa
+  dat$FAOST_CODE[dat$FAOST_CODE == "RNEmashreq"] <- 15003 # Other Near East countries
+
+  dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
+  dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
+
+  dat <- dat[!is.na(dat$FAOST_CODE),]
+  dat <- dat[!duplicated(dat[c("Year","FAOST_CODE")]),]
+
+  # Add Area var from syb.df
+  tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
+  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
+  dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
+
+  dat$FAO_TABLE_NAME <- str_replace_all(dat$FAO_TABLE_NAME, "SOFI Regional Office for ", "")
+  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
+  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
+  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
+
+  save(dat, file=paste0(data.dir,"/fsi_data.RData"))
+}
+
+load(paste0(data.dir,"/fsi_data.RData"))
+
 # M49LatinAmericaAndCaribbean
 dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
 # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
@@ -64,14 +129,11 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 # This should be thought twice how to produce it for regional books!
 
-tbl <- df[df$FAOST_CODE %in% c(5000,5852,5851,5100,5300,5205,5500),] # World
-tbl <- tbl[tbl$Year %in% c(1991,2015),]
-library(tidyr)
-tbl$Year <- paste0("X",tbl$Year)
-tbl <- tbl[c("Year","FAO_TABLE_NAME","FS.OA.POU.PCT3D1")]
-dw <- spread(tbl,
-             Year,
-             FS.OA.POU.PCT3D1)
+dw <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000),Year %in% c(1991,2015)) %>%
+  mutate(Year = paste0("X",Year)) %>%
+  select(Year,FAO_TABLE_NAME,FS.OA.POU.PCT3D1) %>%
+  spread(key = Year,value = FS.OA.POU.PCT3D1)
+
 dw$FAO_TABLE_NAME[dw$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
 dw$X2015[dw$X2015 == "20"] <- "20.0"
 names(dw) <- c("","1990-92","2014-16")
@@ -87,7 +149,6 @@ print.xtable(xtable(dw, caption = "\\large{Prevalence of undernourishment (perce
 
 ## ---- P2undernuLEFT ----
 # data
-
 dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
 
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
@@ -95,6 +156,8 @@ dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 dat <- left_join(dat,region_key)
 
 dat <- dat[dat$FAOST_CODE != 348,]
+dat <- dat[dat$FAOST_CODE != 357,]
+dat <- dat[dat$FAOST_CODE != 41,]
 dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 #dat <- dat[which(dat[[region_to_report]]),]
@@ -253,9 +316,13 @@ if (region_to_report == "RNE") short_text <- "Availability is an important dimen
 
 
 ## ---- P2availabTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
 
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
@@ -263,7 +330,7 @@ p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plo
 p <- p + labs(y="percent", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
-                     labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
+                            labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
 p
 
@@ -317,7 +384,7 @@ if (region_to_report == "RNE") caption_text <- "Energy supply derived from cerea
 if (region_to_report == "GLO") caption_text <- "Energy supply derived from cereals, roots and tubers, top 20 countries in 2009-2011"
 
 
-## ---- P2availabRIGHT, eval=P2availab ,right_plot=P2availab, fig.height=right_plot_height, fig.width=right_plot_width ----
+## ---- P2availabRIGHT ----
 
 
 dat <- df[df$Year %in%  c(2010) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PPCS.GT.GCD3D")]
@@ -365,9 +432,15 @@ if (region_to_report == "GLO") caption_text <- "Average protein supply, top 20 c
 
 
 
-## ---- P2availabBOTTOM, eval=P2availab, bottom_plot=P2availab, fig.height=bottom_plot_height, fig.width=bottom_plot_width ----
+## ---- P2availabBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot <- dat_plot[!is.na(dat_plot$FBS.PPCS.AO.GCD3D),]
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
@@ -376,7 +449,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="g/cap/day", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
@@ -386,7 +459,7 @@ p
 caption_text <- "Average supply of protein of animal origin"
 
 
-## ---- P2availabMAP, eval=P2availab, map_plot=P2availab, fig.width=map.fig.width, fig.height= map.fig.height ,out.width=map.out.width, out.height=map.out.height, out.extra=map.out.extra ----
+## ---- P2availabMAP ----
 
 dat <- df[df$Year %in%  2012 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","QV.PCNPV.FOOD.ID3D")]
 
@@ -431,7 +504,13 @@ if (region_to_report == "RNE") short_text <- "An adequate supply of food does no
 
 
 ## ---- P2accessTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
@@ -546,7 +625,13 @@ if (region_to_report == "GLO") caption_text <- "Prevalence of undernourishment, 
 
 ## ---- P2accessBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
@@ -554,8 +639,8 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="US$", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -608,7 +693,13 @@ if (region_to_report == "RNE") short_text <- "Over the last ten years, food and 
 
 
 ## ---- P2stabilityTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+                                                                    "Europe and Central Asia",
+                                                                    "Asia and the Pacific",
+                                                                    "Africa",
+                                                                    "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
@@ -715,7 +806,7 @@ if (region_to_report == "RNE") caption_text <- "Domestic food price volatility i
 if (region_to_report == "GLO") caption_text <- "Domestic food price volatility index, top 20 countriesin 2014"
 
 ## ---- P2stabilityBOTTOM ----
-dat <- df %>% filter(FAOST_CODE %in% c(5100,5300,5500,5205,5000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
+dat <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
 
 dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
 
@@ -724,7 +815,7 @@ dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
 dat_plot$year_range[dat$Year == 2000] <- "1999-2001"
 dat_plot$year_range[dat$Year == 2010] <- "2009-2011"
 
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
+dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=(dat_plot %>% filter(year_range == "2009-2011") %>% arrange(-T.V.FEFS.PCT3D))$FAO_TABLE_NAME)
 
 p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME,y=T.V.FEFS.PCT3D,fill=year_range))
 p <- p + geom_bar(stat="identity",position="dodge")
