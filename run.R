@@ -8,8 +8,8 @@ gc()
 options(scipen=999) # disable scientific number formatting
 
 # set root directory
-# root.dir <- "~/btsync/faosync/pocketbooks/regional15/" # Markus
- root.dir <- "~/FAO/regional15/" # Amy
+if (Sys.info()[["user"]] == "markus") root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
+if (Sys.info()[["user"]] == "amy")   root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
@@ -41,10 +41,10 @@ include_foreword     <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- T
-include_part2        <- T
-include_part3        <- T
-include_part4        <- T
+include_part1        <- F
+include_part2        <- F
+include_part3        <- F
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -54,14 +54,14 @@ include_part6        <- F
 # -------------------------------
 include_country_profiles <- T
 include_definitions      <- T
-include_notes            <- T
+include_notes            <- F
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"

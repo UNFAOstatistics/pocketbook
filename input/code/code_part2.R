@@ -131,7 +131,7 @@ S
                               14005,  # Israel
                               5400    # Europe
   )
-  
+
   variables_to_censore <- c("FS.OA.POU.PCT3D1", # Prevalence of undernourishment (percent) (3 year averages)
                             "FS.OA.SFEP.PCT",    #	Share of food expenditure of the poor (percent)
                             "FS.OA.DOFD.KCD3D",	 # Depth of food decifit (kcal/capita/day) (3 year averages)
