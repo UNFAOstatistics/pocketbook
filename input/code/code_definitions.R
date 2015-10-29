@@ -11,7 +11,7 @@ definitions_to_print_RAF <- c("agricultural_area",
                               "agriculture_orientation_index",
                                "agriculture_value_added_per_worker",
                               "anemia_among_children_under_5_years_of_age._prevalence_(pros)",
-                              # "anemia_women_in_reproductive_age_(pros)",
+                              # "prevalence_of_anemia_among_pregnant_women_(pros)",
                               "aquaculture_fish_production",
                               "arable_land",
                                "area_equipped_for_irrigation",
@@ -128,7 +128,7 @@ definitions_to_print_RAP <- c("agricultural_area",
                                "agriculture_orientation_index",
                                "agriculture_value_added_per_worker",
                                "anemia_among_children_under_5_years_of_age._prevalence_(pros)",
-                              # "anemia_women_in_reproductive_age_(pros)",
+                              # "prevalence_of_anemia_among_pregnant_women_(pros)",
                               "aquaculture_fish_production",
                               "arable_land",
                               "area_equipped_for_irrigation",
@@ -244,7 +244,7 @@ definitions_to_print_REU <- c("agricultural_area",
                                "agriculture_orientation_index",
                                "agriculture_value_added_per_worker",
                                "anemia_among_children_under_5_years_of_age._prevalence_(pros)",
-                              "anemia_women_in_reproductive_age_(pros)",
+                              "prevalence_of_anemia_among_pregnant_women_(pros)",
                               "aquaculture_fish_production",
                               "arable_land",
                               "area_equipped_for_irrigation",
@@ -354,7 +354,7 @@ definitions_to_print_RNE <- c("agricultural_area",
                                "agriculture_orientation_index",
                                "agriculture_value_added_per_worker",
                                "anemia_among_children_under_5_years_of_age._prevalence_(pros)",
-                              # "anemia_women_in_reproductive_age_(pros)",
+                              # "prevalence_of_anemia_among_pregnant_women_(pros)",
                               "aquaculture_fish_production",
                               "arable_land",
                               "area_equipped_for_irrigation",
@@ -580,13 +580,13 @@ if (region_to_report == "RNE") definitions_to_print <- definitions_to_print_RNE
 if (region_to_report == "COF") definitions_to_print <- definitions_to_print_COF
 
 
-d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
+# d <- read_csv(paste0(root.dir,"/input/data/definitions.csv"))
+# 
+# yml <- yaml::as.yaml(d, column.major = FALSE) # 1
+# writeLines(yml,con = paste0(root.dir,"/input/data/definitions.yaml"))
 
-yml <- yaml::as.yaml(d, column.major = FALSE) # 1
-writeLines(yml,con = paste0(root.dir,"/input/data/definitions.yaml"))
-
-# d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
-# d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
+d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
+d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
 
 
 
