@@ -23,25 +23,29 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
 #                       "GLO" # Global
                               "RAP" # Asia and the Pacific
-#                               ,"RAF"  # Africa
-#                               ,"REU" # Europe and Central Asia
-#                               ,"RNE" # Near East and North Africa
+                              # ,"RAF"  # Africa
+                              # ,"REU" # Europe and Central Asia
+                              # ,"RNE" # Near East and North Africa
 # #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
 ############################################################
-# For print or for web
-for_print <- F
+# For print or for web or a4-print (in-house)
+# output_type <- "web" # web//a4
+# output_type <- "print" # web/print/a4
+output_type <- "a4" # web/print/a4
+
+
 # Parts to include/exclude
 # -------------------------------
-include_covers       <- T
+include_covers       <- F
 include_timestamp    <- T
 include_disclaimer   <- T
 include_foreword     <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
+include_part1        <- T
 include_part2        <- F
 include_part3        <- F
 include_part4        <- F
@@ -53,15 +57,15 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- F
-include_definitions      <- F
-include_notes            <- F
+include_definitions      <- T
+include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # just for troubleshooting
 region_to_report <- "RAF"
