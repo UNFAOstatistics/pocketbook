@@ -5,9 +5,9 @@
   owner: WHO
 - id: energy_consumption_for_power_irrigation
   name: Energy consumption for power irrigation
-  description: Irrigated area is the sum of "total area equipped for full control irrigation: sprinkler" and
-"total area equipped for full control irrigation: localized" taken from the FAO AQUASTAT database. Annual values in FAOSTAT are
-estimated by repeating the last-available value reported in AQUASTAT within the associated time interval.
+  description: 'Irrigated area is the sum of "total area equipped for full control irrigation: sprinkler" 
+    and "total area equipped for full control irrigation: localized" taken from the FAO AQUASTAT database. 
+    Annual values in FAOSTAT are estimated by repeating the last-available value reported in AQUASTAT within the associated time interval.'
   source: FAO, Statistics Division
   owner: FAO
 - id: bioenergy_production
@@ -18,14 +18,14 @@ estimated by repeating the last-available value reported in AQUASTAT within the 
 - id: energy_use_in_agriculture_and_forestry
   name: Energy use in agriculture and forestry
   description: The sum of total energy use by agriculture, forestry and fishing and considers
-all fossil fuels and renewable energy carriers (i.e. animal waste, anthracite, aviation
-gasoline, biodiesel, biogases, biogasoline, brown coal, brown coal briquettes, charcoal,
-coke oven coke, coking coal, conventional crude oil, direct use of geothermal heat,
-direct use of solar thermal heat, fuel oil, fuelwood, gas oil/ diesel oil, gasworks gas, hard
-coal, heat, industrial waste, lignite, liquified petroleum gas, lubricants, motor gasoline,
-municipal wastes, natural gas including LNG, natural gas liquids, other kerosene, other liquid
-biofuels, other oil products, other vegetal material and residues, patent fuel, peat, peat
-products, petroleum coke) and electricity. It is measured in Joules.
+    all fossil fuels and renewable energy carriers (i.e. animal waste, anthracite, aviation
+    gasoline, biodiesel, biogases, biogasoline, brown coal, brown coal briquettes, charcoal,
+    coke oven coke, coking coal, conventional crude oil, direct use of geothermal heat,
+    direct use of solar thermal heat, fuel oil, fuelwood, gas oil/ diesel oil, gasworks gas, hard
+    coal, heat, industrial waste, lignite, liquified petroleum gas, lubricants, motor gasoline,
+    municipal wastes, natural gas including LNG, natural gas liquids, other kerosene, other liquid
+    biofuels, other oil products, other vegetal material and residues, patent fuel, peat, peat
+    products, petroleum coke) and electricity. It is measured in Joules.
   source: FAO, Statistics Division
   owner: FAO
 - id: pop_affec_by_droughts_floods_extr_temp_(pros)

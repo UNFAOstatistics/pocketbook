@@ -2,8 +2,6 @@
 # This is the main script used to control the production of FAO statistical pocketbook workflow #
 ################################################################################################
 
-rm(list=ls(all=TRUE)) # 
-gc()
 
 options(scipen=999) # disable scientific number formatting
 
@@ -23,22 +21,22 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
 #                       "GLO" # Global
                               "RAP" # Asia and the Pacific
-                              # ,"RAF"  # Africa
-                              # ,"REU" # Europe and Central Asia
-                              # ,"RNE" # Near East and North Africa
+                              ,"RAF"  # Africa
+                              ,"REU" # Europe and Central Asia
+                              ,"RNE" # Near East and North Africa
 # #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
 ############################################################
 # For print or for web or a4-print (in-house)
-# output_type <- "web" # web//a4
+output_type <- "web" # web//a4
 # output_type <- "print" # web/print/a4
-output_type <- "a4" # web/print/a4
+# output_type <- "a4" # web/print/a4
 
 
 # Parts to include/exclude
 # -------------------------------
-include_covers       <- F
+include_covers       <- T
 include_timestamp    <- T
 include_disclaimer   <- T
 include_foreword     <- T
@@ -311,4 +309,9 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-source(paste0(root.dir,"/input/code/process_the_book.R"))
+if (!exists("regional15_web")){ # because of the pocketbook_web
+  source(paste0(root.dir,"/input/code/process_the_book.R"))
+  rm(list=ls(all=TRUE)) # 
+  gc()
+  } 
+
