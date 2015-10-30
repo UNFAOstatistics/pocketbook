@@ -12,9 +12,9 @@
   owner: FAO
 - id: bioenergy_production
   name: Bioenergy production
-  description: missing
-  source: missing
-  owner: missing
+  description: Fuel that is produced through biological processes, including agriculture. They can be derived directly from plants, or indirectly from agricultural, commercial, domestic, and/or industrial wastes.
+  source: United Nations Statistics Division
+  owner: United Nations Statistics Division
 - id: energy_use_in_agriculture_and_forestry
   name: Energy use in agriculture and forestry
   description: The sum of total energy use by agriculture, forestry and fishing and considers
@@ -31,8 +31,8 @@
 - id: pop_affec_by_droughts_floods_extr_temp_(pros)
   name: Pop affec by droughts, floods, extr temp (\%)
   description: missing
-  source: missing
-  owner: missing
+  source: World Bank
+  owner: "EM-DAT: The OFDA/CRED International Disaster Database"
 - id: agriculture_value_added_per_worker
   name: Agriculture value added per worker
   description: Agriculture comprises value added from forestry, hunting, and fishing
@@ -511,9 +511,9 @@
   source: Global Forest Resources Assessment, FAO
   owner: FAO
 - id: poverty_headcount_ratio_at_dollar1.25_a_day_PPP_(percent_of_population)
-  name: Poverty headcount ratio at \$1.25 a day PPP (percent of population)
-  description: Population below \$1.25 a day is the percentage of the population living
-    on less than \$1.25 a day at 2005 international prices. As a result of revisions
+  name: Poverty headcount ratio at \$1.90 a day PPP (percent of population)
+  description: Population below \$1.90 a day is the percentage of the population living
+    on less than \$1.90 a day at 2011 international prices. As a result of revisions
     in PPP exchange rates, poverty rates for individual countries cannot be compared
     with poverty rates reported in earlier editions.
   source: World Bank, Development Research Group. Data are based on primary household
