@@ -97,7 +97,6 @@ p <- p + geom_bar(position="fill", stat="identity")
 p <- p + coord_polar("y")
 p <- p + theme_minimal()
 p <- p + theme(legend.position = "right")
-p <- p + theme(text = element_text(size=11, family="PT Sans"))
 p <- p + theme(axis.text = element_blank())
 p <- p + theme(axis.title = element_blank())
 p <- p + theme(axis.ticks = element_blank())
@@ -105,8 +104,15 @@ p <- p + theme(panel.grid.minor = element_blank())
 p <- p + theme(panel.grid.major = element_blank())
 p <- p + scale_fill_manual(values=rev(colPart3$Sub))
 p <- p + theme(legend.title = element_blank())
-p <- p + theme(legend.key.height = unit(7, "mm"))
-p <- p + theme(legend.key.width = unit(3, "mm"))
+if (table_type == "latex"){
+  p <- p + theme(text = element_text(size=11, family="PT Sans"))
+  p <- p + theme(legend.key.height = unit(7, "mm"))
+  p <- p + theme(legend.key.width = unit(3, "mm"))
+} else {
+  p <- p + theme(text = element_text(size=14, family="PT Sans"))
+  p <- p + theme(legend.key.height = unit(9, "mm"))
+  p <- p + theme(legend.key.width = unit(6, "mm"))
+}
 p <- p + theme(panel.grid=element_blank(), panel.border=element_blank())
 p <- p + labs(x=NULL, y=NULL)
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
@@ -313,8 +319,9 @@ names(rc) <- c("","%")
 
 print.xtable(xtable(rc, caption = "\\large{Fastest growing products based on quantities (average anual growth rate, 2000 to 2013)}", digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
-             type = "latex", table.placement = NULL, booktabs = TRUE,
-             include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
+             type = table_type, table.placement = NULL, booktabs = TRUE,
+             include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
+             html.table.attributes = 'class="table table-striped table-hover"')
 
 
 
@@ -542,9 +549,10 @@ gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
 print(xtable(gg, caption = "\\large{Top five items produced in 2013, thousand tonnes}", digits = c(0,0,0,0),
              align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
-      type = "latex", table.placement = NULL,
+      type = table_type, table.placement = NULL,
       booktabs = TRUE, include.rownames = FALSE,
-      size = "footnotesize", caption.placement = "top")
+      size = "footnotesize", caption.placement = "top",
+      html.table.attributes = 'class="table table-striped table-hover"')
 
 
 
@@ -737,8 +745,9 @@ gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
 print.xtable(xtable(gg, caption = "\\large{Live animal production, top 5 in 2013 (thousand heads)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
-             type = "latex", table.placement = NULL, booktabs = TRUE,
-             include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
+             type = table_type, table.placement = NULL, booktabs = TRUE,
+             include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
+             html.table.attributes = 'class="table table-striped table-hover"')
 
 
 
@@ -828,7 +837,6 @@ p <- p + facet_wrap(~Year)
 p <- p + coord_polar("y")
 p <- p + theme_minimal()
 p <- p + theme(legend.position = "top")
-p <- p + theme(text = element_text(size=11, family="PT Sans"))
 p <- p + theme(axis.text = element_blank())
 p <- p + theme(axis.title = element_blank())
 p <- p + theme(axis.ticks = element_blank())
@@ -836,8 +844,15 @@ p <- p + theme(panel.grid.minor = element_blank())
 p <- p + theme(panel.grid.major = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(d$subgroup)))[["Sub"]])
 p <- p + theme(legend.title = element_blank())
-p <- p + theme(legend.key.height = unit(6, "mm"))
-p <- p + theme(legend.key.width = unit(4, "mm"))
+if (table_type == "latex"){
+  p <- p + theme(text = element_text(size=11, family="PT Sans"))
+  p <- p + theme(legend.key.height = unit(6, "mm"))
+  p <- p + theme(legend.key.width = unit(4, "mm"))
+} else {
+  p <- p + theme(text = element_text(size=14, family="PT Sans"))
+  p <- p + theme(legend.key.height = unit(9, "mm"))
+  p <- p + theme(legend.key.width = unit(6, "mm"))
+}
 p <- p + labs(x=NULL, y=NULL)
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p <- p + guides(fill = guide_legend(nrow = 3))
@@ -1107,8 +1122,9 @@ dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 
 print.xtable(xtable(dw, caption = "\\large{Exports and Imports of food, million US\\$ (2012)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
-             type = "latex", table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
-             size = "footnotesize", caption.placement = "top")
+             type = table_type, table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
+             size = "footnotesize", caption.placement = "top",
+             html.table.attributes = 'class="table table-striped table-hover"')
 
 
 ## ---- P3tradeLEFT ----
