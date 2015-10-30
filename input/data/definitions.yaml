@@ -30,7 +30,7 @@
   owner: FAO
 - id: pop_affec_by_droughts_floods_extr_temp_(pros)
   name: Pop affec by droughts, floods, extr temp (\%)
-  description: missing
+  description: Annual average percentage of the population that is affected by natural disasters classified as either droughts, floods, or extreme temperature events.
   source: World Bank
   owner: "EM-DAT: The OFDA/CRED International Disaster Database"
 - id: agriculture_value_added_per_worker
