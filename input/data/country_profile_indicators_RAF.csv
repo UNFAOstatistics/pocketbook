@@ -24,6 +24,9 @@ Hunger dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),
 Hunger dimensions,24,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
 Hunger dimensions,25,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
 Hunger dimensions,26,SH.H2O.SAFE.RU.ZS,,,"Improved water source, rural (% pop)",,1
+Food Supply,42,agricultural_exports_share,,,Agricultural exports (% GDP),,1
+Food Supply,43,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
+Food Supply,44,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
 Production quantities (1 000 tonnes),28,QC.PRD.CRLS.TN.NO,,,Cereals (thousand tonnes),1000,0
 Production quantities (1 000 tonnes),29,QL.PRD.TOT.TN.NO,,,Meat (thousand tonnes),1000,0
 Production quantities (1 000 tonnes),30,QC.PRD.RTTB.TN.NO,,,Roots and tubers (thousand tonnes),1000,0
@@ -38,9 +41,6 @@ Production indices (2004-06=100),38,QI.NPIN.LVSTCK.IN.NO,,,Livestock,,0
 Production indices (2004-06=100),39,prod_ind_Milk.Total,,,Milk,,0
 Production indices (2004-06=100),40,prod_ind_Meat.indigenous.total,,,Meat,,0
 Production indices (2004-06=100),41,production_quantity_index,,,Fish ,,0
-Net trade (min US\$),42,agricultural_exports_share,,,Agricultural exports (% GDP),,1
-Net trade (min US\$),43,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
-Net trade (min US\$),44,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
 Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),,1
 Environment,46,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,0
 Environment,47,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,0
