@@ -5,8 +5,8 @@
   owner: WHO
 - id: energy_consumption_for_power_irrigation
   name: Energy consumption for power irrigation
-  description: 'Irrigated area is the sum of "total area equipped for full control irrigation: sprinkler" 
-    and "total area equipped for full control irrigation: localized" taken from the FAO AQUASTAT database. 
+  description: 'Irrigated area is the sum of "total area equipped for full control irrigation: sprinkler"
+    and "total area equipped for full control irrigation: localized" taken from the FAO AQUASTAT database.
     Annual values in FAOSTAT are estimated by repeating the last-available value reported in AQUASTAT within the associated time interval.'
   source: FAO, Statistics Division
   owner: FAO
@@ -510,12 +510,13 @@
     planting and/or deliberate seeding.
   source: Global Forest Resources Assessment, FAO
   owner: FAO
-- id: poverty_headcount_ratio_at_dollar1.25_a_day_PPP_(percent_of_population)
+- id: poverty_headcount_ratio_at_dollar1.90_a_day_PPP_(percent_of_population)
   name: Poverty headcount ratio at \$1.90 a day PPP (percent of population)
-  description: Population below \$1.90 a day is the percentage of the population living
+  description: 'Population below \$1.90 a day is the percentage of the population living
     on less than \$1.90 a day at 2011 international prices. As a result of revisions
     in PPP exchange rates, poverty rates for individual countries cannot be compared
-    with poverty rates reported in earlier editions.
+    with poverty rates reported in earlier editions. Five countries: Bangladesh, Cabo Verde, Cambodia, Jordan, and Lao PDR,
+    use the 2005 PPP conversion factors and corresponding \$1.25 a day and \$2 a day poverty lines.'
   source: World Bank, Development Research Group. Data are based on primary household
     survey data obtained from government statistical agencies and World Bank country
     departments. Data for high-income economies are from the Luxembourg Income Study
@@ -953,4 +954,3 @@
   description: With or without caffeine, and may or may not be ground.
   source: FAO, Statistics Division
   owner: FAO
-
