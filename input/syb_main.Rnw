@@ -147,16 +147,12 @@ PLACE_PRINT_OR_WEB_HERE
 
 
 <<define_maintitle, echo=FALSE, results='asis', eval=TRUE>>=
+# Processing the text yaml
+pref <- yaml::yaml.load_file(paste0(root.dir,"/input/data/preface_texts.yaml"))
+pref_d <- plyr::ldply (pref, data.frame, stringsAsFactors=FALSE)
 
-if (region_to_report == "RAF") maintitle <- "FAO Statistical Pocketbook"
-if (region_to_report == "RAP") maintitle <- "FAO Statistical Pocketbook"
-if (region_to_report == "REU") maintitle <- "FAO Statistical Pocketbook"
-if (region_to_report == "RNE") maintitle <- "FAO Statistical Pocketbook"
-if (region_to_report == "LAC") maintitle <- "FAO Statistical Pocketbook"
-if (region_to_report == "COF") maintitle <- "FAO Coffee Pocketbook"
-if (region_to_report == "GLO") maintitle <- "FAO Statistical Pocketbook"
-
-  cat(paste0("\\Huge{",maintitle,"}"))
+maintitle <- pref_d[pref_d$id %in% region_to_report,"maintitle"]
+cat(paste0("\\Huge{",maintitle,"}"))
 @
 
 
@@ -173,16 +169,9 @@ if (region_to_report == "GLO") maintitle <- "FAO Statistical Pocketbook"
 
 \begin{center}
 <<define_subtitle, echo=FALSE, results='asis', eval=TRUE>>=
+subtitle <- pref_d[pref_d$id %in% region_to_report,"subtitle"]
 
-if (region_to_report == "RAF") subtitle <- "Africa \n\n Food and Agriculture"
-if (region_to_report == "RAP") subtitle <- "Asia and the Pacific \n\n Food and Agriculture"
-if (region_to_report == "REU") subtitle <- "Europe and Central Asia \n\n Food and Agriculture"
-if (region_to_report == "RNE") subtitle <- "Near East and North Africa \n\n Food and Agriculture"
-# if (region_to_report == "COF") subtitle <- "Coffee and Coffee \n\n and Coffee"
-if (region_to_report == "COF") subtitle <- ""
-if (region_to_report == "GLO") subtitle <- ""
-
-  cat(paste0("\\Huge{",subtitle,"}"))
+cat(paste0("\\Huge{",subtitle,"}"))
 @
 
 \end{center}
@@ -193,67 +182,23 @@ if (region_to_report == "GLO") subtitle <- ""
 
 <<define_print_location, echo=FALSE, results='asis', eval=TRUE>>=
 
-  if (region_to_report == "RAF"){
-    cat("
-    \\hspace*{\\fill}
-            Food and Agriculture Organization of the United Nations
-    \\hspace*{\\fill}
+bottom_row1 <- pref_d[pref_d$id %in% region_to_report,"bottom_row1"]
+bottom_row2 <- pref_d[pref_d$id %in% region_to_report,"bottom_row2"]
+bottom_row3 <- pref_d[pref_d$id %in% region_to_report,"bottom_row3"]
 
-    \\hspace*{\\fill}
-            Regional office for Africa
-    \\hspace*{\\fill}
+cat(paste0(
+"\\hspace*{\\fill}",
+        bottom_row1,
+"\\hspace*{\\fill}
 
-    \\hspace*{\\fill}
-            Accra, 2015
-    \\hspace*{\\fill}
-    ")
-    }
-  if (region_to_report == "RAP"){
-    cat("
-    \\hspace*{\\fill}
-            Food and Agriculture Organization of the United Nations
-    \\hspace*{\\fill}
+\\hspace*{\\fill}",
+        bottom_row2,
+"\\hspace*{\\fill}
 
-    \\hspace*{\\fill}
-            Regional Office for Asia and the Pacific
-    \\hspace*{\\fill}
-
-    \\hspace*{\\fill}
-            Bangkok, 2015
-    \\hspace*{\\fill}
-    ")
-    }
-  if (region_to_report == "REU"){
-    cat("
-    \\hspace*{\\fill}
-            Food and Agriculture Organization of the United Nations
-    \\hspace*{\\fill}
-
-    \\hspace*{\\fill}
-            FAO Regional Office for Europe and Central Asia
-    \\hspace*{\\fill}
-
-    \\hspace*{\\fill}
-            Budapest, 2015
-    \\hspace*{\\fill}
-    ")
-    }
-  if (region_to_report == "RNE"){
-    cat("
-    \\hspace*{\\fill}
-            Food and Agriculture Organization of the United Nations
-    \\hspace*{\\fill}
-
-    \\hspace*{\\fill}
-            FAO Regional Office for the Near East and North Africa
-    \\hspace*{\\fill}
-
-    \\hspace*{\\fill}
-            Cairo, 2015
-    \\hspace*{\\fill}
-    ")
-    }
-
+\\hspace*{\\fill}",
+        bottom_row3,
+"\\hspace*{\\fill}"
+))
 
 @
 
@@ -379,8 +324,7 @@ cat(
 
 <<foreword_chunk, eval=include_foreword, cache=cache_foreword>>=
 
-  if (region_to_report != "COF"){
-    cat(
+cat(paste0(
 "
 \\LARGE{Foreword}
 
@@ -389,168 +333,33 @@ cat(
 \\bigskip
 
 \\large
-")
 
-if (region_to_report == "RAF"){
-  cat("\\textbf{Africa pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Africa pockebook ends}")
-  }
-if (region_to_report == "RAP"){
-  cat("\\textbf{Asia and the Pacific pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Asia and the Pacific pockebook ends}")
-  }
-if (region_to_report == "REU"){
-  cat("\\textbf{Europe and Central Asia pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Europe and Central Asia pockebook ends}")
-  }
-if (region_to_report == "RNE"){
-  cat("\\textbf{Near East and North Africa pockebook begins} This year, 2015, is a pivotal one as we look back on the progress we have made on the development agenda, and forward on what we must still accomplish. \\textbf{Near East and North Africa pockebook ends}")
-  }
-
-
-## -------------------------------------------------------------
-## The paragraphs below are same for each regional book until next ## ----
-
-
-
-
-cat("
-
-This is the end of a 15-year cycle where the international community partnered with developing countries to tackle the Millennium Development Goals. We are now taking stock of what we can learn from that effort. For example we know that the commitment to halve the percentage of hungry people, that is, to reach the MDG 1c target, has been almost met at the global level. Indeed, 73 of the 129 countries monitored for progress have reached that MDG target, while 29 of them also reached the more ambitious WFS goal by at least halving the number of undernourished people in their populations. 
-
-This year also marks the beginning of the new post-2015 Sustainable Development Agenda. Again the international community will unite around new priorities for the future.
-
-Clear indicators to measure progress towards these international goals is of paramount importance. Timely and robust statistics are the fundamental tool in monitoring the myriad efforts being made, both with an eye to early detection of problems and the recognition of success. The better the data, the better the policies that can be designed. And the better the data, the easier it is to measure the impact of policies or to hold stakeholders accountable for the pledges they make.
-
-This publication presents selected key indicators related to agriculture and food security that stakeholders can use to prioritize their actions. It is divided into two main sections, one thematic and one country-specific. It presents a variety of dimensions of agriculture and food security along four main focus areas:
-
-
-{\\textbf{\\color{part1} The setting}} measures the state of the agricultural resource base by assessing the supply of land, labour, capital and inputs, and examining the pressure on the world food system stemming from demographic and macroeconomic change.
-
-{\\textbf{\\color{part2} Hunger dimensions}} gauges the state of food insecurity and malnutrition, and highlights the four dimensions – availability, access, stability and utilization – that determine the scale of hunger and the shape of undernourishment.
-
-{\\textbf{\\color{part3} Food supply}} evaluates the past and present productive capacity of world agriculture, together with the role of trade, in meeting the world’s demand for food, feed and other products.
-
-{\\textbf{\\color{part4} Environment}} examines the sustainability of agriculture in the context of the pressure it exerts on its ecological surroundings, including the interaction of agriculture with climate change.
-
-This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one of the tools that can be used as building blocks for monitoring progress and formulating policy. It includes data from FAOSTAT as well as from other partners within the organization and in the international community.
-
-FAO is deeply committed to helping countries strengthen their statistical systems to improve the timeliness and quality of their data. And it will continue to do so through the SDG process.
-")
-
-## -------------------------------------------------------------
-## Regiona spesific statisticians
-
-if (region_to_report == "RAF"){
-  cat("\\bigskip
-
-  \\hspace*{\\fill}
-          Regional Statistician
-  \\hspace*{\\fill}
-
-  \\hspace*{\\fill}
-          \\textit{Statistician, Refional office for RAF}
-  \\hspace*{\\fill}
-  ")
-  }
-if (region_to_report == "RAP"){
-  cat("\\bigskip
-
-  \\hspace*{\\fill}
-          Regional Statistician
-  \\hspace*{\\fill}
-
-  \\hspace*{\\fill}
-          \\textit{Statistician, Refional office for RAP}
-  \\hspace*{\\fill}
-  ")
-  }
-if (region_to_report == "REU"){
-  cat("\\bigskip
-
-  \\hspace*{\\fill}
-          Regional Statistician
-  \\hspace*{\\fill}
-
-  \\hspace*{\\fill}
-          \\textit{Statistician, Refional office for REU}
-  \\hspace*{\\fill}
-  ")
-  }
-if (region_to_report == "RNE"){
-  cat("\\bigskip
-
-  \\hspace*{\\fill}
-          Regional Statistician
-  \\hspace*{\\fill}
-
-  \\hspace*{\\fill}
-          \\textit{Statistician, Refional office for RNE}
-  \\hspace*{\\fill}
-  ")
-  }
-
-cat("
-
-\\bigskip
-\\bigskip
-
-\\hspace*{\\fill}
-        Pietro Gennari
-\\hspace*{\\fill}
-
-\\hspace*{\\fill}
-        \\textit{Chief Statistician and Director, Statistics Division}
-\\hspace*{\\fill}
-\\bigskip
-
-
-")
-
-
-
-  }
-
-if (region_to_report == "COF") {
-
-    cat(
+",
+pref_d[pref_d$id %in% region_to_report,"foreword"],
 "
-\\Large{Foreword}
-
-\\bigskip
-\\bigskip
-\\bigskip
-\\bigskip
-
-\\large
-
-
-
-Today, more people are consuming more coffee than ever before. As the middle classes of the developing world continue to swell, as their incomes rise and coffee remains affordable, the luxury of the occasional coffee has become a daily habit in an ever-growing number of countries. The rising demand has also afforded producers with new options and opportunities. Coffee has become an important contributor to cash income for many smallholders, who produce most of the world’s beans. The annual output has now reached almost nine million tonnes, one million tonnes more than a decade ago. The gross value of production of green coffee now exceeds US\\$16 billion, and its export value reached US\\$24 billion in 2012.
-
-\\vspace{3mm}
-
-While rising demand offers unprecedented opportunities to growers, they also have to live up to a growing set of challenges. Many are confronted with inadequate access to credit, high price volatility, as well as bureaucratic hurdles at home and market barriers abroad. And, they are operating in a global value chain where a vast and often unorganized number of small coffee growers are exposed to the market power of a few, large traders and roasters. In addition, many smallholders find it hard to cope with the vagaries of weather in the short-run and the deteriorating growing conditions brought about by climate change over the longer-term.
-
-\\vspace{3mm}
-
-This Pocketbook puts numbers to these developments, assesses short-term changes and long-term trends in production, consumption, trade and prices, and provides useful background information on related shifts in poverty, health and rural development. It is part of the FAO Statistical Yearbook suite of products and is organized around two major sections: thematic spreads with data-driven visualizations, and comprehensive country and regional profiles.
-
-\\vspace{3mm}
-
-FAO is strongly committed to helping countries strengthen their national statistical systems and improve the timeliness and quality of their data. This includes a commitment to improve and broaden the information necessary to support evidence-based decision making by all stakeholders in the coffee value chain.
 
 \\bigskip
 \\bigskip
 \\bigskip
 
-\\hspace*{\\fill}
-         Pietro Gennari
-\\hspace*{\\fill}
+\\hspace*{\\fill}",
+        pref_d[pref_d$id %in% region_to_report,"person1_name"],
+"\\hspace*{\\fill}
 
-\\hspace*{\\fill}
-        \\textit{Chief Statistician and Director, ESS}
-\\hspace*{\\fill}
-")
+\\hspace*{\\fill}",
+        pref_d[pref_d$id %in% region_to_report,"person1_title"],
+"\\hspace*{\\fill}
 
-}
+\\bigskip
+
+\\hspace*{\\fill}",
+        pref_d[pref_d$id %in% region_to_report,"person2_name"],
+"\\hspace*{\\fill}
+
+\\hspace*{\\fill}",
+        pref_d[pref_d$id %in% region_to_report,"person2_title"],
+"\\hspace*{\\fill}
+"))
 @
 
 
@@ -564,7 +373,6 @@ cat("
   \\large
   \\clearpage
   ")
-
 
 
 @
