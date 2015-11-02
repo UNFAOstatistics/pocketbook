@@ -213,8 +213,9 @@ if (broke_all_into_images | broke_only_tables_into_images){
 
   # convert the index.md into html in jpog comparison
 
-  system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison.md -o ",root.dir,"output/jpg/regional_book_comparison.html"))
-  system(paste0("pandoc ",root.dir,"output/jpg/regional_table_comparison.md -o ",root.dir,"output/jpg/regional_table_comparison.html"))
+  system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison.md -o ",     root.dir,"output/jpg/regional_book_comparison.html"))
+  system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison_reg.md -o ", root.dir,"output/jpg/regional_book_comparison_reg.html"))
+  system(paste0("pandoc ",root.dir,"output/jpg/regional_table_comparison.md -o ",    root.dir,"output/jpg/regional_table_comparison.html"))
   if (region_to_report == "COF") system(paste0("pandoc ",root.dir,"output/jpg/coffee_comparison.md -o ",root.dir,"output/jpg/coffee_comparison.html"))
 
 
