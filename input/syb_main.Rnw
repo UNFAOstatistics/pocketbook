@@ -151,8 +151,8 @@ PLACE_PRINT_OR_WEB_HERE
 pref <- yaml::yaml.load_file(paste0(root.dir,"/input/data/preface_texts.yaml"))
 pref_d <- plyr::ldply (pref, data.frame, stringsAsFactors=FALSE)
 
-maintitle <- pref_d[pref_d$id %in% region_to_report,"maintitle"]
-cat(paste0("\\Huge{",maintitle,"}"))
+
+cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"maintitle"],"}"))
 @
 
 
@@ -169,9 +169,7 @@ cat(paste0("\\Huge{",maintitle,"}"))
 
 \begin{center}
 <<define_subtitle, echo=FALSE, results='asis', eval=TRUE>>=
-subtitle <- pref_d[pref_d$id %in% region_to_report,"subtitle"]
-
-cat(paste0("\\Huge{",subtitle,"}"))
+cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"subtitle"],"}"))
 @
 
 \end{center}
@@ -181,22 +179,17 @@ cat(paste0("\\Huge{",subtitle,"}"))
 \begin{center}
 
 <<define_print_location, echo=FALSE, results='asis', eval=TRUE>>=
-
-bottom_row1 <- pref_d[pref_d$id %in% region_to_report,"bottom_row1"]
-bottom_row2 <- pref_d[pref_d$id %in% region_to_report,"bottom_row2"]
-bottom_row3 <- pref_d[pref_d$id %in% region_to_report,"bottom_row3"]
-
 cat(paste0(
 "\\hspace*{\\fill}",
-        bottom_row1,
+        pref_d[pref_d$id %in% region_to_report,"bottom_row1"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        bottom_row2,
+        pref_d[pref_d$id %in% region_to_report,"bottom_row2"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        bottom_row3,
+        pref_d[pref_d$id %in% region_to_report,"bottom_row3"],
 "\\hspace*{\\fill}"
 ))
 
