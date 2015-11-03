@@ -102,7 +102,6 @@ p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
 
-
 cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
 cat("\\vspace{1mm}")
 
@@ -769,41 +768,47 @@ if (region_to_report == "RNE") short_text <- "Investing in agriculture is one of
 
 ## ---- P1investData ----
 
-d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
-d1 <- d1[2:26,1:3]
-names(d1) <- c("Year","oda_share_agriculture","share_of_agriculture_forestry_fishing")
-# d1$Year <- as.character(d1$Year)
-# d1$Year[d1$Year == "2013*"] <- "2013"
-
-d1$oda_share_agriculture <- factor(d1$oda_share_agriculture)
-d1$oda_share_agriculture <- as.numeric(levels(d1$oda_share_agriculture))[d1$oda_share_agriculture]
-
-d1$share_of_agriculture_forestry_fishing <- factor(d1$share_of_agriculture_forestry_fishing)
-d1$share_of_agriculture_forestry_fishing <- as.numeric(levels(d1$share_of_agriculture_forestry_fishing))[d1$share_of_agriculture_forestry_fishing]
-
-d1$Year <- factor(d1$Year)
-d1$Year <- as.numeric(levels(d1$Year))[d1$Year]
-d1$FAOST_CODE <- 5000
-
-dat <- gather(d1, variable, value, 2:3)
-dat$variable <- as.character(dat$variable)
-dat$variable[dat$variable == "share_of_agriculture_forestry_fishing"] <- "Agriculture, narrow"
-dat$variable[dat$variable == "oda_share_agriculture"] <- "Agriculture, broad"
-dat <- dat[dat$Year >= 1995,]
+# d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
+# d1 <- d1[2:26,1:3]
+# names(d1) <- c("Year","oda_share_agriculture","share_of_agriculture_forestry_fishing")
+# # d1$Year <- as.character(d1$Year)
+# # d1$Year[d1$Year == "2013*"] <- "2013"
+# 
+# d1$oda_share_agriculture <- factor(d1$oda_share_agriculture)
+# d1$oda_share_agriculture <- as.numeric(levels(d1$oda_share_agriculture))[d1$oda_share_agriculture]
+# 
+# d1$share_of_agriculture_forestry_fishing <- factor(d1$share_of_agriculture_forestry_fishing)
+# d1$share_of_agriculture_forestry_fishing <- as.numeric(levels(d1$share_of_agriculture_forestry_fishing))[d1$share_of_agriculture_forestry_fishing]
+# 
+# d1$Year <- factor(d1$Year)
+# d1$Year <- as.numeric(levels(d1$Year))[d1$Year]
+# d1$FAOST_CODE <- 5000
+# 
+# dat <- gather(d1, variable, value, 2:3)
+# dat$variable <- as.character(dat$variable)
+# dat$variable[dat$variable == "share_of_agriculture_forestry_fishing"] <- "Agriculture, narrow"
+# dat$variable[dat$variable == "oda_share_agriculture"] <- "Agriculture, broad"
+# dat <- dat[dat$Year >= 1995,]
 
 ## ---- P1investTOPRIGHT ----
 
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_share_commit_tot)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_share_commit_tot)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_share_commit_tot)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_share_commit_tot)
+
 dat_plot <- dat
 
-# Draw the plot
-p <- ggplot(dat, aes(x = Year, y = value, color=variable))
+p <- ggplot(data = dat_plot, aes(x = Year, y = dfa_share_commit_tot,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(y="percent", x="")
+p <- p + guides(color = guide_legend(nrow = 3))
 p
 
+
 # Caption
-caption_text <- "Aid flows to agriculture, share of total aid (1995-2013) - NO COUNTRY LEVEL DATA???"
+caption_text <- "Aid  commitment flows to agriculture, forestry and fishing, share of total aid in \\% (1995-2013)"
 
 ## ---- P1investLEFT ----
 # data
@@ -845,28 +850,54 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Total credit to agriculture, top 20 countries in 2014 (2000 and 2012)"
+caption_text <- "Total credit to agriculture, top 20 countries in 2010-12"
 
 ## ---- P1investRIGHT ----
 
 # data
-gg <- read_excel(paste0(data.dir,"/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
-gg <- gg[c(3,5)]
-gg$Year <- 2010
-names(gg)[names(gg)=="AOI average (2008-2012)"] <- "agri_orientation_index"
-names(gg)[names(gg)=="countrycode"] <- "FAOST_CODE"
+# gg <- read_excel(paste0(data.dir,"/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
+# gg <- gg[c(3,5)]
+# gg$Year <- 2010
+# names(gg)[names(gg)=="AOI average (2008-2012)"] <- "agri_orientation_index"
+# names(gg)[names(gg)=="countrycode"] <- "FAOST_CODE"
 
 
 # Add region key and subset
-dat <- left_join(gg,region_key)
+# dat <- left_join(gg,region_key)
+# dat <- dat[which(dat[[region_to_report]]),]
+# 
+# dat <- arrange(dat, -agri_orientation_index)
+# top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+# bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+# dat_plot <- rbind(top10,bot10)
+# 
+# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, agri_orientation_index),y=agri_orientation_index))
+# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+# p <- p + coord_flip()
+# p <- p + labs(x="",y="index")
+# p <- p + guides(color = guide_legend(nrow = 2))
+# p
+
+dat <- syb.df %>% filter(Year %in% c(2009:2013)) %>% select(FAOST_CODE,SHORT_NAME,Year,dfa_AOI_commit)
+dat <- dat[!is.na(dat$dfa_AOI_commit),]
+dat <- dat[!is.na(dat$SHORT_NAME),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -agri_orientation_index)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+top10 <- dat %>%  group_by(SHORT_NAME) %>% dplyr::summarise(dfa_AOI_commit = mean(dfa_AOI_commit, na.rm=TRUE)) %>%
+  arrange(-dfa_AOI_commit) %>%
+  slice(1:10) %>%
+  dplyr::mutate(color = "With highest values")
+
+bot10 <- dat %>%  group_by(SHORT_NAME) %>% dplyr::summarise(dfa_AOI_commit = mean(dfa_AOI_commit, na.rm=TRUE)) %>%
+  arrange(dfa_AOI_commit) %>%
+  slice(1:10) %>%
+  dplyr::mutate(color = "With lowest values")
 dat_plot <- rbind(top10,bot10)
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, agri_orientation_index),y=agri_orientation_index))
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, dfa_AOI_commit),y=dfa_AOI_commit))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -874,44 +905,31 @@ p <- p + labs(x="",y="index")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
 # Caption
-caption_text <- "Agri-Orientation Index, highest and lowest values (average 2008-2012)"
+caption_text <- "DFA Agriculture Orientation Index, highest and lowest values, average (2009-2013)"
 
 
 ## ---- P1investBOTTOM ----
 
-d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=2, skip=2)
-d1 <- d1[1:2,]
-names(d1)[1] <- "variable"
-
-d2 <- gather(d1, Year, Value, 2:20)
-d2 <- spread(d2, variable, Value)
-
-d2$Bilateral <- as.character(d2$Bilateral)
-d2$Bilateral <- str_replace_all(d2$Bilateral, ",", "")
-d2$Bilateral <- as.factor(d2$Bilateral)
-d2$Bilateral <- as.numeric(levels(d2$Bilateral))[d2$Bilateral]
-d2$Year <- factor(d2$Year)
-d2$Year <- as.numeric(levels(d2$Year))[d2$Year]
-dat <- d2
-
-dat <- dat[dat$Year >= 1995,]
-dat <- dat[!is.na(dat$Year),]
-
-dat <- gather(dat, variable, value, 2:3)
-dat$variable <- as.character(dat$variable)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
 
 dat_plot <- dat
 
-p <- ggplot(dat_plot, aes(x=Year, y=value, fill=variable))
-p <- p + geom_area(stat="identity", position="stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="million constant US$")
-p <- p + scale_y_continuous(labels=space) 
+p <- ggplot(data = dat_plot, aes(x = Year, y = dfa_commit_usd2013,group=SHORT_NAME,color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(y="billion US$", x="")
+p <- p + guides(color = guide_legend(nrow = 3))
 p
 
 # Caption
-caption_text <- "Aid flows to agriculture, broad (1995-2013) - NO COUNTRY LEVEL DATA???"
+caption_text <- "Aid  commitment flows to agriculture, forestry and fishing, share of total aid in \\% (1995-2013)"
+
+
 
 ## ---- p1investMAPdata ----
 dat <- getFAOtoSYB(domainCode = "IG",
