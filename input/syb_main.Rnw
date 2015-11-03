@@ -1888,10 +1888,61 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 %                                         |___/
 %
 
-
-<<country_profiles, child = if (include_country_profiles) 'syb_country_profiles.Rnw'>>=
+<<compute_countryprofiles, echo=FALSE, results='asis', eval=include_country_profiles>>=
+source(paste0(root.dir,"input/code/code_countryprofiles.R"))
 @
 
+
+
+% If coffee book lets put here some nice brown color
+<<define_empty_page_color, echo=FALSE, results='asis', eval=include_country_profiles>>=
+
+  empty_page_color <- "FAOblue"
+  if (region_to_report == "COF") empty_page_color <- "part7"
+  cat(paste0("\\newpage
+             
+             \\pagecolor{",
+             empty_page_color,
+             "}
+             
+              \\thispagestyle{empty}
+              \\mbox{}
+              \\newpage
+              \\thispagestyle{empty}
+              \\mbox{}
+              \\clearpage
+              \\pagecolor{white}             
+             "))
+  @
+
+
+
+%%% COUNTRY DATA
+<<define_new_part_color, echo=FALSE, results='asis', eval=include_country_profiles>>=
+  empty_page_color <- "FAOblue"
+  if (region_to_report == "COF") empty_page_color <- "part7"
+  cat(paste0("\\newpart{",
+             empty_page_color,
+             "}"
+  ))
+  @
+
+
+<<include_counryprofiletables, echo=FALSE, results='asis', eval=include_country_profiles>>=
+
+    cat("
+             \\phantomsection
+             \\addcontentsline{toc}{section}{Country Profiles}
+             \\faoset{bgcolor=white}\\selectcolor
+             \\parindent=0pt
+             \\parskip=\\medskipamount
+             \\hangafter=-2
+             \\input{CountryProfiles.tex}
+            
+            \\newpage
+             ")
+  
+@
 
 
 %   ____          __  _         _  _    _
