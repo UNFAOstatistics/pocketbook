@@ -11,7 +11,6 @@ if (Sys.info()[["user"]] == "amy")   root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
-# data.dir <- "~/btsync/faosync/pocketbooks/GSPB15/database/"
 data.dir <- paste0(root.dir,"/input/data/database/")
 
 # Stuff you DO edit
@@ -21,9 +20,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
 #                       "GLO" # Global
                               "RAP" # Asia and the Pacific
-                              ,"RAF"  # Africa
-                              ,"REU" # Europe and Central Asia
-                              ,"RNE" # Near East and North Africa
+                              # ,"RAF"  # Africa
+                              # ,"REU" # Europe and Central Asia
+                              # ,"RNE" # Near East and North Africa
 # #                              ,"LAC" # Latin America and the Caribbean
                                  # "COF" # Coffee
                       )
@@ -63,7 +62,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -71,7 +70,7 @@ table_type <- "latex"
 
 
 # just for troubleshooting
-region_to_report <- "RAF"
+# region_to_report <- "RAF"
 
 ############################################################
 # CACHE
@@ -186,7 +185,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load(paste0(data.dir,"/SYB2015-09-24.RData"))
 # load(paste0(data.dir,"/SYB2015-10-14.RData"))
 # load(paste0(data.dir,"/SYB2015-10-15.RData"))
-load(paste0(data.dir,"/SYB2015-10-20.RData"))
+# load(paste0(data.dir,"/SYB2015-10-20.RData"))
+load(paste0(data.dir,"/SYB2015-11-02.RData"))
 
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -316,7 +316,7 @@ map.df <- left_join(map.df,region_key)
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))
-  rm(list=ls(all=TRUE)) # 
-  gc()
+  # rm(list=ls(all=TRUE)) # 
+  # gc()
   } 
 

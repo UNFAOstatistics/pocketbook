@@ -3,7 +3,6 @@
 # Stuff You DO NOT edit
 ####################################################
 
-#region_to_report <- "GLO"
 
 # -- delete output/ -folder recursively
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE)
