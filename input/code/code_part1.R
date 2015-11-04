@@ -912,22 +912,42 @@ caption_text <- "DFA Agriculture Orientation Index, highest and lowest values, a
 
 ## ---- P1investBOTTOM ----
 
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 1995:2013) %>% select(SHORT_NAME,Year,dfa_commit_usd2013) %>% mutate(dfa_commit_usd2013 = dfa_commit_usd2013 / 1000)
+
+if (region_to_report == "RAF")  dat <- syb.df %>% select(FAOST_CODE,Year,bilat_don_agr,multilat_don_agr,privat_don_agr) %>% filter(FAOST_CODE %in% 12000)
+if (region_to_report == "RAP")  dat <- syb.df %>% select(FAOST_CODE,Year,bilat_don_agr,multilat_don_agr,privat_don_agr) %>% filter(FAOST_CODE %in% 13000)
+if (region_to_report == "REU")  dat <- syb.df %>% select(FAOST_CODE,Year,bilat_don_agr,multilat_don_agr,privat_don_agr) %>% filter(FAOST_CODE %in% 14000)
+if (region_to_report == "RNE")  dat <- syb.df %>% select(FAOST_CODE,Year,bilat_don_agr,multilat_don_agr,privat_don_agr) %>% filter(FAOST_CODE %in% 15000)
+
+dat <- left_join(dat,region_key)
+
+dat <- gather(dat, variable, value, 3:5)
+dat <- dat[!is.na(dat$value),]
+
+dat$variable <- as.character(dat$variable)
+dat$variable[dat$variable == "bilat_don_agr"] <- "Bilateral"
+dat$variable[dat$variable == "multilat_don_agr"] <- "Multilateral"
+dat$variable[dat$variable == "privat_don_agr"] <- "Private"
+
+dat$variable <- factor(dat$variable, levels= c("Bilateral","Multilateral","Private"))
+
+# dat$value <- dat$value / 1000
+
+# print data for technical report
+#datatable(dat)
 
 dat_plot <- dat
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = dfa_commit_usd2013,group=SHORT_NAME,color=SHORT_NAME))
-p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="billion US$", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+# Draw the plot
+p <- ggplot(dat_plot, aes(x = Year, y = value))
+p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+p <- p + labs(x="",y="million 2013 US$")
+# p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
+# p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
 
 # Caption
-caption_text <- "Aid  commitment flows to agriculture, forestry and fishing, share of total aid in \\% (1995-2013)"
+caption_text <- "Aid commitment flow to Agriculture, Forestry and Fishing, million 2013 US\\$ (1995-2013)"
 
 
 
