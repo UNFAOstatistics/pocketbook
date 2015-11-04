@@ -92,9 +92,29 @@ sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
   result <- gsub("m3", "m\\textsuperscript{3}", result, fixed = TRUE)
   result <- gsub("CO2", "CO\\textsubscript{2}", result, fixed = TRUE)
   
+  return(result)
+}
+
+
+sanitizeToHTML <- function(str, html=FALSE, type=c("text","table")) {
+  
+  type <- match.arg(type)
+  
+  result <- as.character(str)
+  
+  # result <- gsub("^", ifelse(type == "table", "\\verb|^|",
+  #                            "\\textsuperscript "), result,fixed = TRUE)
+
+  ## special expressions
+  # result <- gsub("km2", "km\\textsuperscript{2}", result, fixed = TRUE)
+  # result <- gsub("m3", "m\\textsuperscript{3}", result, fixed = TRUE)
+  # result <- gsub("CO2", "CO\\textsubscript{2}", result, fixed = TRUE)
   
   return(result)
 }
+
+
+
 
 ## -------------------------------------------------------------------------------------
 # Variables in common
@@ -563,7 +583,7 @@ if (table_type == "latex"){
 if (table_type == "html"){
   
   ## Create the new .tex file
-  fileOut <- paste0(root.dir,"output/process/CountryProfiles.tex")
+  fileOut <- paste0(root.dir,"output/process/CountryProfiles.html")
   if(file.exists(fileOut)) file.remove(fileOut)
   file.create(fileOut)
   ## Subset the dataset
@@ -596,90 +616,25 @@ if (table_type == "html"){
   
   ## Set the rowheight for cprofiles for each book
   
-  tbl_row_height <- 1.12
-  if (region_to_report == "COF") tbl_row_height <- 1.42
-  if (region_to_report == "RAF") tbl_row_height <- 1.18
-  if (region_to_report == "RAP") tbl_row_height <- 1.12
-  if (region_to_report == "REU") tbl_row_height <- 1.12
-  if (region_to_report == "RNE") tbl_row_height <- 1.22
-  
-  cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),
-      file = fileOut, append = TRUE)
-  
-  
-  cat("\\setlength{\\tabcolsep}{4pt}\n",
-      file = fileOut, append = TRUE) ## Reduce the space between columns
-  cat("\\normalsize\n",
-      file = fileOut, append = TRUE)
   for (i in 1:nrow(M49countries)) {
-    ## header
     
-    # conditional row colors ------------------------------
-    row_color <- "FAOblue"
-    if (region_to_report == "COF") row_color <- "part7"
-    define_row_color <- paste0("\\rowcolors{1}{",row_color,"!10}{white}")
-    # conditional row colors ------------------------------
+    cat(paste0('<h3>',M49countries[i, "SHORT_NAME"],'</h3> \n'),
+        file = fileOut, append = TRUE)
     
-    if (region_to_report == "COF"){
-      cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
-          define_row_color,
-          "\\begin{tabular}{L{4.6cm} R{0.9cm} R{0.9cm} R{0.9cm}}
-          \\toprule
-          \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
-          \\midrule\n",
-          file = fileOut, append = TRUE)
-    } else{
-      cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
-          define_row_color,
-          "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
-          \\toprule
-          \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
-          \\midrule\n",
-          file = fileOut, append = TRUE)
-    }
+    # header
+    cat(paste0('<table class="table table-striped table-hover"> \n'),
+        file = fileOut, append = TRUE)
+    
+
+    cat('<tr><th></th><th>',year1,'</th><th>',year2,'</th><th>',year3,'</th></tr>  \n',
+        file = fileOut, append = TRUE)
     
     ## data
     tmp = CountryProfile.df[CountryProfile.df[, "FAOST_CODE"] == M49countries[i, "FAOST_CODE"], ]
     for (part in 1:length(unique(indicators.df[, "PART"]))) {
-      #     cat("\t\\multicolumn{4}{l}{\\textcolor{",paste0("part", part),"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
-      #         file = fileOut, append = TRUE, sep = "")
       
-      if (region_to_report == "COF"){
-        if (part %in% c(3,4)) {
-          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
+      cat('<tr><th>', unique(indicators.df$PART)[part], '</th><th> </th><th> </th><th> </th></tr> \n',
               file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
-                   file = fileOut, append = TRUE, sep = "")
-      }
-      if (region_to_report == "RAF"){
-        if (part %in% c(4,5)) {
-          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
-              file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
-                   file = fileOut, append = TRUE, sep = "")
-      }
-      if (region_to_report == "RAP"){
-        if (part %in% c(4,5)) {
-          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
-              file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
-                   file = fileOut, append = TRUE, sep = "")
-      }
-      if (region_to_report == "REU"){
-        if (part %in% c(4,5)) {
-          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
-              file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
-                   file = fileOut, append = TRUE, sep = "")
-      }
-      if (region_to_report == "RNE"){
-        if (part %in% c(4,5)) {
-          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
-              file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
-                   file = fileOut, append = TRUE, sep = "")
-      }
-      
       
       subindicators.df = indicators.df[indicators.df[, "PART"] == unique(indicators.df$PART)[part], ]
       for (j in 1:nrow(subindicators.df)) {
@@ -695,9 +650,9 @@ if (table_type == "html"){
             lya = na.locf(tmp[tmp[, "Year"] %in% c((year1-2):(year1+3)), subindicators.df[j, "INDICATOR1"]], na.rm = FALSE)[6]
             if (!is.na(lya)) {
               if (is.numeric(lya)) {
-                chunk1 = paste0("\\textit{", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "}")
+                chunk1 = paste0("<i>", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "</i>")
               } else {
-                chunk1 = paste0("\\textit{", lya, "}")
+                chunk1 = paste0("<i>", lya, "</i>")
               }
             } else {
               chunk1 = ""
@@ -718,9 +673,9 @@ if (table_type == "html"){
             lya = na.locf(tmp[tmp[, "Year"] %in% c((year2-7):(year2+3)), subindicators.df[j, "INDICATOR1"]], na.rm = FALSE)[11]
             if (!is.na(lya)) {
               if (is.numeric(lya)) {
-                chunk2 = paste0("\\textit{", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "}")
+                chunk2 = paste0("<i>", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "</i>")
               } else {
-                chunk2 = paste0("\\textit{", lya, "}")
+                chunk2 = paste0("<i>", lya, "</i>")
               }
             } else {
               chunk2 = ""
@@ -741,9 +696,9 @@ if (table_type == "html"){
             lya = na.locf(tmp[tmp[, "Year"] %in% c((year3-9):(year3+2)), subindicators.df[j, "INDICATOR1"]], na.rm = FALSE)[12]
             if (!is.na(lya)) {
               if (is.numeric(lya)) {
-                chunk3 = paste0("\\textit{", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "}")
+                chunk3 = paste0("<i>", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "</i>")
               } else {
-                chunk3 = paste0("\\textit{", lya, "}")
+                chunk3 = paste0("<i>", lya, "</i>")
               }
             } else {
               chunk3 = ""
@@ -752,22 +707,16 @@ if (table_type == "html"){
         } else {
           chunk3 = ""
         }
-        chunk1 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk1)
-        chunk2 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk2)
-        chunk3 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk3)
-        cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+        cat('<tr> <td align="left">', sanitizeToHTML(subindicators.df[j, "SERIES_NAME_SHORT"]), '</td> <td align="left">', chunk1, '</td> <td align="left">', chunk2, '</td> <td align="left">', chunk3, "</td> </tr> \n",
             file = fileOut, append = TRUE, sep = "")
-        
+
       }
+
     }
-    ## tail
-    cat("\ \ \ \ \ \ \ \\toprule
-      \\end{tabular}
-      \\clearpage\n",
+    cat(paste0('</table> \n </br></br> \n'),
         file = fileOut, append = TRUE)
-    
-  }
-  }
+    }
+}
 
 
 # -- in case we need footnotes under each of the country profile table
