@@ -593,28 +593,59 @@ d_list <- yaml::yaml.load_file(paste0(root.dir,"/input/data/definitions.yaml"))
 d <- plyr::ldply (d_list, data.frame, stringsAsFactors=FALSE)
 
 
-
-for (i in definitions_to_print){
-
-#   i <- "bioenergy_consumption_in_agriculture"
-#   i <- "arable_land"
-  item <- d[d$id %in% i,]
-
-  # If Item or source is not specified
-  if (nchar(item[["source"]]) != 0){
-    source_line <- paste0("\\source{ ",item[["source"]]," } \n")
-  } else source_line <- "\n"
-  if (nchar(item[["owner"]]) != 0){
-    owner_line <- paste0("\\owner{ ",item[["owner"]]," } \n")
-  } else owner_line <- "\n"
-
-
-  cat(paste0("\\begin{metadata}{",item[["name"]],"}{} \n",
-             item[["description"]],"\n",
-             source_line,
-             owner_line,
-#              "\\source{ ",item[["source"]]," } \n",
-#              "\\owner{ ",item[["owner"]]," } \n",
-             "\\end{metadata} \n"))
-
+if (table_type == "latex"){
+  
+  for (i in definitions_to_print){
+    
+    #   i <- "bioenergy_consumption_in_agriculture"
+    #   i <- "arable_land"
+    item <- d[d$id %in% i,]
+    
+    # If Item or source is not specified
+    if (nchar(item[["source"]]) != 0){
+      source_line <- paste0("\\source{ ",item[["source"]]," } \n")
+    } else source_line <- "\n"
+    if (nchar(item[["owner"]]) != 0){
+      owner_line <- paste0("\\owner{ ",item[["owner"]]," } \n")
+    } else owner_line <- "\n"
+    
+    
+    cat(paste0("\\begin{metadata}{",item[["name"]],"}{} \n",
+               item[["description"]],"\n",
+               source_line,
+               owner_line,
+               #              "\\source{ ",item[["source"]]," } \n",
+               #              "\\owner{ ",item[["owner"]]," } \n",
+               "\\end{metadata} \n"))
+    
+  }
+  
 }
+if (table_type == "html"){
+  
+  for (i in definitions_to_print){
+    
+    #   i <- "bioenergy_consumption_in_agriculture"
+    #   i <- "arable_land"
+    item <- d[d$id %in% i,]
+    
+    # If Item or source is not specified
+    if (nchar(item[["source"]]) != 0){
+      source_line <- paste0("**Source:** *",item[["source"]],"* \n")
+    } else source_line <- "\n"
+    if (nchar(item[["owner"]]) != 0){
+      owner_line <- paste0("**Owner** *",item[["owner"]],"* \n")
+    } else owner_line <- "\n"
+    
+    
+    cat(paste0("<h4>",item[["name"]],"</h4> \n",
+               item[["description"]],"\n","\n",
+               source_line,"\n",
+               owner_line,
+               " \n"))
+    
+  }
+  
+}
+
+
