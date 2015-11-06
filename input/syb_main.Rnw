@@ -218,28 +218,20 @@ cat(
 %% Disclamer
 % \thispagestyle{empty}
 
-\includepdf[width=\paperwidth,height=\paperheight, offset=-0 -30, pagecommand={}]{./I4691E_disclaimer.pdf}
+
 
 % \includegraphics{./I4691E_disclaimer_crop.pdf}
 
 <<define_disclaimer, echo=FALSE, results='asis', eval=include_disclaimer>>=
   if (region_to_report == "COF"){
   cat("
-    \\ifprint
-    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-30 -100]{./I4985E_Disclaimer_coffee.pdf}
-    \\else
-    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-10 -10]{./I4985E_Disclaimer_coffee.pdf}
-    \\fi
-  ")
-    if (region_to_report != "COF"){
-      cat("
-    \\ifprint
-    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-30 -100]{./I4691E_disclaimer.pdf}
-    \\else
-    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-10 -50]{./I4691E_disclaimer.pdf}
-    \\fi
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-0 -30, pagecommand={}]{./I4985E_Disclaimer_coffee.pdf}
   ")
     }
+if (region_to_report != "COF"){
+      cat("
+    \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-0 -30, pagecommand={}]{./I4691E_disclaimer.pdf}
+  ")
   }
 @
 
@@ -359,20 +351,6 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 
 
 
-<<foreword_placeholder, eval=!include_foreword >>=
-
-cat("
-  \\Large{Just a placeholder}
-  \\large
-  \\clearpage
-  ")
-
-
-@
-
-
-
-
 %
 % MMMMMMMM               MMMMMMMM               AAA               PPPPPPPPPPPPPPPPP
 % M:::::::M             M:::::::M              A:::A              P::::::::::::::::P
@@ -477,8 +455,8 @@ p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
 p <- p + guides(colour=FALSE)
 p
 
-
-
+# no overview table for COFFEE
+if (region_to_report == "COF") include_overview_tbl <- FALSE
 @
 
 
@@ -501,6 +479,18 @@ p
 %       TTTTTTTTTTT      BBBBBBBBBBBBBBBBB   LLLLLLLLLLLLLLLLLLLLLLLL
 
 \clearpage
+
+
+
+<<foreword_placeholder, eval=!include_overview_tbl, fig.height=2, fig.width=2>>=
+
+# Coffeeboook should not include the list of countries... therefore hacking something byt latex does not give up
+# A blank plot
+plot(1, type="n", axes=F, xlab="", ylab="")
+
+@
+
+
 
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
@@ -558,7 +548,7 @@ if(length(unique(overview.df$subgroup)) == 11) alignment <- "lp{.5in}p{.5in}p{.5
 if(length(unique(overview.df$subgroup)) == 12) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 
 
-tbl_font_size <- "scriptsize"
+tbl_font_size <- "tiny"
 if (region_to_report == "RAF") tbl_font_size <- "footnotesize"
 if (region_to_report == "RNE") tbl_font_size <- "footnotesize"
 if (region_to_report == "REU") tbl_font_size <- "footnotesize"
@@ -626,22 +616,41 @@ if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}"))
 
 
 
+<<page_numbering>>=
+# This is just pretty odd, but it works
+if (region_to_report == "COF"){
+  cat("
+    \\pagenumbering{arabic}  %% Arabic page numbering
+    \\setcounter{page}{1}
+
+    ")
+} else {
+  cat("
+    \\pagenumbering{arabic}  %% Arabic page numbering
+    \\setcounter{page}{2}
+    ")
+}
+@
+
+
 %% PART1 - The Setting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpart{part1}
-\rowcolors{1}{part1!10}{white}
-% \clearpage
-\pagenumbering{arabic}  %% Arabic page numbering
-\setcounter{page}{2}
+<<part1_prelatex, eval=P1over>>=
+cat("
+    \\newpart{part1}
+    \\rowcolors{1}{part1!10}{white}
+    ")
+@
 
 
-<<setup-code-part1>>=
+
+<<setup-code-part1, eval=P1over>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 @
 
 
-<<part1_setup, eval=include_part1>>=
+<<part1_setup, eval=P1over>>=
 @
 
 
@@ -656,7 +665,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 <<P1overTEXT, eval=P1over, short_text_ChartPage=P1over>>=
 @
 
-<<P1overData,results='hide', cache=FALSE>>=
+<<P1overData,results='hide', cache=FALSE, eval=P1over>>=
 @
 
 
@@ -852,17 +861,22 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 %% PART2 - Hunger dimensions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpart{part2}
-\rowcolors{1}{part2!10}{white}
-\clearpage
+<<part2_prelatex, eval=P2undernu>>=
+cat("
+    \\newpart{part2}
+    \\rowcolors{1}{part2!10}{white}
+    \\clearpage
+    ")
+@
 
-<<setup-code-part2>>=
+
+<<setup-code-part2, eval=P2undernu>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
 
-<<part2_setup, eval=include_part2>>=
+<<part2_setup, eval=P2undernu>>=
 @
 
 
@@ -1084,17 +1098,23 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 %% PART3 - Food Supply
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpart{part3}
-\rowcolors{1}{part3!10}{white}
-\clearpage
 
-<<setup-code-part3>>=
+<<part3_prelatex, eval=P3des>>=
+cat("
+    \\newpart{part3}
+    \\rowcolors{1}{part3!10}{white}
+    \\clearpage
+    ")
+@
+
+
+<<setup-code-part3, eval=P3des>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 @
 
 
 
-<<part3_setup, eval=include_part3>>=
+<<part3_setup, eval=P3des>>=
 @
 
 
@@ -1340,16 +1360,22 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 %% PART4 - Sustainability dimensions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpart{part4}
-\rowcolors{1}{part4!10}{white}
-\clearpage
 
-<<setup-code-part4>>=
+<<part4_prelatex, eval=P4land>>=
+cat("
+    \\newpart{part4}
+    \\rowcolors{1}{part4!10}{white}
+    \\clearpage
+    ")
+@
+
+
+<<setup-code-part4, eval=P4land>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
 @
 
 
-<<part4_setup, eval=include_part4>>=
+<<part4_setup, eval=P4land>>=
 @
 
 
@@ -1571,18 +1597,24 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
 %% PART5 - Custom stuff for Coffee book
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpart{part5}
-\rowcolors{1}{part5!10}{white}
-\clearpage
+<<part5_prelatex, eval=P5over>>=
+cat("
+    \\newpart{part5}
+    \\rowcolors{1}{part5!10}{white}
+    ")
+@
 
-<<setup-code-part5>>=
+
+
+<<setup-code-part5, eval=P5over>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 @
 
 
 
-<<part5_setup, eval=include_part5>>=
+<<part5_setup, eval=P5over>>=
 @
+
 
 
 %    ___                                  _
@@ -1749,16 +1781,20 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 %% PART6 - Coffee book coffee specific spreads!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpart{part6}
-\rowcolors{1}{part6!10}{white}
-\clearpage
+<<part6_prelatex, eval=P6coffeeprod>>=
+cat("
+    \\newpart{part6}
+    \\rowcolors{1}{part6!10}{white}
+    \\clearpage
+    ")
+@
 
-<<setup-code-part6>>=
+<<setup-code-part6, eval=P6coffeeprod>>=
 knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 @
 
 
-<<part6_setup, eval=include_part6>>=
+<<part6_setup, eval=P6coffeeprod>>=
 @
 
 %
@@ -2070,7 +2106,7 @@ cat("
 
 <<define_back_cover, echo=FALSE, results='asis', eval=include_covers>>=
   cover_name <- paste0("back_cover_",region_to_report,".pdf")
-  if (region_to_report %in% c("RAF","REU")) cat(paste0("\\includepdf[offset=28 28, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report %in% c("RAF","REU","GLO")) cat(paste0("\\includepdf[offset=28 28, noautoscale=true]{",cover_name,"}"))
   if (region_to_report %in% c("COF","RNE","RAP"))       cat(paste0("\\includepdf[offset=-28 28, noautoscale=true]{",cover_name,"}"))
   @
 

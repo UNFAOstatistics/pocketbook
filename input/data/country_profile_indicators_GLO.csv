@@ -1,37 +1,53 @@
 PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS
-Overview,1,OA.TPBS.POP.PPL.NO,,,"Population, total (mln)",,0
-Overview,2,OA.TPR.POP.PPL.NO,,,"Population, rural (mln)",,0
-Overview,3,NY.GDP.PCAP.PP.KD,,,GDP per capita (current US$),,0
-Overview,4,SI.POV.DDAY,,,"Poverty headcount, $1.25 a day (% pop)",,1
-Overview,5,SI.POV.NAHC,,,"Poverty headcount, nat'l poverty lines (% pop)",,1
-Overview,6,SI.POV.RUHC,,,"Rural pov headcount, nat'l poverty lines (% rural pop)",,1
-Overview,7,SP.DYN.LE00.IN,,,"Life expectancy at birth, total (years)",,0
-Overview,8,SE.PRM.CMPT.ZS,,,Primary completion rate (% age group),,1
-Overview,9,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
-Overview,10,SH.STA.ACSN,,,Improved sanitation facilities (% pop),,1
-Overview,11,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
-Overview,12,FS.OA.NOU.P3D1,,,Number of people undernourished (mln),,0
-Macroeconomics,13,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% of GDP)",,1
-Macroeconomics,14,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$),1000000,0
-Macroeconomics,15,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$),1000000,0
-Macroeconomics,25,PP_656_5532,,,"Producer prices, green coffee (US$ per tonne)",,2
-Macroeconomics,26,PI_656_5539,,,Producer price index (2004-06=100),,0
-"Exports, coffee",17,TP_656_5922,,,Green (1 000 US$),,0
-"Exports, coffee",18,TP_657_5922,,,Roasted (1 000 US$),,0
-"Exports, coffee",19,TP_659_5922,,,Extracts (1 000 US$),,0
-"Imports, coffee",21,TP_656_5622,,,Green (1 000 US$),,0
-"Imports, coffee",22,TP_657_5622,,,Roasted (1 000 US$),,0
-"Imports, coffee",23,TP_659_5622,,,Extracts (1 000 US$),,0
-Production and consumption,27,QV.GPV.FOOD.ID.NO,,,"Food prod value, gross (constant 2004-06 1 000 l$)",1000000,0
-Production and consumption,28,QI.NPIN.FOOD.IN.NO,,,Food prod index (2004-2006=100),,0
-Production and consumption,29,QC_656_5312,,,"Area harvested, coffee (ha)",,0
-Production and consumption,30,QC_656_5419,,,"Yield, coffee (hg/ha)",,0
-Production and consumption,31,QC_656_5510,,,"Production quantity, coffee (mln tonnes)",1000,0
-Production and consumption,32,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/cap/day),,0
-Production and consumption,33,CC_2903_664,,,Vegetal (crop) products (kcal/cap/day),,0
-Production and consumption,34,CL_2941_664,,,Animal products (kcal/cap/day),,0
-Environment,35,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% total),,1
-Environment,36,ER.LND.PTLD.ZS,,,Terrestrial protected areas (% total land area),,1
-Environment,37,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1
-Environment,38,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% total),,1
-Environment,39,GHG.AFOLU.TOT.ECO2EQ.NO,,,"GHG emissions from ag (CO2 eq, gigagrams)",1000,0
+The setting,1,OA.TPBS.POP.PPL.NO,,,"Population, total (mln)",,1
+The setting,2,OA.TPR.POP.PPL.NO,,,"Population, rural (mln)",,1
+The setting,3,IG.AFFH.STOCGG.USD.SH,,,Govt expenditure on ag (% total outlays),,1
+The setting,4,area_harvested,,,Area harvested (mln ha),1000000,0
+The setting,5,cropping_intensity_ratio,,,Cropping intensity ratio,,1
+The setting,6,AQ.WAT.WATPCP.MC.NO,,,Water resources (1 000 m3/person/year),1000,0
+The setting,7,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1 000 ha),1000,0
+The setting,8,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (% area equipped for irrigation),,1
+The setting,9,SL.AGR.EMPL.ZS,,,Employment in agriculture (%),,1
+The setting,10,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
+The setting,12,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (kg of nutrients per ha)",0.001,1
+The setting,13,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (kg of nutrients per ha)",0.001,1
+The setting,14,potash_tonnes_per_ha,,,"Fertilizers, Potash (kg nutrients per ha)",0.001,1
+The setting,16,energy.for.power.irrigation,,,"Energy consump, power irrigation (mln kWh)",,0
+The setting,17,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),,0
+Hunger dimensions,18,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
+Hunger dimensions,19,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,0
+Hunger dimensions,20,FBS.PCSS.CSR.PCT3D,,,"Dietary en supp, cereals/roots/tubers (%)",,0
+Hunger dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
+Hunger dimensions,22,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
+Hunger dimensions,23,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,1
+Hunger dimensions,24,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
+Hunger dimensions,25,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
+Hunger dimensions,26,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
+Food supply,27,QV.NPV.FOOD.ID.NO,,,"Food production value, (2004-2006 mln I$)",1000000,0
+Food supply,28,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,0
+Food supply,29,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
+Food supply,30,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
+Production indices (2004-06=100),31,QI.NPIN.FOOD.IN.NO,,,Net food,,0
+Production indices (2004-06=100),32,QI.NPIN.CRPS.IN.NO,,,Net crops,,0
+Production indices (2004-06=100),33,QI.NPIN.CRLS.IN.NO,,,Cereals,,0
+Production indices (2004-06=100),34,Oilcrops.Primary,,,Vegetable oils,,0
+Production indices (2004-06=100),35,Roots.and.Tubers.Total,,,Roots and tubers,,0
+Production indices (2004-06=100),36,Vegetables.and.Fruit.Primary,,,Fruit and vegetables,,0
+Production indices (2004-06=100),37,Sugar.raw,,,Sugar,,0
+Production indices (2004-06=100),38,QI.NPIN.LVSTCK.IN.NO,,,Livestock,,0
+Production indices (2004-06=100),39,Milk.Total,,,Milk,,0
+Production indices (2004-06=100),40,Meat.indigenous.total,,,Meat,,0
+Production indices (2004-06=100),41,production_quantity_index,,,Fish ,,0
+Net trade (mln US\$),42,TP.NETVAL.CRLSPREP.USD.NO,,,Cereals,1000000,0
+Net trade (mln US\$),43,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
+Net trade (mln US\$),44,TP.NETVAL.MEATPREP.USD.NO,,,Meat,1000000,0
+Net trade (mln US\$),45,TP.NETVAL.MILKEQ.USD.NO,,,Dairy products,1000000,0
+Net trade (mln US\$),46,net_fish_trade,,,Fish,1000,0
+Environment,47,RL.AREA.FOR.HA.SH,,,Forest area (%),,0
+Environment,48,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,0
+Environment,49,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,0
+Environment,50,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,0
+Environment,51,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% of total),,0
+Environment,52,BP.TP.GP.TJ.NO,,,Biofuel production (thousand kt of oil eq.),1000,0
+Environment,53,FO.WP.PQ.TN.NO,,,Wood pellet prod. (1 000 tonnes),1000,0
+Environment,54,GHG.AFOLU.TOT.ECO2EQ.NO,,,"Net GHG emissions from AFOLU (CO2 eq, Mt)",1000,0
