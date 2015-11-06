@@ -467,33 +467,29 @@ caption_text <- "Income share held by highest 20 (percent) (2010-2014)"
 
 ## ---- P5povertyRIGHT ----
 
-# National poverty thresholds did not come from world bank. Rerun the database with new WB data if you want this!!
+dat <- filter(syb.df, Year %in%
+                   c(2010:2014)) %>%
+                  group_by(FAOST_CODE,SHORT_NAME) %>%
+                  dplyr::summarise(SI.POV.NAHC = mean(SI.POV.NAHC, na.rm=TRUE))
+dat <- ungroup(dat)
+dat <- dat[!is.na(dat$SI.POV.NAHC),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
 
-plot(cars)
+dat <- dat[which(dat[[region_to_report]]),]
 
-# dat <- filter(syb.df, Year %in%
-#                    c(2010:2014)) %>% 
-#                   group_by(FAOST_CODE,SHORT_NAME) %>% 
-#                   dplyr::summarise(SI.POV.NAHC = mean(SI.POV.NAHC, na.rm=TRUE))
-# dat <- ungroup(dat)
-# dat <- dat[!is.na(dat$SI.POV.NAHC),]
-# # Add region key and subset
-# dat <- left_join(dat,region_key)
-# 
-# dat <- dat[which(dat[[region_to_report]]),]
-# 
-# dat <- arrange(dat, -SI.POV.NAHC)
-# top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
-# bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
-# dat_plot <- rbind(top10,bot10)
-# 
-# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SI.POV.NAHC),y=SI.POV.NAHC))
-# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-# p <- p + coord_flip()
-# p <- p + labs(x="",y="percent")
-# p <- p + guides(color = guide_legend(nrow = 2))
-# p
+dat <- arrange(dat, -SI.POV.NAHC)
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+dat_plot <- rbind(top10,bot10)
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SI.POV.NAHC),y=SI.POV.NAHC))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + coord_flip()
+p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
 
 
 # Caption

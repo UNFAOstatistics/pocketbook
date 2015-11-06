@@ -53,7 +53,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   #  ---- grid below the countries ------------------------
   p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
   p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
-  if (region_to_report %in% c("COF","RAP")){
+  if (region_to_report %in% c("COF","RAP","GLO")){
     p <- p + theme(legend.position = c(0.00,0.05), 
                    legend.justification=c(0,0),
                    legend.key.height=unit(8,'mm'),

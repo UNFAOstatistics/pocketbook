@@ -413,6 +413,7 @@ if (table_type == "latex"){
   if (region_to_report == "RAP") tbl_row_height <- 1.12
   if (region_to_report == "REU") tbl_row_height <- 1.12
   if (region_to_report == "RNE") tbl_row_height <- 1.22
+  if (region_to_report == "GLO") tbl_row_height <- 1.22
   
   cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),
       file = fileOut, append = TRUE)

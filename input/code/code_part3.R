@@ -31,6 +31,7 @@ if (region_to_report == "RAF") short_text <- "The dietary energy supply (DES) is
 if (region_to_report == "RAP") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
 if (region_to_report == "REU") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
 if (region_to_report == "RNE") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
+if (region_to_report == "GLO") short_text <- "The dietary energy supply (DES) is the food available for human consumption, expressed in kilocalories per person per day. At the country level, it is calculated as a measure of food available for human use after taking out all non-food utilization, including exports, industrial use, animal feed, seed, wastage and changes in stocks. In 1961 the average global calorie availability was as low as 2 196 kcal/cap/day; by 2011, it had reached 2 870 kcal/cap/day, and was centered more around a narrow base of staple grains as well as meat and dairy products."
 
 ## ---- P3desData ----
 # Retrieve data
@@ -275,6 +276,7 @@ if (region_to_report == "RAF") short_text <- "The majority of people in developi
 if (region_to_report == "RAP") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
 if (region_to_report == "REU") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
 if (region_to_report == "RNE") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
+if (region_to_report == "GLO") short_text <- "The majority of people in developing countries live in rural areas, and most of them depend on agriculture for their livelihoods. Over the past 50 years, growth in crop production has been driven largely by higher yields per unit of land, and crop intensification. Trends are not uniform across regions, however. Most of the growth in wheat and rice production in Asia and Northern Africa has been from gains in yield, while expansion of harvested land has led to production growth of maize in Latin America and in sub-Saharan Africa."
 
 ## ---- P3cropproData ----
 
@@ -428,6 +430,11 @@ if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE
          QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
          QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
          QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 5000) %>%
+  select(FAOST_CODE,Area,Year,
+         QC.PRD.CRLS.TN.NO,   # Cereals production (tonnes)
+         QC.RHRV.CRLS.HA.NO,  # Cereals harvested area (ha)
+         QC.YIELD.CRLS.HG.NO) # Cereals yield (hg/ha)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -510,6 +517,7 @@ if (region_to_report == "RAF") short_text <- "Cereals, which include wheat, rice
 if (region_to_report == "RAP") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
 if (region_to_report == "REU") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
 if (region_to_report == "RNE") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
+if (region_to_report == "GLO") short_text <- "Cereals, which include wheat, rice, barley, maize, rye, oats and millet, make up the majority of the production of the crop sector. They continue to be the most important food source for human consumption. Yet external factors, such as rising incomes and urbanization, are causing diets to shift towards diets that are higher in protein, fats and sugar. In addition, livestock and biofuel production have and will most likely grow at a faster rate than crop production. This is causing a shift away from crops, like wheat and rice, towards coarse grains and oilseeds to meet demands for food, feed and biofuel."
 
 ## ---- P3cropData ----
 
@@ -653,6 +661,9 @@ if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAO
 if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Area,Year,
          QC.YIELD.CRLS.HG.NO)   
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+  select(SHORT_NAME,Area,Year,
+         QC.YIELD.CRLS.HG.NO)   
 dat_plot <- na.omit(dat)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = QC.YIELD.CRLS.HG.NO,group=SHORT_NAME,color=SHORT_NAME))
@@ -708,6 +719,7 @@ if (region_to_report == "RAF") short_text <- "The world food economy is being in
 if (region_to_report == "RAP") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
 if (region_to_report == "REU") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
 if (region_to_report == "RNE") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
+if (region_to_report == "GLO") short_text <- "The world food economy is being increasingly driven by the shift of diets towards animal-based products such as meat, milk and dairy. As a result, agriculture is being affected, not only through growth of livestock production, but also through linkages to other sectors that supply feeding stuffs, such as crops and fisheries. Globally livestock production is the largest user of agricultural land and therefore also leaves a significant imprint on the environment."
 
 ## ---- P3livestockData ----
 
@@ -909,6 +921,7 @@ if (region_to_report == "RAF") short_text <- "Fish is an important component in 
 if (region_to_report == "RAP") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
 if (region_to_report == "REU") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
 if (region_to_report == "RNE") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
+if (region_to_report == "GLO") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods"
 
 ## ---- P3fisheriesData ----
 
@@ -928,6 +941,9 @@ if (region_to_report == "REU") dat <- syb.df %>% filter(FAOST_CODE %in% 14000) %
   select(SHORT_NAME,Year,
          capture_fish_production,aquaculture_fish_production)
 if (region_to_report == "RNE") dat <- syb.df %>% filter(FAOST_CODE %in% 15000) %>%
+  select(SHORT_NAME,Year,
+         capture_fish_production,aquaculture_fish_production)
+if (region_to_report == "GLO") dat <- syb.df %>% filter(FAOST_CODE %in% 5000) %>%
   select(SHORT_NAME,Year,
          capture_fish_production,aquaculture_fish_production)
 dat <- na.omit(dat)
@@ -1025,6 +1041,9 @@ if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAO
 if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Area,Year,
          production_quantity_index)   # cereal export value
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+  select(SHORT_NAME,Area,Year,
+         production_quantity_index)   # cereal export value
 dat_plot <- na.omit(dat)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = production_quantity_index,group=SHORT_NAME,color=SHORT_NAME))
@@ -1081,6 +1100,7 @@ if (region_to_report == "RAF") short_text <- "Most of the food consumed worldwid
 if (region_to_report == "RAP") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
 if (region_to_report == "REU") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
 if (region_to_report == "RNE") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
+if (region_to_report == "GLO") short_text <- "Most of the food consumed worldwide is grown locally. Where there is not enough local production to meet demand, trade has been instrumental in filling the gap. The scale of food and agricultural trade today is unprecedented. In real terms, the value of international flows has increased around fivefold over the past 50 years, reflecting global trends in the overall volume of trade. However, this expansion has been unevenly distributed across regions. High-income countries have generally outpaced developing regions, although several of the latter have comparative advantages in food and agricultural production."
 
 ## ---- P3tradeData ----
 
@@ -1101,6 +1121,10 @@ if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
 if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Area,Year,
+         TP.EXVAL.FOOD.USD.NO,   # food export value
+         TP.IMVAL.FOOD.USD.NO) # food import value
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
@@ -1218,6 +1242,9 @@ if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAO
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
 if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+  select(SHORT_NAME,Area,Year,
+         TP.EXVAL.CRLS.USD.NO)   # cereal export value
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
 dat_plot <- na.omit(dat)

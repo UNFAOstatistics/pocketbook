@@ -21,32 +21,6 @@ flist <- list.files(paste0(root.dir,"/input/"),
                     full.names = TRUE)
 file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 
-## Copy everything from templates/-folder into process/folder
-flist <- list.files(paste0(root.dir,"/input/templates"),
-                    recursive = TRUE,
-                    include.dirs = TRUE,
-                    full.names = TRUE)
-file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
-
-# Lets automate some changes in latex classes depending on what type of doc we want
-
-if (output_type %in% "print"){
-  system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ % PLACE_DIMENSIONS_HERE /g' ",root.dir,"/output/process/faoyearbook.cls"))
-}
-if (output_type %in% "web"){
-  system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\PassOptionsToPackage{papersize={10cm,21cm},top=1cm,bottom=1cm, left=1cm, right=1cm, twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
-}
-if (output_type %in% "a4"){
-  system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\PassOptionsToPackage{papersize={220mm,307mm},layout=a4paper,layouthoffset=5mm,layoutvoffset=5mm,twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
-}
-
-if (output_type %in% "print"){
-  system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\documentclass[print]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
-}
-if (output_type %in% c("web","a4")){
-  system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\documentclass[twoside,web]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
-}
-
 
 ## Copy .md into jpg folder
 flist <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
@@ -69,6 +43,34 @@ setwd(paste0(root.dir,"/output/process"))
 ## ---- loop_begins ----
 
 for (region_to_report in regionS_to_report) {
+
+  
+  ## Copy everything from templates/-folder into process/folder
+  flist <- list.files(paste0(root.dir,"/input/templates"),
+                      recursive = TRUE,
+                      include.dirs = TRUE,
+                      full.names = TRUE)
+  file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
+  
+  # Lets automate some changes in latex classes depending on what type of doc we want
+  
+  if (output_type %in% "print"){
+    system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ % PLACE_DIMENSIONS_HERE /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  }
+  if (output_type %in% "web"){
+    system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\PassOptionsToPackage{papersize={10cm,21cm},top=1cm,bottom=1cm, left=1cm, right=1cm, twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  }
+  if (output_type %in% "a4"){
+    system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\PassOptionsToPackage{papersize={220mm,307mm},layout=a4paper,layouthoffset=5mm,layoutvoffset=5mm,twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  }
+  
+  if (output_type %in% "print"){
+    system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\documentclass[print]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
+  }
+  if (output_type %in% c("web","a4")){
+    system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\documentclass[twoside,web]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
+  }
+  
 
   if (region_to_report == "COF"){
     system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\colorbox{part6}{\\\\parbox{\\\\dimexpr\\\\columnwidth+2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
