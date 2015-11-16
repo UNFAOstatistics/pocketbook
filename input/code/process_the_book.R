@@ -54,28 +54,46 @@ for (region_to_report in regionS_to_report) {
   
   # Lets automate some changes in latex classes depending on what type of doc we want
   
-  if (output_type %in% "print"){
+  # in unix (tested in linux mint!)
+  if (output_type %in% "print" & Sys.info()[["sysname"]] != "Windows"){
     system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ % PLACE_DIMENSIONS_HERE /g' ",root.dir,"/output/process/faoyearbook.cls"))
   }
-  if (output_type %in% "web"){
+  if (output_type %in% "web" & Sys.info()[["sysname"]] != "Windows"){
     system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\PassOptionsToPackage{papersize={10cm,21cm},top=1cm,bottom=1cm, left=1cm, right=1cm, twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
   }
-  if (output_type %in% "a4"){
-    system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\PassOptionsToPackage{papersize={220mm,307mm},layout=a4paper,layouthoffset=5mm,layoutvoffset=5mm,twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
-  }
-  
-  if (output_type %in% "print"){
+  if (output_type %in% "print" & Sys.info()[["sysname"]] != "Windows"){
     system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\documentclass[print]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
   }
-  if (output_type %in% c("web","a4")){
+  if (output_type %in% "web" & Sys.info()[["sysname"]] != "Windows"){
     system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\documentclass[twoside,web]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
+  }
+  # in windows (tested in windows 8.1 64bit)
+  if (output_type %in% "print" & Sys.info()[["sysname"]] == "Windows"){
+    system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ % PLACE_DIMENSIONS_HERE /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  }
+  if (output_type %in% "web" & Sys.info()[["sysname"]] == "Windows"){
+    system(paste0("sed -i -- 's/PLACE_DIMENSIONS_HERE/ \\\\\\PassOptionsToPackage{papersize={10cm,21cm},top=1cm,bottom=1cm, left=1cm, right=1cm, twoside}{geometry} /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  }
+  if (output_type %in% "print" & Sys.info()[["sysname"]] == "Windows"){
+    system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\\\documentclass[print]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
+  }
+  if (output_type %in% "web" & Sys.info()[["sysname"]] == "Windows"){
+    system(paste0("sed -i -- 's/PLACE_PRINT_OR_WEB_HERE/ \\\\\\documentclass[twoside,web]{faofactbook} /g' ",root.dir,"/output/process/syb_main.Rnw"))
   }
   
 
-  if (region_to_report == "COF"){
+  if (region_to_report == "COF" & Sys.info()[["sysname"]] != "Windows"){
     system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\colorbox{part6}{\\\\parbox{\\\\dimexpr\\\\columnwidth+2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
-  } else {
+  } 
+  if (region_to_report != "COF" & Sys.info()[["sysname"]] != "Windows"){
     system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\colorbox{FAOblue}{\\\\parbox{\\\\dimexpr\\\\columnwidth-2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
+  }
+  
+  if (region_to_report == "COF" & Sys.info()[["sysname"]] == "Windows"){
+    system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\\\colorbox{part6}{\\\\parbox{\\\\dimexpr\\\\columnwidth+2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
+  } 
+  if (region_to_report != "COF" & Sys.info()[["sysname"]] == "Windows"){
+    system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\\\colorbox{FAOblue}{\\\\parbox{\\\\dimexpr\\\\columnwidth-2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
   }
 
 
@@ -139,8 +157,8 @@ for (region_to_report in regionS_to_report) {
     embed_fonts(plot)
   }
 
-  system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
-  system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+  system(paste0("lualatex ",root.dir,"output/process/syb_main.tex"))
+  system(paste0("lualatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
   #
   # Technical report
