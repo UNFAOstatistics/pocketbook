@@ -227,10 +227,30 @@ cat(
   cat("
     \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-0 -30, pagecommand={}]{./I4985E_Disclaimer_coffee.pdf}
   ")
-    }
-if (region_to_report != "COF"){
-      cat("
+  }
+  if (region_to_report == "GLO"){
+  cat("
     \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-0 -30, pagecommand={}]{./I4691E_disclaimer.pdf}
+  ")
+    }
+if (region_to_report == "RAP"){
+      cat("
+    \\includepdf[scale=0.6, offset=50 -60, pagecommand={}]{./RAP_I5102E_disclaimer.pdf}
+  ")
+}
+if (region_to_report == "RAF"){
+      cat("
+    \\includepdf[scale=0.6, offset=50 -60, pagecommand={}]{./RAF_I5103E_disclaimer.pdf}
+  ")
+}
+if (region_to_report == "REU"){
+      cat("
+    \\includepdf[scale=0.6, offset=50 -60, pagecommand={}]{./REU_I5104E_disclaimer.pdf}
+  ")
+  }
+if (region_to_report == "RNE"){
+      cat("
+    \\includepdf[scale=0.6, offset=50 -60, pagecommand={}]{./RNE_I5105E_disclaimer.pdf}
   ")
   }
 @
