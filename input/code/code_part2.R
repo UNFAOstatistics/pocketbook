@@ -106,22 +106,21 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
-  
+
   # GLO
   # dat$FAOST_CODE[dat$FAOST_CODE == "LACregion"] <- 5205 # Regional Office for the Near East
   # dat$FAOST_CODE[dat$FAOST_CODE == "RAFregion"] <- 5100 # Gulf Cooperation Council States and Yemen
   # dat$FAOST_CODE[dat$FAOST_CODE == "RAPregion"] <- 5300 # North Africa
   # dat$FAOST_CODE[dat$FAOST_CODE == "REUregion"] <- 5400 # Other Near East countries
   # dat$FAOST_CODE[dat$FAOST_CODE == "RNEregion"] <- 5500 # Other Near East countries
-  
-  
+
+
   # As filippo stated in email on 22/10/15 that
   ## The aggregates in yellow have been created but not disseminated because
   ## they include developed countries. This means that you can use them but
   ## just for those statistics in which developed countries are shown
   ## (you can refer to the Food Security Indicators file for this). For example,
   ## you cannot show the Prevalence of Undernourishment for these aggregates.
-S
   # -> so I am replacing values for those variables & those aggregates with NA
   # and they will appear empty in countryprofile tables
 
@@ -349,6 +348,189 @@ create_map_here()
 
 # Caption
 caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
+
+
+
+
+
+ #
+ #   ___  _               _ _
+ #  / _ \| |__   ___  ___(_) |_ _   _
+ # | | | | '_ \ / _ \/ __| | __| | | |
+ # | |_| | |_) |  __/\__ \ | |_| |_| |
+ #  \___/|_.__/ \___||___/_|\__|\__, |
+ #                              |___/
+
+
+## ---- P2obesityTEXT ----
+spread_title <- "Obesity/overweight"
+if (region_to_report == "RAF") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "RAP") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "REU") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "RNE") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "GLO") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+
+## ---- P2obesityTOPRIGHT
+dat <- read.csv(paste0(data.dir,"/FSI2015_disseminationData_A_11.csv"), stringsAsFactors=FALSE)
+over_acq <- gather(dat, Year_range, value, 3:27)
+over_acq$Year_range <- as.character(over_acq$Year_range)
+
+over_acq$Year[over_acq$Year_range == "X1990.92"] <- 1991
+over_acq$Year[over_acq$Year_range == "X1991.93"] <- 1992
+over_acq$Year[over_acq$Year_range == "X1992.94"] <- 1993
+over_acq$Year[over_acq$Year_range == "X1993.95"] <- 1994
+over_acq$Year[over_acq$Year_range == "X1994.96"] <- 1995
+over_acq$Year[over_acq$Year_range == "X1995.97"] <- 1996
+over_acq$Year[over_acq$Year_range == "X1996.98"] <- 1997
+over_acq$Year[over_acq$Year_range == "X1997.99"] <- 1998
+over_acq$Year[over_acq$Year_range == "X1998.00"] <- 1999
+over_acq$Year[over_acq$Year_range == "X1999.01"] <- 2000
+over_acq$Year[over_acq$Year_range == "X2000.02"] <- 2001
+over_acq$Year[over_acq$Year_range == "X2001.03"] <- 2002
+over_acq$Year[over_acq$Year_range == "X2002.04"] <- 2003
+over_acq$Year[over_acq$Year_range == "X2003.05"] <- 2004
+over_acq$Year[over_acq$Year_range == "X2004.06"] <- 2005
+over_acq$Year[over_acq$Year_range == "X2005.07"] <- 2006
+over_acq$Year[over_acq$Year_range == "X2006.08"] <- 2007
+over_acq$Year[over_acq$Year_range == "X2007.09"] <- 2008
+over_acq$Year[over_acq$Year_range == "X2008.10"] <- 2009
+over_acq$Year[over_acq$Year_range == "X2009.11"] <- 2010
+over_acq$Year[over_acq$Year_range == "X2010.12"] <- 2011
+over_acq$Year[over_acq$Year_range == "X2011.13"] <- 2012
+over_acq$Year[over_acq$Year_range == "X2012.14."] <- 2013
+over_acq$Year[over_acq$Year_range == "X2013.15."] <- 2014
+over_acq$Year[over_acq$Year_range == "X2014.16."] <- 2015
+
+over_acq$Year <- factor(over_acq$Year)
+over_acq$Year <- as.numeric(levels(over_acq$Year))[over_acq$Year]
+
+names(over_acq) <- c("FAOST_CODE","FAO_TABLE_NAME","Year_range","value","Year")
+
+dat <- over_acq %>% filter(FAOST_CODE %in% c(5001,5851,5852), Year %in% c(1992,2015)) %>%  select(FAOST_CODE,FAO_TABLE_NAME,Year,value) %>% 
+    dplyr::rename(SHORT_NAME = FAO_TABLE_NAME)
+
+dat$fill[dat$Year == 1992] <- "1991-93"
+dat$fill[dat$Year == 2015] <- "2014-16"
+
+dat_plot <- dat
+# reorder
+# dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "2014-16") %>% arrange(-value))$SHORT_NAME)
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=c("Developed countries","Developing countries","World"))
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
+p <- p + geom_bar(stat="identity", position="dodge")
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- p + labs(x="",y="percent")
+p <- p + theme(axis.text.x = element_text(angle=45))
+p
+
+# Caption
+caption_text <- "Prevalence of over-acquisition (1991-93 and 2014-16)"
+# caption_text <- "text"
+
+## ---- P2obesityLEFT ----
+dat <- syb.df[syb.df$Year %in%  2005:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SH.STA.OWGH.MA.ZS")]
+
+dat <- dat[!is.na(dat$SH.STA.OWGH.MA.ZS),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+#and subset
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SH.STA.OWGH.MA.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SH.STA.OWGH.MA.ZS),y=SH.STA.OWGH.MA.ZS))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Prevalence of overweigth among children under 5, countries with the highest values, male (percent 2005-2013*)"
+
+
+## ---- P2obesityRIGHT ----
+dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SH.STA.OWGH.FE.ZS")]
+
+dat <- dat[!is.na(dat$SH.STA.OWGH.FE.ZS),]
+# Add region key and subset
+dat <- left_join(dat,region_key)
+
+dat <- dat[dat$FAOST_CODE != 348,]
+dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+
+#and subset
+dat <- dat[which(dat[[region_to_report]]),]
+
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SH.STA.OWGH.FE.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
+
+
+p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SH.STA.OWGH.FE.ZS),y=SH.STA.OWGH.FE.ZS))
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
+p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+p <- p + coord_flip()
+p <- p + labs(x="",y="percent")
+p <- p + guides(color = guide_legend(nrow = 2))
+p
+
+# Caption
+caption_text <- "Prevalence of overweigth among children under 5, countries with the highest values, female (percent 2005-2013*)"
+# caption_text <- "text"
+# 
+## ---- P2obesityBOTTOM ----
+dat <- over_acq %>% filter(FAOST_CODE %in% c(5001,5100,5853,5500,5205), Year >= 1990) %>%  select(FAOST_CODE,FAO_TABLE_NAME,Year,value) %>% 
+  dplyr::rename(SHORT_NAME = FAO_TABLE_NAME)
+
+
+dat_plot <- dat
+
+p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
+p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + labs(y="percent", x="")
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010,2015),
+                            labels = c("1990-92", "2000-02", "2005-07", "2009-11","2014-16"))
+p
+
+# Caption
+caption_text <- "Prevalence of over-acquisition (1990-92 to 2014-16)"
+# caption_text <- "text"
+
+## ---- P2obesityMAP ----
+dat <- syb.df %>% filter(Year == 2014) %>%
+                select(Year,FAOST_CODE,SHORT_NAME,obesity_BOTH)
+dat <- dat[!is.na(dat$obesity_BOTH),]
+dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
+
+
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+
+# Add region key and subset
+
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","obesity_BOTH")]
+cat_data$value_cat <- categories(x=cat_data$obesity_BOTH, n=5, method="jenks")
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# define map unit
+map_unit <- "Percent"
+
+create_map_here()
+
+# Caption
+caption_text <- "Prevalence of obesity, adults (percent, 2014)"
+
 
 
 #   _____                       _                             _   _           _       _   _   _   _
