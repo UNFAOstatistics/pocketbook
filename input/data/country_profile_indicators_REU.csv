@@ -8,32 +8,32 @@ The setting,6,AQ.WAT.WATPCP.MC.NO,,,Water resources (m3/person/year),1000,0
 The setting,7,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1000 ha),1000,0
 The setting,8,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (%),,1
 The setting,9,agr_employment_male_female,,,"Employment in agriculture (M/F, %)",,1
-The setting,10,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (nutrients per ha)",0.001,1
-The setting,11,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (nutrients per ha)",0.001,1
-The setting,12,potash_tonnes_per_ha,,,"Fertilizers, Potash (nutrients per ha)",0.001,1
+The setting,10,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (nutrients kg per ha)",0.001,1
+The setting,11,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (nutrients kg per ha)",0.001,1
+The setting,12,potash_tonnes_per_ha,,,"Fertilizers, Potash (nutrients kg per ha)",0.001,1
 The setting,13,energy.for.power.irrigation,,,"Energy consump, power irrigation (mln kWh)",1000000,0
 The setting,14,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),1000,1
 The setting,15,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
-Hunger and dietary dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
-Hunger and dietary dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1
-Hunger and dietary dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary en supp, cereals/roots/tubers (%)",,1
-Hunger and dietary dimensions,19,FBS.PPCS.AO.GCD3D,,,Average protein supply of animal origin (g/capita/day),,0
-Hunger and dietary dimensions,20,FS.OA.SFEP.PCT,,,Share of food expenditure (%),,1
-Hunger and dietary dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
-Hunger and dietary dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0
-Hunger and dietary dimensions,23,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
-Hunger and dietary dimensions,24,SH.STA.STNT.ZS,,,"Stunting, children under 5 (%)",,1
-Hunger and dietary dimensions,25,SH.STA.WAST.ZS,,,"Wasting, children under 5 (%)",,1
-Hunger and dietary dimensions,26,SH.STA.OWGH.ZS,,,"Overweight, children under 5 (%)",,1
-Hunger and dietary dimensions,28,overweight,,,"Overweight, adults (M/F, %)",,1
-Hunger and dietary dimensions,29,obesity,,,"Obesity, adults (M/F, %)",,1
-Hunger and dietary dimensions,31,FS.OU.VAD.PCT,,,"Vitamin A deficiency, total pop. (%)",,1
-Hunger and dietary dimensions,32,SH.ANM.CHLD.ZS,,,"Anemia, children under 5 (%)",,1
-Hunger and dietary dimensions,33,SH.PRG.ANEM,,,"Anemia, women in reproductive age (%)",,1
-Hunger and dietary dimensions,35,FS.OU.IODINE.PCT,,,"Iodine deficiency, total pop. (%)",,1
-Hunger and dietary dimensions,36,SH.XPD.TOTL.ZS,,,"Health expenditure, total (% of GDP)",,1
-Hunger and dietary dimensions,37,SH.XPD.PCAP,,,"Health expenditure per capita, PPP ($)",,0
-Hunger and dietary dimensions,38,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
+Hunger and dietary quality dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
+Hunger and dietary quality dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1
+Hunger and dietary quality dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary en supp, cereals/roots/tubers (%)",,1
+Hunger and dietary quality dimensions,19,FBS.PPCS.AO.GCD3D,,,Average protein supply of animal origin (g/capita/day),,0
+Hunger and dietary quality dimensions,20,FS.OA.SFEP.PCT,,,Share of food expenditure (%),,1
+Hunger and dietary quality dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
+Hunger and dietary quality dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0
+Hunger and dietary quality dimensions,23,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
+Hunger and dietary quality dimensions,24,SH.STA.STNT.ZS,,,"Stunting, children under 5 (%)",,1
+Hunger and dietary quality dimensions,25,SH.STA.WAST.ZS,,,"Wasting, children under 5 (%)",,1
+Hunger and dietary quality dimensions,26,SH.STA.OWGH.ZS,,,"Overweight, children under 5 (%)",,1
+Hunger and dietary quality dimensions,28,overweight,,,"Overweight, adults (M/F, %)",,1
+Hunger and dietary quality dimensions,29,obesity,,,"Obesity, adults (M/F, %)",,1
+Hunger and dietary quality dimensions,31,FS.OU.VAD.PCT,,,"Vitamin A deficiency, total pop. (%)",,1
+Hunger and dietary quality dimensions,32,SH.ANM.CHLD.ZS,,,"Anemia, children under 5 (%)",,1
+Hunger and dietary quality dimensions,33,SH.PRG.ANEM,,,"Anemia, women in reproductive age (%)",,1
+Hunger and dietary quality dimensions,35,FS.OU.IODINE.PCT,,,"Iodine deficiency, children aged 6 to 12 (%)",,1
+Hunger and dietary quality dimensions,36,SH.XPD.TOTL.ZS,,,"Health expenditure, total (% of GDP)",,1
+Hunger and dietary quality dimensions,37,SH.XPD.PCAP,,,"Health expenditure per capita, PPP ($)",,0
+Hunger and dietary quality dimensions,38,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
 Food Supply,39,QV.NPV.FOOD.ID.NO,,,"Food production value, (2004-2006 mln I$)",1000000,0
 Food Supply,40,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,1
 Production indices (2004-06=100),41,QI.NPIN.FOOD.IN.NO,,,Net food,,0
