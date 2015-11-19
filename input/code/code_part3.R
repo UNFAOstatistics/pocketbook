@@ -521,11 +521,26 @@ if (region_to_report == "GLO") short_text <- "Cereals, which include wheat, rice
 
 ## ---- P3cropData ----
 
-# This should be thought twice how to produce it for regional books!
-load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
-names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
-dat <- dat[dat$Year > 1999,]
+# # This should be thought twice how to produce it for regional books!
+# load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
+# names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
+# dat <- dat[dat$Year > 1999,]
+# 
+# # Add region key and subset
+# dat <- left_join(dat,region_key)
 
+# This should be thought twice how to produce it for regional books!
+download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Crops_E_All_Data_(Norm).zip",
+              destfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"))
+unzip(zipfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"),
+      exdir = data.dir)
+dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
+# Remove two items
+dat <- dat[!dat$Item %in% c("Cereals (Rice Milled Eqv)","Vegetables Primary"),]
+
+
+# dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -568,21 +583,21 @@ print(xtable(gg, caption = "\\large{Top five items produced in 2013, thousand to
 first <- as.character(gg[1,1])
 # data
 
-d <- dat %>% filter(Item %in% first, Element == "Production", Year %in% c(2000,2012)) %>%
+d <- dat %>% filter(Item %in% first, Element == "Production", Year %in% c(2000,2013)) %>%
   # select(FAOST_CODE,Year,Value,Unit,SHORT_NAME) %>%
   mutate(Value = Value * 1000) # into kilograms
 
-d <- d[!is.na(d$Value),]
 # Add region key and subset
 
 d <- d[d$FAOST_CODE != 348,]
 d$SHORT_NAME[d$FAOST_CODE == 351] <- "China"
 
-per_capita <- syb.df %>% filter(Year %in% c(2000,2012)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
+per_capita <- syb.df %>% filter(Year %in% c(2000,2013)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
 
 d <- left_join(d,per_capita)
 
 d$Value <- d$Value / d$OA.TPBS.POP.PPL.NO
+d <- d[!is.na(d$Value),]
 
 d <- d[which(d[[region_to_report]]),]
 
@@ -594,7 +609,7 @@ nro_latest_cases <- nrow(d[d$Year == max(d$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 d <- arrange(d, -Year, -Value)
 # slice the data for both years
-top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
 top2000 <- d %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -611,28 +626,27 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top 20",first,"producing countries, per capita")
+caption_text <- paste("Top 20",tolower(first),"producing countries, per capita")
 
 
 ## ---- P3cropRIGHT ----
 
 second <- as.character(gg[2,1])
 
-d <- dat %>% filter(Item %in% second, Element == "Production", Year %in% c(2000,2012)) %>%
+d <- dat %>% filter(Item %in% second, Element == "Production", Year %in% c(2000,2013)) %>%
   # select(FAOST_CODE,Year,Value,Unit,SHORT_NAME) %>%
   mutate(Value = Value * 1000) # into kilograms
 
-d <- d[!is.na(d$Value),]
-# Add region key and subset
 
 d <- d[d$FAOST_CODE != 348,]
 d$SHORT_NAME[d$FAOST_CODE == 351] <- "China"
 
-per_capita <- syb.df %>% filter(Year %in% c(2000,2012)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
+per_capita <- syb.df %>% filter(Year %in% c(2000,2013)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
 
 d <- left_join(d,per_capita)
 
 d$Value <- d$Value / d$OA.TPBS.POP.PPL.NO
+d <- d[!is.na(d$Value),]
 
 d <- d[which(d[[region_to_report]]),]
 
@@ -644,7 +658,7 @@ nro_latest_cases <- nrow(d[d$Year == max(d$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 d <- arrange(d, -Year, -Value)
 # slice the data for both years
-top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
 top2000 <- d %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -661,7 +675,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top 20",second,"producing countries, per capita")
+caption_text <- paste("Top 20",tolower(second),"producing countries, per capita")
 
 
 ## ---- P3cropBOTTOM ----
@@ -796,8 +810,8 @@ dat <- dat[!is.na(dat$QL.PRD.MILK.TN.NO),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -QL.PRD.MILK.TN.NO)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK.TN.NO))
@@ -824,8 +838,8 @@ dat <- dat[!is.na(dat$QL.PRD.EGG.TN.NO),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -QL.PRD.EGG.TN.NO)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.TN.NO))
@@ -1001,8 +1015,8 @@ dat <- dat[!is.na(dat$capture_fish_production),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -capture_fish_production)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=capture_fish_production))
@@ -1030,8 +1044,8 @@ dat <- dat[!is.na(dat$aquaculture_fish_production),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -aquaculture_fish_production)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Countries with highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Countries with lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=aquaculture_fish_production))
@@ -1155,7 +1169,7 @@ dw$TP.IMVAL.FOOD.USD.NO <- dw$TP.IMVAL.FOOD.USD.NO / 1000000000
 
 dw <- dw[order(-dw$TP.IMVAL.FOOD.USD.NO),c("SHORT_NAME","TP.EXVAL.FOOD.USD.NO","TP.IMVAL.FOOD.USD.NO")]
 
-dw <- head(dw, 6) # to work with RAP too
+dw <- head(dw, 7) # to work with RAP too
 
 names(dw) <- c("","Export value", "Import value")
 
@@ -1165,7 +1179,7 @@ dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
 dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 
 print.xtable(xtable(dw, caption = "\\large{Exports and Imports of food, million US\\$ (2012)}", digits = c(0,0,0,0),
-                    align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
+                    align= "l{\raggedright\arraybackslash}p{1.2cm}rr"),
              type = table_type, table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
              size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
