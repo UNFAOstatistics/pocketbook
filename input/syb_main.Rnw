@@ -1247,7 +1247,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3cropTEXT, eval=P3crop, short_text_ChartPage=P3crop>>=
 @
 
-<<P3cropData,results='hide',cache=FALSE,eval=P3crop>>=
+<<P3cropData,results='hide',cache=TRUE,eval=P3crop>>=
 @
 
 
@@ -1285,7 +1285,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3livestockTEXT, eval=P3livestock, short_text_ChartPage=P3livestock>>=
 @
 
-<<P3livestockData,results='hide',cache=FALSE,eval=P3livestock>>=
+<<P3livestockData,results='hide',cache=TRUE,eval=P3livestock>>=
 @
 
 
