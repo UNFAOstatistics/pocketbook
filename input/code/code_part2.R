@@ -507,8 +507,8 @@ caption_text <- "Prevalence of over-acquisition (1990-92 to 2014-16)"
 
 ## ---- P2obesityMAP ----
 dat <- syb.df %>% filter(Year == 2014) %>%
-                select(Year,FAOST_CODE,SHORT_NAME,obesity_BOTH)
-dat <- dat[!is.na(dat$obesity_BOTH),]
+                select(Year,FAOST_CODE,SHORT_NAME,overweight_BOTH)
+dat <- dat[!is.na(dat$overweight_BOTH),]
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
 
 
@@ -518,8 +518,8 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","obesity_BOTH")]
-cat_data$value_cat <- categories(x=cat_data$obesity_BOTH, n=5, method="jenks")
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","overweight_BOTH")]
+cat_data$value_cat <- categories(x=cat_data$overweight_BOTH, n=5, method="jenks")
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -529,7 +529,7 @@ map_unit <- "Percent"
 create_map_here()
 
 # Caption
-caption_text <- "Prevalence of obesity, adults (percent, 2014)"
+caption_text <- "Prevalence of overweight and obesity, adults (percent, 2014)"
 
 
 
