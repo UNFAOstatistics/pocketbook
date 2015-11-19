@@ -62,7 +62,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -188,7 +188,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load(paste0(data.dir,"/SYB2015-10-20.RData"))
 # load(paste0(data.dir,"/SYB2015-11-05.RData"))
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-18_night/SYB2015-11-18.RData")
-load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-18/SYB2015-11-18.RData")
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19_night/SYB2015-11-19.RData")
+load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19/SYB2015-11-19.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 

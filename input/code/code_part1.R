@@ -768,7 +768,7 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012
 
 ## ---- P1inputMAP ----
 # TRY RP.PEST.TOT.TN.SH.EXP
-dat <- filter(syb.df, Year %in% 2007:2012) %>% 
+dat <- syb.df %>% filter(Year %in% 2007:2012) %>% 
   select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%  
   dplyr::mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH * 1000) # we want kg per ha
 
