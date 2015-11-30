@@ -281,13 +281,18 @@ if (region_to_report == "GLO") short_text <- "The majority of people in developi
 ## ---- P3cropproData ----
 
 # This should be thought twice how to produce it for regional books!
-load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
-names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
+if (!file.exists(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))){
+  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Crops_E_All_Data_(Norm).zip",
+                destfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"))
+  unzip(zipfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"),
+        exdir = data.dir)
+  dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+} else dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+
+names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
 dat <- dat[dat$Year > 1999,]
 # Add region key and subset
 dat <- left_join(dat,region_key)
-
-
 
 
 ## ---- P3cropproTOPRIGHT ----
@@ -319,7 +324,7 @@ rc <- growth %>% arrange(-growth_rate) %>% slice(1:5)
 
 names(rc) <- c("","%")
 
-print.xtable(xtable(rc, caption = "\\large{Fastest growing products based on quantities (average anual growth rate, 2000 to 2013)}", digits = c(0,0,0),
+print.xtable(xtable(rc, caption = "\\large{Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)}", digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = table_type, table.placement = NULL, booktabs = TRUE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
@@ -530,11 +535,14 @@ if (region_to_report == "GLO") short_text <- "Cereals, which include wheat, rice
 # dat <- left_join(dat,region_key)
 
 # This should be thought twice how to produce it for regional books!
-download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Crops_E_All_Data_(Norm).zip",
-              destfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"))
-unzip(zipfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"),
-      exdir = data.dir)
-dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+if (!file.exists(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))){
+  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Crops_E_All_Data_(Norm).zip",
+                destfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"))
+  unzip(zipfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"),
+        exdir = data.dir)
+  dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+} else dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+
 names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
 # Remove two items
 dat <- dat[!dat$Item %in% c("Cereals (Rice Milled Eqv)","Vegetables Primary"),]
@@ -754,27 +762,37 @@ if (region_to_report == "GLO") short_text <- "The world food economy is being in
 ## ---- P3livestockData ----
 
 # This should be thought twice how to produce it for regional books!
-download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Livestock_E_All_Data_(Norm).zip",
-              destfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"))
-unzip(zipfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"),
-      exdir = data.dir)
-dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
+if (!file.exists(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))){
+  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Livestock_E_All_Data_(Norm).zip",
+                destfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"))
+  unzip(zipfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"),
+        exdir = data.dir)
+  dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
+} else dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
+
 names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
 
 dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
+
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
 ## ---- P3livestockTOPRIGHT ----
 dat <- dat[which(dat[[region_to_report]]),]
 d13 <- dat %>%  filter(Year %in% 2013, Unit %in% c("Head","1000 Head")) %>%
-  filter(!grepl("Total",Item)) %>%
+  filter(!grepl("Total",Item),
+         !grepl("Poultry Birds",Item),
+         !grepl("Sheep and Goats",Item)
+         ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
   arrange(-Value) %>%
   slice(1:5)
 d00 <- dat %>%  filter(Year %in% 2000, Unit %in% c("Head","1000 Head")) %>%
-  filter(!grepl("Total",Item)) %>%
+  filter(!grepl("Total",Item),
+         !grepl("Poultry Birds",Item),
+         !grepl("Sheep and Goats",Item)
+         ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
   arrange(-Value) %>%
@@ -828,7 +846,7 @@ caption_text <- "Total milk production, top and bottom 10 countries (2012)"
 
 ## ---- P3livestockRIGHT ----
 
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO) %>%  mutate(QL.PRD.EGG.TN.NO = QL.PRD.EGG.TN.NO / 1000)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO) %>%  mutate(QL.PRD.EGG.TN.NO = QL.PRD.EGG.TN.NO / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -846,7 +864,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.T
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="1 000 tonnes")
+p <- p + labs(x="",y="mln tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space) 
 p
