@@ -253,6 +253,7 @@ if (region_to_report == "GLO") short_text <- "Global demand for water has risen 
 
 
 ## ---- P4waterData, cache=TRUE,results='hide', eval=P4water ----
+library(readxl)
 g <- read_excel(paste0(data.dir,"/UPDATEDWATER_WR_Capita_2000-2010.xlsx"))
 names(g) <- c("FAO_TABLE_NAME","Year2000","Year2010")
 g <- gather(g, "Year", "per_capita_water_resources", 2:3)

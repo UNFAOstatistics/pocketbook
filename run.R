@@ -6,7 +6,7 @@
 options(scipen=999) # disable scientific number formatting
 
 # set root directory
-if (Sys.info()[["user"]] == "markus") root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
+if (Sys.info()[["user"]] %in% c("markus","aurelius")) root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
 if (Sys.info()[["user"]] == "amy")   root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
@@ -19,9 +19,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                        # "RAP" # Asia and the Pacific
+                        "RAP" # Asia and the Pacific
                         # ,"RAF"  # Africa
-                        "REU" # Europe and Central Asia
+                        ,"REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # ,"COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
@@ -53,7 +53,7 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
+include_country_profiles <- T
 include_definitions      <- T
 include_notes            <- T
 # -------------------------------
@@ -194,7 +194,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-25-12/SYB2015-11-25-12.RData")
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
-load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
+load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -224,7 +225,7 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPEastAsia"]           <- 13001
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSoutheastAsia"]      <- 13003
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPCentralAsia"]        <- 13005
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPOceania"]            <- 130015
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPOceania"]            <- 13006
 
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
