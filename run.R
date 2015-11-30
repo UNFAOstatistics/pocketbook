@@ -53,7 +53,7 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions      <- T
 include_notes            <- T
 # -------------------------------
@@ -193,7 +193,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-24/SYB2015-11-24.RData") # old FAO aggregation script
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-25-12/SYB2015-11-25-12.RData")
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
-load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
+load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -219,20 +220,21 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFWestAfrica"]     <- 12005
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPregion"]             <- 13000
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPEastAsia"]           <- 13001
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPacificIslands"]     <- 13002
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPacificIslands"]     <- 13002
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSoutheastAsia"]      <- 13003
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPCentralAsia"]        <- 13005
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPOceania"]            <- 130015
 
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMelanesia"]          <- 13008
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMicronesia"]         <- 13009
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPolynesia"]          <- 13010
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPRussianFederation"]  <- 13011
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthernAsia"]       <- 13012
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPUnitedStates"]       <- 13013
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPWesternAsia"]        <- 13014
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMelanesia"]          <- 13008
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMicronesia"]         <- 13009
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPolynesia"]          <- 13010
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPRussianFederation"]  <- 13011
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthernAsia"]       <- 13012
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPUnitedStates"]       <- 13013
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPWesternAsia"]        <- 13014
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDeveloped"]          <- 13100
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDevelopedCountries"] <- 13200
@@ -251,11 +253,6 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEregion"] <- 15000
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEgccsy"]  <- 15001
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEna"]     <- 15002
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEome"]    <- 15003
-
-
-
-
-
 
 syb.df$FAOST_CODE <- factor(syb.df$FAOST_CODE)
 syb.df$FAOST_CODE <- as.numeric(levels(syb.df$FAOST_CODE))[syb.df$FAOST_CODE]
@@ -315,7 +312,7 @@ map.df <- left_join(map.df,region_key)
 
 ##############################################################
 ##############################################################
-## Pppulation threshold - currently disabled
+## Pppulation threshold - currently disabled as the countries included are defined in "/input/code/define_regions.R"
 #############################################################
 # pop_threshold <- 120000 #
 # small_countries <- syb.df[syb.df$OA.TPBS.POP.PPL.NO <= pop_threshold,c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]
