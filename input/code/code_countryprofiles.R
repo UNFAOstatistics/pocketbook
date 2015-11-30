@@ -327,13 +327,14 @@ if (region_to_report == "RAP"){
 }
 if (region_to_report == "REU"){
   M49countries <-
-    rbind(data.frame(FAOST_CODE = c(14000,14001,14003,14004,14005,14006,14007),
+    rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,14005,14006,14007),
                      SHORT_NAME = c("Regional Office for Europe and Central Asia",
+                                    "Central Asia",
                                     "Caucasus and Turkey",
-                                    "Central Eastern Europe",
+                                    "EU Central and Eastern",
                                     "CIS Europe",
                                     "Israel",
-                                    "Other and EFTA",
+                                    "EU other and EFTA",
                                     "South Eastern Europe"),
                      stringsAsFactors = FALSE),
           M49countries)
