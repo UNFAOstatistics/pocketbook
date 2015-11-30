@@ -189,6 +189,8 @@ water_vars.df$FAOST_CODE[water_vars.df$FAOST_CODE == 357] <- 351
 myvars <- names(syb.df) %in% water_vars
 syb.df <- syb.df[!myvars]
 
+water_vars.df <- water_vars.df[!duplicated(water_vars.df[c("FAOST_CODE","Year")]),]
+
 syb.df <- dplyr::left_join(syb.df,water_vars.df)
 
 
