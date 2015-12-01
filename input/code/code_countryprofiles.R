@@ -316,12 +316,12 @@ if (region_to_report == "RAP"){
                                     13005, # Central Asia
                                     # 13006, # Australia and New Zealand
                                     13006, # Oceania 
+                                    13012, # Southhern Asia
                                     68, # France
                                     # 13008, #Melanesia
                                     # 13009, #Micronesia
                                     # 13010, # Polynesia
                                     185,  # Russian Federation
-                                    13012, # Southhern Asia
                                     231#, # United States
                                     # 13014 # Western Asia
                                     ),
@@ -331,12 +331,12 @@ if (region_to_report == "RAP"){
                                     "Central Asia",
                                     # "Australia and New Zealand",
                                     "Oceania",
+                                    "Southern Asia",
                                     "France",
                                     # "Melanesia",
                                     # "Micronesia",
                                     # "Polynesia",
                                     "Russian Federation",
-                                    "Southern Asia",
                                     "United States"  
                                     # "Western Asia"
                                     ),

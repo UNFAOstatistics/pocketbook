@@ -53,9 +53,9 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
-include_definitions      <- T
-include_notes            <- T
+include_country_profiles <- F
+include_definitions      <- F
+include_notes            <- F
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
@@ -139,6 +139,9 @@ source(paste0(root.dir,"/input/code/plot/create_map_here.R"))
 # load FAOcountryprofile data
 FAOcountryProfile <- read_csv(paste0(root.dir,"/input/data/FAOcountryProfile.csv"))
 
+# Russia is not part of FAO RAP Central Asia !!
+FAOcountryProfile$FAO_RAP_SUB_REG[FAOcountryProfile[, "FAOST_CODE"] == 185] <- NA
+
 # Recode the Short Name Variables
 ## Abbreviate names
 FAOcountryProfile[FAOcountryProfile[, "FAO_TABLE_NAME"] == "Latin America and the Caribbean"          & !is.na(FAOcountryProfile[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Latin America\nand the Caribbean"
@@ -175,6 +178,8 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Serbia and Montenegro"  
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Kitts and Nevis"                        & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Saint Kitts\nand Nevis"
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Netherlands\nAntilles"
 #FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == ""                                            & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- ""
+
+
 
 # North Korea
 FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem Rep"
