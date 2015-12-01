@@ -25,10 +25,10 @@ if (region_to_report == "RAF") map.out.height  <- "1.5\\columnwidth"
 if (region_to_report == "RAF") map.out.extra  <- 'angle=0'
 
 # RAP
-if (region_to_report == "RAP") map.fig.width  <- 12
-if (region_to_report == "RAP") map.fig.height  <- 8
-if (region_to_report == "RAP") map.out.width  <- "1.7\\columnwidth"
-if (region_to_report == "RAP") map.out.extra  <- 'angle=90'
+if (region_to_report == "RAP") map.fig.width  <- 8
+if (region_to_report == "RAP") map.fig.height  <- 7
+if (region_to_report == "RAP") map.out.width  <- "1.5\\columnwidth"
+if (region_to_report == "RAP") map.out.extra  <- 'angle=0'
 
 # REU
 if (region_to_report == "REU") map.fig.width  <- 12
