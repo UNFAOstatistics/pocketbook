@@ -854,7 +854,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = dfa_share_commit_tot,group=SHORT_
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 4))
 p
 
 

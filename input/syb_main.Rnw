@@ -566,9 +566,10 @@ if(length(unique(overview.df$subgroup)) == 4) alignment <- "lp{.7in}p{.7in}p{.7i
 #if(length(unique(overview.df$subgroup)) == 5) alignment <- "lp{.5in}p{.5in}p{.6in}p{.5in}p{.5in}"
 
 if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}"
+if(length(unique(overview.df$subgroup)) == 6) alignment <- "l{\raggedleft\arraybackslash}p{1.0cm}p{0.8cm}p{1.3cm}p{0.9cm}p{1.0cm}p{1.0cm}"
 #if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}"
 
-if(length(unique(overview.df$subgroup)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
+# if(length(unique(overview.df$subgroup)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
 if(length(unique(overview.df$subgroup)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 8) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 9) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
@@ -581,18 +582,22 @@ tbl_font_size <- "tiny"
 if (region_to_report == "RAF") tbl_font_size <- "footnotesize"
 if (region_to_report == "RNE") tbl_font_size <- "footnotesize"
 if (region_to_report == "REU") tbl_font_size <- "footnotesize"
-if (region_to_report == "RAP") tbl_font_size <- "scriptsize"
+if (region_to_report == "RAP") tbl_font_size <- "footnotesize"
 
+cat(
+"\\begin{center}
+        TABLE: \\textbf{Classification of countries} \\newline
+\\end{center}"
+)
 
 print(
-  xtable(overview_data, caption = "Countries included",align= alignment
+  xtable(overview_data, align= alignment
          ),
   floating=FALSE,
   type = "latex", table.placement = NULL,
   booktabs = TRUE,
   include.rownames = FALSE,
   size = tbl_font_size,
-  caption.placement = "top",
   add.to.row = list(pos = as.list(rws), command = col),
   sanitize.colnames.function=bold
   )
