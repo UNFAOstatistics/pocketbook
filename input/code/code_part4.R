@@ -935,22 +935,20 @@ caption_text <- "Land use total emissions, highest 20 countries in 2012"
 
 
 ## ---- P4climateBOTTOM ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,
-                                                                                                           # GLI.CHPF.TOT.ECO2EQ.NO,
-                                                                                                           GHG.BS.TECO2EQ.GG.NO#,
-                                                                                                           # GL.FL.F.NERCO2EQ.NO
-                                                                                                           )
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+                                                                                                           
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000,  Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 
-dat <- gather(dat, variable, value, 2:6)
+dat <- gather(dat, variable, value, 2:5)
 dat$fill[dat$variable == "GHG.TOT.ALL.GG.NO"]   <- "All GHG agricultural sectors"
 dat$fill[dat$variable == "GL.FL.NFC.NERCO2EQ.NO"] <- "Net forest conversion"
-dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and peat fires"
+# dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and peat fires"
 dat$fill[dat$variable == "GHG.BS.TECO2EQ.GG.NO"] <- "Burning savanna"
-dat$fill[dat$variable == "GL.FL.F.NERCO2EQ.NO"] <- "Forest"
+dat$fill[dat$variable == "GL.FL.TOT.NERCO2EQ.NO"] <- "Forest"
+
 
 dat$value <- dat$value / 1000 # into thousand gigagrams
 
