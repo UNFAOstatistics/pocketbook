@@ -771,7 +771,6 @@ if (!file.exists(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
 } else dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
 
 names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
-
 dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
 
 # Add region key and subset
@@ -781,14 +780,14 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 d13 <- dat %>%  filter(Year %in% 2013, Unit %in% c("Head","1000 Head")) %>%
   filter(!grepl("Total",Item),
-         !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes")
+         !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes","Rabbits and hares") # Rabbits and hares because Nigeria in 2013 figures
          ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
   arrange(-Value)
 d00 <- dat %>%  filter(Year %in% 2000, Unit %in% c("Head","1000 Head")) %>%
   filter(!grepl("Total",Item),
-         !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes")
+         !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes","Rabbits and hares") # Rabbits and hares because Nigeria in 2013 figures)
          ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
@@ -803,6 +802,8 @@ gg[[2]] <- round(gg[[2]],0)
 gg[[3]] <- round(gg[[3]],0)
 gg[[2]]<- prettyNum(gg[[2]], big.mark=" ")
 gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
+
+top_animal <- gg[1,1]
 
 print.xtable(xtable(gg, caption = "\\large{Live animal number, top 5 in 2013 (thousand heads)}", digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
@@ -871,8 +872,17 @@ caption_text <- "Total egg production, top and bottom 10 countries (2012)"
 
 
 ## ---- P3livestockBOTTOM ----
-load(paste0(data.dir,"/Production_Livestock_E_All_Data.RData"))
-names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
+if (!file.exists(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))){
+  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Livestock_E_All_Data_(Norm).zip",
+                destfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"))
+  unzip(zipfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"),
+        exdir = data.dir)
+  dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
+} else dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
+
+names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
+dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
+
 # Add region key and subset
 dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
@@ -883,10 +893,12 @@ df <- subgrouping(region_to_report = region_to_report)
 # merge data with the region info
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-d <- dat %>% filter(Item == "Pigs", Year %in% c(2000,2013)) %>% group_by(Year,subgroup) %>%
-  dplyr::summarise(Value = sum(Value)) %>%
-  dplyr::mutate(sum = sum(Value)) %>%
-  dplyr::mutate(share = round(Value/sum*100,0)) %>%
+d <- dat %>% filter(Item == top_animal, Year %in% c(2000,2013), Unit %in% c("Head","1000 Head")) %>% 
+  group_by(Year,subgroup) %>%
+  dplyr::summarise(Value = sum(Value,na.rm=TRUE)) %>%
+  na.omit() %>% 
+  dplyr::mutate(sum = sum(Value,na.rm=TRUE)) %>%
+  dplyr::mutate(share = round(Value/sum*100,1)) %>%
   ungroup() %>%
   dplyr::mutate(subgroup = str_replace_all(subgroup, "\\ \\+\\ \\(Total\\)","")) %>%
   group_by(Year) %>%
@@ -921,7 +933,7 @@ p
 
 
 # Caption
-caption_text <- "Pig production (heads)"
+caption_text <- paste(top_animal, "production (heads)")
 
 
 
