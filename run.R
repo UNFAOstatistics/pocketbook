@@ -20,9 +20,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
                       # "GLO" # Global
                         "RAP" # Asia and the Pacific
-                        # ,"RAF"  # Africa
+                        ,"RAF"  # Africa
                         ,"REU" # Europe and Central Asia
-                        # ,"RNE" # Near East and North Africa
+                        ,"RNE" # Near East and North Africa
                         # ,"COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -195,7 +195,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
-load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
+# load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
+load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -233,7 +234,7 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPOceania"]            <- 13006
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMicronesia"]         <- 13009
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPolynesia"]          <- 13010
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPRussianFederation"]  <- 13011
-# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthernAsia"]       <- 13012
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthernAsia"]       <- 13012
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPUnitedStates"]       <- 13013
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPWesternAsia"]        <- 13014
 

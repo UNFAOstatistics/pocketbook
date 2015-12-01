@@ -398,6 +398,14 @@ the_whole   <- map.df # for mapping the grey areas
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 
+if (region_to_report == "RAP"){
+  mcwmotr <- data.frame(FAOST_CODE = c(68,185,231),
+                        subgroup = c("Member countries with mainland outside the region",
+                                     "Member countries with mainland outside the region",
+                                     "Member countries with mainland outside the region"))
+  df <- rbind(df,mcwmotr)
+}
+
 # merge data with the region info
 overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 overview.df <- arrange(overview.df, order)
@@ -515,7 +523,8 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
 # Add region key and subset
-if (!(region_to_report %in% c("GLO","COF"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
+if (!(region_to_report %in% c("GLO","COF","RAP"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
+if (region_to_report %in% "RAP") overview.df <- overview.df
 if (region_to_report %in% "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
 if (region_to_report == "COF") overview.df <- overview.df
 
@@ -572,7 +581,7 @@ tbl_font_size <- "tiny"
 if (region_to_report == "RAF") tbl_font_size <- "footnotesize"
 if (region_to_report == "RNE") tbl_font_size <- "footnotesize"
 if (region_to_report == "REU") tbl_font_size <- "footnotesize"
-if (region_to_report == "RAP") tbl_font_size <- "footnotesize"
+if (region_to_report == "RAP") tbl_font_size <- "scriptsize"
 
 
 print(
@@ -638,7 +647,7 @@ if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}"))
 
 <<page_numbering>>=
 # This is just pretty odd, but it works
-if (region_to_report %in% c("COF","RAF","RNE")){
+if (region_to_report %in% c("COF","RAF","RNE","RAP")){
   cat("
     \\pagenumbering{arabic}  %% Arabic page numbering
     \\setcounter{page}{1}

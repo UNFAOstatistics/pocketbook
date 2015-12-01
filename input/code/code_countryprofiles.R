@@ -310,20 +310,36 @@ if (region_to_report == "RAF"){
 }
 if (region_to_report == "RAP"){
   M49countries <-
-    rbind(data.frame(FAOST_CODE = c(13000,13001,13003,13005,13006,13007,13008,13009,13010,13011,13012,13013,13014),
+    rbind(data.frame(FAOST_CODE = c(13000, # Regional Office for Asia and the Pacific
+                                    13001, # East Asia
+                                    13003, # Southeast Asia
+                                    13005, # Central Asia
+                                    # 13006, # Australia and New Zealand
+                                    13006, # Oceania 
+                                    68, # France
+                                    # 13008, #Melanesia
+                                    # 13009, #Micronesia
+                                    # 13010, # Polynesia
+                                    185,  # Russian Federation
+                                    13012, # Southhern Asia
+                                    231#, # United States
+                                    # 13014 # Western Asia
+                                    ),
                      SHORT_NAME = c("Regional Office for Asia and the Pacific",
                                     "East Asia",
                                     "Southeast Asia",
                                     "Central Asia",
-                                    "Australia and New Zealand",
+                                    # "Australia and New Zealand",
+                                    "Oceania",
                                     "France",
-                                    "Melanesia",
-                                    "Micronesia",
-                                    "Polynesia",
+                                    # "Melanesia",
+                                    # "Micronesia",
+                                    # "Polynesia",
                                     "Russian Federation",
                                     "Southern Asia",
-                                    "United States",
-                                    "Western Asia"),
+                                    "United States"  
+                                    # "Western Asia"
+                                    ),
                      stringsAsFactors = FALSE),
           M49countries)
 }
