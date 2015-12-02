@@ -816,27 +816,6 @@ if (region_to_report == "GLO") short_text <- "Investing in agriculture is one of
 
 ## ---- P1investData ----
 
-# d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
-# d1 <- d1[2:26,1:3]
-# names(d1) <- c("Year","oda_share_agriculture","share_of_agriculture_forestry_fishing")
-# # d1$Year <- as.character(d1$Year)
-# # d1$Year[d1$Year == "2013*"] <- "2013"
-# 
-# d1$oda_share_agriculture <- factor(d1$oda_share_agriculture)
-# d1$oda_share_agriculture <- as.numeric(levels(d1$oda_share_agriculture))[d1$oda_share_agriculture]
-# 
-# d1$share_of_agriculture_forestry_fishing <- factor(d1$share_of_agriculture_forestry_fishing)
-# d1$share_of_agriculture_forestry_fishing <- as.numeric(levels(d1$share_of_agriculture_forestry_fishing))[d1$share_of_agriculture_forestry_fishing]
-# 
-# d1$Year <- factor(d1$Year)
-# d1$Year <- as.numeric(levels(d1$Year))[d1$Year]
-# d1$FAOST_CODE <- 5000
-# 
-# dat <- gather(d1, variable, value, 2:3)
-# dat$variable <- as.character(dat$variable)
-# dat$variable[dat$variable == "share_of_agriculture_forestry_fishing"] <- "Agriculture, narrow"
-# dat$variable[dat$variable == "oda_share_agriculture"] <- "Agriculture, broad"
-# dat <- dat[dat$Year >= 1995,]
 
 ## ---- P1investTOPRIGHT ----
 
@@ -904,31 +883,6 @@ p
 caption_text <- "Total credit to agriculture, top 20 countries in 2010-12"
 
 ## ---- P1investRIGHT ----
-
-# data
-# gg <- read_excel(paste0(data.dir,"/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
-# gg <- gg[c(3,5)]
-# gg$Year <- 2010
-# names(gg)[names(gg)=="AOI average (2008-2012)"] <- "agri_orientation_index"
-# names(gg)[names(gg)=="countrycode"] <- "FAOST_CODE"
-
-
-# Add region key and subset
-# dat <- left_join(gg,region_key)
-# dat <- dat[which(dat[[region_to_report]]),]
-# 
-# dat <- arrange(dat, -agri_orientation_index)
-# top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-# bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
-# dat_plot <- rbind(top10,bot10)
-# 
-# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, agri_orientation_index),y=agri_orientation_index))
-# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-# p <- p + coord_flip()
-# p <- p + labs(x="",y="index")
-# p <- p + guides(color = guide_legend(nrow = 2))
-# p
 
 dat <- syb.df %>% filter(Year %in% c(2009:2013)) %>% select(FAOST_CODE,SHORT_NAME,Year,dfa_AOI_commit)
 dat <- dat[!is.na(dat$dfa_AOI_commit),]

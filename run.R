@@ -53,17 +53,17 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
-include_definitions      <- F
-include_notes            <- F
+include_country_profiles <- T
+include_definitions      <- T
+include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
-upload_images_to_server <- F
+upload_pdfs_to_server   <- T
+upload_images_to_server <- T
 # ------------------------------
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -201,7 +201,9 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
 # load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
-load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
+# load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
+# load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
+load("~/btsync/faosync/syb_database/output_data/2015-12-02-01/SYB2015-12-02-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 

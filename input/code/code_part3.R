@@ -526,14 +526,6 @@ if (region_to_report == "GLO") short_text <- "Cereals, which include wheat, rice
 
 ## ---- P3cropData ----
 
-# # This should be thought twice how to produce it for regional books!
-# load(paste0(data.dir,"/Production_Crops_E_All_Data.RData"))
-# names(dat)[names(dat)=="CountryCode"] <- "FAOST_CODE"
-# dat <- dat[dat$Year > 1999,]
-# 
-# # Add region key and subset
-# dat <- left_join(dat,region_key)
-
 # This should be thought twice how to produce it for regional books!
 if (!file.exists(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))){
   download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Crops_E_All_Data_(Norm).zip",

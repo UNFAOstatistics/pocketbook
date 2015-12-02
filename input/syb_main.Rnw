@@ -25,7 +25,7 @@ source(paste0(root.dir,"input/code/knitr_hooks.R"))
 %
 
 <<syb_parameters, echo=FALSE, message=FALSE, warning=FALSE, results='hide'>>=
-source(paste0(root.dir,"input/code/plot_parameters.R"))
+source(paste0(root.dir,"input/code/plot/plot_parameters.R"))
 @
 
 
