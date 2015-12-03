@@ -43,10 +43,10 @@ Net trade (min US\$),44,TP.NETVAL.CRLSPREP.USD.NO,,,Cereals,1000000,0
 Net trade (min US\$),45,TP.NETVAL.MEATPREP.USD.NO,,,Meat,1000000,0
 Net trade (min US\$),46,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
 Net trade (min US\$),47,TP.NETVAL.MILKEQ.USD.NO,,,Dairy products,1000000,0
-Environment,49,RL.AREA.FOR.HA.SH,,,Forest area (%),,1
+Environment,49,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
 Environment,50,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% of total),,1
 Environment,51,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,1
-Environment,52,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),,1
+Environment,52,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),0.01,1
 Environment,53,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,1
 Environment,54,BP.TP.GP.TJ.NO,,,Biofuel production (thousand kt of oil eq.),1000,0
 Environment,55,FO.WP.PQ.TN.NO,,,Wood pellet prod. (min tonnes),1000,0
