@@ -540,7 +540,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + labs(x="",y="% of total energy consumption")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -573,7 +573,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + labs(x="",y="% of total energy consumption")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
