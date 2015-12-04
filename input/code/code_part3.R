@@ -250,7 +250,7 @@ cat_data$value_cat <- categories(x=cat_data$FS.DA.ADESA.PCT3D, n=5, manual=FALSE
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
 
 create_map_here()
 
