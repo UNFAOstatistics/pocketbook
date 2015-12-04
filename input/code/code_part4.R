@@ -969,7 +969,8 @@ caption_text <- "Emissions by subsectors in 2012"
 
 
 ## ---- P4climateMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO) %>% 
+  dplyr::mutate(GHG.AFOLU.TOT.ECO2EQ.NO = GHG.AFOLU.TOT.ECO2EQ.NO / 1000) # into million gigagrams
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -986,9 +987,9 @@ cat_data$value_cat <- categories(x=cat_data$GHG.AFOLU.TOT.ECO2EQ.NO, n=5)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- expression("1 000 gigagrams CO"[2] * "eq")
+map_unit <- expression("mln gigagrams CO"[2] * "eq")
 
 create_map_here()
 
 # Caption
-caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, gigagrams CO\\textsubscript{2} eq (2012)"
+caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2012)"

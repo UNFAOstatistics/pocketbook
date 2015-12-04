@@ -203,7 +203,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
-load("~/btsync/faosync/syb_database/output_data/2015-12-02-01/SYB2015-12-02-01.RData")
+load("~/btsync/faosync/syb_database/output_data/2015-12-04-01/SYB2015-12-04-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
