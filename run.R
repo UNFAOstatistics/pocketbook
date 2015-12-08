@@ -6,7 +6,7 @@
 options(scipen=999) # disable scientific number formatting
 
 # set root directory
-if (Sys.info()[["user"]] == "markus") root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
+if (Sys.info()[["user"]] %in% c("markus","aurelius")) root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
 if (Sys.info()[["user"]] == "amy")   root.dir <- "~/FAO/regional15/" # Amy
 if (Sys.info()[["user"]] == "markus" & Sys.info()[["sysname"]] == "Windows")   root.dir <- "C:/temp/regional15/" # Amy
 
@@ -140,6 +140,9 @@ source(paste0(root.dir,"/input/code/plot/create_map_here.R"))
 # load FAOcountryprofile data
 FAOcountryProfile <- read_csv(paste0(root.dir,"/input/data/FAOcountryProfile.csv"))
 
+# Russia is not part of FAO RAP Central Asia !!
+FAOcountryProfile$FAO_RAP_SUB_REG[FAOcountryProfile[, "FAOST_CODE"] == 185] <- NA
+
 # Recode the Short Name Variables
 ## Abbreviate names
 FAOcountryProfile[FAOcountryProfile[, "FAO_TABLE_NAME"] == "Latin America and the Caribbean"          & !is.na(FAOcountryProfile[, "FAO_TABLE_NAME"]), "FAO_TABLE_NAME"] <- "Latin America\nand the Caribbean"
@@ -177,6 +180,8 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Saint Kitts and Nevis"  
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Netherlands\nAntilles"
 #FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == ""                                            & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- ""
 
+
+
 # North Korea
 FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem Rep"
 
@@ -187,11 +192,26 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load(paste0(data.dir,"/SYB2015-10-14.RData"))
 # load(paste0(data.dir,"/SYB2015-10-15.RData"))
 load(paste0(data.dir,"/SYB2015-10-20.RData"))
-# load(paste0(data.dir,"/SYB2015-11-05.RData"))
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-18/SYB2015-11-18.RData") # old FAO aggregation script
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19_night/SYB2015-11-19.RData") # old FAO aggregation script
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19/SYB2015-11-19.RData") # old FAO aggregation script
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-20/SYB2015-11-20.RData") # old FAO aggregation script
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-24/SYB2015-11-24.RData") # old FAO aggregation script
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-25-12/SYB2015-11-25-12.RData")
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
+# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
+# load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
+# load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
+# load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
+# load("~/btsync/faosync/syb_database/output_data/2015-12-04-01/SYB2015-12-04-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
 syb.df <- syb.df[!syb.df$FAOST_CODE %in% "",]
+
+
+# fff <- syb.df %>% group_by(FAOST_CODE)  %>% filter(row_number() == 1) %>% select(FAOST_CODE,FAO_TABLE_NAME)
 
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "LACregion"]         <- 11000
@@ -207,22 +227,24 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFNorthAfrica"]    <- 12003
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFSouthernAfrica"] <- 12004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAFWestAfrica"]     <- 12005
 
+
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPregion"]             <- 13000
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPEastAsia"]           <- 13001
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPacificIslands"]     <- 13002
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPacificIslands"]     <- 13002
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSoutheastAsia"]      <- 13003
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPCentralAsia"]        <- 13005
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPOceania"]            <- 13006
 
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMelanesia"]          <- 13008
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMicronesia"]         <- 13009
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPolynesia"]          <- 13010
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPRussianFederation"]  <- 13011
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMelanesia"]          <- 13008
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPMicronesia"]         <- 13009
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPPolynesia"]          <- 13010
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPRussianFederation"]  <- 13011
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthernAsia"]       <- 13012
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPUnitedStates"]       <- 13013
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPWesternAsia"]        <- 13014
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPUnitedStates"]       <- 13013
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPWesternAsia"]        <- 13014
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDeveloped"]          <- 13100
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDevelopedCountries"] <- 13200
@@ -231,10 +253,10 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPDeveloping"]         <- 13300
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUregion"]                 <- 14000
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCaucAndTurkey"]          <- 14001
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCentralAsia"]            <- 14002
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCentralEasternEurope"]   <- 14003
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUEUCentralandEastern"]    <- 14003
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCISeurope"]              <- 14004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUIsrael"]                 <- 14005
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUOtherAndEFTA"]           <- 14006
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUEUOtherAndEFTA"]         <- 14006
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUSouthEasternEurope"]     <- 14007
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RNEregion"] <- 15000
@@ -246,6 +268,7 @@ syb.df$FAOST_CODE <- factor(syb.df$FAOST_CODE)
 syb.df$FAOST_CODE <- as.numeric(levels(syb.df$FAOST_CODE))[syb.df$FAOST_CODE]
 
 syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], by = "FAOST_CODE", all.x = TRUE)
+
 
 # Fill missing values in SHORT_NAME with FAO_TABLE_NAME
 syb.df$SHORT_NAME <- ifelse(is.na(syb.df$SHORT_NAME), syb.df$FAO_TABLE_NAME, syb.df$SHORT_NAME)
@@ -301,7 +324,7 @@ map.df <- left_join(map.df,region_key)
 
 ##############################################################
 ##############################################################
-## Pppulation threshold - currently disabled
+## Pppulation threshold - currently disabled as the countries included are defined in "/input/code/define_regions.R"
 #############################################################
 # pop_threshold <- 120000 #
 # small_countries <- syb.df[syb.df$OA.TPBS.POP.PPL.NO <= pop_threshold,c("FAOST_CODE","Year","SHORT_NAME","OA.TPBS.POP.PPL.NO")]

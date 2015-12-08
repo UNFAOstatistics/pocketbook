@@ -69,6 +69,8 @@ dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 
+dat$value <- dat$value * 100 # into percents
+
 dat_plot <- dat
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Agricultural") %>% arrange(-value))$SHORT_NAME)
@@ -184,6 +186,8 @@ dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
 dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
 dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
 
+dat$value <- dat$value * 100 # into percents
+
 dat_plot <- dat
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Arable") %>% arrange(-value))$SHORT_NAME)
@@ -249,6 +253,7 @@ if (region_to_report == "GLO") short_text <- "Global demand for water has risen 
 
 
 ## ---- P4waterData, cache=TRUE,results='hide', eval=P4water ----
+library(readxl)
 g <- read_excel(paste0(data.dir,"/UPDATEDWATER_WR_Capita_2000-2010.xlsx"))
 names(g) <- c("FAO_TABLE_NAME","Year2000","Year2010")
 g <- gather(g, "Year", "per_capita_water_resources", 2:3)
@@ -295,7 +300,7 @@ bottom_5 <- head(arrange(filter(gg, Year == 2010), per_capita_water_resources),5
 bottom_5_00 <- gg[gg$Year == 2000 & gg$FAOST_CODE %in% unique(bottom_5$FAOST_CODE),]
 bottomdata <- rbind(bottom_5,bottom_5_00)
 
-bottomdata$FAO_TABLE_NAME <- factor(bottomdata$FAO_TABLE_NAME, levels=arrange(bottomdata[bottomdata$Year == 2010,], -per_capita_water_resources)$FAO_TABLE_NAME)
+bottomdata$FAO_TABLE_NAME <- factor(bottomdata$FAO_TABLE_NAME, levels=arrange(bottomdata[bottomdata$Year == 2010,], per_capita_water_resources)$FAO_TABLE_NAME)
 
 p <- ggplot(bottomdata, aes(x=FAO_TABLE_NAME,y=per_capita_water_resources,fill=factor(Year)))
 p <- p + geom_bar(stat="identity",position="dodge")
@@ -417,7 +422,7 @@ cat_data$value_cat <- categories(x=cat_data$pooled.freshwater, n=5, method="jenk
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
 
 create_map_here()
 
@@ -535,7 +540,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + labs(x="",y="% of total energy consumption")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -568,7 +573,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(x="",y="% of tot energy consumption")
+p <- p + labs(x="",y="% of total energy consumption")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
@@ -780,7 +785,7 @@ caption_text <- "Forest characteristics (2015)"
 
 
 ## ---- P4forestryMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH * 100) # we want percetanges
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -882,7 +887,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -921,7 +926,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -930,18 +935,20 @@ caption_text <- "Land use total emissions, highest 20 countries in 2012"
 
 
 ## ---- P4climateBOTTOM ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GLI.CHPF.TOT.ECO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.F.NERCO2EQ.NO)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+                                                                                                           
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000,  Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 
-dat <- gather(dat, variable, value, 2:6)
+dat <- gather(dat, variable, value, 2:5)
 dat$fill[dat$variable == "GHG.TOT.ALL.GG.NO"]   <- "All GHG agricultural sectors"
 dat$fill[dat$variable == "GL.FL.NFC.NERCO2EQ.NO"] <- "Net forest conversion"
-dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and peat fires"
+# dat$fill[dat$variable == "GLI.CHPF.TOT.ECO2EQ.NO"] <- "Cultivation histoils and peat fires"
 dat$fill[dat$variable == "GHG.BS.TECO2EQ.GG.NO"] <- "Burning savanna"
-dat$fill[dat$variable == "GL.FL.F.NERCO2EQ.NO"] <- "Forest"
+dat$fill[dat$variable == "GL.FL.TOT.NERCO2EQ.NO"] <- "Forest"
+
 
 dat$value <- dat$value / 1000 # into thousand gigagrams
 
@@ -957,12 +964,13 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Emissions by subsectors in 2012 - figure differs, check!!"
+caption_text <- "Emissions by subsectors in 2012"
 
 
 
 ## ---- P4climateMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO)
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO) %>% 
+  dplyr::mutate(GHG.AFOLU.TOT.ECO2EQ.NO = GHG.AFOLU.TOT.ECO2EQ.NO / 1000) # into million gigagrams
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -979,9 +987,9 @@ cat_data$value_cat <- categories(x=cat_data$GHG.AFOLU.TOT.ECO2EQ.NO, n=5)
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- expression("1 000 gigagrams CO"[2] * "eq")
+map_unit <- expression("mln gigagrams CO"[2] * "eq")
 
 create_map_here()
 
 # Caption
-caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, gigagrams CO\\textsubscript{2} eq (2012)"
+caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2012)"

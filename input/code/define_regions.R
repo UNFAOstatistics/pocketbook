@@ -118,9 +118,9 @@ RAF <- c(RAF_Central_Africa,
 # cat(paste(faost_code_data$M49_Central.Asia, collapse=","))  
 
 RAP_Central_Asia <- c(108, # Kazakhstan
-                      113, # Kyrgyzstan
-                      208, # Tajikistan
-                      213, # Turkmenistan
+                      # 113, # Kyrgyzstan
+                      # 208, # Tajikistan
+                      # 213, # Turkmenistan
                       235) # Uzbekistan
 
 # cat(paste(shQuote(country_data$M49_Eastern.Asia, type="cmd"), collapse=", "))
@@ -164,27 +164,27 @@ RAP_South_Eastern_Asia  <- c(26, # Brunei Darussalam
 # cat(paste(country_data$M49_Western.Asia, collapse=","))
 # cat(paste(faost_code_data$M49_Western.Asia, collapse=","))  
 
-RAP_Western_Asia  <- c(1, # Armenia
-                       52, # Azerbaijan
-                       13, # Bahrain
-                       50, # Cyprus
-                       73, # Georgia
-                       103, # Iraq
-                       105, # Israel
-                       112, # Jordan
-                       118, # Kuwait
-                       121, # Lebanon
-                       299, # Occupied Palestinian Territory
-                       221, # Oman
-                       179, # Qatar
-                       194, # Saudi Arabia
-                       212, # the Syrian Arab Republic
-                       223, # Turkey
-                       225, # the United Arab Emirates
-                       249, # Yemen
-                       247, # Democratic Yemen
-                       246 # Yemen (old)
-)
+# RAP_Western_Asia  <- c(1, # Armenia
+#                        52, # Azerbaijan
+#                        13, # Bahrain
+#                        50, # Cyprus
+#                        73, # Georgia
+#                        103, # Iraq
+#                        105, # Israel
+#                        112, # Jordan
+#                        118, # Kuwait
+#                        121, # Lebanon
+#                        299, # Occupied Palestinian Territory
+#                        221, # Oman
+#                        179, # Qatar
+#                        194, # Saudi Arabia
+#                        212, # the Syrian Arab Republic
+#                        223, # Turkey
+#                        225, # the United Arab Emirates
+#                        249, # Yemen
+#                        247, # Democratic Yemen
+#                        246 # Yemen (old)
+# )
 
 
 # cat(paste(country_data$M49_Australia.and.New.Zealand, collapse=","))
@@ -237,16 +237,21 @@ RAP_Polynesia  <- c(5, # American Samoa
                     243 # Wallis and Futuna Islands
 )
 
+RAP_Oceania <- c(RAP_Austriala_and_New_Zealand,
+                 RAP_Melanesia,
+                 RAP_Micronesia,
+                 RAP_Polynesia)
 
-RAP_Russian_Federation  <- c(185)
+
+# RAP_Russian_Federation  <- c(185)
 
 
-RAP_France  <- c(68)
+# RAP_France  <- c(68)
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
 # cat(paste(faost_code_data$M49_Melanesia, collapse=","))  
 
-RAP_United_States  <- c(231)
+# RAP_United_States  <- c(231)
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
 # cat(paste(faost_code_data$M49_Melanesia, collapse=","))  
@@ -255,14 +260,15 @@ RAP <- c(RAP_Central_Asia,
          RAP_Eastern_Asia,
          RAP_Southern_Asia,
          RAP_South_Eastern_Asia,
-         RAP_Western_Asia,
-         RAP_Austriala_and_New_Zealand,
-         RAP_Melanesia,
-         RAP_Micronesia,
-         RAP_Polynesia,
-         RAP_Russian_Federation,
-         RAP_France,
-         RAP_United_States
+         # RAP_Western_Asia,
+         # RAP_Austriala_and_New_Zealand,
+         # RAP_Melanesia,
+         # RAP_Micronesia,
+         # RAP_Polynesia,
+         RAP_Oceania
+         # RAP_Russian_Federation,
+         # RAP_France,
+         # RAP_United_States
 )
 
 
@@ -292,7 +298,7 @@ REU_South_Eastern_Europe <- c(3, # "Albania"
 # cat(paste(country_data$M49_REUOtherAndEFTA, collapse=","))
 # cat(paste(faost_code_data$M49_REUOtherAndEFTA, collapse=","))
 
-REU_Other_and_EFTA <- c(6, #Andorra
+REU_EU_other_and_EFTA <- c(6, #Andorra
                         11, #Austria
                         255, #Belgium
                         15, #Belgium-Luxembourg
@@ -336,7 +342,7 @@ REU_CIS_Europe <- c(57, # Belarus
 # cat(paste(country_data$M49_REUCentralEasternEurope, collapse=","))
 # cat(paste(faost_code_data$M49_REUCentralEasternEurope, collapse=","))
 
-REU_Central_Eastern_Europe <- c(27,  # Bulgaria
+REU_EU_Central_and_Eastern <- c(27,  # Bulgaria
                                 167, # the Czech Republic
                                 51,  # Czechoslovakia
                                 63, # Estonia
@@ -365,10 +371,10 @@ REU_Central_Asia <- c(108, # Kazakhstan
 
 
 REU <- c(REU_South_Eastern_Europe,
-         REU_Other_and_EFTA,
+         REU_EU_other_and_EFTA,
          REU_Caucasus_and_Turkey,
          REU_CIS_Europe,
-         REU_Central_Eastern_Europe,
+         REU_EU_Central_and_Eastern,
          REU_Israel,
          REU_Central_Asia)  
 
@@ -1036,21 +1042,22 @@ region_key$RAP_Central_Asia                 <- ifelse(region_key$FAOST_CODE %in%
 region_key$RAP_Eastern_Asia                 <- ifelse(region_key$FAOST_CODE %in% RAP_Eastern_Asia, TRUE, FALSE)
 region_key$RAP_Southern_Asia                <- ifelse(region_key$FAOST_CODE %in% RAP_Southern_Asia, TRUE, FALSE)
 region_key$RAP_South_Eastern_Asia           <- ifelse(region_key$FAOST_CODE %in% RAP_South_Eastern_Asia, TRUE, FALSE)
-region_key$RAP_Western_Asia                 <- ifelse(region_key$FAOST_CODE %in% RAP_Western_Asia, TRUE, FALSE)
-region_key$RAP_Austriala_and_New_Zealand    <- ifelse(region_key$FAOST_CODE %in% RAP_Austriala_and_New_Zealand, TRUE, FALSE)
-region_key$RAP_Melanesia                    <- ifelse(region_key$FAOST_CODE %in% RAP_Melanesia, TRUE, FALSE)
-region_key$RAP_Micronesia                   <- ifelse(region_key$FAOST_CODE %in% RAP_Micronesia, TRUE, FALSE)
-region_key$RAP_Polynesia                    <- ifelse(region_key$FAOST_CODE %in% RAP_Polynesia, TRUE, FALSE)
-region_key$RAP_Russian_Federation           <- ifelse(region_key$FAOST_CODE %in% RAP_Russian_Federation, TRUE, FALSE)
-region_key$RAP_France                       <- ifelse(region_key$FAOST_CODE %in% RAP_France, TRUE, FALSE)
-region_key$RAP_United_States                <- ifelse(region_key$FAOST_CODE %in% RAP_United_States, TRUE, FALSE)
+# region_key$RAP_Western_Asia                 <- ifelse(region_key$FAOST_CODE %in% RAP_Western_Asia, TRUE, FALSE)
+# region_key$RAP_Austriala_and_New_Zealand    <- ifelse(region_key$FAOST_CODE %in% RAP_Austriala_and_New_Zealand, TRUE, FALSE)
+# region_key$RAP_Melanesia                    <- ifelse(region_key$FAOST_CODE %in% RAP_Melanesia, TRUE, FALSE)
+# region_key$RAP_Micronesia                   <- ifelse(region_key$FAOST_CODE %in% RAP_Micronesia, TRUE, FALSE)
+# region_key$RAP_Polynesia                    <- ifelse(region_key$FAOST_CODE %in% RAP_Polynesia, TRUE, FALSE)
+region_key$RAP_Oceania                      <- ifelse(region_key$FAOST_CODE %in% RAP_Oceania, TRUE, FALSE)
+# region_key$RAP_Russian_Federation           <- ifelse(region_key$FAOST_CODE %in% RAP_Russian_Federation, TRUE, FALSE)
+# region_key$RAP_France                       <- ifelse(region_key$FAOST_CODE %in% RAP_France, TRUE, FALSE)
+# region_key$RAP_United_States                <- ifelse(region_key$FAOST_CODE %in% RAP_United_States, TRUE, FALSE)
 
 region_key$REU                          <- ifelse(region_key$FAOST_CODE %in% REU, TRUE, FALSE)
 region_key$REU_South_Eastern_Europe     <- ifelse(region_key$FAOST_CODE %in% REU_South_Eastern_Europe, TRUE, FALSE)
-region_key$REU_Other_And_EFTA           <- ifelse(region_key$FAOST_CODE %in% REU_Other_and_EFTA, TRUE, FALSE)
+region_key$REU_EU_other_and_EFTA        <- ifelse(region_key$FAOST_CODE %in% REU_EU_other_and_EFTA, TRUE, FALSE)
 region_key$REU_Caucasus_and_Turkey      <- ifelse(region_key$FAOST_CODE %in% REU_Caucasus_and_Turkey, TRUE, FALSE)
 region_key$REU_CIS_Europe               <- ifelse(region_key$FAOST_CODE %in% REU_CIS_Europe, TRUE, FALSE)
-region_key$REU_Central_Eastern_Europe   <- ifelse(region_key$FAOST_CODE %in% REU_Central_Eastern_Europe, TRUE, FALSE)
+region_key$REU_EU_Central_and_Eastern   <- ifelse(region_key$FAOST_CODE %in% REU_EU_Central_and_Eastern, TRUE, FALSE)
 region_key$REU_Israel                   <- ifelse(region_key$FAOST_CODE %in% REU_Israel, TRUE, FALSE)
 region_key$REU_Central_Asia             <- ifelse(region_key$FAOST_CODE %in% REU_Central_Asia, TRUE, FALSE)
 

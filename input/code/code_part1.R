@@ -83,7 +83,9 @@ dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
 dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
 
 if (region_to_report == "REU"){
-  dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>% group_by(variable,Year) %>%  dplyr::summarise(value = sum(value, na.rm=TRUE))
+  dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>% 
+    group_by(variable,Year) %>% 
+    dplyr::summarise(value = sum(value, na.rm=TRUE))
   dat$variable <- as.character(dat$variable)
   dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
   dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
@@ -201,7 +203,8 @@ caption_text <- "Total economically active population (2000 to 2014)"
 
 
 ## ---- P1overMAP ----
-dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
+dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP) %>% 
+  mutate(OA.TPR.POP.PPL.SHP = OA.TPR.POP.PPL.SHP * 100)
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
@@ -215,7 +218,7 @@ cat_data$value_cat <- categories(x=cat_data$OA.TPR.POP.PPL.SHP, n=5, method="jen
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
 
 create_map_here()
 
@@ -391,7 +394,7 @@ cat_data$value_cat <- categories(x=cat_data$NV.AGR.TOTL.ZS, n=5, method="jenks")
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
 
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
@@ -581,7 +584,7 @@ cat_data$value_cat <- categories(x=cat_data$SL.AGR.EMPL.ZS, n=5, method="jenks")
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
 
 create_map_here()
 
@@ -612,27 +615,39 @@ if (region_to_report == "GLO") short_text <- "Adequate access to inputs, includi
 
 
 ## ---- P1inputTOPRIGHT ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# 
+# 
+# dat <- gather(dat, variable, value, 3:5)
+# dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
+# dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
+# dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
+# 
+# dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
-
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
 
 dat <- gather(dat, variable, value, 3:5)
-dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
-dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
-dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
+dat$fill[dat$variable == "RF.FERT.NI.TN.SH"] <- "Nitrogen"
+dat$fill[dat$variable == "RF.FERT.PH.TN.SH"] <- "Phosphate"
+dat$fill[dat$variable == "RF.FERT.PO.TN.SH"] <- "Potash"
 
-dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
+dat$value <- dat$value * 1000 # As we want kg per ha
 
 dat_plot <- dat
 
-p <- ggplot(dat_plot, aes(x=Year, y=share, fill=fill))
+p <- ggplot(dat_plot, aes(x=Year, y=value, fill=fill))
 p <- p + geom_area(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="kg/haś")
+p <- p + labs(x="",y="kg/ha")
 p <- p + scale_x_continuous(breaks=c(2002,2004,2006,2008,2010,2012))
 p
 
@@ -641,7 +656,9 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002
 
 
 ## ---- P1inputLEFT ----
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.NI.TN.SH")]
+dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>% 
+  select(FAOST_CODE,Year,RF.FERT.NI.TN.SH) %>% 
+  mutate(RF.FERT.NI.TN.SH = RF.FERT.NI.TN.SH * 1000) # As we want kg per ha
 
 dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
 # Add region key and subset
@@ -655,7 +672,6 @@ dat <- dat[which(dat[[region_to_report]]),]
 # top for this plot
 dat <- arrange(dat, -RF.FERT.NI.TN.SH)
 top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
-
 
 dat_plot <- top20
 
@@ -674,8 +690,9 @@ caption_text <- "Nitrogen fertilizers consumption in nutrients per ha of arable 
 
 
 ## ---- P1inputRIGHT ----
-
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RF.FERT.PH.TN.SH")]
+dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>% 
+  select(FAOST_CODE,Year,RF.FERT.PH.TN.SH) %>% 
+  mutate(RF.FERT.PH.TN.SH = RF.FERT.PH.TN.SH * 1000) # As we want kg per ha
 
 dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
 # Add region key and subset
@@ -706,26 +723,39 @@ caption_text <- "Phosphate fertilizers consumption in nutrients per ha of arable
 
 ## ---- P1inputBOTTOM ----
 
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
+# 
+# 
+# 
+# dat <- gather(dat, variable, value, 2:4)
+# dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
+# dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
+# dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
+# 
+# dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
-
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
 
 dat <- gather(dat, variable, value, 2:4)
-dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
-dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
-dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
+dat$fill[dat$variable == "RF.FERT.NI.TN.SH"] <- "Nitrogen"
+dat$fill[dat$variable == "RF.FERT.PH.TN.SH"] <- "Phosphate"
+dat$fill[dat$variable == "RF.FERT.PO.TN.SH"] <- "Potash"
 
-dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
+dat$value <- dat$value * 1000 # As we want kg per ha
 
 dat_plot <- dat
 
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Nitrogen") %>% arrange(-share))$SHORT_NAME)
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Nitrogen") %>% arrange(-value))$SHORT_NAME)
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=share, fill=fill))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="kg/ha")
@@ -737,12 +767,14 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2012
 
 
 ## ---- P1inputMAP ----
-dat <- filter(syb.df, Year %in% 2007:2012) %>% select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%  dplyr::mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH)
+# TRY RP.PEST.TOT.TN.SH.EXP
+dat <- syb.df %>% filter(Year %in% 2007:2012) %>% 
+  select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%  
+  dplyr::mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH * 1000) # we want kg per ha
 
 dat <- dat[!is.na(dat$RP.PEST.TOT.TN.SH),]
 
 dat <- dat %>% group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ungroup()
-
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -784,27 +816,6 @@ if (region_to_report == "GLO") short_text <- "Investing in agriculture is one of
 
 ## ---- P1investData ----
 
-# d1 <- read_excel(paste0(data.dir,"/Stat Pocketbook_Investment ODA 09 Sep 2015.xlsx"), sheet=1)
-# d1 <- d1[2:26,1:3]
-# names(d1) <- c("Year","oda_share_agriculture","share_of_agriculture_forestry_fishing")
-# # d1$Year <- as.character(d1$Year)
-# # d1$Year[d1$Year == "2013*"] <- "2013"
-# 
-# d1$oda_share_agriculture <- factor(d1$oda_share_agriculture)
-# d1$oda_share_agriculture <- as.numeric(levels(d1$oda_share_agriculture))[d1$oda_share_agriculture]
-# 
-# d1$share_of_agriculture_forestry_fishing <- factor(d1$share_of_agriculture_forestry_fishing)
-# d1$share_of_agriculture_forestry_fishing <- as.numeric(levels(d1$share_of_agriculture_forestry_fishing))[d1$share_of_agriculture_forestry_fishing]
-# 
-# d1$Year <- factor(d1$Year)
-# d1$Year <- as.numeric(levels(d1$Year))[d1$Year]
-# d1$FAOST_CODE <- 5000
-# 
-# dat <- gather(d1, variable, value, 2:3)
-# dat$variable <- as.character(dat$variable)
-# dat$variable[dat$variable == "share_of_agriculture_forestry_fishing"] <- "Agriculture, narrow"
-# dat$variable[dat$variable == "oda_share_agriculture"] <- "Agriculture, broad"
-# dat <- dat[dat$Year >= 1995,]
 
 ## ---- P1investTOPRIGHT ----
 
@@ -822,7 +833,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = dfa_share_commit_tot,group=SHORT_
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 4))
 p
 
 
@@ -872,31 +883,6 @@ p
 caption_text <- "Total credit to agriculture, top 20 countries in 2010-12"
 
 ## ---- P1investRIGHT ----
-
-# data
-# gg <- read_excel(paste0(data.dir,"/Lowest and Top 20 AOI GEA_final_Stat Pocketbook.xlsx"))
-# gg <- gg[c(3,5)]
-# gg$Year <- 2010
-# names(gg)[names(gg)=="AOI average (2008-2012)"] <- "agri_orientation_index"
-# names(gg)[names(gg)=="countrycode"] <- "FAOST_CODE"
-
-
-# Add region key and subset
-# dat <- left_join(gg,region_key)
-# dat <- dat[which(dat[[region_to_report]]),]
-# 
-# dat <- arrange(dat, -agri_orientation_index)
-# top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-# bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
-# dat_plot <- rbind(top10,bot10)
-# 
-# p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, agri_orientation_index),y=agri_orientation_index))
-# p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
-# p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-# p <- p + coord_flip()
-# p <- p + labs(x="",y="index")
-# p <- p + guides(color = guide_legend(nrow = 2))
-# p
 
 dat <- syb.df %>% filter(Year %in% c(2009:2013)) %>% select(FAOST_CODE,SHORT_NAME,Year,dfa_AOI_commit)
 dat <- dat[!is.na(dat$dfa_AOI_commit),]
@@ -995,7 +981,7 @@ cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks",d
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
 
 create_map_here()
 

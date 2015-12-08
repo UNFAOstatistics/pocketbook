@@ -898,7 +898,12 @@
   name: Renewable water resources withdrawn (\% of total)
   description: The total volume of groundwater and surface water withdrawn from their
     sources for human use (in the agricultural, municipal and industrial sectors),
-    expressed as a percentage of the total actual renewable water resources.
+    expressed as a percentage of the total actual renewable water resources.  Water 
+    withdrawals can exceed 100 percent of total renewable resources where extraction 
+    from nonrenewable aquifers or desalination plants is considerable or where water 
+    reuse is significant. Withdrawals for agriculture and industry are total withdrawals 
+    for irrigation and livestock production and for direct industrial use (including for 
+    cooling thermoelectric plants).
   source: 'Land and Water Division (AQUASTAT) '
   owner: FAO
 - id: water_resources_per_capita_(m3_person_year)

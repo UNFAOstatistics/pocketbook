@@ -213,6 +213,7 @@ flist <- list.files(paste0(root.dir,"output/process"),
 # Exclude the covers etc files from being copied
 flist <- flist[!grepl("cover", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("disclaimer", flist, ignore.case = TRUE)]
+flist <- flist[!grepl("barcode", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("book\\.", flist, ignore.case = TRUE)]
 # Exclude the plain syb_main.pdf
 flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]

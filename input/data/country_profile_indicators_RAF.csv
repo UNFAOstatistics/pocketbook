@@ -41,7 +41,7 @@ Production indices (2004-06=100),38,QI.NPIN.LVSTCK.IN.NO,,,Livestock,,0
 Production indices (2004-06=100),39,prod_ind_Milk.Total,,,Milk,,0
 Production indices (2004-06=100),40,prod_ind_Meat.indigenous.total,,,Meat,,0
 Production indices (2004-06=100),41,production_quantity_index,,,Fish ,,0
-Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),,1
+Environment,45,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
 Environment,46,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,0
 Environment,47,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,0
 Environment,48,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% of total),,0

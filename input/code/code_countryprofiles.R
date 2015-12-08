@@ -189,6 +189,8 @@ water_vars.df$FAOST_CODE[water_vars.df$FAOST_CODE == 357] <- 351
 myvars <- names(syb.df) %in% water_vars
 syb.df <- syb.df[!myvars]
 
+water_vars.df <- water_vars.df[!duplicated(water_vars.df[c("FAOST_CODE","Year")]),]
+
 syb.df <- dplyr::left_join(syb.df,water_vars.df)
 
 
@@ -308,32 +310,49 @@ if (region_to_report == "RAF"){
 }
 if (region_to_report == "RAP"){
   M49countries <-
-    rbind(data.frame(FAOST_CODE = c(13000,13001,13003,13005,13006,13007,13008,13009,13010,13011,13012,13013,13014),
+    rbind(data.frame(FAOST_CODE = c(13000, # Regional Office for Asia and the Pacific
+                                    13001, # East Asia
+                                    13003, # Southeast Asia
+                                    13005, # Central Asia
+                                    # 13006, # Australia and New Zealand
+                                    13006, # Oceania 
+                                    13012, # Southhern Asia
+                                    68, # France
+                                    # 13008, #Melanesia
+                                    # 13009, #Micronesia
+                                    # 13010, # Polynesia
+                                    185,  # Russian Federation
+                                    231#, # United States
+                                    # 13014 # Western Asia
+                                    ),
                      SHORT_NAME = c("Regional Office for Asia and the Pacific",
                                     "East Asia",
                                     "Southeast Asia",
                                     "Central Asia",
-                                    "Australia and New Zealand",
-                                    "France",
-                                    "Melanesia",
-                                    "Micronesia",
-                                    "Polynesia",
-                                    "Russian Federation",
+                                    # "Australia and New Zealand",
+                                    "Oceania",
                                     "Southern Asia",
-                                    "United States",
-                                    "Western Asia"),
+                                    "France",
+                                    # "Melanesia",
+                                    # "Micronesia",
+                                    # "Polynesia",
+                                    "Russian Federation",
+                                    "United States"  
+                                    # "Western Asia"
+                                    ),
                      stringsAsFactors = FALSE),
           M49countries)
 }
 if (region_to_report == "REU"){
   M49countries <-
-    rbind(data.frame(FAOST_CODE = c(14000,14001,14003,14004,14005,14006,14007),
+    rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,14005,14006,14007),
                      SHORT_NAME = c("Regional Office for Europe and Central Asia",
+                                    "Central Asia",
                                     "Caucasus and Turkey",
-                                    "Central Eastern Europe",
+                                    "EU Central and Eastern",
                                     "CIS Europe",
                                     "Israel",
-                                    "Other and EFTA",
+                                    "EU other and EFTA",
                                     "South Eastern Europe"),
                      stringsAsFactors = FALSE),
           M49countries)
