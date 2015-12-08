@@ -90,10 +90,10 @@ for (region_to_report in regionS_to_report) {
   }
   
   if (region_to_report == "COF" & Sys.info()[["sysname"]] == "Windows"){
-    system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\\\colorbox{part6}{\\\\parbox{\\\\dimexpr\\\\columnwidth+2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
+    system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\\\colorbox{part6}{\\\\\\parbox{\\\\\\dimexpr\\\\\\columnwidth+2ex}{\\\\\\Large\\\\\\color{white}\\\\\\hypertarget{#1}{#1}}}\\\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
   } 
   if (region_to_report != "COF" & Sys.info()[["sysname"]] == "Windows"){
-    system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\\\colorbox{FAOblue}{\\\\parbox{\\\\dimexpr\\\\columnwidth-2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
+    system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\\\colorbox{FAOblue}{\\\\\\parbox{\\\\\\dimexpr\\\\\\columnwidth-2ex}{\\\\\\Large\\\\\\color{white}\\\\\\hypertarget{#1}{#1}}}\\\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
   }
 
 
@@ -157,8 +157,10 @@ for (region_to_report in regionS_to_report) {
     embed_fonts(plot)
   }
 
-  system(paste0("lualatex ",root.dir,"output/process/syb_main.tex"))
-  system(paste0("lualatex ",root.dir,"output/process/syb_main.tex"))
+#   system(paste0("lualatex ",root.dir,"output/process/syb_main.tex"))
+#   system(paste0("lualatex ",root.dir,"output/process/syb_main.tex"))
+  system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+  system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
   #
   # Technical report

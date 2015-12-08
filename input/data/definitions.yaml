@@ -113,7 +113,7 @@
 - id: fertilizers_(kg_ha)
   name: Fertilizers (kg/ha)
   description: 'Collected through individual countries in product weight through the
-    new FAO Questionnaire on Agricultural Resources – Fertilizers and then converted
+    new FAO Questionnaire on Agricultural Resources - Fertilizers and then converted
     to nutrients and validated for consistency regarding summary totals of production,
     import, export, non-fertilizer use and consumption for the three types of fertilizers:
     nitrogen (N), phosphate (P205), potash (K2O) and including complex fertilizers
@@ -647,7 +647,7 @@
     Reasonable access is defined as the availability of at least 20 liters a person
     a day from a source within one kilometer of the dwelling.
   source: World Bank
-  owner: World Health Organization and United Nations Children’s Fund, Joint Measurement
+  owner: World Health Organization and United Nations Children's Fund, Joint Measurement
     Programme (JMP)
 - id: poverty_headcount_ratio_at_rural_poverty_line_(percent_of_rural_population)
   name: Poverty headcount ratio at rural poverty line (percent of rural population)
@@ -710,8 +710,8 @@
     with the base period 2004-2006. They are based on the sum of price-weighted quantities
     of different agricultural commodities produced after deductions of quantities
     used as seed and feed weighted in a similar manner. All the indices are calculated
-    by the Laspeyres formula. Production quantities – except for fish – of each commodity
-    – except for fish – are weighted by 2004-2006 average international commodity
+    by the Laspeyres formula. Production quantities - except for fish - of each commodity
+    - except for fish - are weighted by 2004-2006 average international commodity
     prices and summed for each year. To obtain the index, the aggregate for a given
     year is divided by the average aggregate for the base period 2004-2006. The fish
     index is only normalized to the base period 2004-06.Since the FAO indices are
@@ -726,16 +726,16 @@
     stages. When calculating indices of agricultural, food and nonfood production,
     all intermediate primary inputs of agricultural origin are deducted. However,
     for indices of any other commodity group, only inputs originating from within
-    the same group are deducted; thus, only seed is removed from the group “crops”
+    the same group are deducted; thus, only seed is removed from the group "crops"
     and from all crop subgroups, such as cereals, oil crops, etc.; and both feed and
     seed originating from within the livestock sector (e.g. milk feed, hatching eggs)
-    are removed from the group “livestock products”. For the main two livestock subgroups,
+    are removed from the group "livestock products". For the main two livestock subgroups,
     namely, meat and milk, only feed originating from the respective subgroup is removed.
     International commodity prices are used in order to avoid the use of exchange
     rates for obtaining continental and world aggregates and to improve international
-    comparative analysis of productivity at the national level. These ”international
-    prices”, expressed in ”international dollars,” are derived using a Geary-Khamis
-    formula for the agricultural sector. This method assigns a single “price” to each
+    comparative analysis of productivity at the national level. These "international
+    prices", expressed in "international dollars," are derived using a Geary-Khamis
+    formula for the agricultural sector. This method assigns a single "price" to each
     commodity. The commodities covered in the computation of indices of agricultural
     production are all crops and livestock products originating in each country. The
     category of food production includes commodities that are considered edible and
@@ -898,11 +898,11 @@
   name: Renewable water resources withdrawn (\% of total)
   description: The total volume of groundwater and surface water withdrawn from their
     sources for human use (in the agricultural, municipal and industrial sectors),
-    expressed as a percentage of the total actual renewable water resources.  Water 
-    withdrawals can exceed 100 percent of total renewable resources where extraction 
-    from nonrenewable aquifers or desalination plants is considerable or where water 
-    reuse is significant. Withdrawals for agriculture and industry are total withdrawals 
-    for irrigation and livestock production and for direct industrial use (including for 
+    expressed as a percentage of the total actual renewable water resources.  Water
+    withdrawals can exceed 100 percent of total renewable resources where extraction
+    from nonrenewable aquifers or desalination plants is considerable or where water
+    reuse is significant. Withdrawals for agriculture and industry are total withdrawals
+    for irrigation and livestock production and for direct industrial use (including for
     cooling thermoelectric plants).
   source: 'Land and Water Division (AQUASTAT) '
   owner: FAO
