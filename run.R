@@ -191,7 +191,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load(paste0(data.dir,"/SYB2015-09-24.RData"))
 # load(paste0(data.dir,"/SYB2015-10-14.RData"))
 # load(paste0(data.dir,"/SYB2015-10-15.RData"))
-load(paste0(data.dir,"/SYB2015-10-20.RData"))
+# load(paste0(data.dir,"/SYB2015-10-20.RData"))
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-18/SYB2015-11-18.RData") # old FAO aggregation script
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19_night/SYB2015-11-19.RData") # old FAO aggregation script
 # load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19/SYB2015-11-19.RData") # old FAO aggregation script
@@ -205,6 +205,8 @@ load(paste0(data.dir,"/SYB2015-10-20.RData"))
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-04-01/SYB2015-12-04-01.RData")
+load("E:/btsync/faosync/syb_database/output_data/2015-12-08-01/SYB2015-12-08-01.RData")
+
 
 syb.df <- SYB.df; rm(SYB.df)
 
