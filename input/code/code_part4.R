@@ -596,7 +596,8 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","GN_6808_72182")]
-cat_data$value_cat <- categories(x=cat_data$GN_6808_72182, n=3)
+if (region_to_report == "RAP")  cat_data$value_cat <- categories(x=cat_data$GN_6808_72182,manual = TRUE, manual_breaks = c(5,25,50,500,7769))
+if (region_to_report != "RAP")  cat_data$value_cat <- categories(x=cat_data$GN_6808_72182)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 

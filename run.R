@@ -21,10 +21,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
                       # "GLO" # Global
                         "RAP" # Asia and the Pacific
-#                         ,"RAF"  # Africa
-#                         ,"REU" # Europe and Central Asia
-#                         ,"RNE" # Near East and North Africa
-#                         ,"COF" # Coffee
+                        ,"RAF"  # Africa
+                        ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
+                        # ,"COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ############################################################
@@ -59,12 +59,12 @@ include_definitions      <- F
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
-upload_images_to_server <- F
+upload_pdfs_to_server   <- T
+upload_images_to_server <- T
 # ------------------------------
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -204,9 +204,13 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
+<<<<<<< HEAD
 # load("~/btsync/faosync/syb_database/output_data/2015-12-04-01/SYB2015-12-04-01.RData")
 load("E:/btsync/faosync/syb_database/output_data/2015-12-08-01/SYB2015-12-08-01.RData")
 
+=======
+load("~/btsync/faosync/syb_database/output_data/2015-12-08-01/SYB2015-12-08-01.RData")
+>>>>>>> origin/master
 
 syb.df <- SYB.df; rm(SYB.df)
 
