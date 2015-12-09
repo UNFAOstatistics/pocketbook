@@ -30,8 +30,6 @@ pdfcrop --margins '-0 -0 -331 -0' RNE_cover.pdf back_cover_RNE.pdf
 pdftk back_cover_RNE.pdf stamp 'RNE I5105E barcode1.pdf' output back_cover_RNE_bc.pdf
 
 
-################
-
 
 # COF
 # New small one
