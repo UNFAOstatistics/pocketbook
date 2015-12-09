@@ -290,11 +290,14 @@ tbr.df <-
 M49countries <-
   M49countries[!M49countries[, "FAOST_CODE"] %in% tbr.df[, "FAOST_CODE"],]
 ## Occupied Palestinian Territory
-M49countries[M49countries[, "FAOST_CODE"] == 299, "SHORT_NAME"] <-
-  "West Bank and Gaza Strip"
+M49countries[M49countries[, "FAOST_CODE"] == 299, "SHORT_NAME"] <- "West Bank and Gaza Strip"
 ## Chinas
-M49countries <-
-  M49countries[!M49countries[, "FAOST_CODE"] %in% c(41,128,96,357,214),]
+M49countries <- M49countries[!M49countries[, "FAOST_CODE"] %in% c(41,128,96,357,214),]
+
+# could not get the encoding working in Windows... therefore:
+if (Sys.info()[["sysname"]] == "Windows") M49countries["SHORT_NAME"][M49countries["FAOST_CODE"] == 107] <- "Cote d'Ivoire"
+if (Sys.info()[["sysname"]] != "Windows") M49countries["SHORT_NAME"][M49countries["FAOST_CODE"] == 107] <- "Côte d'Ivoire"
+
 
 # M49countries <- head(M49countries)
 

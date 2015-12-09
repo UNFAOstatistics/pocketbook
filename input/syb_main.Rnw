@@ -43,6 +43,7 @@ PLACE_PRINT_OR_WEB_HERE
 \usepackage{lipsum,textcomp}
 \usepackage[T1]{fontenc}
 \RequirePackage[utf8x]{inputenc}
+% \RequirePackage[ansinew]{inputenc}
 \usepackage{tabularx}
 \usepackage{fixltx2e}
 \usepackage{bpchem}
@@ -51,6 +52,13 @@ PLACE_PRINT_OR_WEB_HERE
 \usepackage{lscape}
 %\usepackage[document]{ragged2e}
 
+% \usepackage{listings}
+
+% \lstset{
+%   literate={ä}{{\"a}}1
+%            {ü}{{\"u}}1
+%            {ô}{{\"ö}}1
+% }
 
 \usepackage{pdfpages}
 
@@ -590,6 +598,91 @@ cat(
         TABLE: \\textbf{Classification of countries} \\newline
 \\end{center}"
 )
+
+# debug
+# overview_data[3,5] <- NA
+# debug
+
+# ttt <- overview_data
+# overview_data <- ttt
+
+# overview_data <- data.frame(lapply(overview_data, as.character), 
+#                             stringsAsFactors=FALSE)
+# 
+# ##' Sanitize the expression for Latex code
+# ##'
+# ##' The function sanitize an expression for the Latex code
+# ##'
+# ##' @param str A string to be sanitized
+# ##' @param html  
+# ##' @param type Specify whether the expression is for text or table
+# ##' @export
+# 
+# sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
+# 
+#       type <- match.arg(type)
+# 
+#       result <- as.character(str)
+#       
+#       result <- gsub("\\\\-","TEX.BACKSLASH",result)
+#       result <- gsub("\\\\","SANITIZE.BACKSLASH",result)
+#       result <- gsub("$","\\$",result,fixed=TRUE)
+#       result <- gsub(">","$>$",result,fixed=TRUE)
+#       result <- gsub("<","$<$",result,fixed=TRUE)
+#       result <- gsub("|","$|$",result,fixed=TRUE)
+#       result <- gsub("{","\\{",result,fixed=TRUE)
+#       result <- gsub("}","\\}",result,fixed=TRUE)
+#       result <- gsub("%","\\%",result,fixed=TRUE)
+#       result <- gsub("&","\\&",result,fixed=TRUE)
+#       result <- gsub("_","\\_",result,fixed=TRUE)
+#       ## result <- gsub("_", "\\textsubscript", result, fixed = TRUE)
+#       result <- gsub("#","\\#",result,fixed=TRUE)
+#       result <- gsub("^", ifelse(type == "table", "\\verb|^|",
+#                                  "\\textsuperscript "), result,fixed = TRUE)
+#       result <- gsub("~","\\~{}",result,fixed=TRUE)
+#       result <- gsub("ÃÂŽ","\\^{o}",result,fixed=TRUE)
+#       result <- gsub("ô","\\^{o}",result,fixed=TRUE)
+#       result <- gsub("ÃÂ¢","\\^{a}",result,fixed=TRUE)
+#       result <- gsub("ÃÂš","\\`{e}",result,fixed=TRUE)
+#       result <- gsub("è","\\`{e}",result,fixed=TRUE)
+#       result <- gsub("ÃÂ©","\\'{e}",result,fixed=TRUE)
+#       result <- gsub("é","\\'{e}",result,fixed=TRUE)
+#       result <- gsub("ó","\\'{o}",result,fixed=TRUE)
+#       result <- gsub("ò","\\`{o}",result,fixed=TRUE)
+#       result <- gsub("í","\\'{i}",result,fixed=TRUE)
+#       result <- gsub("ì","\\`{i}",result,fixed=TRUE)
+#       result <- gsub("Í","\\'{I}",result,fixed=TRUE)
+#       result <- gsub("Ì","\\`{I}",result,fixed=TRUE)      
+#       result <- gsub("Å","\\r{A}",result,fixed=TRUE)
+#       result <- gsub("ç","\\c{c}",result,fixed=TRUE)
+#       result <- gsub("á","\\'{a}",result,fixed=TRUE)
+#       result <- gsub("à","\\`{a}",result,fixed=TRUE)
+#       result <- gsub("Á","\\'{A}",result,fixed=TRUE)
+#       result <- gsub("À","\\`{A}",result,fixed=TRUE)
+#       result <- gsub("ú","\\'{u}",result,fixed=TRUE)
+#       result <- gsub("ù","\\`{u}",result,fixed=TRUE)
+#       result <- gsub("ñ","\\~{n}",result,fixed=TRUE)
+#       result <- gsub("SANITIZE.BACKSLASH","$\\backslash$",result,fixed=TRUE)
+#       result <- gsub("TEX.BACKSLASH","\\-",result,fixed=TRUE)
+#       if(html) {
+#         result <- gsub("( www.[0-9A-Za-z./\\-\\_]*)"," \\\\url{\\1}",result)
+#       	result <- gsub("(http://(www.)*[0-9A-Za-z./\\-\\_]*)","\\\\url{\\1}",result)
+#       	dotSlash<-grepl("\\url\\{.*\\.}",result)
+#       	result[dotSlash] <- gsub("\\.\\}","\\}\\.",result[dotSlash])
+#       }
+#       
+#       ## special expressions
+#       result <- gsub("km2", "km\\textsuperscript{2}", result, fixed = TRUE)
+#       result <- gsub("m3", "m\\textsuperscript{3}", result, fixed = TRUE)
+#       result <- gsub("CO2", "CO\\textsubscript{2}", result, fixed = TRUE)
+#       
+#       
+#       return(result)
+#     }
+# 
+# for (i in 1:ncol(overview_data)){
+#   overview_data[[i]] <- sanitizeToLatex(overview_data[[i]])
+# }
 
 print(
   xtable(overview_data, align= alignment

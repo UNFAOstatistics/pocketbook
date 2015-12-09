@@ -12,7 +12,9 @@ if (Sys.info()[["user"]] == "markus" & Sys.info()[["sysname"]] == "Windows")   r
 
 setwd(root.dir)
 # set data directory
-data.dir <- paste0(root.dir,"/input/data/database/")
+if (Sys.info()[["sysname"]] == "Windows") data.dir <- paste0(root.dir,"input/data/database")
+if (Sys.info()[["sysname"]] != "Windows") data.dir <- paste0(root.dir,"/input/data/database/")
+
 
 # Stuff you DO edit
 # ----------------------------------------------------------------------------------
@@ -20,10 +22,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                        "RAP" # Asia and the Pacific
-                        ,"RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                        # "RAP" # Asia and the Pacific
+                        "RAF"  # Africa
+                        # ,"REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # ,"COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -54,9 +56,9 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
-include_definitions      <- F
-include_notes            <- F
+include_country_profiles <- T
+include_definitions      <- T
+include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
@@ -96,7 +98,7 @@ cache_definitions <- F
 #  | (_) |__  _ __ __ _ _ __(_) ___  ___
 #  | | | '_ \| '__/ _` | '__| |/ _ \/ __|
 #  | | | |_) | | | (_| | |  | |  __/\__ \
-#  |_|_|_.__/|_|  \__,_|_|  |_|\___||___/
+#  |_|_|_.__/|_|  \__,_|_|  |_|\___||___/f
 #
 
 ## ---- load_libraries
@@ -163,7 +165,9 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Sao Tome and Principe"  
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "United States of America"                     & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "United States\nof America"
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Iran (Islamic Republic of)"                   & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Iran\n(Islamic Republic of)"
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Bosnia and Herzegovina"                       & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Bosnia and\nHerzegovina"
-FAOcountryProfile["SHORT_NAME"][FAOcountryProfile[, "FAOST_CODE"] == 107]                                                                                        <- "Côte d'Ivoire"
+# could not get the encoding working in Windows... therefore:
+if (Sys.info()[["sysname"]] == "Windows") FAOcountryProfile["SHORT_NAME"][FAOcountryProfile[, "FAOST_CODE"] == 107]                                                                                        <- "Cote d'Ivoire"
+if (Sys.info()[["sysname"]] != "Windows") FAOcountryProfile["SHORT_NAME"][FAOcountryProfile[, "FAOST_CODE"] == 107]                                                                                        <- "Côte d'Ivoire"
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Falkland Islands (Malvinas)"                  & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Falkland Islands\n(Malvinas)"
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Papua New Guinea"                             & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Papua New\nGuinea"
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "American Samoa"                               & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "American\nSamoa"
