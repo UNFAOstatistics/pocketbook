@@ -1,9 +1,17 @@
+#!/bin/bash
 # So Idea is to 
 # 1. save/print the multipage original received from Nicola into single spreads name them as cover_region.pdf
+
+# I am implementing this manually using Evince, as commandline tools give file size equal to all four ~4mb. Evince givers you 700kb
+
+# pdftk 'COVER_FaoPocket_2015_Regions-colors-rev3-web.pdf' burst output cover-%d.pdf
+# mv cover-1.pdf  REU_cover.pdf
+# mv cover-2.pdf  RAP_cover.pdf
+# mv cover-3.pdf  RAF_cover.pdf
+# mv cover-4.pdf  RNE_cover.pdf
+
 # 2. then to make the barcodes into same dimension and so that the barcode is placed into the white space
 # 3. run the codes below
-
-
 
 # RAP
 pdfcrop --margins '-331 -0 -0 -0' RAP_cover.pdf front_cover_RAP.pdf
@@ -31,17 +39,12 @@ pdftk back_cover_RNE.pdf stamp 'RNE I5105E barcode1.pdf' output back_cover_RNE_b
 
 
 
-# COF
+# COF coffee-book
 # New small one
-pdfcrop --margins '-332 -0 -0 -0' COVER_FaoPocket_2015_Cofee-rev1-light.pdf front_cover_COF.pdf
-pdfcrop --margins '-0 -0 -332 -0' COVER_FaoPocket_2015_Cofee-rev1-light.pdf back_cover_COF.pdf
-
-
-
-
-
+# pdfcrop --margins '-332 -0 -0 -0' COVER_FaoPocket_2015_Cofee-rev1-light.pdf front_cover_COF.pdf
+# pdfcrop --margins '-0 -0 -332 -0' COVER_FaoPocket_2015_Cofee-rev1-light.pdf back_cover_COF.pdf
 
 
 # File with crop marks (HUGE 52MB)
-pdfcrop --margins '-363 -33 -33 -33' COVER_FaoPocket_2015_Cofee-rev2.pdf front_cover_COF.pdf
-pdfcrop --margins '-33 -33 -363 -33' COVER_FaoPocket_2015_Cofee-rev2.pdf back_cover_COF.pdf
+# pdfcrop --margins '-363 -33 -33 -33' COVER_FaoPocket_2015_Cofee-rev2.pdf front_cover_COF.pdf
+# pdfcrop --margins '-33 -33 -363 -33' COVER_FaoPocket_2015_Cofee-rev2.pdf back_cover_COF.pdf
