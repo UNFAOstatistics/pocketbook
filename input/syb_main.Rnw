@@ -161,9 +161,17 @@ cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"maintitle"],"}"))
 
 \vspace*{10pt}
 
-\begin{center}
-\Huge{2015}
-\end{center}
+
+<<define_year, echo=FALSE, results='asis', eval=TRUE>>=
+
+cat(paste0(
+  "\\begin{center} \n",
+  "\\Huge{",pref_d[pref_d$id %in% region_to_report,"year"],"} \n",
+  "\\end{center} \n"
+  ))
+
+@
+
 
 \vspace*{10pt}
 
@@ -656,6 +664,7 @@ if (region_to_report %in% c("COF","RAF","RNE","RAP")){
   cat("
     \\pagenumbering{arabic}  %% Arabic page numbering
     \\setcounter{page}{1}
+    \\thispagestyle{empty} % make the overview table page with no page number as it differs between books 
 
     ")
 } else {

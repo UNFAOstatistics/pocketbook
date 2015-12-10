@@ -1,9 +1,10 @@
 - id: RAF
   maintitle: FAO Statistical Pocketbook
+  year: 2016
   subtitle: Africa
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Africa
-  bottom_row3: Accra, 2015
+  bottom_row3: Accra, 2016
   foreword: |
     This is the end of a 15-year cycle where the international community
     partnered with developing countries to tackle the Millennium
@@ -72,10 +73,11 @@
 #################################################################################
 - id: RAP
   maintitle: FAO Statistical Pocketbook
+  year: 2016
   subtitle: Asia and the Pacific
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Asia and the Pacific
-  bottom_row3: Bangkok, 2015
+  bottom_row3: Bangkok, 2016
   foreword: |
     This is the end of a 15-year cycle where the international community
     partnered with developing countries to tackle the Millennium
@@ -144,10 +146,11 @@
 #################################################################################
 - id: REU
   maintitle: FAO Statistical Pocketbook
+  year: 2016
   subtitle: Europe and Central Asia
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Europe and Central Asia
-  bottom_row3: Budapest, 2015
+  bottom_row3: Budapest, 2016
   foreword: |
     This is the end of a 15-year cycle where the international community
     partnered with developing countries to tackle the Millennium
@@ -216,10 +219,11 @@
 #################################################################################
 - id: RNE
   maintitle: FAO Statistical Pocketbook
+  year: 2016
   subtitle: Near East and North Africa
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Near East and North Africa
-  bottom_row3: Cairo, 2015
+  bottom_row3: Cairo, 2016
   foreword: |
     This is the end of a 15-year cycle where the international community
     partnered with developing countries to tackle the Millennium
@@ -288,6 +292,7 @@
 #################################################################################
 - id: COF
   maintitle: FAO Statistical Pocketbook
+  year: 2015
   subtitle: Coffee
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Africa
@@ -343,9 +348,10 @@
 #################################################################################
 - id: GLO
   maintitle: FAO Statistical Pocketbook
+  year: 2016
   subtitle: ""
   bottom_row1: Food and Agriculture Organization of the United Nations
-  bottom_row2: Roma, 2015
+  bottom_row2: Roma, 2016
   bottom_row3: ""
   foreword: |
     This is the end of a 15-year cycle where the international community
