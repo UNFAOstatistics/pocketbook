@@ -2173,8 +2173,8 @@ cat("
 
 <<define_back_cover, echo=FALSE, results='asis', eval=include_covers>>=
   cover_name <- paste0("back_cover_",region_to_report,"_bc.pdf")
-  if (region_to_report %in% c("RAF","REU","GLO","RAP")) cat(paste0("\\includepdf[offset=28 28, noautoscale=true]{",cover_name,"}"))
-  if (region_to_report %in% c("COF","RNE"))       cat(paste0("\\includepdf[offset=-28 28, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report %in% c("GLO","RAP","RNE")) cat(paste0("\\includepdf[offset=28 28, noautoscale=true]{",cover_name,"}"))
+  if (region_to_report %in% c("RAF","COF","REU"))       cat(paste0("\\includepdf[offset=-28 28, noautoscale=true]{",cover_name,"}"))
   @
 
 \fi
