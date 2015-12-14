@@ -745,7 +745,7 @@ if (table_type == "html"){
     } else owner_line <- "\n"
 
 
-    cat(paste0("<h4>",item[["name"]],"</h4> \n",
+    cat(paste0("<h1>",item[["name"]],"</h1> \n",
                item[["description"]],"\n","\n",
                source_line,"\n",
                owner_line,

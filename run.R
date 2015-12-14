@@ -34,7 +34,7 @@ output_type <- "web" # web//a4
 
 
 # Parts to include/exclude
-# -------------------------------
+# -------------------------------(heads)
 include_covers       <- T
 include_timestamp    <- T
 include_disclaimer   <- T
@@ -58,12 +58,12 @@ include_definitions      <- T
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- T
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
-upload_images_to_server <- T
+upload_pdfs_to_server   <- F
+upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -203,7 +203,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
-load("~/btsync/faosync/syb_database/output_data/2015-12-08-01/SYB2015-12-08-01.RData")
+load("~/btsync/faosync/syb_database/output_data/2015-12-11-01/SYB2015-12-11-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 

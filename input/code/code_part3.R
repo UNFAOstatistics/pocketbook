@@ -927,7 +927,7 @@ p
 
 
 # Caption
-caption_text <- paste0("Production (heads) of regions most produced animal: ", tolower(top_animal), ", in 2000 and 2013")
+caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2013 (heads)")
 
 
 

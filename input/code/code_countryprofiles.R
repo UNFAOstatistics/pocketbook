@@ -638,7 +638,7 @@ if (table_type == "html"){
   
   for (i in 1:nrow(M49countries)) {
     
-    cat(paste0('<h3>',M49countries[i, "SHORT_NAME"],'</h3> \n'),
+    cat(paste0('<h1>',M49countries[i, "SHORT_NAME"],'</h1> \n'),
         file = fileOut, append = TRUE)
     
     # header

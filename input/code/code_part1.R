@@ -98,7 +98,8 @@ dat <- dat %>% group_by(Year,variable) %>%  dplyr::summarise(value = sum(value, 
 #datatable(dat)
 
 # Draw the plot
-p <- ggplot(dat, aes(x = Year, y = value))
+dat_plot <- dat
+p <- ggplot(dat_plot, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="billion people")
