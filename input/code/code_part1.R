@@ -107,17 +107,20 @@ p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
 
-cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
-cat("\\vspace{1mm}")
+if (table_type == "latex"){
+  cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
+  cat("\\vspace{1mm}")
+} else cat("<br><i>Data after 2015 are projections</i>")
+
 
 # Caption
 
 caption_text <- "rural and urban population (1985 to 2016)"
-if (region_to_report == "RAF") caption_text <- "Africa rural and urban population (1985 to 2016)"
-if (region_to_report == "RAP") caption_text <- "Asia and Pacific rural and urban population (1985 to 2016)"
-if (region_to_report == "REU") caption_text <- "Europe and Central Asia rural and urban population (1985 to 2016)"
-if (region_to_report == "RNE") caption_text <- "North Africa and Near East rural and urban population (1985 to 2016)"
-if (region_to_report == "GLO") caption_text <- "World rural and urban population (1985 to 2016)"
+# if (region_to_report == "RAF") caption_text <- "Africa rural and urban population (1985 to 2016)"
+# if (region_to_report == "RAP") caption_text <- "Asia and Pacific rural and urban population (1985 to 2016)"
+# if (region_to_report == "REU") caption_text <- "Europe and Central Asia rural and urban population (1985 to 2016)"
+# if (region_to_report == "RNE") caption_text <- "North Africa and Near East rural and urban population (1985 to 2016)"
+# if (region_to_report == "GLO") caption_text <- "World rural and urban population (1985 to 2016)"
 
 
 
@@ -221,7 +224,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Rural population, share of total population (2014)"
@@ -406,7 +410,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
@@ -587,7 +592,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Employment in agriculture, share of total employment (percent, 2007 to 2012*)"
@@ -794,7 +800,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "kg/ha"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
@@ -984,7 +991,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"

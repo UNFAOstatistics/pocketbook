@@ -254,7 +254,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
@@ -326,9 +327,15 @@ rc <- growth %>% arrange(-growth_rate) %>% slice(1:5)
 
 names(rc) <- c("","%")
 
-print.xtable(xtable(rc, caption = "\\large{Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)}", digits = c(0,0,0),
+tbl_data <- rc
+if (table_type == "latex") cap <- "\\large{Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)}"
+if (table_type == "html")  cap <- "<b>Table: Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)</b>"
+caption_text <- cap
+
+print.xtable(xtable(rc, caption = cap, digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = table_type, table.placement = NULL, booktabs = TRUE,
+             comment = FALSE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
 
@@ -503,7 +510,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "index"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Crops, gross per capita production index (2004-06 = 100, 2013)"
@@ -572,10 +580,16 @@ gg[[3]] <- round(gg[[3]],0)
 gg[[2]]<- prettyNum(gg[[2]], big.mark=" ")
 gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
-print(xtable(gg, caption = "\\large{Top five items produced in 2013, thousand tonnes}", digits = c(0,0,0,0),
+tbl_data <- gg
+if (table_type == "latex") cap <- "\\large{Top five items produced in 2013, thousand tonnes}"
+if (table_type == "html")  cap <- "<b>Table: Top five items produced in 2013, thousand tonnes</b>"
+caption_text <- cap
+
+print(xtable(gg, caption = cap, digits = c(0,0,0,0),
              align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
       type = table_type, table.placement = NULL,
       booktabs = TRUE, include.rownames = FALSE,
+      comment = FALSE,
       size = "footnotesize", caption.placement = "top",
       html.table.attributes = 'class="table table-striped table-hover"')
 
@@ -731,7 +745,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "kg/cap"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Cereal production, kg/cap (2013)"
@@ -799,9 +814,15 @@ gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
 top_animal <- gg[1,1]
 
-print.xtable(xtable(gg, caption = "\\large{Live animal number, top 5 in 2013 (thousand heads)}", digits = c(0,0,0,0),
+tbl_data <- gg
+if (table_type == "latex") cap <- "\\large{Live animal number, top 5 in 2013 (thousand heads)}"
+if (table_type == "html")  cap <- "<b>Table: Live animal number, top 5 in 2013 (thousand heads)</b>"
+caption_text <- cap
+
+print.xtable(xtable(gg, caption = cap, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
              type = table_type, table.placement = NULL, booktabs = TRUE,
+             comment = FALSE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
 
@@ -957,7 +978,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Cattle and buffaloes per ha of agricultural area, heads per ha (2012)"
@@ -1135,7 +1157,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "1 000 US$"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Net trade of fish in 2012"
@@ -1199,9 +1222,15 @@ dw[[3]] <- round(dw[[3]],0)
 dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
 dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 
-print.xtable(xtable(dw, caption = "\\large{Exports and Imports of food, million US\\$ (2012)}", digits = c(0,0,0,0),
+tbl_data <- dw
+if (table_type == "latex") cap <- "\\large{Exports and Imports of food, million US\\$ (2012)}"
+if (table_type == "html")  cap <- "<b>Table: Exports and Imports of food, million US$ (2012) </b>"
+caption_text <- cap
+
+print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.2cm}rr"),
              type = table_type, table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
+             comment = FALSE,
              size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
 
@@ -1339,7 +1368,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 map_unit <- "index"
 
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Import value index (2004-2006 = 100, 2011)"

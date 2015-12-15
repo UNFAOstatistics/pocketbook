@@ -240,7 +240,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Coffee yield (2013)"
@@ -544,7 +545,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
 } else gr_rob <- gr_rob
 
 # create_map_here(manualPalette=TRUE,manual_palette=c("grey70","#d7191c","#fdae61","#ffffbf","#a6d96a","#1a9641"))
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Net trade of coffee in 2012"
@@ -729,7 +731,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Producer Price Index (2004-2006 = 100) (2012)"

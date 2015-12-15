@@ -226,7 +226,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # map_unit <- "m² per capita"
 map_unit <- "ha per capita"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Cropland per capita, ha/cap"
@@ -424,7 +425,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
@@ -596,15 +598,16 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","GN_6808_72182")]
-if (region_to_report == "RAP")  cat_data$value_cat <- categories(x=cat_data$GN_6808_72182,manual = TRUE, manual_breaks = c(5,25,50,500,7769))
-if (region_to_report != "RAP")  cat_data$value_cat <- categories(x=cat_data$GN_6808_72182)
+if (region_to_report %in% c("RAP","GLO"))  cat_data$value_cat <- categories(x=cat_data$GN_6808_72182,manual = TRUE, manual_breaks = c(5,25,50,500,7769))
+if (!region_to_report %in% c("RAP","GLO"))  cat_data$value_cat <- categories(x=cat_data$GN_6808_72182)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "million kWh"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
@@ -805,7 +808,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Forest area as share of total land area, percent (2012)"
@@ -990,7 +994,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- expression("mln gigagrams CO"[2] * "eq")
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2012)"

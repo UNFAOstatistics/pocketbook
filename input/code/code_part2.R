@@ -190,12 +190,17 @@ dw <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000),Year %in% c(
 dw$FAO_TABLE_NAME[dw$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
 dw$X2015[dw$X2015 == "20"] <- "20.0"
 names(dw) <- c("","1990-92","2014-16")
-
+tbl_data <- dw
 #dw <- dw[c(7,3,4,1,2,5,6),]
 # Chiaras comments
-print.xtable(xtable(dw, caption = "\\large{Prevalence of undernourishment (percent)}", digits = c(0,0,0,0),
+if (table_type == "latex") cap <- "\\large{Prevalence of undernourishment (percent)}"
+if (table_type == "html")  cap <- "<b>Table: Prevalence of undernourishment (percent)</b>"
+caption_text <- cap
+
+print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
              type = table_type, table.placement = NULL,
+             comment=FALSE,
              booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
 
@@ -344,7 +349,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 map_unit <- "Percent"
 
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
@@ -526,7 +532,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "Percent"
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Prevalence of overweight and obesity, adults (percent, 2014)"
@@ -714,7 +721,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 map_unit <- "Percent"
 
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Average value of food production, constant 2004-2006 I\\$ per person (3 year average, 2011-13)"
@@ -907,7 +915,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 map_unit <- "per 100 km² of land"
 
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Road density, per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
@@ -1085,7 +1094,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 map_unit <- "index"
 
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Political stability and absence of violence/terrorism, index (2013)"
@@ -1272,7 +1282,8 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 map_unit <- "percent"
 
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Percentage of anaemia among children under 5, percent (2011)"

@@ -194,7 +194,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Rural population, share of total population (2014)"
@@ -377,7 +378,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
@@ -636,7 +638,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here()
+p <- create_map_here()
+p
 
 # Caption
 caption_text <- "Share of population living less than US\\$ 1.25 per day (2007 - 2012)"
@@ -895,7 +898,8 @@ if (!(region_to_report %in% c("GLO","COF"))) {
   gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long <= max(map.plot$long),]
 } else gr_rob <- gr_rob
 
-create_map_here() 
+p <- create_map_here() 
+p
 
 # Caption
  caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
