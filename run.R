@@ -6,7 +6,7 @@
 options(scipen=999) # disable scientific number formatting
 
 # set root directory
-if (Sys.info()[["user"]] %in% c("markus","aurelius")) root.dir <- "~/btsync/faosync/pocketbooks/regional15/"
+if (Sys.info()[["user"]] %in% c("markus","aurelius")) root.dir <- "~/btsync/faosync/pocketbooks/pocketbook/"
 if (Sys.info()[["user"]] == "amy")   root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
