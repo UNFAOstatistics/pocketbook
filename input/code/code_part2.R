@@ -182,7 +182,9 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 # This should be thought twice how to produce it for regional books!
 
-dw <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000),Year %in% c(1991,2015)) %>%
+dw <- df %>% 
+      filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000),
+             Year %in% c(1991,2015)) %>%
   mutate(Year = paste0("X",Year)) %>%
   select(Year,FAO_TABLE_NAME,FS.OA.POU.PCT3D1) %>%
   spread(key = Year,value = FS.OA.POU.PCT3D1)
@@ -249,12 +251,13 @@ p <- p + labs(x="",y="million people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
-caption_text <- "Countries with the highest number of undernourished in 2014-16"
+caption_text <- "World countries with the highest number of undernourished in 2014-16"
 
 
 ## ---- P2undernuRIGHT ----
 
-dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+if (region_to_report != "RNE") dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+if (region_to_report == "RNE") dat <- df[df$Year %in%  c(1991,2010) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
 
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 # Add region key and subset
@@ -275,7 +278,8 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+if (region_to_report == "RNE") top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2009-2011")
+if (region_to_report != "RNE") top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -560,19 +564,19 @@ if (region_to_report == "GLO") short_text <- "Availability is an important dimen
 
 
 ## ---- P2availabTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
 
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-                                                                    "Europe and Central Asia",
-                                                                    "Asia and the Pacific",
-                                                                    "Africa",
-                                                                    "World"))
+# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+#                                                                     "Europe and Central Asia",
+#                                                                     "Asia and the Pacific",
+#                                                                     "Africa",
+#                                                                     "World"))
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="percent", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
@@ -678,13 +682,13 @@ if (region_to_report == "GLO") caption_text <- "Average protein supply, top 20 c
 
 ## ---- P2availabBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
 
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-                                                                    "Europe and Central Asia",
-                                                                    "Asia and the Pacific",
-                                                                    "Africa",
-                                                                    "World"))
+# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+#                                                                     "Europe and Central Asia",
+#                                                                     "Asia and the Pacific",
+#                                                                     "Africa",
+#                                                                     "World"))
 
 dat_plot <- dat_plot[!is.na(dat_plot$FBS.PPCS.AO.GCD3D),]
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
@@ -693,7 +697,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="g/cap/day", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
@@ -750,13 +754,13 @@ if (region_to_report == "GLO") short_text <- "An adequate supply of food does no
 
 
 ## ---- P2accessTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
 
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-                                                                    "Europe and Central Asia",
-                                                                    "Asia and the Pacific",
-                                                                    "Africa",
-                                                                    "World"))
+# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+#                                                                     "Europe and Central Asia",
+#                                                                     "Asia and the Pacific",
+#                                                                     "Africa",
+#                                                                     "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
@@ -764,7 +768,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="kcal/cap/day", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
@@ -871,13 +875,13 @@ if (region_to_report == "GLO") caption_text <- "Prevalence of undernourishment, 
 
 ## ---- P2accessBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
 
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-                                                                    "Europe and Central Asia",
-                                                                    "Asia and the Pacific",
-                                                                    "Africa",
-                                                                    "World"))
+# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+#                                                                     "Europe and Central Asia",
+#                                                                     "Asia and the Pacific",
+#                                                                     "Africa",
+#                                                                     "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
@@ -885,7 +889,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="US$", x="")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_y_continuous(labels=space)
 p
 
@@ -941,13 +945,13 @@ if (region_to_report == "GLO") short_text <- "Over the last ten years, food and 
 
 
 ## ---- P2stabilityTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
 
-dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-                                                                    "Europe and Central Asia",
-                                                                    "Asia and the Pacific",
-                                                                    "Africa",
-                                                                    "World"))
+# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
+#                                                                     "Europe and Central Asia",
+#                                                                     "Asia and the Pacific",
+#                                                                     "Africa",
+#                                                                     "World"))
 
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
 
@@ -955,7 +959,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DEA.PCFPV.IDD,group=FAO_TABLE_
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="index", x="")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + theme(axis.text.x = element_text(angle = 45))
 p
 
@@ -1054,7 +1058,7 @@ if (region_to_report == "RNE") caption_text <- "Domestic food price volatility i
 if (region_to_report == "GLO") caption_text <- "Domestic food price volatility index, top 20 countriesin 2014"
 
 ## ---- P2stabilityBOTTOM ----
-dat <- df %>% filter(FAOST_CODE %in% c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
+dat <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
 
 dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
 
@@ -1238,7 +1242,13 @@ if (region_to_report == "RNE") caption_text <- "Percentage of children under 5 a
 if (region_to_report == "GLO") caption_text <- "Percentage of children under 5 affected by wasting, highest 20 countries (2006 - 2014*)"
 
 ## ---- P2utilizaBOTTOM ----
-dat <- df %>% filter(FAOST_CODE %in% c(5000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RAF") dat <- df %>% filter(FAOST_CODE %in% c(12000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RAP") dat <- df %>% filter(FAOST_CODE %in% c(13000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "REU") dat <- df %>% filter(FAOST_CODE %in% c(14000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RNE") dat <- df %>% filter(FAOST_CODE %in% c(15000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "GLO") dat <- df %>% filter(FAOST_CODE %in% c(5000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+
+
 
 dat <- dat[!is.na(dat$SH.STA.ACSN),]
 dat <- dat[!is.na(dat$SH.H2O.SAFE.ZS),]
