@@ -360,10 +360,10 @@
   owner: FAO
 - id: credit_to_agriculture
   name: Credit to agriculture
-  description: This dataset is built by compiling official 
-  country data published on-line by national
-  central banks in their monetary and financial
-  statistics publications
+  description: This dataset is built by compiling official
+    country data published on-line by national
+    central banks in their monetary and financial
+    statistics publications
   source: FAO, Statistics Division
   owner: FAO
 - id: cropland
@@ -906,11 +906,11 @@
   name: Renewable water resources withdrawn (\% of total)
   description: The total volume of groundwater and surface water withdrawn from their
     sources for human use (in the agricultural, municipal and industrial sectors),
-    expressed as a percentage of the total actual renewable water resources.  Water 
-    withdrawals can exceed 100 percent of total renewable resources where extraction 
-    from nonrenewable aquifers or desalination plants is considerable or where water 
-    reuse is significant. Withdrawals for agriculture and industry are total withdrawals 
-    for irrigation and livestock production and for direct industrial use (including for 
+    expressed as a percentage of the total actual renewable water resources.  Water
+    withdrawals can exceed 100 percent of total renewable resources where extraction
+    from nonrenewable aquifers or desalination plants is considerable or where water
+    reuse is significant. Withdrawals for agriculture and industry are total withdrawals
+    for irrigation and livestock production and for direct industrial use (including for
     cooling thermoelectric plants).
   source: 'Land and Water Division (AQUASTAT) '
   owner: FAO
