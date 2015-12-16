@@ -517,7 +517,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Male employment in agriculture, share of Male employment (percent 2003 - 2013*)"
+caption_text <- "Male employment in agriculture, share of male employment (percent 2003 - 2013*)"
 
 
 ## ---- P1laboBOTTOM_data ----
@@ -888,7 +888,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Total credit to agriculture, top 20 countries in 2010-12"
+caption_text <- paste("Total credit to agriculture, top",ncases,"countries in 2010-12")
 
 ## ---- P1investRIGHT ----
 

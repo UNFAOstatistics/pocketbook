@@ -358,6 +358,14 @@
     nes.
   source: FAO, Statistics Division
   owner: FAO
+- id: credit_to_agriculture
+  name: Credit to agriculture
+  description: This dataset is built by compiling official 
+  country data published on-line by national
+  central banks in their monetary and financial
+  statistics publications
+  source: FAO, Statistics Division
+  owner: FAO
 - id: cropland
   name: Cropland
   description: Includes arable land and permanent crops.

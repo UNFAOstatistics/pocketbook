@@ -1270,7 +1270,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3cropTEXT, eval=P3crop, short_text_ChartPage=P3crop>>=
 @
 
-<<P3cropData,results='hide',cache=TRUE,eval=P3crop>>=
+<<P3cropData,results='hide',cache=FALSE,eval=P3crop>>=
 @
 
 
@@ -1308,7 +1308,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<P3livestockTEXT, eval=P3livestock, short_text_ChartPage=P3livestock>>=
 @
 
-<<P3livestockData,results='hide',cache=TRUE,eval=P3livestock>>=
+<<P3livestockData,results='hide',cache=FALSE,eval=P3livestock>>=
 @
 
 
@@ -2115,7 +2115,7 @@ cat("
 
 <<notes2, eval=include_notes>>=
 
- if (region_to_report != "COF"){
+ if (region_to_report %in% c("GLO","RNE","RAF")){
    cat("\\vspace{2mm}
 
    Following the creation of the Republic of South Sudan in July 2011, the M49 classification considered the Sudan as part of the Northern Africa region, and South Sudan as part of Eastern Africa. In this report, data for the Sudan are therefore included in the Northern Africa region.")

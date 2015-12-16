@@ -185,7 +185,7 @@ names(dat)[names(dat)=="FBS.PCS.PDES.KCD3D"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
 nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
+dat <- arrange(dat, -Year, Value)
 # slice the data for both years
 top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")

@@ -101,10 +101,13 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RL.AREA.ARBL.HA.SHP)
-top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+if (region_to_report == "RNE") top20 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "2012")
+if (region_to_report != "RNE") top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 # bottom for the next plot
 dat <- arrange(dat, RL.AREA.ARBL.HA.SHP)
-bottom20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+if (region_to_report == "RNE") bottom20 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "2012")
+if (region_to_report != "RNE") bottom20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+
 
 dat_plot <- top20
 
@@ -122,7 +125,7 @@ caption_text <- "Arable land per capita, top 20 countries"
 if (region_to_report == "RAF") caption_text <- "Arable land per capita, top 20 African countries"
 if (region_to_report == "RAP") caption_text <- "Arable land per capita, top 20 Asian and the Pacific countries"
 if (region_to_report == "REU") caption_text <- "Arable land per capita, top 20 European and Central Asian countries"
-if (region_to_report == "RNE") caption_text <- "Arable land per capita, top 20 North Africa and Near East countries"
+if (region_to_report == "RNE") caption_text <- "Arable land per capita, top 10 North Africa and Near East countries"
 if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 countries"
 
 
