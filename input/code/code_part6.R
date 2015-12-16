@@ -121,12 +121,17 @@ rcc <- rcc[c(3,2)]
 
 names(rcc) <- c("","%")
 
+if (table_type == "latex") cap <- "\\large{Fastest growing coffee producers based on quantities (average annual growth rate, 2000 to 2013)}"
+if (table_type == "html")  cap <- "<b>Table: Fastest growing coffee producers based on quantities (average annual growth rate, 2000 to 2013)</b>"
+caption_text <- cap
 
-
-print.xtable(xtable(rcc, caption = "\\large{Fastest growing coffee producers based on quantities (average annual growth rate, 2000 to 2013)}", digits = c(0,0,0),
+tbl_data <- rcc
+print.xtable(xtable(rcc, caption = cap, digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
-             type = "latex", table.placement = NULL,
-             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
+             type = table_type, table.placement = NULL,
+             comment = FALSE,
+             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
+             html.table.attributes = 'class="table table-striped table-hover"')
 
 
 
@@ -382,12 +387,20 @@ rcc <- rcc[c(3,2)]
 # rcc$SHORT_NAME[rcc$FAOST_CODE == 128] <- "China, Macao SAR"
 # rcc <- rcc[c(3,2)]
 
+
 names(rcc) <- c("","%")
 
-print.xtable(xtable(rcc, caption = "\\large{Fastest growing coffee exporters based on export value (average annual growth rate, 2000 to 2013)}", digits = c(0,0,0),
+if (table_type == "latex") cap <- "\\large{Fastest growing coffee exporters based on export value (average annual growth rate, 2000 to 2013)}"
+if (table_type == "html")  cap <- "<b>Table: Fastest growing coffee exporters based on export value (average annual growth rate, 2000 to 2013)</b>"
+caption_text <- cap
+
+tbl_data <- rcc
+print.xtable(xtable(rcc, caption = cap, digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
-             type = "latex", table.placement = NULL,
-             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top")
+             type = table_type, table.placement = NULL,
+             comment=FALSE,
+             booktabs = TRUE, include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
+             html.table.attributes = 'class="table table-striped table-hover"')
 
 
 
