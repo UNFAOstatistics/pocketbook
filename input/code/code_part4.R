@@ -121,13 +121,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Arable land per capita, top 20 countries"
-if (region_to_report == "RAF") caption_text <- "Arable land per capita, top 20 African countries"
-if (region_to_report == "RAP") caption_text <- "Arable land per capita, top 20 Asian and the Pacific countries"
-if (region_to_report == "REU") caption_text <- "Arable land per capita, top 20 European and Central Asian countries"
-if (region_to_report == "RNE") caption_text <- "Arable land per capita, top 10 North Africa and Near East countries"
-if (region_to_report == "GLO") caption_text <- "Arable land per capita, top 20 countries"
-
+caption_text <- paste("Arable land per capita, top",nrow(dat_plot),"countries")
 
 
 ## ---- P4landRIGHT ----
@@ -143,12 +137,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Arable land per capita, bottom 20 countries"
-if (region_to_report == "RAF") caption_text <- "Arable land per capita, bottom 20 African countries"
-if (region_to_report == "RAP") caption_text <- "Arable land per capita, bottom 20 Asian and the Pacific countries"
-if (region_to_report == "REU") caption_text <- "Arable land per capita, bottom 20 European and Central Asian countries"
-if (region_to_report == "RNE") caption_text <- "Arable land per capita, bottom 20 North Africa and Near East countries"
-if (region_to_report == "GLO") caption_text <- "Arable land per capita, bottom 20 countries"
+caption_text <- paste("Arable land per capita, bottom",nrow(dat_plot),"countries")
 
 
 
@@ -345,7 +334,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Freshwater withdrawal by industrial sector, share of total, highest 20 (1999 to 2013)"
+caption_text <- paste("Freshwater withdrawal by industrial sector, share of total, highest",nrow(dat_plot),"(1999 to 2013)")
 
 
 ## ---- P4waterRIGHT ----
@@ -376,7 +365,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Freshwater withdrawal by agricultural sector, share of total, highest 20 (1999 to 2013)"
+caption_text <- paste("Freshwater withdrawal by agricultural sector, share of total, highest",nrow(dat_plot),"(1999 to 2013)")
 
 
 ## ---- P4waterBOTTOM ----
@@ -518,7 +507,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Bioenergy production, share of total energy production, top 20 countries 2009"
+caption_text <- paste("Bioenergy production, share of total energy production, top",nrow(dat_plot),"countries 2009")
 
 
 ## ---- P4energyRIGHT ----
@@ -551,7 +540,7 @@ p
 
 
 # Caption
-caption_text <- "Energy use in agriculture and forestry, share of total energy consumption, top 20 countries 2009"
+caption_text <- paste("Energy use in agriculture and forestry, share of total energy consumption, top",nrow(dat_plot),"countries 2009")
 
 
 ## ---- P4energyBOTTOM ----
@@ -709,7 +698,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Top 20 exporters of forest products (2012)"
+caption_text <- paste("Top",nrow(dat_plot),"exporters of forest products (2012)")
 
 
 ## ---- P4forestryRIGHT ----
@@ -743,7 +732,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Top 20 importers of forest products (2012)"
+caption_text <- paste("Top",nrow(dat_plot),"importers of forest products (2012)")
 
 
 ## ---- P4forestryBOTTOM ----
@@ -899,7 +888,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Greehouse gas emissions in agriculture, highest 20 countries in 2012"
+caption_text <- paste("Greehouse gas emissions in agriculture, highest",nrow(top12),"countries in 2012")
 
 
 
@@ -938,7 +927,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Land use total emissions, highest 20 countries in 2012"
+caption_text <- paste("Land use total emissions, highest",ncases,"countries in 2012")
 
 
 

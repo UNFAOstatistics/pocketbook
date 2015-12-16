@@ -164,7 +164,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Dietary energy supply, top 20 countries in 2015"
+caption_text <- paste("Dietary energy supply, top",ncases,"countries in 2015")
 
 ## ---- P3desRIGHT ----
 
@@ -204,7 +204,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Dietary energy supply, bottom 20 countries in 2015"
+caption_text <- paste("Dietary energy supply, bottom",ncases,"countries in 2015")
 
 
 ## ---- P3desBOTTOM ----
@@ -379,7 +379,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Top 20 crop producing countries in 2012 based on net per capita crop production value"
+caption_text <- paste("Top",ncases,"crop producing countries in 2012 based on net per capita crop production value")
 
 
 ## ---- P3cropproRIGHT ----
@@ -421,7 +421,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Top 20 food producing countries in 2012 based on net food per capita production value"
+caption_text <- paste("Top",ncases,"food producing countries in 2012 based on net food per capita production value")
 
 ## ---- P3cropproBOTTOM ----
 if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>%
@@ -642,7 +642,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top 20",tolower(first),"producing countries, per capita")
+caption_text <- paste("Top",ncases,tolower(first),"producing countries, kg per capita")
 
 
 ## ---- P3cropRIGHT ----
@@ -691,7 +691,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top 20",tolower(second),"producing countries, per capita")
+caption_text <- paste("Top",ncases,tolower(second),"producing countries, per capita")
 
 
 ## ---- P3cropBOTTOM ----
@@ -843,7 +843,9 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -QL.PRD.MILK.TN.NO)
 top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
-dat_plot <- rbind(top10,bot10)
+
+overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK.TN.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -855,7 +857,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Total milk production, top and bottom 10 countries (2012)"
+caption_text <- paste("Total milk production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
 
 ## ---- P3livestockRIGHT ----
 
@@ -871,7 +873,9 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -QL.PRD.EGG.TN.NO)
 top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
-dat_plot <- rbind(top10,bot10)
+
+overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.TN.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -883,7 +887,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Total egg production, top and bottom 10 countries (2012)"
+caption_text <- paste("Total egg production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
 
 
 ## ---- P3livestockBOTTOM ----
@@ -1060,7 +1064,9 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -capture_fish_production)
 top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
-dat_plot <- rbind(top10,bot10)
+
+overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=capture_fish_production))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -1072,7 +1078,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "20 countries with highest value of capture production (2013)"
+caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of capture production (2013)")
 
 
 ## ---- P3fisheriesRIGHT ----
@@ -1089,7 +1095,10 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -aquaculture_fish_production)
 top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
-dat_plot <- rbind(top10,bot10)
+
+overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=aquaculture_fish_production))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -1102,7 +1111,7 @@ p
 
 # Caption
 
-caption_text <- "20 countries with highest value of aquaculture production (2013)"
+caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of aquaculture production (2013)")
 
 
 ## ---- P3fisheriesBOTTOM ----
@@ -1272,7 +1281,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Top food importing countries in 2012"
+caption_text <- paste("Top",ncases,"food importing countries in 2012")
 
 ## ---- P3tradeRIGHT ----
 
@@ -1312,7 +1321,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- "Top food exporting countries in 2012"
+caption_text <- paste("Top",ncases,"food exporting countries in 2012")
 
 
 ## ---- P3tradeBOTTOM ----
