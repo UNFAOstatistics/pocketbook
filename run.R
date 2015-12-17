@@ -58,11 +58,11 @@ include_definitions      <- T
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -336,6 +336,8 @@ map.df <- left_join(map.df,region_key)
 # na_countries_FAOST_CODE <- unique(na_countries$FAOST_CODE)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
+
+region_to_report="RNE" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))

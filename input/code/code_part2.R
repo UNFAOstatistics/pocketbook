@@ -183,7 +183,7 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 # This should be thought twice how to produce it for regional books!
 
 dw <- df %>%
-      filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000),
+      filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000),
              Year %in% c(1991,2015)) %>%
   mutate(Year = paste0("X",Year)) %>%
   select(Year,FAO_TABLE_NAME,FS.OA.POU.PCT3D1) %>%
@@ -215,6 +215,8 @@ dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year
 dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
+
+dat <- dat[!is.na(dat$SHORT_NAME),]
 
 dat <- dat[dat$FAOST_CODE != 348,]
 dat <- dat[dat$FAOST_CODE != 357,]
@@ -296,12 +298,6 @@ p
 
 # Caption
 caption_text <- paste("Top",ncases,"ountries with the highest number of undernourished in",unique(top2015$color))
-if (region_to_report == "RAF") caption_text <- "African countries with the highest number of undernourished in 2014-16"
-if (region_to_report == "RAP") caption_text <- "Asian and the Pacific countries with the highest number of undernourished in 2014-16"
-if (region_to_report == "REU") caption_text <- "European countries with the highest number of undernourished in 2014-16"
-if (region_to_report == "RNE") caption_text <- "North Aftican and Near East countries with the highest number of undernourished in 2014-16"
-if (region_to_report == "GLO") caption_text <- "Countries with the highest number of undernourished in 2014-16"
-
 
 ## ---- P2undernuBOTTOM ----
 
@@ -553,18 +549,18 @@ caption_text <- "Prevalence of overweight and obesity, adults (percent, 2014)"
 
 ## ---- P2availabTEXT ----
 spread_title <- "Food availability"
-if (region_to_report == "RAF") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
-if (region_to_report == "RAP") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
-if (region_to_report == "REU") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "RAF") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "RAP") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "REU") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
 if (region_to_report == "RNE") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
-if (region_to_report == "GLO") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. However, growth rates in Africa have been lower for the last 20 years, despite notable exceptions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
+if (region_to_report == "GLO") short_text <- "Availability is an important dimension of food security. Supplying enough food to the reference population is a necessary, but insufficient, condition for ensuring adequate access for individuals. Over recent decades, trends in food production per capita have been generally positive across most regions. In most countries and regions, high food availability is associated with relatively low prevalence of undernourishment. However, outcome indicators show that high food availability does not always guarantee high food security."
 
 ## ---- P2availabData ----
 
 
 
 ## ---- P2availabTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -671,7 +667,7 @@ caption_text <- paste("Average protein supply, top",nrow(dat_plot),"countries in
 
 ## ---- P2availabBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -686,7 +682,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="g/cap/day", x="")
-p <- p + guides(color = guide_legend(nrow = 5))
+p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
 p <- p + theme(axis.text.x = element_text(angle = 45))
@@ -743,7 +739,7 @@ if (region_to_report == "GLO") short_text <- "An adequate supply of food does no
 
 
 ## ---- P2accessTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -854,7 +850,7 @@ caption_text <- paste("Prevalence of undernourishment, highest",ncases,"countrie
 
 ## ---- P2accessBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -924,7 +920,7 @@ if (region_to_report == "GLO") short_text <- "Over the last ten years, food and 
 
 
 ## ---- P2stabilityTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -1027,7 +1023,7 @@ p
 caption_text <- paste("Domestic food price volatility index, top",ncases,"countriesin 2014")
 
 ## ---- P2stabilityBOTTOM ----
-dat <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,12003) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
+dat <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
 
 dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
 
@@ -1203,7 +1199,7 @@ caption_text <- paste("Percentage of children under 5 affected by wasting, highe
 
 ## ---- P2utilizaBOTTOM ----
 if (region_to_report == "RAF") dat <- df %>% filter(FAOST_CODE %in% c(12000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
-if (region_to_report == "RAP") dat <- df %>% filter(FAOST_CODE %in% c(13000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RAP") dat <- df %>% filter(FAOST_CODE %in% c(5853), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
 if (region_to_report == "REU") dat <- df %>% filter(FAOST_CODE %in% c(14000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
 if (region_to_report == "RNE") dat <- df %>% filter(FAOST_CODE %in% c(15000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
 if (region_to_report == "GLO") dat <- df %>% filter(FAOST_CODE %in% c(5000),  Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
@@ -1224,7 +1220,8 @@ p <- ggplot(dat_plot, aes(x=Year,y=value,color=variable))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y="percent of population")
-p <- p + scale_x_continuous(breaks=c(2000,2005,2010))
+if (region_to_report == "RAP") p <- p + scale_x_continuous(breaks=c(2008,2010,2012))
+if (region_to_report != "RAP") p <- p + scale_x_continuous(breaks=c(2000,2005,2010))
 p
 
 caption_text <- "Access to improved water source and sanitation facilities"

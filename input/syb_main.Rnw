@@ -664,7 +664,7 @@ if (region_to_report %in% c("COF","RAF","RNE","RAP")){
   cat("
     \\pagenumbering{arabic}  %% Arabic page numbering
     \\setcounter{page}{1}
-    \\thispagestyle{empty} % make the overview table page with no page number as it differs between books 
+    \\thispagestyle{empty} % make the overview table page with no page number as it differs between books
 
     ")
 } else {
@@ -960,12 +960,12 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 @
 
 
-%   ___  _               _ _         
-%  / _ \| |__   ___  ___(_) |_ _   _ 
+%   ___  _               _ _
+%  / _ \| |__   ___  ___(_) |_ _   _
 % | | | | '_ \ / _ \/ __| | __| | | |
 % | |_| | |_) |  __/\__ \ | |_| |_| |
 %  \___/|_.__/ \___||___/_|\__|\__, |
-%                              |___/ 
+%                              |___/
 % Only for REU
 
 <<P2obesityTEXT, eval=P2obesity, short_text_ChartPage=P2obesity>>=
@@ -2003,18 +2003,18 @@ source(paste0(root.dir,"input/code/code_countryprofiles.R"))
   empty_page_color <- "FAOblue"
   if (region_to_report == "COF") empty_page_color <- "part7"
   cat(paste0("\\newpage
-             
+
              \\pagecolor{",
              empty_page_color,
              "}
-             
+
               \\thispagestyle{empty}
               \\mbox{}
               \\newpage
               \\thispagestyle{empty}
               \\mbox{}
               \\clearpage
-              \\pagecolor{white}             
+              \\pagecolor{white}
              "))
   @
 
@@ -2041,10 +2041,10 @@ source(paste0(root.dir,"input/code/code_countryprofiles.R"))
              \\parskip=\\medskipamount
              \\hangafter=-2
              \\input{CountryProfiles.tex}
-            
+
             \\newpage
              ")
-  
+
 @
 
 
@@ -2118,7 +2118,7 @@ cat("
  if (region_to_report %in% c("GLO","RNE","RAF")){
    cat("\\vspace{2mm}
 
-   Following the creation of the Republic of South Sudan in July 2011, the M49 classification considered the Sudan as part of the Northern Africa region, and South Sudan as part of Eastern Africa. In this report, data for the Sudan are therefore included in the Northern Africa region.")
+   Following the creation of the Republic of South Sudan in July 2011, the M49 classification considered the Sudan as part of the Northern Africa region, and South Sudan as part of Eastern Africa. In this report, data for the Sudan are therefore included in the Northern Africa region. Data for Sudan prior to 2011 refers to former Sudan.")
    } else cat("")
 
 @
