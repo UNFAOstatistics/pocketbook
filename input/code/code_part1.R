@@ -136,7 +136,7 @@ top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.POP.PPL.GR10))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -165,7 +165,7 @@ top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
@@ -295,8 +295,6 @@ dat <- dat[which(dat[[region_to_report]]),]
 # top for this plot
 dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-EA.PRD.AGRI.KD) %>% slice(1:20) %>% dplyr::mutate(color = "2013",
                                                                                                                                                            EA.PRD.AGRI.KD = EA.PRD.AGRI.KD / 1000)
-ncases <- nrow(dat_plot)
-
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EA.PRD.AGRI.KD),y=EA.PRD.AGRI.KD))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -307,7 +305,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Agriculture value added per worker, top",ncases,"countries with the highest values (2003-2013*)")
+caption_text <- paste("Agriculture value added per worker, top",nrow(dat_plot),"countries with the highest values (2003-2013*)")
 
 ## ---- P1econRIGHT ----
 
@@ -337,9 +335,7 @@ bot10 <- dat %>% arrange(FAOST_CODE,Year) %>%
   dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
-
-dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, growth_NV.AGR.TOTL.KD),y=growth_NV.AGR.TOTL.KD))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -906,7 +902,7 @@ bot10 <- dat %>%  group_by(SHORT_NAME) %>% dplyr::summarise(dfa_AOI_commit = mea
   dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 
 

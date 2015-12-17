@@ -168,9 +168,9 @@ caption_text <- paste("Dietary energy supply, top",ncases,"countries in 2015")
 
 ## ---- P3desRIGHT ----
 
-dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCS.PDES.KCD3D")]
+dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.DA.ADESA.PCT3D")]
 
-dat <- dat[!is.na(dat$FBS.PCS.PDES.KCD3D),]
+dat <- dat[!is.na(dat$FS.DA.ADESA.PCT3D),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -181,11 +181,11 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # semi-standard data munging for two year dot-plots
 # give name Value for value-col
-names(dat)[names(dat)=="FBS.PCS.PDES.KCD3D"] <- "Value"
+names(dat)[names(dat)=="FS.DA.ADESA.PCT3D"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
 nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, Value)
+dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
 top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
@@ -198,13 +198,13 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="kcal/cap/day")
+p <- p + labs(x="",y="percent")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
 
 # Caption
-caption_text <- paste("Dietary energy supply, bottom",ncases,"countries in 2015")
+caption_text <- paste("Average dietary energy supply adequacy, percent, top",ncases,"countries (2014-2016)")
 
 
 ## ---- P3desBOTTOM ----
@@ -259,11 +259,6 @@ p
 
 # Caption
 caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
-if (region_to_report == "RAF") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
-if (region_to_report == "RAP") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
-if (region_to_report == "REU") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
-if (region_to_report == "RNE") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
-if (region_to_report == "GLO") caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
 
 #    ____                                             _               _    _
 #   / ___| _ __  ___   _ __    _ __   _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __
@@ -845,7 +840,7 @@ top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK.TN.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -875,7 +870,7 @@ top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.TN.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -1066,7 +1061,7 @@ top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=capture_fish_production))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -1097,7 +1092,7 @@ top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$SHORT_NAME != overlap,], bot10[bot10$SHORT_NAME != overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=aquaculture_fish_production))
