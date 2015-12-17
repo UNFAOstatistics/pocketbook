@@ -28,8 +28,8 @@ regionS_to_report <- c(
                       )
 ############################################################
 # For print or for web or a4-print (in-house)
-output_type <- "web" # web//a4
-# output_type <- "print" # web/print/a4
+# output_type <- "web" # web//a4
+output_type <- "print" # web/print/a4
 # output_type <- "a4" # web/print/a4
 
 
@@ -58,7 +58,7 @@ include_definitions      <- T
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- T
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
