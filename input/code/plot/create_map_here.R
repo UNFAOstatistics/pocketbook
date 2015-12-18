@@ -74,7 +74,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   if (region_to_report == "RNE") p <- p + geom_polygon(data=map.df[which(map.df[["RAF"]]),], fill = "grey95", colour = alpha("white", 1/2))
   #  ---- grid below the countries ------------------------
   p <- p + geom_polygon(aes(fill = value_cat), colour = NA)
-  p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, guide = FALSE)
+  p <- p + geom_polygon(fill=NA,colour = alpha("white", 1/2), size=.4, show.legend = FALSE)
   if (region_to_report %in% c("COF","GLO")){
     p <- p + theme(legend.position = c(0.00,0.05), 
                    legend.justification=c(0,0),
