@@ -2063,7 +2063,11 @@ cat("
 \\phantomsection
 \\addcontentsline{toc}{section}{Definitions}
 
+
+
 \\begin{MetadataCollection}
+\\pagestyle{empty} %%% remove Contents string from header!!
+
 \\twocolumn
 \\normalfont \\LARGE Definitions
 
@@ -2100,6 +2104,7 @@ cat("
 
 
  \\begin{MetadataCollection}
+\\pagestyle{empty} %%% remove Contents string from header!!
 
  \\onecolumn
  \\normalfont \\LARGE Notes

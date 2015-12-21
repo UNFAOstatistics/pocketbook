@@ -28,7 +28,7 @@ regionS_to_report <- c(
                       )
 ############################################################
 # For print or for web or a4-print (in-house)
-# output_type <- "web" # web//a4
+output_type <- "web" # web//a4
 # output_type <- "print" # web/print/a4
 # output_type <- "a4" # web/print/a4
 
@@ -58,7 +58,7 @@ include_definitions      <- T
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- T
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
@@ -203,7 +203,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
-load("~/btsync/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
+# load("~/btsync/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-21-01/SYB2015-12-21-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
