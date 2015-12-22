@@ -523,33 +523,6 @@ caption_text <- paste("Male employment in agriculture in top",ncases,"countries,
 
 
 ## ---- P1laboBOTTOM_data ----
-# data
-
-# Retrieve data
-library(FAOSTAT)
-dat <- getFAOtoSYB(domainCode = "OA", # male economically active population
-                   elementCode = 592,
-                   itemCode = 3010)
-dat1 <- dat$aggregates
-dat <- getFAOtoSYB(domainCode = "shell
-                   sudo sh -e ~/Downloads/crouton -t unity -r trusty
-                   sudo startunityOA", # female economically active population
-                   elementCode = 593,
-                   itemCode = 3010)
-dat2 <- dat$aggregates
-dat <- getFAOtoSYB(domainCode = "OA", # male economically active population IN AGRICULTURE
-                   elementCode = 602,
-                   itemCode = 3010)
-dat3 <- dat$aggregates
-dat <- getFAOtoSYB(domainCode = "OA", # female economically active population IN AGRICULTURE
-                   elementCode = 603,
-                   itemCode = 3010)
-dat4 <- dat$aggregates
-dat <- left_join(dat1,dat2)
-dat <- left_join(dat,dat3)
-datx <- left_join(dat,dat4)
-
-
 
 
 
@@ -940,7 +913,7 @@ dat$variable[dat$variable == "privat_don_agr"] <- "Private"
 
 dat$variable <- factor(dat$variable, levels= c("Bilateral","Multilateral","Private"))
 
-# dat$value <- dat$value / 1000
+dat$value <- dat$value / 1000 # into bilion dollars
 
 # print data for technical report
 #datatable(dat)
@@ -951,13 +924,13 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="million 2013 US$")
+p <- p + labs(x="",y="billion 2013 US$")
 # p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 # p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
 
 # Caption
-caption_text <- "Aid commitment flow to Agriculture, Forestry and Fishing, million 2013 US\\$ (1995-2013)"
+caption_text <- "Aid commitment flow to Agriculture, Forestry and Fishing, billion 2013 US\\$ (1995-2013)"
 
 
 

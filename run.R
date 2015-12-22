@@ -43,9 +43,9 @@ include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
-include_part2        <- T
-include_part3        <- T
-include_part4        <- T
+include_part2        <- F
+include_part3        <- F
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -53,12 +53,12 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
-include_definitions      <- T
-include_notes            <- T
+include_country_profiles <- F
+include_definitions      <- F
+include_notes            <- F
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
@@ -204,7 +204,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-21-01/SYB2015-12-21-01.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-22-01/SYB2015-12-22-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
