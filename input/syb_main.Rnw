@@ -530,11 +530,14 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
+df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
+overview.df <- left_join(df,region_key)
+
 # Add region key and subset
-if (!(region_to_report %in% c("GLO","COF","RAP"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
-if (region_to_report %in% "RAP") overview.df <- overview.df
-if (region_to_report %in% "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
-if (region_to_report == "COF") overview.df <- overview.df
+# if (!(region_to_report %in% c("GLO","COF","RAP"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
+# if (region_to_report %in% "RAP") overview.df <- overview.df
+# if (region_to_report %in% "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
+# if (region_to_report == "COF") overview.df <- overview.df
 
 if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}"))
 
