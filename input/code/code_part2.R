@@ -170,7 +170,7 @@ dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
 # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "ns"] <- 0
 dat$FS.OA.NOU.P3D1 <- as.factor(dat$FS.OA.NOU.P3D1)
 dat$FS.OA.NOU.P3D1 <- as.numeric(levels(dat$FS.OA.NOU.P3D1))[dat$FS.OA.NOU.P3D1]
-# dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
+dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
 dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
 dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
 
@@ -249,7 +249,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="million people")
+p <- p + labs(x="",y="\nmillion people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -292,7 +292,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="million people")
+p <- p + labs(x="",y="\nmillion people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -301,9 +301,9 @@ caption_text <- paste("Top",ncases,"ountries with the highest number of undernou
 
 ## ---- P2undernuBOTTOM ----
 
-dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.POU.PCT3D1")]
+dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
 
-dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
+dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -312,20 +312,22 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-# sorted by data from 2013 as 2015 is very sparse
-top5_FAOST_CODE <- dat %>% filter(Year == 2013) %>% arrange(-FS.OA.POU.PCT3D1) %>% slice(1:5) %>% select(FAOST_CODE)
+top5_FAOST_CODE <- dat %>% filter(Year == 2013) %>% arrange(-FS.OA.NOU.P3D1) %>% slice(1:5) %>% select(FAOST_CODE)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% as.vector(as.matrix(top5_FAOST_CODE)))
 
-p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.POU.PCT3D1,color=SHORT_NAME))
+
+
+p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.NOU.P3D1,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="million\n")
 p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
                             labels = c("1990-92", "1999-2001", "2004-06", "2009-11", "2014-16"))
 p
 
 # Caption
-caption_text <- "Prevalence of undernourishment, top 5 countries in 2013"
+caption_text <- "Number of undernourished (million), top 5 countries in 2012-2014"
+
 
 
 ## ---- P2undernuMAP ----
@@ -426,7 +428,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=c("Developed countries
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
@@ -454,7 +456,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -483,7 +485,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -501,7 +503,7 @@ dat_plot <- dat
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="percent\n", x="")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010,2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11","2014-16"))
@@ -571,7 +573,7 @@ dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="percent\n", x="")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
@@ -615,7 +617,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -655,7 +657,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PPCS.GT.GCD3D))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="g/cap/day")
+p <- p + labs(x="",y="\ng/cap/day")
 #p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(legend.position = "none")
 p
@@ -681,7 +683,7 @@ dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribb
 p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="g/cap/day", x="")
+p <- p + labs(y="g/cap/day\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
@@ -752,7 +754,7 @@ dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribb
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="kcal/cap/day", x="")
+p <- p + labs(y="kcal/cap/day\n", x="")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
@@ -798,7 +800,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -839,7 +841,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -863,7 +865,7 @@ dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribb
 p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="US$", x="")
+p <- p + labs(y="US$\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -933,7 +935,7 @@ dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribb
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DEA.PCFPV.IDD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
-p <- p + labs(y="index", x="")
+p <- p + labs(y="index\n", x="")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + theme(axis.text.x = element_text(angle = 45))
 p
@@ -976,7 +978,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="kcal/capita/day")
+p <- p + labs(x="",y="\nkcal/capita/day")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -1015,7 +1017,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="index")
+p <- p + labs(x="",y="\nindex")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -1037,7 +1039,7 @@ dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=(dat_plot %>% 
 p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME,y=T.V.FEFS.PCT3D,fill=year_range))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x=NULL,y="percent")
+p <- p + labs(x=NULL,y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
@@ -1148,7 +1150,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 # p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -1189,7 +1191,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 # p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -1219,7 +1221,7 @@ dat_plot$variable[dat_plot$variable == "SH.STA.ACSN"] <- "Sanitation facilities"
 p <- ggplot(dat_plot, aes(x=Year,y=value,color=variable))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x=NULL,y="percent of population")
+p <- p + labs(x=NULL,y="percent of population\n")
 if (region_to_report == "RAP") p <- p + scale_x_continuous(breaks=c(2008,2010,2012))
 if (region_to_report != "RAP") p <- p + scale_x_continuous(breaks=c(2000,2005,2010))
 p

@@ -102,7 +102,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="billion people")
+p <- p + labs(x="",y="billion people\n")
 p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
@@ -142,7 +142,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -172,7 +172,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="years")
+p <- p + labs(x="",y="\nyears")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -195,7 +195,7 @@ dat_plot$OA.TEAPT.POP.PPL.NO <- dat_plot$OA.TEAPT.POP.PPL.NO / 1000000
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(x="",y="million people")
+p <- p + labs(x="",y="million people\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p
 
@@ -271,7 +271,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(f
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
@@ -300,7 +300,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="constant 2000 thousand US$")
+p <- p + labs(x="",y="\nconstant 2000 thousand US$")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -341,7 +341,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, growth_NV.AGR.TOTL.KD),y=growth_
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -374,7 +374,7 @@ dat_plot <- dat %>%  group_by(Year) %>%
 p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="percent\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p
 
@@ -456,7 +456,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(f
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
@@ -486,7 +486,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -514,7 +514,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -541,7 +541,7 @@ dat_plot <- dat
 p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="percent\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p
 
@@ -617,7 +617,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x=Year, y=value, fill=fill))
 p <- p + geom_area(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="kg/ha")
+p <- p + labs(x="",y="kg/ha\n")
 p <- p + scale_x_continuous(breaks=c(2002,2004,2006,2008,2010,2012))
 p
 
@@ -650,7 +650,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="kg/ha")
+p <- p + labs(x="",y="\nkg/ha")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -683,7 +683,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="kg/ha")
+p <- p + labs(x="",y="\nkg/ha")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -730,7 +730,7 @@ ncases <- nrow(dat_plot)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="kg/ha")
+p <- p + labs(x="",y="kg/ha\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
@@ -805,7 +805,7 @@ dat_plot <- dat
 p <- ggplot(data = dat_plot, aes(x = Year, y = dfa_share_commit_tot,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="percent", x="")
+p <- p + labs(y="percent\n", x="")
 p <- p + guides(color = guide_legend(nrow = 4))
 p
 
@@ -848,7 +848,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="million US$")
+p <- p + labs(x="",y="\nmillion US$")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -883,7 +883,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, dfa_AOI_commit),y=dfa_AOI_commit
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="index")
+p <- p + labs(x="",y="\nindex")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -924,7 +924,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="billion 2013 US$")
+p <- p + labs(x="",y="billion 2013 US$\n")
 # p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 # p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p

@@ -158,7 +158,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="kcal/cap/day")
+p <- p + labs(x="",y="\nkcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -198,7 +198,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -228,7 +228,7 @@ dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
-p <- p + labs(x="",y="kcal/cap/day")
+p <- p + labs(x="",y="kcal/cap/day\n")
 p <- p + scale_y_continuous(labels=space) 
 p
 
@@ -368,7 +368,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="constant 2004 - 2006 Int$")
+p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -410,7 +410,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="constant 2004 - 2006 Int$")
+p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
 p <- p + guides(color = guide_legend(nrow = 1))
 # p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
 p
@@ -479,7 +479,7 @@ dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Yield"
 p <- ggplot(dat_plot, aes(x=variable,y=growth_rate,fill=variable))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$variable)))[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="percent\n")
 p <- p + theme(legend.position = "none")
 p
 
@@ -631,7 +631,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="kg per capita")
+p <- p + labs(x="",y="\nkg per capita")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -680,7 +680,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="kg per capita")
+p <- p + labs(x="",y="\nkg per capita")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -710,7 +710,7 @@ dat_plot <- na.omit(dat)
 p <- ggplot(data = dat_plot, aes(x = Year, y = QC.YIELD.CRLS.HG.NO,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="hg/capita", x="")
+p <- p + labs(y="hg/capita\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p <- p + scale_y_continuous(labels=space) 
@@ -846,7 +846,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="million tonnes")
+p <- p + labs(x="",y="\nmillion tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -876,7 +876,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.T
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="mln tonnes")
+p <- p + labs(x="",y="\nmln tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -1037,7 +1037,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="million tonnes")
+p <- p + labs(x="",y="million tonnes\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
@@ -1067,7 +1067,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=captu
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="million tonnes")
+p <- p + labs(x="",y="\nmillion tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -1099,7 +1099,7 @@ p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=a
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="million tonnes")
+p <- p + labs(x="",y="\nmillion tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space) 
 p
@@ -1130,7 +1130,7 @@ dat_plot <- na.omit(dat)
 p <- ggplot(data = dat_plot, aes(x = Year, y = production_quantity_index,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="index", x="")
+p <- p + labs(y="index\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
@@ -1194,19 +1194,19 @@ if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2012, FAOST_CODE
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 13001:13014) %>%
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 14001:14007) %>%
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% 15001:15003) %>%
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year >= 2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
@@ -1227,8 +1227,8 @@ dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
 dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 
 tbl_data <- dw
-if (table_type == "latex") cap <- "\\large{Exports and Imports of food, million US\\$ (2012)}"
-if (table_type == "html")  cap <- "<b>Table: Exports and Imports of food, million US$ (2012) </b>"
+if (table_type == "latex") cap <- "\\large{Exports and Imports of food, million US\\$ (2013)}"
+if (table_type == "html")  cap <- "<b>Table: Exports and Imports of food, million US$ (2013) </b>"
 caption_text <- cap
 
 print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
@@ -1271,7 +1271,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="billion US$")
+p <- p + labs(x="",y="\nbillion US$")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -1311,7 +1311,7 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="billion US$")
+p <- p + labs(x="",y="\nbillion US$")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
@@ -1342,7 +1342,7 @@ dat_plot$value <- dat_plot$TP.EXVAL.CRLS.USD.NO / 1000000000
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(y="billion constant 2005 US$", x="")
+p <- p + labs(y="billion constant 2005 US$\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2012))
 p

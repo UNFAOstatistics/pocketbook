@@ -78,7 +78,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(f
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
 p
@@ -116,7 +116,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="ha/cap")
+p <- p + labs(x="",y="\n\nha/cap")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -132,7 +132,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="ha/cap")
+p <- p + labs(x="",y="\n\nha/cap")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -187,7 +187,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(f
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
 p
@@ -329,7 +329,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -360,7 +360,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="percent")
+p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -468,7 +468,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(x="",y="% of tot energy production")
+p <- p + labs(x="",y="% of tot energy production\n")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
@@ -502,7 +502,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="% of tot energy production")
+p <- p + labs(x="",y="\n% of tot energy production")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -534,7 +534,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="% of total energy consumption")
+p <- p + labs(x="",y="\n% of total energy consumption")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -567,7 +567,7 @@ dat_plot <- dat
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
-p <- p + labs(x="",y="% of total energy consumption")
+p <- p + labs(x="",y="% of total energy consumption\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
@@ -660,7 +660,7 @@ dat_plot <- dat_plot %>% group_by(Year,fill) %>%
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="million tonnes")
+p <- p + labs(x="",y="million tonnes\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 2))
 p
@@ -692,7 +692,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="billion US$")
+p <- p + labs(x="",y="\nbillion US$")
 p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
 p
@@ -725,8 +725,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="billion US$")
-p <- p + labs(x="",y="billion US$")
+p <- p + labs(x="",y="\nbillion US$")
 p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
 p
@@ -771,7 +770,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(f
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="million ha")
+p <- p + labs(x="",y="million ha\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
