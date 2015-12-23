@@ -539,7 +539,8 @@ overview.df <- left_join(df,region_key)
 # if (region_to_report %in% "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
 # if (region_to_report == "COF") overview.df <- overview.df
 
-if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}"))
+if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}",
+                                                        "\\newgeometry{left=0.6cm,right=-10cm,top=10cm,bottom=0cm}"))
 
 df <- overview.df[!duplicated(overview.df[c("SHORT_NAME")]),]
 df <- df[c("SHORT_NAME","subgroup")]
@@ -581,7 +582,8 @@ if(length(unique(overview.df$subgroup)) == 6) alignment <- "l{\raggedleft\arrayb
 #if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}"
 
 # if(length(unique(overview.df$subgroup)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
-if(length(unique(overview.df$subgroup)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
+if(length(unique(overview.df$subgroup)) == 7) alignment <- "l{\raggedleft\arraybackslash}p{2.3cm}p{1.3cm}p{2.3cm}p{2.3cm}p{1.8cm}p{1.3cm}p{2.3cm}"
+# if(length(unique(overview.df$subgroup)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 8) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 9) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 10) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
@@ -597,7 +599,7 @@ if (region_to_report == "RAP") tbl_font_size <- "footnotesize"
 
 cat(
 "\\begin{center}
-        TABLE: \\textbf{Classification of countries} \\newline
+        TABLE: \\textbf{Classification of countries} \\newline \\vspace{-5mm}
 \\end{center}"
 )
 
@@ -613,7 +615,8 @@ print(
   sanitize.colnames.function=bold
   )
 
-if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}"))
+if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}",
+                                                        "\\restoregeometry"))
 @
 
 
