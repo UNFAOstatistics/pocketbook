@@ -14,10 +14,16 @@ if (table_type == "latex"){
                                lineheight = 0.8),
     axis.ticks = element_blank(),
     axis.title.x = element_text(family = "PT Sans", face = "plain", colour = "black",
-                                size = 10, hjust = 0.5, vjust = 0.2, angle = 0,
+                                size = 10, 
+                                hjust = 0.5,
+                                vjust = 0.9,
+                                angle = 0,
                                 lineheight = 0.7),
     axis.title.y = element_text(family = "PT Sans", face = "plain", colour = "black",
-                                size = 10, hjust = 0.5, vjust = 0.2, angle = 90,
+                                size = 10, 
+                                hjust = 0.5,
+                                vjust = 0.9,
+                                angle = 90,
                                 lineheight = 0.7),
     #   axis.ticks.length = ,
     #   axis.ticks.margin = ,
@@ -54,7 +60,7 @@ if (table_type == "latex"){
     plot.background = element_blank(),
     #plot.background = element_rect(fill=NA,colour = "grey90",size=1,linetype="solid"),
     plot.title =  element_blank(),
-    plot.margin = unit(rep(0.1, 4), "line")
+    plot.margin = unit(rep(0.6, 4), "line")
     
     
   )

@@ -170,7 +170,7 @@ dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
 # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "ns"] <- 0
 dat$FS.OA.NOU.P3D1 <- as.factor(dat$FS.OA.NOU.P3D1)
 dat$FS.OA.NOU.P3D1 <- as.numeric(levels(dat$FS.OA.NOU.P3D1))[dat$FS.OA.NOU.P3D1]
-dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
+# dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
 dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
 dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
 
@@ -312,9 +312,9 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FS.OA.POU.PCT3D1)
-top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
-dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
+# sorted by data from 2013 as 2015 is very sparse
+top5_FAOST_CODE <- dat %>% filter(Year == 2013) %>% arrange(-FS.OA.POU.PCT3D1) %>% slice(1:5) %>% select(FAOST_CODE)
+dat_plot <- dat %>%  filter(FAOST_CODE %in% as.vector(as.matrix(top5_FAOST_CODE)))
 
 p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.POU.PCT3D1,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
@@ -325,7 +325,7 @@ p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
 p
 
 # Caption
-caption_text <- "Prevalence of undernourishment, top 5 countries"
+caption_text <- "Prevalence of undernourishment, top 5 countries in 2013"
 
 
 ## ---- P2undernuMAP ----
