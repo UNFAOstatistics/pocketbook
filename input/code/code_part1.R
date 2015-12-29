@@ -913,7 +913,7 @@ dat$variable[dat$variable == "privat_don_agr"] <- "Private"
 
 dat$variable <- factor(dat$variable, levels= c("Bilateral","Multilateral","Private"))
 
-dat$value <- dat$value / 1000 # into bilion dollars
+dat$value <- dat$value / 1000000000 # into bilion dollars
 
 # print data for technical report
 #datatable(dat)
