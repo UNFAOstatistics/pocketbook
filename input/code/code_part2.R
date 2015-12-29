@@ -297,7 +297,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Top",ncases,"ountries with the highest number of undernourished in",unique(top2015$color))
+caption_text <- paste("Top",ncases,"countries with the highest number of undernourished in",unique(top2015$color))
 
 ## ---- P2undernuBOTTOM ----
 
