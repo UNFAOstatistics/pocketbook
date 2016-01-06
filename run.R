@@ -43,9 +43,9 @@ include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -53,9 +53,9 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
-include_definitions      <- F
-include_notes            <- F
+include_country_profiles <- T
+include_definitions      <- T
+include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
 broke_all_into_images         <- F
@@ -204,7 +204,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -338,7 +339,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="RNE" # debuggin
+region_to_report="RAP" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))

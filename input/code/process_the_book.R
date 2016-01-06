@@ -235,9 +235,9 @@ if (upload_pdfs_to_server) {
 
   #  upload the output pdf to kapsi
   pdfs <- list.files(paste0(root.dir,"/output/pdf"), full.names = TRUE)
-  pdfs <- c(pdfs,"/home/markus/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
-  pdfs <- pdfs[!(pdfs %in% c("/home/markus/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
-                             "/home/markus/btsync/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
+  pdfs <- c(pdfs,"/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
+  pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
+                             "/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
   system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
 }
 
