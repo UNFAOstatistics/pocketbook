@@ -16,7 +16,7 @@ The setting,14,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),1000,1
 The setting,15,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
 Hunger and dietary quality dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
 Hunger and dietary quality dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1
-Hunger and dietary quality dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary en supp, cereals/roots/tubers (%)",,1
+Hunger and dietary quality dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary energy supp, cereals/roots/tubers (%)",,1
 Hunger and dietary quality dimensions,19,FBS.PPCS.AO.GCD3D,,,Average protein supply of animal origin (g/capita/day),,0
 Hunger and dietary quality dimensions,20,FS.OA.SFEP.PCT,,,Share of food expenditure (%),,1
 Hunger and dietary quality dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
@@ -42,16 +42,16 @@ Production indices (2004-06=100),43,QI.NPIN.CRLS.IN.NO,,,Cereal,,0
 Food Supply,44,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
 Food Supply,45,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
 Food Supply,46,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
-Net trade (min US\$),47,TP.NETVAL.CRLSPREP.USD.NO,,,Cereals,1000000,0
-Net trade (min US\$),48,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
-Net trade (min US\$),49,TP.NETVAL.MEATPREP.USD.NO,,,Meat,1000000,0
-Net trade (min US\$),50,TP.NETVAL.MILKEQ.USD.NO,,,Dairy products,1000000,0
-Net trade (min US\$),51,net_fish_trade,,,Fish,1000,0
+Net trade (mln US\$),47,TP.NETVAL.CRLSPREP.USD.NO,,,Cereals,1000000,0
+Net trade (mln US\$),48,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
+Net trade (mln US\$),49,TP.NETVAL.MEATPREP.USD.NO,,,Meat,1000000,0
+Net trade (mln US\$),50,TP.NETVAL.MILKEQ.USD.NO,,,Dairy products,1000000,0
+Net trade (mln US\$),51,net_fish_trade,,,Fish,1000,0
 Environment,52,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
 Environment,53,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,1
 Environment,54,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,1
 Environment,55,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),0.01,1
 Environment,56,AQ.WAT.WWAGR.MC.SH,,,Share of renewable water resources (%),,1
 Environment,57,BP.TP.GP.TJ.NO,,,Biofuel production (thousand kt of oil eq.),1000,0
-Environment,58,FO.WP.PQ.TN.NO,,,Wood pellet prod. (min tonnes),1000,0
+Environment,58,FO.WP.PQ.TN.NO,,,Wood pellet prod. (mln tonnes),1000,0
 Environment,59,GHG.AFOLU.TOT.ECO2EQ.NO,,,"Net GHG emissions from AFOLU (CO2 eq, Mt)",1000,0

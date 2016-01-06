@@ -303,8 +303,12 @@ M49countries <-
 if (region_to_report == "RAF"){
   M49countries <-
     rbind(data.frame(FAOST_CODE = 12000:12005,
-                     SHORT_NAME = c("Regional Office for Africa","Central Africa","Eastern Africa",
-                                    "Northern Africa","Southern Africa","Western Africa"),
+                     SHORT_NAME = c("Regional Office for Africa",
+                                    "Central Africa",
+                                    "Eastern Africa",
+                                    "Northern Africa",
+                                    "Southern Africa",
+                                    "Western Africa"),
                      stringsAsFactors = FALSE),
           M49countries)
 }
@@ -360,7 +364,7 @@ if (region_to_report == "REU"){
 if (region_to_report == "RNE"){
   M49countries <-
     rbind(data.frame(FAOST_CODE = 15000:15003,
-                     SHORT_NAME = c("Regional Office for the Near East",
+                     SHORT_NAME = c("Regional Office for Near East and North Africa",
                                     "Gulf Cooperation\n Council States\n and Yemen",
                                     "North Africa",
                                     "Other Near\n East countries"),
