@@ -339,6 +339,8 @@ if (region_to_report == "RNE"){
 
 cat(paste0(
 "
+\\addcontentsline{toc}{section}{Foreword}
+
 \\LARGE{Foreword}
 
 \\bigskip
