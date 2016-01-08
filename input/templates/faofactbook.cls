@@ -170,6 +170,28 @@ REPLACE_THIS _WITH_PROPER_COLOR
   {\MakeUppercase\contentsname}%
   \@starttoc{toc}}
 
+\renewcommand*\l@part[2]{%
+  \ifnum \c@tocdepth >-2\relax
+    \addpenalty{-\@highpenalty}%
+    \setlength\@tempdima{3em}%
+    \addvspace{\@tocpartskip}%
+    \begingroup
+     \@fao@tocrule@start=\pagetotal
+     \protected@write\@auxout{}{\string\fao@partblobtop{\fao@currentpartnum}{\the\@fao@tocrule@start}}%
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      %\leftskip180\p@
+      \leftskip-3\p@
+      {\leavevmode
+       %\color{@bgcolor}\bfseries\partname\space#1:
+       \color{@bgcolor}\bfseries\space#1
+       \hfil \hb@xt@\@pnumwidth{\hss #2}}%
+     \par\@draw@tocrule@part
+       \nobreak
+         \global\@nobreaktrue
+         \everypar{\global\@nobreakfalse\everypar{}}%
+    \endgroup
+  \fi}
 
 \renewcommand*\l@section[2]{%
   \ifnum \c@tocdepth >-2\relax

@@ -1001,6 +1001,7 @@ This environment must be inside indicator pages.}}{}
 \newenvironment{graphicKey}[1][]{\vfill\par\hfill
   \def\@tempa{#1}\ifx\@empty\@tempa\else\begin{minipage}{#1}\fi}{%
     \ifx\@tempa\@empty\else\end{minipage}\fi}
+% --- TOC ?!?
 \renewcommand\tableofcontents{\cleardoublepage
   \makebox[0pt][l]{\fontsize{24pt}{32pt}\selectfont \bfseries
     \color{black!70}\MakeUppercase{\contentsname}\space}%

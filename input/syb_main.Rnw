@@ -340,6 +340,7 @@ if (region_to_report == "RNE"){
 cat(paste0(
 "
 \\addcontentsline{toc}{section}{Foreword}
+\\addcontentsline{toc}{subsection}{Foreword_sub}
 
 \\LARGE{Foreword}
 
@@ -401,6 +402,7 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 %
 
 \clearpage
+
 
 <<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
 
@@ -495,6 +497,29 @@ p
 
 # no overview table for COFFEE
 if (region_to_report == "COF") include_overview_tbl <- FALSE
+
+@
+
+
+% Custom footnote command with no marker!
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+<<foreword_footnote, eval=include_overview_map>>=
+
+if (region_to_report == "RAF") footnote_text <- "This is country grouping custom text for Africa"
+if (region_to_report == "RAP") footnote_text <- "This is country grouping custom text for Asia"
+if (region_to_report == "REU") footnote_text <- "This is country grouping custom text for Europe"
+if (region_to_report == "RNE") footnote_text <- "This is country grouping custom text for North Africa"
+if (region_to_report == "GLO") footnote_text <- "This is country grouping custom text for Global book"
+
+cat(paste0("\\blfootnote{",footnote_text,"}"))
+
 @
 
 
@@ -690,6 +715,7 @@ if (region_to_report %in% c("COF","RAF","RNE","RAP")){
 <<part1_prelatex, eval=P1over>>=
 cat("
     \\newpart{part1}
+    \\addcontentsline{toc}{part}{The setting}
     \\rowcolors{1}{part1!10}{white}
     ")
 @
@@ -916,6 +942,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 <<part2_prelatex, eval=P2availab>>=
 cat("
     \\newpart{part2}
+    \\addcontentsline{toc}{part}{Hunger dimension}
     \\rowcolors{1}{part2!10}{white}
     \\clearpage
     ")
@@ -1177,6 +1204,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 <<part3_prelatex, eval=P3des>>=
 cat("
     \\newpart{part3}
+    \\addcontentsline{toc}{part}{Food supply}
     \\rowcolors{1}{part3!10}{white}
     \\clearpage
     ")
@@ -1439,6 +1467,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 <<part4_prelatex, eval=P4land>>=
 cat("
     \\newpart{part4}
+    \\addcontentsline{toc}{part}{Environment}
     \\rowcolors{1}{part4!10}{white}
     \\clearpage
     ")
@@ -1675,6 +1704,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
 <<part5_prelatex, eval=P5over>>=
 cat("
     \\newpart{part5}
+    \\addcontentsline{toc}{part}{Overview}
     \\rowcolors{1}{part5!10}{white}
     ")
 @
@@ -1859,6 +1889,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part5.R"))
 <<part6_prelatex, eval=P6coffeeprod>>=
 cat("
     \\newpart{part6}
+    \\addcontentsline{toc}{part}{Coffee}
     \\rowcolors{1}{part6!10}{white}
     \\clearpage
     ")
@@ -2043,6 +2074,8 @@ source(paste0(root.dir,"input/code/code_countryprofiles.R"))
 
     cat("
              \\phantomsection
+             \\newpart{white}
+             \\addcontentsline{toc}{part}{Country Profiles}
              \\addcontentsline{toc}{section}{Country Profiles}
              \\faoset{bgcolor=white}\\selectcolor
              \\parindent=0pt
@@ -2069,6 +2102,7 @@ source(paste0(root.dir,"input/code/code_countryprofiles.R"))
 cat("
 \\newpart{white}
 \\phantomsection
+\\addcontentsline{toc}{part}{Metadata}
 \\addcontentsline{toc}{section}{Definitions}
 
 
