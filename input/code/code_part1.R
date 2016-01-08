@@ -83,8 +83,8 @@ dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
 dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
 
 if (region_to_report == "REU"){
-  dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>% 
-    group_by(variable,Year) %>% 
+  dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>%
+    group_by(variable,Year) %>%
     dplyr::summarise(value = sum(value, na.rm=TRUE))
   dat$variable <- as.character(dat$variable)
   dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
@@ -177,7 +177,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Life expectancy at birth,",nrow(dat_plot)/2,"countries with the highest and lowest values (2013)")
+caption_text <- paste("Life expectancy at birth, top and bottom",nrow(dat_plot)/2,"countries (2013)")
 
 ## ---- P1overBOTTOM ----
 # data
@@ -206,7 +206,7 @@ caption_text <- "Total economically active population (2000 to 2014)"
 
 
 ## ---- P1overMAP ----
-dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP) %>% 
+dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP) %>%
   mutate(OA.TPR.POP.PPL.SHP = OA.TPR.POP.PPL.SHP * 100)
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
@@ -300,7 +300,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="\nconstant 2000 thousand US$")
+p <- p + labs(x="",y="\nthousand US$ (constant 2000)")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -626,8 +626,8 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002
 
 
 ## ---- P1inputLEFT ----
-dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>% 
-  select(FAOST_CODE,Year,RF.FERT.NI.TN.SH) %>% 
+dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>%
+  select(FAOST_CODE,Year,RF.FERT.NI.TN.SH) %>%
   mutate(RF.FERT.NI.TN.SH = RF.FERT.NI.TN.SH * 1000) # As we want kg per ha
 
 dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
@@ -660,8 +660,8 @@ caption_text <- paste("Nitrogen fertilizers consumption in nutrients per ha of a
 
 
 ## ---- P1inputRIGHT ----
-dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>% 
-  select(FAOST_CODE,Year,RF.FERT.PH.TN.SH) %>% 
+dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>%
+  select(FAOST_CODE,Year,RF.FERT.PH.TN.SH) %>%
   mutate(RF.FERT.PH.TN.SH = RF.FERT.PH.TN.SH * 1000) # As we want kg per ha
 
 dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
@@ -698,14 +698,14 @@ caption_text <- paste("Phosphate fertilizers consumption in nutrients per ha of 
 # if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
 # if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
 # if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.NO,RF.FERT.PH.TN.NO,RF.FERT.PO.TN.NO,RL.AREA.ARBLPRMN.HA.NO)
-# 
-# 
-# 
+#
+#
+#
 # dat <- gather(dat, variable, value, 2:4)
 # dat$fill[dat$variable == "RF.FERT.NI.TN.NO"] <- "Nitrogen"
 # dat$fill[dat$variable == "RF.FERT.PH.TN.NO"] <- "Phosphate"
 # dat$fill[dat$variable == "RF.FERT.PO.TN.NO"] <- "Potash"
-# 
+#
 # dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
 if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
@@ -740,8 +740,8 @@ caption_text <- paste("Fertilizer consumption in nutrients per ha of arable land
 
 ## ---- P1inputMAP ----
 # TRY RP.PEST.TOT.TN.SH.EXP
-dat <- syb.df %>% filter(Year %in% 2007:2012) %>% 
-  select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%  
+dat <- syb.df %>% filter(Year %in% 2007:2012) %>%
+  select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%
   dplyr::mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH * 1000) # we want kg per ha
 
 dat <- dat[!is.na(dat$RP.PEST.TOT.TN.SH),]

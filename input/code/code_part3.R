@@ -160,7 +160,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/cap/day")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -200,7 +200,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -229,7 +229,7 @@ p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day\n")
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -370,11 +370,11 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top",ncases,"crop producing countries in 2012 based on net per capita crop production value")
+caption_text <- paste("Top",ncases,"crop producing countries in 2012 based on net per capita crop production value (constant 2004 - 2006 Int\\$)")
 
 
 ## ---- P3cropproRIGHT ----
@@ -416,7 +416,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Top",ncases,"food producing countries in 2012 based on net food per capita production value")
+caption_text <- paste("Top",ncases,"food producing countries in 2012 based on net per capita food production value (constant 2004 - 2006 Int\\$)")
 
 ## ---- P3cropproBOTTOM ----
 if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>%
@@ -633,7 +633,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -682,7 +682,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
 p <- p + guides(color = guide_legend(nrow = 1))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -692,19 +692,19 @@ caption_text <- paste("Top",ncases,tolower(second),"producing countries, per cap
 ## ---- P3cropBOTTOM ----
 if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Area,Year,
-         QC.YIELD.CRLS.HG.NO)   
+         QC.YIELD.CRLS.HG.NO)
 if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Area,Year,
-         QC.YIELD.CRLS.HG.NO)   
+         QC.YIELD.CRLS.HG.NO)
 if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Area,Year,
-         QC.YIELD.CRLS.HG.NO)   
+         QC.YIELD.CRLS.HG.NO)
 if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Area,Year,
-         QC.YIELD.CRLS.HG.NO)   
+         QC.YIELD.CRLS.HG.NO)
 if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Area,Year,
-         QC.YIELD.CRLS.HG.NO)   
+         QC.YIELD.CRLS.HG.NO)
 dat_plot <- na.omit(dat)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = QC.YIELD.CRLS.HG.NO,group=SHORT_NAME,color=SHORT_NAME))
@@ -713,7 +713,7 @@ p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plo
 p <- p + labs(y="hg/capita\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -848,7 +848,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -878,7 +878,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmln tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -907,10 +907,10 @@ df <- subgrouping(region_to_report = region_to_report)
 # merge data with the region info
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-d <- dat %>% filter(Item == top_animal, Year %in% c(2000,2013), Unit %in% c("Head","1000 Head")) %>% 
+d <- dat %>% filter(Item == top_animal, Year %in% c(2000,2013), Unit %in% c("Head","1000 Head")) %>%
   group_by(Year,subgroup) %>%
   dplyr::summarise(Value = sum(Value,na.rm=TRUE)) %>%
-  na.omit() %>% 
+  na.omit() %>%
   dplyr::mutate(sum = sum(Value,na.rm=TRUE)) %>%
   dplyr::mutate(share = round(Value/sum*100,1)) %>%
   ungroup() %>%
@@ -1069,7 +1069,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
@@ -1101,7 +1101,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
 p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption

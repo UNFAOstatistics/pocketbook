@@ -384,7 +384,7 @@ p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
 p <- p + theme(axis.text.x = element_text(angle=45))
-p <- p + scale_y_continuous(labels=space) 
+p <- p + scale_y_continuous(labels=space)
 p
 
 
@@ -671,7 +671,7 @@ caption_text <- "Production of selected forest products"
 
 ## ---- P4forestryLEFT ----
 dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.EXVAL.TOT.USD.NO) %>%
-  dplyr::mutate(FO.EXVAL.TOT.USD.NO = FO.EXVAL.TOT.USD.NO / 1000000 )
+  dplyr::mutate(FO.EXVAL.TOT.USD.NO = FO.EXVAL.TOT.USD.NO / 1000000000 ) #into trillion
 
 dat <- dat[!is.na(dat$FO.EXVAL.TOT.USD.NO),]
 # Add region key and subset
@@ -692,9 +692,9 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="\nbillion US$")
+p <- p + labs(x="",y="\ntrillion US$")
 p <- p + scale_y_continuous(labels=space)
-# p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000)) 
+# p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000))
 p
 
 # Caption
@@ -704,7 +704,7 @@ caption_text <- paste("Top",nrow(dat_plot),"exporters of forest products (2012)"
 ## ---- P4forestryRIGHT ----
 
 dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.IMVAL.TOT.USD.NO) %>%
-  dplyr::mutate(FO.IMVAL.TOT.USD.NO = FO.IMVAL.TOT.USD.NO / 1000000 )
+  dplyr::mutate(FO.IMVAL.TOT.USD.NO = FO.IMVAL.TOT.USD.NO / 1000000000 ) #into trillion
 
 dat <- dat[!is.na(dat$FO.IMVAL.TOT.USD.NO),]
 # Add region key and subset
@@ -725,9 +725,9 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="\nbillion US$")
+p <- p + labs(x="",y="\ntrillion US$")
 p <- p + scale_y_continuous(labels=space)
-# p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000)) 
+# p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000))
 p
 
 # Caption
@@ -934,7 +934,7 @@ caption_text <- paste("Land use total emissions, highest",ncases,"countries in 2
 if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
-                                                                                                           
+
 if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000,  Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 
@@ -965,7 +965,7 @@ caption_text <- "Emissions by subsectors in 2012"
 
 
 ## ---- P4climateMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO) %>% 
+dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO) %>%
   dplyr::mutate(GHG.AFOLU.TOT.ECO2EQ.NO = GHG.AFOLU.TOT.ECO2EQ.NO / 1000) # into million gigagrams
 
 # dat <- dat[dat$FAOST_CODE != 41,]
