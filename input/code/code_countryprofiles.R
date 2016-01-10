@@ -119,8 +119,6 @@ sanitizeToHTML <- function(str, html=FALSE, type=c("text","table")) {
 ## -------------------------------------------------------------------------------------
 # Variables in common
 
-# merge latest FSI data from Filippo
-
 
 if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
 
@@ -139,17 +137,12 @@ if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
   syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"),all.x=TRUE)
 }
 
-
-
-
 if (!("cropping_intensity_ratio" %in% names(syb.df))) {
 
   syb.df$cropping_intensity_ratio <- syb.df$area_harvested / syb.df$RL.AREA.AGR.HA.NO
 }
 
-
 ## Fertilisers
-
 if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
 
   syb.df$phosphate_tonnes_per_ha <- syb.df$phosphate_tonnes / syb.df$RL.AREA.AGR.HA.NO
@@ -161,13 +154,10 @@ if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
 }
 
 
-
-if (!("aqua_culture_share" %in% names(syb.df))) {
-
-  syb.df$aqua_culture_share <- syb.df$FI.PRD.AQ.TN.NO / (syb.df$FI.PRD.AQ.TN.NO + syb.df$FI.PRD.CAPT.TN.NO) *100
-}
-
-
+# if (!("aqua_culture_share" %in% names(syb.df))) {
+# 
+#   syb.df$aqua_culture_share <- syb.df$FI.PRD.AQ.TN.NO / (syb.df$FI.PRD.AQ.TN.NO + syb.df$FI.PRD.CAPT.TN.NO) *100
+# }
 
 if (!("rural_pop_share" %in% names(syb.df))) {
 

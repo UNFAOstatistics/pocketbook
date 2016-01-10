@@ -335,12 +335,34 @@ if (region_to_report == "RNE"){
  % fffffffff            ooooooooooo    rrrrrrr                eeeeeeeeeeeeee           www             www           ddddddddd   ddddd
  %
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New how to use page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \addcontentsline{toc}{section}{Introduction}
+% 
+% \LARGE{Introduction}
+% 
+% \bigskip
+% \bigskip
+% \bigskip
+% 
+% \large
+% 
+% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eleifend scelerisque lectus. Morbi non magna in ligula pellentesque laoreet. In laoreet eu orci vitae suscipit. Mauris eget consectetur arcu, eu commodo arcu. Sed a tristique augue. Suspendisse eu est arcu. Nam et venenatis turpis, id finibus purus. Nunc non finibus nisl. Ut elementum nibh sit amet urna interdum, non dignissim nunc fermentum. Integer lobortis sit amet enim vitae tristique. Aliquam faucibus consequat elementum. Aliquam erat volutpat. Praesent semper est in nunc rhoncus aliquam. Curabitur sagittis orci libero. Integer tristique mattis consequat.
+% 
+% Proin viverra hendrerit elementum. Curabitur id leo quis nisl blandit scelerisque a eget ipsum. Suspendisse finibus, nisi nec congue varius, ligula quam volutpat erat, molestie vestibulum quam augue vitae nisi. Nullam malesuada velit enim, at varius lectus dictum et. Mauris faucibus interdum tortor, sit amet dictum velit pretium eget. Phasellus sit amet ultricies lectus. Donec varius fermentum arcu, sed bibendum metus venenatis vitae. Nullam malesuada nibh vitae velit dictum, ac aliquet sapien eleifend.
+% 
+% Nam vitae nisl vitae sapien auctor egestas eget quis mi. Integer feugiat nibh ac ex feugiat, ut ullamcorper lectus elementum. Curabitur facilisis lorem sit amet congue venenatis. Curabitur gravida id nisl quis blandit. Sed nulla sapien, convallis et dui non, ultricies fringilla nunc. Nunc pellentesque vehicula euismod. Maecenas tempor finibus felis a accumsan. Vestibulum bibendum at lorem vel consectetur. Ut bibendum sapien et mauris sagittis, id elementum dui dapibus. Ut egestas efficitur dui vitae bibendum. Nullam ipsum libero, pellentesque non eleifend ac, luctus nec ipsum. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 <<foreword_chunk, eval=include_foreword, cache=cache_foreword>>=
 
 cat(paste0(
 "
 \\addcontentsline{toc}{section}{Foreword}
-\\addcontentsline{toc}{subsection}{Foreword_sub}
 
 \\LARGE{Foreword}
 
