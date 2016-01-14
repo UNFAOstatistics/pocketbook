@@ -37,7 +37,7 @@ output_type <- "web" # web//a4
 # -------------------------------(heads)
 include_covers       <- T
 include_timestamp    <- T
-include_disclaimer   <- T
+include_disclaimer   <- F
 include_foreword     <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
@@ -58,7 +58,7 @@ include_definitions      <- T
 include_notes            <- T
 # -------------------------------
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
@@ -207,7 +207,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-01/SYB2015-12-30-01.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-04-22/SYB2016-01-04-22.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
