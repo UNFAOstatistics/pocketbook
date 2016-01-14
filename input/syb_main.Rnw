@@ -232,7 +232,8 @@ cat(
 
 % \includegraphics{./I4691E_disclaimer_crop.pdf}
 
-<<define_disclaimer, echo=FALSE, results='asis', eval=include_disclaimer>>=
+%<<define_disclaimer, echo=FALSE, results='asis', eval=include_disclaimer>>=
+<<define_disclaimer, echo=FALSE, results='asis', eval=FALSE>>=
   if (region_to_report == "COF"){
   cat("
     \\includepdf[width=\\paperwidth,height=\\paperheight, offset=-0 -30, pagecommand={}]{./I4985E_Disclaimer_coffee.pdf}
@@ -279,40 +280,51 @@ if (region_to_report == "RNE"){
   innerbottommargin=0pt
 ]{siderules}
 
-\begin{minipage}[b]{0.75\textwidth}% open the minipage
-\large
-\vspace{8cm}
-\setlength\parindent{24pt}
-\setlength{\parskip}{1em}
-\begin{siderules}
-\begin{flushleft}
+
+<<define_disclaimer_text, echo=FALSE, results='asis', eval=include_disclaimer>>=
+cat("
+\\begin{minipage}[b]{0.75\\textwidth}% open the minipage
+\\large
+\\vspace{8cm}
+\\setlength\\parindent{24pt}
+\\setlength{\\parskip}{1em}
+\\begin{siderules}
+\\begin{flushleft}
 The designations employed and the presentation of material in this information product do not imply the expression of any opinion whatsoever on the part of the Food and Agriculture Organization of the United Nations (FAO) concerning the legal or development status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. The mention of specific companies or products of manufacturers, whether or not these have been patented, does not imply that these have been endorsed or recommended by FAO in preference to others of a similar nature that are not mentioned.
 
 The views expressed in this information product are those of the author(s) and do not necessarily reflect the views or policies of FAO.
+    ")
 
+if (region_to_report == "COF"){cat("ISBN XX-YY-ZZ")}
+if (region_to_report == "GLO"){cat("ISBN XX-YY-ZZ")}
+if (region_to_report == "RAP"){cat("ISBN 978-92-5-108940-8")}
+if (region_to_report == "RAF"){cat("ISBN 978-92-5-108941-5")}
+if (region_to_report == "RNE"){cat("ISBN 978-92-5-108943-9")}
+if (region_to_report == "REU"){cat("ISBN 978-92-5-108942-2")}
 
-<<define_isbn>>=
-  if (region_to_report == "COF"){cat("ISBN XX-YY-ZZ")}
-  if (region_to_report == "GLO"){cat("ISBN XX-YY-ZZ")}
-  if (region_to_report == "RAP"){cat("ISBN 978-92-5-108940-8")}
-  if (region_to_report == "RAF"){cat("ISBN 978-92-5-108941-5")}
-  if (region_to_report == "RNE"){cat("ISBN 978-92-5-108943-9")}
-  if (region_to_report == "REU"){cat("ISBN 978-92-5-108942-2")}
-@
+cat("
 
-\copyright FAO, 2016
+\\copyright FAO, 2016
 
 FAO encourages the use, reproduction and dissemination of material in this information product. Except where otherwise indicated, material may be copied, downloaded and printed for private study, research and teaching purposes, or for use in non-commercial products or services, provided that appropriate acknowledgement of FAO as the source and copyright holder is given and that FAO’s endorsement of users’ views, products or services is not implied in any way.
 
 All requests for translation and adaptation rights, and for resale and other commercial use rights should be made via www.fao. org/contact-us/licence-request or addressed to copyright@fao. org.
 
 FAO information products are available on the FAO website (www.fao.org/publications) and can be purchased through publications-sales@fao.o
-\end{flushleft}
-\end{siderules}
-\end{minipage}
+\\end{flushleft}
+\\end{siderules}
+\\end{minipage}
+
+\\clearpage
+    ")
+
+@
 
 
-\clearpage
+
+
+
+
 
 
 %
@@ -386,35 +398,11 @@ FAO information products are available on the FAO website (www.fao.org/publicati
  %
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% New how to use page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \addcontentsline{toc}{section}{Introduction}
-% 
-% \LARGE{Introduction}
-% 
-% \bigskip
-% \bigskip
-% \bigskip
-% 
-% \large
-% 
-% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eleifend scelerisque lectus. Morbi non magna in ligula pellentesque laoreet. In laoreet eu orci vitae suscipit. Mauris eget consectetur arcu, eu commodo arcu. Sed a tristique augue. Suspendisse eu est arcu. Nam et venenatis turpis, id finibus purus. Nunc non finibus nisl. Ut elementum nibh sit amet urna interdum, non dignissim nunc fermentum. Integer lobortis sit amet enim vitae tristique. Aliquam faucibus consequat elementum. Aliquam erat volutpat. Praesent semper est in nunc rhoncus aliquam. Curabitur sagittis orci libero. Integer tristique mattis consequat.
-% 
-% Proin viverra hendrerit elementum. Curabitur id leo quis nisl blandit scelerisque a eget ipsum. Suspendisse finibus, nisi nec congue varius, ligula quam volutpat erat, molestie vestibulum quam augue vitae nisi. Nullam malesuada velit enim, at varius lectus dictum et. Mauris faucibus interdum tortor, sit amet dictum velit pretium eget. Phasellus sit amet ultricies lectus. Donec varius fermentum arcu, sed bibendum metus venenatis vitae. Nullam malesuada nibh vitae velit dictum, ac aliquet sapien eleifend.
-% 
-% Nam vitae nisl vitae sapien auctor egestas eget quis mi. Integer feugiat nibh ac ex feugiat, ut ullamcorper lectus elementum. Curabitur facilisis lorem sit amet congue venenatis. Curabitur gravida id nisl quis blandit. Sed nulla sapien, convallis et dui non, ultricies fringilla nunc. Nunc pellentesque vehicula euismod. Maecenas tempor finibus felis a accumsan. Vestibulum bibendum at lorem vel consectetur. Ut bibendum sapien et mauris sagittis, id elementum dui dapibus. Ut egestas efficitur dui vitae bibendum. Nullam ipsum libero, pellentesque non eleifend ac, luctus nec ipsum. 
-
-
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-<<foreword_chunk, eval=include_foreword, cache=cache_foreword>>=
+<<foreword_chunk, eval=include_foreword>>=
 
 cat(paste0(
 "
@@ -457,6 +445,62 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 @
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New how to use page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<introduction_chunk, eval=include_introduction>>=
+
+cat("
+
+\\clearpage
+
+\\addcontentsline{toc}{section}{Introduction}
+
+\\LARGE{Introduction}
+
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\large
+
+This publication presents selected key indicators related to
+agriculture and food security that stakeholders can use to
+prioritize their actions. It is divided into two main sections, one
+thematic and one country-specific. It presents a variety of
+dimensions of agriculture and food security along four main focus
+areas:
+
+{\\textbf{\\color{part1} The setting}} measures the state of the
+agricultural resource base by assessing the supply of land, labour,
+capital and inputs, and examining the pressure on the world food
+system stemming from demographic and macroeconomic change.
+
+{\\textbf{\\color{part2} Hunger dimensions}} gauges the state of
+food insecurity and malnutrition, and highlights the four dimensions
+– availability, access, stability and utilization – that determine
+the scale of hunger and the shape of undernourishment.
+
+{\\textbf{\\color{part3} Food supply}} evaluates the past and
+present productive capacity of world agriculture, together with the
+role of trade, in meeting the world’s demand for food, feed and
+other products.
+
+{\\textbf{\\color{part4} Environment}} examines the sustainability
+of agriculture in the context of the pressure it exerts on its
+ecological surroundings, including the interaction of agriculture
+with climate change.
+
+This Pocketbook is part of the FAO Statistical Yearbook suite of
+products and is just one of the tools that can be used as building
+blocks for monitoring progress and formulating policy. It includes
+data from FAOSTAT as well as from other partners within the
+organization and in the international community.
+    ")
+
+@
 
 
 
