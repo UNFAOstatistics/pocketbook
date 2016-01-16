@@ -37,8 +37,9 @@ output_type <- "web" # web//a4
 # -------------------------------(heads)
 include_covers       <- T
 include_timestamp    <- T
-include_disclaimer   <- F
+include_disclaimer   <- T
 include_foreword     <- T
+include_introduction <- T
 include_overview_map <- T
 include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
