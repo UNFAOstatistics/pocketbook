@@ -217,6 +217,8 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
 
 # Countries ---------------------------------------------------------------
 
+
+
 # if (region_to_report == "COF"){
 # M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","SHORT_NAME")]
 # this used to be short name as above, but we shall use fao_table_name instead. However, everything hereafter is hard
@@ -437,7 +439,7 @@ if (table_type == "latex"){
   ## Years to be shown in the country profile
   year1 = 1990
   year2 = 2000
-  year3 = 2014
+  year3 = 2015
   ## This script creates the latex file
 
   ## Set the rowheight for cprofiles for each book
