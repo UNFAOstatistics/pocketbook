@@ -378,6 +378,8 @@ FAO information products are available on the FAO website (www.fao.org/publicati
 
 \setlength{\parskip}{3pt plus 3pt minus 1pt}  %% Increasing the spacing in the introduction page
 
+
+
  %                                                                                                                            dddddddd
  %    ffffffffffffffff                                                                                                        d::::::d
  %   f::::::::::::::::f                                                                                                       d::::::d
@@ -446,6 +448,8 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 
 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New how to use page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -454,11 +458,14 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 
 cat("
 
+% to add empty page
+\\afterpage{\\blankpage}
+
 \\clearpage
 
 \\addcontentsline{toc}{section}{Introduction}
 
-\\LARGE{Introduction}
+\\LARGE{Introduction or How to use this book}
 
 \\bigskip
 \\bigskip
@@ -498,6 +505,7 @@ products and is just one of the tools that can be used as building
 blocks for monitoring progress and formulating policy. It includes
 data from FAOSTAT as well as from other partners within the
 organization and in the international community.
+
     ")
 
 @
@@ -688,8 +696,8 @@ overview.df <- left_join(df,region_key)
 # if (region_to_report %in% "GLO") overview.df <- overview.df; overview.df <- overview.df[!is.na(overview.df$subgroup),]
 # if (region_to_report == "COF") overview.df <- overview.df
 
-if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}",
-                                                        "\\newgeometry{left=0.6cm,right=-10cm,top=10cm,bottom=0cm}"))
+# if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\begin{landscape}",
+#                                                         "\\newgeometry{left=0.6cm,right=-10cm,top=10cm,bottom=0cm}"))
 
 df <- overview.df[!duplicated(overview.df[c("SHORT_NAME")]),]
 df <- df[c("SHORT_NAME","subgroup")]
@@ -731,7 +739,7 @@ if(length(unique(overview.df$subgroup)) == 6) alignment <- "l{\raggedleft\arrayb
 #if(length(unique(overview.df$subgroup)) == 5) alignment <- "l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}l{\raggedleft\arraybackslash}p{1.2cm}"
 
 # if(length(unique(overview.df$subgroup)) == 6) alignment <- "lp{.6in}p{.6in}p{.6in}p{.6in}p{.6in}p{.6in}"
-if(length(unique(overview.df$subgroup)) == 7) alignment <- "l{\raggedleft\arraybackslash}p{2.3cm}p{1.3cm}p{2.3cm}p{2.3cm}p{1.8cm}p{1.3cm}p{2.3cm}"
+if(length(unique(overview.df$subgroup)) == 7) alignment <- "l{\raggedleft\arraybackslash}p{0.8cm}p{0.9cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.7cm}p{0.8cm}"
 # if(length(unique(overview.df$subgroup)) == 7) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 8) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
 if(length(unique(overview.df$subgroup)) == 9) alignment <- "lp{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}p{.5in}"
@@ -764,8 +772,8 @@ print(
   sanitize.colnames.function=bold
   )
 
-if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}",
-                                                        "\\restoregeometry"))
+# if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}",
+#                                                         "\\restoregeometry"))
 @
 
 
@@ -813,21 +821,24 @@ if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}",
 
 
 
-<<page_numbering>>=
+<<page_numbering, eval=FALSE>>=
 # This is just pretty odd, but it works
-if (region_to_report %in% c("COF","RAF","RNE","RAP")){
+# if (region_to_report %in% c("COF","RAF","RNE","RAP")){
   cat("
+    
     \\pagenumbering{arabic}  %% Arabic page numbering
     \\setcounter{page}{1}
-    \\thispagestyle{empty} % make the overview table page with no page number as it differs between books
+    
 
     ")
-} else {
-  cat("
-    \\pagenumbering{arabic}  %% Arabic page numbering
-    \\setcounter{page}{2}
-    ")
-}
+
+#\\thispagestyle{empty} % make the overview table page with no page number as it differs between books
+# } else {
+#   cat("
+#     \\pagenumbering{arabic}  %% Arabic page numbering
+#     \\setcounter{page}{2}
+#     ")
+# }
 @
 
 
@@ -839,6 +850,8 @@ cat("
     \\newpart{part1}
     \\addcontentsline{toc}{part}{The setting}
     \\rowcolors{1}{part1!10}{white}
+    \\pagenumbering{arabic}  %% Arabic page numbering
+    \\setcounter{page}{2}
     ")
 @
 
