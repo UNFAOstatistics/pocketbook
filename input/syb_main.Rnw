@@ -293,6 +293,7 @@ cat("
 The designations employed and the presentation of material in this information product do not imply the expression of any opinion whatsoever on the part of the Food and Agriculture Organization of the United Nations (FAO) concerning the legal or development status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. The mention of specific companies or products of manufacturers, whether or not these have been patented, does not imply that these have been endorsed or recommended by FAO in preference to others of a similar nature that are not mentioned.
 
 The views expressed in this information product are those of the author(s) and do not necessarily reflect the views or policies of FAO.
+
     ")
 
 if (region_to_report == "COF"){cat("ISBN XX-YY-ZZ")}
@@ -463,15 +464,15 @@ cat("
 
 \\clearpage
 
-\\addcontentsline{toc}{section}{Introduction}
+\\addcontentsline{toc}{section}{How to use this book}
 
-\\LARGE{Introduction or How to use this book}
+\\LARGE{How to use this book}
 
-\\bigskip
-\\bigskip
 \\bigskip
 
 \\large
+
+\\subsection{The structure}
 
 This publication presents selected key indicators related to
 agriculture and food security that stakeholders can use to
@@ -505,6 +506,37 @@ products and is just one of the tools that can be used as building
 blocks for monitoring progress and formulating policy. It includes
 data from FAOSTAT as well as from other partners within the
 organization and in the international community.
+
+\\subsection{Aggregations}
+
+Two types of aggregations are used in the book: sum and weighted mean.
+Two restrictions are imposed when computing the aggregation: i) the
+sufficiency condition -- the aggregation is computed only when
+sufficient countries have reported data, and the current threshold is
+set at 50 percent of the variable and the weighting variable, if
+present; and ii) the comparability condition -- as aggregations are
+usually computed over time, this condition is designed to ensure that
+the number of countries is comparable over several years; under the
+current restriction the number of countries may not vary by more than 15
+over time.
+
+Aggregation based on the country groupings defined in table
+'Classification of Countries' on page xi which follow
+UN M49 classification of countries
+
+\\subsection{Data presentation conventions}
+
+The cutoff date for the data is 18 January 2016.
+
+\\begin{itemize}
+\\item  When country data have not been reported for the reference year, an asterisk (*) on the year label indicates that the value for the most recent year available is shown. For example, 2008–2010* means that the most recent value for the period from 2008 to 2010 is shown. When a growth rate is computed, the specified interval always refers to available data.
+\\item A billion is 1\\,000 million.
+\\item A trillion is 1\\,000 billion.
+\\item A blank means that data are not available or that aggregates cannot be calculated because of missing data for the years shown.
+\\item In tables, 0 or 0.0 means zero or a number that is small enough to round to zero at the displayed number of decimal places.
+\\item  A \\textasciitilde{} in the maps refers to the range specified in the class intervals.
+\\end{itemize}
+
 
     ")
 
@@ -825,10 +857,10 @@ print(
 # This is just pretty odd, but it works
 # if (region_to_report %in% c("COF","RAF","RNE","RAP")){
   cat("
-    
+
     \\pagenumbering{arabic}  %% Arabic page numbering
     \\setcounter{page}{1}
-    
+
 
     ")
 

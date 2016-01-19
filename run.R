@@ -19,10 +19,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                        # "RAP" # Asia and the Pacific
-                        # "RAF"  # Africa
-                        # ,"REU" # Europe and Central Asia
-                        "RNE" # Near East and North Africa
+                        "RAP" # Asia and the Pacific
+                        ,"RAF"  # Africa
+                        ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -35,18 +35,18 @@ output_type <- "web" # web//a4
 
 # Parts to include/exclude
 # -------------------------------(heads)
-include_covers       <- F
-include_timestamp    <- F
-include_disclaimer   <- F
-include_foreword     <- F
-include_introduction <- F
-include_overview_map <- F
-include_overview_tbl <- F # do not include for coffee book
+include_covers       <- T
+include_timestamp    <- T
+include_disclaimer   <- T
+include_foreword     <- T
+include_introduction <- T
+include_overview_map <- T
+include_overview_tbl <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part1        <- T
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -63,7 +63,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -210,11 +210,12 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
 # load("~/btsync/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-01/SYB2015-12-30-01.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-11/SYB2016-01-18-11.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
