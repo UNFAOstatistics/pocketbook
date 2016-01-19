@@ -700,7 +700,7 @@ if (table_type == "latex"){
         
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *France is a member of FAO Regional Office for Asia and the Pacific as it has territories in the region. However the data refer to the entire country, irrespective of geographic location.
+      *France is included in this publication as it has territories in the Region. However the data refer to the entire country, irrespective of geographic location.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -708,7 +708,7 @@ if (table_type == "latex"){
         
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Russian Federation is geographically included in both Europe and Asia and is also a member of the FAO Regional Conference for Asia and the Pacific.
+      *Russian Federation is included in this publication as it is geographically included in both Europe and Asia and is also a member of the FAO Regional Conference for Asia and the Pacific.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -716,7 +716,7 @@ if (table_type == "latex"){
         
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *United States is a member of FAO Regional Office for Asia and the Pacific as it has territories in the region. However the data refer to the entire country, irrespective of geographic location.
+      *United States is included in this publication as it has territories in the Region. However the data refer to  the entire country, irrespective of geographic location of its territorial areas.
       \\clearpage\n",
             file = fileOut, append = TRUE)
         
