@@ -43,33 +43,6 @@
     the easier it is to measure the impact of policies or to hold 
     stakeholders accountable for the pledges they make.
 
-    This publication presents selected key indicators related to
-    agriculture and food security that stakeholders can use to
-    prioritize their actions. It is divided into two main sections, one
-    thematic and one country-specific. It presents a variety of
-    dimensions of agriculture and food security along four main focus
-    areas:
-
-    {\textbf{\color{part1} The setting}} measures the state of the
-    agricultural resource base by assessing the supply of land, labour,
-    capital and inputs, and examining the pressure on the world food
-    system stemming from demographic and macroeconomic change.
-
-    {\textbf{\color{part2} Hunger dimensions}} gauges the state of
-    food insecurity and malnutrition, and highlights the four dimensions
-    – availability, access, stability and utilization – that determine
-    the scale of hunger and the shape of undernourishment.
-
-    {\textbf{\color{part3} Food supply}} evaluates the past and
-    present productive capacity of world agriculture, together with the
-    role of trade, in meeting the world’s demand for food, feed and
-    other products.
-
-    {\textbf{\color{part4} Environment}} examines the sustainability
-    of agriculture in the context of the pressure it exerts on its
-    ecological surroundings, including the interaction of agriculture
-    with climate change.
-
     This Pocketbook is part of the FAO Statistical Yearbook suite of 
     products and is just one of the tools that can be used as building 
     blocks for monitoring progress and formulating policy. It includes 
@@ -83,6 +56,37 @@
   person1_title: Assistant Director-General and Regional Representative for Africa
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  acknowledgements: |
+    The FAO Regional Office for Africa (FAORAF) and the FAO Statistics Division (ESS) of
+    the Food and Agriculture Organization of the United Nations would like to acknowledge 
+    the collective effort of statisticians and other staff in national statistical offices,
+    ministries of agriculture and other ministries and government departments in this region 
+    that constantly provide data to FAO. In addition we would like to acknowledge the
+    ongoing cooperation with regional and international institutions and non-government
+    organizations, whose efforts have made this publication possible.
+    
+    This publication was jointly prepared by FAORAF and ESS. The work was carried 
+    under the guidance of Bukar Tijani (Regional Representative and Assistant Director 
+    General, FAORAF) and Pietro Gennari (Chief Statistician, FAO, and Director, ESS). 
+    Production was managed by Eloi Ouedraogo (FAORAF) and his team in Accra, which included
+    Marcel Ouattara (FAORAF); and Amy Heyman (ESS) and her team in Rome, which 
+    included Filippo Gheri (ESS) and Shira Fano (ESS). Contributors were Nienke Beintema
+    (the International Food Policy Research Institute – IFPRI), Riccardo Biancalani (NRC),
+    Andrea Borlizzi (ESS), Chiara Brunelli (ESS), Carlo Cafiero (ESS), Cinzia Cerri (ESS), 
+    Rocio Condor-Golec (Climate, Energy and Tenure Division – NRC), Piero Conforti (ESS),
+    Elisenda Estruch (Gender, Equity and Rural Employment Division – ESW), Alessandro
+    Ferrara (NRC), Karen Frenken (Land and Water Division – NRL), Nandini Gunewardena
+    (FAOLOW) , Gary Jones (International Monetary Fund – IMF), Arvydas Lebedys (Forest
+    Economics, Policy and Products Division – FOE) , Erdgin Mane (ESS), Robert Mayo (ESS),
+    Verena Nowak (Nutrition Division – ESN), Michael Rahija (IFPRI), Simone Rossi (NRC),
+    Mirella Salvatore (NRC), Nadia Scialabba (NRC), Gert-Jan Stads (IFPRI), Nathalie Troubat
+    (ESS), Sachiko Tsuji (Statistics and Information Service – FIPS), Francesco Tubiello
+    (NRC), Stefania Vannuccini (FIPS), Nathan Wanner (ESS) and Firas Yassin (ESS). A special
+    thanks goes to Andrea Alcibiade (ESS), Guido Barbaglia (ESS), Giorgia DeSantis (ESS),
+    James Edge (ESS), Carola Fabi (ESS), Amanda Gordon (ESS), Nicola Graziani (ESS), Fabio
+    Grita (ESS), Michelle Kendrick (ESA), Francesca Pittueo, Adam Prakash (ESS), Gordon
+    Ramsay, Nicholas Sakoff (ESS), Nicola Selleri (ESS), Sylvaine Thomas (ESS), and Boris
+    Veytsman.
 #################################################################################
 #################################################################################
 - id: RAP
@@ -114,33 +118,6 @@
     measure the impact of policies or to hold stakeholders accountable for 
     the pledges they make. 
 
-    This publication presents selected key indicators related to
-    agriculture and food security that stakeholders can use to
-    prioritize their actions. It is divided into two main sections, one
-    thematic and one country-specific. It presents a variety of
-    dimensions of agriculture and food security along four main focus
-    areas:
-
-    {\textbf{\color{part1} The setting}} measures the state of the
-    agricultural resource base by assessing the supply of land, labour,
-    capital and inputs, and examining the pressure on the world food
-    system stemming from demographic and macroeconomic change.
-
-    {\textbf{\color{part2} Hunger dimensions}} gauges the state of
-    food insecurity and malnutrition, and highlights the four dimensions
-    – availability, access, stability and utilization – that determine
-    the scale of hunger and the shape of undernourishment.
-
-    {\textbf{\color{part3} Food supply}} evaluates the past and
-    present productive capacity of world agriculture, together with the
-    role of trade, in meeting the world’s demand for food, feed and
-    other products.
-
-    {\textbf{\color{part4} Environment}} examines the sustainability
-    of agriculture in the context of the pressure it exerts on its
-    ecological surroundings, including the interaction of agriculture
-    with climate change.
-
     This Pocketbook is part of the FAO Statistical Yearbook suite of
     products and is just one of the tools that can be used as building
     blocks for monitoring progress and formulating policy. It includes
@@ -155,6 +132,47 @@
   person1_title: Assistant Director-General and Regional Representative, Asia and the Pacific
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  acknowledgements: |
+    The Food and Agriculture Organization of the United Nations’ Regional 
+    Office for Asia and the Pacific (FAORAP) and the FAO Statistics Division 
+    (ESS) would like to acknowledge the collective effort of statisticians 
+    and other staff in national statistical offices, ministries of agriculture 
+    and other ministries and government departments in this region that constantly 
+    provide data to FAO. In addition we would like to acknowledge the ongoing 
+    cooperation with regional and international institutions and non-government 
+    organizations whose efforts have made this publication possible. 
+    
+    This publication was jointly prepared by FAORAP and the ESS. The work was carried out 
+    under the guidance of Hiroyuki Konuma (Assistant Director-General and Regional 
+    Representative, FAORAP) and Pietro Gennari (Chief Statistician, FAO, and Director, ESS).
+    The publication is based on data published in FAOSTAT and in other international publications.
+    Production of this book was managed by Mukesh Srivastava (FAORAP) and Amy Heyman (ESS). 
+    A number of technical officers at FAORAP, including Purushottam Mudbhary, David Dawe, 
+    Sumiter Broca, Patrick Durst, Seevalingum Ramasawmy, Rosa Rolle, Thierry Facon, 
+    Simmathiri Appanah, Subash Dasgupta, Vinod Ahuja and Yurdi Yasmi provided valuable 
+    comments and contributions during the preparation of this book, particularly on the 
+    highlights presented in the text. The publication was edited by Robin Leslie.
+    Yohei Kunikane and Anthony Bur- gard provided valuable support in finalizing and 
+    printing of the publication. The team at FAO headquarters in Rome included 
+    Filippo Gheri and Shira Fano (ESS) who were responsible for data extraction, 
+    layout design and graphics. The other contributors were Nienke Beintema 
+    (the International Food Policy Research Institute – IFPRI), Riccardo Biancalani (NRC), 
+    Andrea Borlizzi (ESS), Chiara Brunelli (ESS), Carlo Cafiero (ESS), Cinzia Cerri (ESS), 
+    Rocio Condor- Golec (Climate, Energy and Tenure Division – NRC), Piero Conforti (ESS), 
+    Elisenda Estruch (Gender, Equity and Rural Employment Division – ESW), 
+    Alessandro Ferrara (NRC), Karen Frenken (Land and Water Division – NRL), 
+    Nandini Gunewardena (FAOLOW), Gary Jones (In- ternational Monetary Fund – IMF), 
+    Arvydas Lebedys (Forest Economics, Policy and Products Division – FOE), 
+    Erdgin Mane (ESS), Robert Mayo (ESS), Verena Nowak (Nutrition Division – ESN), 
+    Michael Rahija (IFPRI), Simone Rossi (NRC), Mirella Salvatore (NRC), 
+    Nadia Scialabba (NRC), Gert-Jan Stads (IFPRI), Nathalie Troubat (ESS), 
+    Sachiko Tsuji (Statistics and Information Service – FIPS), Francesco Tubiello (NRC), 
+    Stefania Vannuccini (FIPS), Nathan Wanner (ESS) and Firas Yassin (ESS). 
+    Special thanks go to other staff from ESS: Andrea Alcibiade, Guido Barbaglia, 
+    Giorgia DeSantis, James Edge, Carola Fabi, Amanda Gordon, Nicola Graziani, 
+    Fabio Grita, Francesca Pittueo, Adam Prakash, Gordon Ramsay, Nicholas Sakoff, 
+    Nicola Selleri, Syl- vaine Thomas as well as Michelle Kendrick (ESA) 
+    and Boris Veytsman for their inputs.
 #################################################################################
 #################################################################################
 - id: REU
@@ -188,33 +206,6 @@
     impact of policies or to hold stakeholders accountable for the
     pledges they make.
 
-    This publication presents selected key indicators related to
-    agriculture and food security that stakeholders can use to
-    prioritize their actions. It is divided into two main sections, one
-    thematic and one country-specific. It presents a variety of
-    dimensions of agriculture and food security along four main focus
-    areas:
-
-    {\textbf{\color{part1} The setting}} measures the state of the
-    agricultural resource base by assessing the supply of land, labour,
-    capital and inputs, and examining the pressure on the world food
-    system stemming from demographic and macroeconomic change.
-
-    {\textbf{\color{part2} Hunger dimensions}} gauges the state of
-    food insecurity and malnutrition, and highlights the four dimensions
-    – availability, access, stability and utilization – that determine
-    the scale of hunger and the shape of undernourishment.
-
-    {\textbf{\color{part3} Food supply}} evaluates the past and
-    present productive capacity of world agriculture, together with the
-    role of trade, in meeting the world’s demand for food, feed and
-    other products.
-
-    {\textbf{\color{part4} Environment}} examines the sustainability
-    of agriculture in the context of the pressure it exerts on its
-    ecological surroundings, including the interaction of agriculture
-    with climate change.
-
     This Pocketbook is part of the FAO Statistical Yearbook suite of
     products and is just one of the tools that can be used as building
     blocks for monitoring progress and formulating policy. It includes
@@ -228,6 +219,28 @@
   person1_title: Regional Assistant Director-General, Europe and Central Asia
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  acknowledgements: |
+    This publication was jointly prepared by Regional Office for Europe and Central Asia (REU)
+    and the Statistics Division (ESS) of the Food and Agriculture Organization of the United 
+    Nations. The work was carried under the guidance of Pietro Gennari (Chief Statistician, FAO,
+    and Director, ESS), and Vladimir Rakhmanin (Regional Representative and Assistant Director
+    General, REU). Production was managed by Amy Heyman (ESS) and Salar Tayyib (REU), and
+    the work was carried out by Filippo Gheri (ESS) and Shira Fano (ESS). Contributors include
+    Nienke Beintema (the International Food Policy Research Institute – IFPRI), Riccardo 
+    Biancalani (Climate, Energy and Tenure Division – NRC), Andrea Borlizzi (ESS), Chiara Brunelli
+    (ESS), Carlo Cafiero (ESS), Cinzia Cerri (ESS), Rocio Condor-Golec (NRC), Piero Conforti (ESS),
+    Elisenda Estruch (Gender, Equity and Rural Employment Division – ESW), Alessandro Ferrara
+    (NRC), Karen Frenken (Land and Water Division – NRL), Nandini Gunewardena (FAOLOW) ,
+    Gary Jones (International Monetary Fund – IMF), Arvydas Lebedys (Forest Economics, Policy
+    and Products Division – FOE) , Erdgin Mane (ESS), Robert Mayo (ESS), Verena Nowak (Nu-
+    trition Division – ESN), Michael Rahija (IFPRI), Simone Rossi (NRC), Mirella Salvatore (NRC),
+    Nadia Scialabba (NRC), Gert-Jan Stads (IFPRI), Nathalie Troubat (ESS), Sachiko Tsuji (Statis-
+    tics and Information Service – FIPS), Francesco Tubiello (NRC), Stefania Vannuccini (FIPS),
+    NathanWanner (ESS) and Firas Yassin (ESS). A special thanks goes to Andrea Alcibiade (ESS),
+    Guido Barbaglia (ESS), Giorgia DeSantis (ESS), James Edge (ESS), Carola Fabi (ESS), Amanda
+    Gordon (ESS), Nicola Graziani (ESS), Fabio Grita (ESS), Francesca Loiacono, Michelle Kendrick
+    (ESA), Adam Prakash (ESS), Gordon Ramsay, Nicholas Sakoff (ESS), Nicola Selleri (ESS), 
+    Sylvaine Thomas (ESS), and Boris Veytsman.
 #################################################################################
 #################################################################################
 - id: RNE
@@ -288,6 +301,28 @@
   person1_title: Assistant Director-General, FAO Regional Representative for Near East and North Africa
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  acknowledgements: |
+    This publication was prepared by the Statistics Division (ESS) and the Near East and North
+    Africa Office (RNENA) of the Food and Agriculture Organization of the United Nations. The
+    work was carried under the guidance of Pietro Gennari (Chief Statistician, FAO, and Director,
+    ESS) and Abdessalam Ould Ahmed (Regional Representative and Assistant Director General,
+    RNENA). Production was managed by Amy Heyman (ESS) and Mohamed Barre (RNENA), and
+    the work was carried out by Filippo Gheri (ESS) and Shira Fano (ESS). Hadi Fathallah (RNENA)
+    was a principal contributor. Contributors include Nienke Beintema (the International Food
+    Policy Research Institute – IFPRI), Riccardo Biancalani (NRC), Andrea Borlizzi (ESS), Chiara
+    Brunelli (ESS), Carlo Cafiero (ESS), Cinzia Cerri (ESS), Rocio Condor-Golec (Climate, Energy
+    and Tenure Division – NRC), Piero Conforti (ESS), Elisenda Estruch (Gender, Equity and Rural
+    Employment Division – ESW), Alessandro Ferrara (NRC), Karen Frenken (Land and Water Di-
+    vision – NRL), Nandini Gunewardena (FAOLOW) , Gary Jones (International Monetary Fund –
+    IMF), Arvydas Lebedys (Forest Economics, Policy and Products Division – FOE) , Erdgin Mane
+    (ESS), Robert Mayo (ESS), Verena Nowak (Nutrition Division – ESN), Michael Rahija (IFPRI),
+    Simone Rossi (NRC), Mirella Salvatore (NRC), Nadia Scialabba (NRC), Gert-Jan Stads (IFPRI),
+    Nathalie Troubat (ESS), Sachiko Tsuji (Statistics and Information Service – FIPS), Francesco
+    Tubiello (NRC), Stefania Vannuccini (FIPS), NathanWanner (ESS) and Firas Yassin (ESS). A spe-
+    cial thanks goes to Andrea Alcibiade (ESS), Guido Barbaglia (ESS), Giorgia DeSantis (ESS),
+    James Edge (ESS), Carola Fabi (ESS), Amanda Gordon (ESS), Nicola Graziani (ESS), Fabio Grita
+    (ESS), Francesca Loiacono, Michelle Kendrick (ESA), Adam Prakash (ESS), Gordon Ramsay,
+    Nicholas Sakoff (ESS), Nicola Selleri (ESS), Sylvaine Thomas (ESS), and Boris Veytsman.
 #################################################################################
 #################################################################################
 - id: COF

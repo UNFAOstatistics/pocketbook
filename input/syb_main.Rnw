@@ -544,6 +544,37 @@ The cutoff date for the data is 18 January 2016.
 
 
 
+<<acknowledgements_chunk, eval=include_acknowledgements>>=
+
+
+cat(paste0(
+"
+% to add empty page
+\\afterpage{\\blankpage}
+
+\\clearpage
+
+\\addcontentsline{toc}{section}{Acknowledgements}
+
+\\LARGE{Acknowledgements}
+
+\\bigskip
+\\bigskip
+\\bigskip
+
+\\large
+
+",
+pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
+))
+
+
+
+@
+
+
+
+
 %
 % MMMMMMMM               MMMMMMMM               AAA               PPPPPPPPPPPPPPPPP
 % M:::::::M             M:::::::M              A:::A              P::::::::::::::::P
