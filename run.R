@@ -20,9 +20,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
                       # "GLO" # Global
                         "RAP" # Asia and the Pacific
-                        # ,"RAF"  # Africa
-                        # "REU" # Europe and Central Asia
-                        # ,"RNE" # Near East and North Africa
+                        ,"RAF"  # Africa
+                        ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -57,10 +57,9 @@ include_part6        <- F
 # -------------------------------
 include_country_profiles <- T
 include_definitions      <- T
-include_notes            <- T
 # --------------------------- ----
 # Upgrade the comparison tables
-broke_all_into_images         <- F
+broke_all_into_images         <- T
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
