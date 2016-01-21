@@ -290,9 +290,9 @@ REU_South_Eastern_Europe <- c(3, # "Albania"
                               273, # "Montenegro"
                               272, # "Serbia"
                               186, # "Serbia and Montenegro"
-                              154, # "The former Yugoslav Republic of Macedonia"
-                              248) # "Yugoslav SFR"
-
+                              154#, # "The former Yugoslav Republic of Macedonia"
+                              #248) # "Yugoslav SFR"
+)
 
 
 # cat(paste(country_data$M49_REUOtherAndEFTA, collapse=","))
