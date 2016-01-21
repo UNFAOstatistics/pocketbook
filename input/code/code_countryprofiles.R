@@ -692,7 +692,9 @@ if (table_type == "latex"){
       if (M49countries[i,"SHORT_NAME"] %in% RAP_reg_names){
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi which follow UN M49 classification of countries
+      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi which follow UN M49 classification of countries. 
+      This aggregate does not include France, Russian Federation and USA which are FAO members and attend meeting of regional 
+      bodies as they have some territories located in the Asia-Pacific region.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       } 
