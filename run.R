@@ -21,7 +21,7 @@ regionS_to_report <- c(
                       # "GLO" # Global
                         "RAP" # Asia and the Pacific
                         # ,"RAF"  # Africa
-                        # ,"REU" # Europe and Central Asia
+                        # "REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
@@ -64,7 +64,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -216,7 +216,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-11/SYB2016-01-18-11.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-19-18/SYB2016-01-19-18.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 

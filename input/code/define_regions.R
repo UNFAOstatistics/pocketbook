@@ -217,7 +217,7 @@ RAP_Micronesia  <- c(88, # Guam
                      145, # Micronesia (Federated States of)
                      148, # Nauru
                      163, # Northern Mariana Islands
-                     164, # Pacific Islands
+                    #  164, # Pacific Islands
                      180 # Trust Territory of,Palau
 )
 
