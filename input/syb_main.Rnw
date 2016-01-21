@@ -694,27 +694,6 @@ if (region_to_report == "COF") include_overview_tbl <- FALSE
 @
 
 
-% Custom footnote command with no marker!
-
-\newcommand\blfootnote[1]{%
-  \begingroup
-  \renewcommand\thefootnote{}\footnote{#1}%
-  \addtocounter{footnote}{-1}%
-  \endgroup
-}
-
-<<foreword_footnote, eval=include_overview_map>>=
-
-if (region_to_report == "RAF") footnote_text <- "This is country grouping custom text for Africa"
-if (region_to_report == "RAP") footnote_text <- "This is country grouping custom text for Asia"
-if (region_to_report == "REU") footnote_text <- "This is country grouping custom text for Europe"
-if (region_to_report == "RNE") footnote_text <- "This is country grouping custom text for North Africa"
-if (region_to_report == "GLO") footnote_text <- "This is country grouping custom text for Global book"
-
-cat(paste0("\\blfootnote{",footnote_text,"}"))
-
-@
-
 
 %
 % TTTTTTTTTTTTTTTTTTTTTTTBBBBBBBBBBBBBBBBB   LLLLLLLLLLL
@@ -823,7 +802,7 @@ if (region_to_report == "RAP") tbl_font_size <- "footnotesize"
 
 cat(
 "\\begin{center}
-        TABLE: \\textbf{Classification of countries} \\newline \\vspace{-5mm}
+        TABLE: \\textbf{Classification of countries\\textsuperscript{*}} \\newline \\vspace{-5mm}
 \\end{center}"
 )
 
@@ -842,6 +821,29 @@ print(
 # if(length(unique(overview.df$subgroup)) >= 7) cat(paste("\\end{landscape}",
 #                                                         "\\restoregeometry"))
 @
+
+
+% Custom footnote command with no marker!
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+<<foreword_footnote, eval=include_overview_tbl>>=
+
+if (region_to_report == "RAF") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Africa"
+if (region_to_report == "RAP") footnote_text <- "\\textsuperscript{*}Countries listed here are classified in accordance with the UN M.49 groupings developed by the United Nations Statistics Division. Countries which are members of FAO and attend FAO Regional Conference but have mainland outside the Asia and Pacific region have notably been excluded for analytical purposes to reflect the situation within the geography of the Asia and Pacific region. Unless otherwise specified, the statistics on their territories located in this region are also excluded from aggregates provided in this book."
+if (region_to_report == "REU") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Europe"
+if (region_to_report == "RNE") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for North Africa"
+if (region_to_report == "GLO") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Global book"
+
+cat(paste0("\\blfootnote{",footnote_text,"}"))
+
+@
+
 
 
 % to add empty page
@@ -2307,10 +2309,8 @@ cat("
 \\addcontentsline{toc}{part}{Metadata}
 \\addcontentsline{toc}{section}{Definitions}
 
-
-
 \\begin{MetadataCollection}
-\\pagestyle{empty} %%% remove Contents string from header!!
+\\pagestyle{plain} %%% remove Contents string from header!!
 
 \\twocolumn
 \\normalfont \\LARGE Definitions
@@ -2348,7 +2348,7 @@ cat("
 
 
  \\begin{MetadataCollection}
-\\pagestyle{empty} %%% remove Contents string from header!!
+\\pagestyle{plain} %%% remove Contents string from header!!
 
  \\onecolumn
  \\normalfont \\LARGE Notes
