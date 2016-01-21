@@ -1,18 +1,18 @@
 
 
-# 
-# ____      _    _____ 
+#
+# ____      _    _____
 # |  _ \    / \  |  ___|
-# | |_) |  / _ \ | |_   
-# |  _ <  / ___ \|  _|  
-# |_| \_\/_/   \_\_|    
+# | |_) |  / _ \ | |_
+# |  _ <  / ___ \|  _|
+# |_| \_\/_/   \_\_|
 # cat(paste(shQuote(country_data$RAF, type="cmd"), collapse=", "))
 # FAO_TABLE_NAME
 
 #RAF <-  c("Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cabo Verde", "Central African Republic", "Chad", "the Comoros", "Congo", "Côte d'Ivoire", "the Democratic Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Ethiopia", "Ethiopia PDR", "Gabon", "the Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Mayotte", "Morocco", "Mozambique", "Namibia", "the Niger", "Nigeria", "Réunion", "Rwanda", "Saint Helena, Ascension and Tristan da Cunha", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "the Sudan", "the Sudan", "Swaziland", "Togo", "Tunisia", "Uganda", "the United Republic of Tanzania", "Western Sahara", "Zambia", "Zimbabwe")
 
 # cat(paste(country_data$M49_Middle.Africa, collapse=","))
-# cat(paste(faost_code_data$M49_Middle.Africa, collapse=","))  
+# cat(paste(faost_code_data$M49_Middle.Africa, collapse=","))
 
 RAF_Central_Africa <- c(7, # Angola
                         32, # Cameroon
@@ -26,7 +26,7 @@ RAF_Central_Africa <- c(7, # Angola
 
 
 # cat(paste(country_data$M49_Northern.Africa, collapse=","))
-# cat(paste(faost_code_data$M49_Northern.Africa, collapse=","))  
+# cat(paste(faost_code_data$M49_Northern.Africa, collapse=","))
 
 RAF_Northern_Africa <- c(4, # Algeria
                          59, # Egypt
@@ -40,7 +40,7 @@ RAF_Northern_Africa <- c(4, # Algeria
 )
 
 # cat(paste(country_data$M49_Western.Africa, collapse=","))
-# cat(paste(faost_code_data$M49_Western.Africa, collapse=","))  
+# cat(paste(faost_code_data$M49_Western.Africa, collapse=","))
 
 RAF_Western_Africa <- c(53, # Benin
                         233, # Burkina Faso
@@ -62,7 +62,7 @@ RAF_Western_Africa <- c(53, # Benin
 
 
 # cat(paste(country_data$M49_Southern.Africa, collapse=","))
-# cat(paste(faost_code_data$M49_Southern.Africa, collapse=","))  
+# cat(paste(faost_code_data$M49_Southern.Africa, collapse=","))
 
 RAF_Southern_Africa <- c(20, # Botswana
                          122, # Lesotho
@@ -71,7 +71,7 @@ RAF_Southern_Africa <- c(20, # Botswana
                          209) # Swaziland
 
 # cat(paste(country_data$M49_Eastern.Africa, collapse=","))
-# cat(paste(faost_code_data$M49_Eastern.Africa, collapse=","))  
+# cat(paste(faost_code_data$M49_Eastern.Africa, collapse=","))
 
 RAF_Eastern_Africa <- c(29, # Burundi
                         45, # the Comoros
@@ -101,12 +101,12 @@ RAF <- c(RAF_Central_Africa,
          RAF_Southern_Africa,
          RAF_Western_Africa)
 
-#  ____      _    ____  
-#  |  _ \    / \  |  _ \ 
+#  ____      _    ____
+#  |  _ \    / \  |  _ \
 #  | |_) |  / _ \ | |_) |
-#  |  _ <  / ___ \|  __/ 
-#  |_| \_\/_/   \_\_|    
-#  
+#  |  _ <  / ___ \|  __/
+#  |_| \_\/_/   \_\_|
+#
 
 # RAP
 # - See T:\Team_working_folder\F\FAOSYBs\PB15\RAP15\countrylist.xls for the list
@@ -115,7 +115,7 @@ RAF <- c(RAF_Central_Africa,
 
 
 # cat(paste(shQuote(country_data$M49_Central.Asia, type="cmd"), collapse=", "))
-# cat(paste(faost_code_data$M49_Central.Asia, collapse=","))  
+# cat(paste(faost_code_data$M49_Central.Asia, collapse=","))
 
 RAP_Central_Asia <- c(108, # Kazakhstan
                       # 113, # Kyrgyzstan
@@ -124,7 +124,7 @@ RAP_Central_Asia <- c(108, # Kazakhstan
                       235) # Uzbekistan
 
 # cat(paste(shQuote(country_data$M49_Eastern.Asia, type="cmd"), collapse=", "))
-# cat(paste(faost_code_data$M49_Eastern.Asia, collapse=","))  
+# cat(paste(faost_code_data$M49_Eastern.Asia, collapse=","))
 
 RAP_Eastern_Asia  <- c(351, # China
                        #41, # China
@@ -134,7 +134,7 @@ RAP_Eastern_Asia  <- c(351, # China
                        117) # Republic of Korea
 
 # cat(paste(country_data$M49_Southern.Asia, collapse=","))
-# cat(paste(faost_code_data$M49_Southern.Asia, collapse=","))  
+# cat(paste(faost_code_data$M49_Southern.Asia, collapse=","))
 
 RAP_Southern_Asia  <- c(2, # Afghanistan
                         16, # Bangladesh
@@ -147,7 +147,7 @@ RAP_Southern_Asia  <- c(2, # Afghanistan
                         38) # Sri Lanka
 
 # cat(paste(country_data$'M49_South-Eastern.Asia', collapse=","))
-# cat(paste(faost_code_data$'M49_South-Eastern.Asia', collapse=","))  
+# cat(paste(faost_code_data$'M49_South-Eastern.Asia', collapse=","))
 
 RAP_South_Eastern_Asia  <- c(26, # Brunei Darussalam
                              115, # Cambodia
@@ -162,7 +162,7 @@ RAP_South_Eastern_Asia  <- c(26, # Brunei Darussalam
                              237) # Viet Nam
 
 # cat(paste(country_data$M49_Western.Asia, collapse=","))
-# cat(paste(faost_code_data$M49_Western.Asia, collapse=","))  
+# cat(paste(faost_code_data$M49_Western.Asia, collapse=","))
 
 # RAP_Western_Asia  <- c(1, # Armenia
 #                        52, # Azerbaijan
@@ -188,7 +188,7 @@ RAP_South_Eastern_Asia  <- c(26, # Brunei Darussalam
 
 
 # cat(paste(country_data$M49_Australia.and.New.Zealand, collapse=","))
-# cat(paste(faost_code_data$M49_Australia.and.New.Zealand, collapse=","))  
+# cat(paste(faost_code_data$M49_Australia.and.New.Zealand, collapse=","))
 
 RAP_Austriala_and_New_Zealand  <- c(10,  # Australia
                                     156, # New Zealand
@@ -197,7 +197,7 @@ RAP_Austriala_and_New_Zealand  <- c(10,  # Australia
 
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
-# cat(paste(faost_code_data$M49_Melanesia, collapse=","))  
+# cat(paste(faost_code_data$M49_Melanesia, collapse=","))
 
 
 RAP_Melanesia  <- c(66, # Fiji
@@ -208,7 +208,7 @@ RAP_Melanesia  <- c(66, # Fiji
 )
 
 # cat(paste(country_data$M49_Micronesia, collapse=","))
-# cat(paste(faost_code_data$M49_Micronesia, collapse=","))  
+# cat(paste(faost_code_data$M49_Micronesia, collapse=","))
 
 
 RAP_Micronesia  <- c(88, # Guam
@@ -223,7 +223,7 @@ RAP_Micronesia  <- c(88, # Guam
 
 
 # cat(paste(country_data$M49_Polynesia, collapse=","))
-# cat(paste(faost_code_data$M49_Polynesia, collapse=","))  
+# cat(paste(faost_code_data$M49_Polynesia, collapse=","))
 
 RAP_Polynesia  <- c(5, # American Samoa
                     47, # the Cook Islands
@@ -249,12 +249,12 @@ RAP_Oceania <- c(RAP_Austriala_and_New_Zealand,
 # RAP_France  <- c(68)
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
-# cat(paste(faost_code_data$M49_Melanesia, collapse=","))  
+# cat(paste(faost_code_data$M49_Melanesia, collapse=","))
 
 # RAP_United_States  <- c(231)
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
-# cat(paste(faost_code_data$M49_Melanesia, collapse=","))  
+# cat(paste(faost_code_data$M49_Melanesia, collapse=","))
 
 RAP <- c(RAP_Central_Asia,
          RAP_Eastern_Asia,
@@ -272,11 +272,11 @@ RAP <- c(RAP_Central_Asia,
 )
 
 
-# ____  _____ _   _ 
+# ____  _____ _   _
 # |  _ \| ____| | | |
 # | |_) |  _| | | | |
 # |  _ <| |___| |_| |
-# |_| \_\_____|\___/ 
+# |_| \_\_____|\___/
 # REU
 # - Please use the groupings from the REU Yearbook
 # - Please add EU region as well
@@ -344,7 +344,7 @@ REU_CIS_Europe <- c(57, # Belarus
 
 REU_EU_Central_and_Eastern <- c(27,  # Bulgaria
                                 167, # the Czech Republic
-                                51,  # Czechoslovakia
+                                # 51,  # Czechoslovakia
                                 63, # Estonia
                                 97,  # Hungary
                                 119, # Latvia
@@ -376,14 +376,14 @@ REU <- c(REU_South_Eastern_Europe,
          REU_CIS_Europe,
          REU_EU_Central_and_Eastern,
          REU_Israel,
-         REU_Central_Asia)  
+         REU_Central_Asia)
 
 
 
-# ____  _   _ _____ 
+# ____  _   _ _____
 # |  _ \| \ | | ____|
-# | |_) |  \| |  _|  
-# |  _ <| |\  | |___ 
+# | |_) |  \| |  _|
+# |  _ <| |\  | |___
 # |_| \_\_| \_|_____|
 # RNE
 # -    Please use the groupings from the RNE Yearbook
@@ -430,12 +430,12 @@ RNE <- c(RNE_Gulf_Cooperation_Council_States_and_Yemen,
          RNE_North_Africa)
 
 
-# _        _    ____ 
+# _        _    ____
 # | |      / \  / ___|
-# | |     / _ \| |    
-# | |___ / ___ \ |___ 
+# | |     / _ \| |
+# | |___ / ___ \ |___
 # |_____/_/   \_\____|
-#   
+#
 
 LAC_Caribbean <- c(8, # Antigua and Barbuda
                    12, # Bahamas
@@ -448,7 +448,7 @@ LAC_Caribbean <- c(8, # Antigua and Barbuda
                    188, # Saint Kitts and Nevis
                    189, # Saint Lucia
                    191, # Saint Vincent and the Grenadines
-                   220  # Trinidad and Tobago 
+                   220  # Trinidad and Tobago
 )
 
 
@@ -476,7 +476,7 @@ LAC_South_America <- c(9, # Argentina
                        207, # Suriname
                        234, # Uruguay
                        236 # Venezuela (Bolivarian Republic of)
-                       
+
 )
 
 
@@ -497,12 +497,12 @@ LAC <- c(LAC_Caribbean,
 
 
 
-# ____  _      ___  
-# / ___|| |    / _ \ 
+# ____  _      ___
+# / ___|| |    / _ \
 # | |  _ | |   | | | |
 # | |_| || |___| |_| |
-# \____||_____|\___/ 
-#   
+# \____||_____|\___/
+#
 
 
 GLO_Europe <- REU
@@ -523,12 +523,12 @@ GLO <- c(GLO_Europe,
 
 
 
-# __  __  _  _    ___  
-# |  \/  || || |  / _ \ 
+# __  __  _  _    ___
+# |  \/  || || |  / _ \
 # | |\/| || || |_| (_) |
 # | |  | ||__   _|\__, |
-# |_|  |_|   |_|    /_/ 
-#   
+# |_|  |_|   |_|    /_/
+#
 
 
 M49_Europe <- c(284,	 # Åland Islands
@@ -809,12 +809,12 @@ M49_Americas <- c(258,	 # Anguilla
 
 
 
-#  ____  ___   _____ 
+#  ____  ___   _____
 # / ___|/ _ \ |  ___|
-# | |   | | | || |_   
-# | |___| |_| ||  _|  
-# \____|\___/ |_|    
-#   
+# | |   | | | || |_
+# | |___| |_| ||  _|
+# \____|\___/ |_|
+#
 
 COF_Coffee_producers_April <- c(7, # Angola
                                 19, # Bolivia
@@ -971,7 +971,7 @@ COF_Nonmember_countries_Caribbean <- c(258, # Anguila
 
 COF_Nonmember_countries_Central_America_and_Mexico <- c(23, # Belize
                                                         17 # Bermuda
-                                                        
+
 )
 
 COF_Nonmember_countries_Europe <- c(3, # Albania
@@ -987,7 +987,7 @@ COF_Nonmember_countries_Europe <- c(3, # Albania
                                     272, # Serbia
                                     185, # Russian Fede
                                     230 # Ukraine
-                                    
+
 )
 
 COF_Nonmember_countries_North_America <- c(33 # Canada
@@ -1022,7 +1022,7 @@ COF <- c(M49_Americas,
 
 
 ##########################################################################################################
-# Create dummy vars 
+# Create dummy vars
 
 if (!(exists("run_only_regions"))) region_key <- FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME","SHORT_NAME")]
 if (exists("run_only_regions")) region_key <- FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")]
@@ -1031,11 +1031,11 @@ if (exists("run_only_regions")) region_key <- FAOcountryProfile[c("FAOST_CODE","
 region_key <- region_key[region_key$FAOST_CODE %in% GLO,]
 
 region_key$RAF                <- ifelse(region_key$FAOST_CODE %in% RAF, TRUE, FALSE)
-region_key$RAF_Central_Africa <- ifelse(region_key$FAOST_CODE %in% RAF_Central_Africa, TRUE, FALSE) 
-region_key$RAF_Eastern_Africa    <- ifelse(region_key$FAOST_CODE %in% RAF_Eastern_Africa, TRUE, FALSE) 
-region_key$RAF_Northern_Africa   <- ifelse(region_key$FAOST_CODE %in% RAF_Northern_Africa, TRUE, FALSE) 
-region_key$RAF_Southern_Africa   <- ifelse(region_key$FAOST_CODE %in% RAF_Southern_Africa, TRUE, FALSE) 
-region_key$RAF_Western_Africa    <- ifelse(region_key$FAOST_CODE %in% RAF_Western_Africa, TRUE, FALSE) 
+region_key$RAF_Central_Africa <- ifelse(region_key$FAOST_CODE %in% RAF_Central_Africa, TRUE, FALSE)
+region_key$RAF_Eastern_Africa    <- ifelse(region_key$FAOST_CODE %in% RAF_Eastern_Africa, TRUE, FALSE)
+region_key$RAF_Northern_Africa   <- ifelse(region_key$FAOST_CODE %in% RAF_Northern_Africa, TRUE, FALSE)
+region_key$RAF_Southern_Africa   <- ifelse(region_key$FAOST_CODE %in% RAF_Southern_Africa, TRUE, FALSE)
+region_key$RAF_Western_Africa    <- ifelse(region_key$FAOST_CODE %in% RAF_Western_Africa, TRUE, FALSE)
 
 region_key$RAP                              <- ifelse(region_key$FAOST_CODE %in% RAP, TRUE, FALSE)
 region_key$RAP_Central_Asia                 <- ifelse(region_key$FAOST_CODE %in% RAP_Central_Asia, TRUE, FALSE)
@@ -1089,17 +1089,17 @@ region_key$COF_Europe   <- ifelse(region_key$FAOST_CODE %in% M49_Europe,   TRUE,
 
 
 if (!(exists("run_only_regions"))){
-  
+
   # Replace the ad-hoc regional grouping with the one we have created
   myvars <- names(fao_world@data) %in% c("RAF","LAC","RAP","REU","RNE")
   fao_world@data <- fao_world@data[!myvars]
-  
+
   # View(region_key[!(region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE),])
   fao_world$FAOST_CODE[fao_world$FAOST_CODE %in% 41] <- 351
-  
+
   attribute_data <- region_key[region_key$FAOST_CODE %in% fao_world@data$FAOST_CODE,]
-  
-  
+
+
   FAOST_CODE <- as.character(fao_world$FAOST_CODE)
   VarX <- rep(NA, length(FAOST_CODE))
   dat <- data.frame(FAOST_CODE,VarX)
@@ -1116,6 +1116,5 @@ if (!(exists("run_only_regions"))){
   library(maptools)
   dat2$FAOST_CODE <- NULL
   fao_world <- spCbind(fao_world, dat2)
-  
-}
 
+}
