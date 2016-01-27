@@ -151,11 +151,12 @@ if (!("nitrogen_tonnes_per_ha" %in% names(syb.df))) {
   syb.df$total_nutrients_tonnes_per_ha <- (syb.df$phosphate_tonnes +
                                              syb.df$potash_tonnes +
                                              syb.df$nitrogen_tonnes) / syb.df$RL.AREA.AGR.HA.NO
+  
 }
 
 
 # if (!("aqua_culture_share" %in% names(syb.df))) {
-# 
+#
 #   syb.df$aqua_culture_share <- syb.df$FI.PRD.AQ.TN.NO / (syb.df$FI.PRD.AQ.TN.NO + syb.df$FI.PRD.CAPT.TN.NO) *100
 # }
 
@@ -335,7 +336,7 @@ if (region_to_report == "RAF"){
 }
 if (region_to_report == "RAP"){
   # Combine region countries with extra countries France, Russia, US
-  
+
   M49countries <-
     rbind(
     M49countries,
@@ -347,7 +348,7 @@ if (region_to_report == "RAP"){
                    "Russian Federation",
                    "United States"),
     stringsAsFactors = FALSE))
-  
+
   # Into alphabetical order
   M49countries <- arrange(M49countries, SHORT_NAME)
 
@@ -462,7 +463,7 @@ if (table_type == "latex"){
       file = fileOut, append = TRUE)
   for (i in 1:nrow(M49countries)) {
     ## header
-    
+
     # conditional row colors ------------------------------
     row_color <- "FAOblue"
     if (region_to_report == "COF") row_color <- "part7"
@@ -477,10 +478,10 @@ if (table_type == "latex"){
           \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
           \\midrule\n",
           file = fileOut, append = TRUE)
-    } 
+    }
     # RAP  customatisation
     if (region_to_report %in% "RAP"){
-     
+
       if (M49countries[i,"SHORT_NAME"] %in% c("France","United States","Russian Federation",RAP_reg_names)){
         cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
             define_row_color,
@@ -489,7 +490,7 @@ if (table_type == "latex"){
           \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
           \\midrule\n",
             file = fileOut, append = TRUE)
-      } 
+      }
       if (!M49countries[i,"SHORT_NAME"] %in% c("France","United States","Russian Federation",RAP_reg_names)){
         cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
             define_row_color,
@@ -498,10 +499,10 @@ if (table_type == "latex"){
             \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
             \\midrule\n",
             file = fileOut, append = TRUE)
-      } 
+      }
     }
     if (region_to_report %in% "RAF"){
-      
+
       if (M49countries[i,"SHORT_NAME"] %in% RAF_reg_names){
         cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
             define_row_color,
@@ -531,7 +532,7 @@ if (table_type == "latex"){
             \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
             \\midrule\n",
               file = fileOut, append = TRUE)
-      } 
+      }
       if (!M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
         cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
             define_row_color,
@@ -543,7 +544,7 @@ if (table_type == "latex"){
       }
     }
     if (region_to_report %in% "REU"){
-      
+
       if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
           cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
               define_row_color,
@@ -562,7 +563,7 @@ if (table_type == "latex"){
               \\midrule\n",
             file = fileOut, append = TRUE)
       }
-      
+
     }
     ## data
     tmp = CountryProfile.df[CountryProfile.df[, "FAOST_CODE"] == M49countries[i, "FAOST_CODE"], ]
@@ -681,25 +682,35 @@ if (table_type == "latex"){
         chunk1 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk1)
         chunk2 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk2)
         chunk3 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk3)
-        cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
-            file = fileOut, append = TRUE, sep = "")
+        # Add asterisk if SOFI indicator
+        fsi_meta <- read_csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"))
+        fsi_meta <- as.data.frame(fsi_meta)
+        if (subindicators.df[j, "INDICATOR1"] %in% fsi_meta[["NAME"]] & M49countries[i,"SHORT_NAME"] %in% c(RAP_reg_names,
+                                                                                                            RAF_reg_names,
+                                                                                                            REU_reg_names,
+                                                                                                            RNE_reg_names)){
+          cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),"\\textsuperscript{\\dag}", " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+              file = fileOut, append = TRUE, sep = "")
+        } else {
+          cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+              file = fileOut, append = TRUE, sep = "")
+        }
+        
 
       }
     }
     ## tail
     if (region_to_report == "RAP"){
-      
+
       if (M49countries[i,"SHORT_NAME"] %in% RAP_reg_names){
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi which follow UN M49 classification of countries. 
-      This aggregate does not include France, Russian Federation and USA which are FAO members and attend meeting of regional 
-      bodies as they have some territories located in the Asia-Pacific region.
+      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
             file = fileOut, append = TRUE)
-      } 
+      }
       if (M49countries[i,"SHORT_NAME"] %in% c("France")){
-        
+
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
       *France is included in this publication as it has territories in the Region. However the data refer to the entire country, irrespective of geographic location.
@@ -707,7 +718,7 @@ if (table_type == "latex"){
             file = fileOut, append = TRUE)
       }
       if (M49countries[i,"SHORT_NAME"] %in% c("Russian Federation")){
-        
+
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
       *Russian Federation is included in this publication as it is geographically included in both Europe and Asia and is also a member of the FAO Regional Conference for Asia and the Pacific.
@@ -715,13 +726,13 @@ if (table_type == "latex"){
             file = fileOut, append = TRUE)
       }
       if (M49countries[i,"SHORT_NAME"] %in% c("United States")){
-        
+
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
       *United States is included in this publication as it has territories in the Region. However the data refer to  the entire country, irrespective of geographic location of its territorial areas.
       \\clearpage\n",
             file = fileOut, append = TRUE)
-        
+
       }
       if (!M49countries[i,"SHORT_NAME"] %in% c("France",
                                               "Russian Federation",
@@ -733,33 +744,33 @@ if (table_type == "latex"){
             file = fileOut, append = TRUE)
       }
     }
-    
+
     if (region_to_report == "RAF"){
-      
+
       if (M49countries[i,"SHORT_NAME"] %in% RAF_reg_names){
-        
+
       cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Here we can have a RAF specific footnote for the whole region as well as for each of the subregions. Will refer to tableoverview table in the beginning. Have to decided on exact wording!
+      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
       if (!M49countries[i,"SHORT_NAME"] %in% RAF_reg_names){
-        
+
         cat("\ \ \ \ \ \ \ \\toprule
       \\end{tabular}
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
-      
+
     }
-    
+
     if (region_to_report == "REU"){
-    
+
       if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Here we can have a REU specific footnote for the whole region as well as for each of the subregions. Will refer to tableoverview table in the beginning. Have to decided on exact wording!
+      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -768,27 +779,27 @@ if (table_type == "latex"){
       \\end{tabular}
       \\clearpage\n",
             file = fileOut, append = TRUE)
-      }  
+      }
     }
-    
+
     if (region_to_report == "RNE"){
-      
+
       if (M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
 
         cat("\ \ \ \ \ \ \ \\toprule
         \n\\end{tabular}
-        *Here we can have a RNE specific footnote for the whole region as well as for each of the subregions. Will refer to tableoverview table in the beginning. Have to decided on exact wording!
+        *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
         \\clearpage\n",
         file = fileOut, append = TRUE)
         }
       if (!M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
-      
+
         cat("\ \ \ \ \ \ \ \\toprule
         \\end{tabular}
         \\clearpage\n",
         file = fileOut, append = TRUE)
       }
-      
+
     }
 
   }
@@ -937,6 +948,8 @@ if (table_type == "html"){
 # system("~/btsync/faosync/pocketbooks/pocketbook/input/code/countryprofile_footnote_RAP.sh")
 
 # system("sed -i 's#{ 2014 }#{ 2014* }#' ./output/process/CountryProfiles.tex && sed -i 's#\\end{tabular}#\*We can add a footnote for each table like this..\n\\end{tabular}#' ./output/process/CountryProfiles.tex")
-#sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
+# sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
+# save(syb.df, file="~/btsync/faosync/pocketbooks/pocketbook_tests/regiona_sybdata.RData")
+
 
 syb.df <- temp
