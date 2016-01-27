@@ -191,11 +191,11 @@ cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"subtitle"],"}"))
 <<define_print_location, echo=FALSE, results='asis', eval=TRUE>>=
 cat(paste0(
 "\\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"bottom_row1"],
+        pref_d[pref_d$id %in% region_to_report,"bottom_row2"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"bottom_row2"],
+        pref_d[pref_d$id %in% region_to_report,"bottom_row1"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
@@ -507,36 +507,46 @@ blocks for monitoring progress and formulating policy. It includes
 data from FAOSTAT as well as from other partners within the
 organization and in the international community.
 
-\\subsection{Aggregations}
+\\subsection{From Notes..}
 
-Two types of aggregations are used in the book: sum and weighted mean.
-Two restrictions are imposed when computing the aggregation: i) the
-sufficiency condition -- the aggregation is computed only when
-sufficient countries have reported data, and the current threshold is
-set at 50 percent of the variable and the weighting variable, if
-present; and ii) the comparability condition -- as aggregations are
-usually computed over time, this condition is designed to ensure that
-the number of countries is comparable over several years; under the
-current restriction the number of countries may not vary by more than 15
-over time.
+The country classification adopted in this publication is based on the 
+United Nations M49 classification (\\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). 
+The country names have been abbreviated for the purpose of this publication. 
+The official FAO names can be found at \\url{http://termportal.fao.org/faonocs/appl/}.
 
-Aggregation based on the country groupings defined in table
-'Classification of Countries' on page xi which follow
-UN M49 classification of countries
+Following the creation of the Republic of South Sudan in July 2011, 
+the M49 classification considered the Sudan as part of the Northern Africa region, 
+and South Sudan as part of Eastern Africa. In this report, data for 
+the Sudan are therefore included in the Northern Africa region. 
+Data for Sudan prior to 2011 refers to former Sudan.
 
-\\subsection{Data presentation conventions}
+The asterisk in charts and maps indicates the most recent year 
+available in the specified time interval. In the country profiles, 
+when the country data have not been reported for the reference year, 
+data in italics indicate that the value for the most recent year available is shown.
 
-The cutoff date for the data is 18 January 2016.
+In the tables, a blank means not applicable or, for an aggregate, 
+not analytically meaningful. A 0 or 0.0 means zero or a number that 
+is small enough to round to zero at the displayed number of decimal places.
 
-\\begin{itemize}
-\\item  When country data have not been reported for the reference year, an asterisk (*) on the year label indicates that the value for the most recent year available is shown. For example, 2008–2010* means that the most recent value for the period from 2008 to 2010 is shown. When a growth rate is computed, the specified interval always refers to available data.
-\\item A billion is 1\\,000 million.
-\\item A trillion is 1\\,000 billion.
-\\item A blank means that data are not available or that aggregates cannot be calculated because of missing data for the years shown.
-\\item In tables, 0 or 0.0 means zero or a number that is small enough to round to zero at the displayed number of decimal places.
-\\item  A \\textasciitilde{} in the maps refers to the range specified in the class intervals.
-\\end{itemize}
+The \\textasciitilde{} in the maps refers to the range specified in the class intervals.
 
+In addition:
+       \\begin{itemize}
+       \\item <5.0 proportion less than 5 percent
+       \\item <0.1 less than 100\\,000 people
+       \\item ns not statistically significant
+       \\end{itemize}
+
+Two types of aggregations are used in the book: sum and weighted mean. 
+Two restrictions are imposed when computing the aggregation: 
+i) the sufficiency condition – the aggregation is computed only when sufficient 
+countries have reported data, and the current threshold is set at 50 percent 
+of the variable and the weighting variable, if present; and 
+ii) the comparability condition – as aggregations are usually computed over time, 
+this condition is designed to ensure that the number of countries is comparable 
+over several years; under the current restriction the number of countries 
+may not vary by more than 15 over time.
 
     ")
 
@@ -597,7 +607,7 @@ pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
 \clearpage
 
 
-<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries">>=
+<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries\\textsuperscript{*}">>=
 
 the_whole   <- map.df # for mapping the grey areas
 
@@ -693,6 +703,33 @@ if (region_to_report == "COF") include_overview_tbl <- FALSE
 
 @
 
+
+% Custom footnote command with no marker!
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+<<overview_footnote_text, eval=TRUE>>=
+
+if (region_to_report == "RAF") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Africa"
+if (region_to_report == "RAP") footnote_text <- "\\textsuperscript{*}Countries listed here are classified in accordance with the UN M.49 groupings developed by the United Nations Statistics Division. Countries which are members of FAO and attend FAO Regional Conference but have mainland outside the Asia and Pacific region have notably been excluded for analytical purposes to reflect the situation within the geography of the Asia and Pacific region. Unless otherwise specified, the statistics on their territories located in this region are also excluded from aggregates provided in this book,
+including France, Russian Federation and USA which are FAO members and attend meeting of regional bodies as they have some territories located in the Asia-Pacific region"
+if (region_to_report == "REU") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Europe"
+if (region_to_report == "RNE") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for North Africa"
+if (region_to_report == "GLO") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Global book"
+
+@
+
+
+<<overview_map_footnote, eval=include_overview_map>>=
+
+cat(paste0("\\blfootnote{",footnote_text,"}"))
+
+@
 
 
 %
@@ -823,22 +860,8 @@ print(
 @
 
 
-% Custom footnote command with no marker!
 
-\newcommand\blfootnote[1]{%
-  \begingroup
-  \renewcommand\thefootnote{}\footnote{#1}%
-  \addtocounter{footnote}{-1}%
-  \endgroup
-}
-
-<<foreword_footnote, eval=include_overview_tbl>>=
-
-if (region_to_report == "RAF") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Africa"
-if (region_to_report == "RAP") footnote_text <- "\\textsuperscript{*}Countries listed here are classified in accordance with the UN M.49 groupings developed by the United Nations Statistics Division. Countries which are members of FAO and attend FAO Regional Conference but have mainland outside the Asia and Pacific region have notably been excluded for analytical purposes to reflect the situation within the geography of the Asia and Pacific region. Unless otherwise specified, the statistics on their territories located in this region are also excluded from aggregates provided in this book."
-if (region_to_report == "REU") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Europe"
-if (region_to_report == "RNE") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for North Africa"
-if (region_to_report == "GLO") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Global book"
+<<overview_tbl_footnote, eval=include_overview_tbl>>=
 
 cat(paste0("\\blfootnote{",footnote_text,"}"))
 
@@ -2330,45 +2353,6 @@ cat("
 ")
 @
 
-
- %  _   _       _
- % | \ | | ___ | |_ ___  ___
- % |  \| |/ _ \| __/ _ \/ __|
- % | |\  | (_) | ||  __/\__ \
- % |_| \_|\___/ \__\___||___/
- %
-
-
-
-<<notes1, eval=include_notes>>=
- cat("
- \\newpart{white}
- \\phantomsection
- \\addcontentsline{toc}{section}{Notes}
-
-
- \\begin{MetadataCollection}
-\\pagestyle{plain} %%% remove Contents string from header!!
-
- \\onecolumn
- \\normalfont \\LARGE Notes
-
- \\bigskip
-
- \\footnotesize \n")
-@
-
-
-<<print_notes, eval=include_notes>>=
-source(paste0(root.dir,"input/code/code_notes.R"))
-@
-
-
-<<notes3, eval=include_notes>>=
- cat("
-       \\end{MetadataCollection}
-     ")
-@
 
 
 %   ____                _
