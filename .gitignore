@@ -4,3 +4,9 @@
 *.Rproj
 output/
 project/
+input/templates/cover/covermaps/covermap_RAF.pdf
+input/templates/cover/covermaps/covermap_RAP.pdf
+input/templates/cover/covermaps/covermap_REU.pdf
+input/templates/cover/covermaps/covermap_RNE.pdf
+input/templates/cover/covermaps/maps_for_covers.md
+input/templates/cover/covermaps/maps_for_covers.html
