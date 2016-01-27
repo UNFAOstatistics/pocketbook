@@ -319,7 +319,7 @@ REU_reg_names <- c("Regional Office for Europe and Central Asia",
                    "Caucasus and Turkey",
                    "EU Central and Eastern",
                    "CIS Europe",
-                   "Israel",
+                   #"Israel",
                    "EU other and EFTA",
                    "South Eastern Europe")
 RNE_reg_names <- c("Regional Office for Near East and North Africa",
@@ -374,7 +374,9 @@ if (region_to_report == "RAP"){
 }
 if (region_to_report == "REU"){
   M49countries <-
-    rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,14005,14006,14007),
+    rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,
+                                    #14005, # Exclude Israel from country groupings
+                                    14006,14007),
                      SHORT_NAME = REU_reg_names,
                      stringsAsFactors = FALSE),
           M49countries)
@@ -686,6 +688,8 @@ if (table_type == "latex"){
         fsi_meta <- read_csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"))
         fsi_meta <- as.data.frame(fsi_meta)
         if (subindicators.df[j, "INDICATOR1"] %in% fsi_meta[["NAME"]] & M49countries[i,"SHORT_NAME"] %in% c(RAP_reg_names,
+                                                                                                            RAF_reg_names,
+                                                                                                            REU_reg_names,
                                                                                                             RNE_reg_names)){
           cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),dag_char, " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
