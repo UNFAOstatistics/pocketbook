@@ -531,6 +531,13 @@ is small enough to round to zero at the displayed number of decimal places.
 
 The \\textasciitilde{} in the maps refers to the range specified in the class intervals.
 
+The \\textsuperscript{\\dag} in figure and table captions and in some indicator names  
+in regional country profile tables indicates that the country composition used in 
+regional aggregation is different from one presented on pages x and xi
+and follows the country composition used in
+\\textit{The State of Food Insecurity in the World 2015} report 
+(\\url{http://www.fao.org/3/a-i4646e.pdf}) as described in Annex1.
+
 In addition:
        \\begin{itemize}
        \\item <5.0 proportion less than 5 percent
@@ -547,14 +554,6 @@ ii) the comparability condition – as aggregations are usually computed over ti
 this condition is designed to ensure that the number of countries is comparable 
 over several years; under the current restriction the number of countries 
 may not vary by more than 15 over time.
-
-The \\textsuperscript{\\dag} in figure and table captions and in some indicator names  
-in regional country profile tables indicates that the country composition used in 
-regional aggregation is different from one presented on pages x and xi
-and follows the country composition used in
-\\textit{The State of Food Insecurity in the World 2015} report 
-(\\url{http://www.fao.org/3/a-i4646e.pdf}) as described in Annex1
-
 
     ")
 

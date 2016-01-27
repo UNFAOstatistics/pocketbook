@@ -686,10 +686,8 @@ if (table_type == "latex"){
         fsi_meta <- read_csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"))
         fsi_meta <- as.data.frame(fsi_meta)
         if (subindicators.df[j, "INDICATOR1"] %in% fsi_meta[["NAME"]] & M49countries[i,"SHORT_NAME"] %in% c(RAP_reg_names,
-                                                                                                            RAF_reg_names,
-                                                                                                            REU_reg_names,
                                                                                                             RNE_reg_names)){
-          cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),"\\textsuperscript{\\dag}", " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+          cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),dag_char, " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
         } else {
           cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
