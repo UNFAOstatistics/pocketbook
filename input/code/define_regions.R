@@ -78,7 +78,7 @@ RAF_Eastern_Africa <- c(29, # Burundi
                         72, # Djibouti
                         178, # Eritrea
                         238, # Ethiopia
-                        # 62, # Ethiopia PDR
+                        62, # Ethiopia PDR
                         114, # Kenya
                         129, # Madagascar
                         130, # Malawi
@@ -191,8 +191,8 @@ RAP_South_Eastern_Asia  <- c(26, # Brunei Darussalam
 # cat(paste(faost_code_data$M49_Australia.and.New.Zealand, collapse=","))
 
 RAP_Austriala_and_New_Zealand  <- c(10,  # Australia
-                                    156#, # New Zealand
-                                    # 161 # Norfolk Island
+                                    156, # New Zealand
+                                    161 # Norfolk Island
 )
 
 
@@ -201,8 +201,8 @@ RAP_Austriala_and_New_Zealand  <- c(10,  # Australia
 
 
 RAP_Melanesia  <- c(66, # Fiji
-                    #153, # New Caledonia
-                    #168, # Papua New Guinea
+                    153, # New Caledonia
+                    168, # Papua New Guinea
                     25, # Solomon Islands
                     155 # Vanuatu
 )
@@ -211,36 +211,35 @@ RAP_Melanesia  <- c(66, # Fiji
 # cat(paste(faost_code_data$M49_Micronesia, collapse=","))
 
 
-# RAP_Micronesia  <- c(#88, # Guam
-#                     #  83 # Kiribati
-#                     #  127, # the Marshall Islands
-#                     #  145, # Micronesia (Federated States of)
-#                     #  148, # Nauru
-#                     #  163, # Northern Mariana Islands
-#                     #  164, # Pacific Islands
-#                     #  180 # Trust Territory of,Palau
-# )
-
+RAP_Micronesia  <- c(88, # Guam
+                     83, # Kiribati
+                     127, # the Marshall Islands
+                     145, # Micronesia (Federated States of)
+                     148, # Nauru
+                     163, # Northern Mariana Islands
+                    #  164, # Pacific Islands
+                     180 # Trust Territory of,Palau
+)
 
 
 # cat(paste(country_data$M49_Polynesia, collapse=","))
 # cat(paste(faost_code_data$M49_Polynesia, collapse=","))
 
-RAP_Polynesia  <- c(#5, # American Samoa
-                    # 47, # the Cook Islands
-                    # 70, # French Polynesia
-                    # 160, # Niue
-                    # 172, # Pitcairn Islands
-                    244#, # Samoa
-                    # 218, # Tokelau
-                    # 219, # Tonga
-                    # 227, # Tuvalu
-                    # 243 # Wallis and Futuna Islands
+RAP_Polynesia  <- c(5, # American Samoa
+                    47, # the Cook Islands
+                    70, # French Polynesia
+                    160, # Niue
+                    172, # Pitcairn Islands
+                    244, # Samoa
+                    218, # Tokelau
+                    219, # Tonga
+                    227, # Tuvalu
+                    243 # Wallis and Futuna Islands
 )
 
 RAP_Oceania <- c(RAP_Austriala_and_New_Zealand,
                  RAP_Melanesia,
-                #  RAP_Micronesia,
+                 RAP_Micronesia,
                  RAP_Polynesia)
 
 
@@ -400,8 +399,8 @@ RNE_Gulf_Cooperation_Council_States_and_Yemen <- c(13, # Bahrain
                                                    194, # Saudi Arabia
                                                    225, # the United Arab Emirates
                                                    249, # Yemen
-                                                   247) # Democratic Yemen
-                                                  #  246) # Yemen (old)
+                                                   247, # Democratic Yemen
+                                                   246) # Yemen (old)
 
 
 # cat(paste(country_data$M49_RNEome, collapse=","))

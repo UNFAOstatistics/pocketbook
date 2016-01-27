@@ -53,12 +53,12 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13004  #	South and Southwest Asia
   dat$FAOST_CODE[dat$FAOST_CODE == "5857"] <- 13005  #	Central Asia - 'Caucasus and central Asia' in SOFI
   # dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13006  #	Australia New Zealand ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "RAPDeveloped"] <- 13006  #	Australia New Zealand ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "5502"] <- 13008  #	Melanesia ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "5503"] <- 13009  #	Micronesia ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "5504"] <- 13010  #	Polynesia ??
+  dat$FAOST_CODE[dat$FAOST_CODE == "5500"] <- 13006  #	Australia New Zealand ??
+  # dat$FAOST_CODE[dat$FAOST_CODE == "5502"] <- 13008  #	Melanesia ??
+  # dat$FAOST_CODE[dat$FAOST_CODE == "5503"] <- 13009  #	Micronesia ??
+  # dat$FAOST_CODE[dat$FAOST_CODE == "5504"] <- 13010  #	Polynesia ??
   dat$FAOST_CODE[dat$FAOST_CODE == "5303"] <- 13012  #	Southern Asia
-  dat$FAOST_CODE[dat$FAOST_CODE == "5856"] <- 13014  #	Western Asia ??
+  # dat$FAOST_CODE[dat$FAOST_CODE == "5856"] <- 13014  #	Western Asia ??
   ## RAP country level aggregates
   new_rows <- dat[dat$FAOST_CODE == "68",]
   new_rows$FAOST_CODE[new_rows$FAOST_CODE == "68"] <- 13007  #	France
@@ -124,7 +124,7 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   # -> so I am replacing values for those variables & those aggregates with NA
   # and they will appear empty in countryprofile tables
 
-  aggregates_to_censore <- c( 13006,  #	Australia New Zealand ??
+  aggregates_to_censore <- c( #13006,  #	Australia New Zealand ?? This is now Oceania!!
                               13008,  #	Melanesia ??
                               13009,  #	Micronesia ??
                               13010,  #	Polynesia ??
