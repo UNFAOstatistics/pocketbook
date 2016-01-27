@@ -173,18 +173,8 @@ if (broke_only_tables_into_images){
   system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
 
 }
-if (broke_all_into_images) system(paste0("convert -density 150 syb_main.pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
-
-
-
-  # knitr::purl("syb_part2.Rnw","syb_part2.R")
-  # knitr::spin("syb_part2.R")
-  #
-  # knitr::purl("syb_part3.Rnw","syb_part3.R")
-  # knitr::spin("syb_part3.R")
-  #
-  # knitr::purl("syb_part4.Rnw","syb_part4.R")
-  # knitr::spin("syb_part4.R")
+if (broke_all_into_images) 
+  system(paste0("convert -density 150 syb_main_",region_to_report,".pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
 }
 
 # copy the output -pdf's into the output/pdf-folder
