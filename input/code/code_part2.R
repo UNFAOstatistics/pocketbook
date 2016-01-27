@@ -195,7 +195,7 @@ names(dw) <- c("","1990-92","2014-16")
 tbl_data <- dw
 #dw <- dw[c(7,3,4,1,2,5,6),]
 # Chiaras comments
-if (table_type == "latex") cap <- "\\large{Prevalence of undernourishment (percent)}"
+if (table_type == "latex") cap <- paste("\\large{Prevalence of undernourishment (percent)",dag_char,"}")
 if (table_type == "html")  cap <- "<b>Table: Prevalence of undernourishment (percent)</b>"
 caption_text <- cap
 
@@ -253,7 +253,7 @@ p <- p + labs(x="",y="\nmillion people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
-caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16")
+caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16",dag_char)
 
 
 ## ---- P2undernuRIGHT ----
@@ -582,7 +582,7 @@ p
 
 
 # Caption
-caption_text <- "Average dietary energy supply adequacy, 3 year average (1990 to 2015)"
+caption_text <- paste("Average dietary energy supply adequacy, 3 year average (1990 to 2015)",dag_char)
 
 
 ## ---- P2availabLEFT ----
@@ -691,7 +691,7 @@ p <- p + theme(axis.text.x = element_text(angle = 45))
 p
 
 # Caption
-caption_text <- "Average supply of protein of animal origin"
+caption_text <- paste("Average supply of protein of animal origin",dag_char)
 
 
 ## ---- P2availabMAP ----
@@ -763,7 +763,7 @@ p
 
 
 # Caption
-caption_text <- "Depth of food decifit (kcal/capita/day) (3 year averages)"
+caption_text <- paste("Depth of food decifit (kcal/capita/day) (3 year averages)",dag_char)
 
 
 
@@ -871,7 +871,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "GDP per capita, PPP, constant 2011 international \\$"
+caption_text <- paste("GDP per capita, PPP, constant 2011 international \\$",dag_char)
 
 
 
@@ -942,7 +942,7 @@ p
 
 
 # Caption
-caption_text <- "Per capita food production variability, constant 2004-2006 thousand international \\$"
+caption_text <- paste("Per capita food production variability, constant 2004-2006 thousand international \\$",dag_char)
 
 
 
@@ -1043,7 +1043,7 @@ p <- p + labs(x=NULL,y="percent\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
-caption_text <- "Value of food imports as a share of total merchandise exports (3 year averages)"
+caption_text <- paste("Value of food imports as a share of total merchandise exports (3 year averages)",dag_char)
 
 
 ## ---- P2stabilityMAP ----
