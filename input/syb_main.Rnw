@@ -523,7 +523,8 @@ Data for Sudan prior to 2011 refers to former Sudan.
 The asterisk in charts and maps indicates the most recent year 
 available in the specified time interval. In the country profiles, 
 when the country data have not been reported for the reference year, 
-data in italics indicate that the value for the most recent year available is shown.
+data in italics indicate that the value for the most recent year complete data
+available is shown.
 
 In the tables, a blank means not applicable or, for an aggregate, 
 not analytically meaningful. A 0 or 0.0 means zero or a number that 
