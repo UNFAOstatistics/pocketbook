@@ -36,7 +36,11 @@ if (region_to_report == "GLO") short_text <- "Undernourishment is a state, lasti
 
 if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
-
+  
+  # Cereal dependency ratio has odd numbers for year 2011. (China (351) is 100)
+  # Recoding them to NA
+  dat$FBS.IDR.CRLS.PCT3D[dat$Year == 2011]  <- NA
+  
   # RAF
   dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRafReg"] <- "12000" # Regional Office for Africa
   dat$FAOST_CODE[dat$FAOST_CODE == "5101"] <- 12002 # Eastern Africa
@@ -99,7 +103,7 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
 
   # Add Area var from syb.df
   tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
-  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE")
+  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE",all.x=TRUE)
   dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
 
   dat$FAO_TABLE_NAME <- str_replace_all(dat$FAO_TABLE_NAME, "SOFI Regional Office for ", "")
@@ -1205,7 +1209,6 @@ if (region_to_report == "RAP") dat <- df %>% filter(FAOST_CODE %in% c(5853), Yea
 if (region_to_report == "REU") dat <- df %>% filter(FAOST_CODE %in% c(14000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
 if (region_to_report == "RNE") dat <- df %>% filter(FAOST_CODE %in% c(15000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
 if (region_to_report == "GLO") dat <- df %>% filter(FAOST_CODE %in% c(5000),  Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
-
 
 
 dat <- dat[!is.na(dat$SH.STA.ACSN),]

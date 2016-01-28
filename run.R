@@ -55,7 +55,7 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
+include_country_profiles <- T
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables
@@ -219,7 +219,10 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-19-18/SYB2016-01-19-18.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-00/SYB2016-01-28-00.RData")
+
+
 
 syb.df <- SYB.df; rm(SYB.df)
 
@@ -370,3 +373,5 @@ if (!exists("regional15_web")){ # because of the pocketbook_web
   # gc()
   } 
 
+
+syb.df %>% select(FAOST_CODE,Year,AQ.WAT.WWAGR.MC.SH) %>% na.omit()
