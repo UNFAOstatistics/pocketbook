@@ -485,7 +485,7 @@ if (table_type == "latex"){
     if (region_to_report %in% "RAP"){
 
       if (M49countries[i,"SHORT_NAME"] %in% c("France","United States","Russian Federation",RAP_reg_names)){
-        cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
+        cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
             define_row_color,
             "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
           \\toprule
@@ -506,7 +506,7 @@ if (table_type == "latex"){
     if (region_to_report %in% "RAF"){
 
       if (M49countries[i,"SHORT_NAME"] %in% RAF_reg_names){
-        cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
+        cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
             define_row_color,
             "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
           \\toprule
@@ -527,7 +527,7 @@ if (table_type == "latex"){
     if (region_to_report %in% "RNE"){
 
       if (M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
-          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
+          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
               define_row_color,
               "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
             \\toprule
@@ -548,7 +548,7 @@ if (table_type == "latex"){
     if (region_to_report %in% "REU"){
 
       if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
-          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "* }", # asterisk for France, Russia & US
+          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
               define_row_color,
               "\\begin{tabular}{L{4.0cm} R{1cm} R{1cm} R{1cm}}
             \\toprule
@@ -707,7 +707,7 @@ if (table_type == "latex"){
       if (M49countries[i,"SHORT_NAME"] %in% RAP_reg_names){
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
+      \\textsuperscript{\\ddag} Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -715,7 +715,7 @@ if (table_type == "latex"){
 
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *France is included in this publication as it has territories in the Region. However the data refer to the entire country, irrespective of geographic location.
+      \\textsuperscript{\\ddag} France is included in this publication as it has territories in the Region. However the data refer to the entire country, irrespective of geographic location.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -723,7 +723,7 @@ if (table_type == "latex"){
 
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Russian Federation is included in this publication as it is geographically included in both Europe and Asia and is also a member of the FAO Regional Conference for Asia and the Pacific.
+      \\textsuperscript{\\ddag} Russian Federation is included in this publication as it is geographically included in both Europe and Asia and is also a member of the FAO Regional Conference for Asia and the Pacific.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -731,7 +731,7 @@ if (table_type == "latex"){
 
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *United States is included in this publication as it has territories in the Region. However the data refer to  the entire country, irrespective of geographic location of its territorial areas.
+      \\textsuperscript{\\ddag} United States is included in this publication as it has territories in the Region. However the data refer to  the entire country, irrespective of geographic location of its territorial areas.
       \\clearpage\n",
             file = fileOut, append = TRUE)
 
@@ -753,7 +753,7 @@ if (table_type == "latex"){
 
       cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
+      \\textsuperscript{\\ddag} Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -772,7 +772,7 @@ if (table_type == "latex"){
       if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
         cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
-      *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
+      \\textsuperscript{\\ddag} Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
             file = fileOut, append = TRUE)
       }
@@ -790,7 +790,7 @@ if (table_type == "latex"){
 
         cat("\ \ \ \ \ \ \ \\toprule
         \n\\end{tabular}
-        *Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
+        \\textsuperscript{\\ddag} Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
         \\clearpage\n",
         file = fileOut, append = TRUE)
         }
