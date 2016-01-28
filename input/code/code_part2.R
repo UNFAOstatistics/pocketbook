@@ -257,7 +257,7 @@ p <- p + labs(x="",y="\nmillion people")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
-caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16",dag_char)
+caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16")
 
 
 ## ---- P2undernuRIGHT ----
@@ -514,7 +514,7 @@ p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010,2015),
 p
 
 # Caption
-caption_text <- "Prevalence of over-acquisition (1990-92 to 2014-16)"
+caption_text <- paste("Prevalence of over-acquisition (1990-92 to 2014-16)",dag_char)
 # caption_text <- "text"
 
 ## ---- P2obesityMAP ----
