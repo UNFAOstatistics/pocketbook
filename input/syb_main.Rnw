@@ -468,18 +468,17 @@ cat("
 
 \\LARGE{How to use this book}
 
-\\bigskip
-
 \\large
+
+\\vspace{-2mm}
 
 \\subsection{The structure}
 
-This publication presents selected key indicators related to
-agriculture and food security that stakeholders can use to
-prioritize their actions. It is divided into two main sections, one
-thematic and one country-specific. It presents a variety of
-dimensions of agriculture and food security along four main focus
-areas:
+This publication presents selected key indicators related to agriculture and food security
+that the international community, governments, the private sector and civil society can
+use to assess current trends and prioritize their actions. It is divided into two main sections,
+one thematic and one country-specific. It presents a variety of dimensions of agriculture
+and food security along four main focus areas:
 
 {\\textbf{\\color{part1} The setting}} measures the state of the
 agricultural resource base by assessing the supply of land, labour,
@@ -501,13 +500,16 @@ of agriculture in the context of the pressure it exerts on its
 ecological surroundings, including the interaction of agriculture
 with climate change.
 
-This Pocketbook is part of the FAO Statistical Yearbook suite of
-products and is just one of the tools that can be used as building
-blocks for monitoring progress and formulating policy. It includes
-data from FAOSTAT as well as from other partners within the
-organization and in the international community.
+This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one
+of the tools that can be used as building blocks for monitoring progress and formulating
+policy. It includes data from FAOSTAT and other FAO sources,  as well as from other
+partner organizations from the international community.  The source for all indicators,
+as well as more information about each one of them, is included in the '\\textit{Definitions}'
+section at the end of the pocketbook.
 
-\\subsection{From Notes..}
+\\vspace{-2mm}
+
+\\subsection{Country definitions and classification}
 
 The country classification adopted in this publication is based on the 
 United Nations M49 classification (\\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). 
@@ -520,11 +522,35 @@ and South Sudan as part of Eastern Africa. In this report, data for
 the Sudan are therefore included in the Northern Africa region. 
 Data for Sudan prior to 2011 refers to former Sudan.
 
-The asterisk in charts and maps indicates the most recent year 
-available in the specified time interval. In the country profiles, 
-when the country data have not been reported for the reference year, 
-data in italics indicate that the value for the most recent year complete data
-available is shown.
+\\vspace{-2mm}
+
+\\subsection{Aggregations}
+
+Unless otherwise specified, regional and sub-regional aggregates are based on the country
+groupings defined in table ’Classification of Countries’ on page xi. Some indicators.
+A small subset of indicators are based on the aggregation rules defined in the
+State of Food Insecurity in the World 2015 report (\\url{http://www.fao.org/3/a-i4646e.pdf})
+and these are identified with the †symbol, as described below.
+
+Two types of aggregations are used in the book: sum and weighted mean. Two restrictions
+are imposed when computing the aggregation: i) the sufficiency condition – the
+aggregation is computed only when sufficient countries have reported data, and the current
+threshold is set at 50 percent of the variable and the weighting variable, if present;
+and ii) the comparability condition - as aggregations are usually computed over time,
+this condition is designed to ensure that the number of countries is comparable over
+several years; under the current restriction the number of countries may not vary by
+more than 15 over time.
+
+\\vspace{-2mm}
+
+\\subsection{Data presentation conventions}
+
+The cut-off date for the data in this publication is xx January 2016.
+
+The asterisk (*) in charts and maps indicates the most recent year available in the specified
+time interval. In the country profiles, when the country data have not been reported
+for the reference year, data in \\textit{italics} indicate that the 
+value for the most recent year of complete information is shown.
 
 In the tables, a blank means not applicable or, for an aggregate, 
 not analytically meaningful. A 0 or 0.0 means zero or a number that 
@@ -534,28 +560,18 @@ The \\textasciitilde{} in the maps refers to the range specified in the class in
 
 The \\textsuperscript{\\dag} in figure and table captions and in some indicator names  
 in regional country profile tables indicates that the country composition used in 
-regional aggregation is different from one presented on pages x and xi
+regional aggregation is different from one presented on pages xi
 and follows the country composition used in
 \\textit{The State of Food Insecurity in the World 2015} report 
 (\\url{http://www.fao.org/3/a-i4646e.pdf}) as described in Annex1.
 
 In addition:
        \\begin{itemize}
+       \\itemsep0em
        \\item <5.0 proportion less than 5 percent
        \\item <0.1 less than 100\\,000 people
        \\item ns not statistically significant
        \\end{itemize}
-
-Two types of aggregations are used in the book: sum and weighted mean. 
-Two restrictions are imposed when computing the aggregation: 
-i) the sufficiency condition – the aggregation is computed only when sufficient 
-countries have reported data, and the current threshold is set at 50 percent 
-of the variable and the weighting variable, if present; and 
-ii) the comparability condition – as aggregations are usually computed over time, 
-this condition is designed to ensure that the number of countries is comparable 
-over several years; under the current restriction the number of countries 
-may not vary by more than 15 over time.
-
     ")
 
 @
