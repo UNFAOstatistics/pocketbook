@@ -550,7 +550,9 @@ The cut-off date for the data in this publication is xx January 2016.
 The asterisk (*) in charts and maps indicates the most recent year available in the specified
 time interval. In the country profiles, when the country data have not been reported
 for the reference year, data in \\textit{italics} indicate that the 
-value for the most recent year of complete information is shown.
+value for the most recent year of complete information is shown. 
+The one exception is population data, for which the latest 
+information available refers to the year 2015.
 
 In the tables, a blank means not applicable or, for an aggregate, 
 not analytically meaningful. A 0 or 0.0 means zero or a number that 
@@ -566,10 +568,14 @@ and follows the country composition used in
 (\\url{http://www.fao.org/3/a-i4646e.pdf}) as described in Annex1.
 
 In addition:
+
+\\vspace{-2mm}
        \\begin{itemize}
        \\itemsep0em
        \\item <5.0 proportion less than 5 percent
+\\vspace{-1mm}
        \\item <0.1 less than 100\\,000 people
+\\vspace{-1mm}
        \\item ns not statistically significant
        \\end{itemize}
     ")
@@ -598,8 +604,8 @@ cat(paste0(
 
 \\large
 
-",
-pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
+"#,
+#pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
 ))
 
 
