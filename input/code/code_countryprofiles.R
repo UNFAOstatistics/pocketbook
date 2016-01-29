@@ -442,7 +442,7 @@ if (table_type == "latex"){
   ## Years to be shown in the country profile
   year1 = 1990
   year2 = 2000
-  year3 = 2015
+  year3 = 2014
   ## This script creates the latex file
 
   ## Set the rowheight for cprofiles for each book
