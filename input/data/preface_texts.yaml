@@ -139,52 +139,21 @@
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
   acknowledgements: |
-    The Food and Agriculture Organization of the United Nations’ Regional
-    Office for Asia and the Pacific (FAORAP) and the FAO Statistics Division
-    (ESS) would like to acknowledge the collective effort of statisticians
-    and other staff in national statistical offices, ministries of agriculture
-    and other ministries and government departments in this region that constantly
-    provide data to FAO. In addition we would like to acknowledge the ongoing
-    cooperation with regional and international institutions and non-government
+    The Food and Agriculture Organization of the United Nations’ Regional Office for Asia
+    and the Pacific (FAORAP) and the FAO Statistics Division (ESS) would like to acknowledge
+    the collective effort of statisticians and other staff in national statistical offices,
+    ministries of agriculture and other ministries and government departments in this region
+    that constantly provide data to FAO. In addition we would like to acknowledge the
+    ongoing cooperation with regional and international institutions and non-government
     organizations whose efforts have made this publication possible.
-
-    This publication was jointly prepared by FAORAP and the ESS. The work was carried out
-    under the guidance of Hiroyuki Konuma (Assistant Director-General and Regional
+    
+    This publication was jointly prepared by FAORAP and the ESS. The work was carried
+    out under the guidance of Kundhavi Kadiresan (Assistant Director-General and Regional
     Representative, FAORAP) and Pietro Gennari (Chief Statistician, FAO, and Director, ESS).
     The publication is based on data published in FAOSTAT and in other international publications.
-    Production of this book was managed by Mukesh Srivastava (FAORAP) and Amy Heyman (ESS).
-    A number of technical officers at FAORAP, including Purushottam Mudbhary, David Dawe,
-    Sumiter Broca, Patrick Durst, Seevalingum Ramasawmy, Rosa Rolle, Thierry Facon,
-    Simmathiri Appanah, Subash Dasgupta, Vinod Ahuja and Yurdi Yasmi provided valuable
-    comments and contributions during the preparation of this book, particularly on the
-    highlights presented in the text. The publication was edited by Robin Leslie.
-    Yohei Kunikane and Anthony Bur- gard provided valuable support in finalizing and
-    printing of the publication. The team at FAO headquarters in Rome included
-    Filippo Gheri and Shira Fano (ESS) who were responsible for data extraction,
-    layout design and graphics. The other contributors were Nienke Beintema
-    (the International Food Policy Research Institute – IFPRI), Riccardo Biancalani (NRC),
-    Andrea Borlizzi (ESS), Chiara Brunelli (ESS), Carlo Cafiero (ESS), Cinzia Cerri (ESS),
-    Rocio Condor- Golec (Climate, Energy and Tenure Division – NRC), Piero Conforti (ESS),
-    Elisenda Estruch (Gender, Equity and Rural Employment Division – ESW),
-    Alessandro Ferrara (NRC), Karen Frenken (Land and Water Division – NRL),
-    Nandini Gunewardena (FAOLOW), Gary Jones (In- ternational Monetary Fund – IMF),
-    Arvydas Lebedys (Forest Economics, Policy and Products Division – FOE),
-    Erdgin Mane (ESS), Robert Mayo (ESS), Verena Nowak (Nutrition Division – ESN),
-    Michael Rahija (IFPRI), Simone Rossi (NRC), Mirella Salvatore (NRC),
-    Nadia Scialabba (NRC), Gert-Jan Stads (IFPRI), Nathalie Troubat (ESS),
-    Sachiko Tsuji (Statistics and Information Service – FIPS), Francesco Tubiello (NRC),
-    Stefania Vannuccini (FIPS), Nathan Wanner (ESS) and Firas Yassin (ESS).
-    Special thanks go to other staff from ESS: Andrea Alcibiade, Guido Barbaglia,
-    Giorgia DeSantis, James Edge, Carola Fabi, Amanda Gordon, Nicola Graziani,
-    Fabio Grita, Francesca Pittueo, Adam Prakash, Gordon Ramsay, Nicholas Sakoff,
-    Nicola Selleri, Syl- vaine Thomas as well as Michelle Kendrick (ESA)
-    and Boris Veytsman for their inputs.
-
-    This publication was carried out under the direction of Pietro Gennari
-    (Chief Statistician and Director, ESS) and Josef Schmidhuber (Deputy Director, ESS).
-    It was prepared by the Statistics Division (Amy Heyman and Markus Kainu).
-    A special thanks the team leaders for their input and to Nicola Selleri
-    (ESS) for the cover design.
+    Production of this book was managed by Mukesh Srivastava (FAORAP) and Stephen Katz (ESS), with
+    the assistance of xxxx, yyyyy, and zzzz from FAORAP and Amy Heyman, Markus Kainu, and Nicola
+    Selleri from FAO Headquarters.
 #################################################################################
 #################################################################################
 - id: REU
