@@ -293,13 +293,13 @@ M49countries <-
 
 ## Add aggregates NOT
 
-RAF_reg_names <- c("Regional Office for Africa",
+RAF_reg_names <- c("Africa",
                    "Central Africa",
                    "Eastern Africa",
                    "Northern Africa",
                    "Southern Africa",
                    "Western Africa")
-RAP_reg_names <- c("Regional Office for Asia and the Pacific",
+RAP_reg_names <- c("Asia and the Pacific",
                    "East Asia",
                    "Southeast Asia",
                    "Central Asia",
@@ -314,7 +314,7 @@ RAP_reg_names <- c("Regional Office for Asia and the Pacific",
                    # "United States"
                    # "Western Asia"
                    )
-REU_reg_names <- c("Regional Office for Europe and Central Asia",
+REU_reg_names <- c("Europe and Central Asia",
                    "Central Asia",
                    "Caucasus and Turkey",
                    "EU Central and Eastern",
@@ -322,7 +322,7 @@ REU_reg_names <- c("Regional Office for Europe and Central Asia",
                    #"Israel",
                    "EU other and EFTA",
                    "South Eastern Europe")
-RNE_reg_names <- c("Regional Office for Near East and North Africa",
+RNE_reg_names <- c("Near East and North Africa",
                    "Gulf Cooperation\n Council States\n and Yemen",
                    "North Africa",
                    "Other Near\n East countries")
@@ -951,7 +951,8 @@ if (table_type == "html"){
 
 # system("sed -i 's#{ 2014 }#{ 2014* }#' ./output/process/CountryProfiles.tex && sed -i 's#\\end{tabular}#\*We can add a footnote for each table like this..\n\\end{tabular}#' ./output/process/CountryProfiles.tex")
 # sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
-# save(syb.df, file="~/btsync/faosync/pocketbooks/pocketbook_tests/regiona_sybdata.RData")
+syb.df <- merge(syb.df,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME","FAO_TABLE_NAME")],by="FAOST_CODE",all=TRUE)
+save(syb.df, file="~/btsync/faosync/pocketbooks/pocketbook_tests/regiona_sybdata.RData")
 
 
 syb.df <- temp

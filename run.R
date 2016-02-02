@@ -7,7 +7,7 @@ options(scipen=999) # disable scientific number formatting
 
 # set root directory
 if (Sys.info()[["user"]] %in% c("markus","aurelius")) root.dir <- "~/btsync/faosync/pocketbooks/pocketbook/"
-if (Sys.info()[["user"]] == "amy")   root.dir <- "~/FAO/regional15/" # Amy
+if (Sys.info()[["user"]] == "amy") root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
 # set data directory
@@ -59,7 +59,7 @@ include_country_profiles <- T
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables
-broke_all_into_images         <- T
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
@@ -71,6 +71,7 @@ table_type <- "latex"
 
 # special characters 
 dag_char <- "\\textsuperscript{\\dag}"
+ddag_char <- "\\textsuperscript{\\ddag}"
 
 
 # just for troubleshooting
@@ -220,7 +221,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-19-18/SYB2016-01-19-18.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-00/SYB2016-01-28-00.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-19/SYB2016-01-28-19.RData")
 
 
 
