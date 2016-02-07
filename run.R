@@ -6,7 +6,7 @@
 options(scipen=999) # disable scientific number formatting
 
 # set root directory
-if (Sys.info()[["user"]] %in% c("markus","aurelius")) root.dir <- "~/btsync/faosync/pocketbooks/pocketbook/"
+if (Sys.info()[["user"]] %in% c("markus","aurelius","aino")) root.dir <- "~/btsync/faosync/pocketbooks/pocketbook/"
 if (Sys.info()[["user"]] == "amy") root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
@@ -44,10 +44,10 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- T
-include_part2        <- T
-include_part3        <- T
-include_part4        <- T
+include_part1        <- F
+include_part2        <- F
+include_part3        <- F
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder

@@ -311,7 +311,7 @@ caption_text <- paste("Agriculture value added per worker, top",nrow(dat_plot),"
 
 # data
 dat <- syb.df %>% filter(Year %in% c(2003:2013)) %>% select(FAOST_CODE,SHORT_NAME,Year,NV.AGR.TOTL.KD)
-dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
+  dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
