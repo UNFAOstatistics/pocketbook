@@ -9,9 +9,9 @@ The setting,7,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1 000 ha),1000,
 The setting,8,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (% area equipped for irrigation),,1
 The setting,9,SL.AGR.EMPL.ZS,,,Employment in agriculture (%),,1
 The setting,10,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
-The setting,12,nitrogen_tonnes_per_ha,,,"Fertilizers, Nitrogen (kg of nutrients per ha)",0.001,1
-The setting,13,phosphate_tonnes_per_ha,,,"Fertilizers, Phosphate (kg of nutrients per ha)",0.001,1
-The setting,14,potash_tonnes_per_ha,,,"Fertilizers, Potash (kg nutrients per ha)",0.001,1
+The setting,12,RF.FERT.NI.TN.SH,,,"Fertilizers, Nitrogen (kg of nutrients per ha)",0.001,1
+The setting,13,RF.FERT.PH.TN.SH,,,"Fertilizers, Phosphate (kg of nutrients per ha)",0.001,1
+The setting,14,RF.FERT.PO.TN.SH,,,"Fertilizers, Potash (kg nutrients per ha)",0.001,1
 The setting,16,energy.for.power.irrigation,,,"Energy consump, power irrigation (mln kWh)",,0
 The setting,17,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),,0
 Hunger dimensions,18,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
