@@ -16,7 +16,7 @@ The setting,15,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
 Hunger and dietary quality dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
 Hunger and dietary quality dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1
 Hunger and dietary quality dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary energy supp, cereals/roots/tubers (%)",,1
-Hunger and dietary quality dimensions,19,FBS.PPCS.AO.GCD3D,,,Average protein supply of animal origin (g/capita/day),,0
+Hunger and dietary quality dimensions,19,FBS.PPCS.AO.GCD3D,,,Average protein supply of animal origin (g/cap/day),,0
 Hunger and dietary quality dimensions,20,FS.OA.SFEP.PCT,,,Share of food expenditure (%),,1
 Hunger and dietary quality dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
 Hunger and dietary quality dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0
