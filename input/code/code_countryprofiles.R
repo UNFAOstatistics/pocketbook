@@ -550,7 +550,7 @@ if (table_type == "latex"){
       if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
           cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
               define_row_color,
-              "\\begin{tabular}{L{4.05cm} R{1cm} R{1cm} R{1cm}}
+              "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
             \\toprule
             \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
             \\midrule\n",
@@ -559,7 +559,7 @@ if (table_type == "latex"){
       if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
         cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
             define_row_color,
-            "\\begin{tabular}{L{4.05cm} R{1cm} R{1cm} R{1cm}}
+            "\\begin{tabular}{L{4.20cm} R{0.9cm} R{0.9cm} R{0.9cm}}
               \\toprule
               \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
               \\midrule\n",
@@ -952,7 +952,7 @@ if (table_type == "html"){
 # system("sed -i 's#{ 2014 }#{ 2014* }#' ./output/process/CountryProfiles.tex && sed -i 's#\\end{tabular}#\*We can add a footnote for each table like this..\n\\end{tabular}#' ./output/process/CountryProfiles.tex")
 # sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
 syb.df <- merge(syb.df,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME","FAO_TABLE_NAME")],by="FAOST_CODE",all=TRUE)
-save(syb.df, file="~/btsync/faosync/pocketbooks/pocketbook_tests/regiona_sybdata.RData")
+save(syb.df, file="~/btsync/faosync/pocketbooks/pocketbook_tests/data/regiona_sybdata.RData")
 
 
 syb.df <- temp
