@@ -559,7 +559,7 @@ if (table_type == "latex"){
       if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
         cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
             define_row_color,
-            "\\begin{tabular}{L{4.20cm} R{0.9cm} R{0.9cm} R{0.9cm}}
+            "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
               \\toprule
               \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
               \\midrule\n",
