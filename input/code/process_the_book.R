@@ -229,12 +229,14 @@ if (upload_pdfs_to_server) {
   pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
                              "/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
   system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
+  # system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65"))
 }
 
 
 if (upload_images_to_server) {
     comparison <- list.files(paste0(root.dir,"/output/jpg"), full.names = TRUE)
     system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
+    # system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65/comparison/"))
 }
 
 
