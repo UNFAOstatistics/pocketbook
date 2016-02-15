@@ -223,8 +223,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-19/SYB2016-01-28-19.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-14/SYB2016-02-08-14.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
 
 
 
@@ -377,5 +377,3 @@ if (!exists("regional15_web")){ # because of the pocketbook_web
   # gc()
   } 
 
-
-syb.df %>% select(FAOST_CODE,Year,AQ.WAT.WWAGR.MC.SH) %>% na.omit()

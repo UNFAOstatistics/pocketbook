@@ -41,10 +41,8 @@ setwd(paste0(root.dir,"/output/process"))
 #                      |_|                   |___/
 
 ## ---- loop_begins ----
-
 for (region_to_report in regionS_to_report) {
 
-  
   ## Copy everything from templates/-folder into process/folder
   flist <- list.files(paste0(root.dir,"/input/templates"),
                       recursive = TRUE,
