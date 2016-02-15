@@ -532,14 +532,19 @@ A small subset of indicators are based on the aggregation rules defined in the
 State of Food Insecurity in the World 2015 report (\\url{http://www.fao.org/3/a-i4646e.pdf})
 and these are identified with the †symbol, as described below.
 
-Two types of aggregations are used in the book: sum and weighted mean. Two restrictions
-are imposed when computing the aggregation: i) the sufficiency condition – the
+% Two types of aggregations are used in the book: sum and weighted mean. Two restrictions
+% are imposed when computing the aggregation: i) the sufficiency condition – the
+% aggregation is computed only when sufficient countries have reported data, and the current
+% threshold is set at 50 percent of the variable and the weighting variable, if present;
+% and ii) the comparability condition - as aggregations are usually computed over time,
+% this condition is designed to ensure that the number of countries is comparable over
+% several years; under the current restriction the number of countries may not vary by
+% more than 15 over time.
+
+Two types of aggregations are used in the book: sum and weighted mean. 
+A sufficiency condition is imposed when computing the aggregation – the 
 aggregation is computed only when sufficient countries have reported data, and the current
-threshold is set at 50 percent of the variable and the weighting variable, if present;
-and ii) the comparability condition - as aggregations are usually computed over time,
-this condition is designed to ensure that the number of countries is comparable over
-several years; under the current restriction the number of countries may not vary by
-more than 15 over time.
+threshold is set at 50 percent of the variable and the weighting variable, if present.
 
 \\vspace{-2mm}
 
