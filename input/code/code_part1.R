@@ -372,7 +372,7 @@ dat_plot <- dat %>%  group_by(Year) %>%
   arrange(-share)
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
-p <- p + geom_line(size=1.1, alpha=.7)
+p <- p + geom_line(size=1.1, alpha=.7) + geom_point()
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -921,13 +921,29 @@ dat$value <- dat$value / 1000 # into bilion dollars
 dat_plot <- dat
 
 # Draw the plot
-p <- ggplot(dat_plot, aes(x = Year, y = value))
-p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
-p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="billion 2013 US$\n")
-# p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
-# p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
-p
+# p <- ggplot(dat_plot, aes(x = Year, y = value))
+# p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
+# p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+# p <- p + labs(x="",y="billion 2013 US$\n")
+# # p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
+# # p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
+# p
+
+
+if (nrow(dat_plot) > 0){
+  p <- ggplot(dat_plot, aes(x = Year, y = value))
+  p <- p + geom_bar(aes(fill=variable), stat = "identity",position = "stack")
+  p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
+  p <- p + labs(x="",y="billion 2013 US$\n")
+  # p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
+  p <- p + scale_x_continuous(breaks=min(dat_plot$Year):max(dat_plot$Year))
+  p <- p + theme(axis.text.x = element_text(angle=90,vjust=.5))
+  p
+} else plot(cars)
+
+
+
+
 
 # Caption
 caption_text <- "Aid commitment flow to Agriculture, Forestry and Fishing, billion 2013 US\\$ (1995-2013)"
