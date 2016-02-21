@@ -264,8 +264,11 @@ tbr.df <-
                               "Martinique", "Mayotte", "Micronesia", "Monaco",
                               "Montserrat", "Nauru", "New Caledonia", "Niue",
                               "Norfolk Island", "Northern Mariana Islands",
-                              "Oman", "Palau", "Papua New Guinea", "Pitcairn Islands",
-                              "Puerto Rico", "Qatar", "Reunion", "Saint Barthelemi",
+                              #"Oman",
+                              "Palau", "Papua New Guinea", "Pitcairn Islands",
+                              "Puerto Rico", 
+                              #"Qatar",
+                              "Reunion", "Saint Barthelemi",
                               "Saint Helena", "Saint Kitts", "Saint Lucia",
                               "Saint Pierre", "San Marino", "Sark", "Saint-Martin (French Part)",
                               "Sint Maarten (Dutch Part)", "Singapore",
@@ -276,7 +279,10 @@ tbr.df <-
              FAOST_CODE = c(284,5,6,258,8,22,12,278,239,36,47,279,55,61,65,
                             64,69,70,82,85,86,87,88,274,94,264,283,125,
                             127,135,270,145,140,142,148,153,160,161,163,
-                            221,180,168,172,177,179,182,282,187,188,189,
+                            #221, # Oman
+                            180,168,172,177,
+                            #179, # Qatar
+                            182,282,187,188,189,
                             190,192,285,281,280,200,260,218,219,224,227,
                             240,243,205),
              stringsAsFactors = FALSE)
