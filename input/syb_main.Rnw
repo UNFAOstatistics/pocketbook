@@ -527,7 +527,7 @@ Data for Sudan prior to 2011 refers to former Sudan.
 \\subsection{Aggregations}
 
 Unless otherwise specified, regional and sub-regional aggregates are based on the country
-groupings defined in table ’Classification of Countries’ on page xi. Some indicators.
+groupings defined in table ’Classification of Countries’ on page xi.
 A small subset of indicators are based on the aggregation rules defined in the
 State of Food Insecurity in the World 2015 report (\\url{http://www.fao.org/3/a-i4646e.pdf})
 and these are identified with the †symbol, as described below.
