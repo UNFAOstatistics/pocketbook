@@ -12,7 +12,7 @@ The setting,11,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
 The setting,13,RF.FERT.NI.TN.SH,,,"Fertilizers, Nitrogen (kg per ha)",0.001,0
 The setting,14,RF.FERT.PH.TN.SH,,,"Fertilizers, Phosphate (kg per ha)",0.001,0
 The setting,15,RF.FERT.PO.TN.SH,,,"Fertilizers, Potash (kg per ha)",0.001,0
-The setting,18,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),1000,0
+The setting,18,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),,0
 Hunger dimensions,19,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
 Hunger dimensions,20,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
 Hunger dimensions,21,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
