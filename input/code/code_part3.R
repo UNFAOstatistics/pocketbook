@@ -147,8 +147,8 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
@@ -164,7 +164,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Dietary energy supply, top",ncases,"countries in 2015")
+caption_text <- paste("Dietary energy supply, top",ncases,"countries in 2014-2016")
 
 ## ---- P3desRIGHT ----
 
@@ -187,8 +187,8 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
+top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
@@ -686,7 +686,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top",ncases,tolower(second),"producing countries, per capita")
+caption_text <- paste("Top",ncases,tolower(second),"producing countries, kg per capita")
 
 
 ## ---- P3cropBOTTOM ----
@@ -717,7 +717,7 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Cereals, yield"
+caption_text <- "Cereals, yield, hg per capita"
 
 
 ## ---- P3cropMAP ----

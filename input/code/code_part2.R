@@ -1026,7 +1026,7 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Domestic food price volatility index, top",ncases,"countriesin 2014")
+caption_text <- paste("Domestic food price volatility index, top",ncases,"countries in 2014")
 
 ## ---- P2stabilityBOTTOM ----
 dat <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
