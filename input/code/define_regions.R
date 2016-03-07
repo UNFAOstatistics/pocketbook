@@ -202,7 +202,7 @@ RAP_Austriala_and_New_Zealand  <- c(10,  # Australia
 
 RAP_Melanesia  <- c(66, # Fiji
                     #153, # New Caledonia
-                    #168, # Papua New Guinea
+                    168, # Papua New Guinea
                     25, # Solomon Islands
                     155 # Vanuatu
 )
@@ -211,15 +211,15 @@ RAP_Melanesia  <- c(66, # Fiji
 # cat(paste(faost_code_data$M49_Micronesia, collapse=","))
 
 
-# RAP_Micronesia  <- c(#88, # Guam
-#                     #  83 # Kiribati
-#                     #  127, # the Marshall Islands
-#                     #  145, # Micronesia (Federated States of)
-#                     #  148, # Nauru
+RAP_Micronesia  <- c(#88, # Guam
+                     83, # Kiribati
+                     127, # the Marshall Islands
+                     145, # Micronesia (Federated States of)
+                     148, # Nauru
 #                     #  163, # Northern Mariana Islands
 #                     #  164, # Pacific Islands
-#                     #  180 # Trust Territory of,Palau
-# )
+                     180 # Trust Territory of,Palau
+)
 
 
 
@@ -227,32 +227,32 @@ RAP_Melanesia  <- c(66, # Fiji
 # cat(paste(faost_code_data$M49_Polynesia, collapse=","))
 
 RAP_Polynesia  <- c(#5, # American Samoa
-                    # 47, # the Cook Islands
+                    47, # the Cook Islands
                     # 70, # French Polynesia
-                    # 160, # Niue
+                    160, # Niue
                     # 172, # Pitcairn Islands
-                    244#, # Samoa
+                    244, # Samoa
                     # 218, # Tokelau
-                    # 219, # Tonga
-                    # 227, # Tuvalu
+                    219, # Tonga
+                    227 # Tuvalu
                     # 243 # Wallis and Futuna Islands
 )
 
 RAP_Oceania <- c(RAP_Austriala_and_New_Zealand,
                  RAP_Melanesia,
-                #  RAP_Micronesia,
+                 RAP_Micronesia,
                  RAP_Polynesia)
 
 
-# RAP_Russian_Federation  <- c(185)
+RAP_Russian_Federation  <- c(185)
 
 
-# RAP_France  <- c(68)
+RAP_France  <- c(68)
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
 # cat(paste(faost_code_data$M49_Melanesia, collapse=","))
 
-# RAP_United_States  <- c(231)
+RAP_United_States  <- c(231)
 
 # cat(paste(country_data$M49_Melanesia, collapse=","))
 # cat(paste(faost_code_data$M49_Melanesia, collapse=","))
@@ -270,6 +270,22 @@ RAP <- c(RAP_Central_Asia,
          # RAP_Russian_Federation,
          # RAP_France,
          # RAP_United_States
+)
+
+# New regiona for a ALL FAO RAP MEMBERS ie. WAP
+WAP <- c(RAP_Central_Asia,
+         RAP_Eastern_Asia,
+         RAP_Southern_Asia,
+         RAP_South_Eastern_Asia,
+         # RAP_Western_Asia,
+         # RAP_Austriala_and_New_Zealand,
+         # RAP_Melanesia,
+         # RAP_Micronesia,
+         # RAP_Polynesia,
+         RAP_Oceania,
+         RAP_Russian_Federation,
+         RAP_France,
+         RAP_United_States
 )
 
 
@@ -1052,6 +1068,9 @@ region_key$RAP_Oceania                      <- ifelse(region_key$FAOST_CODE %in%
 # region_key$RAP_Russian_Federation           <- ifelse(region_key$FAOST_CODE %in% RAP_Russian_Federation, TRUE, FALSE)
 # region_key$RAP_France                       <- ifelse(region_key$FAOST_CODE %in% RAP_France, TRUE, FALSE)
 # region_key$RAP_United_States                <- ifelse(region_key$FAOST_CODE %in% RAP_United_States, TRUE, FALSE)
+
+# New regiona for a ALL FAO RAP MEMBERS ie. WAP
+region_key$WAP                              <- ifelse(region_key$FAOST_CODE %in% WAP, TRUE, FALSE)
 
 region_key$REU                          <- ifelse(region_key$FAOST_CODE %in% REU, TRUE, FALSE)
 region_key$REU_South_Eastern_Europe     <- ifelse(region_key$FAOST_CODE %in% REU_South_Eastern_Europe, TRUE, FALSE)

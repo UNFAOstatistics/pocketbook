@@ -365,7 +365,8 @@ if (region_to_report == "RAP"){
                                     13005, # Central Asia
                                     # 13006, # Australia and New Zealand
                                     13006, # Oceania
-                                    13012 # Southhern Asia
+                                    13012, # Southhern Asia
+                                    23000 # FAO RAP member countries
                                     # 68, # France
                                     # 13008, #Melanesia
                                     # 13009, #Micronesia
@@ -374,7 +375,7 @@ if (region_to_report == "RAP"){
                                     # 231#, # United States
                                     # 13014 # Western Asia
                                     ),
-                     SHORT_NAME = RAP_reg_names,
+                     SHORT_NAME = c(RAP_reg_names,"FAO RAP member countries"),
                      stringsAsFactors = FALSE),
           M49countries)
 }
