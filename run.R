@@ -223,8 +223,10 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-19/SYB2016-01-28-19.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-14/SYB2016-02-08-14.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
 
 
 
@@ -258,6 +260,8 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSoutheastAsia"]      <- 13003
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPSouthSouthwestAsia"] <- 13004
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPCentralAsia"]        <- 13005
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPOceania"]            <- 13006
+
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "WAPregion"]             <- 23000 # FAO RAP member countries
 
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPAustraliaNewZealand"]<- 13006
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "RAPFrance"]             <- 13007
