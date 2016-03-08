@@ -93,8 +93,14 @@ dat <- dat %>% group_by(var) %>%  dplyr::summarise(wmean = weighted.mean(mean, O
 
 dat_plot <- dat  %>% dplyr::mutate(sum = sum(mean))
 
-p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = var, width = sum))
+p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = var, width = sum, ymax=1))
 p <- p + geom_bar(position="fill", stat="identity")
+p <- p + geom_label(aes(x=sum*2.0/2,y=mean+2,label=paste0(round(wmean,1),"%")),
+                    label.padding = unit(0.10, "lines"),
+                    position="fill",
+                    color="white",
+                    stat="identity",alpha=.8,
+                    size=3,family="PT Sans",fontface="bold",show.legend=FALSE)
 p <- p + coord_polar("y")
 p <- p + theme_minimal()
 p <- p + theme(legend.position = "right")
@@ -916,10 +922,18 @@ d <- dat %>% filter(Item == top_animal, Year %in% c(2000,2013), Unit %in% c("Hea
   ungroup() %>%
   dplyr::mutate(subgroup = str_replace_all(subgroup, "\\ \\+\\ \\(Total\\)","")) %>%
   group_by(Year) %>%
-  dplyr::mutate(pos = cumsum(share)- share/2)
+  dplyr::mutate(pos = cumsum(share)- share/2) %>% 
+  mutate(label = round(Value / 1000000,1))
 
-p <- ggplot(d, aes(x=sum/2, y = share, fill = subgroup, width = sum))
+library(ggrepel)
+p <- ggplot(d, aes(x=sum/2, y = share, fill = subgroup, width = sum, label=label, ymax=1))
 p <- p + geom_bar(position="fill", stat="identity")
+p <- p + geom_label(aes(x=sum*2/2,y=share+14),
+                   label.padding = unit(0.10, "lines"),
+                   position="fill",
+                   color="white",
+                   stat="identity",alpha=.8,
+                   size=3,family="PT Sans",fontface="bold",show.legend=FALSE)
 p <- p + facet_wrap(~Year)
 p <- p + coord_polar("y")
 p <- p + theme_minimal()
@@ -930,6 +944,7 @@ p <- p + theme(axis.ticks = element_blank())
 p <- p + theme(panel.grid.minor = element_blank())
 p <- p + theme(panel.grid.major = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(d$subgroup)))[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(d$subgroup)))[["Sub"]])
 p <- p + theme(legend.title = element_blank())
 if (table_type == "latex"){
   p <- p + theme(text = element_text(size=11, family="PT Sans"))
@@ -942,12 +957,12 @@ if (table_type == "latex"){
 }
 p <- p + labs(x=NULL, y=NULL)
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
-p <- p + guides(fill = guide_legend(nrow = 3))
+p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 
 # Caption
-caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2013 (heads)")
+caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2013 (million heads)")
 
 
 
