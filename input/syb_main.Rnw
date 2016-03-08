@@ -609,8 +609,8 @@ cat(paste0(
 
 \\large
 
-"#,
-#pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
+",
+pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
 ))
 
 
@@ -754,7 +754,7 @@ if (region_to_report == "RAF") footnote_text <- "\\textsuperscript{*}This is cou
 if (region_to_report == "RAP") footnote_text <- "\\textsuperscript{*}Countries listed here are classified in accordance with the UN M.49 groupings developed by the United Nations Statistics Division. Countries which are members of FAO and attend FAO Regional Conference but have mainland outside the Asia and Pacific region have notably been excluded for analytical purposes to reflect the situation within the geography of the Asia and Pacific region. Unless otherwise specified, the statistics on their territories located in this region are also excluded from aggregates provided in this book,
 including France, Russian Federation and USA which are FAO members and attend meeting of regional bodies as they have some territories located in the Asia-Pacific region"
 if (region_to_report == "REU") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Europe"
-if (region_to_report == "RNE") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for North Africa"
+if (region_to_report == "RNE") footnote_text <- "\\textsuperscript{*}The groupings are consistent with the following: SNG sub regional countries (Bahrain, Kuwait, Oman, Qatar, Saudi Arabia, United Arab Emirates, and Yemen); SNE sub regional countries (Algeria, Libya, Mauritania, Morocco and Tunisia); and the rest of other countries (Egypt, Iran (Islamic Republic of), Iraq, Jordan, Lebanon, Sudan, and Syria)."
 if (region_to_report == "GLO") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Global book"
 
 @
