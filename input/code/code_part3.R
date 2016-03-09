@@ -98,12 +98,13 @@ p <- p + geom_bar(position="fill", stat="identity")
 p <- p + geom_label(aes(x=sum*2.0/2,y=mean+2,label=paste0(round(wmean,1),"%")),
                     label.padding = unit(0.10, "lines"),
                     position="fill",
-                    color="white",
-                    stat="identity",alpha=.8,
+                    color="white",lineheight=.7,
+                    stat="identity",alpha=.9,
                     size=3,family="PT Sans",fontface="bold",show.legend=FALSE)
 p <- p + coord_polar("y")
 p <- p + theme_minimal()
 p <- p + theme(legend.position = "right")
+# p <- p + theme(legend.position = "none")
 p <- p + theme(axis.text = element_blank())
 p <- p + theme(axis.title = element_blank())
 p <- p + theme(axis.ticks = element_blank())

@@ -44,10 +44,10 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- T
-include_part2        <- T
+include_part1        <- F
+include_part2        <- F
 include_part3        <- T
-include_part4        <- T
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -55,11 +55,11 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables
-broke_all_into_images         <- T
+broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
