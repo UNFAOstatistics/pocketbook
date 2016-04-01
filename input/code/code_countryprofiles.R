@@ -730,11 +730,11 @@ if (table_type == "latex"){
                 chunk1 = paste0("\\textit{", lya, "}")
               }
             } else {
-              chunk1 = ""
+              chunk1 = NA
             }
           }
         } else {
-          chunk1 = ""
+          chunk1 = NA
         }
         y2 = tmp[tmp[, "Year"] == year2, subindicators.df[j, "INDICATOR1"]]
         if (length(y2) == 1) {
@@ -753,11 +753,11 @@ if (table_type == "latex"){
                 chunk2 = paste0("\\textit{", lya, "}")
               }
             } else {
-              chunk2 = ""
+              chunk2 = NA
             }
           }
         } else {
-          chunk2 = ""
+          chunk2 = NA
         }
         y3 = tmp[tmp[, "Year"] == year3, subindicators.df[j, "INDICATOR1"]]
         if (length(y3) == 1) {
@@ -776,11 +776,11 @@ if (table_type == "latex"){
                 chunk3 = paste0("\\textit{", lya, "}")
               }
             } else {
-              chunk3 = ""
+              chunk3 = NA
             }
           }
         } else {
-          chunk3 = ""
+          chunk3 = NA
         }
         chunk1 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk1)
         chunk2 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk2)
