@@ -559,7 +559,7 @@ value for the most recent year of complete information is shown.
 The one exception is population data, for which the latest 
 information available refers to the year 2015.
 
-In the tables, a blank means not applicable or, for an aggregate, 
+In the tables, a \\textit{NA} means not applicable or, for an aggregate, 
 not analytically meaningful. A 0 or 0.0 means zero or a number that 
 is small enough to round to zero at the displayed number of decimal places.
 
