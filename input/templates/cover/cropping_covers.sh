@@ -2,7 +2,12 @@
 # So Idea is to 
 # 1. save/print the multipage original received from Nicola into single spreads name them as cover_region.pdf
 
-# I am implementing this manually using Evince, as commandline tools give file size equal to all four ~4mb. Evince givers you 700kb
+# The latest
+# wget http://www.mentaltoy.com/fao/COVER_FaoPocket_2015_Regions-old-cover-rev7-earth.pdf
+
+
+# I am implementing this manually using Evince, as commandline tools give file size equal to all four ~4mb. 
+# Evince givers you 700kb
 
 # pdftk 'COVER_FaoPocket_2015_Regions-colors-rev3-web.pdf' burst output cover-%d.pdf
 # mv cover-1.pdf  REU_cover.pdf

@@ -19,10 +19,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                        "RAP" # Asia and the Pacific
-                        ,"RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                        # "RAP" # Asia and the Pacific
+                        # # ,"RAF"  # Africa
+                        # ,"REU" # Europe and Central Asia
+                        "RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -59,11 +59,11 @@ include_country_profiles <- T
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables
-broke_all_into_images         <- T
-broke_only_tables_into_images <- T
+broke_all_into_images         <- F
+broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
