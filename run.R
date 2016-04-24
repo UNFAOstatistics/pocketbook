@@ -21,8 +21,8 @@ regionS_to_report <- c(
                       # "GLO" # Global
                         # "RAP" # Asia and the Pacific
                         # # ,"RAF"  # Africa
-                        # ,"REU" # Europe and Central Asia
-                        "RNE" # Near East and North Africa
+                        "REU" # Europe and Central Asia
+                        # "RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
