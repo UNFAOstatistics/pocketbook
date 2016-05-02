@@ -461,7 +461,7 @@ if (region_to_report == "RAP"){
                                     13006, # Oceania
                                     13012 #, # Southhern Asia
                                     # excludinf for now
-                                    # 23000 # FAO RAP member countries
+                                    # 23000 # FAO RAP member countries #**
                                     # 68, # France
                                     # 13008, #Melanesia
                                     # 13009, #Micronesia
@@ -471,7 +471,7 @@ if (region_to_report == "RAP"){
                                     # 13014 # Western Asia
                                     ),
                      SHORT_NAME = c(RAP_reg_names#,
-                                    #"FAO RAP member countries"
+                                    #"FAO RAP member countries" #**
                                     ),
                      stringsAsFactors = FALSE),
           M49countries)

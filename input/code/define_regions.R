@@ -272,21 +272,21 @@ RAP <- c(RAP_Central_Asia,
          # RAP_United_States
 )
 
-# New regiona for a ALL FAO RAP MEMBERS ie. WAP
-WAP <- c(RAP_Central_Asia,
-         RAP_Eastern_Asia,
-         RAP_Southern_Asia,
-         RAP_South_Eastern_Asia,
-         # RAP_Western_Asia,
-         # RAP_Austriala_and_New_Zealand,
-         # RAP_Melanesia,
-         # RAP_Micronesia,
-         # RAP_Polynesia,
-         RAP_Oceania,
-         RAP_Russian_Federation,
-         RAP_France,
-         RAP_United_States
-)
+# # New regiona for a ALL FAO RAP MEMBERS ie. WAP
+# WAP <- c(RAP_Central_Asia,
+#          RAP_Eastern_Asia,
+#          RAP_Southern_Asia,
+#          RAP_South_Eastern_Asia,
+#          # RAP_Western_Asia,
+#          # RAP_Austriala_and_New_Zealand,
+#          # RAP_Melanesia,
+#          # RAP_Micronesia,
+#          # RAP_Polynesia,
+#          RAP_Oceania,
+#          RAP_Russian_Federation,
+#          RAP_France,
+#          RAP_United_States
+# )
 
 
 # ____  _____ _   _
@@ -1070,7 +1070,7 @@ region_key$RAP_Oceania                      <- ifelse(region_key$FAOST_CODE %in%
 # region_key$RAP_United_States                <- ifelse(region_key$FAOST_CODE %in% RAP_United_States, TRUE, FALSE)
 
 # New regiona for a ALL FAO RAP MEMBERS ie. WAP
-region_key$WAP                              <- ifelse(region_key$FAOST_CODE %in% WAP, TRUE, FALSE)
+# region_key$WAP                              <- ifelse(region_key$FAOST_CODE %in% WAP, TRUE, FALSE)
 
 region_key$REU                          <- ifelse(region_key$FAOST_CODE %in% REU, TRUE, FALSE)
 region_key$REU_South_Eastern_Europe     <- ifelse(region_key$FAOST_CODE %in% REU_South_Eastern_Europe, TRUE, FALSE)
