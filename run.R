@@ -20,15 +20,15 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
                       # "GLO" # Global
                         # "RAP" # Asia and the Pacific
-                        # # ,"RAF"  # Africa
+                        # ,"RAF"  # Africa
                         "REU" # Europe and Central Asia
-                        # "RNE" # Near East and North Africa
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ############################################################
 # For print or for web or a4-print (in-house)
-output_type <- "web" # web//a4
+output_type <- "web" # web//a4g
 # output_type <- "print" # web/print/a4
 # output_type <- "a4" # web/print/a4
 
@@ -44,10 +44,10 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- T
-include_part2        <- T
-include_part3        <- T
-include_part4        <- T
+include_part1        <- F
+include_part2        <- F
+include_part3        <- F
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -55,7 +55,7 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables
@@ -63,7 +63,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -194,6 +194,9 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem Rep"
 
 
+FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former Yugoslav\nRepublic of Macedonia"
+
+
 # load SYB data
 # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
 # load(paste0(data.dir,"/SYB2015-09-24.RData"))
@@ -226,8 +229,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
-
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
 
 
 syb.df <- SYB.df; rm(SYB.df)
@@ -282,7 +285,8 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCaucAndTurkey"]          <- 14001
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCentralAsia"]            <- 14002
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUEUCentralandEastern"]    <- 14003
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCISeurope"]              <- 14004
-syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUIsrael"]                 <- 14005
+# syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUIsrael"]                 <- 14005
+syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUmisc"]                 <- 14999
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUEUOtherAndEFTA"]         <- 14006
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUSouthEasternEurope"]     <- 14007
 
@@ -373,7 +377,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="RAP" # debuggin
+region_to_report="REU" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))
