@@ -44,10 +44,10 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part1        <- T
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -55,10 +55,10 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
+include_country_profiles <- T
 include_definitions      <- T
 # --------------------------- ----
-# Upgrade the comparison tables
+# Upgrade the comparison tables 
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
@@ -230,7 +230,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
 
 
 syb.df <- SYB.df; rm(SYB.df)
@@ -287,6 +288,7 @@ syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUEUCentralandEastern"]    <- 14003
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUCISeurope"]              <- 14004
 # syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUIsrael"]                 <- 14005
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUmisc"]                 <- 14999
+# syb.df <- syb.df[syb.df$FAOST_CODE %in% "REUmisc",]
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUEUOtherAndEFTA"]         <- 14006
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "REUSouthEasternEurope"]     <- 14007
 

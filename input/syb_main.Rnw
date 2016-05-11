@@ -655,6 +655,9 @@ the_whole   <- map.df # for mapping the grey areas
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 
+# Because of Andorra, Monaco, San Marino & Israel that do not belong to any group
+if (region_to_report == "REU") df <- df[!df$subgroup %in% "misc",]
+
 if (region_to_report == "RAP"){
   mcwmotr <- data.frame(FAOST_CODE = c(68,185,231),
                         subgroup = c("Member countries with mainland outside the region",
@@ -809,7 +812,11 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
+# Because of Andorra, Monaco, San Marino & Israel that do not belong to any group
+if (region_to_report == "REU") df <- df[!df$subgroup %in% "misc",]
 overview.df <- left_join(df,region_key)
+
+
 
 # Add region key and subset
 # if (!(region_to_report %in% c("GLO","COF","RAP"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
