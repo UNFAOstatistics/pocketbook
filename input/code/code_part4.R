@@ -389,7 +389,7 @@ p
 
 
 # Caption
-caption_text <- "Countries with the lowest renewable water resources per capita"
+caption_text <- "Countries with the highest renewable water resources per capita"
 
 
 ## ---- P4waterMAP ----

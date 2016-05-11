@@ -253,7 +253,7 @@ M49countries <-
 tbr.df <-
   data.frame(COUNTRY_NAME = c("Aland Island",
                               "American Samoa",
-                              "Andorra",
+                              # "Andorra",
                               "Anguilla",
                               "Antigua and Barbuda",
                               "Aruba",
@@ -283,7 +283,7 @@ tbr.df <-
                               "Martinique",
                               "Mayotte",
                               # "Micronesia",
-                              "Monaco",
+                              # "Monaco",
                               "Montserrat",
                               # "Nauru",
                               "New Caledonia",
@@ -302,7 +302,7 @@ tbr.df <-
                               "Saint Kitts",
                               "Saint Lucia",
                               "Saint Pierre",
-                              "San Marino",
+                              # "San Marino",
                               "Sark",
                               "Saint-Martin (French Part)",
                               "Sint Maarten (Dutch Part)",
@@ -317,7 +317,7 @@ tbr.df <-
                               "Western Sahara"),
              FAOST_CODE = c(284,
                             5,
-                            6,
+                            # 6, # Andorra
                             258,
                             8,
                             22,
@@ -347,7 +347,7 @@ tbr.df <-
                             135,
                             270,
                             # 145, # Micronesia
-                            140,
+                            # 140, # Monaco
                             142,
                             # 148, # Nauru
                             153,
@@ -366,7 +366,7 @@ tbr.df <-
                             188,
                             189,
                             190,
-                            192,
+                            #192, # San Marino
                             285,
                             281,
                             280,

@@ -114,8 +114,9 @@ if (table_type == "latex"){
 
 
 # Caption
+if (region_to_report != "REU")  caption_text <- "Rural and urban population (1961 to 2016)"
+if (region_to_report == "REU")  caption_text <- "Rural and urban population (1961 to 2050)"
 
-caption_text <- "Rural and urban population (1985 to 2016)"
 
 
 ## ---- P1overLEFT ----
@@ -737,7 +738,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- paste("Fertilizer consumption in nutrients per ha of arable land, top",ncases,"countries (2012)")
+caption_text <- paste("Fertilizer consumption in nutrients per ha of arable land (2012)")
 
 
 ## ---- P1inputMAP ----
@@ -954,7 +955,7 @@ p
 
 # Caption
 # caption_text <- "Aid commitment flow to Agriculture, Forestry and Fishing, billion 2013 US\\$ (1995-2013)"
-caption_text <- paste("Aid commitment flow to Agriculture, Forestry and Fishing, top",length(unique(dat_plot$SHORT_NAME)),"countries in 2013 (million 2013 US\\$)")
+caption_text <- paste("Aid commitment flows to Agriculture, Forestry and Fishing, top",length(unique(dat_plot$SHORT_NAME)),"countries in 2013 (million 2013 US\\$)")
 
 
 ## ---- p1investMAPdata ----

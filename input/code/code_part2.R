@@ -376,11 +376,11 @@ caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
 
 ## ---- P2obesityTEXT ----
 spread_title <- "Obesity/overweight"
-if (region_to_report == "RAF") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
-if (region_to_report == "RAP") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
-if (region_to_report == "REU") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in the region and is also increasing in nearly all countries."
-if (region_to_report == "RNE") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
-if (region_to_report == "GLO") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The global prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "RAF") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "RAP") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "REU") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The prevalence of overweight and obesity has risen in the region and is also increasing in nearly all countries."
+if (region_to_report == "RNE") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
+if (region_to_report == "GLO") short_text <- "Overweight and obesity are defined as abnormal or excessive fat accumulation that may impair health. These phenomena are measured using BMI, with overweight greater than 25 and obesity higher than 30. A high body mass index is recognized as increasing the likelihood of incurring various non-communicable diseases and health problems, including cardiovascular disease, diabetes, various cancers and osteoarthritis. The prevalence of overweight and obesity has risen in all regions and is also increasing in nearly all countries."
 
 ## ---- P2obesityTOPRIGHT
 dat <- read.csv(paste0(data.dir,"/FSI2015_disseminationData_A_11.csv"), stringsAsFactors=FALSE)
@@ -437,7 +437,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- "Prevalence of over-acquisition (1991-93 and 2014-16)"
+caption_text <- paste0("Prevalence of over-acquisition (1991-93 and 2014-16)",dag_char)
 # caption_text <- "text"
 
 ## ---- P2obesityLEFT ----
@@ -904,7 +904,7 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Road density, per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
+caption_text <- "Road density, km per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
 
 
 #   _____                       _           _             _       _   _   _   _
@@ -1141,6 +1141,7 @@ if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- nrow(dat)
 } else max_nro_countries <- 20
 
+ncases <- max_nro_countries
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
 # top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
@@ -1182,6 +1183,7 @@ if (region_to_report %in% c("REU","RNE")){
   max_nro_countries <- nrow(dat)
 } else max_nro_countries <- 20
 
+ncases <- max_nro_countries
 
 top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
 # top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")

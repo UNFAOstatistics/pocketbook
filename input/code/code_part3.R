@@ -1059,7 +1059,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- "Fish production for aquaculture and capture fishing"
+caption_text <- "Fish production from aquaculture and capture fishing"
 
 
 ## ---- P3fisheriesLEFT ----
