@@ -655,8 +655,6 @@ the_whole   <- map.df # for mapping the grey areas
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 
-# Because of Andorra, Monaco, San Marino & Israel that do not belong to any group
-if (region_to_report == "REU") df <- df[!df$subgroup %in% "misc",]
 
 if (region_to_report == "RAP"){
   mcwmotr <- data.frame(FAOST_CODE = c(68,185,231),
@@ -670,6 +668,12 @@ if (region_to_report == "RAP"){
 overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 overview.df <- arrange(overview.df, order)
 #overview.df <- merge(overview.df,FAOcountryProfile,by="FAOST_CODE")
+
+# Because of Andorra, Monaco, San Marino & Israel that do not belong to any group G wanteg to show them individually
+# if (region_to_report == "REU"){
+#   overview.df$subgroup <- ifelse(overview.df$subgroup %in% "misc", overview.df$SHORT_NAME, overview.df$subgroup)
+# } 
+if (region_to_report == "REU") overview.df$subgroup[overview.df$subgroup %in% "misc"] <- "Andorra, Israel, Monaco and San Marino"
 
 # define map unit
 map_unit <- ""
@@ -813,7 +817,8 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 # Because of Andorra, Monaco, San Marino & Israel that do not belong to any group
-if (region_to_report == "REU") df <- df[!df$subgroup %in% "misc",]
+# if (region_to_report == "REU") df <- df[!df$subgroup %in% "misc",]
+if (region_to_report == "REU") df$subgroup[df$subgroup %in% "misc"] <- "Andorra, Israel, Monaco and San Marino"
 overview.df <- left_join(df,region_key)
 
 
@@ -851,6 +856,21 @@ for (col in 1:ncol(overview_data)){
 }
 overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data), ]
 #
+# Specific order for for EU other and EFTA - so ordering a single column based on new factor levels
+if (region_to_report == "REU"){
+  
+  overview_data$`EU other and EFTA` <- factor(overview_data$`EU other and EFTA`,
+                                              levels=c("Austria", "Belgium", "Cyprus", "Denmark", "Finland",
+                                                       "France", "Germany", "Greece", "Ireland", "Italy", 
+                                                       "Luxembourg", "Malta", "Netherlands", "Portugal", 
+                                                       "Spain", "Sweden", "United Kingdom", 
+                                                       "Iceland", "Norway", "Switzerland")) # Non eu countries 
+  overview_data$`EU other and EFTA` <- overview_data[order(overview_data$`EU other and EFTA`),]$`EU other and EFTA`
+  }
+
+
+
+
 
 
 library(xtable)
@@ -891,6 +911,10 @@ cat(
         TABLE: \\textbf{Classification of countries\\textsuperscript{*}} \\newline \\vspace{-5mm}
 \\end{center}"
 )
+
+
+
+
 
 print(
   xtable(overview_data, align= alignment

@@ -231,7 +231,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-28-10/SYB2016-05-28-10.RData")
 
 
 syb.df <- SYB.df; rm(SYB.df)

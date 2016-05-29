@@ -213,8 +213,15 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
 
 }
 
+# LEts remove TEMPORARILY the 
+# "SH.STA.STNT.ZS.x"
+# "SH.STA.WAST.ZS.x" 
+# "SH.STA.STNT.ZS.y"
+# "SH.STA.WAST.ZS.y" 
 
-
+syb.df <- syb.df %>% select(-SH.STA.STNT.ZS.y,-SH.STA.WAST.ZS.y)
+names(syb.df)[names(syb.df) %in% "SH.STA.STNT.ZS.x"] <- "SH.STA.STNT.ZS"
+names(syb.df)[names(syb.df) %in% "SH.STA.WAST.ZS.x"] <- "SH.STA.WAST.ZS"
 
 # Countries ---------------------------------------------------------------
 

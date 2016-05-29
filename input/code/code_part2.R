@@ -164,9 +164,7 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
 
 
   save(dat, file=paste0(data.dir,"/fsi_data.RData"))
-}
-
-load(paste0(data.dir,"/fsi_data.RData"))
+} else load(paste0(data.dir,"/fsi_data.RData"))
 
 # M49LatinAmericaAndCaribbean
 dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
@@ -897,7 +895,7 @@ cat_data$value_cat <- categories(x=cat_data$IS.ROD.DNST.K2D, n=5) # manualBreaks
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "per 100 km² of land"
+map_unit <- "km per 100 km² of land"
 
 
 p <- create_map_here()

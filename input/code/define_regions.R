@@ -318,7 +318,6 @@ REU_EU_other_and_EFTA <- c(11, #Austria
                         255, #Belgium
                         # 15, #Belgium-Luxembourg
                         50, #Cyprus
-                        98, # Croatia
                         54, #Denmark
                         67, #Finland
                         68, # France
@@ -360,6 +359,7 @@ REU_CIS_Europe <- c(57, # Belarus
 REU_EU_Central_and_Eastern <- c(27,  # Bulgaria
                                 167, # the Czech Republic
                                 # 51,  # Czechoslovakia
+                                98, # Croatia
                                 63, # Estonia
                                 97,  # Hungary
                                 119, # Latvia
