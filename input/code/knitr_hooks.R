@@ -1,12 +1,13 @@
 library(knitr)
 
 # pdf.options(useDingbats = TRUE)
-pdf.options(encoding='Cyrillic')
+# pdf.options(encoding='Cyrillic')
 
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
 
 syb_pdf = function(file, width, height) {
-  pdf(file, width = width, height = height, pointsize = 10, family = "PT Sans")
+  cairo_pdf(file, width = width, height = height, pointsize = 10, family = "PT Sans")
+  # svglite::svglite(file, width = width, height = height, pointsize = 10)
 }
 
 

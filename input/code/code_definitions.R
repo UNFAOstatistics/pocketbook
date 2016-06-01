@@ -709,21 +709,43 @@ if (table_type == "latex"){
     item <- d[d$id %in% i,]
 
     # If Item or source is not specified
-    if (nchar(item[["source"]]) != 0){
-      source_line <- paste0("\\source{ ",item[["source"]]," } \n")
-    } else source_line <- "\n"
-    if (nchar(item[["owner"]]) != 0){
-      owner_line <- paste0("\\owner{ ",item[["owner"]]," } \n")
-    } else owner_line <- "\n"
-
-
-    cat(paste0("\\begin{metadata}{",item[["name"]],"}{} \n",
-               item[["description"]],"\n",
-               source_line,
-               owner_line,
-               #              "\\source{ ",item[["source"]]," } \n",
-               #              "\\owner{ ",item[["owner"]]," } \n",
-               "\\end{metadata} \n"))
+    if (!rulang){
+      
+      if (nchar(item[["source"]]) != 0){
+        source_line <- paste0("\\source{ ",item[["source"]]," } \n")
+      } else source_line <- "\n"
+      if (nchar(item[["owner"]]) != 0){
+        owner_line <- paste0("\\owner{ ",item[["owner"]]," } \n")
+      } else owner_line <- "\n"
+      
+      
+      cat(paste0("\\begin{metadata}{",item[["name"]],"}{} \n",
+                 item[["description"]],"\n",
+                 source_line,
+                 owner_line,
+                 #              "\\source{ ",item[["source"]]," } \n",
+                 #              "\\owner{ ",item[["owner"]]," } \n",
+                 "\\end{metadata} \n"))
+    }
+    
+    if (rulang){
+      
+      if (nchar(item[["source_ru"]]) != 0){
+        source_line <- paste0("\\source{ ",item[["source_ru"]]," } \n")
+      } else source_line <- "\n"
+      if (nchar(item[["owner_ru"]]) != 0){
+        owner_line <- paste0("\\owner{ ",item[["owner_ru"]]," } \n")
+      } else owner_line <- "\n"
+      
+      
+      cat(paste0("\\begin{metadata}{",item[["name_ru"]],"}{} \n",
+                 item[["description_ru"]],"\n",
+                 source_line,
+                 owner_line,
+                 #              "\\source{ ",item[["source"]]," } \n",
+                 #              "\\owner{ ",item[["owner"]]," } \n",
+                 "\\end{metadata} \n"))
+    }
 
   }
 

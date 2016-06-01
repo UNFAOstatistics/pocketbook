@@ -911,6 +911,8 @@ dat <- dat[which(dat[[region_to_report]]),]
 # DEFAULT GROUPING
 df <- subgrouping(region_to_report = region_to_report)
 
+df <- df[!df$subgroup %in% "Andorra, Israel, Monaco and San Marino",]
+
 # merge data with the region info
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 

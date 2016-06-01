@@ -3,6 +3,10 @@
   description: The percentage of pregnant women whose hemoglobin level is smaller than 110 grams per liter at sea level. Anemia is a condition in which the number of red blood cells or their oxygen-carrying capacity is insufficient to meet physiologic needs, which vary by age, sex, altitude, smoking status, and pregnancy status. In its severe form it is associated with fatigue, weakness, dizziness, and drowsiness. Children under age 5 and pregnant women have the highest risk for anemia.
   source: World Bank
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: energy_consumption_for_power_irrigation
   name: Energy consumption for power irrigation
   description: 'Irrigated area is the sum of "total area equipped for full control irrigation: sprinkler"
@@ -10,11 +14,19 @@
     Annual values in FAOSTAT are estimated by repeating the last-available value reported in AQUASTAT within the associated time interval.'
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: bioenergy_production
   name: Bioenergy production
   description: Fuel that is produced through biological processes, including agriculture. They can be derived directly from plants, or indirectly from agricultural, commercial, domestic, and/or industrial wastes.
   source: United Nations Statistics Division
   owner: United Nations Statistics Division
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: energy_use_in_agriculture_and_forestry
   name: Energy use in agriculture and forestry
   description: The sum of total energy use by agriculture, forestry and fishing and considers
@@ -28,11 +40,19 @@
     products, petroleum coke) and electricity. It is measured in Joules.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: pop_affec_by_droughts_floods_extr_temp_(pros)
   name: Pop affec by droughts, floods, extr temp (\%)
   description: Annual average percentage of the population that is affected by natural disasters classified as either droughts, floods, or extreme temperature events.
   source: World Bank
   owner: "EM-DAT: The OFDA/CRED International Disaster Database"
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: agriculture_value_added_per_worker
   name: Agriculture value added per worker
   description: Agriculture comprises value added from forestry, hunting, and fishing
@@ -47,6 +67,10 @@
     workers.
   source: World Bank
   owner: IMF and FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: value_added_agriculture
   name: Value added, agriculture
   description: Agriculture corresponds to ISIC divisions 1-5 and includes forestry,
@@ -58,6 +82,10 @@
     (ISIC), revision 3.
   source: World Bank
   owner: World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: roundwood_production_(mln_m3)
   name: Roundwood production (mln m3)
   description: "All roundwood felled or otherwise harvested and removed. It comprises
@@ -72,6 +100,10 @@
     (i.e. excluding bark). "
   source: FAO, Statistics Division
   owner: FAO, Forestry Department
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: domestic_food_price_level_index
   name: Domestic food price level index
   description: An indicator of the relative price of food in a country. The indicator
@@ -87,6 +119,10 @@
     as general and food consumer price indices are available.
   source: FAO, Statistics Division
   owner: ILO and World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: water_withdrawal._agriculture_(pros_of_total)
   name: Water withdrawal, agriculture (\% of total)
   description: Annual quantity of water withdrawn for irrigation, livestock and aquaculture
@@ -95,6 +131,10 @@
     drainage water, (treated) wastewater and desalinated water.
   source: FAO, Land and Water Division (AQUASTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: area_equipped_for_irrigation
   name: Area equipped for irrigation
   description: Area equipped to provide water (via irrigation) to crops. It includes
@@ -102,6 +142,10 @@
     areas equipped for spate irrigation.
   source: FAO, Land and Water Division (AQUASTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: population_growth_(pros)
   name: Population, growth (\%)
   description: Based on the de facto definition of population, which counts all residents
@@ -110,6 +154,10 @@
     of the country of origin.
   source: FAO, Statistics Division
   owner: UN Population Division
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: fertilizers_(kg_ha)
   name: Fertilizers (kg/ha)
   description: 'Collected through individual countries in product weight through the
@@ -125,12 +173,20 @@
     nitrogen (N), phosphorus (P) or potassium (K).'
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: cattle
   name: Cattle
   description: Common ox (Bos taurus); zebu, humped ox (Bos indicus); Asiatic ox (subgenus
     Bibos); Tibetan yak (Poephagus grunniens).
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: official_development_assistance_(oda)
   name: Official Development Assistance (ODA)
   description: Consists of disbursements of loans made on concessional terms (net
@@ -143,6 +199,10 @@
   owner: Development Assistance Committee of the Organisation for Economic Co-operation
     and Development, Geographical Distribution of Financial Flows to Developing Countries,
     Development Co-operation Report, and International Development Statistics database.
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)
   name: Greenhouse gas emissions from agriculture (CO2 eq, gigagrams)
   description: Contains all the emissions produced in the different agricultural emissions
@@ -152,6 +212,10 @@
     production and management activities.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: per_capita_food_production_variability_(constant_2004_2006_thousand_intdollar_per_capita)
   name: Per capita food production variability (constant 2004-2006 thousand int\$
     per capita)
@@ -159,12 +223,20 @@
     value in constant 2004-2006 international dollars" as disseminated in FAOSTAT.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: per_capita_food_supply_variability_(kcal_capita_day)
   name: Per capita food supply variability (kcal/capita/day)
   description: Corresponds to the variability of the "food supply in kcal/caput/day"
     as disseminated in FAOSTAT.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: food_CPI
   name: Food consumer price index
   description: 'Covers all goods and services, and for the food and non-alcoholic
@@ -173,6 +245,10 @@
     compiled and disseminated by the International Labour Organisation (ILO). '
   source: FAO, Statistics Division
   owner: ILO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: health_expenditure_total_(pros_of_GDP)
   name: Health expenditure, total (\% of GDP)
   description: Data are broken down into public and private expenditures. In general,
@@ -191,6 +267,10 @@
     and allow analysis of the equity and efficiency of financing to inform policy.
   source: World Bank
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: health_expenditure_per_capita_PPP_(dollar)
   name: Health expenditure per capita, PPP (\$)
   description: Data are broken down into public and private expenditures. In general,
@@ -209,12 +289,20 @@
     and allow analysis of the equity and efficiency of financing to inform policy.
   source: World Bank
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: population._total
   name: Population, total
   description: De facto population in a country, area or region as of 1 July of the
     year indicated.
   source: FAO, Statistics Division
   owner: 'World Population Prospects: The 2012 Revision from the UN Population Division'
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: population._rural
   name: Population, rural
   description: De facto population living in areas classified as rural (that is, it
@@ -222,6 +310,10 @@
     Data refer to 1 July of the year indicated and are presented in thousands.
   source: FAO, Statistics Division
   owner: United Nations Population Division, World Urbanization Prospects.
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: aquaculture_fish_production
   name: Aquaculture fish production
   description: Defined as the farming of aquatic organisms. Farmingimplies some form
@@ -240,6 +332,10 @@
     sum of aquaculture and capture fish production.
   source: Fisheries and Aquaculture Department (Fishery and Aquaculture statistics)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: capture_fish_production
   name: Capture fish production
   description: Defined as the hunting, collecting and gathering activities directed
@@ -252,6 +348,10 @@
     plants. Fish production is the sum of aquaculture and capture fish production.
   source: Fisheries and Aquaculture Department (Fishery and Aquaculture statistics)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: average_dietary_energy_supply_adequacy_(pros)
   name: Average dietary energy supply adequacy (\%)
   description: Expresses the Dietary Energy Supply (DES) as a percentage of the Average
@@ -261,6 +361,10 @@
     in terms of calories.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: dietary_energy_supply._cereals._roots_and_tubers_(pros)
   name: Dietary energy supply, cereals, roots and tubers (\%)
   description: Expresses the energy supply (in kcal/caput/day) provided by cereals,
@@ -269,12 +373,20 @@
     balance sheets.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: growth_value_of_food_production
   name: Growth value of food production
   description: 'Expresses the food net production value , as estimated by FAO and
     published by FAOSTAT, in per capita terms. '
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: prevalence_of_undernourishment
   name: Prevalence of undernourishment
   description: Expresses the probability that a randomly selected individual from
@@ -285,6 +397,10 @@
     based on the notion of an average individual in the reference population.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: food_imports_and_exports_(mln_usdollar)
   name: Food imports and exports (mln US\$)
   description: Food comprises the commodities in SITC sections 0 (food and live animals),
@@ -292,6 +408,10 @@
     division 22 (oil seeds, oil nuts, and oil kernels).
   source: FAO, Statistics Division and Fisheries Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: biofuel_production_(thousand_kt_of_oil_eq.)
   name: Biofuel production (thousand kt of oil eq.)
   description: Fuel that is produced through biological processes, including agriculture.
@@ -299,6 +419,10 @@
     domestic, and/or industrial wastes.
   source: United Nations Statistics Division
   owner: United Nations Statistics Division
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: gdp_per_capita_(usdollar._ppp)
   name: GDP per capita (US\$, PPP)
   description: Gross domestic product converted to international dollars using purchasing
@@ -311,6 +435,10 @@
     international dollars.
   source: FAO, Statistics Division
   owner: World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: yield_crops
   name: Yield, crops
   description: |-
@@ -318,12 +446,20 @@
     the area information may correspond to planted area, as for grapes, or because of the scarcity and unreliability of the area figures reported by the countries, as for example for cocoa and coffee.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: children_under_5_years_of_age_who_are_stunted_(pros)
   name: Children under 5 years of age who are stunted (\%)
   description: Height-for-age less than -2 standard deviations of the WHO Child Growth
     Standards median, among children aged 0-5 years.
   source: World Bank
   owner: World Health Organization, Global Database on Child Growth and Malnutrition
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: food_production._average_value
   name: Food production, average value
   description: In International Dollars (I\$) divided by the total population. It
@@ -331,6 +467,10 @@
     food production.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: livestock_primary_production
   name: Livestock primary production
   description: Include products from live and slaughtered animals. Products from slaughtered
@@ -351,6 +491,10 @@
     on farms.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: cereals
   name: Cereals
   description: Include wheat, rice paddy, barley, maize, popcorn, rye, oats, millets,
@@ -358,6 +502,10 @@
     nes.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: credit_to_agriculture
   name: Credit to agriculture
   description: This dataset is built by compiling official
@@ -366,17 +514,29 @@
     statistics publications
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: cropland
   name: Cropland
   description: Includes arable land and permanent crops.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: coffee_export_green
   name: Coffee, Green
   description: 'Includes coffea spp. (arabica, robusta, liberica). It is raw coffee
     in all forms. '
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: road_density_(per_100_sq_km_of_land_area)
   name: Road density (per 100 sq km of land area)
   description: Includes motorways, highways, and main or national roads, secondary
@@ -384,12 +544,20 @@
     and built for motor traffic that separates the traffic flowing in opposite directions.
   source: World Bank
   owner: International Road Federation, World Road Statistics and electronic files
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: average_protein_supply_of_animal_origin_(g_capita_day)
   name: Average protein supply of animal origin (g/capita/day)
   description: 'Includes the following groups: meat; offals; animal fats and products;
     milk and products; eggs, fish, seafood and products; and aquatic products, other.'
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: the_depth_of_the_food_deficit_(pros)
   name: The depth of the food deficit (\%)
   description: Indicates how many calories would be needed to lift the undernourished
@@ -401,6 +569,10 @@
     by the total population.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: life_expectancy_at_birth_(years)
   name: Life expectancy at birth (years)
   description: Indicates the number of years a newborn infant would live if prevailing
@@ -408,11 +580,19 @@
     its life.
   source: World Bank
   owner: UNPD World Population Prospects 2010
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: water_withdrawal._industrial_(pros_of_total_water_withdrawal)
   name: Water withdrawal, industrial (\% of total water withdrawal)
   description: Industrial water withdrawal as percentage of total water withdrawal.
   source: Land and Water Division (AQUASTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: value_added_industry
   name: Value added, industry
   description: Industry corresponds to ISIC divisions 10-45 and includes manufacturing
@@ -425,12 +605,20 @@
     (ISIC), revision 3.
   source: World Development Indicators, World Bank
   owner: World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: coffee_export_extracts
   name: Coffee, extracts
   description: It is essences and concentrates, including instant coffee, roasted
     chicory and other coffee substitutes, extracts and essences thereof.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: political_stability_and_absence_of_violence_terrorism_(index)
   name: Political stability and absence of violence/terrorism (index)
   description: Measures perceptions of the likelihood that the government will be
@@ -438,6 +626,10 @@
     violence and terrorism.
   source: World Bank
   owner: Brookings Institution and World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: agriculture_orientation_index
   name: Agriculture orientation index (AOI)
   description: Measures the ratio of the agriculture share of government expenditures,
@@ -447,6 +639,10 @@
     sectors.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: domestic_food_price_volatility
   name: Domestic food price volatility
   description: Measures the variability in the relative price of food in a country.  The
@@ -459,6 +655,10 @@
     of these standard deviations is then computed to obtain an annual volatility indicator.
   source: FAO, Statistics Division
   owner: FAO, ILO and World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: other_naturally_regenerated_forest
   name: Other naturally regenerated forest
   description: Naturally regenerated forest is forest predominantly composed of trees
@@ -466,6 +666,10 @@
     forest where there are clearly visible indications of human activities.
   source: Global Forest Resources Assessment, FAO
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: primary_forest
   name: Primary forest
   description: Naturally regenerated forest of native species, where there are no
@@ -473,12 +677,20 @@
     not significantly disturbed.
   source: Global Forest Resources Assessment, FAO
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: rice
   name: Rice
   description: Oryza spp., mainly oryza sativa.  Rice grain after threshing and winnowing.
     Also known as rice in the husk and rough rice. Used mainly for human food.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: employment_in_agriculture_(pros)
   name: Employment in agriculture (\%)
   description: People who work for a public or private employer and receive remuneration
@@ -487,6 +699,10 @@
     3) and includes hunting, forestry, and fishing.
   source: World Bank
   owner: ILO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: area_irrigated_(pros)
   name: Area irrigated (\%)
   description: Percent of area equipped for irrigation that is actually irrigated
@@ -494,6 +710,10 @@
     more than once a year is counted only once.
   source: Land and Water Division (AQUASTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: underweight._children_under_5_(pros)
   name: Underweight, children under-5 (\%)
   description: Percentage of underweight (weight-for-age less than -2 standard deviations
@@ -502,6 +722,10 @@
   owner: World Health Organization, Global Database on Child Growth and Malnutrition.
     Country-level data are unadjusted data from national surveys, and thus may not
     be comparable across countries.
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: income_share_held_by_highest_20percent_(percent)
   name: Income share held by highest 20\% (percent)
   description: Percentage share of income or consumption is the share that accrues
@@ -512,12 +736,20 @@
     departments. Data for high-income economies are from the Luxembourg Income Study
     database. For more information and methodology, please see PovcalNet (http://iresearch.worldbank.org/PovcalNet/index.htm).
   owner: World Bank (WDI)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: planted_forest
   name: Planted forest
   description: Planted forest is forest predominantly composed of trees establishedthrough
     planting and/or deliberate seeding.
   source: Global Forest Resources Assessment, FAO
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: poverty_headcount_ratio_at_dollar1.90_a_day_PPP_(percent_of_population)
   name: Poverty headcount ratio at \$1.90 a day PPP (percent of population)
   description: 'Population below \$1.90 a day is the percentage of the population living
@@ -530,6 +762,10 @@
     departments. Data for high-income economies are from the Luxembourg Income Study
     database. For more information and methodology, please see PovcalNet (http://iresearch.worldbank.org/PovcalNet/index.htm).
   owner: World Bank (WDI)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: coffee_producer_prices
   name: Producer prices, agriculture
   description: 'Prices received by farmers (called producer prices) for for primary
@@ -537,6 +773,10 @@
     sale (prices paid at the farm-gate). '
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: primary_completion_rate._total_(percent of relevant age group)
   name: Primary completion rate, total (percent of relevant age group)
   description: Primary completion rate is the percentage of students completing the
@@ -546,16 +786,28 @@
   source: United Nations Educational, Scientific, and Cultural Organization (UNESCO)
     Institute for Statistics.
   owner: World Bank (WDI)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: coffeebook_animal_products_(kcal_cap_day)
   name: Animal products (kcal/cap/day)
   description: 'Processed products of animal origin. '
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: coffeebook_vegetal_(crop)_products
   name: Vegetal (crop) products (kcal/cap/day)
   description: 'Processed products of vegetal origin. '
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: share_of_food_expenditure(pros)
   name: Share of food expenditure (\%)
   description: Proportion of food consumption over total consumption (food and non-food)
@@ -568,6 +820,10 @@
     etc.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: value_of_food_(excluding_fish)_imports_over_total_merchandise_exports
   name: Value of food (excluding fish) imports over total merchandise exports
   description: Provides a measure of vulnerability and captures the adequacy of foreign
@@ -575,6 +831,10 @@
     food security depending on production and trade patterns.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: pesticides
   name: Pesticides
   description: 'Refer to insecticides, fungicides, herbicides, disinfectants and any
@@ -594,6 +854,10 @@
     product; sales; distribution or imports for use in the agricultural sector.'
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: crop_production
   name: Production, crops
   description: Refer to the actual harvested production from the field or orchard
@@ -612,6 +876,10 @@
     area during the year.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: area_harvested
   name: Area harvested
   description: Refer to the area from which a crop is gathered. Area harvested, therefore,
@@ -625,6 +893,10 @@
     times as harvested
   source: FAO, Statistics Division  (FAOSTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: government_expenditure_on_agriculture_(pros_total_outlays)
   name: Government expenditure on agriculture (\% total outlays)
   description: Refers to Core Areas of Government Functions Relevant to the Agriculture
@@ -636,6 +908,10 @@
     returns.
   source: FAO, Statistics Division  (FAOSTAT)
   owner: FAO and IMF
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: population_with_access_to_sanitation_facilities_(pros)
   name: Population with access to sanitation facilities (\%)
   description: Refers to the percentage of the population with at least adequate access
@@ -646,6 +922,10 @@
   source: World Bank
   owner: World Health Organization and United Nations Children's Fund, Joint Measurement
     Programme (JMP)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: improved_water_source_(pros)
   name: Improved water source (\%)
   description: Refers to the percentage of the population with reasonable access to
@@ -657,6 +937,10 @@
   source: World Bank
   owner: World Health Organization and United Nations Children’s Fund, Joint Measurement
     Programme (JMP)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: poverty_headcount_ratio_at_rural_poverty_line_(percent_of_rural_population)
   name: Poverty headcount ratio at rural poverty line (percent of rural population)
   description: Rural poverty rate is the percentage of the rural population living
@@ -664,6 +948,10 @@
   source: Global Poverty Working Group. Data are based on World Bank's country poverty
     assessments and country Poverty Reduction Strategies.
   owner: World Bank (WDI)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: value_added_services
   name: Value added, services
   description: Services correspond to ISIC divisions 50-99 and they include value
@@ -679,6 +967,10 @@
     revision 3.
   source: World Development Indicators, World Bank
   owner: World Bank
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: organic_area_(pros)
   name: Organic area (\%)
   description: Sum of areas under "Agricultural area certified organic" and "Agricultural
@@ -693,6 +985,10 @@
     to organic land.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: cereal_import_dependency_ratio
   name: Cereal import dependency ratio
   description: Tells how much of the available domestic food supply of cereals has
@@ -702,6 +998,10 @@
     values indicate that the country is a net exporter of cereals.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: food_production_index
   name: Food production index
   description: 'The FAO indices of agricultural production show the relative level
@@ -711,6 +1011,10 @@
     of agricultural origin are deducted. '
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: agricultural_production_indices
   name: Agricultural production indices
   description: The FAO indices of agricultural production show the relative level
@@ -756,6 +1060,10 @@
     or in their average live weight are not taken into account.
   source: FAO, Statistics Division and Fisheries Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: dietary_energy_supply_(kcal_pc_day)
   name: Dietary energy supply (kcal/pc/day)
   description: The food available for human consumption, expressed in kilocalories
@@ -764,6 +1072,10 @@
     use, animal feed, seed, wastage and changes in stocks.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: forest_area_pros
   name: Forest area (\%)
   description: 'The land spanning more than 0.5 hectares with trees higher than 5
@@ -786,6 +1098,10 @@
     urban parks and gardens.'
   source: Global Forest Resources Assessment, FAO
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: arable_land
   name: Arable land
   description: The land under temporary agricultural crops (multiple-cropped areas
@@ -796,6 +1112,10 @@
     cultivable.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: wood_pellet_production_(thousand_tonnes)
   name: Wood pellet production (thousand tonnes)
   description: The most common type of pellet fuel and are generally made from compacted
@@ -805,18 +1125,30 @@
     tops and branches discarded during logging operations.
   source: FAO, Statistics Division
   owner: Forestry Division, FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: overweight_adults_(pros)
   name: Overweight, adults (M/F, \%)
   description: The percentage of adults (ages 20+) who have a BMI (kg/m2) greater
     than 25.
   source: WHO
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: obesity_adults(pros)
   name: Obesity, adults (M/F, \%)
   description: The percentage of adults (ages 20+) who have a BMI (kg/m2) greater
     than 30 .
   source: WHO
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: anemia_among_children_under_5_years_of_age._prevalence_(pros)
   name: Anemia among children under 5 years of age, prevalence (\%)
   description: The percentage of children under age 5 whose hemoglobin level is less
@@ -828,6 +1160,10 @@
     and severe anemia in children and pregnant and non-pregnant women for 1995-2011:
     a systematic analysis of population-representative data. The Lancet Global Health
     2013; 1(1): e16-e25.'
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: poverty_headcount_ratio_at_national_poverty_line_(percent_of_population)
   name: Poverty headcount ratio at national poverty line (percent of population)
   description: The percentage of the population living below the national poverty
@@ -836,6 +1172,10 @@
   source: Global Poverty Working Group. Data are based on World Bank's country poverty
     assessments and country Poverty Reduction Strategies.
   owner: World Bank (WDI)
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: children_under_5_years_of_age_affected_by_wasting_(pros)
   name: Children under 5 years of age affected by wasting (\%)
   description: The proportion of children under five whose weight for height is more
@@ -843,12 +1183,20 @@
     population ages 0-59.
   source: World Bank
   owner: World Health Organization, Global Database on Child Growth and Malnutrition
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: iodine_deficiency_total_pop_(pros)
   name: Iodine deficiency, total pop. (\%)
   description: The proportion of school children aged 6 to 12 years of age showing
     urinary iodine equal or lower than 100 μg/l.
   source: World Bank
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: labour_force_participation_rate
   name: Labour force participation rate
   description: 'The proportion of the population ages 15-64 that is economically active:
@@ -856,12 +1204,20 @@
     specified period.'
   source: World Bank
   owner: KILM database, ILO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: vitamin_A_deficiency_total_pop_(pros)
   name: Vitamin A deficiency, total pop. (\%)
   description: 'The proportion of total population with serum retinol equal or lower
     than 0.70 μmol/l. '
   source: FAO, Statistics Division
   owner: WHO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: cropping_intensity_ratio
   name: Cropping Intensity Ratio
   description: The ratio of area harvested to total arable land. The cropping intensity
@@ -869,6 +1225,10 @@
     the same area.
   source: FAO, Statistics Division  (FAOSTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: forestry_production
   name: Forestry production
   description: 'The solid volume or weight of all production of the products specified
@@ -881,27 +1241,47 @@
     products.'
   source: FAO, Statistics Division
   owner: Forestry Division, FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: agricultural_area
   name: Agricultural area
   description: The sum arable land, permanent crops, and permanent pastures.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: net_trade
   name: Net trade
   description: The sum of exports and imports of goods and services.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: current_account_balance_(pros_GDP)
   name: Current account balance (\% GDP)
   description: The sum of net exports of goods and services, net primary income, and
     net secondary income.
   source: World Bank
   owner: IMF, World Bank and OECD
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: total_land_area
   name: Total land area
   description: The total area of the country excluding area under inland water bodies.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: renewable_water_resources_withdrawn_(pros_of_total)
   name: Renewable water resources withdrawn (\% of total)
   description: The total volume of groundwater and surface water withdrawn from their
@@ -914,11 +1294,19 @@
     cooling thermoelectric plants).
   source: 'Land and Water Division (AQUASTAT) '
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: water_resources_per_capita_(m3_person_year)
   name: Water resources per capita (m3/person/year)
   description: Total annual internal renewable water resources per inhabitant.
   source: Land and Water Division (AQUASTAT)
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: terrestrial_protected_areas_(pros_total_land_area)
   name: Terrestrial protected areas (\% total land area)
   description: Totally or partially protected areas of at least 1,000 hectares that
@@ -930,6 +1318,10 @@
   source: World Bank
   owner: United Nations Environmental Program and the World Conservation Monitoring
     Centre, as compiled by the World Resources Institute
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: wheat
   name: Wheat
   description: 'Triticum spp.: common (T. aestivum) durum (T. durum) spelt (T. spelta).
@@ -939,6 +1331,10 @@
     uses. Used mainly for human food.'
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: import_value_index_(2004_2006_=_100)
   name: Import value index (2004-2006 = 100)
   description: Value indices represent the change in the currentvalues of Import c.i.f.
@@ -947,6 +1343,10 @@
     approximate c.i.f. values (by a standard factor of 112 percent).
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: food_production_value_(gross)
   name: Food production value (gross)
   description: Value of gross production has been compiled by multiplying gross production
@@ -956,14 +1356,26 @@
     data, this value of production aggregate refers to the notion of "gross production".
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: milk
   name: Milk
   description: Whole fresh milk production from Buffalos, Camels, Cows, Goats and
     Sheep.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: coffee_export_roasted
   name: Coffee, Roasted
   description: With or without caffeine, and may or may not be ground.
   source: FAO, Statistics Division
   owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО

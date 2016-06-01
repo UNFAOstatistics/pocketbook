@@ -163,8 +163,10 @@ PLACE_PRINT_OR_WEB_HERE
 pref <- yaml::yaml.load_file(paste0(root.dir,"/input/data/preface_texts.yaml"))
 pref_d <- plyr::ldply (pref, data.frame, stringsAsFactors=FALSE)
 
+preface_region <- region_to_report
+if (rulang) preface_region <- "REURU"
 
-cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"maintitle"],"}"))
+cat(paste0("\\Huge{",pref_d[pref_d$id %in% preface_region,"maintitle"],"}"))
 @
 
 
@@ -178,7 +180,7 @@ cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"maintitle"],"}"))
 
 cat(paste0(
   "\\begin{center} \n",
-  "\\Huge{",pref_d[pref_d$id %in% region_to_report,"year"],"} \n",
+  "\\Huge{",pref_d[pref_d$id %in% preface_region,"year"],"} \n",
   "\\end{center} \n"
   ))
 
@@ -189,7 +191,7 @@ cat(paste0(
 
 \begin{center}
 <<define_subtitle, echo=FALSE, results='asis', eval=TRUE>>=
-cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"subtitle"],"}"))
+cat(paste0("\\Huge{",pref_d[pref_d$id %in% preface_region,"subtitle"],"}"))
 @
 
 \end{center}
@@ -201,15 +203,15 @@ cat(paste0("\\Huge{",pref_d[pref_d$id %in% region_to_report,"subtitle"],"}"))
 <<define_print_location, echo=FALSE, results='asis', eval=TRUE>>=
 cat(paste0(
 "\\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"bottom_row2"],
+        pref_d[pref_d$id %in% preface_region,"bottom_row2"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"bottom_row1"],
+        pref_d[pref_d$id %in% preface_region,"bottom_row1"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"bottom_row3"],
+        pref_d[pref_d$id %in% preface_region,"bottom_row3"],
 "\\hspace*{\\fill}"
 ))
 
@@ -300,20 +302,30 @@ cat("
 \\setlength{\\parskip}{1em}
 \\begin{siderules}
 \\begin{flushleft}
+")
+if (!rulang) cat("
 The designations employed and the presentation of material in this information product do not imply the expression of any opinion whatsoever on the part of the Food and Agriculture Organization of the United Nations (FAO) concerning the legal or development status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. The mention of specific companies or products of manufacturers, whether or not these have been patented, does not imply that these have been endorsed or recommended by FAO in preference to others of a similar nature that are not mentioned.
 
 The views expressed in this information product are those of the author(s) and do not necessarily reflect the views or policies of FAO.
 
-    ")
+")
+
+if (rulang) cat("
+Используемые обозначения и изложение материала в настоящем информационном продукте не означают выражения какого-либо мнения со стороны Продовольственной и сельскохозяйственной организации Объединенных Наций (ФАО) относительно правового статуса или уровня развития любой страны, территории, города или района или их властей, или относительно делимитации их границ. Упоминание конкретных компаний или продуктов производителей, независимо от того или нет, запатентованы они, не означает, что они были одобрены или рекомендованы ФАО отдается предпочтение перед другими продуктами аналогичного характера, не упомянутыми в тексте.
+
+Мнения, выраженные в настоящем информационном продукте, принадлежат автору (ам) и не обязательно отражают точку зрения или политику ФАО.
+
+")
 
 if (region_to_report == "COF"){cat("ISBN XX-YY-ZZ")}
 if (region_to_report == "GLO"){cat("ISBN XX-YY-ZZ")}
 if (region_to_report == "RAP"){cat("ISBN 978-92-5-108940-8")}
 if (region_to_report == "RAF"){cat("ISBN 978-92-5-108941-5")}
 if (region_to_report == "RNE"){cat("ISBN 978-92-5-108943-9")}
-if (region_to_report == "REU"){cat("ISBN 978-92-5-108942-2")}
+if (region_to_report == "REU" & !rulang){cat("ISBN 978-92-5-108942-2")}
+if (region_to_report == "REU" & rulang){cat("ISBN NEED NEW CODE")}
 
-cat("
+if (!rulang) cat("
 
 \\copyright FAO, 2016
 
@@ -322,6 +334,20 @@ FAO encourages the use, reproduction and dissemination of material in this infor
 All requests for translation and adaptation rights, and for resale and other commercial use rights should be made via www.fao.org/contact-us/licence-request or addressed to copyright@fao.org.
 
 FAO information products are available on the FAO website (www.fao.org/publications) and can be purchased through publications-sales@fao.org
+")
+
+if (rulang) cat("
+
+\\copyright ФАО, 2016
+
+ФАО поощряет использование, воспроизводство и распространение материалов, содержащихся в настоящем информационном продукте. За исключением случаев, когда указано иное, материал может быть скопированы, загружены и распечатаны для частного исследования, научно-исследовательских и учебных целей, или для использования в некоммерческих продуктов или услуг, при условии, что соответствующее признание ФАО в качестве держателя источника и авторского права дается и что ФАО одобрение пользователей взглядов, продуктов или услуг, не подразумевается каким-либо образом.
+
+Все запросы для перевода и адаптации к ним прав, а также для перепродажи и другие права на коммерческое использование должно осуществляться через www.fao.org/contact-us/licence-request или на имя copyright@fao.org.
+
+информационные продукты ФАО доступны на веб-сайте ФАО (www.fao.org/publications) и могут быть приобретены через publications-sales@fao.org
+")
+
+cat("
 \\end{flushleft}
 \\end{siderules}
 \\end{minipage}
@@ -417,11 +443,14 @@ FAO information products are available on the FAO website (www.fao.org/publicati
 
 <<foreword_chunk, eval=include_foreword>>=
 
+forewd <- "Foreword"
+if (rulang) forewd <- "предисловие"
+
 cat(paste0(
 "
-\\addcontentsline{toc}{section}{Foreword}
+\\addcontentsline{toc}{section}{",forewd,"}
 
-\\LARGE{Foreword}
+\\LARGE{",forewd,"}
 
 \\bigskip
 \\bigskip
@@ -430,7 +459,7 @@ cat(paste0(
 \\large
 
 ",
-pref_d[pref_d$id %in% region_to_report,"foreword"],
+pref_d[pref_d$id %in% preface_region,"foreword"],
 "
 
 \\bigskip
@@ -438,21 +467,21 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 \\bigskip
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"person1_name"],
+        pref_d[pref_d$id %in% preface_region,"person1_name"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"person1_title"],
+        pref_d[pref_d$id %in% preface_region,"person1_title"],
 "\\hspace*{\\fill}
 
 \\bigskip
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"person2_name"],
+        pref_d[pref_d$id %in% preface_region,"person2_name"],
 "\\hspace*{\\fill}
 
 \\hspace*{\\fill}",
-        pref_d[pref_d$id %in% region_to_report,"person2_title"],
+        pref_d[pref_d$id %in% preface_region,"person2_title"],
 "\\hspace*{\\fill}
 "))
 @
@@ -469,11 +498,12 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 
 if (region_to_report == "RAF") long_region_name <- "for Africa (RAF)"
 if (region_to_report == "RAP") long_region_name <- "for Asia and the Pacific (RAP)"
-if (region_to_report == "REU") long_region_name <- "for Europe and Central Asia (REU)"
+if (region_to_report == "REU" & !rulang) long_region_name <- "for Europe and Central Asia (REU)"
+if (region_to_report == "REU" & rulang) long_region_name <- "Европа и Центральная Азия"
 if (region_to_report == "RNE") long_region_name <- "for Near East and North Africa (RNE)"
 if (region_to_report == "GLO") long_region_name <- ""
 
-
+if (!rulang){
 cat(paste("
 
 % to add empty page
@@ -604,6 +634,141 @@ In addition:
        \\item ns not statistically significant
        \\end{itemize}
     "))
+}
+
+if (rulang){
+cat(paste("
+
+% to add empty page
+\\afterpage{\\blankpage}
+
+\\clearpage
+
+\\addcontentsline{toc}{section}{Как использовать эту книгу}
+
+\\LARGE{Как использовать эту книгу}
+
+\\large
+
+\\vspace{-2mm}
+
+\\subsection{Структура}
+
+This publication presents selected key indicators",long_region_name,"related to agriculture and food security
+that the international community, governments, the private sector and civil society can
+use to assess current trends and prioritize their actions. It is divided into two main sections,
+one thematic and one country-specific. It presents a variety of dimensions of agriculture
+and food security along four main focus areas:
+
+{\\textbf{\\color{part1} Настройки}} measures the state of the
+agricultural resource base by assessing the supply of land, labour,
+capital and inputs, and examining the pressure on the world food
+system stemming from demographic and macroeconomic change.
+
+{\\textbf{\\color{part2} размеры Голод}} gauges the state of
+food insecurity and malnutrition, and highlights the four dimensions
+– availability, access, stability and utilization – that determine
+the scale of hunger and the shape of undernourishment.
+
+{\\textbf{\\color{part3} Обеспечение продовольствием}} evaluates the past and
+present productive capacity of world agriculture, together with the
+role of trade, in meeting the world’s demand for food, feed and
+other products.
+
+{\\textbf{\\color{part4} Окружающая среда}} examines the sustainability
+of agriculture in the context of the pressure it exerts on its
+ecological surroundings, including the interaction of agriculture
+with climate change.
+
+This Pocketbook is part of the FAO Statistical Yearbook suite of products and is just one
+of the tools that can be used as building blocks for monitoring progress and formulating
+policy. It includes data from FAOSTAT and other FAO sources,  as well as from other
+partner organizations from the international community.  The source for all indicators,
+as well as more information about each one of them, is included in the '\\textit{Definitions}'
+section at the end of the pocketbook.
+
+\\vspace{-2mm}
+
+\\subsection{Определения и классификация по странам}",
+if (region_to_report %in% "REU"){"
+For purposes of comparison, based mainly on geographic criteria, while also taking into consideration, as much as possible, economic and population aspects, the region of Europe and Central Asia has been subdivided into seven sub-groups, which will be referred in this pocketbook as sub-regions. The aggregates for the sub-region “Andorra, Israel, Monaco and San Marino” are not shown in charts and tables on the pages 2-43 but these countries are fully represented in the pocketbook individually and contribute to the aggregates for the whole ECA region. The country names have been abbreviated for the purpose of this publication. The official FAO names can be found at http://termportal.fao.org/faonocs/appl/.  
+"} else {"
+
+The country classification adopted in this publication is based on the 
+United Nations M49 classification (\\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). 
+The country names have been abbreviated for the purpose of this publication. 
+The official FAO names can be found at \\url{http://termportal.fao.org/faonocs/appl/}.
+
+Following the creation of the Republic of South Sudan in July 2011, 
+the M49 classification considered the Sudan as part of the Northern Africa region, 
+and South Sudan as part of Eastern Africa. In this report, data for 
+the Sudan are therefore included in the Northern Africa region. 
+Data for Sudan prior to 2011 refers to former Sudan.
+"},"
+\\vspace{-2mm}
+
+\\subsection{Скопления}
+
+Unless otherwise specified, regional and sub-regional aggregates are based on the country
+groupings defined in table ’Classification of Countries’ on page xi.
+A small subset of indicators are based on the aggregation rules defined in the
+State of Food Insecurity in the World 2015 report (\\url{http://www.fao.org/3/a-i4646e.pdf})
+and these are identified with the †symbol, as described below.
+
+% Two types of aggregations are used in the book: sum and weighted mean. Two restrictions
+% are imposed when computing the aggregation: i) the sufficiency condition – the
+% aggregation is computed only when sufficient countries have reported data, and the current
+% threshold is set at 50 percent of the variable and the weighting variable, if present;
+% and ii) the comparability condition - as aggregations are usually computed over time,
+% this condition is designed to ensure that the number of countries is comparable over
+% several years; under the current restriction the number of countries may not vary by
+% more than 15 over time.
+
+Two types of aggregations are used in the book: sum and weighted mean. 
+A sufficiency condition is imposed when computing the aggregation – the 
+aggregation is computed only when sufficient countries have reported data, and the current
+threshold is set at 50 percent of the variable and the weighting variable, if present.
+
+\\vspace{-2mm}
+
+\\subsection{соглашения о представлении данных}
+
+The cut-off date for the data in this publication is xx January 2016.
+
+The asterisk (*) in charts and maps indicates the most recent year available in the specified
+time interval. In the country profiles, when the country data have not been reported
+for the reference year, data in \\textit{italics} indicate that the 
+value for the most recent year of complete information is shown. 
+The one exception is population data, for which the latest 
+information available refers to the year 2015.
+
+In the tables, a \\textit{NA} means not applicable or, for an aggregate, 
+not analytically meaningful. A 0 or 0.0 means zero or a number that 
+is small enough to round to zero at the displayed number of decimal places.
+
+The \\textasciitilde{} in the maps refers to the range specified in the class intervals.
+
+The \\textsuperscript{\\dag} in figure and table captions and in some indicator names  
+in regional country profile tables indicates that the country composition used in 
+regional aggregation is different from one presented on pages xi
+and follows the country composition used in
+\\textit{The State of Food Insecurity in the World 2015} report 
+(\\url{http://www.fao.org/3/a-i4646e.pdf}) as described in Annex1.
+
+In addition:
+
+\\vspace{-2mm}
+       \\begin{itemize}
+       \\itemsep0em
+       \\item <5.0 proportion less than 5 percent
+\\vspace{-1mm}
+       \\item <0.1 less than 100\\,000 people
+\\vspace{-1mm}
+       \\item ns not statistically significant
+       \\end{itemize}
+    "))
+}
+
 
 @
 
@@ -611,6 +776,8 @@ In addition:
 
 <<acknowledgements_chunk, eval=include_acknowledgements>>=
 
+acknowl <- "Acknowledgements"
+if (rulang) acknowl <- "подтверждения"
 
 cat(paste0(
 "
@@ -619,9 +786,9 @@ cat(paste0(
 
 \\clearpage
 
-\\addcontentsline{toc}{section}{Acknowledgements}
+\\addcontentsline{toc}{section}{",acknowl,"}
 
-\\LARGE{Acknowledgements}
+\\LARGE{",acknowl,"}
 
 \\bigskip
 \\bigskip
@@ -630,7 +797,7 @@ cat(paste0(
 \\large
 
 ",
-pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
+pref_d[pref_d$id %in% preface_region,"acknowledgements"]
 ))
 
 mapcaption <- "Classification of countries\\textsuperscript{*}"
@@ -1040,13 +1207,16 @@ cat(paste0("\\blfootnote{",footnote_text,"}"))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 <<part1_prelatex, eval=P1over>>=
-cat("
+thesetting <- "The setting"
+if (rulang) thesetting <- "Настройки"
+
+cat(paste("
     \\newpart{part1}
-    \\addcontentsline{toc}{part}{The setting}
+    \\addcontentsline{toc}{part}{",thesetting,"}
     \\rowcolors{1}{part1!10}{white}
     \\pagenumbering{arabic}  %% Arabic page numbering
     \\setcounter{page}{2}
-    ")
+    "))
 @
 
 
@@ -2400,12 +2570,15 @@ source(paste0(root.dir,"input/code/code_countryprofiles.R"))
 
 
 <<include_counryprofiletables, echo=FALSE, results='asis', eval=include_country_profiles>>=
-
+cprof <- "Country Profiles"  
+if (rulang) cprof <- "Профили стран" 
+  
+  
     cat("
              \\phantomsection
              \\newpart{white}
-             \\addcontentsline{toc}{part}{Country Profiles}
-             \\addcontentsline{toc}{section}{Country Profiles}
+             \\addcontentsline{toc}{part}{",cprof,"}
+             \\addcontentsline{toc}{section}{",cprof,"}
              \\faoset{bgcolor=white}\\selectcolor
              \\parindent=0pt
              \\parskip=\\medskipamount
@@ -2428,20 +2601,26 @@ source(paste0(root.dir,"input/code/code_countryprofiles.R"))
 
 <<print_definitions_texsnippets1, eval=include_definitions>>=
 
-cat("
+prtname <- "Metadata"  
+if (rulang) prtname <- "Метаданные"  
+
+  defns <-  "Definitions"
+if (rulang)  defns <-  "Определения"
+  
+cat(paste("
 \\newpart{white}
 \\phantomsection
-\\addcontentsline{toc}{part}{Metadata}
-\\addcontentsline{toc}{section}{Definitions}
+\\addcontentsline{toc}{part}{",prtname,"}
+\\addcontentsline{toc}{section}{",defns,"}
 
 \\begin{MetadataCollection}
 \\pagestyle{plain} %%% remove Contents string from header!!
 
 \\twocolumn
-\\normalfont \\LARGE Definitions
+\\normalfont \\LARGE ",defns,"
 
 \\footnotesize
-")
+"))
 @
 
 <<print_definitions, eval=include_definitions>>=

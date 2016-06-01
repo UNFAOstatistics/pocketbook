@@ -427,7 +427,7 @@ REU_reg_names <- c("Europe and Central Asia",
                    "EU Central and Eastern",
                    "CIS Europe",
                    #"Israel",
-                   "EU other and EFTA",
+                   "EU Other and EFTA",
                    "South Eastern Europe")
 RNE_reg_names <- c("Near East and North Africa",
                    "Gulf Cooperation\n Council States\n and Yemen",
@@ -483,7 +483,7 @@ if (region_to_report == "RAP"){
                      stringsAsFactors = FALSE),
           M49countries)
 }
-if (region_to_report == "REU"){
+if (region_to_report == "REU" & !rulang){
   M49countries <-
     rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,
                                     #14005, # Exclude Israel from country groupings
@@ -491,6 +491,17 @@ if (region_to_report == "REU"){
                      SHORT_NAME = REU_reg_names,
                      stringsAsFactors = FALSE),
           M49countries)
+}
+if (region_to_report == "REU" & rulang){
+  M49countries <-
+    rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,
+                                    #14005, # Exclude Israel from country groupings
+                                    14006,14007),
+                     SHORT_NAME = translate_subgroups(REU_reg_names),
+                     stringsAsFactors = FALSE),
+          M49countries)
+  M49countries$SHORT_NAME_RU <- countrycode.multilang::countrycode(M49countries$FAOST_CODE, "fao", "country.name.russian")
+  M49countries$SHORT_NAME <- ifelse(!is.na(M49countries$SHORT_NAME_RU), M49countries$SHORT_NAME_RU, M49countries$SHORT_NAME)
 }
 if (region_to_report == "RNE"){
   M49countries <-
