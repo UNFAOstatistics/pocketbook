@@ -27,6 +27,10 @@ regionS_to_report <- c(
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
+## Language
+rulang <- T
+itlang <- F
+filang <- F
 
 ############################################################
 # For print or for web or a4-print (in-house)
@@ -97,6 +101,41 @@ cache_definitions <- F
 
 ############################################################
 ############################################################
+
+# _                       _       _   _                 
+# | |_ _ __ __ _ _ __  ___| | __ _| |_(_) ___  _ __  ___ 
+# | __| '__/ _` | '_ \/ __| |/ _` | __| |/ _ \| '_ \/ __|
+# | |_| | | (_| | | | \__ \ | (_| | |_| | (_) | | | \__ \
+#  \__|_|  \__,_|_| |_|___/_|\__,_|\__|_|\___/|_| |_|___/
+# 
+# Function for translations
+
+translate_subgroups <- function(var){
+  
+  if (rulang){
+    var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+    var[var %in% "South Eastern Europe"] <- "Юго-Восточной Европы"
+    var[var %in% "Caucasus and Turkey"] <- "Кавказа и Турции"
+    var[var %in% "EU Other and EFTA"] <- "ЕС другой и ЕАСТ"
+    var[var %in% "CIS Europe"] <- "СНГ Европа"
+    var[var %in% "EU Central Eastern"] <- "Центральная и Восточная ЕС"
+    var[var %in% "Central Asia"] <- "Центральная Азия"
+  }
+  if (filang){
+    var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
+    var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
+    var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
+    var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
+    var[var %in% "CIS Europe"] <- "IVY Eurooppa"
+    var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
+    var[var %in% "Central Asia"] <- "Keski-Aasia"
+  }
+  return(var)
+}
+
+
+
+
 
 #   _ _ _                    _
 #  | (_) |__  _ __ __ _ _ __(_) ___  ___

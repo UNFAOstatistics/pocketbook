@@ -126,7 +126,7 @@ for (region_to_report in regionS_to_report) {
   unlink(paste0(root.dir,"/output/process/figure"), recursive = TRUE)
 
 
-  knitr::knit("syb_main.Rnw")
+  knitr::knit("syb_main.Rnw", encoding = "utf-8")
   # Embed fonts
   flist <- list.files(paste0(root.dir,"output/process/figure"),
                       recursive = TRUE,
@@ -136,6 +136,10 @@ for (region_to_report in regionS_to_report) {
   for (plot in flist) {
     embed_fonts(plot)
   }
+  
+  # Manual translations
+  if ( rulang) system(paste0("sed -i -- 's/\\\\newcommand\\\\chartname{Chart}/ \\\\newcommand\\\\chartname{Диаграмма} /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  
 
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))

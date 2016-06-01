@@ -34,10 +34,11 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 ## ---- P1overTEXT ----
 spread_title <- "Population"
+if (rulang) spread_title <- "Население"
 if (region_to_report == "RAF") short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. Since the late 1960s, Africa has experienced unsteady population growth rate; nevertheless its population has tripled since then, to over 1 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Urbanization is progressing in Africa with two-fifths of people living in cities in 2015."
 if (region_to_report == "RAP") short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
 if (region_to_report == "REU") short_text <- "Declining mortality rates and prolonged life expectancy in the region are not supported by high fertility rates. Thus population growth rates have been slowing since the late 1960s to the practically flat rate at present. Population growth is distributed unevenly across the region, some areas like Central Asia, and Caucasus and Turkey showing population increase while some areas, like EU central and Eastern, and CIS Europe, population decline. About one seventh of the total population of the region lives in rural areas."
-if (region_to_report == "REU" & lang = "ru") short_text <- "Снижение уровня смертности и продлить продолжительность жизни в регионе не поддерживаются высоким уровнем рождаемости. Таким образом, темпы роста населения замедляется, начиная с конца 1960-х годов до практически плоской ставки в настоящее время. Рост численности населения неравномерно распределены по всему региону, в некоторых районах, как в Средней Азии и Кавказа и Турции, показывающие рост населения в то время как в некоторых областях, таких как ЕС странах Центральной и Восточной, и СНГ Европа, сокращение численности населения. Около одной седьмой от общей численности населения региона проживает в сельской местности."
+if (region_to_report == "REU" & rulang) short_text <- "Снижение уровня смертности и продлить продолжительность жизни в регионе не поддерживаются высоким уровнем рождаемости. Таким образом, темпы роста населения замедляется, начиная с конца 1960-х годов до практически плоской ставки в настоящее время. Рост численности населения неравномерно распределены по всему региону, в некоторых районах, как в Средней Азии и Кавказа и Турции, показывающие рост населения в то время как в некоторых областях, таких как ЕС странах Центральной и Восточной, и СНГ Европа, сокращение численности населения. Около одной седьмой от общей численности населения региона проживает в сельской местности."
 if (region_to_report == "RNE") short_text <- "The declining mortality rates combined with a moderate life expectancy and supported by an extreme fertility contributes to population growth in the world. The region, in turn, have been showing steady population growth since the late 1960s in urban areas compared to lower rates in the rural ones. Population growth is generally higher in the Gulf countries like Qatar United Arab Emirates, Bahrain and Kuwait compared to middle income countries like Morocco, Tunisia and Iran. The last two decades show that there have been more people living in cities than in rural areas."
 if (region_to_report == "GLO") short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
 
@@ -88,9 +89,10 @@ if (region_to_report == "REU"){
     group_by(variable,Year) %>%
     dplyr::summarise(value = sum(value, na.rm=TRUE))
   dat$variable <- as.character(dat$variable)
-  dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
-  dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
-  
+  if (!rulang) dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
+  if (!rulang) dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
+  if (rulang) dat$variable[dat$variable == "OA_3010_551"] <- "Сельское население"
+  if (rulang) dat$variable[dat$variable == "OA_3010_561"] <- "Городское население"
 }
 
 
@@ -105,20 +107,23 @@ p <- ggplot(dat_plot, aes(x = Year, y = value))
 p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="billion people\n")
+if (rulang) p <- p + labs(x="",y="миллионов человек\n")
 p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
 p
 
 if (table_type == "latex"){
-  cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
+  if (!rulang){
+    cat("\\footnotesize{\\textit{Data after 2015 are projections}}")
+  } else cat("\\footnotesize{\\textit{Данные после 2015 года являются проекциями}}")
   cat("\\vspace{1mm}")
 } else cat("<br><i>Data after 2015 are projections</i>")
 
 
 # Caption
 if (region_to_report != "REU")  caption_text <- "Rural and urban population (1961 to 2016)"
-if (region_to_report == "REU")  caption_text <- "Rural and urban population (1961 to 2050)"
-
+if (region_to_report == "REU" & !rulang)  caption_text <- "Rural and urban population (1961 to 2050)"
+if (region_to_report == "REU" & rulang)  caption_text <- "Сельского и городского населения (1961 до 2050)"
 
 
 ## ---- P1overLEFT ----
@@ -136,21 +141,28 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -OA.TPBS.POP.PPL.GR10)
 top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+if (rulang) top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "С высокими значениями")
+
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+if (rulang) bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "С самыми низкими значениями")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.POP.PPL.GR10))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\nпроцент")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Population, average annual growth, top and bottom",nrow(dat_plot)/2,"countries (2004-2014)")
+if (rulang) caption_text <- paste("Население, среднегодовой рост, верх и низ",nrow(dat_plot)/2,"страны (2004-2014)")
 
 
 ## ---- P1overRIGHT ----
@@ -165,22 +177,28 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SP.DYN.LE00.IN)
 top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+if (rulang) top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "С высокими значениями")
+
 bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+if (rulang) bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "С самыми низкими значениями")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nyears")
+if (rulang) p <- p + labs(x="",y="\nлет")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Life expectancy at birth, top and bottom",nrow(dat_plot)/2,"countries (2013)")
+caption_text <- paste("Ожидаемая продолжительность жизни при рождении, сверху и снизу",nrow(dat_plot)/2,"страны (2013)")
 
 ## ---- P1overBOTTOM ----
 # data
@@ -195,16 +213,19 @@ dat_plot <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
 
 dat_plot$OA.TEAPT.POP.PPL.NO <- dat_plot$OA.TEAPT.POP.PPL.NO / 1000000
 
+if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME)
+
 p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people\n")
+if (rulang) p <- p + labs(x="",y="миллионов человекe\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p
 
 # Caption
 caption_text <- "Total economically active population (2000 to 2014)"
-
+if (rulang) caption_text <- "Общая численность экономически активного населения (2000 до 2014)"
 
 
 
@@ -225,12 +246,16 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
+if (rulang) map_unit <- "процент"
+  
+
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Rural population, share of total population (2014)"
+if (rulang) caption_text <- "Сельское население, доля от общей численности населения (2014)"
 
 
 
@@ -961,33 +986,33 @@ caption_text <- paste("Aid commitment flows to Agriculture, Forestry and Fishing
 
 
 ## ---- p1investMAPdata ----
-dat <- getFAOtoSYB(domainCode = "IG",
-                   elementCode = 6111,
-                   itemCode = 23101)
-dat <- dat[["aggregates"]]
-dat <- dat[!is.na(dat$IG_23101_6111),]
-dat <- dat %>% filter(Year %in% 2008:2012) %>% group_by(FAOST_CODE) %>% dplyr::mutate(maxyear = max(Year)) %>% ungroup () %>% filter(Year == maxyear)
+# dat <- getFAOtoSYB(domainCode = "IG",
+#                    elementCode = 6111,
+#                    itemCode = 23101)
+# dat <- dat[["aggregates"]]
+# dat <- dat[!is.na(dat$IG_23101_6111),]
+# dat <- dat %>% filter(Year %in% 2008:2012) %>% group_by(FAOST_CODE) %>% dplyr::mutate(maxyear = max(Year)) %>% ungroup () %>% filter(Year == maxyear)
 
 
 
 
 ## ---- P1investMAP ----
-map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
-
-# Add region key and subset
-
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IG_23101_6111")]
-cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks",decimals=2)
-
-map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-
-# define map unit
-map_unit <- "percent"
-
-p <- create_map_here()
-p
-
-# Caption
-caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"
+# map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+# 
+# # Add region key and subset
+# 
+# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+# 
+# cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IG_23101_6111")]
+# cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks",decimals=2)
+# 
+# map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+# 
+# # define map unit
+# map_unit <- "percent"
+# 
+# p <- create_map_here()
+# p
+# 
+# # Caption
+# caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"

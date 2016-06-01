@@ -1,6 +1,7 @@
 library(knitr)
 
-#pdf.options(useDingbats = TRUE)
+# pdf.options(useDingbats = TRUE)
+pdf.options(encoding='Cyrillic')
 
 knit_hooks$set(chunk = function(x, options) x) # do not wrap output in kframe
 

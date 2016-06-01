@@ -41,8 +41,18 @@ PLACE_PRINT_OR_WEB_HERE
 
 %% Other packages to be loaded
 \usepackage{lipsum,textcomp}
-\usepackage[T1]{fontenc}
+% \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
+
+\usepackage[T1,T2A]{fontenc}
+% \usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+% \usepackage{fontspec} % loaded by polyglossia, but included here for transparency 
+% \usepackage{polyglossia}
+% \setmainlanguage{russian} 
+% \setotherlanguage{english}
+
 \usepackage{tabularx}
 \usepackage{fixltx2e}
 \usepackage{bpchem}
@@ -623,7 +633,8 @@ cat(paste0(
 pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
 ))
 
-
+mapcaption <- "Classification of countries\\textsuperscript{*}"
+if (rulang) mapcaption <- "Классификация стран\\textsuperscript{*}"
 
 @
 
@@ -652,7 +663,7 @@ pref_d[pref_d$id %in% region_to_report,"acknowledgements"]
 \clearpage
 
 
-<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap="Classification of countries\\textsuperscript{*}">>=
+<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap=mapcaption>>=
 
 the_whole   <- map.df # for mapping the grey areas
 
@@ -833,7 +844,10 @@ overview.df <- left_join(df,region_key)
 #                                                         "\\newgeometry{left=0.6cm,right=-10cm,top=10cm,bottom=0cm}"))
 
 df <- overview.df[!duplicated(overview.df[c("SHORT_NAME")]),]
-df <- df[c("SHORT_NAME","subgroup")]
+df <- df[c("SHORT_NAME","FAOST_CODE","subgroup")]
+
+if (rulang) df$SHORT_NAME <- countrycode.multilang::countrycode(df$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+df$FAOST_CODE <- NULL
 
 df <- df[!duplicated(df[c("SHORT_NAME","subgroup")]),]
 df$row <- 1:nrow(df)
@@ -857,7 +871,7 @@ for (col in 1:ncol(overview_data)){
 overview_data <- overview_data[rowSums(is.na(overview_data))!=ncol(overview_data), ]
 #
 # Specific order for for EU other and EFTA - so ordering a single column based on new factor levels
-if (region_to_report == "REU"){
+if (region_to_report == "REU" & !rulang){
   
   overview_data$`EU other and EFTA` <- factor(overview_data$`EU other and EFTA`,
                                               levels=c("Austria", "Belgium", "Cyprus", "Denmark", "Finland",
@@ -906,11 +920,26 @@ if (region_to_report == "RNE") tbl_font_size <- "footnotesize"
 if (region_to_report == "REU") tbl_font_size <- "footnotesize"
 if (region_to_report == "RAP") tbl_font_size <- "footnotesize"
 
+if (rulang){
+
+cat(
+"\\begin{center}
+        Таблица: \\textbf{Классификация стран\\textsuperscript{*}} \\newline \\vspace{-5mm}
+\\end{center}"
+)
+  } else{
 cat(
 "\\begin{center}
         TABLE: \\textbf{Classification of countries\\textsuperscript{*}} \\newline \\vspace{-5mm}
 \\end{center}"
 )
+}
+
+
+
+
+
+
 
 
 

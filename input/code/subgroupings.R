@@ -68,10 +68,21 @@ subgrouping <- function(region_to_report, gather=TRUE){
     df$subgroup[df$subgroup %in% "Other Near East countries"] <- "Other Near East\ncountries"
   }
   
-  if (region_to_report == "REU") {
+  if (region_to_report == "REU" & !rulang) {
     df$subgroup[df$subgroup %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco and San Marino"
   }
   
+  # translations!!
+  
+  if (region_to_report == "REU" & rulang) {
+    df$subgroup[df$subgroup %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+    df$subgroup[df$subgroup %in% "South Eastern Europe"] <- "Юго-Восточной Европы"
+    df$subgroup[df$subgroup %in% "Caucasus and Turkey"] <- "Кавказа и Турции"
+    df$subgroup[df$subgroup %in% "EU other and EFTA"] <- "ЕС другой и ЕАСТ"
+    df$subgroup[df$subgroup %in% "CIS Europe"] <- "СНГ Европа"
+    df$subgroup[df$subgroup %in% "EU Central and Eastern"] <- "Центральная и Восточная ЕС"
+    df$subgroup[df$subgroup %in% "Central Asia"] <- "Центральная Азия"
+  }
   
   
   
