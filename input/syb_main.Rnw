@@ -309,9 +309,9 @@ cat("
 
 FAO encourages the use, reproduction and dissemination of material in this information product. Except where otherwise indicated, material may be copied, downloaded and printed for private study, research and teaching purposes, or for use in non-commercial products or services, provided that appropriate acknowledgement of FAO as the source and copyright holder is given and that FAO’s endorsement of users’ views, products or services is not implied in any way.
 
-All requests for translation and adaptation rights, and for resale and other commercial use rights should be made via www.fao. org/contact-us/licence-request or addressed to copyright@fao. org.
+All requests for translation and adaptation rights, and for resale and other commercial use rights should be made via www.fao.org/contact-us/licence-request or addressed to copyright@fao.org.
 
-FAO information products are available on the FAO website (www.fao.org/publications) and can be purchased through publications-sales@fao.o
+FAO information products are available on the FAO website (www.fao.org/publications) and can be purchased through publications-sales@fao.org
 \\end{flushleft}
 \\end{siderules}
 \\end{minipage}
@@ -457,10 +457,10 @@ pref_d[pref_d$id %in% region_to_report,"foreword"],
 
 <<introduction_chunk, eval=include_introduction>>=
 
-if (region_to_report == "RAF") long_region_name <- "for Africa"
-if (region_to_report == "RAP") long_region_name <- "for Asia and the Pacific"
-if (region_to_report == "REU") long_region_name <- "for Europe and Central Asia"
-if (region_to_report == "RNE") long_region_name <- "for Near East and North Africa"
+if (region_to_report == "RAF") long_region_name <- "for Africa (RAF)"
+if (region_to_report == "RAP") long_region_name <- "for Asia and the Pacific (RAP)"
+if (region_to_report == "REU") long_region_name <- "for Europe and Central Asia (REU)"
+if (region_to_report == "RNE") long_region_name <- "for Near East and North Africa (RNE)"
 if (region_to_report == "GLO") long_region_name <- ""
 
 
@@ -516,7 +516,10 @@ section at the end of the pocketbook.
 
 \\vspace{-2mm}
 
-\\subsection{Country definitions and classification}
+\\subsection{Country definitions and classification}",
+if (region_to_report %in% "REU"){"
+For purposes of comparison, based mainly on geographic criteria, while also taking into consideration, as much as possible, economic and population aspects, the region of Europe and Central Asia has been subdivided into seven sub-groups, which will be referred in this pocketbook as sub-regions. The aggregates for the sub-region “Andorra, Israel, Monaco and San Marino” are not shown in charts and tables on the pages 2-43 but these countries are fully represented in the pocketbook individually and contribute to the aggregates for the whole ECA region. The country names have been abbreviated for the purpose of this publication. The official FAO names can be found at http://termportal.fao.org/faonocs/appl/.  
+"} else {"
 
 The country classification adopted in this publication is based on the 
 United Nations M49 classification (\\url{http://unstats.un.org/unsd/methods/m49/m49.htm}). 
@@ -528,7 +531,7 @@ the M49 classification considered the Sudan as part of the Northern Africa regio
 and South Sudan as part of Eastern Africa. In this report, data for 
 the Sudan are therefore included in the Northern Africa region. 
 Data for Sudan prior to 2011 refers to former Sudan.
-
+"},"
 \\vspace{-2mm}
 
 \\subsection{Aggregations}
@@ -669,12 +672,6 @@ overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 overview.df <- arrange(overview.df, order)
 #overview.df <- merge(overview.df,FAOcountryProfile,by="FAOST_CODE")
 
-# Because of Andorra, Monaco, San Marino & Israel that do not belong to any group G wanteg to show them individually
-# if (region_to_report == "REU"){
-#   overview.df$subgroup <- ifelse(overview.df$subgroup %in% "misc", overview.df$SHORT_NAME, overview.df$subgroup)
-# } 
-if (region_to_report == "REU") overview.df$subgroup[overview.df$subgroup %in% "misc"] <- "Andorra, Israel, Monaco and San Marino"
-
 # define map unit
 map_unit <- ""
 
@@ -704,6 +701,12 @@ mapColors = mapColFun(nCol)
 }
 
 
+# # Because of Andorra, Monaco, San Marino & Israel that do not belong to any group G wanteg to show them individually
+# overview.df$subgroup[overview.df$subgroup %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco and San Marino"
+# # if (region_to_report == "REU"){
+# #   overview.df$subgroup <- ifelse(overview.df$subgroup %in% "misc", overview.df$SHORT_NAME, overview.df$subgroup)
+# # } 
+# if (region_to_report == "REU") overview.df$subgroup[overview.df$subgroup %in% "misc"] <- "Andorra, Israel, Monaco and San Marino"
 
 
 
@@ -767,7 +770,7 @@ if (region_to_report == "COF") include_overview_tbl <- FALSE
 if (region_to_report == "RAF") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Africa"
 if (region_to_report == "RAP") footnote_text <- "\\textsuperscript{*}Countries listed here are classified in accordance with the UN M.49 groupings developed by the United Nations Statistics Division. Countries which are members of FAO and attend FAO Regional Conference but have mainland outside the Asia and Pacific region have notably been excluded for analytical purposes to reflect the situation within the geography of the Asia and Pacific region. Unless otherwise specified, the statistics on their territories located in this region are also excluded from aggregates provided in this book,
 including France, Russian Federation and USA which are FAO members and attend meeting of regional bodies as they have some territories located in the Asia-Pacific region"
-if (region_to_report == "REU") footnote_text <- "\\textsuperscript{*}For purposes of comparison, based mainly on geographic criteria, while also taking into consideration, as much as possible, economic and population aspects, the region of Europe and Central Asia has been subdivided into six sub-groups, which will be referred in this pocketbook as sub-regions. Israel is represented in the maps, has its own data table, participates in calculation of the aggregates for the whole region but because of its geographical distance from the other countries in the region and to its non-EU and EFTA membership, it has not been included in the sub-regions."
+if (region_to_report == "REU") footnote_text <- "\\textsuperscript{*}For purposes of comparison, based mainly on geographic criteria, while also taking into consideration, as much as possible, economic and population aspects, the region of Europe and Central Asia has been subdivided into seven sub-groups, which will be referred in this pocketbook as sub-regions. The aggregates for the sub-region “Andorra, Israel, Monaco and San Marino” are not shown in charts and tables on the pages 2-43 but these countries are fully represented in the pocketbook individually and contribute to the aggregates for the whole ECA region"
 if (region_to_report == "RNE") footnote_text <- "\\textsuperscript{*}The groupings are consistent with the following: SNG sub regional countries (Bahrain, Kuwait, Oman, Qatar, Saudi Arabia, United Arab Emirates, and Yemen); SNE sub regional countries (Algeria, Libya, Mauritania, Morocco and Tunisia); and the rest of other countries (Egypt, Iran (Islamic Republic of), Iraq, Jordan, Lebanon, Sudan, and Syria)."
 if (region_to_report == "GLO") footnote_text <- "\\textsuperscript{*}This is country grouping custom text for Global book"
 
@@ -816,9 +819,6 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
-# Because of Andorra, Monaco, San Marino & Israel that do not belong to any group
-# if (region_to_report == "REU") df <- df[!df$subgroup %in% "misc",]
-if (region_to_report == "REU") df$subgroup[df$subgroup %in% "misc"] <- "Andorra, Israel, Monaco and San Marino"
 overview.df <- left_join(df,region_key)
 
 

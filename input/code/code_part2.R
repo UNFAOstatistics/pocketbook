@@ -492,7 +492,7 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Prevalence of overweigth among children under 5, top",nrow(dat_plot),"countries with the highest values, female (percent 2005-2013*)")
+caption_text <- paste("Prevalence of overweight among children under 5, top",nrow(dat_plot),"countries with the highest values, female (percent 2005-2013*)")
 # caption_text <- "text"
 #
 ## ---- P2obesityBOTTOM ----
@@ -765,7 +765,7 @@ p
 
 
 # Caption
-caption_text <- paste("Depth of food decifit (kcal/capita/day) (3 year averages)",dag_char)
+caption_text <- paste("Depth of food deficit (kcal/capita/day) (3 year averages)",dag_char)
 
 
 

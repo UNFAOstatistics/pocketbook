@@ -305,7 +305,7 @@ REU_South_Eastern_Europe <- c(3, # "Albania"
                               80, # Bosnia and Herzegovina
                               273, # "Montenegro"
                               272, # "Serbia"
-                              186, # "Serbia and Montenegro"
+                              # 186, # "Serbia and Montenegro"
                               154#, # "The former Yugoslav Republic of Macedonia"
                               #248) # "Yugoslav SFR"
 )
@@ -385,7 +385,7 @@ REU_Central_Asia <- c(108, # Kazakhstan
                       235) # Uzbekistan
 
 # For countries not part of any real subgroup
-REU_misc <- c(6, #Andorra
+REU_Andorra_Israel_Monaco_and_San_Marino <- c(6, #Andorra
               140, # Monaco
               192, # San Marino
               105 # Israel
@@ -398,7 +398,7 @@ REU <- c(REU_South_Eastern_Europe,
          REU_EU_Central_and_Eastern,
          # REU_Israel,
          REU_Central_Asia,
-         REU_misc
+         REU_Andorra_Israel_Monaco_and_San_Marino
 )
 
 
@@ -1085,7 +1085,7 @@ region_key$REU_Caucasus_and_Turkey      <- ifelse(region_key$FAOST_CODE %in% REU
 region_key$REU_CIS_Europe               <- ifelse(region_key$FAOST_CODE %in% REU_CIS_Europe, TRUE, FALSE)
 region_key$REU_EU_Central_and_Eastern   <- ifelse(region_key$FAOST_CODE %in% REU_EU_Central_and_Eastern, TRUE, FALSE)
 # region_key$REU_Israel                   <- ifelse(region_key$FAOST_CODE %in% REU_Israel, TRUE, FALSE)
-region_key$REU_misc                   <- ifelse(region_key$FAOST_CODE %in% REU_misc, TRUE, FALSE)
+region_key$REU_Andorra_Israel_Monaco_and_San_Marino                   <- ifelse(region_key$FAOST_CODE %in% REU_Andorra_Israel_Monaco_and_San_Marino, TRUE, FALSE)
 region_key$REU_Central_Asia             <- ifelse(region_key$FAOST_CODE %in% REU_Central_Asia, TRUE, FALSE)
 
 region_key$RNE                                            <- ifelse(region_key$FAOST_CODE %in% RNE, TRUE, FALSE)

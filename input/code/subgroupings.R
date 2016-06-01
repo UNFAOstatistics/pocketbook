@@ -68,5 +68,12 @@ subgrouping <- function(region_to_report, gather=TRUE){
     df$subgroup[df$subgroup %in% "Other Near East countries"] <- "Other Near East\ncountries"
   }
   
+  if (region_to_report == "REU") {
+    df$subgroup[df$subgroup %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco and San Marino"
+  }
+  
+  
+  
+  
   df[c("FAOST_CODE","subgroup")]
 }
