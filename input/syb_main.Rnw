@@ -2530,7 +2530,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part6.R"))
 %
 
 <<compute_countryprofiles, echo=FALSE, results='asis', eval=include_country_profiles>>=
-source(paste0(root.dir,"input/code/code_countryprofiles.R"))
+source(paste0(root.dir,"input/code/code_countryprofiles.R"), encoding="UTF-8")
 @
 
 

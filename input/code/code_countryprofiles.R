@@ -219,9 +219,12 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
 # "SH.STA.STNT.ZS.y"
 # "SH.STA.WAST.ZS.y" 
 
-syb.df <- syb.df %>% select(-SH.STA.STNT.ZS.y,-SH.STA.WAST.ZS.y)
-names(syb.df)[names(syb.df) %in% "SH.STA.STNT.ZS.x"] <- "SH.STA.STNT.ZS"
-names(syb.df)[names(syb.df) %in% "SH.STA.WAST.ZS.x"] <- "SH.STA.WAST.ZS"
+if ("SH.STA.STNT.ZS.y" %in% names(syb.df)){
+  syb.df <- syb.df %>% select(-SH.STA.STNT.ZS.y,-SH.STA.WAST.ZS.y)
+  names(syb.df)[names(syb.df) %in% "SH.STA.STNT.ZS.x"] <- "SH.STA.STNT.ZS"
+  names(syb.df)[names(syb.df) %in% "SH.STA.WAST.ZS.x"] <- "SH.STA.WAST.ZS"
+  }
+
 
 # Countries ---------------------------------------------------------------
 
@@ -532,6 +535,13 @@ if (region_to_report == "RNE"){
 indicators.df <- read.csv(paste0(root.dir,"input/data/country_profile_indicators_",region_to_report,".csv"), na.strings = "", stringsAsFactors = FALSE)
 
 
+if (rulang){
+  indicators.df$PART <- NULL
+  names(indicators.df)[names(indicators.df) %in% "PART_RU"] <- "PART"
+  indicators.df$SERIES_NAME_SHORT <- NULL
+  names(indicators.df)[names(indicators.df) %in% "SERIES_NAME_SHORT_RU"] <- "SERIES_NAME_SHORT"
+}
+
 # source(paste0(root.dir,"input/code/table/tableInfo.R"))
 if (table_type == "latex"){
 
@@ -552,7 +562,11 @@ if (table_type == "latex"){
 
 
   # Multiplying
+  indicators.df$MULTIPLIER <- factor(indicators.df$MULTIPLIER)
+  indicators.df$MULTIPLIER <- as.numeric(levels(indicators.df$MULTIPLIER))[indicators.df$MULTIPLIER]
+
   multip.df <- indicators.df[!is.na(indicators.df$MULTIPLIER),]
+
 
   for (name in names(CountryProfile.df)) {
     if (name %in% multip.df$INDICATOR1) CountryProfile.df[[name]] <- CountryProfile.df[[name]] / multip.df[multip.df$INDICATOR1 %in% name,]$MULTIPLIER
@@ -691,6 +705,9 @@ if (table_type == "latex"){
     }
     ## data
     tmp = CountryProfile.df[CountryProfile.df[, "FAOST_CODE"] == M49countries[i, "FAOST_CODE"], ]
+    
+    
+    
     for (part in 1:length(unique(indicators.df[, "PART"]))) {
       #     cat("\t\\multicolumn{4}{l}{\\textcolor{",paste0("part", part),"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
       #         file = fileOut, append = TRUE, sep = "")
@@ -733,6 +750,8 @@ if (table_type == "latex"){
 
 
       subindicators.df = indicators.df[indicators.df[, "PART"] == unique(indicators.df$PART)[part], ]
+      
+
       for (j in 1:nrow(subindicators.df)) {
         y1 = tmp[tmp[, "Year"] == year1, subindicators.df[j, "INDICATOR1"]]
         if (length(y1) == 1) {
@@ -806,6 +825,8 @@ if (table_type == "latex"){
         chunk1 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk1)
         chunk2 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk2)
         chunk3 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk3)
+        
+        
         # Add asterisk if SOFI indicator
         fsi_meta <- read_csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"))
         fsi_meta <- as.data.frame(fsi_meta)
@@ -813,11 +834,12 @@ if (table_type == "latex"){
                                                                                                             RAF_reg_names,
                                                                                                             REU_reg_names,
                                                                                                             RNE_reg_names)){
-          cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),dag_char, " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
-              file = fileOut, append = TRUE, sep = "")
+              cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),dag_char, " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+                file = fileOut, append = TRUE, sep = "")
+          
         } else {
-          cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
-              file = fileOut, append = TRUE, sep = "")
+            cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+            file = fileOut, append = TRUE, sep = "")
         }
         
 

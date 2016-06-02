@@ -1,55 +1,55 @@
-PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS
-The setting,1,tot_pop_male_female,,,"Population, total (M/F, mln)",,1
-The setting,2,rural_pop_gender_shares,,,"Population, rural (M/F, % total population)",,1
-The setting,4,area_harvested,,,Area harvested (mln ha),1000000,1
-The setting,6,AQ.WAT.WATPCP.MC.NO,,,Water resources (m3/person/year),1000,0
-The setting,7,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1000 ha),1000,0
-The setting,8,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (%),,1
-The setting,9,agr_employment_male_female,,,"Employment in agriculture (M/F, %)",,1
-The setting,10,RF.FERT.NI.TN.SH,,,"Fertilizers, Nitrogen (kg per ha)",0.001,1
-The setting,11,RF.FERT.PH.TN.SH,,,"Fertilizers, Phosphate (kg per ha)",0.001,1
-The setting,12,RF.FERT.PO.TN.SH,,,"Fertilizers, Potash (kg per ha)",0.001,1
-The setting,13,energy.for.power.irrigation,,,"Energy consump, power irrigation (mln kWh)",1000000,0
-The setting,14,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),,1
-The setting,15,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
-Hunger and dietary quality dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
-Hunger and dietary quality dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1
-Hunger and dietary quality dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary energy supp, cereals/roots/tubers (%)",,1
-Hunger and dietary quality dimensions,19,FBS.PPCS.AO.GCD3D,,,Avrg. protein supply of animal origin (g/cap/day),,0
-Hunger and dietary quality dimensions,20,FS.OA.SFEP.PCT,,,Share of food expenditure (%),,1
-Hunger and dietary quality dimensions,21,FS.OA.POU.PCT3D1,,,Prevalence of undernourishment (%),,1
-Hunger and dietary quality dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0
-Hunger and dietary quality dimensions,23,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
-Hunger and dietary quality dimensions,24,SH.STA.STNT.ZS,,,"Stunting, children under 5 (%)",,1
-Hunger and dietary quality dimensions,25,SH.STA.WAST.ZS,,,"Wasting, children under 5 (%)",,1
-Hunger and dietary quality dimensions,26,SH.STA.OWGH.ZS,,,"Overweight, children under 5 (%)",,1
-Hunger and dietary quality dimensions,28,overweight,,,"Overweight, adults (M/F, %)",,1
-Hunger and dietary quality dimensions,29,obesity,,,"Obesity, adults (M/F, %)",,1
-Hunger and dietary quality dimensions,31,FS.OU.VAD.PCT,,,"Vitamin A deficiency, total pop. (%)",,1
-Hunger and dietary quality dimensions,32,SH.ANM.CHLD.ZS,,,"Anemia, children under 5 (%)",,1
-Hunger and dietary quality dimensions,33,SH.PRG.ANEM,,,"Anemia, women in reproductive age (%)",,1
-Hunger and dietary quality dimensions,35,FS.OU.IODINE.PCT,,,"Iodine deficiency, children aged 6 to 12 (%)",,1
-Hunger and dietary quality dimensions,36,SH.XPD.TOTL.ZS,,,"Health expenditure, total (% of GDP)",,1
-Hunger and dietary quality dimensions,37,SH.XPD.PCAP,,,"Health expenditure per capita, PPP ($)",,0
-Hunger and dietary quality dimensions,38,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
-Food Supply,39,QV.NPV.FOOD.ID.NO,,,"Food production value, (2004-2006 mln I$)",1000000,0
-Food Supply,40,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,1
-Production indices (2004-06=100),41,QI.NPIN.FOOD.IN.NO,,,Net food,,0
-Production indices (2004-06=100),42,QI.NPIN.CRPS.IN.NO,,,Net crop,,0
-Production indices (2004-06=100),43,QI.NPIN.CRLS.IN.NO,,,Cereal,,0
-Food Supply,44,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
-Food Supply,45,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
-Food Supply,46,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
-Net trade (mln US\$),47,TP.NETVAL.CRLSPREP.USD.NO,,,Cereals,1000000,0
-Net trade (mln US\$),48,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
-Net trade (mln US\$),49,TP.NETVAL.MEATPREP.USD.NO,,,Meat,1000000,0
-Net trade (mln US\$),50,TP.NETVAL.MILKEQ.USD.NO,,,Dairy products,1000000,0
-Net trade (mln US\$),51,net_fish_trade,,,Fish,1000,0
-Environment,52,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
-Environment,53,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,1
-Environment,54,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,1
-Environment,55,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),0.01,1
-Environment,56,AQ.WAT.WWAGR.MC.SH,,,Share of renewable water resources (%),,1
-Environment,57,BP.TP.GP.TJ.NO,,,Biofuel production (thousand kt of oil eq.),1000,0
-Environment,58,FO.WP.PQ.TN.NO,,,Wood pellet prod. (mln tonnes),1000,0
-Environment,59,GHG.AFOLU.TOT.ECO2EQ.NO,,,"Net GHG emissions from AFOLU (CO2 eq, Mt)",1000,0
+"PART","ORDER","INDICATOR1","INDICATOR2","INDICATOR3","SERIES_NAME_SHORT","MULTIPLIER","DIGITS","SERIES_NAME_SHORT_RU","PART_RU"
+"The setting",1,"tot_pop_male_female",NA,NA,"Population, total (M/F, mln)",NA,1,"Индикатор на русском языке","Настройки"
+"The setting",2,"rural_pop_gender_shares",NA,NA,"Population, rural (M/F, % total population)",NA,1,"Индикатор на русском языке","Настройки"
+"The setting",4,"area_harvested",NA,NA,"Area harvested (mln ha)",1000000,1,"Индикатор на русском языке","Настройки"
+"The setting",6,"AQ.WAT.WATPCP.MC.NO",NA,NA,"Water resources (m3/person/year)",1000,0,"Индикатор на русском языке","Настройки"
+"The setting",7,"AQ.WAT.EQIRR.HA.NO",NA,NA,"Area equipped for irrigation (1000 ha)",1000,0,"Индикатор на русском языке","Настройки"
+"The setting",8,"AQ.WAT.SHIRR.HA.SH",NA,NA,"Area irrigated (%)",NA,1,"Индикатор на русском языке","Настройки"
+"The setting",9,"agr_employment_male_female",NA,NA,"Employment in agriculture (M/F, %)",NA,1,"Индикатор на русском языке","Настройки"
+"The setting",10,"RF.FERT.NI.TN.SH",NA,NA,"Fertilizers, Nitrogen (kg per ha)",0.001,1,"Индикатор на русском языке","Настройки"
+"The setting",11,"RF.FERT.PH.TN.SH",NA,NA,"Fertilizers, Phosphate (kg per ha)",0.001,1,"Индикатор на русском языке","Настройки"
+"The setting",12,"RF.FERT.PO.TN.SH",NA,NA,"Fertilizers, Potash (kg per ha)",0.001,1,"Индикатор на русском языке","Настройки"
+"The setting",13,"energy.for.power.irrigation",NA,NA,"Energy consump, power irrigation (mln kWh)",1000000,0,"Индикатор на русском языке","Настройки"
+"The setting",14,"EA.PRD.AGRI.KD",NA,NA,"Agr value added per worker (constant US$)",NA,1,"Индикатор на русском языке","Настройки"
+"The setting",15,"NY.GDP.PCAP.PP.KD",NA,NA,"GDP per capita (US$, PPP)",NA,0,"Индикатор на русском языке","Настройки"
+"Hunger and dietary quality dimensions",16,"FBS.PCS.PDES.KCD3D",NA,NA,"Dietary energy supply (kcal/pc/day)",NA,0,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",17,"FS.DA.ADESA.PCT3D",NA,NA,"Average dietary energy supply adequacy (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",18,"FBS.PCSS.CSR.PCT3D",NA,NA,"Dietary energy supp, cereals/roots/tubers (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",19,"FBS.PPCS.AO.GCD3D",NA,NA,"Avrg. protein supply of animal origin (g/cap/day)",NA,0,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",20,"FS.OA.SFEP.PCT",NA,NA,"Share of food expenditure (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",21,"FS.OA.POU.PCT3D1",NA,NA,"Prevalence of undernourishment (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",22,"FS.DEA.DFPLIV.IND",NA,NA,"Domestic food price volatility (index)",NA,0,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",23,"SH.STA.MALN.ZS",NA,NA,"Underweight, children under-5 (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",24,"SH.STA.STNT.ZS",NA,NA,"Stunting, children under 5 (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",25,"SH.STA.WAST.ZS",NA,NA,"Wasting, children under 5 (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",26,"SH.STA.OWGH.ZS",NA,NA,"Overweight, children under 5 (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",28,"overweight",NA,NA,"Overweight, adults (M/F, %)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",29,"obesity",NA,NA,"Obesity, adults (M/F, %)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",31,"FS.OU.VAD.PCT",NA,NA,"Vitamin A deficiency, total pop. (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",32,"SH.ANM.CHLD.ZS",NA,NA,"Anemia, children under 5 (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",33,"SH.PRG.ANEM",NA,NA,"Anemia, women in reproductive age (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",35,"FS.OU.IODINE.PCT",NA,NA,"Iodine deficiency, children aged 6 to 12 (%)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",36,"SH.XPD.TOTL.ZS",NA,NA,"Health expenditure, total (% of GDP)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",37,"SH.XPD.PCAP",NA,NA,"Health expenditure per capita, PPP ($)",NA,0,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Hunger and dietary quality dimensions",38,"SH.H2O.SAFE.ZS",NA,NA,"Improved water source (% pop)",NA,1,"Индикатор на русском языке","Голод и диетические качества размеры"
+"Food Supply",39,"QV.NPV.FOOD.ID.NO",NA,NA,"Food production value, (2004-2006 mln I$)",1000000,0,"Индикатор на русском языке","Обеспечение продовольствием"
+"Food Supply",40,"NV.AGR.TOTL.ZS",NA,NA,"Agriculture, value added (% GDP)",NA,1,"Индикатор на русском языке","Обеспечение продовольствием"
+"Production indices (2004-06=100)",41,"QI.NPIN.FOOD.IN.NO",NA,NA,"Net food",NA,0,"Индикатор на русском языке","Индексы производства (2004-06 = 100)"
+"Production indices (2004-06=100)",42,"QI.NPIN.CRPS.IN.NO",NA,NA,"Net crop",NA,0,"Индикатор на русском языке","Индексы производства (2004-06 = 100)"
+"Production indices (2004-06=100)",43,"QI.NPIN.CRLS.IN.NO",NA,NA,"Cereal",NA,0,"Индикатор на русском языке","Индексы производства (2004-06 = 100)"
+"Food Supply",44,"FBS.IDR.CRLS.PCT3D",NA,NA,"Cereal import dependency ratio (%)",NA,1,"Индикатор на русском языке","Обеспечение продовольствием"
+"Food Supply",45,"TP.EXVAL.FOOD.USD.NO",NA,NA,"Food exports (mln US$) ",1000000,0,"Индикатор на русском языке","Обеспечение продовольствием"
+"Food Supply",46,"TP.IMVAL.FOOD.USD.NO",NA,NA,"Food imports (mln US$) ",1000000,0,"Индикатор на русском языке","Обеспечение продовольствием"
+"Net trade (mln US\$)",47,"TP.NETVAL.CRLSPREP.USD.NO",NA,NA,"Cereals",1000000,0,"Индикатор на русском языке","Сальдо торгового баланса (млн долл США \$)"
+"Net trade (mln US\$)",48,"TP.NETVAL.FV.USD.NO",NA,NA,"Fruit and vegetables",1000000,0,"Индикатор на русском языке","Сальдо торгового баланса (млн долл США \$)"
+"Net trade (mln US\$)",49,"TP.NETVAL.MEATPREP.USD.NO",NA,NA,"Meat",1000000,0,"Индикатор на русском языке","Сальдо торгового баланса (млн долл США \$)"
+"Net trade (mln US\$)",50,"TP.NETVAL.MILKEQ.USD.NO",NA,NA,"Dairy products",1000000,0,"Индикатор на русском языке","Сальдо торгового баланса (млн долл США \$)"
+"Net trade (mln US\$)",51,"net_fish_trade",NA,NA,"Fish",1000,0,"Индикатор на русском языке","Сальдо торгового баланса (млн долл США \$)"
+"Environment",52,"RL.AREA.FOR.HA.SH",NA,NA,"Forest area (%)",0.01,1,"Индикатор на русском языке","Окружающая среда"
+"Environment",53,"AQ.WAT.WWAGR.MC.SH",NA,NA,"Renewable water res withdrawn (% of total)",NA,1,"Индикатор на русском языке","Окружающая среда"
+"Environment",54,"ER.LND.PTLD.ZS",NA,NA,"Terrestrial protect areas (% total land area) ",NA,1,"Индикатор на русском языке","Окружающая среда"
+"Environment",55,"RL.AREA.AGRORG.HA.SH",NA,NA,"Organic area (% total agricultural area)",0.01,1,"Индикатор на русском языке","Окружающая среда"
+"Environment",56,"AQ.WAT.WWAGR.MC.SH",NA,NA,"Share of renewable water resources (%)",NA,1,"Индикатор на русском языке","Окружающая среда"
+"Environment",57,"BP.TP.GP.TJ.NO",NA,NA,"Biofuel production (thousand kt of oil eq.)",1000,0,"Индикатор на русском языке","Окружающая среда"
+"Environment",58,"FO.WP.PQ.TN.NO",NA,NA,"Wood pellet prod. (mln tonnes)",1000,0,"Индикатор на русском языке","Окружающая среда"
+"Environment",59,"GHG.AFOLU.TOT.ECO2EQ.NO",NA,NA,"Net GHG emissions from AFOLU (CO2 eq, Mt)",1000,0,"Индикатор на русском языке","Окружающая среда"

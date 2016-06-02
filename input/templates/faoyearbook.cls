@@ -93,7 +93,7 @@ PLACE_DIMENSIONS_HERE
 \RequirePackage[utf8x]{inputenc}
 \RequirePackage{pdfpages}
 \RequirePackage[authoryear]{natbib}
-\RequirePackage[breaklinks]{hyperref}
+\RequirePackage[breaklinks,unicode]{hyperref}
 \RequirePackage{bookmark}
 \if@issuumode
 \RequirePackage{issuulinks}
