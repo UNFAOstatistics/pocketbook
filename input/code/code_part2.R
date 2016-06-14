@@ -435,7 +435,7 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- paste0("Prevalence of over-acquisition (1991-93 and 2014-16)",dag_char)
+caption_text <- paste0("Prevalence of food over-acquisition (1991-93 and 2014-16)",dag_char)
 # caption_text <- "text"
 
 ## ---- P2obesityLEFT ----
@@ -512,7 +512,7 @@ p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010,2015),
 p
 
 # Caption
-caption_text <- paste("Prevalence of over-acquisition (1990-92 to 2014-16)",dag_char)
+caption_text <- paste("Prevalence of food over-acquisition (1990-92 to 2014-16)",dag_char)
 # caption_text <- "text"
 
 ## ---- P2obesityMAP ----

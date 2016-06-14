@@ -75,7 +75,7 @@ for (region_to_report in regionS_to_report) {
   } else {
     system(paste0("sed -i -- 's/REPLACE_THIS _WITH_PROPER_COLOR/ \\\\colorbox{FAOblue}{\\\\parbox{\\\\dimexpr\\\\columnwidth-2ex}{\\\\Large\\\\color{white}\\\\hypertarget{#1}{#1}}}\\\\par} /g' ",root.dir,"/output/process/faofactbook.cls"))
   }
-
+  
 
   # region_to_report <- regionS_to_report[1]
 

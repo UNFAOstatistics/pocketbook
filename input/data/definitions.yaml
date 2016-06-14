@@ -387,6 +387,18 @@
   description_ru: Описание индикатора на русском языке
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
+- id: Prevalence_of_food_over-acquisition
+  name: Prevalence of food over-acquisition
+  description: The percentage of individuals in a population who tend, on a regular basis, 
+    to acquire food in excess of their needs, is obtained by estimating the probability that, 
+    by randomly sampling a member of the population, the level of food consumption is 
+    found to be excessive when assessed against that person’s energy requirements.
+  source: FAO, Statistics Division
+  owner: FAO
+  name_ru: Наименование показателя на русском языке
+  description_ru: Описание индикатора на русском языке
+  source_ru: ФАО, Статистический отдел
+  owner_ru: ФАО
 - id: prevalence_of_undernourishment
   name: Prevalence of undernourishment
   description: Expresses the probability that a randomly selected individual from
