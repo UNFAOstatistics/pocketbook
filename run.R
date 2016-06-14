@@ -19,15 +19,15 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                        # "RAP" # Asia and the Pacific
-                        # ,"RAF"  # Africa
-                        "REU" # Europe and Central Asia
+                        "RAP" # Asia and the Pacific
+                        # "RAF"  # Africa
+                        # ,"REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 
@@ -50,9 +50,9 @@ include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -68,7 +68,7 @@ broke_all_into_images         <- F
 broke_only_tables_into_images <- F
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -274,7 +274,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
 # load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-06-01-10/SYB2016-06-01-10.RData")
+# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-06-01-10/SYB2016-06-01-10.RData")
+load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-06-04-09/SYB2016-06-04-09.RData")
 
 
 syb.df <- SYB.df; rm(SYB.df)

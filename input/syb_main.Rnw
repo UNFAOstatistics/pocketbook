@@ -46,7 +46,12 @@ PLACE_PRINT_OR_WEB_HERE
 
 \usepackage[T1,T2A]{fontenc}
 % \usepackage[utf8]{inputenc}
-\usepackage[russian]{babel}
+
+
+<<r rubabel>>=
+if (rulang) cat("\\usepackage[russian]{babel}")
+@
+
 
 % \usepackage{fontspec} % loaded by polyglossia, but included here for transparency 
 % \usepackage{polyglossia}
