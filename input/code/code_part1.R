@@ -38,7 +38,7 @@ if (rulang) spread_title <- "Население"
 if (region_to_report == "RAF") short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. Since the late 1960s, Africa has experienced unsteady population growth rate; nevertheless its population has tripled since then, to over 1 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Urbanization is progressing in Africa with two-fifths of people living in cities in 2015."
 if (region_to_report == "RAP") short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
 if (region_to_report == "REU") short_text <- "Declining mortality rates and prolonged life expectancy in the region are not supported by high fertility rates. Thus population growth rates have been slowing since the late 1960s to the practically flat rate at present. Population growth is distributed unevenly across the region, some areas like Central Asia, and Caucasus and Turkey showing population increase while some areas, like EU central and Eastern, and CIS Europe, population decline. About one seventh of the total population of the region lives in rural areas."
-if (region_to_report == "REU" & rulang) short_text <- "Снижение уровня смертности и продлить продолжительность жизни в регионе не поддерживаются высоким уровнем рождаемости. Таким образом, темпы роста населения замедляется, начиная с конца 1960-х годов до практически плоской ставки в настоящее время. Рост численности населения неравномерно распределены по всему региону, в некоторых районах, как в Средней Азии и Кавказа и Турции, показывающие рост населения в то время как в некоторых областях, таких как ЕС странах Центральной и Восточной, и СНГ Европа, сокращение численности населения. Около одной седьмой от общей численности населения региона проживает в сельской местности."
+if (region_to_report == "REU" & rulang) short_text <- "Снижение показателей смертности и увеличение продолжительности жизни в регионе не сопровождается высоким коэффициентом рождаемости. Поэтому с конца 1960-х годов темпы роста населения замедлялись и в настоящее время достигли практически нулевого уровня. Рост населения неравномерно распределяется по территории региона: в некоторых субрегионах, как например «Центральная Азия», «Кавказ и Турция» наблюдается рост населения, а в некоторых субрегионах, как например «Центральная и Восточная часть ЕС» и «СНГ Европа» численность населения сокращается. Около одной седьмой части общей численности населения региона проживает в сельских районах."
 if (region_to_report == "RNE") short_text <- "The declining mortality rates combined with a moderate life expectancy and supported by an extreme fertility contributes to population growth in the world. The region, in turn, have been showing steady population growth since the late 1960s in urban areas compared to lower rates in the rural ones. Population growth is generally higher in the Gulf countries like Qatar United Arab Emirates, Bahrain and Kuwait compared to middle income countries like Morocco, Tunisia and Iran. The last two decades show that there have been more people living in cities than in rural areas."
 if (region_to_report == "GLO") short_text <- "A combination of declining mortality rates, prolonged life expectancy and younger populations in regions with high fertility contributes to population growth in the world. While growth rates have been slowing since the late 1960s, the world’s population has nevertheless doubled since then, to over 7 billion people. Population growth is generally highest where income levels are low. This is especially true in cities. Since 2008, there have been more people living in cities than in rural areas."
 
@@ -123,7 +123,8 @@ if (table_type == "latex"){
 # Caption
 if (region_to_report != "REU")  caption_text <- "Rural and urban population (1961 to 2016)"
 if (region_to_report == "REU" & !rulang)  caption_text <- "Rural and urban population (1961 to 2050)"
-if (region_to_report == "REU" & rulang)  caption_text <- "Сельского и городского населения (1961 до 2050)"
+if (region_to_report == "REU" & rulang)  caption_text <- "Сельское и городское население  (с 1961 по 2050 гг.)"
+
 
 
 ## ---- P1overLEFT ----
@@ -275,6 +276,9 @@ if (region_to_report == "RAP") short_text <- "While some sectors have been hard 
 if (region_to_report == "REU") short_text <- "Although its share in the total GDP has been steadily declining in the region over the last decade, the value added in agriculture has demonstrated a considerable increase in some countries, especially in Central Asia and Eastern Europe. However, in many of those countries agriculture engages large portions of the population, so the agricultural productivity, expressed in terms of the agriculture value added per worker, is still low. In terms of agricultural productivity the EU part of the region is clearly in lead."
 if (region_to_report == "RNE") short_text <- "While it demonstrates very low share in Gulf Countries, the value added in agriculture has considerable share to GDP in Other Near East and North Africa countries, where it has been showing unsteady increase the last decade. It is also shows a very heterogeneous annual growth among different countries, with the highest positive value for Qatar and the lowest in United Arab Emirates. Agricultural value added per worker also shows big differences depending not only on different agricultural productivity but also on the proportion of the population engaged in agriculture in different countries."
 if (region_to_report == "GLO") short_text <- "While some sectors have been hard hit, agriculture has demonstrated resilience during the recent economic downturn.  Changes in the wider economy, including growing global integration, affect the performance of the agriculture sector.  Higher overall economic growth also raises consumers’ incomes and hence food demand. Changing interest rates influence capital investments, land values and storage levels, while inflation affects input prices, revenues and credit costs. Fluctuations in exchange rates have an important bearing on international competitiveness and trade flows."
+if (rulang) spread_title <- "Экономика"
+if (region_to_report == "REU" & rulang) short_text <- "Несмотря на то что доля сельского хозяйства в общем объеме ВВП в регионе за последнее десятилетие неуклонно снижается, добавленная стоимость в сельском хозяйстве продемонстрировала значительный рост в некоторых странах, особенно в странах Центральной Азии и Восточной Европы. Однако во многих из этих стран сельское хозяйство привлекает значительную часть населения, поэтому производительность сельского хозяйства, выраженная в терминах добавленной стоимости в сельском хозяйстве на одного работника, остается по-прежнему низкой. По производительности сельского хозяйства страны ЕС являются бесспорными лидерами."
+
 
 ## ---- P1econTOPRIGHT ----
 
@@ -305,7 +309,7 @@ p
 
 # Caption
 caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-
+if (rulang) caption_text <- ""
 
 ## ---- P1econLEFT ----
 dat <- syb.df[syb.df$Year %in%  2003:2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","EA.PRD.AGRI.KD")]
@@ -334,6 +338,7 @@ p
 
 # Caption
 caption_text <- paste("Agriculture value added per worker, top",nrow(dat_plot),"countries with the highest values (2003-2013*)")
+if (rulang) caption_text <- ""
 
 ## ---- P1econRIGHT ----
 
@@ -375,6 +380,7 @@ p
 
 # Caption
 caption_text <- paste("Value added in agriculture, average annual growth,",nrow(dat_plot)/2,"countries with highest and lowest values (2003-2013)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P1econBOTTOM_data ----
@@ -410,6 +416,7 @@ p
 
 # Caption
 caption_text <- "Value added in agriculture as share of GDP"
+if (rulang) caption_text <- ""
 
 ## ---- P1econMAP ----
 dat <- syb.df %>% filter(Year %in% c(2010:2013), FAOST_CODE < 5000) %>%
@@ -445,7 +452,7 @@ p
 
 # Caption
 caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-
+if (rulang) caption_text <- ""
 
 
 
@@ -465,6 +472,9 @@ if (region_to_report == "RAP") short_text <- "A strong labour market is the foun
 if (region_to_report == "REU") short_text <- "A strong labour market is the foundation of sustained well-being and economic growth, inclusion and social cohesion. Therefore access to safe, productive and remunerated work is essential. Yet many workers, especially the most vulnerable, do not enter into formal wage employment but are instead self-employed or participate in unpaid family work, such as in agriculture. This is especially the case with subsistence farming. As a large share of the working poor are involved in agriculture, developments in this sector have a major impact on welfare."
 if (region_to_report == "RNE") short_text <- "A strong labour market is the foundation of sustained well-being and economic growth, inclusion and social cohesion. Therefore access to safe, productive and remunerated work is essential. Yet many workers, especially the most vulnerable, do not enter into formal wage employment but are instead self-employed or participate in unpaid family work, such as in agriculture. This is especially the case with subsistence farming. Although labour force’s shares is biased towards males in the region, female employment rates are higher in agriculture and it has steadily been decreasing since 2000."
 if (region_to_report == "GLO") short_text <- "A strong labour market is the foundation of sustained well-being and economic growth, inclusion and social cohesion. Therefore access to safe, productive and remunerated work is essential. Yet many workers, especially the most vulnerable, do not enter into formal wage employment but are instead self-employed or participate in unpaid family work, such as in agriculture. This is especially the case with subsistence farming. As a large share of the working poor are involved in agriculture, developments in this sector have a major impact on welfare."
+if (rulang) spread_title <- "Занятость"
+if (region_to_report == "REU" & rulang) short_text <- "Стабильный рынок труда является основой устойчивого благосостояния и экономического роста, инклюзивности и социальной сплоченности. Поэтому доступ к безопасной, продуктивной и оплачиваемой работе имеет первостепенное значение. Однако многие работники, в первую очередь наиболее уязвимые, не участвуют в формальной оплачиваемой занятости, а вместо этого являются самозанятыми или выполняют неоплачиваемую работу в семье, например, в сельском хозяйстве. Это в первую очередь распространяется на натуральное хозяйство. Поскольку значительная доля бедных слоев населения занята в сельском хозяйстве, изменения в этом секторе оказывают существенное влияние на уровень благосостояния населения."
+
 
 ## ---- P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
 if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
@@ -492,7 +502,7 @@ p
 
 # Caption
 caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
-
+if (rulang) caption_text <- ""
 
 ## ---- P1laboLEFT ----
 dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
@@ -522,6 +532,7 @@ p
 
 # Caption
 caption_text <- paste("Female employment in agriculture in top",ncases,"countries, share of female employment (percent 2003-2013*)")
+if (rulang) caption_text <- ""
 
 ## ---- P1laboRIGHT ----
 dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
@@ -550,7 +561,7 @@ p
 
 # Caption
 caption_text <- paste("Male employment in agriculture in top",ncases,"countries, share of male employment (percent 2003 - 2013*)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P1laboBOTTOM_data ----
 
@@ -577,6 +588,7 @@ p
 
 # Caption
 caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+if (rulang) caption_text <- ""
 
 ## ---- P1laboMAP ----
 dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
@@ -604,7 +616,7 @@ p
 
 # Caption
 caption_text <- "Employment in agriculture, share of total employment (percent, 2007 to 2012*)"
-
+if (rulang) caption_text <- ""
 
 
 #   ___                           _
@@ -624,6 +636,8 @@ if (region_to_report == "RAP") short_text <- "Adequate access to inputs, includi
 if (region_to_report == "REU") short_text <- "Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. With respect to use of fertilizers and pesticides, the situation is non-homogenous in the region. In EU other and EFTA countries, due to stronger inclinations towards conservation and organic agriculture, per hectare use of the mineral fertilizers and pesticides has been declining over the last decade, while in the remaining part of the region it has been expanding. Nevertheless, in terms of the level of fertilizer use, EU other and EFTA countries still are in lead together with South Eastern Europe and EU Central and Eastern."
 if (region_to_report == "RNE") short_text <- "Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. Within the region, it is evident the use of large quantities of fertilizers, nitrogen in specific. However, fertilizers use is not homogenous within the region as the Gulf countries consume more than five times nutrients per hectare than Near East and North Africa countries. This is mainly due to the difficult and costly expansion of arable land within the desert environment."
 if (region_to_report == "GLO") short_text <- "Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. Throughout Asia and in parts of Latin America, expanding seed and fertilizer use has been accompanied by investments in irrigation, rural roads, marketing infrastructure and financial services, paving the way for dynamic commercial input markets. In other regions, such as sub-Saharan Africa, the uptake of agricultural inputs is relatively low because it is often cheaper to expand cropland to have higher production."
+if (rulang) spread_title <- "Факторы производства"
+if (region_to_report == "REU" & rulang) short_text <- "Адекватный доступ к факторам производства, таким как земля, пестициды и удобрения, имеет первостепенное значение для сельскохозяйственного производства и роста. Что касается применения удобрений и пестицидов, ситуация в регионе неоднородна. В субрегионе «Другие страны ЕС и ЕАСТ», благодаря усилению тенденций перехода к ресурсосберегающему сельскому хозяйству и к органическому сельскому хозяйству, использование минеральных удобрений и пестицидов на гектар пашни на протяжении последнего десятилетия снижается, в то время как в остальной части региона применение удобрений и пестицидов увеличивается. Тем не менее, с точки зрения общего уровня применения удобрений, субрегион «Другие страны ЕС и ЕАСТ» по-прежнему лидирует, вместе со субрегионами «Юго-Восточноя Европа» и «Центральная и Восточная часть ЕС». "
 
 ## ---- P1inputData ----
 
@@ -653,7 +667,7 @@ p
 
 # Caption
 caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002 to 2012)"
-
+if (rulang) caption_text <- ""
 
 ## ---- P1inputLEFT ----
 dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>%
@@ -687,7 +701,7 @@ p
 
 # Caption
 caption_text <- paste("Nitrogen fertilizers consumption in nutrients per ha of arable land, top",nrow(dat_plot),"countries (2012)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P1inputRIGHT ----
 dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>%
@@ -719,7 +733,7 @@ p
 
 # Caption
 caption_text <- paste("Phosphate fertilizers consumption in nutrients per ha of arable land, top",nrow(dat_plot)," countries (2012)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P1inputBOTTOM ----
 
@@ -766,7 +780,7 @@ p
 
 # Caption
 caption_text <- paste("Fertilizer consumption in nutrients per ha of arable land (2012)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P1inputMAP ----
 # TRY RP.PEST.TOT.TN.SH.EXP
@@ -800,6 +814,7 @@ p
 
 # Caption
 caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
+if (rulang) caption_text <- ""
 
 #   ___                                _                                _
 #  |_ _|  _ __   __   __   ___   ___  | |_   _ __ ___     ___   _ __   | |_
@@ -816,6 +831,8 @@ if (region_to_report == "RAP") short_text <- "Investing in agriculture is one of
 if (region_to_report == "REU") short_text <- "Investing in agriculture is one of the most effective strategies for reducing poverty and hunger, and promoting sustainability. Farmers tend to be the largest investors in agriculture, and therefore their investment decisions are paramount for any strategy aimed at improving agricultural investment."
 if (region_to_report == "RNE") short_text <- "Investing in agriculture is one of the most effective strategies for reducing poverty and hunger, and promoting sustainability. The region, however, has been showing a declining and fluctuating aid commitment flows to agriculture, forestry and fishing since 1995. In 2013, Morocco, Egypt and Sudan were the largest providers of aid to agriculture. Instead, in the period 2010-2012, countries like United Arab Emirates, Syria and Egypt have supported farmers with the biggest amount of agricultural credits."
 if (region_to_report == "GLO") short_text <- "Investing in agriculture is one of the most effective strategies for reducing poverty and hunger, and promoting sustainability. The regions of the world where hunger and extreme poverty are most widespread today – South Asia and sub-Saharan Africa – have seen flat or declining rates of investment per worker in agriculture over the past thirty years. Farmers tend to be the largest investors in developing country agriculture, and therefore their investment decisions are paramount for any strategy aimed at improving agricultural investment."
+if (rulang) spread_title <- "Инвестиции"
+if (region_to_report == "REU" & rulang) short_text <- "Инвестирование в сельское хозяйство является одной из наиболее эффективных стратегий сокращения масштабов нищеты и голода и содействия устойчивому развитию. Фермеры, как правило, являются крупнейшими инвесторами в сельское хозяйство, и, следовательно, их инвестиционные решения имеют первостепенное значение для любой стратегии, направленной на повышение инвестиций в сельское хозяйство."
 
 ## ---- P1investData ----
 
@@ -842,6 +859,7 @@ p
 
 # Caption
 caption_text <- "Aid  commitment flows to agriculture, forestry and fishing, share of total aid in \\% (1995-2013)"
+if (rulang) caption_text <- ""
 
 ## ---- P1investLEFT ----
 # data
@@ -884,6 +902,7 @@ p
 
 # Caption
 caption_text <- paste("Total credit to agriculture, top",ncases,"countries in 2010-12")
+if (rulang) caption_text <- ""
 
 ## ---- P1investRIGHT ----
 
@@ -920,7 +939,7 @@ p
 
 # Caption
 caption_text <- paste("DFA Agriculture Orientation Index,",nrow(dat_plot)/2,"countries with highest and lowest values, average (2009-2013)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P1investBOTTOM ----
 
@@ -983,7 +1002,7 @@ p
 # Caption
 # caption_text <- "Aid commitment flow to Agriculture, Forestry and Fishing, billion 2013 US\\$ (1995-2013)"
 caption_text <- paste("Aid commitment flows to Agriculture, Forestry and Fishing, top",length(unique(dat_plot$SHORT_NAME)),"countries in 2013 (million 2013 US\\$)")
-
+if (rulang) caption_text <- ""
 
 ## ---- p1investMAPdata ----
 # dat <- getFAOtoSYB(domainCode = "IG",
