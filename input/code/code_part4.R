@@ -82,12 +82,14 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
 caption_text <- "Land area"
+if (rulang) caption_text <- ""
 
 
 ## ---- P4landLEFT ----
@@ -120,11 +122,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n\nha/cap")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Arable land per capita, top",nrow(dat_plot),"countries")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4landRIGHT ----
@@ -136,11 +140,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n\nha/cap")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Arable land per capita, bottom",nrow(dat_plot),"countries")
+if (rulang) caption_text <- ""
 
 
 
@@ -191,12 +197,14 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
 caption_text <- "Agricultural area"
+if (rulang) caption_text <- ""
 
 
 
@@ -226,6 +234,7 @@ p
 
 # Caption
 caption_text <- "Cropland per capita, ha/cap"
+if (rulang) caption_text <- ""
 
 
 #
@@ -304,12 +313,14 @@ p <- ggplot(bottomdata, aes(x=FAO_TABLE_NAME,y=per_capita_water_resources,fill=f
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 
 # Caption
 caption_text <- "Countries with the lowest renewable water resources per capita"
+if (rulang) caption_text <- ""
 
 ## ---- P4waterLEFT ----
 
@@ -335,11 +346,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Freshwater withdrawal by industrial sector, share of total, highest",nrow(dat_plot),"(1999 to 2013)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4waterRIGHT ----
@@ -366,11 +379,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Freshwater withdrawal by agricultural sector, share of total, highest",nrow(dat_plot),"(1999 to 2013)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4waterBOTTOM ----
@@ -388,6 +403,7 @@ p <- ggplot(topdata, aes(x=FAO_TABLE_NAME,y=per_capita_water_resources,fill=fact
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -395,6 +411,7 @@ p
 
 # Caption
 caption_text <- "Countries with the highest renewable water resources per capita"
+if (rulang) caption_text <- ""
 
 
 ## ---- P4waterMAP ----
@@ -421,12 +438,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
+if (rulang) caption_text <- ""
 
 
 #   _____
@@ -476,12 +495,14 @@ p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of tot energy production\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
 # Caption
 caption_text <- "Bioenergy production, share of total energy production"
+if (rulang) caption_text <- ""
 
 
 
@@ -510,11 +531,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n% of tot energy production")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Bioenergy production, share of total energy production, top",nrow(dat_plot),"countries 2009")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4energyRIGHT ----
@@ -542,12 +565,14 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n% of total energy consumption")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 
 # Caption
 caption_text <- paste("Energy use in agriculture and forestry, share of total energy consumption, top",nrow(dat_plot),"countries 2009")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4energyBOTTOM ----
@@ -575,12 +600,14 @@ p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of total energy consumption\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
 # Caption
 caption_text <- "Energy use in agriculture and forestry, share of total energy consumption"
+if (rulang) caption_text <- ""
 
 ## ---- P4energyMAP ----
 dat <- syb.df %>% filter(Year >= 2008) %>% select(FAOST_CODE,Year,GN_6808_72182) %>% mutate(GN_6808_72182 = GN_6808_72182 / 1000000)
@@ -610,6 +637,7 @@ p
 
 # Caption
 caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
+if (rulang) caption_text <- ""
 
 
 #   _____                               _
@@ -670,12 +698,14 @@ p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- "Production of selected forest products"
+if (rulang) caption_text <- ""
 
 
 ## ---- P4forestryLEFT ----
@@ -702,12 +732,14 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\ntrillion US$")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000))
 p
 
 # Caption
 caption_text <- paste("Top",nrow(dat_plot),"exporters of forest products (2012)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4forestryRIGHT ----
@@ -735,12 +767,14 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\ntrillion US$")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000))
 p
 
 # Caption
 caption_text <- paste("Top",nrow(dat_plot),"importers of forest products (2012)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P4forestryBOTTOM ----
@@ -780,12 +814,14 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million ha\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 
 # Caption
 caption_text <- "Forest characteristics (2015)"
+if (rulang) caption_text <- ""
 
 
 ## ---- P4forestryMAP ----
@@ -807,12 +843,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Forest area as share of total land area, percent (2012)"
+if (rulang) caption_text <- ""
 
 
 #    ____   _   _                       _                     _
@@ -861,6 +899,7 @@ p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
@@ -869,6 +908,7 @@ p
 
 # Caption
 caption_text <- "Greenhouse gas emissions in agriculture"
+if (rulang) caption_text <- ""
 
 
 ## ---- P4climateLEFT ----
@@ -894,11 +934,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Greehouse gas emissions in agriculture, highest",nrow(top12),"countries in 2012")
+if (rulang) caption_text <- ""
 
 
 
@@ -933,11 +975,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Land use total emissions, highest",ncases,"countries in 2012")
+if (rulang) caption_text <- ""
 
 
 
@@ -965,6 +1009,7 @@ p <- ggplot(dat_plot, aes(x=reorder(fill, -value), y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_blank())
 p <- p + guides(fill = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
@@ -972,6 +1017,7 @@ p
 
 # Caption
 caption_text <- "Emissions by subsectors in 2012"
+if (rulang) caption_text <- ""
 
 
 
@@ -1001,3 +1047,4 @@ p
 
 # Caption
 caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2012)"
+if (rulang) caption_text <- ""

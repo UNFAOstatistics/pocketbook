@@ -128,12 +128,13 @@ if (table_type == "latex"){
 }
 p <- p + theme(panel.grid=element_blank(), panel.border=element_blank())
 p <- p + labs(x=NULL, y=NULL)
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p
 
 # Caption
 caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-
+if (rulang) caption_text <- ""
 
 ## ---- P3desLEFT ----
 # data
@@ -169,12 +170,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/cap/day")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Dietary energy supply, top",ncases,"countries in 2014-2016")
+if (rulang) caption_text <- ""
 
 ## ---- P3desRIGHT ----
 
@@ -209,12 +212,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Average dietary energy supply adequacy, percent, top",ncases,"countries (2014-2016)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3desBOTTOM ----
@@ -239,11 +244,13 @@ p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- "Dietary energy supply in top 5 countries"
+if (rulang) caption_text <- ""
 
 ## ---- P3desMAP ----
 
@@ -263,12 +270,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
+if (rulang) caption_text <- ""
 
 #    ____                                             _               _    _
 #   / ___| _ __  ___   _ __    _ __   _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __
@@ -338,6 +347,7 @@ tbl_data <- rc
 if (table_type == "latex") cap <- "\\large{Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)}"
 if (table_type == "html")  cap <- "<b>Table: Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)</b>"
 caption_text <- cap
+if (rulang) caption_text <- ""
 
 print.xtable(xtable(rc, caption = cap, digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
@@ -381,12 +391,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"crop producing countries in 2012 based on net per capita crop production value (constant 2004 - 2006 Int\\$)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3cropproRIGHT ----
@@ -423,12 +435,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 # p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"food producing countries in 2012 based on net per capita food production value (constant 2004 - 2006 Int\\$)")
+if (rulang) caption_text <- ""
 
 ## ---- P3cropproBOTTOM ----
 if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>%
@@ -492,11 +506,13 @@ p <- ggplot(dat_plot, aes(x=variable,y=growth_rate,fill=variable))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$variable)))[["Sub"]])
 p <- p + labs(x="",y="percent\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(legend.position = "none")
 p
 
 # Caption
 caption_text <- "Average annual growth in cereals production (2000-13)"
+if (rulang) caption_text <- ""
 
 
 ## ---- P3cropproMAP ----
@@ -522,6 +538,7 @@ p
 
 # Caption
 caption_text <- "Crops, gross per capita production index (2004-06 = 100, 2013)"
+if (rulang) caption_text <- ""
 
 #
 #    ____
@@ -593,6 +610,7 @@ tbl_data <- gg
 if (table_type == "latex") cap <- "\\large{Top five items produced in 2013, thousand tonnes}"
 if (table_type == "html")  cap <- "<b>Table: Top five items produced in 2013, thousand tonnes</b>"
 caption_text <- cap
+if (rulang) caption_text <- ""
 
 print(xtable(gg, caption = cap, digits = c(0,0,0,0),
              align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
@@ -646,12 +664,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Top",ncases,tolower(first),"producing countries, kg per capita")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3cropRIGHT ----
@@ -695,12 +715,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Top",ncases,tolower(second),"producing countries, kg per capita")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3cropBOTTOM ----
@@ -725,6 +747,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = QC.YIELD.CRLS.HG.NO,group=SHORT_N
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="hg/capita\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p <- p + scale_y_continuous(labels=space)
@@ -732,6 +755,7 @@ p
 
 # Caption
 caption_text <- "Cereals, yield, hg per capita"
+if (rulang) caption_text <- ""
 
 
 ## ---- P3cropMAP ----
@@ -759,6 +783,7 @@ p
 
 # Caption
 caption_text <- "Cereal production, kg/cap (2013)"
+if (rulang) caption_text <- ""
 
 
 
@@ -829,6 +854,7 @@ tbl_data <- gg
 if (table_type == "latex") cap <- "\\large{Live animal number, top 5 in 2013 (thousand heads)}"
 if (table_type == "html")  cap <- "<b>Table: Live animal number, top 5 in 2013 (thousand heads)</b>"
 caption_text <- cap
+if (rulang) caption_text <- ""
 
 print.xtable(xtable(gg, caption = cap, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
@@ -863,12 +889,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Total milk production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
+if (rulang) caption_text <- ""
 
 ## ---- P3livestockRIGHT ----
 
@@ -893,12 +921,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmln tonnes")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Total egg production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3livestockBOTTOM ----
@@ -968,6 +998,7 @@ if (table_type == "latex"){
   p <- p + theme(legend.key.width = unit(6, "mm"))
 }
 p <- p + labs(x=NULL, y=NULL)
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
 p <- p + guides(fill = guide_legend(nrow = 2))
 p
@@ -975,6 +1006,7 @@ p
 
 # Caption
 caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2013 (million heads)")
+if (rulang) caption_text <- ""
 
 
 
@@ -1009,6 +1041,7 @@ p
 
 # Caption
 caption_text <- "Cattle and buffaloes per ha of agricultural area, heads per ha (2012)"
+if (rulang) caption_text <- ""
 
 
 #   _____  _       _                  _
@@ -1067,12 +1100,14 @@ p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
 caption_text <- "Fish production from aquaculture and capture fishing"
+if (rulang) caption_text <- ""
 
 
 ## ---- P3fisheriesLEFT ----
@@ -1097,12 +1132,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of capture production (2013)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3fisheriesRIGHT ----
@@ -1129,6 +1166,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -1136,6 +1174,7 @@ p
 # Caption
 
 caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of aquaculture production (2013)")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3fisheriesBOTTOM ----
@@ -1160,12 +1199,14 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = production_quantity_index,group=S
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="index\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
 
 # Caption
 caption_text <- "Fish production indices (2004-06=100)"
+if (rulang) caption_text <- ""
 
 
 
@@ -1195,6 +1236,7 @@ p
 
 # Caption
 caption_text <- "Net trade of fish in 2012"
+if (rulang) caption_text <- ""
 
 
 #      _                 _               _  _                       _   _                    _
@@ -1261,6 +1303,7 @@ tbl_data <- dw
 if (table_type == "latex") cap <- "\\large{Exports and Imports of food, million US\\$ (2013)}"
 if (table_type == "html")  cap <- "<b>Table: Exports and Imports of food, million US$ (2013) </b>"
 caption_text <- cap
+if (rulang) caption_text <- ""
 
 print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.2cm}rr"),
@@ -1303,11 +1346,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"food importing countries in 2012")
+if (rulang) caption_text <- ""
 
 ## ---- P3tradeRIGHT ----
 
@@ -1343,11 +1388,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"food exporting countries in 2012")
+if (rulang) caption_text <- ""
 
 
 ## ---- P3tradeBOTTOM ----
@@ -1374,12 +1421,14 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHOR
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="billion constant 2005 US$\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2012))
 p
 
 # Caption
 caption_text <- "Cereal exports"
+if (rulang) caption_text <- ""
 
 ## ---- P3tradeMAP ----
 dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,
@@ -1408,3 +1457,4 @@ p
 
 # Caption
 caption_text <- "Import value index (2004-2006 = 100, 2011)"
+if (rulang) caption_text <- ""

@@ -200,6 +200,7 @@ tbl_data <- dw
 if (table_type == "latex") cap <- paste("\\large{Prevalence of undernourishment (percent)",dag_char,"}")
 if (table_type == "html")  cap <- "<b>Table: Prevalence of undernourishment (percent)</b>"
 caption_text <- cap
+if (rulang) caption_text <- ""
 
 print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.7cm}rr"),
@@ -252,11 +253,12 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16")
-
+if (rulang) caption_text <- ""
 
 ## ---- P2undernuRIGHT ----
 
@@ -295,11 +297,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"countries with the highest number of undernourished in",unique(top2015$color))
+if (rulang) caption_text <- ""
 
 ## ---- P2undernuBOTTOM ----
 
@@ -323,13 +327,14 @@ p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.NOU.P3D1,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="million\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
                             labels = c("1990-92", "1999-2001", "2004-06", "2009-11", "2014-16"))
 p
 
 # Caption
 caption_text <- "Number of undernourished (million), top 5 countries in 2012-2014"
-
+if (rulang) caption_text <- ""
 
 
 ## ---- P2undernuMAP ----
@@ -350,7 +355,8 @@ cat_data$value_cat <- categories(x=cat_data$FS.OA.POU.PCT3D1, n=5, manual = TRUE
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 
 p <- create_map_here()
@@ -358,7 +364,7 @@ p
 
 # Caption
 caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
-
+if (rulang) caption_text <- ""
 
 
 
@@ -433,12 +439,13 @@ p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="percent\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
 caption_text <- paste0("Prevalence of food over-acquisition (1991-93 and 2014-16)",dag_char)
-# caption_text <- "text"
+if (rulang) caption_text <- ""
 
 ## ---- P2obesityLEFT ----
 dat <- syb.df[syb.df$Year %in%  2005:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SH.STA.OWGH.MA.ZS")]
@@ -461,12 +468,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Prevalence of overweight among children under 5, top",nrow(dat_plot),"countries with the highest values, male (percent 2005-2013*)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P2obesityRIGHT ----
 dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SH.STA.OWGH.FE.ZS")]
@@ -490,12 +498,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Prevalence of overweight among children under 5, top",nrow(dat_plot),"countries with the highest values, female (percent 2005-2013*)")
-# caption_text <- "text"
+if (rulang) caption_text <- ""
 #
 ## ---- P2obesityBOTTOM ----
 dat <- over_acq %>% filter(FAOST_CODE %in% c(5001,5100,5853,5500,5205), Year >= 1990) %>%  select(FAOST_CODE,FAO_TABLE_NAME,Year,value) %>%
@@ -508,6 +517,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHOR
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010,2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11","2014-16"))
@@ -515,7 +525,7 @@ p
 
 # Caption
 caption_text <- paste("Prevalence of food over-acquisition (1990-92 to 2014-16)",dag_char)
-# caption_text <- "text"
+if (rulang) caption_text <- ""
 
 ## ---- P2obesityMAP ----
 dat <- syb.df %>% filter(Year == 2014) %>%
@@ -536,14 +546,15 @@ cat_data$value_cat <- categories(x=cat_data$overweight_BOTH, n=5, method="jenks"
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Prevalence of overweight and obesity, adults (percent, 2014)"
-
+if (rulang) caption_text <- ""
 
 
 #   _____                       _                             _   _           _       _   _   _   _
@@ -580,6 +591,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
@@ -589,7 +601,7 @@ p
 
 # Caption
 caption_text <- paste("Average dietary energy supply adequacy, 3 year average (1990 to 2015)",dag_char)
-
+if (rulang) caption_text <- ""
 
 ## ---- P2availabLEFT ----
 
@@ -624,11 +636,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Energy supply derived from cereals, roots and tubers, top",ncases,"countries in 2009-2011")
+if (rulang) caption_text <- ""
 
 ## ---- P2availabRIGHT ----
 
@@ -664,13 +678,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\ng/cap/day")
+if (rulang) p <- p + labs(x="",y="\n")
 #p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(legend.position = "none")
 p
 
 # Caption
 caption_text <- paste("Average protein supply, top",nrow(dat_plot),"countries in 2009-2011")
-
+if (rulang) caption_text <- ""
 
 
 ## ---- P2availabBOTTOM ----
@@ -690,6 +705,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="g/cap/day\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
@@ -698,7 +714,7 @@ p
 
 # Caption
 caption_text <- paste("Average supply of protein of animal origin",dag_char)
-
+if (rulang) caption_text <- ""
 
 ## ---- P2availabMAP ----
 
@@ -715,7 +731,8 @@ cat_data$value_cat <- categories(x=cat_data$QV.PCNPV.FOOD.ID3D, n=5) # manualBre
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "Percent"
+map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 
 p <- create_map_here()
@@ -723,7 +740,7 @@ p
 
 # Caption
 caption_text <- "Average value of food production, constant 2004-2006 I\\$ per person (3 year average, 2011-13)"
-
+if (rulang) caption_text <- ""
 
 #   _____                       _
 #  |  ___|   ___     ___     __| |     __ _    ___    ___    ___   ___   ___
@@ -762,6 +779,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="kcal/cap/day\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
@@ -771,7 +789,7 @@ p
 
 # Caption
 caption_text <- paste("Depth of food deficit (kcal/capita/day) (3 year averages)",dag_char)
-
+if (rulang) caption_text <- ""
 
 
 ## ---- P2accessLEFT ----
@@ -808,12 +826,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Domestic food price level index, top",ncases,"countries in 2014 (2000 to 2014)")
-
+if (rulang) caption_text <- ""
 
 
 ## ---- P2accessRIGHT ----
@@ -849,13 +868,14 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 
 # Caption
 caption_text <- paste("Prevalence of undernourishment, highest",ncases,"countries in 2014-16 (3 year averages)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P2accessBOTTOM ----
 
@@ -873,13 +893,14 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="US$\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("GDP per capita, PPP, constant 2011 international \\$",dag_char)
-
+if (rulang) caption_text <- ""
 
 
 ## ---- P2accessMAP ----
@@ -908,7 +929,7 @@ p
 
 # Caption
 caption_text <- "Road density, km per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
-
+if (rulang) caption_text <- ""
 
 #   _____                       _           _             _       _   _   _   _
 #  |  ___|   ___     ___     __| |    ___  | |_    __ _  | |__   (_) | | (_) | |_   _   _
@@ -945,6 +966,7 @@ p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DEA.PCFPV.IDD,group=FAO_TABLE_
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="index\n", x="")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 5))
 p <- p + theme(axis.text.x = element_text(angle = 45))
 p
@@ -952,7 +974,7 @@ p
 
 # Caption
 caption_text <- paste("Per capita food production variability, constant 2004-2006 thousand international \\$",dag_char)
-
+if (rulang) caption_text <- ""
 
 
 ## ---- P2stabilityLEFT ----
@@ -988,12 +1010,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/capita/day")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Per capita food supply variability, top",ncases,"countries in 2011, kcal/capita/day")
-
+if (rulang) caption_text <- ""
 
 ## ---- P2stabilityRIGHT ----
 dat <- df[df$Year %in%  c(2000,2014) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.DEA.DFPLIV.IND")]
@@ -1027,11 +1050,13 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Domestic food price volatility index, top",ncases,"countries in 2014")
+if (rulang) caption_text <- ""
 
 ## ---- P2stabilityBOTTOM ----
 dat <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
@@ -1049,11 +1074,12 @@ p <- ggplot(dat_plot, aes(x=FAO_TABLE_NAME,y=T.V.FEFS.PCT3D,fill=year_range))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y="percent\n")
+if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 caption_text <- paste("Value of food imports as a share of total merchandise exports (3 year averages)",dag_char)
-
+if (rulang) caption_text <- ""
 
 ## ---- P2stabilityMAP ----
 dat <- df[df$Year %in%  2013 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","G.GD.PSAVT.IN")]
@@ -1079,7 +1105,7 @@ p
 
 # Caption
 caption_text <- "Political stability and absence of violence/terrorism, index (2013)"
-
+if (rulang) caption_text <- ""
 
 
 #   _____                       _             _     _   _   _                 _     _
@@ -1163,11 +1189,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 # p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Percentage of children under 5 who are stunted, highest",ncases,"countries (2006 - 2014*)")
+if (rulang) caption_text <- ""
 
 ## ---- P2utilizaRIGHT ----
 dat <- df[df$Year %in%  2006:2014 & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","SH.STA.WAST.ZS")]
@@ -1205,12 +1233,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\n")
 # p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Percentage of children under 5 affected by wasting, highest",ncases,"countries (2006 - 2014*)")
-
+if (rulang) caption_text <- ""
 
 ## ---- P2utilizaBOTTOM ----
 if (region_to_report == "RAF") dat <- df %>% filter(FAOST_CODE %in% c(12000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
@@ -1234,11 +1263,13 @@ p <- ggplot(dat_plot, aes(x=Year,y=value,color=variable))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y="percent of population\n")
+if (rulang) p <- p + labs(x="",y="\n")
 if (region_to_report == "RAP") p <- p + scale_x_continuous(breaks=c(2008,2010,2012))
 if (region_to_report != "RAP") p <- p + scale_x_continuous(breaks=c(2000,2005,2010))
 p
 
 caption_text <- "Access to improved water source and sanitation facilities"
+if (rulang) caption_text <- ""
 
 ## ---- P2utilizaMAP ----
 
@@ -1261,6 +1292,7 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
+if (rulang) map_unit <- ""
 
 
 p <- create_map_here()
@@ -1268,3 +1300,4 @@ p
 
 # Caption
 caption_text <- "Percentage of anaemia among children under 5, percent (2011)"
+if (rulang) caption_text <- ""
