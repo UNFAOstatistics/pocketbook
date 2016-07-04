@@ -19,15 +19,15 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                        "RAP" # Asia and the Pacific
-                        # "RAF"  # Africa
-                        # ,"REU" # Europe and Central Asia
+                         # "RAP" # Asia and the Pacific
+                        # , "RAF"  # Africa
+                        "REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -40,7 +40,7 @@ output_type <- "web" # web//a4g
 
 # Parts to include/exclude
 # -------------------------------(heads)
-include_covers           <- T
+include_covers           <- F
 include_timestamp        <- T
 include_disclaimer       <- T
 include_foreword         <- T
@@ -61,14 +61,15 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- T
-include_definitions      <- T
+include_definitions      <- F
 # --------------------------- ----
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
+broke_rus_translation_images  <- T
 # -------------------------------
 # To be uploaded for comments or not
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -109,28 +110,84 @@ cache_definitions <- F
 # 
 # Function for translations
 
-translate_subgroups <- function(var){
+translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE){
   
-  if (rulang){
-    var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
-    var[var %in% "South Eastern Europe"] <- "Юго-Восточной Европы"
-    var[var %in% "Caucasus and Turkey"] <- "Кавказа и Турции"
-    var[var %in% "EU Other and EFTA"] <- "ЕС другой и ЕАСТ"
-    var[var %in% "CIS Europe"] <- "СНГ Европа"
-    var[var %in% "EU Central Eastern"] <- "Центральная и Восточная ЕС"
-    var[var %in% "EU Central and Eastern"] <- "Центральная и Восточная ЕС"
-    var[var %in% "Central Asia"] <- "Центральная Азия"
-    var[var %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
+  if (add_row_breaks){
+    
+    if (!isfactor){
+      if (rulang){
+        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+        var[var %in% "South Eastern Europe"] <- "Юго-Восточной \nЕвропы"
+        var[var %in% "Caucasus and Turkey"] <- "Кавказа и \nТурции"
+        var[var %in% "EU Other and EFTA"] <- "ЕС другой \nи ЕАСТ"
+        var[var %in% "CIS Europe"] <- "СНГ Европа"
+        var[var %in% "EU Central Eastern"] <- "Центральная и \nВосточная ЕС"
+        var[var %in% "EU Central and Eastern"] <- "Центральная и \nВосточная ЕС"
+        var[var %in% "Central Asia"] <- "Центральная \nАзия"
+        var[var %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
+      }
+      if (filang){
+        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
+        var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
+        var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
+        var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
+        var[var %in% "CIS Europe"] <- "IVY Eurooppa"
+        var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
+        var[var %in% "Central Asia"] <- "Keski-Aasia"
+      }
+    } else {
+      if (rulang){
+        levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
+        levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточной \nЕвропы"
+        levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказа \nи Турции"
+        levels(var)[levels(var) %in% "EU Other and EFTA"] <- "ЕС другой \nи ЕАСТ"
+        levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
+        levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центральная и \nВосточная ЕС"
+        levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центральная и \nВосточная ЕС"
+        levels(var)[levels(var) %in% "Central Asia"] <- "Центральная \nАзия"
+        levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
+      }
+    }
+  } else {
+    
+    if (!isfactor){
+      if (rulang){
+        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+        var[var %in% "South Eastern Europe"] <- "Юго-Восточной Европы"
+        var[var %in% "Caucasus and Turkey"] <- "Кавказа и Турции"
+        var[var %in% "EU Other and EFTA"] <- "ЕС другой и ЕАСТ"
+        var[var %in% "CIS Europe"] <- "СНГ Европа"
+        var[var %in% "EU Central Eastern"] <- "Центральная и Восточная ЕС"
+        var[var %in% "EU Central and Eastern"] <- "Центральная и Восточная ЕС"
+        var[var %in% "Central Asia"] <- "Центральная Азия"
+        var[var %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
+      }
+      if (filang){
+        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
+        var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
+        var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
+        var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
+        var[var %in% "CIS Europe"] <- "IVY Eurooppa"
+        var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
+        var[var %in% "Central Asia"] <- "Keski-Aasia"
+      }
+    } else {
+      if (rulang){
+        levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+        levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточной Европы"
+        levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказа и Турции"
+        levels(var)[levels(var) %in% "EU Other and EFTA"] <- "ЕС другой и ЕАСТ"
+        levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
+        levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центральная и Восточная ЕС"
+        levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центральная и Восточная ЕС"
+        levels(var)[levels(var) %in% "Central Asia"] <- "Центральная Азия"
+        levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
+      }
+    }
+    
   }
-  if (filang){
-    var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
-    var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
-    var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
-    var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
-    var[var %in% "CIS Europe"] <- "IVY Eurooppa"
-    var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
-    var[var %in% "Central Asia"] <- "Keski-Aasia"
-  }
+  
+
   return(var)
 }
 
@@ -373,7 +430,6 @@ syb.df[syb.df[, "FAO_TABLE_NAME"] == "Occupied Palestinian Territory" & !is.na(s
 
 syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Gulf Cooperation Council States and Yemen"] <- "Gulf Cooperation\n Council States\n and Yemen"
 syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Near\n East countries"
-
 
 
 # source(paste0(root.dir,"/input/code/process_fisheries_data.R"))

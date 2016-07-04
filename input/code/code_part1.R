@@ -631,6 +631,8 @@ dat_plot <- dat
 
 dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks = FALSE)
 
+if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(data = dat_plot, aes(x = Year, y = share,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
@@ -1141,5 +1143,30 @@ if (rulang) caption_text <- paste("Потоки помощи в сельское
 # p <- create_map_here()
 # p
 # 
+dat <- as.data.frame(unique(syb.df$FAOST_CODE))
+names(dat) <- "FAOST_CODE"
+dat$value <- dat$FAOST_CODE
+map.plot <- left_join(map.df,dat)
+map.plot <- map.plot[which(map.plot[[region_to_report]]),]
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","value")]
+cat_data$value_cat <- categories(x=cat_data$value, n=5, method="jenks",decimals=2)
+
+map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+map_unit <- "nonsense"
+if (rulang) map_unit <- "бред какой то"
+#
+p <- create_map_here()
+p
+
+# 
+# map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+# 
+# # define map unit
+# map_unit <- "percent"
+
 # # Caption
-# caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"
+caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"
+if (rulang) caption_text <- "Доля государственных расходов на сельское хозяйство, доля в общем объеме расходов (в процентах, с 2008 по 2012 гг.*)"
+
+
