@@ -5,8 +5,8 @@
 
 
 # -- delete output/ -folder recursively
-unlink(paste0(root.dir,"/output/process"), recursive = TRUE)
-unlink(paste0(root.dir,"/output/jpg"), recursive = TRUE)
+unlink(paste0(root.dir,"/output/process"), recursive = TRUE) 
+# unlink(paste0(root.dir,"/output/jpg"), recursive = TRUE)# lets not do this in order for russian translation to work..
 
 # -- Create output folder if not exists --- #
 if (!file.exists(paste0(root.dir,"/output"))) dir.create(paste0(root.dir,"/output"))
@@ -26,6 +26,15 @@ file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
 flist <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
                     "+[.]md$",
                     full.names = TRUE)
+# adhoc fix to get the html there for russian translation
+flist2 <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
+                    "+[.]html$",
+                    full.names = TRUE)
+# adhoc fix to get the html there for russian translation
+flist3 <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
+                     "+[.]png$",
+                     full.names = TRUE)
+flist <- c(flist,flist2,flist3)
 file.copy(flist, paste0(root.dir,"/output/jpg"), overwrite = TRUE)
 
 
@@ -214,16 +223,21 @@ if (broke_all_into_images | broke_only_tables_into_images){
   system(paste0("pandoc ",root.dir,"output/jpg/regional_table_comparison.md -o ",    root.dir,"output/jpg/regional_table_comparison.html"))
   if (region_to_report == "COF") system(paste0("pandoc ",root.dir,"output/jpg/coffee_comparison.md -o ",root.dir,"output/jpg/coffee_comparison.html"))
 
-
-  # system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison_raf.md -o ",root.dir,"output/jpg/regional_book_comparison_raf.html"))
-  # system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison_rap.md -o ",root.dir,"output/jpg/regional_book_comparison_rap.html"))
-  # system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison_reu.md -o ",root.dir,"output/jpg/regional_book_comparison_reu.html"))
-  # system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison_rne.md -o ",root.dir,"output/jpg/regional_book_comparison_rne.html"))
-
-
 }
 
+if (broke_rus_translation_images){
+  
 
+  if (!rulang) system(paste0("convert -density 150 -alpha remove syb_main_REU.pdf ",root.dir,"output/jpg/REU.jpg"))
+  if (rulang) system(paste0("convert -density 150 -alpha remove syb_main_REU_ru.pdf ",root.dir,"output/jpg/REURU.jpg"))
+  
+  # copy the output -html's into the output/html-folder
+  flist <- list.files(paste0(root.dir,"/output/process"),
+                      "+[.]html$",
+                      full.names = TRUE)
+  file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
+
+}
 
 if (upload_pdfs_to_server) {
 
