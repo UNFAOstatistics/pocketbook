@@ -732,10 +732,10 @@ if (table_type == "latex"){
     if (rulang){
       
       if (nchar(item[["source_ru"]]) != 0){
-        source_line <- paste0("\\source{ ",item[["source_ru"]]," } \n")
+        source_line <- paste0("\\source_ru{ ",item[["source_ru"]]," } \n")
       } else source_line <- "\n"
       if (nchar(item[["owner_ru"]]) != 0){
-        owner_line <- paste0("\\owner{ ",item[["owner_ru"]]," } \n")
+        owner_line <- paste0("\\owner_ru{ ",item[["owner_ru"]]," } \n")
       } else owner_line <- "\n"
       
       
