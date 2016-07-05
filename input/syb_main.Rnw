@@ -1455,12 +1455,15 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 <<part2_prelatex, eval=P2availab>>=
-cat("
+thesetting <- "Hunger dimension"
+if (rulang) thesetting <- "Аспекты голода"
+
+cat(paste("
     \\newpart{part2}
-    \\addcontentsline{toc}{part}{Hunger dimension}
+    \\addcontentsline{toc}{part}{",thesetting,"}
     \\rowcolors{1}{part2!10}{white}
     \\clearpage
-    ")
+    "))
 @
 
 
@@ -1717,12 +1720,15 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
 
 
 <<part3_prelatex, eval=P3des>>=
-cat("
+thesetting <- "Food supply"
+if (rulang) thesetting <- "Продовольственное снабжение"
+
+cat(paste("
     \\newpart{part3}
-    \\addcontentsline{toc}{part}{Food supply}
+    \\addcontentsline{toc}{part}{",thesetting,"}
     \\rowcolors{1}{part3!10}{white}
     \\clearpage
-    ")
+    "))
 @
 
 
@@ -1980,12 +1986,16 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
 
 
 <<part4_prelatex, eval=P4land>>=
-cat("
+thesetting <- "Environment"
+if (rulang) thesetting <- "Окружающая среда"
+
+cat(paste("
     \\newpart{part4}
-    \\addcontentsline{toc}{part}{Environment}
+    \\addcontentsline{toc}{part}{",thesetting,"}
     \\rowcolors{1}{part4!10}{white}
     \\clearpage
-    ")
+    "))
+
 @
 
 
