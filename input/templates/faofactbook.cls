@@ -45,18 +45,23 @@ left=1cm, right=1cm, twoside}{geometry}
 % ---------------------------------------------------------------------------------
 % New Font sizes
 % ---------------------------------------------------------------------------------
-\renewcommand\normalsize{%
-   % \@setfontsize\normalsize{6\p@}{7}% Affects caption sizes and texts size within Chatpage environments
-   \@setfontsize\normalsize{5.5\p@}{6}% Affects caption sizes and texts size within Chatpage environments
+\renewcommand\normalsize{%% Affects caption sizes and texts size within Chatpage environments 
+   % \@setfontsize\normalsize{6\p@}{7}
+   
+PLACE_FONTSIZE_NORMALSIZE_HERE
+   
    \abovedisplayskip 1\p@ \@plus1\p@ \@minus1\p@
    \abovedisplayshortskip \z@ \@plus2\p@
    \belowdisplayshortskip 1\p@ \@plus2\p@ \@minus2\p@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
 \normalsize
-\renewcommand\small{%
-   % \@setfontsize\small{5.5\p@}{6}% Affects at least the small tables within ChartPage envisonments
-   \@setfontsize\small{5\p@}{5.5}% Affects at least the small tables within ChartPage envisonments
+\renewcommand\small{%% Affects at least the small tables within ChartPage envisonments
+   % \@setfontsize\small{5.5\p@}{6}
+   
+   
+PLACE_FONTSIZE_SMALL_HERE
+   
    \abovedisplayskip 4\p@ \@plus1\p@ \@minus1\p@
    \abovedisplayshortskip \z@ \@plus1\p@
    \belowdisplayshortskip 2\p@ \@plus\p@ \@minus1\p@
@@ -72,7 +77,9 @@ left=1cm, right=1cm, twoside}{geometry}
 \renewcommand\tiny{\@setfontsize\tiny{3}{3}}
 % \renewcommand\large{\@setfontsize\large\@viipt\@viiipt}
 % \renewcommand\large{\@setfontsize\large{6.5}{7}}
-\renewcommand\large{\@setfontsize\large{5.5}{6.0}}
+
+PLACE_FONTSIZE_LARGE_HERE
+
 \renewcommand\Large{\@setfontsize\Large\@xipt{13}} % Section are size large
 \renewcommand\LARGE{\@setfontsize\LARGE\@xivpt{16}}
 \renewcommand\huge{\@setfontsize\huge\@xvpt{18}}
