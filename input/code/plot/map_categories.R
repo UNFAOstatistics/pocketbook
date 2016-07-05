@@ -42,14 +42,14 @@ categories <- function(x, n=5,method="jenks",manual=FALSE,manual_breaks = NULL,d
              dig.lab=5, labels = labs)
   }
   y <- as.character(y)
-  #if (is.na(y)) {
-  if (!translateru){
-    y[is.na(y)] <- "No Data"
-    y <- factor(y, levels=c("No Data",labs[1:n]))
-  } else {
-    y[is.na(y)] <- "нет данных"
-    y <- factor(y, levels=c("нет данных",labs[1:n]))
-  }
-  #} else y <- factor(y, levels=c(labs[1:n]))
+  if (is.na(y)) {
+    if (!translateru){
+      y[is.na(y)] <- "No Data"
+      y <- factor(y, levels=c("No Data",labs[1:n]))
+    } else {
+      y[is.na(y)] <- "нет данных"
+      y <- factor(y, levels=c("нет данных",labs[1:n]))
+    }
+  } else y <- factor(y, levels=c(labs[1:n]))
   y
 }
