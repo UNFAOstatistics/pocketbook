@@ -1097,10 +1097,15 @@ This environment must be inside indicator pages.}}{}
   \immediate\write\@auxout{\string\@writefile{lom}{\string\par}}}
 \def\metadata#1#2{\bgroup
   \def\meta@key{#2}%
-    \def\source##1{\par\penalty10000\emph{Source: }##1\par\penalty10000}%
-    \def\source_ru##1{\par\penalty10000\emph{Источник: }##1\par\penalty10000}%
-    \def\owner##1{\par\penalty10000\emph{Owner: }##1\par\penalty10000}%
-    \def\owner_ru##1{\par\penalty10000\emph{Владелец авторского права: }##1\par\penalty10000}%
+
+ADD_SOURCE_HERE
+    % \def\source##1{\par\penalty10000\emph{Source: }##1\par\penalty10000}%
+    % \def\source_ru##1{\par\penalty10000\emph{Источник: }##1\par\penalty10000}%
+
+ADD_OWNER_HERE
+    % \def\owner##1{\par\penalty10000\emph{Owner: }##1\par\penalty10000}%
+    % \def\owner_ru##1{\par\penalty10000\emph{Владелец авторского права: }##1\par\penalty10000}%
+
   \begin{list}{}{\topsep4\p@\labelwidth\z@
       \labelsep\z@\itemindent\z@\parsep0.4ex plus 0.5ex minus
       0.2ex\relax\listparindent\z@\leftmargin\z@\rightmargin\z@

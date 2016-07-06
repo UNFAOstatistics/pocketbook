@@ -673,14 +673,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "million kWh"
-if (rulang) map_unit <- ""
+if (rulang) map_unit <- "млн кВтч"
 
 p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Потребление энергии для орошения машинным способом, млн кВтч (2008-2011 гг.*)"
-if (rulang) caption_text <- "млн кВтч"
+caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
+if (rulang) caption_text <- "Потребление энергии для орошения машинным способом, млн кВтч (2008-2011 гг.*)"
 
 
 #   _____                               _

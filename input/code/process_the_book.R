@@ -96,6 +96,17 @@ for (region_to_report in regionS_to_report) {
     system(paste0("sed -i -- 's/PLACE_FONTSIZE_LARGE_HERE/ \\\\renewcommand\\\\large{\\\\@setfontsize\\\\large{6.5}{7.0}} /g' ",root.dir,"/output/process/faofactbook.cls"))
   }
   
+  
+  # Definition environments for Russian translation
+  if (rulang){
+    system(paste0("sed -i -- 's/ADD_SOURCE_HERE/ \\\\def\\\\source_ru##1{\\\\par\\\\penalty10000\\\\emph{Источник: }##1\\\\par\\\\penalty10000}% /g' ",root.dir,"/output/process/faoyearbook.cls"))
+    system(paste0("sed -i -- 's/ADD_OWNER_HERE/  \\\\def\\\\owner_ru##1{\\\\par\\\\penalty10000\\\\emph{Владелец авторского права: }##1\\\\par\\\\penalty10000}% /g' ",root.dir,"/output/process/faoyearbook.cls"))
+    
+  } else {
+    system(paste0("sed -i -- 's/ADD_SOURCE_HERE/  \\\\def\\\\source##1{\\\\par\\\\penalty10000\\\\emph{Source: }##1\\\\par\\\\penalty10000}% /g' ",root.dir,"/output/process/faoyearbook.cls"))
+    system(paste0("sed -i -- 's/ADD_OWNER_HERE/  \\\\def\\\\owner##1{\\\\par\\\\penalty10000\\\\emph{Owner: }##1\\\\par\\\\penalty10000}% /g' ",root.dir,"/output/process/faoyearbook.cls"))
+  }
+  
 
   # region_to_report <- regionS_to_report[1]
 
