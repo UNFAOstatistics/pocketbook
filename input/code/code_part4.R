@@ -68,6 +68,8 @@ dat <- na.omit(dat)
 
 
 dat <- gather(dat, variable, value, 2:4)
+
+
 dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
@@ -78,18 +80,25 @@ dat_plot <- dat
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Agricultural") %>% arrange(-value))$SHORT_NAME)
 
+if (rulang){
+  dat_plot$fill[dat_plot$fill == "Agricultural"] <- "Сельскохозяйственные \nземли"
+  dat_plot$fill[dat_plot$fill == "Forest"] <- "Леса"
+  dat_plot$fill[dat_plot$fill == "Other"] <- "Другие \nземли"
+  dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks = TRUE)
+} 
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
 caption_text <- "Land area"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Земельные площади"
 
 
 ## ---- P4landLEFT ----
@@ -116,23 +125,27 @@ if (region_to_report != "RNE") bottom20 <- dat %>% slice(1:20) %>% dplyr::mutate
 
 dat_plot <- top20
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n\nha/cap")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nга на душу населения")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Arable land per capita, top",nrow(dat_plot),"countries")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Пахотные земли на душу населения,",nrow(dat_plot),"стран с самыми высокими значениями")
 
 
 ## ---- P4landRIGHT ----
 dat_plot <- bottom20
+
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -140,13 +153,13 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n\nha/cap")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nга на душу населения")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Arable land per capita, bottom",nrow(dat_plot),"countries")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Пахотные земли на душу населения,",nrow(dat_plot),"стран с самыми низкими значениями")
 
 
 
@@ -193,18 +206,26 @@ dat_plot <- dat
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Arable") %>% arrange(-value))$SHORT_NAME)
 
+if (rulang){
+  dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks =  TRUE)
+  
+  dat_plot$fill[dat_plot$fill == "Arable"]   <- "Пахотные \nземли"
+  dat_plot$fill[dat_plot$fill == "Permanent crops"]   <- "Многолетние \nсельскохозяйственные культуры"
+  dat_plot$fill[dat_plot$fill == "Permanent meadows and pastures"]   <- "Постоянные луга \nи пастбища"
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="percent\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
 caption_text <- "Agricultural area"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Сельскохозяйственные земли"
 
 
 
@@ -228,13 +249,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 # map_unit <- "m² per capita"
 map_unit <- "ha per capita"
+if (rulang) map_unit <- "га/чел"
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Cropland per capita, ha/cap"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Земли под сельскохозяйственными культурами на душу населения, га/чел"
 
 
 #
@@ -309,18 +331,23 @@ bottomdata <- rbind(bottom_5,bottom_5_00)
 
 bottomdata$FAO_TABLE_NAME <- factor(bottomdata$FAO_TABLE_NAME, levels=arrange(bottomdata[bottomdata$Year == 2010,], per_capita_water_resources)$FAO_TABLE_NAME)
 
+if (rulang) levels(bottomdata$FAO_TABLE_NAME) <- countrycode.multilang::countrycode(levels(bottomdata$FAO_TABLE_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) bottomdata$Year[bottomdata$Year == 2000] <- "2000 г."
+if (rulang) bottomdata$Year[bottomdata$Year == 2010] <- "2010 г."
+
 p <- ggplot(bottomdata, aes(x=FAO_TABLE_NAME,y=per_capita_water_resources,fill=factor(Year)))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y=expression(м^"3"/год/чел))
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 
+
 # Caption
 caption_text <- "Countries with the lowest renewable water resources per capita"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Страны с самыми низкими показателями возобновляемых водных ресурсов на душу населения"
 
 ## ---- P4waterLEFT ----
 
@@ -340,19 +367,21 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -new_var)
 dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, new_var),y=new_var))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nпроценты")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Freshwater withdrawal by industrial sector, share of total, highest",nrow(dat_plot),"(1999 to 2013)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Забор пресной воды на промышленные нужды как процентная доля от общего водозабора,",nrow(dat_plot),"стран с самыми высокими значениями (с 1999 по 2013 гг.)")
 
 
 ## ---- P4waterRIGHT ----
@@ -373,19 +402,21 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -new_var)
 dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, new_var),y=new_var))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nпроценты")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Freshwater withdrawal by agricultural sector, share of total, highest",nrow(dat_plot),"(1999 to 2013)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Забор пресной воды на сельскохозяйственные нужды как процентная доля от общего водозабора,",nrow(dat_plot),"стран с самыми высокими значениями (с 1999 по 2013 гг.)")
 
 
 ## ---- P4waterBOTTOM ----
@@ -399,11 +430,15 @@ topdata <- rbind(top_10,top_10_00)
 
 topdata$FAO_TABLE_NAME <- factor(topdata$FAO_TABLE_NAME, levels=arrange(topdata[topdata$Year == 2010,], -per_capita_water_resources)$FAO_TABLE_NAME)
 
+if (rulang) levels(topdata$FAO_TABLE_NAME) <- countrycode.multilang::countrycode(levels(topdata$FAO_TABLE_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) topdata$Year[topdata$Year == 2000] <- "2000 г."
+if (rulang) topdata$Year[topdata$Year == 2010] <- "2010 г."
+
 p <- ggplot(topdata, aes(x=FAO_TABLE_NAME,y=per_capita_water_resources,fill=factor(Year)))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x=NULL,y=expression(m^"3"/yr/person))
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y=expression(м^"3"/год/человек))
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -411,7 +446,7 @@ p
 
 # Caption
 caption_text <- "Countries with the highest renewable water resources per capita"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Страны с самыми высокими показателями возобновляемых водных ресурсов на душу населения"
 
 
 ## ---- P4waterMAP ----
@@ -438,14 +473,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
-if (rulang) map_unit <- ""
+if (rulang) map_unit <- "проценты"
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Freshwater resources withdrawn by agriculture (percent, 1999-2013*)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Забор воды из пресноводных ресурсов на сельскохозяйственные нужды (в процентах, 1999-2013 гг.*)"
 
 
 #   _____
@@ -491,18 +526,20 @@ dat <- na.omit(dat)
 
 dat_plot <- dat
 
+if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6740_72041, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of tot energy production\n")
-if (rulang) p <- p + labs(x="",y="\n")
-p <- p + guides(color = guide_legend(nrow = 5))
+if (rulang) p <- p + labs(x="",y="% в общем объеме \nпроизводства энергии\n")
+p <- p + guides(color = guide_legend(nrow = 6))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
 # Caption
 caption_text <- "Bioenergy production, share of total energy production"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Производство биоэнергии, доля в общем объеме производства энергии"
 
 
 
@@ -525,20 +562,21 @@ top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 dat_plot <- top20
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6740_72041),y=EE_6740_72041))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n% of tot energy production")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\n% в общем объеме производства энергии")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- paste("Bioenergy production, share of total energy production, top",nrow(dat_plot),"countries 2009")
-if (rulang) caption_text <- ""
-
+if (rulang) caption_text <- paste("Производство биоэнергии, доля в общем производстве энергии,",nrow(dat_plot),"стран с самыми высокими показателями в 2009 году")
 
 ## ---- P4energyRIGHT ----
 dat <- syb.df %>% filter(Year %in% 2009) %>% select(SHORT_NAME,Year,EE_6741_72040)
@@ -559,12 +597,14 @@ top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 dat_plot <- top20
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6741_72040),y=EE_6741_72040))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="\n% of total energy consumption")
+p <- p + labs(x="",y="\n% в общем объеме производства энергии")
 if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
@@ -572,7 +612,7 @@ p
 
 # Caption
 caption_text <- paste("Energy use in agriculture and forestry, share of total energy consumption, top",nrow(dat_plot),"countries 2009")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Потребление энергии в сельском и лесном хозяйстве, доля в общем объеме потребления энергии,",nrow(dat_plot),"стран с самыми высокими показателями в 2009 г.")
 
 
 ## ---- P4energyBOTTOM ----
@@ -596,18 +636,20 @@ dat <- na.omit(dat)
 
 dat_plot <- dat
 
+if (rulang)dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(dat_plot, aes(x=Year, y=EE_6741_72040, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of total energy consumption\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="% в общем объеме производства энергии\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
 
 # Caption
 caption_text <- "Energy use in agriculture and forestry, share of total energy consumption"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Потребление энергии в сельском и лесном хозяйстве, доля в общем объеме потребления энергии"
 
 ## ---- P4energyMAP ----
 dat <- syb.df %>% filter(Year >= 2008) %>% select(FAOST_CODE,Year,GN_6808_72182) %>% mutate(GN_6808_72182 = GN_6808_72182 / 1000000)
@@ -631,13 +673,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "million kWh"
+if (rulang) map_unit <- ""
 
 p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
-if (rulang) caption_text <- ""
+caption_text <- "Потребление энергии для орошения машинным способом, млн кВтч (2008-2011 гг.*)"
+if (rulang) caption_text <- "млн кВтч"
 
 
 #   _____                               _
@@ -694,18 +737,26 @@ dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 dat_plot <- dat_plot %>% group_by(Year,fill) %>%
           dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
 
+if (rulang){
+  dat_plot$fill[dat_plot$fill == "Paper and paperboard"] <- "Бумага и \nкартон"
+  dat_plot$fill[dat_plot$fill == "Recovered paper"] <- "Рекуперированная \nбумага"
+  dat_plot$fill[dat_plot$fill == "Wood pulp"] <- "Древесная \nцеллюлоза"
+  
+}
+
+
 p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="млн тонн\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
 caption_text <- "Production of selected forest products"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Производство отдельных лесопродуктов"
 
 
 ## ---- P4forestryLEFT ----
@@ -725,6 +776,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -FO.EXVAL.TOT.USD.NO)
 dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FO.EXVAL.TOT.USD.NO),y=FO.EXVAL.TOT.USD.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -732,14 +784,14 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\ntrillion US$")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nтрлн долл. США")
 p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,10000,20000))
 p
 
 # Caption
 caption_text <- paste("Top",nrow(dat_plot),"exporters of forest products (2012)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- caption_text <- paste(nrow(dat_plot),"самых крупных экспортеров лесопродукции (2012 г.)")
 
 
 ## ---- P4forestryRIGHT ----
@@ -760,6 +812,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -FO.IMVAL.TOT.USD.NO)
 dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FO.IMVAL.TOT.USD.NO),y=FO.IMVAL.TOT.USD.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -767,14 +820,14 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\ntrillion US$")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nтрлн долл. США")
 p <- p + scale_y_continuous(labels=space)
 # p <- p + scale_y_continuous(labels=space,breaks=c(0,20000,40000))
 p
 
 # Caption
 caption_text <- paste("Top",nrow(dat_plot),"importers of forest products (2012)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(nrow(dat_plot),"самых крупных импортеров лесопродукции (2012 г.)")
 
 
 ## ---- P4forestryBOTTOM ----
@@ -810,18 +863,27 @@ dat_plot <- dat
 # # AGREGATE
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "primary forest") %>% arrange(-value))$SHORT_NAME)
 #
+
+if (rulang){
+  dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks = TRUE)
+  dat_plot$fill[dat_plot$fill == "primary forest"] <- "девственные леса"
+  dat_plot$fill[dat_plot$fill == "planted forest"] <- "лесонасаждения"
+  dat_plot$fill[dat_plot$fill == "other naturally regenerated forest"] <- "леса, восстанавливаемые \nестественным путем"
+}
+
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million ha\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="млн га\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 
 # Caption
 caption_text <- "Forest characteristics (2015)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Характеристики леса (2015 г.)"
 
 
 ## ---- P4forestryMAP ----
@@ -843,14 +905,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
-if (rulang) map_unit <- ""
+if (rulang) map_unit <- "проценты"
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Forest area as share of total land area, percent (2012)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Доля площади лесов в общей площади суши, в процентах (2012 г.)"
 
 
 #    ____   _   _                       _                     _
@@ -895,20 +957,21 @@ dat$GHG.TOT.ALL.GG.NO <- dat$GHG.TOT.ALL.GG.NO /1000
 
 dat_plot <- dat
 
+if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(dat_plot, aes(x=Year, y=GHG.TOT.ALL.GG.NO, color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y=expression("тыс. гигаграммов CO"[2] * "-экв"))
 p <- p + theme(axis.text.x = element_text(angle=45))
-p <- p + guides(color = guide_legend(nrow = 5))
+p <- p + guides(color = guide_legend(nrow = 6))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
 
-
 # Caption
 caption_text <- "Greenhouse gas emissions in agriculture"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Выбросы парниковых газов в сельском хозяйстве"
 
 
 ## ---- P4climateLEFT ----
@@ -929,18 +992,25 @@ top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
+dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,GHG.TOT.ALL.GG.NO)$SHORT_NAME)
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, GHG.TOT.ALL.GG.NO),y=GHG.TOT.ALL.GG.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
-if (rulang) p <- p + labs(x="",y="\n")
-p <- p + guides(color = guide_legend(nrow = 1))
+if (rulang) p <- p + labs(x="",y=expression("млн тонн CO"[2] * "экв."))
+p <- p + guides(color = guide_legend(nrow = 1)) 
 p
 
 # Caption
 caption_text <- paste("Greehouse gas emissions in agriculture, highest",nrow(top12),"countries in 2012")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Выбросы парниковых газов в сельском хозяйстве, ",nrow(top12),"стран с самыми высокими показателями в 2012 году")
 
 
 
@@ -970,18 +1040,25 @@ dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y=expression("млн тонн CO"[2] * "экв."))
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Land use total emissions, highest",ncases,"countries in 2012")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Общий объем выбросов парниковых газов в результате землепользования,",
+                                  ncases,"стран с самыми высокими показателями в 2012 году")
 
 
 
@@ -1005,11 +1082,22 @@ dat$value <- dat$value / 1000 # into thousand gigagrams
 
 dat_plot <- dat
 
+if (rulang){
+  
+  dat_plot$fill[dat_plot$fill == "All GHG agricultural sectors"]   <- "Выбросы парниковых \nгазов во всех \nсельскохозяйственных секторах"
+  dat_plot$fill[dat_plot$fill == "Net forest conversion"]   <- "Чистая величина перевода лесов в нелесные земли"
+  dat_plot$fill[dat_plot$fill == "Burning savanna"]   <- "Сжигание саванн"
+  dat_plot$fill[dat_plot$fill == "Forest"]   <- "Лесное хозяйство"
+  
+}
+
+
+
 p <- ggplot(dat_plot, aes(x=reorder(fill, -value), y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y=expression("тыс. гигаграммов CO"[2] * "-экв."))
 p <- p + theme(axis.text.x = element_blank())
 p <- p + guides(fill = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
@@ -1017,7 +1105,7 @@ p
 
 # Caption
 caption_text <- "Emissions by subsectors in 2012"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Выбросы парниковых газов в подсекторах в 2012 г."
 
 
 
@@ -1041,10 +1129,11 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- expression("mln gigagrams CO"[2] * "eq")
+if (rulang) map_unit <- expression("млн Гг CO"[2] * "-экв.")
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2012)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Суммарные выбросы парниковых газов в сельском хозяйстве, лесном хозяйстве и других видах землепользования, в млн гигаграммов эквивалента CO\\textsubscript{2} (2012 г.)"
