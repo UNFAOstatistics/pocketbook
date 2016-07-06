@@ -662,8 +662,7 @@
   description: Measures the variability in the relative price of food in a country.  The
     indicator is calculated from the monthly domestic food price level index using
     monthly consumer and general food price indices and purchasing power parity data
-    from the International Comparison Program conducted by the World Bank (see the
-    Relative Price of Food Indicator for more information).  Month-to-month growth
+    from the International Comparison Program conducted by the World Bank. Month-to-month growth
     rates are calculated, and the standard deviation of these growth rates are calculated
     over the previous 8 months (8-months rolling standard deviation).  The average
     of these standard deviations is then computed to obtain an annual volatility indicator.
@@ -1203,7 +1202,7 @@
   source_ru: Всемирный банк
   owner_ru: ВОЗ, Глобальная база данных по росту и недостаточному питанию детей
 - id: iodine_deficiency_total_pop_(pros)
-  name: Iodine deficiency, total pop. (\%)
+  name: Iodine deficiency, children aged 6 to 12 (\%)
   description: The proportion of school children aged 6 to 12 years of age showing
     urinary iodine equal or lower than 100 μg/l.
   source: World Bank

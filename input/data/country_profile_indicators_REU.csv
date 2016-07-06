@@ -27,7 +27,7 @@
 "Hunger and dietary quality dimensions",29,"obesity",NA,NA,"Obesity, adults (M/F, %)",NA,1,"Взрослые, страдающие от ожирения (м/ж, %)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",31,"FS.OU.VAD.PCT",NA,NA,"Vitamin A deficiency, total pop. (%)",NA,1,"Дефицит витамина А среди населения (%)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",32,"SH.ANM.CHLD.ZS",NA,NA,"Anemia, children under 5 (%)",NA,1,"Анемия среди детей до 5 лет (%)","Аспекты голода и рациона питания"
-"Hunger and dietary quality dimensions",33,"SH.PRG.ANEM",NA,NA,"Anemia, women in reproductive age (%)",NA,1,"Анемия среди женщин репродуктивного возраста (%)","Аспекты голода и рациона питания"
+"Hunger and dietary quality dimensions",33,"SH.PRG.ANEM",NA,NA,"Anemia, pregnant women (%)",NA,1,"Анемия среди женщин репродуктивного возраста (%)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",35,"FS.OU.IODINE.PCT",NA,NA,"Iodine deficiency, children aged 6 to 12 (%)",NA,1,"Дефицит йода среди детей от 6 до 12 лет (%)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",36,"SH.XPD.TOTL.ZS",NA,NA,"Health expenditure, total (% of GDP)",NA,1,"Расходы на здравоохранение (% от ВВП)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",37,"SH.XPD.PCAP",NA,NA,"Health expenditure per capita, PPP ($)",NA,0,"Расходы на здравоохранение на душу населения, по ППС (в долл. США)","Аспекты голода и рациона питания"
