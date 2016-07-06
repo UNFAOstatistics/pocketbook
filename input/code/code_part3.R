@@ -69,13 +69,29 @@ dw <- gather(despie,
              4:9)
 d <- dw %>% group_by(FAOST_CODE,var) %>% dplyr::summarise(mean = mean(value))
 
-d$var <- as.character(d$var)
-d$var[d$var == "FBS.SDES.CRLS.PCT3D"] <- "Cereals\n(excl. beer)"
-d$var[d$var == "FBS.SDES.SR.PCT3D"] <- "Starchy roots"
-d$var[d$var == "FBS.SDES.SS.PCT3D"] <- "Sugar and\nsweeteners"
-d$var[d$var == "FBS.SDES.MO.PCT3D"] <- "Meat and offals"
-d$var[d$var == "FBS.SDES.VOAF.PCT3D"] <- "Milk\n(excl. butter)"
-d$var[d$var == "FBS.SDES.MEB.PCT3D"] <- "Veg. oils and\nanimal fats"
+if (rulang){
+  
+  d$var <- as.character(d$var)
+  d$var[d$var == "FBS.SDES.CRLS.PCT3D"] <- "Злаки \n(за искл. пива)"
+  d$var[d$var == "FBS.SDES.SR.PCT3D"] <- "Крахмалистые \nкорнеплоды"
+  d$var[d$var == "FBS.SDES.SS.PCT3D"] <- "Сахар и \nсахарозаменители"
+  d$var[d$var == "FBS.SDES.MO.PCT3D"] <- "Мясо и \nсубпродукты"
+  d$var[d$var == "FBS.SDES.VOAF.PCT3D"] <- "Молоко (за искл. \nсливочного масла)"
+  d$var[d$var == "FBS.SDES.MEB.PCT3D"] <- "Растительные масла и \nживотные жиры"
+  
+} else {
+  
+  d$var <- as.character(d$var)
+  d$var[d$var == "FBS.SDES.CRLS.PCT3D"] <- "Cereals\n(excl. beer)"
+  d$var[d$var == "FBS.SDES.SR.PCT3D"] <- "Starchy roots"
+  d$var[d$var == "FBS.SDES.SS.PCT3D"] <- "Sugar and\nsweeteners"
+  d$var[d$var == "FBS.SDES.MO.PCT3D"] <- "Meat and offals"
+  d$var[d$var == "FBS.SDES.VOAF.PCT3D"] <- "Milk\n(excl. butter)"
+  d$var[d$var == "FBS.SDES.MEB.PCT3D"] <- "Veg. oils and\nanimal fats"
+
+}
+
+
 
 d$FAOST_CODE <- factor(d$FAOST_CODE)
 d$FAOST_CODE <- as.numeric(levels(d$FAOST_CODE))[d$FAOST_CODE]
@@ -134,7 +150,7 @@ p
 
 # Caption
 caption_text <- "Share of dietary energy supply, kcal/capita/day (2009-2011)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Доля энергетической ценности пищевого рациона, ккал/чел/сутки (2009-2011 гг.)"
 
 ## ---- P3desLEFT ----
 # data
@@ -165,19 +181,26 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2014-2016"] <- "2014-2016 гг."
+  dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/cap/day")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nккал/чел/день")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Dietary energy supply, top",ncases,"countries in 2014-2016")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Предложение пищевой энергии,",ncases,"стран с самыми высокими показателями в 2014-2016 гг.")
+
 
 ## ---- P3desRIGHT ----
 
@@ -207,6 +230,12 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2014-2016"] <- "2014-2016 гг."
+  dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -219,7 +248,8 @@ p
 
 # Caption
 caption_text <- paste("Average dietary energy supply adequacy, percent, top",ncases,"countries (2014-2016)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Адекватность средней энергетической ценности пищевого рациона, в процентах,",
+                                  ncases,"стран с самыми высокими значениями (2014-2016 гг.)")
 
 
 ## ---- P3desBOTTOM ----
@@ -239,18 +269,19 @@ dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
 
 p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="kcal/cap/day\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="ккал/чел/день\n")
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- "Dietary energy supply in top 5 countries"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Предложение пищевой энергии в 5 странах с самыми высокими значениями"
 
 ## ---- P3desMAP ----
 
@@ -270,14 +301,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "percent"
-if (rulang) map_unit <- ""
+if (rulang) map_unit <- "проценты"
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Average dietary energy supply adequacy, percent (2014-2016)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Адекватность средней энергетической ценности пищевого рациона, в процентах (2014-2016 гг.)"
 
 #    ____                                             _               _    _
 #   / ___| _ __  ___   _ __    _ __   _ __  ___    __| | _   _   ___ | |_ (_)  ___   _ __
@@ -347,15 +378,21 @@ tbl_data <- rc
 if (table_type == "latex") cap <- "\\large{Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)}"
 if (table_type == "html")  cap <- "<b>Table: Fastest growing products based on quantities (average annual growth rate, 2000 to 2013)</b>"
 caption_text <- cap
-if (rulang) caption_text <- ""
+if (rulang){
+  caption_text <- "\\large{Продукты, производство которых растет самыми быстрыми темпами, исходя из количества (среднегодовые темпы роста, с 2000 по 2013 гг.)}"
+  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Rapeseed"] <- "Семена рапса"
+  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Pyrethrum, dried"] <- "Пиретрум"
+  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Taro (cocoyam)"] <- "Таро"
+  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Vanilla"] <- "Ваниль"
+  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Dates"] <- "финики"
+} 
 
-print.xtable(xtable(rc, caption = cap, digits = c(0,0,0),
+print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0),
                     align= "l{\raggedright\arraybackslash}p{2.2cm}r"),
              type = table_type, table.placement = NULL, booktabs = TRUE,
              comment = FALSE,
              include.rownames = FALSE, size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
-
 
 
 ## ---- P3cropproLEFT ----
@@ -386,19 +423,25 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nпостоянные межд. доллары  2004 − 2006 гг.")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"crop producing countries in 2012 based on net per capita crop production value (constant 2004 - 2006 Int\\$)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(ncases,"стран с наиболее высокими показателями производства сельскохозяйственных культур в 2012 году на основе показателей чистого объема производства сельскохозяйственных культур на душу населения (в межд. постоянных долларах  2004 – 2006 гг.)")
 
 
 ## ---- P3cropproRIGHT ----
@@ -430,19 +473,26 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nпостоянные межд. доллары  2004 − 2006 гг.")
 p <- p + guides(color = guide_legend(nrow = 1))
 # p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"food producing countries in 2012 based on net per capita food production value (constant 2004 - 2006 Int\\$)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(ncases,"стран с наиболее высокими показателями производства продовольствия в 2012 году на основе показателей чистого объема производства продовольствия на душу населения (в межд. постоянных долларах  2004 – 2006 гг.)")
+
 
 ## ---- P3cropproBOTTOM ----
 if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12000) %>%
@@ -498,21 +548,27 @@ for (fs in unique(dat$variable)){
   dat_plot <- rbind(dat_plot,row)
 }
 
-dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Production"
-dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Harvested area"
-dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Yield"
+if (rulang){
+  dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Production"
+  dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Harvested area"
+  dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Yield"
+} else{
+  dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Производство"
+  dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Уборочная площадь"
+  dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Урожайность"
+}
 
 p <- ggplot(dat_plot, aes(x=variable,y=growth_rate,fill=variable))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$variable)))[["Sub"]])
 p <- p + labs(x="",y="percent\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + theme(legend.position = "none")
 p
 
 # Caption
 caption_text <- "Average annual growth in cereals production (2000-13)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Среднегодовые темпы роста производства зерновых (2000-13 гг.)"
 
 
 ## ---- P3cropproMAP ----
@@ -532,13 +588,13 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "index"
-
+if (rulang) map_unit <- "показатель"
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Crops, gross per capita production index (2004-06 = 100, 2013)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Сельскохозяйственные культуры, валовой индекс производства на душу населения (2004-06 гг.= 100, 2013 г.)"
 
 #
 #    ____
@@ -610,9 +666,17 @@ tbl_data <- gg
 if (table_type == "latex") cap <- "\\large{Top five items produced in 2013, thousand tonnes}"
 if (table_type == "html")  cap <- "<b>Table: Top five items produced in 2013, thousand tonnes</b>"
 caption_text <- cap
-if (rulang) caption_text <- ""
+if (rulang){
+  caption_text <- "\\large{Пять самых распространенных продуктов, произведенных в 2013 году, тыс. тонн}"
+  tbl_data[[1]][tbl_data[[1]] == "Wheat"] <- "Пшеница"
+  tbl_data[[1]][tbl_data[[1]] == "Sugar beet"] <- "Сахарная свекла"
+  tbl_data[[1]][tbl_data[[1]] == "Potatoes"] <- "Картофель"
+  tbl_data[[1]][tbl_data[[1]] == "Maize"] <- "Кукуруза"
+  tbl_data[[1]][tbl_data[[1]] == "Barley"] <- "Ячмень"
+} 
 
-print(xtable(gg, caption = cap, digits = c(0,0,0,0),
+
+print(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
              align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
       type = table_type, table.placement = NULL,
       booktabs = TRUE, include.rownames = FALSE,
@@ -659,19 +723,27 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nкг на душу населения")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Top",ncases,tolower(first),"producing countries, kg per capita")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(ncases,
+                                  #tolower(second),
+                                  "стран с самыми высокими показателями производства пшеницы, в кг на душу населения")
 
 
 ## ---- P3cropRIGHT ----
@@ -710,19 +782,27 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nкг на душу населения")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Top",ncases,tolower(second),"producing countries, kg per capita")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(ncases,
+                                  #tolower(second),
+                                  "стран с самыми высокими показателями производства пшеницы, в кг на душу населения")
 
 
 ## ---- P3cropBOTTOM ----
@@ -743,11 +823,13 @@ if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAO
          QC.YIELD.CRLS.HG.NO)
 dat_plot <- na.omit(dat)
 
+dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(data = dat_plot, aes(x = Year, y = QC.YIELD.CRLS.HG.NO,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="hg/capita\n", x="")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="Гг на душу населения\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p <- p + scale_y_continuous(labels=space)
@@ -755,7 +837,7 @@ p
 
 # Caption
 caption_text <- "Cereals, yield, hg per capita"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Зерновые, урожайность, в гектограммах на душу населения "
 
 
 ## ---- P3cropMAP ----
@@ -777,13 +859,13 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "kg/cap"
-
+if (rulang) map_unit <- "кг/чел"
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Cereal production, kg/cap (2013)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Производство зерновых, кг/чел (2013 г.)"
 
 
 
@@ -854,9 +936,17 @@ tbl_data <- gg
 if (table_type == "latex") cap <- "\\large{Live animal number, top 5 in 2013 (thousand heads)}"
 if (table_type == "html")  cap <- "<b>Table: Live animal number, top 5 in 2013 (thousand heads)</b>"
 caption_text <- cap
-if (rulang) caption_text <- ""
+if (rulang){
+  caption_text <- "\\large{Число самых распространенных животных в 2013 году (тыс. голов)}"
+  tbl_data[[1]][tbl_data[[1]] == "Chickens"] <- "Куры"
+  tbl_data[[1]][tbl_data[[1]] == "Sheep"] <- "Овцы"
+  tbl_data[[1]][tbl_data[[1]] == "Pigs"] <- "Свиньи"
+  tbl_data[[1]][tbl_data[[1]] == "Cattle"] <- "Рогатый скот"
+  tbl_data[[1]][tbl_data[[1]] == "Turkeys"] <- "Индейки"
+  
+} 
 
-print.xtable(xtable(gg, caption = cap, digits = c(0,0,0,0),
+print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
                     align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),
              type = table_type, table.placement = NULL, booktabs = TRUE,
              comment = FALSE,
@@ -884,19 +974,28 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
+
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+}
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK.TN.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Total milk production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Общий объем производства молока,",nrow(dat_plot)/2,"стран с самыми высокими и самими низкими показателями (2012 г.)")
+
+
 
 ## ---- P3livestockRIGHT ----
 
@@ -916,19 +1015,26 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+}
+
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.TN.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmln tonnes")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste("Total egg production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste("Общий объем производства яиц,",nrow(dat_plot)/2,"стран с самыми высокими и самими низкими показателями (2012 г.)")
 
 
 ## ---- P3livestockBOTTOM ----
@@ -1000,13 +1106,14 @@ if (table_type == "latex"){
 p <- p + labs(x=NULL, y=NULL)
 if (rulang) p <- p + labs(x="",y="\n")
 p <- p + theme(plot.margin=unit(c(0,0,0,0),"mm"))
-p <- p + guides(fill = guide_legend(nrow = 2))
+if (!rulang) p <- p + guides(fill = guide_legend(nrow = 2))
+if (rulang) p <- p + guides(fill = guide_legend(nrow = 3))
 p
 
 
 # Caption
 caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2013 (million heads)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Производство кур (самое распространенное домашнее животное в регионе) в 2000 и 2013 гг. (в млн голов)"
 
 
 
@@ -1026,7 +1133,7 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "head/ha"
-
+if (rulang) map_unit <- "голов/га"
 # graticule
 grat_robin <- spTransform(graticule, CRS("+proj=robin"))  # reproject graticule
 gr_rob <- fortify(grat_robin)
@@ -1041,7 +1148,7 @@ p
 
 # Caption
 caption_text <- "Cattle and buffaloes per ha of agricultural area, heads per ha (2012)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Крупный рогатый скот и буйволы на один гектар сельскохозяйственных угодий, голов/га (2012 г.)"
 
 
 #   _____  _       _                  _
@@ -1089,8 +1196,15 @@ dat <- na.omit(dat)
 # Add region key and subset
 
 dat <- gather(dat, variable, value, 3:4)
-dat$fill[dat$variable == "capture_fish_production"] <- "From capture fishing"
-dat$fill[dat$variable == "aquaculture_fish_production"] <- "From aquaculture"
+if (rulang){
+  dat$fill[dat$variable == "capture_fish_production"] <- "Рыболовство"
+  dat$fill[dat$variable == "aquaculture_fish_production"] <- "Аквакультура"
+} else {
+  dat$fill[dat$variable == "capture_fish_production"] <- "From capture fishing"
+  dat$fill[dat$variable == "aquaculture_fish_production"] <- "From aquaculture"
+}
+
+
 
 dat$value <- dat$value / 1000000
 
@@ -1100,14 +1214,14 @@ p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="млн тонн\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
 caption_text <- "Fish production from aquaculture and capture fishing"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Рыбная продукция аквакультуры и рыболовства"
 
 
 ## ---- P3fisheriesLEFT ----
@@ -1127,19 +1241,25 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+}
+
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=capture_fish_production))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\n млн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
 caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of capture production (2013)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями производства аквакультуры (2013 г.)")
 
 
 ## ---- P3fisheriesRIGHT ----
@@ -1160,13 +1280,19 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+}
+
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=aquaculture_fish_production))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -1174,7 +1300,7 @@ p
 # Caption
 
 caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of aquaculture production (2013)")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями производства аквакультуры (2013 г.)")
 
 
 ## ---- P3fisheriesBOTTOM ----
@@ -1195,18 +1321,20 @@ if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAO
          production_quantity_index)   # cereal export value
 dat_plot <- na.omit(dat)
 
+dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(data = dat_plot, aes(x = Year, y = production_quantity_index,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="index\n", x="")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="индекс\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
 p
 
 # Caption
 caption_text <- "Fish production indices (2004-06=100)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Индексы производства рыбы (2004-06 гг.=100)"
 
 
 
@@ -1230,13 +1358,14 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "1 000 US$"
+if (rulang) map_unit <- "1 000 долл. США"
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Net trade of fish in 2012"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Чистый объем торговли рыбой в 2012 году"
 
 
 #      _                 _               _  _                       _   _                    _
@@ -1305,8 +1434,16 @@ if (table_type == "html")  cap <- "<b>Table: Exports and Imports of food, millio
 caption_text <- cap
 if (rulang) caption_text <- ""
 
-print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
-                    align= "l{\raggedright\arraybackslash}p{1.2cm}rr"),
+if (rulang){
+  caption_text <- "\\large{Экспорт и импорт продовольствия, в млн долл. США (по курсу 2013 г.)}"
+  # names(tbl_data) <- c("","Стоимость экспорта", "Стоимость импорта")
+  names(tbl_data) <- c("","экспорта", "импорта")
+  tbl_data[[1]] <- translate_subgroups(tbl_data[[1]], isfactor = FALSE, add_row_breaks = FALSE)
+} 
+
+
+print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
+                    align= "l{\raggedright\arraybackslash}rrr"),
              type = table_type, table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
              comment = FALSE,
              size = "footnotesize", caption.placement = "top",
@@ -1341,18 +1478,26 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлрд долл. США")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"food importing countries in 2012")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями импорта продовольствия в 2012 году")
+
+
 
 ## ---- P3tradeRIGHT ----
 
@@ -1383,18 +1528,25 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang){
+  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+}
+
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлрд долл. США")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
 caption_text <- paste("Top",ncases,"food exporting countries in 2012")
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями экспорта продовольствия в 2012 году")
 
 
 ## ---- P3tradeBOTTOM ----
@@ -1417,18 +1569,20 @@ dat_plot <- na.omit(dat)
 
 dat_plot$value <- dat_plot$TP.EXVAL.CRLS.USD.NO / 1000000000
 
+dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+
 p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="billion constant 2005 US$\n", x="")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="млрд долл. США в постоянных ценах 2005 г.\n")
 p <- p + guides(color = guide_legend(nrow = 3))
 p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2012))
 p
 
 # Caption
 caption_text <- "Cereal exports"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Экспорт зерновых"
 
 ## ---- P3tradeMAP ----
 dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,
@@ -1450,11 +1604,11 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "index"
-
+if (rulang) map_unit <- "индекс"
 
 p <- create_map_here()
 p
 
 # Caption
 caption_text <- "Import value index (2004-2006 = 100, 2011)"
-if (rulang) caption_text <- ""
+if (rulang) caption_text <- "Индекс стоимости импорта (2004-2006 гг.= 100, 2011 г.)"
