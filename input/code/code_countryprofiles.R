@@ -432,6 +432,17 @@ REU_reg_names <- c("Europe and Central Asia",
                    #"Israel",
                    "EU Other and EFTA",
                    "South Eastern Europe")
+
+REU_reg_names_ru <- c("Европа и Центральная Азия",
+                      "Центральная Азия",
+                      "Кавказа и Турции",
+                      "Центральная и Восточная ЕС",
+                      "СНГ Европа",
+                      "ЕС другой и ЕАСТ",
+                      "Юго-Восточной Европы"
+                      )
+
+
 RNE_reg_names <- c("Near East and North Africa",
                    "Gulf Cooperation\n Council States\n and Yemen",
                    "North Africa",
@@ -500,7 +511,7 @@ if (region_to_report == "REU" & rulang){
     rbind(data.frame(FAOST_CODE = c(14000,14001,14002,14003,14004,
                                     #14005, # Exclude Israel from country groupings
                                     14006,14007),
-                     SHORT_NAME = translate_subgroups(REU_reg_names),
+                     SHORT_NAME = REU_reg_names_ru,
                      stringsAsFactors = FALSE),
           M49countries)
   M49countries$SHORT_NAME_RU <- countrycode.multilang::countrycode(M49countries$FAOST_CODE, "fao", "country.name.russian")
@@ -682,8 +693,10 @@ if (table_type == "latex"){
       }
     }
     if (region_to_report %in% "REU"){
-
-      if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
+      
+      if (rulang){
+        
+        if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names_ru){
           cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
               define_row_color,
               "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
@@ -691,16 +704,41 @@ if (table_type == "latex"){
             \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
             \\midrule\n",
               file = fileOut, append = TRUE)
-      }
-      if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
-        cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
-            define_row_color,
-            "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
+        }
+        if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names_ru){
+          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
+              define_row_color,
+              "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
               \\toprule
               \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
               \\midrule\n",
-            file = fileOut, append = TRUE)
+              file = fileOut, append = TRUE)
+        }
+        
+      } else {
+        
+        if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
+          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
+              define_row_color,
+              "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
+            \\toprule
+            \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
+            \\midrule\n",
+              file = fileOut, append = TRUE)
+        }
+        if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
+          cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
+              define_row_color,
+              "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
+              \\toprule
+              \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
+              \\midrule\n",
+              file = fileOut, append = TRUE)
+        }
+        
       }
+      
+      
 
     }
     ## data
@@ -771,10 +809,12 @@ if (table_type == "latex"){
               }
             } else {
               chunk1 = "{\\scriptsize\\textit{NA}}"
+              if (rulang) chunk1 = "{\\scriptsize\\textit{НП}}"
             }
           }
         } else {
           chunk1 = "{\\scriptsize\\textit{NA}}"
+          if (rulang) chunk1 = "{\\scriptsize\\textit{НП}}"
         }
         y2 = tmp[tmp[, "Year"] == year2, subindicators.df[j, "INDICATOR1"]]
         if (length(y2) == 1) {
@@ -794,10 +834,12 @@ if (table_type == "latex"){
               }
             } else {
               chunk2 = "{\\scriptsize\\textit{NA}}"
+              if (rulang) chunk2 = "{\\scriptsize\\textit{НП}}"
             }
           }
         } else {
           chunk2 = "{\\scriptsize\\textit{NA}}"
+          if (rulang) chunk2 = "{\\scriptsize\\textit{НП}}"
         }
         y3 = tmp[tmp[, "Year"] == year3, subindicators.df[j, "INDICATOR1"]]
         if (length(y3) == 1) {
@@ -817,10 +859,12 @@ if (table_type == "latex"){
               }
             } else {
               chunk3 = "{\\scriptsize\\textit{NA}}"
+              if (rulang) chunk3 = "{\\scriptsize\\textit{НП}}"
             }
           }
         } else {
           chunk3 = "{\\scriptsize\\textit{NA}}"
+          if (rulang) chunk3 = "{\\scriptsize\\textit{НП}}"
         }
         chunk1 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk1)
         chunk2 <- gsub(pattern = ",", replacement = "\\\\,", x = chunk2)
@@ -913,20 +957,41 @@ if (table_type == "latex"){
 
     if (region_to_report == "REU"){
 
-      if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
-        cat("\ \ \ \ \ \ \ \\toprule
+      if (rulang){
+        
+        if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names_ru){
+          cat("\ \ \ \ \ \ \ \\toprule
+      \n\\end{tabular}
+      \\textsuperscript{\\ddag} Совокупные показатели сформированы на основе групп стран, определенных в таблице «Классификация стран» на стр. xi.
+      \\clearpage\n",
+              file = fileOut, append = TRUE)
+        }
+        if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names_ru){
+          cat("\ \ \ \ \ \ \ \\toprule
+      \\end{tabular}
+      \\clearpage\n",
+              file = fileOut, append = TRUE)
+        }
+      }  else {
+        
+        if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
+          cat("\ \ \ \ \ \ \ \\toprule
       \n\\end{tabular}
       \\textsuperscript{\\ddag} Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
       \\clearpage\n",
-            file = fileOut, append = TRUE)
-      }
-      if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
-        cat("\ \ \ \ \ \ \ \\toprule
+              file = fileOut, append = TRUE)
+        }
+        if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
+          cat("\ \ \ \ \ \ \ \\toprule
       \\end{tabular}
       \\clearpage\n",
-            file = fileOut, append = TRUE)
+              file = fileOut, append = TRUE)
+        }
       }
-    }
+        
+      }
+      
+      
 
     if (region_to_report == "RNE"){
 
