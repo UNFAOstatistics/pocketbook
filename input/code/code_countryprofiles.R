@@ -433,14 +433,17 @@ REU_reg_names <- c("Europe and Central Asia",
                    "EU Other and EFTA",
                    "South Eastern Europe")
 
-REU_reg_names_ru <- c("Европа и Центральная Азия",
-                      "Центральная Азия",
-                      "Кавказа и Турции",
-                      "Центральная и Восточная ЕС",
-                      "СНГ Европа",
-                      "ЕС другой и ЕАСТ",
-                      "Юго-Восточной Европы"
-                      )
+
+REU_reg_names_ru <- translate_subgroups(REU_reg_names, isfactor = FALSE, add_row_breaks = FALSE)
+
+# REU_reg_names_ru <- c("Европа и Центральная Азия",
+#                       "Центральная Азия",
+#                       "Кавказа и Турции",
+#                       "Центральная и Восточная ЕС",
+#                       "СНГ Европа",
+#                       "ЕС другой и ЕАСТ",
+#                       "Юго-Восточной Европы"
+#                       )
 
 
 RNE_reg_names <- c("Near East and North Africa",
@@ -514,7 +517,7 @@ if (region_to_report == "REU" & rulang){
                      SHORT_NAME = REU_reg_names_ru,
                      stringsAsFactors = FALSE),
           M49countries)
-  M49countries$SHORT_NAME_RU <- countrycode.multilang::countrycode(M49countries$FAOST_CODE, "fao", "country.name.russian")
+  M49countries$SHORT_NAME_RU <- countrycode.multilang::countrycode(M49countries$FAOST_CODE, "fao", "country.name.russian.fao")
   M49countries$SHORT_NAME <- ifelse(!is.na(M49countries$SHORT_NAME_RU), M49countries$SHORT_NAME_RU, M49countries$SHORT_NAME)
 }
 if (region_to_report == "RNE"){
@@ -549,6 +552,7 @@ indicators.df <- read.csv(paste0(root.dir,"input/data/country_profile_indicators
 if (rulang){
   indicators.df$PART <- NULL
   names(indicators.df)[names(indicators.df) %in% "PART_RU"] <- "PART"
+  indicators.df$SERIES_NAME_SHORT_DAG <- indicators.df$SERIES_NAME_SHORT
   indicators.df$SERIES_NAME_SHORT <- NULL
   names(indicators.df)[names(indicators.df) %in% "SERIES_NAME_SHORT_RU"] <- "SERIES_NAME_SHORT"
 }
@@ -874,18 +878,19 @@ if (table_type == "latex"){
         # Add asterisk if SOFI indicator
         fsi_meta <- read_csv(paste0(data.dir,"/FSI2015_DisseminationMetadata.csv"))
         fsi_meta <- as.data.frame(fsi_meta)
-        if (subindicators.df[j, "INDICATOR1"] %in% fsi_meta[["NAME"]] & M49countries[i,"SHORT_NAME"] %in% c(RAP_reg_names,
-                                                                                                            RAF_reg_names,
-                                                                                                            REU_reg_names,
-                                                                                                            RNE_reg_names)){
-              cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),dag_char, " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
+
+          if (subindicators.df[j, "INDICATOR1"] %in% fsi_meta[["NAME"]] & M49countries[i,"SHORT_NAME"] %in% c(RAP_reg_names,
+                                                                                                              RAF_reg_names,
+                                                                                                              REU_reg_names,
+                                                                                                              REU_reg_names_ru,
+                                                                                                              RNE_reg_names)){
+            cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]),dag_char, " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
                 file = fileOut, append = TRUE, sep = "")
-          
-        } else {
+            
+          } else {
             cat("\t ~ ", sanitizeToLatex(subindicators.df[j, "SERIES_NAME_SHORT"]), " & ", chunk1, " ~ \\ \\ & ", chunk2, " ~ \\ \\ & ", chunk3, " ~ \\ \\ \\\\ \n",
-            file = fileOut, append = TRUE, sep = "")
-        }
-        
+                file = fileOut, append = TRUE, sep = "")
+          }
 
       }
     }
