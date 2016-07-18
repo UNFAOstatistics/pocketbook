@@ -94,11 +94,22 @@ if (region_to_report == "REU"){
     group_by(variable,Year) %>%
     dplyr::summarise(value = sum(value, na.rm=TRUE))
   dat$variable <- as.character(dat$variable)
-  if (!rulang) dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
-  if (!rulang) dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
-  if (rulang) dat$variable[dat$variable == "OA_3010_551"] <- "Сельское население"
-  if (rulang) dat$variable[dat$variable == "OA_3010_561"] <- "Городское население"
+  if (!rulang){
+    dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
+    dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
+    dat$variable <- factor(dat$variable, levels=c("Rural population",
+                                                  "Urban population")) 
+  } 
+  if (rulang){
+    
+    dat$variable[dat$variable == "OA_3010_551"] <- "Сельское население"
+    dat$variable[dat$variable == "OA_3010_561"] <- "Городское населениvе"
+    dat$variable <- factor(dat$variable, levels=c("Сельское население",
+                                                  "Городское населениvе"))
+    } 
+  
 }
+
 
 
 dat <- dat %>% group_by(Year,variable) %>%  dplyr::summarise(value = sum(value, na.rm=TRUE)/1000000000)
@@ -115,6 +126,7 @@ p <- p + labs(x="",y="billion people\n")
 if (rulang) p <- p + labs(x="",y="млрд человек\n")
 p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
+p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 if (table_type == "latex"){
@@ -200,7 +212,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nyears")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nгоды")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -309,9 +321,9 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>%
                                                              filter(fill == "Agriculture") %>% 
                                                              arrange(-value))$SHORT_NAME)
 
-if (rulang) dat_plot$fill[dat_plot$fill == "Agriculture"] <- "сельском хозяйстве"
-if (rulang) dat_plot$fill[dat_plot$fill == "Industry"] <- "промышленности"
-if (rulang) dat_plot$fill[dat_plot$fill == "Services"] <- "сфере услуг"
+if (rulang) dat_plot$fill[dat_plot$fill == "Agriculture"] <- "в сельском хозяйстве"
+if (rulang) dat_plot$fill[dat_plot$fill == "Industry"] <- "в промышленности"
+if (rulang) dat_plot$fill[dat_plot$fill == "Services"] <- "в сфере услуг"
 
 if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME,isfactor = TRUE)
 
@@ -354,7 +366,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nthousand US$ (constant 2000)")
-if (rulang) p <- p + labs(x="",y="\nтыс. долл. США (в постоянных ценах 2000 г.)")
+if (rulang) p <- p + labs(x="",y="\nтыс. долл. США \n(в пост. ценах 2000 г.)")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -934,7 +946,7 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
 if (rulang) p <- p + labs(x="",y="проценты\n")
-p <- p + guides(color = guide_legend(nrow = 4))
+p <- p + guides(color = guide_legend(nrow = 6))
 p
 
 

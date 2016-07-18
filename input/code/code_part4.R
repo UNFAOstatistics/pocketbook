@@ -73,6 +73,10 @@ dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
+dat$fill <- factor(dat$fill, levels=c("Agricultural",
+                                     "Forest",
+                                     "Other"))
+
 
 dat$value <- dat$value * 100 # into percents
 
@@ -81,11 +85,18 @@ dat_plot <- dat
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "Agricultural") %>% arrange(-value))$SHORT_NAME)
 
 if (rulang){
+  dat_plot$fill <- as.character(dat_plot$fill)
   dat_plot$fill[dat_plot$fill == "Agricultural"] <- "Сельскохозяйственные \nземли"
   dat_plot$fill[dat_plot$fill == "Forest"] <- "Леса"
   dat_plot$fill[dat_plot$fill == "Other"] <- "Другие \nземли"
+  dat_plot$fill <- factor(dat_plot$fill, levels=c("Сельскохозяйственные \nземли",
+                                       "Леса",
+                                       "Другие \nземли"
+                                       ))
   dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks = TRUE)
 } 
+
+
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
@@ -94,6 +105,7 @@ p <- p + labs(x="",y="percent\n")
 if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + coord_cartesian(ylim=c(0,100))
+if (rulang) p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -199,6 +211,9 @@ dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RL.AREA.ARBL.HA.SH"]   <- "Arable"
 dat$fill[dat$variable == "RL.AREA.PRMNCR.HA.SH"] <- "Permanent crops"
 dat$fill[dat$variable == "RL.AREA.PRMNMP.HA.SH"] <- "Permanent meadows and pastures"
+dat$fill <- factor(dat$fill, levels=c("Arable",
+                                      "Permanent crops",
+                                      "Permanent meadows and pastures"))
 
 dat$value <- dat$value * 100 # into percents
 
@@ -208,11 +223,15 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(f
 
 if (rulang){
   dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks =  TRUE)
-  
+  dat_plot$fill <- as.character(dat_plot$fill)
   dat_plot$fill[dat_plot$fill == "Arable"]   <- "Пахотные \nземли"
   dat_plot$fill[dat_plot$fill == "Permanent crops"]   <- "Многолетние \nсельскохозяйственные культуры"
   dat_plot$fill[dat_plot$fill == "Permanent meadows and pastures"]   <- "Постоянные луга \nи пастбища"
+  dat_plot$fill <- factor(dat_plot$fill, levels=c("Пахотные \nземли",
+                                                  "Многолетние \nсельскохозяйственные культуры",
+                                                  "Постоянные луга \nи пастбища"))
 }
+
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
@@ -604,8 +623,8 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
-p <- p + labs(x="",y="\n% в общем объеме производства энергии")
-if (rulang) p <- p + labs(x="",y="\n")
+p <- p + labs(x="",y="\n% of total energy consumption")
+if (rulang) p <- p + labs(x="",y="\n% в общем объеме производства энергии")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 

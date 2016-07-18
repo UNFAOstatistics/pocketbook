@@ -384,7 +384,7 @@ if (rulang){
   levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Pyrethrum, dried"] <- "Пиретрум"
   levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Taro (cocoyam)"] <- "Таро"
   levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Vanilla"] <- "Ваниль"
-  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Dates"] <- "финики"
+  levels(tbl_data[[1]])[levels(tbl_data[[1]]) == "Dates"] <- "Финики"
 } 
 
 print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0),
@@ -434,7 +434,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
-if (rulang) p <- p + labs(x="",y="\nпостоянные межд. доллары  2004 − 2006 гг.")
+if (rulang) p <- p + labs(x="",y="\nпост. межд. долл.  \n2004 − 2006 гг.")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
@@ -484,7 +484,7 @@ p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
-if (rulang) p <- p + labs(x="",y="\nпостоянные межд. доллары  2004 − 2006 гг.")
+if (rulang) p <- p + labs(x="",y="\nпост. межд. долл.  \n2004 − 2006 гг.")
 p <- p + guides(color = guide_legend(nrow = 1))
 # p <- p + scale_y_continuous(labels=space,breaks=c(1000,2000))
 p
@@ -548,14 +548,22 @@ for (fs in unique(dat$variable)){
   dat_plot <- rbind(dat_plot,row)
 }
 
-if (rulang){
+if (!rulang){
   dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Production"
   dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Harvested area"
   dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Yield"
+  dat_plot$variable <- factor(dat_plot$variable, levels=c("Harvested area",
+                                                          "Production",
+                                                          "Yield"
+                                                          ))
 } else{
   dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Производство"
   dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Уборочная площадь"
   dat_plot$variable[dat_plot$variable == "QC.YIELD.CRLS.HG.NO"] <- "Урожайность"
+  dat_plot$variable <- factor(dat_plot$variable, levels=c("Уборочная площадь",
+                                                          "Производство",
+                                                          "Урожайность"
+                                                          ))
 }
 
 p <- ggplot(dat_plot, aes(x=variable,y=growth_rate,fill=variable))
@@ -588,7 +596,7 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
 map_unit <- "index"
-if (rulang) map_unit <- "показатель"
+if (rulang) map_unit <- "индекс"
 p <- create_map_here()
 p
 
@@ -802,7 +810,7 @@ p
 caption_text <- paste("Top",ncases,tolower(second),"producing countries, kg per capita")
 if (rulang) caption_text <- paste(ncases,
                                   #tolower(second),
-                                  "стран с самыми высокими показателями производства пшеницы, в кг на душу населения")
+                                  "стран с самыми высокими показателями производства сахарной свеклы, в кг на душу населения")
 
 
 ## ---- P3cropBOTTOM ----
@@ -1057,6 +1065,11 @@ dat <- dat[which(dat[[region_to_report]]),]
 df <- subgrouping(region_to_report = region_to_report)
 
 df <- df[!df$subgroup %in% "Andorra, Israel, Monaco and San Marino",]
+
+if (rulang){
+  df <- df[!df$subgroup %in% "Andorra Israel Monaco and San Marino",]
+  df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = TRUE)
+}
 
 # merge data with the region info
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
@@ -1437,13 +1450,14 @@ if (rulang) caption_text <- ""
 if (rulang){
   caption_text <- "\\large{Экспорт и импорт продовольствия, в млн долл. США (по курсу 2013 г.)}"
   # names(tbl_data) <- c("","Стоимость экспорта", "Стоимость импорта")
-  names(tbl_data) <- c("","экспорта", "импорта")
+  names(tbl_data) <- c("","экспорт", "импорт")
   tbl_data[[1]] <- translate_subgroups(tbl_data[[1]], isfactor = FALSE, add_row_breaks = FALSE)
 } 
 
 
 print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
-                    align= "l{\raggedright\arraybackslash}rrr"),
+                    # align= "l{\raggedright\arraybackslash}rrr"),
+             align= "lrrr"),
              type = table_type, table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
              comment = FALSE,
              size = "footnotesize", caption.placement = "top",
