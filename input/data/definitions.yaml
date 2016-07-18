@@ -1,5 +1,5 @@
 - id: prevalence_of_anemia_among_pregnant_women_(pros)
-  name: Prevalence of anemia among pregnant women (\%)
+  name: Anaemia among pregnant women, prevalence (\%)
   description: The percentage of pregnant women whose hemoglobin level is smaller than 110 grams per liter at sea level. Anemia is a condition in which the number of red blood cells or their oxygen-carrying capacity is insufficient to meet physiologic needs, which vary by age, sex, altitude, smoking status, and pregnancy status. In its severe form it is associated with fatigue, weakness, dizziness, and drowsiness. Children under age 5 and pregnant women have the highest risk for anemia.
   source: World Bank
   owner: WHO
@@ -583,7 +583,7 @@
     by the total population.
   source: FAO, Statistics Division
   owner: FAO
-  name_ru: Средняя интенсивность
+  name_ru: Масштабы дефицита продовольствия (\%)
   description_ru: Этот показатель указывает на то, сколько калорий потребовалось бы для того, чтобы при прочих равных условиях вывести недоедающих людей из этого статуса. Средняя интенсивность лишения продовольствия недоедающих людей, оцениваемая в виде разницы между среднией потребностью в пищевой энергии и средним потреблением пищевой энергии недоедающими людьми (лишёнными продовольствия), умножается на количество недоедающих людей, чтобы получить оценочные данные об общем уровне дефицита продовольствия в стране, а затем нормализуется по отношению ко всему населению.
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
