@@ -44,20 +44,15 @@ PLACE_PRINT_OR_WEB_HERE
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 
-
 % \usepackage[utf8]{inputenc}
 
 
 <<r rubabel>>=
 if (rulang) {
   cat("
-\\usepackage[T1,T2A]{fontenc}
-\\usepackage[russian]{babel}  
-
-")
-  
-  
-  
+\\usepackage[T1,T2A]{fontenc}")
+# \\usepackage[russian]{babel}  
+# ")
 }
 @
 
@@ -484,9 +479,11 @@ pref_d[pref_d$id %in% preface_region,"foreword"],
         pref_d[pref_d$id %in% preface_region,"person1_name"],
 "\\hspace*{\\fill}
 
-\\hspace*{\\fill}",
+{\\centering
+",
         pref_d[pref_d$id %in% preface_region,"person1_title"],
-"\\hspace*{\\fill}
+"\\par
+}
 
 \\bigskip
 
@@ -730,7 +727,7 @@ Data for Sudan prior to 2011 refers to former Sudan.
 стран, определенных в таблице «Классификация стран» на странице xi. Небольшой поднабор 
 показателей основан на правилах формирования совокупных показателей, определенных в отчете 
 «Положение дел в связи с отсутствием продовольственной безопасности в мире 2015» 
-(http://www.fao.org/3/a-i4646e.pdf), и эти показатели помечены символом†, как описано ниже.
+(http://www.fao.org/3/a-i4646r.pdf), и эти показатели помечены символом†, как описано ниже.
 
 % Two types of aggregations are used in the book: sum and weighted mean. Two restrictions
 % are imposed when computing the aggregation: i) the sufficiency condition – the
@@ -845,6 +842,7 @@ if (rulang) mapcaption <- "Классификация стран\\textsuperscrip
 the_whole   <- map.df # for mapping the grey areas
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
+df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE)
 
 
 if (region_to_report == "RAP"){
@@ -1013,6 +1011,7 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
+df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE)
 overview.df <- left_join(df,region_key)
 
 
@@ -1029,7 +1028,7 @@ overview.df <- left_join(df,region_key)
 df <- overview.df[!duplicated(overview.df[c("SHORT_NAME")]),]
 df <- df[c("SHORT_NAME","FAOST_CODE","subgroup")]
 
-if (rulang) df$SHORT_NAME <- countrycode.multilang::countrycode(df$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) df$SHORT_NAME <- countrycode.multilang::countrycode(df$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 df$FAOST_CODE <- NULL
 
 df <- df[!duplicated(df[c("SHORT_NAME","subgroup")]),]
@@ -1064,7 +1063,17 @@ if (region_to_report == "REU" & !rulang){
                                                        "Iceland", "Norway", "Switzerland")) # Non eu countries 
   overview_data$`EU other and EFTA` <- overview_data[order(overview_data$`EU other and EFTA`),]$`EU other and EFTA`
   }
-
+if (region_to_report == "REU" & rulang){
+  
+  overview_data$`Другие страны ЕС и ЕАСТ` <- factor(overview_data$`Другие страны ЕС и ЕАСТ`,
+                                              levels=c("Австрия","Бельгия","Германия",
+                                                       "Греция","Дания","Ирландия","Испания","Италия",
+                                                       "Люксембург","Мальта","Нидерланды","Португалия",
+                                                       "Республика Кипр","Соединенное Королевство Великобритании и Северной Ирландии",
+                                                       "Финляндия","Франция","Швеция",
+                                                       "Исландия","Норвегия","Швейцария")) # Non eu countries 
+  overview_data$`Другие страны ЕС и ЕАСТ` <- overview_data[order(overview_data$`Другие страны ЕС и ЕАСТ`),]$`Другие страны ЕС и ЕАСТ`
+  }
 
 
 
