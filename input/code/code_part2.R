@@ -472,7 +472,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SH.STA.OWGH.MA.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SH.STA.OWGH.MA.ZS),y=SH.STA.OWGH.MA.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -503,7 +503,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SH.STA.OWGH.FE.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SH.STA.OWGH.FE.ZS),y=SH.STA.OWGH.FE.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -661,7 +661,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2009-2011"] <- "2009−2011 гг."
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
@@ -709,7 +709,7 @@ dat_plot <- top15
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FBS.PPCS.GT.GCD3D)$SHORT_NAME)
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PPCS.GT.GCD3D))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -877,7 +877,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2014"] <- "2014 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -925,7 +925,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2014-2016"] <- "2014−2016 гг."
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
@@ -1090,7 +1090,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2011"] <- "2011 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -1136,7 +1136,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2014"] <- "2014 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -1254,7 +1254,7 @@ tbl <- left_join(tbl,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")])
 
 if (rulang){
   tbl <- tbl[c(5,2,4)]
-  tbl$SHORT_NAME <- countrycode.multilang::countrycode(tbl$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+  tbl$SHORT_NAME <- countrycode.multilang::countrycode(tbl$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
   names(tbl) <- c("","год","%")
   print.xtable(xtable(tbl, caption = "\\large{Страны с самой высокой долей детей в возрасте до пяти лет, имеющих пониженную массу тела, в процентах}, в процентах", digits = c(0,0,0,1),
                       align= "l{\raggedright\arraybackslash}p{1.6cm}rr"),
@@ -1300,7 +1300,7 @@ dat_plot <- top15
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, SH.STA.STNT.ZS)$SHORT_NAME)
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.STNT.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -1346,7 +1346,7 @@ dat_plot <- top15
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, SH.STA.WAST.ZS)$SHORT_NAME)
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.WAST.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)

@@ -23,7 +23,7 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 # if (rulang){
 #   syb.df$SHORT_NAME <- ifelse(syb.df$FAOST_CODE <= 351, 
-#                               countrycode.multilang::countrycode(syb.df$FAOST_CODE, origin = "fao", destination = "country.name.russian"),
+#                               countrycode.multilang::countrycode(syb.df$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao"),
 #                               syb.df$SHORT_NAME)
 # }
   
@@ -155,7 +155,7 @@ if (rulang) bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(c
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.POP.PPL.GR10))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -193,7 +193,7 @@ overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 # translate country names
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -346,7 +346,7 @@ dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>
                                                                                                                                                            EA.PRD.AGRI.KD = EA.PRD.AGRI.KD / 1000)
 
 # translate country names
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EA.PRD.AGRI.KD),y=EA.PRD.AGRI.KD))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -398,7 +398,7 @@ if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,]
 if (rulang){
   dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
-  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 } 
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, growth_NV.AGR.TOTL.KD),y=growth_NV.AGR.TOTL.KD))
@@ -565,7 +565,7 @@ dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>
 
 ncases <- nrow(dat_plot)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SL.AGR.EMPL.FE.ZS),y=SL.AGR.EMPL.FE.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -597,7 +597,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SL.AGR.EMPL.MA.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 ncases <- nrow(dat_plot)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SL.AGR.EMPL.MA.ZS),y=SL.AGR.EMPL.MA.ZS))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -753,7 +753,7 @@ top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 dat_plot <- top20
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.NI.TN.SH),y=RF.FERT.NI.TN.SH))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -788,7 +788,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat <- arrange(dat, -RF.FERT.PH.TN.SH)
 dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RF.FERT.PH.TN.SH),y=RF.FERT.PH.TN.SH))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
@@ -976,7 +976,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 if (rulang){
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
   dat_plot$color[dat_plot$color == "2010-2012"] <- "2010−2012 гг."
-  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
@@ -1019,7 +1019,7 @@ if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,]
 if (rulang){
   dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
-  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 }
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, dfa_AOI_commit),y=dfa_AOI_commit))
@@ -1091,7 +1091,7 @@ if (rulang){
   levels(dat_plot$variable)[levels(dat_plot$variable) == "Multilateral"] <- "Многосторонняя"
   levels(dat_plot$variable)[levels(dat_plot$variable) == "Bilateral"] <- "Двусторонняя"
   levels(dat_plot$variable)[levels(dat_plot$variable) == "Private"] <- "Частный"
-  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+  dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 }
 
 

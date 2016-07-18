@@ -181,7 +181,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2014-2016"] <- "2014-2016 гг."
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
@@ -230,7 +230,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2014-2016"] <- "2014-2016 гг."
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
@@ -269,7 +269,7 @@ dat <- arrange(dat, -Year, -FBS.PCS.PDES.KCD3D)
 top5_FAOST_CODE <- head(dat$FAOST_CODE, 5)
 dat_plot <- dat %>%  filter(FAOST_CODE %in% top5_FAOST_CODE)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=Year,y=FBS.PCS.PDES.KCD3D,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
@@ -423,7 +423,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -473,7 +473,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -723,7 +723,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -782,7 +782,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -975,7 +975,7 @@ overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
@@ -1015,7 +1015,7 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
@@ -1241,7 +1241,7 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
@@ -1280,7 +1280,7 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian")
+if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
@@ -1478,7 +1478,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
@@ -1528,7 +1528,7 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian")
+if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
   dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
