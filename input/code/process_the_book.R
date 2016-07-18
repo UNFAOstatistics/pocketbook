@@ -170,14 +170,18 @@ for (region_to_report in regionS_to_report) {
   
   # Manual translations
   if ( rulang) system(paste0("sed -i -- 's/\\\\newcommand\\\\chartname{Chart}/ \\\\newcommand\\\\chartname{Диаграмма} /g' ",root.dir,"/output/process/faoyearbook.cls"))
-  if ( rulang) system(paste0("sed -i -- 's/\\\\@makeschapterhead{\\\\normalfont \\\\LARGE Contents}/ \\\\@makeschapterhead{\\\\normalfont \\\\LARGE содержание} /g' ",root.dir,"/output/process/faofactbook.cls"))
+  if ( rulang) system(paste0("sed -i -- 's/\\\\@makeschapterhead{\\\\normalfont \\\\LARGE Contents}/ \\\\@makeschapterhead{\\\\normalfont \\\\LARGE Содержание} /g' ",root.dir,"/output/process/faofactbook.cls"))
   
   
 
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
-  if (!rulang) system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,".pdf"))
-  if (rulang) system(paste0("cp ",root.dir,"output/process/syb_main.pdf ",root.dir,"output/process/syb_main_",region_to_report,"_ru.pdf"))
+  if (!rulang) system(paste0("cp ",
+                             root.dir,"output/process/syb_main.pdf ",
+                             root.dir,"output/process/syb_main_",region_to_report,".pdf"))
+  if (rulang) system(paste0("cp ",
+                            root.dir,"output/process/syb_main.pdf ",
+                            root.dir,"output/process/syb_main_",region_to_report,"_ru.pdf"))
   # Technical report
   #   knitr::purl("syb_part1.Rnw","syb_part1.R")
   #   knitr::spin("syb_part1.R")
