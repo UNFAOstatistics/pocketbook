@@ -842,7 +842,7 @@ if (rulang) mapcaption <- "Классификация стран\\textsuperscrip
 the_whole   <- map.df # for mapping the grey areas
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
-df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE)
+df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE, abbreviate=FALSE)
 
 
 if (region_to_report == "RAP"){
@@ -1011,7 +1011,7 @@ plot(1, type="n", axes=F, xlab="", ylab="")
 <<overview_table, eval=include_overview_tbl, results='asis', cache=cache_overview_tbl>>=
 
 df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
-df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE)
+df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE, abbreviate=FALSE)
 overview.df <- left_join(df,region_key)
 
 

@@ -1068,7 +1068,7 @@ df <- df[!df$subgroup %in% "Andorra, Israel, Monaco and San Marino",]
 
 if (rulang){
   df <- df[!df$subgroup %in% "Andorra Israel Monaco and San Marino",]
-  df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = TRUE)
+  df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = TRUE, abbreviate = FALSE)
 }
 
 # merge data with the region info
@@ -1434,7 +1434,7 @@ dw <- dw[order(-dw$TP.IMVAL.FOOD.USD.NO),c("SHORT_NAME","TP.EXVAL.FOOD.USD.NO","
 
 dw <- head(dw, 7) # to work with RAP too
 
-names(dw) <- c("","Export value", "Import value")
+names(dw) <- c("","Export", "Import")
 
 dw[[2]] <- round(dw[[2]],0)
 dw[[3]] <- round(dw[[3]],0)
@@ -1442,13 +1442,13 @@ dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
 dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
 
 tbl_data <- dw
-if (table_type == "latex") cap <- "\\large{Exports and Imports of food, million US\\$ (2013)}"
-if (table_type == "html")  cap <- "<b>Table: Exports and Imports of food, million US$ (2013) </b>"
+if (table_type == "latex") cap <- "\\large{Export and Import values of food, million US\\$ (2013)}"
+if (table_type == "html")  cap <- "<b>Table: Export and Import values of food, million US$ (2013) </b>"
 caption_text <- cap
 if (rulang) caption_text <- ""
 
 if (rulang){
-  caption_text <- "\\large{Экспорт и импорт продовольствия, в млн долл. США (по курсу 2013 г.)}"
+  caption_text <- "\\large{Экспорт и импорт продовольствия, в млн долл. США (в постоянных ценах 2013 г.)}"
   # names(tbl_data) <- c("","Стоимость экспорта", "Стоимость импорта")
   names(tbl_data) <- c("","экспорт", "импорт")
   tbl_data[[1]] <- translate_subgroups(tbl_data[[1]], isfactor = FALSE, add_row_breaks = FALSE)

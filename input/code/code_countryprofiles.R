@@ -434,7 +434,7 @@ REU_reg_names <- c("Europe and Central Asia",
                    "South Eastern Europe")
 
 
-REU_reg_names_ru <- translate_subgroups(REU_reg_names, isfactor = FALSE, add_row_breaks = FALSE)
+REU_reg_names_ru <- translate_subgroups(REU_reg_names, isfactor = FALSE, add_row_breaks = FALSE, abbreviate = FALSE)
 
 # REU_reg_names_ru <- c("Европа и Центральная Азия",
 #                       "Центральная Азия",

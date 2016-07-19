@@ -27,7 +27,7 @@ regionS_to_report <- c(
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 
@@ -66,10 +66,10 @@ include_definitions      <- T
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
-broke_rus_translation_images  <- T
+broke_rus_translation_images  <- F
 # -------------------------------
 # To be uploaded for comments or not91830
-upload_pdfs_to_server   <- F
+upload_pdfs_to_server   <- T
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -110,83 +110,120 @@ cache_definitions <- F
 # 
 # Function for translations
 
-translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE){
+translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbreviate=TRUE){
   
-  if (add_row_breaks){
+  if (abbreviate & rulang){
     
-    if (!isfactor){
-      if (rulang){
-        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
-        var[var %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
-        var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
-        var[var %in% "EU Other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
-        var[var %in% "EU other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
-        var[var %in% "CIS Europe"] <- "СНГ Европа"
-        var[var %in% "EU Central Eastern"] <- "Центральная и \nВосточная часть ЕС"
-        var[var %in% "EU Central and Eastern"] <- "Центральная и \nВосточная часть ЕС"
-        var[var %in% "Central Asia"] <- "Центральная \nАзия"
-        var[var %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
-      }
-      if (filang){
-        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
-        var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
-        var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
-        var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
-        var[var %in% "CIS Europe"] <- "IVY Eurooppa"
-        var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
-        var[var %in% "Central Asia"] <- "Keski-Aasia"
-      }
-    } else {
-      if (rulang){
-        levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
-        levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
-        levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ \nи Турции"
-        levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
-        levels(var)[levels(var) %in% "EU other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
-        levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
-        levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центральная и \nВосточная часть ЕС"
-        levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центральная и \nВосточная часть ЕС"
-        levels(var)[levels(var) %in% "Central Asia"] <- "Центральная \nАзия"
-        levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
-      }
+    if (isfactor){
+      
+      levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
+      levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
+      levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
+      levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
+      levels(var)[levels(var) %in% "EU other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
+      levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
+      levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центр. и Вост. \nчасть ЕС"
+      levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центр. и Вост. \nчасть ЕС"
+      levels(var)[levels(var) %in% "Central Asia"] <- "Центральная \nАзия"
+      levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
+      
+    } else{
+      
+      var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
+      var[var %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
+      var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
+      var[var %in% "EU Other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
+      var[var %in% "EU other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
+      var[var %in% "CIS Europe"] <- "СНГ Европа"
+      var[var %in% "EU Central Eastern"] <- "Центр. и Вост. \nчасть ЕС"
+      var[var %in% "EU Central and Eastern"] <- "Центр. и Вост. \nчасть ЕС"
+      var[var %in% "Central Asia"] <- "Центральная \nАзия"
+      var[var %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
+      
+      
     }
+    
+
+    
   } else {
     
-    if (!isfactor){
-      if (rulang){
-        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
-        var[var %in% "South Eastern Europe"] <- "Юго-Восточная Европа"
-        var[var %in% "Caucasus and Turkey"] <- "Кавказ и Турции"
-        var[var %in% "EU Other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
-        var[var %in% "EU other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
-        var[var %in% "CIS Europe"] <- "СНГ Европа"
-        var[var %in% "EU Central Eastern"] <- "Центральная и Восточная часть ЕС"
-        var[var %in% "EU Central and Eastern"] <- "Центральная и Восточная часть ЕС"
-        var[var %in% "Central Asia"] <- "Центральная Азия"
-        var[var %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
-      }
-      if (filang){
-        var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
-        var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
-        var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
-        var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
-        var[var %in% "CIS Europe"] <- "IVY Eurooppa"
-        var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
-        var[var %in% "Central Asia"] <- "Keski-Aasia"
+    if (add_row_breaks){
+      
+      if (!isfactor){
+        if (rulang){
+          var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+          var[var %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
+          var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
+          var[var %in% "EU Other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
+          var[var %in% "EU other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
+          var[var %in% "CIS Europe"] <- "СНГ Европа"
+          var[var %in% "EU Central Eastern"] <- "Центральная и \nВосточная часть ЕС"
+          var[var %in% "EU Central and Eastern"] <- "Центральная и \nВосточная часть ЕС"
+          var[var %in% "Central Asia"] <- "Центральная \nАзия"
+          var[var %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
+        }
+        if (filang){
+          var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
+          var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
+          var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
+          var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
+          var[var %in% "CIS Europe"] <- "IVY Eurooppa"
+          var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
+          var[var %in% "Central Asia"] <- "Keski-Aasia"
+        }
+      } else {
+        if (rulang){
+          levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
+          levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
+          levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ \nи Турции"
+          levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
+          levels(var)[levels(var) %in% "EU other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
+          levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
+          levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центральная и \nВосточная часть ЕС"
+          levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центральная и \nВосточная часть ЕС"
+          levels(var)[levels(var) %in% "Central Asia"] <- "Центральная \nАзия"
+          levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
+        }
       }
     } else {
-      if (rulang){
-        levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
-        levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная Европа"
-        levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и Турции"
-        levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
-        levels(var)[levels(var) %in% "EU other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
-        levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
-        levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центральная и Восточная часть ЕС"
-        levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центральная и Восточная часть ЕС"
-        levels(var)[levels(var) %in% "Central Asia"] <- "Центральная Азия"
-        levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
+      
+      if (!isfactor){
+        if (rulang){
+          var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+          var[var %in% "South Eastern Europe"] <- "Юго-Восточная Европа"
+          var[var %in% "Caucasus and Turkey"] <- "Кавказ и Турции"
+          var[var %in% "EU Other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
+          var[var %in% "EU other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
+          var[var %in% "CIS Europe"] <- "СНГ Европа"
+          var[var %in% "EU Central Eastern"] <- "Центральная и Восточная часть ЕС"
+          var[var %in% "EU Central and Eastern"] <- "Центральная и Восточная часть ЕС"
+          var[var %in% "Central Asia"] <- "Центральная Азия"
+          var[var %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
+        }
+        if (filang){
+          var[var %in% "Andorra Israel Monaco and San Marino"] <- "Andorra, Israel, Monaco ja San Marino"
+          var[var %in% "South Eastern Europe"] <- "Eteläinen Itä-Eurooppa"
+          var[var %in% "Caucasus and Turkey"] <- "Kaukasus ja Turkki"
+          var[var %in% "EU Other and EFTA"] <- "EU muu ja EFTA"
+          var[var %in% "CIS Europe"] <- "IVY Eurooppa"
+          var[var %in% "EU Central Eastern"] <- "EU keskinen ja itäinen"
+          var[var %in% "Central Asia"] <- "Keski-Aasia"
+        }
+      } else {
+        if (rulang){
+          levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
+          levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная Европа"
+          levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и Турции"
+          levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
+          levels(var)[levels(var) %in% "EU other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
+          levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
+          levels(var)[levels(var) %in% "EU Central Eastern"] <- "Центральная и Восточная часть ЕС"
+          levels(var)[levels(var) %in% "EU Central and Eastern"] <- "Центральная и Восточная часть ЕС"
+          levels(var)[levels(var) %in% "Central Asia"] <- "Центральная Азия"
+          levels(var)[levels(var) %in% "Europe and Central Asia"] <- "Европа и Центральная Азия"
+        }
       }
+      
     }
     
   }
