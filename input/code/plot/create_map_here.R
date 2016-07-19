@@ -4,9 +4,9 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
     colPart = plot_colors(part = syb_part, 6)
     mapColFun = colorRampPalette(c("white", colPart[["Main"]][1]))
     
-    if ("No Data" %in% levels(cat_data$value_cat) | "нет данных" %in% levels(cat_data$value_cat)) {
+    if ("No Data" %in% unique(cat_data$value_cat) | "нет данных" %in% unique(cat_data$value_cat)) {
     # if ("No Data" %in% levels(cat_data$value_cat)) {
-      nCol = length(levels(cat_data$value_cat)) -1
+      nCol = length(unique(cat_data$value_cat)) -1
       tmpCol = mapColFun(nCol)[2]
       mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
       mapColors = mapColFun(nCol)
@@ -14,7 +14,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
     } else {
     # if (!"No Data" %in% levels(cat_data$value_cat) | !"нет данных" %in% levels(cat_data$value_cat)){
     # if (!("No Data" %in% levels(cat_data$value_cat))){
-      nCol = length(levels(cat_data$value_cat))
+      nCol = length(unique(cat_data$value_cat))
       tmpCol = mapColFun(nCol)[2]
       mapColFun = colorRampPalette(c(tmpCol, colPart[["Main"]][1]))
       mapColors = mapColFun(nCol)
