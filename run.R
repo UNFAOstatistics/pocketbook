@@ -27,7 +27,7 @@ regionS_to_report <- c(
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -66,7 +66,7 @@ include_definitions      <- T
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
-broke_rus_translation_images  <- F
+broke_rus_translation_images  <- T
 # -------------------------------
 # To be uploaded for comments or not91830
 upload_pdfs_to_server   <- T
@@ -118,7 +118,7 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
       
       levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
       levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
-      levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
+      levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и \nТурция"
       levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
       levels(var)[levels(var) %in% "EU other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
       levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
@@ -131,7 +131,7 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
       
       var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
       var[var %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
-      var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
+      var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурция"
       var[var %in% "EU Other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
       var[var %in% "EU other and EFTA"] <- "Др. cтр. \nЕС и ЕАСТ"
       var[var %in% "CIS Europe"] <- "СНГ Европа"
@@ -153,7 +153,7 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
         if (rulang){
           var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
           var[var %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
-          var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурции"
+          var[var %in% "Caucasus and Turkey"] <- "Кавказ и \nТурция"
           var[var %in% "EU Other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
           var[var %in% "EU other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
           var[var %in% "CIS Europe"] <- "СНГ Европа"
@@ -175,7 +175,7 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
         if (rulang){
           levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, \nМонако и Сан-Марино"
           levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная \nЕвропа"
-          levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ \nи Турции"
+          levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ \nи Турция"
           levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
           levels(var)[levels(var) %in% "EU other and EFTA"] <- "Другие страны ЕС \nи ЕАСТ"
           levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
@@ -191,7 +191,7 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
         if (rulang){
           var[var %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
           var[var %in% "South Eastern Europe"] <- "Юго-Восточная Европа"
-          var[var %in% "Caucasus and Turkey"] <- "Кавказ и Турции"
+          var[var %in% "Caucasus and Turkey"] <- "Кавказ и Турция"
           var[var %in% "EU Other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
           var[var %in% "EU other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
           var[var %in% "CIS Europe"] <- "СНГ Европа"
@@ -213,7 +213,7 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
         if (rulang){
           levels(var)[levels(var) %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
           levels(var)[levels(var) %in% "South Eastern Europe"] <- "Юго-Восточная Европа"
-          levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и Турции"
+          levels(var)[levels(var) %in% "Caucasus and Turkey"] <- "Кавказ и Турция"
           levels(var)[levels(var) %in% "EU Other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
           levels(var)[levels(var) %in% "EU other and EFTA"] <- "Другие страны ЕС и ЕАСТ"
           levels(var)[levels(var) %in% "CIS Europe"] <- "СНГ Европа"
