@@ -589,7 +589,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n% of tot energy production")
-if (rulang) p <- p + labs(x="",y="\n% в общем объеме производства энергии")
+if (rulang) p <- p + labs(x="",y="\n% в общ. объеме \nпроизв. энергии")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
@@ -624,7 +624,7 @@ p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n% of total energy consumption")
-if (rulang) p <- p + labs(x="",y="\n% в общем объеме производства энергии")
+if (rulang) p <- p + labs(x="",y="\n% в общ. объеме \nпотр. энергии")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
