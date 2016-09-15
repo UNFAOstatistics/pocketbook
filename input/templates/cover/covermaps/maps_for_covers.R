@@ -14,7 +14,7 @@ library(knitr)
 opts_chunk$set(fig.width = 6, fig.height = 5)
 
 regional15_web <- TRUE
-source("~/btsync/faosync/pocketbooks/pocketbook/run.R")
+source("~/faosync/pocketbooks/pocketbook/run.R")
 # libraries
 
 #' Plot the maps

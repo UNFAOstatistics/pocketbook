@@ -1161,12 +1161,12 @@ if (table_type == "html"){
 
 
 # -- in case we need footnotes under each of the country profile table
-# system("~/btsync/faosync/pocketbooks/pocketbook/input/code/countryprofile_footnote_RAP.sh")
+# system("~/faosync/pocketbooks/pocketbook/input/code/countryprofile_footnote_RAP.sh")
 
 # system("sed -i 's#{ 2014 }#{ 2014* }#' ./output/process/CountryProfiles.tex && sed -i 's#\\end{tabular}#\*We can add a footnote for each table like this..\n\\end{tabular}#' ./output/process/CountryProfiles.tex")
 # sed -i 's#Net food#Net food**#' ./publication/Tables/CountryProfiles.tex && sed -i 's#\\end{tabular}#\n\**excluding fish\n\\end{tabular}#' ./publication/Tables/CountryProfiles.tex
 syb.df <- merge(syb.df,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME","FAO_TABLE_NAME")],by="FAOST_CODE",all=TRUE)
-save(syb.df, file="~/btsync/faosync/pocketbooks/pocketbook_tests/data/regiona_sybdata.RData")
+save(syb.df, file="~/faosync/pocketbooks/pocketbook_tests/data/regiona_sybdata.RData")
 
 
 syb.df <- temp

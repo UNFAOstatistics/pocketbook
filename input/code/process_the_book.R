@@ -208,12 +208,12 @@ if (broke_only_tables_into_images){
       system("pdftk syb_main.pdf cat 59 output table_pic.pdf") # Turkey
     }
 
-  system(paste0("convert -density 150 agg_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_agg",".jpg"))
-  system(paste0("convert -density 150 table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
+  system(paste0("convert -density 150 -alpha remove agg_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_agg",".jpg"))
+  system(paste0("convert -density 150 -alpha remove table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
 
 }
 if (broke_all_into_images) 
-  system(paste0("convert -density 150 syb_main_",region_to_report,".pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
+  system(paste0("convert -density 150 -alpha remove syb_main_",region_to_report,".pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
 }
 
 # copy the output -pdf's into the output/pdf-folder
@@ -269,9 +269,9 @@ if (upload_pdfs_to_server) {
 
   #  upload the output pdf to kapsi
   pdfs <- list.files(paste0(root.dir,"/output/pdf"), full.names = TRUE)
-  pdfs <- c(pdfs,"/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
-  pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
-                             "/home/aurelius/btsync/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
+  pdfs <- c(pdfs,"/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
+  pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
+                             "/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
   system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
   # system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65"))
 }

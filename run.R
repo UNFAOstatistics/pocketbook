@@ -6,7 +6,7 @@
 options(scipen=999) # disable scientific number formatting
 
 # set root directory
-if (Sys.info()[["user"]] %in% c("markus","aurelius","aino")) root.dir <- "~/btsync/faosync/pocketbooks/pocketbook/"
+if (Sys.info()[["user"]] %in% c("markus","aurelius","aino")) root.dir <- "~/faosync/pocketbooks/pocketbook/"
 if (Sys.info()[["user"]] == "amy") root.dir <- "~/FAO/regional15/" # Amy
 
 setwd(root.dir)
@@ -69,7 +69,7 @@ broke_only_tables_into_images <- F
 broke_rus_translation_images  <- T
 # -------------------------------
 # To be uploaded for comments or not91830
-upload_pdfs_to_server   <- T
+upload_pdfs_to_server   <- F
 upload_images_to_server <- F
 # ------------------------------
 # for latex tables etc. latex specific stuff
@@ -353,37 +353,38 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load(paste0(data.dir,"/SYB2015-10-14.RData"))
 # load(paste0(data.dir,"/SYB2015-10-15.RData"))
 # load(paste0(data.dir,"/SYB2015-10-20.RData"))
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-18/SYB2015-11-18.RData") # old FAO aggregation script
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19_night/SYB2015-11-19.RData") # old FAO aggregation script
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-19/SYB2015-11-19.RData") # old FAO aggregation script
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-20/SYB2015-11-20.RData") # old FAO aggregation script
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-24/SYB2015-11-24.RData") # old FAO aggregation script
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-25-12/SYB2015-11-25-12.RData")
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
-# load("/home/markus/btsync/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
-# load("/home/aurelius/btsync/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
-# load("~/btsync/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
-# load("~/btsync/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
-# load("~/btsync/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-01/SYB2015-12-30-01.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-19-18/SYB2016-01-19-18.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-19/SYB2016-01-28-19.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-14/SYB2016-02-08-14.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
-# load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-06-01-10/SYB2016-06-01-10.RData")
-load("~/btsync/faosync/pocketbooks/pocketbook_database/output_data/2016-06-04-09/SYB2016-06-04-09.RData")
+# load("/home/markus/faosync/syb_database/output_data/2015-11-18/SYB2015-11-18.RData") # old FAO aggregation script
+# load("/home/markus/faosync/syb_database/output_data/2015-11-19_night/SYB2015-11-19.RData") # old FAO aggregation script
+# load("/home/markus/faosync/syb_database/output_data/2015-11-19/SYB2015-11-19.RData") # old FAO aggregation script
+# load("/home/markus/faosync/syb_database/output_data/2015-11-20/SYB2015-11-20.RData") # old FAO aggregation script
+# load("/home/markus/faosync/syb_database/output_data/2015-11-24/SYB2015-11-24.RData") # old FAO aggregation script
+# load("/home/markus/faosync/syb_database/output_data/2015-11-25-12/SYB2015-11-25-12.RData")
+# load("/home/markus/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
+# load("/home/markus/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
+# load("/home/markus/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
+# load("/home/aurelius/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
+# load("~/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
+# load("~/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
+# load("~/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-01/SYB2015-12-30-01.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-19-18/SYB2016-01-19-18.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-19/SYB2016-01-28-19.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-14/SYB2016-02-08-14.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-06-01-10/SYB2016-06-01-10.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-06-04-09/SYB2016-06-04-09.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-07-27-09/SYB2016-07-27-09.RData")
 
 
 syb.df <- SYB.df; rm(SYB.df)
@@ -493,7 +494,7 @@ syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Ne
 #                                                 |___/
 
 source(paste0(root.dir,"/input/code/define_regions.R"))
-save(region_key, file="~/btsync/faosync/pocketbooks/pocketbook_tests/data/region_key.RData")
+save(region_key, file="~/faosync/pocketbooks/pocketbook_tests/data/region_key.RData")
 #  __  __                     _         _
 # |  \/  |  __ _  _ __     __| |  __ _ | |_  __ _
 # | |\/| | / _` || '_ \   / _` | / _` || __|/ _` |
