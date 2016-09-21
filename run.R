@@ -18,16 +18,16 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      # "GLO" # Global
+                      "GLO" # Global
                          # "RAP" # Asia and the Pacific
                         # , "RAF"  # Africa
-                        "REU" # Europe and Central Asia
+                        # "REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 
@@ -60,13 +60,13 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
 broke_only_tables_into_images <- F
-broke_rus_translation_images  <- T
+broke_rus_translation_images  <- F
 # -------------------------------
 # To be uploaded for comments or not91830
 upload_pdfs_to_server   <- F
@@ -384,8 +384,9 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-06-01-10/SYB2016-06-01-10.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-06-04-09/SYB2016-06-04-09.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-07-27-09/SYB2016-07-27-09.RData")
-
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-07-27-09/SYB2016-07-27-09.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-09-20-20/SYB2016-09-20-20.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-09-21-10/SYB2016-09-21-10.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 

@@ -52,7 +52,7 @@ if (region_to_report == "LAC") map.out.extra  <- 'angle=0'
 # GLO
 if (region_to_report == "GLO") map.fig.width  <- 12
 if (region_to_report == "GLO") map.fig.height  <- 8
-if (region_to_report == "GLO") map.out.width  <- "1.7\\columnwidth"
+if (region_to_report == "GLO") map.out.width  <- "1.62\\columnwidth"
 if (region_to_report == "GLO") map.out.extra  <- 'angle=90'
 
 # COF
