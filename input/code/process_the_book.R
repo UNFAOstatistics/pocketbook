@@ -268,19 +268,22 @@ if (broke_rus_translation_images){
 if (upload_pdfs_to_server) {
 
   #  upload the output pdf to kapsi
-  pdfs <- list.files(paste0(root.dir,"/output/pdf"), full.names = TRUE)
-  pdfs <- c(pdfs,"/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
-  pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
-                             "/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
-  system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
-  # system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65"))
+  # pdfs <- list.files(paste0(root.dir,"/output/pdf"), full.names = TRUE)
+  # pdfs <- c(pdfs,"/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
+  # pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
+  #                            "/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
+  # system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
+
+  system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/ muuankarski@kapsi.fi:public_html/fao/RSPB15")
+  system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/data/ muuankarski@kapsi.fi:public_html/fao/RSPB15/data")
 }
 
 
 if (upload_images_to_server) {
-    comparison <- list.files(paste0(root.dir,"/output/jpg"), full.names = TRUE)
-    system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
-    # system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65/comparison/"))
+    # comparison <- list.files(paste0(root.dir,"/output/jpg"), full.names = TRUE)
+    # system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
+    # # system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65/comparison/"))
+    system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/jpg/ muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison")
 }
 
 
