@@ -1160,6 +1160,147 @@ if (table_type == "html"){
 }
 
 
+# if (table_type == "csv"){
+  
+  ## Create the new .tex file
+  dir.create(paste0(root.dir,"/output/data/"), showWarnings = FALSE, recursive = TRUE)
+  fileOut <- paste0(root.dir,"/output/data/CountryProfiles.csv")
+  if(file.exists(fileOut)) file.remove(fileOut)
+  file.create(fileOut)
+  ## Subset the dataset
+  CountryProfile.df <-
+    syb.df[, colnames(syb.df) %in% c("FAOST_CODE", "SHORT_NAME", "Year",
+                                     na.omit(indicators.df[, "INDICATOR1"]),
+                                     na.omit(indicators.df[, "INDICATOR2"]),
+                                     na.omit(indicators.df[, "INDICATOR3"]))]
+  if ("OA.TPBS.POP.PPL.NO" %in% names(CountryProfile.df)) CountryProfile.df[, "OA.TPBS.POP.PPL.NO"] <- CountryProfile.df[, "OA.TPBS.POP.PPL.NO"]/1000000
+  if ("OA.TPR.POP.PPL.NO" %in% names(CountryProfile.df)) CountryProfile.df[, "OA.TPR.POP.PPL.NO"] <- CountryProfile.df[, "OA.TPR.POP.PPL.NO"]/1000000
+  
+  
+  
+  
+  # Multiplying
+  multip.df <- indicators.df[!is.na(indicators.df$MULTIPLIER),]
+  
+  for (name in names(CountryProfile.df)) {
+    if (name %in% multip.df$INDICATOR1) CountryProfile.df[[name]] <- CountryProfile.df[[name]] / multip.df[multip.df$INDICATOR1 %in% name,]$MULTIPLIER
+  }
+  
+  
+  # TeX file ----------------------------------------------------------------
+  
+  ## Years to be shown in the country profile
+  year1 = 1990
+  year2 = 2000
+  year3 = 2014
+  ## This script creates the latex file
+  
+  ## Set the rowheight for cprofiles for each book
+  
+  cat(paste0('"FAOST_CODE";','"country";','"part";','"indicator";',year1,';',year2,';',year3,'\n'),
+      file = fileOut, append = TRUE)
+  
+  for (i in 1:nrow(M49countries)) {
+
+    cat(paste0('"',M49countries[i, "FAOST_CODE"],'";"',M49countries[i, "SHORT_NAME"],'";;;;;\n'),
+        file = fileOut, append = TRUE)
+    ## data
+    tmp = CountryProfile.df[CountryProfile.df[, "FAOST_CODE"] == M49countries[i, "FAOST_CODE"], ]
+    for (part in 1:length(unique(indicators.df[, "PART"]))) {
+      
+      cat(';;"', unique(indicators.df$PART)[part], '";;;;\n',
+          file = fileOut, append = TRUE, sep = "")
+      
+      subindicators.df = indicators.df[indicators.df[, "PART"] == unique(indicators.df$PART)[part], ]
+      for (j in 1:nrow(subindicators.df)) {
+        y1 = tmp[tmp[, "Year"] == year1, subindicators.df[j, "INDICATOR1"]]
+        if (length(y1) == 1) {
+          if (!is.na(y1)) {
+            if (is.numeric(y1)) {
+              chunk1 = format(round(y1, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ",")
+            } else {
+              chunk1 = y1
+            }
+          } else {
+            lya = na.locf(tmp[tmp[, "Year"] %in% c((year1-2):(year1+3)), subindicators.df[j, "INDICATOR1"]], na.rm = FALSE)[6]
+            if (!is.na(lya)) {
+              if (is.numeric(lya)) {
+                chunk1 = paste0("<i>", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "</i>")
+              } else {
+                chunk1 = paste0("<i>", lya, "</i>")
+              }
+            } else {
+              chunk1 = ""
+            }
+          }
+        } else {
+          chunk1 = ""
+        }
+        y2 = tmp[tmp[, "Year"] == year2, subindicators.df[j, "INDICATOR1"]]
+        if (length(y2) == 1) {
+          if (!is.na(y2)) {
+            if (is.numeric(y2)) {
+              chunk2 = format(round(y2, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ",")
+            } else {
+              chunk2 = y2
+            }
+          } else {
+            lya = na.locf(tmp[tmp[, "Year"] %in% c((year2-7):(year2+3)), subindicators.df[j, "INDICATOR1"]], na.rm = FALSE)[11]
+            if (!is.na(lya)) {
+              if (is.numeric(lya)) {
+                chunk2 = paste0("<i>", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "</i>")
+              } else {
+                chunk2 = paste0("<i>", lya, "</i>")
+              }
+            } else {
+              chunk2 = ""
+            }
+          }
+        } else {
+          chunk2 = ""
+        }
+        y3 = tmp[tmp[, "Year"] == year3, subindicators.df[j, "INDICATOR1"]]
+        if (length(y3) == 1) {
+          if (!is.na(y3)) {
+            if (is.numeric(y3)) {
+              chunk3 = format(round(y3, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ",")
+            } else {
+              chunk3 = y3
+            }
+          } else {
+            lya = na.locf(tmp[tmp[, "Year"] %in% c((year3-9):(year3+2)), subindicators.df[j, "INDICATOR1"]], na.rm = FALSE)[12]
+            if (!is.na(lya)) {
+              if (is.numeric(lya)) {
+                chunk3 = paste0("<i>", format(round(lya, digits = subindicators.df[j, "DIGITS"]), nsmall = 0, big.mark = ","), "</i>")
+              } else {
+                chunk3 = paste0("<i>", lya, "</i>")
+              }
+            } else {
+              chunk3 = ""
+            }
+          }
+        } else {
+          chunk3 = ""
+        }
+        cat(';;;"', sanitizeToHTML(subindicators.df[j, "SERIES_NAME_SHORT"]), '";"', chunk1, '";"', chunk2, '";"', chunk3, '"\n',
+            file = fileOut, append = TRUE, sep = "")
+        
+      }
+      
+    }
+    # cat(paste0('</table> \n </br></br> \n'),
+    #     file = fileOut, append = TRUE)
+  }
+# }
+
+csv_table <- read.csv(fileOut, sep=";", stringsAsFactors = FALSE)
+csv_table[csv_table==""] <- NA 
+library(zoo)
+csv_table[1:4] <- na.locf(csv_table[1:4])
+csv_table <- csv_table[!is.na(csv_table$part),]
+csv_table <- csv_table[!is.na(csv_table$indicator),]
+write.csv(csv_table, file=paste0(root.dir,"output/data/countryprofile",region_to_report,".csv"),row.names = FALSE)
+
 # -- in case we need footnotes under each of the country profile table
 # system("~/faosync/pocketbooks/pocketbook/input/code/countryprofile_footnote_RAP.sh")
 
