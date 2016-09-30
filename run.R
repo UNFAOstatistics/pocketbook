@@ -18,8 +18,8 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                         # "RAP" # Asia and the Pacific
+                      # "GLO" # Global
+                         "RAP" # Asia and the Pacific
                         # , "RAF"  # Africa
                         # ,"REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa

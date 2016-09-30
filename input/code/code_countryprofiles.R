@@ -1296,9 +1296,9 @@ if (table_type == "html"){
 csv_table <- read.csv(fileOut, sep=";", stringsAsFactors = FALSE)
 csv_table[csv_table==""] <- NA 
 library(zoo)
-csv_table[1:4] <- na.locf(csv_table[1:4])
-csv_table <- csv_table[!is.na(csv_table$part),]
+csv_table[1:3] <- na.locf(csv_table[1:3])
 csv_table <- csv_table[!is.na(csv_table$indicator),]
+
 write.csv(csv_table, file=paste0(root.dir,"output/data/countryprofile",region_to_report,".csv"),row.names = FALSE)
 
 # -- in case we need footnotes under each of the country profile table

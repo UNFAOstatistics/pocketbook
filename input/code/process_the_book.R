@@ -275,7 +275,7 @@ if (upload_pdfs_to_server) {
   # system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
 
   system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/ muuankarski@kapsi.fi:public_html/fao/RSPB15")
-  system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/data/ muuankarski@kapsi.fi:public_html/fao/RSPB15/data")
+  system("rsync -arvI ~/faosync/pocketbooks/pocketbook//output/data/ muuankarski@kapsi.fi:public_html/fao/RSPB15/data")
 }
 
 
