@@ -1299,6 +1299,25 @@ library(zoo)
 csv_table[1:3] <- na.locf(csv_table[1:3])
 csv_table <- csv_table[!is.na(csv_table$indicator),]
 
+# Add metadata about the indicators - basicly joining what is directly available
+indicators.df <- read.csv(paste0(root.dir,"input/data/country_profile_indicators_",region_to_report,".csv"), na.strings = "", stringsAsFactors = FALSE)
+
+const <- read_csv("/home/aurelius/faosync/pocketbooks/pocketbook_database/input_data/Construction2015.csv")
+meta <- read_csv("/home/aurelius/faosync/pocketbooks/pocketbook_database/input_data/Metadata2015.csv")
+
+
+csv_table <- left_join(csv_table,
+          indicators.df[c("SERIES_NAME_SHORT","INDICATOR1")],
+          by=c("indicator" = "SERIES_NAME_SHORT"))
+
+csv_table <- left_join(csv_table,
+                    meta[c("STS_ID","SOURCE", "DATA_TYPE", "SQL_DOMAIN_CODE", "SQL_ELEMENT_CODE", "SQL_ITEM_CODE", "WDINAME")],
+                    by=c("INDICATOR1" = "STS_ID"))
+
+csv_table <- left_join(csv_table,
+                        const[c("STS_ID", "STS_ID_CONSTR1", "STS_ID_CONSTR2", "STS_ID_WEIGHT", "CONSTRUCTION_TYPE", "GROWTH_RATE_FREQ", "GROWTH_TYPE")],
+                        by=c("INDICATOR1" = "STS_ID"))
+
 write.csv(csv_table, file=paste0(root.dir,"output/data/countryprofile",region_to_report,".csv"),row.names = FALSE)
 
 # -- in case we need footnotes under each of the country profile table
