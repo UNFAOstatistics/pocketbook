@@ -273,6 +273,7 @@ library(wesanderson)
 library(xtable)
 library(extrafont)
 loadfonts()
+library(forcats)
 
 # Source functions
 
