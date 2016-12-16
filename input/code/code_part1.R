@@ -208,6 +208,8 @@ if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,]
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
+p <- p + geom_segment(aes(y = 0, xend = reorder(SHORT_NAME, SP.DYN.LE00.IN), 
+                     yend = SP.DYN.LE00.IN), color = "grey70")
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
