@@ -172,7 +172,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$OA.TPBS.POP.PPL.GR10) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=OA.TPBS.POP.PPL.GR10))
-p <- p + geom_segment(aes(y = min(dat_plot$OA.TPBS.POP.PPL.GR10), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = OA.TPBS.POP.PPL.GR10, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -371,7 +371,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$EA.PRD.AGRI.KD) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=EA.PRD.AGRI.KD))
-p <- p + geom_segment(aes(y = min(dat_plot$EA.PRD.AGRI.KD), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = EA.PRD.AGRI.KD, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -598,7 +598,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SL.AGR.EMPL.FE.ZS) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SL.AGR.EMPL.FE.ZS))
-p <- p + geom_segment(aes(y = min(dat_plot$SL.AGR.EMPL.FE.ZS), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SL.AGR.EMPL.FE.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -634,7 +634,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SL.AGR.EMPL.MA.ZS) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SL.AGR.EMPL.MA.ZS))
-p <- p + geom_segment(aes(y = min(dat_plot$SL.AGR.EMPL.MA.ZS), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SL.AGR.EMPL.MA.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -794,7 +794,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RF.FERT.NI.TN.SH) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RF.FERT.NI.TN.SH))
-p <- p + geom_segment(aes(y = min(dat_plot$RF.FERT.NI.TN.SH), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = RF.FERT.NI.TN.SH, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -833,7 +833,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RF.FERT.PH.TN.SH) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RF.FERT.PH.TN.SH))
-p <- p + geom_segment(aes(y = min(dat_plot$RF.FERT.PH.TN.SH), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = RF.FERT.PH.TN.SH, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -1026,7 +1026,7 @@ if (rulang){
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$Value) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = min(dat_plot$Value), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -1073,7 +1073,7 @@ if (rulang){
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$dfa_AOI_commit) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=dfa_AOI_commit))
-p <- p + geom_segment(aes(y = min(dat_plot$dfa_AOI_commit), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = dfa_AOI_commit, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
