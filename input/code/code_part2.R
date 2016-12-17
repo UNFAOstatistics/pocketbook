@@ -249,6 +249,8 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 ###############
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -293,6 +295,8 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 ###############
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -474,7 +478,11 @@ dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SH.STA.OWGH.MA.ZS),y=SH.STA.OWGH.MA.ZS))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.MA.ZS) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.MA.ZS))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = SH.STA.OWGH.MA.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -505,7 +513,11 @@ dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SH.STA.OWGH.FE.ZS),y=SH.STA.OWGH.FE.ZS))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.FE.ZS) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.FE.ZS))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = SH.STA.OWGH.FE.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -668,6 +680,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -712,6 +726,8 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FBS.PPC
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PPCS.GT.GCD3D))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = FBS.PPCS.GT.GCD3D, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -884,6 +900,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -933,6 +951,8 @@ if (rulang){
 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1097,6 +1117,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1143,6 +1165,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1303,6 +1327,8 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, SH.STA.
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.STNT.ZS))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = SH.STA.STNT.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1349,6 +1375,8 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, SH.STA.
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.WAST.ZS))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = SH.STA.WAST.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
