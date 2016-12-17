@@ -49,18 +49,7 @@ if (region_to_report == "GLO") short_text <- "A combination of declining mortali
 
 ## ---- P1overData ----
 # Retrieve data
-library(FAOSTAT)
-dat <- getFAOtoSYB(domainCode = "OA",
-                   elementCode = 551,
-                   itemCode = 3010)
-dat1 <- dat$aggregates
-dat <- getFAOtoSYB(domainCode = "OA",
-                   elementCode = 561,
-                   itemCode = 3010)
-dat2 <- dat$aggregates
-dat <- left_join(dat1,dat2)
-dfX <- gather(dat, variable, value, 3:4)
-datX <- dfX %>% select(FAOST_CODE,Year,variable,value)
+
 
 
 ## ---- P1overTOPRIGHT ----
@@ -90,6 +79,19 @@ dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
 dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
 
 if (region_to_report == "REU"){
+  library(FAOSTAT)
+  dat <- getFAOtoSYB(domainCode = "OA",
+                     elementCode = 551,
+                     itemCode = 3010)
+  dat1 <- dat$aggregates
+  dat <- getFAOtoSYB(domainCode = "OA",
+                     elementCode = 561,
+                     itemCode = 3010)
+  dat2 <- dat$aggregates
+  dat <- left_join(dat1,dat2)
+  dfX <- gather(dat, variable, value, 3:4)
+  datX <- dfX %>% select(FAOST_CODE,Year,variable,value)
+  
   dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>%
     group_by(variable,Year) %>%
     dplyr::summarise(value = sum(value, na.rm=TRUE))
@@ -214,7 +216,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SP.DYN.LE00.IN) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SP.DYN.LE00.IN))
-p <- p + geom_segment(aes(y = min(dat_plot$SP.DYN.LE00.IN), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                      yend = SP.DYN.LE00.IN, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -428,7 +430,7 @@ if (rulang){
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$growth_NV.AGR.TOTL.KD) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=growth_NV.AGR.TOTL.KD))
-p <- p + geom_segment(aes(y = min(dat_plot$growth_NV.AGR.TOTL.KD), xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = growth_NV.AGR.TOTL.KD, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
