@@ -139,7 +139,11 @@ dat_plot <- top20
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RL.AREA.ARBL.HA.SHP) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RL.AREA.ARBL.HA.SHP))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = RL.AREA.ARBL.HA.SHP, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -159,7 +163,11 @@ dat_plot <- bottom20
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, RL.AREA.ARBL.HA.SHP),y=RL.AREA.ARBL.HA.SHP))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RL.AREA.ARBL.HA.SHP) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RL.AREA.ARBL.HA.SHP))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = RL.AREA.ARBL.HA.SHP, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -388,7 +396,11 @@ dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, new_var),y=new_var))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$new_var) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=new_var))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = new_var, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -423,7 +435,11 @@ dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, new_var),y=new_var))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$new_var) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=new_var))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = new_var, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -583,7 +599,11 @@ dat_plot <- top20
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6740_72041),y=EE_6740_72041))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$EE_6740_72041) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=EE_6740_72041))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = EE_6740_72041, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -618,7 +638,11 @@ dat_plot <- top20
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, EE_6741_72040),y=EE_6741_72040))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$EE_6741_72040) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=EE_6741_72040))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = EE_6741_72040, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -797,7 +821,11 @@ dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FO.EXVAL.TOT.USD.NO),y=FO.EXVAL.TOT.USD.NO))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$FO.EXVAL.TOT.USD.NO) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FO.EXVAL.TOT.USD.NO))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = FO.EXVAL.TOT.USD.NO, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -833,7 +861,11 @@ dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, FO.IMVAL.TOT.USD.NO),y=FO.IMVAL.TOT.USD.NO))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$FO.IMVAL.TOT.USD.NO) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FO.IMVAL.TOT.USD.NO))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = FO.IMVAL.TOT.USD.NO, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -1018,8 +1050,12 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, GHG.TOT.ALL.GG.NO),y=GHG.TOT.ALL.GG.NO))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$GHG.TOT.ALL.GG.NO) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=GHG.TOT.ALL.GG.NO))
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = GHG.TOT.ALL.GG.NO, color=color), alpha=.5)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
@@ -1066,6 +1102,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
