@@ -188,6 +188,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -237,6 +239,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -430,6 +434,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -480,6 +486,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -738,6 +746,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -797,6 +807,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -989,7 +1001,11 @@ if (rulang){
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
 }
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.MILK.TN.NO),y=QL.PRD.MILK.TN.NO))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.MILK.TN.NO) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QL.PRD.MILK.TN.NO))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = QL.PRD.MILK.TN.NO, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1029,8 +1045,12 @@ if (rulang){
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
 }
 
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.EGG.TN.NO) 
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, QL.PRD.EGG.TN.NO),y=QL.PRD.EGG.TN.NO))
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QL.PRD.EGG.TN.NO))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = QL.PRD.EGG.TN.NO, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1260,7 +1280,11 @@ if (rulang){
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
 }
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, capture_fish_production),y=capture_fish_production))
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$capture_fish_production) 
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=capture_fish_production))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = capture_fish_production, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1299,8 +1323,12 @@ if (rulang){
   dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
 }
 
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$aquaculture_fish_production) 
 
-p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, aquaculture_fish_production),y=aquaculture_fish_production))
+
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=aquaculture_fish_production))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = aquaculture_fish_production, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1499,6 +1527,8 @@ if (rulang){
 }
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1550,6 +1580,8 @@ if (rulang){
 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = Value, color=color), alpha=.5) 
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
