@@ -5,38 +5,18 @@
 
 
 # -- delete output/ -folder recursively
-unlink(paste0(root.dir,"/output/process"), recursive = TRUE) 
+unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force=TRUE) 
 # unlink(paste0(root.dir,"/output/jpg"), recursive = TRUE)# lets not do this in order for russian translation to work..
 
 # -- Create output folder if not exists --- #
-if (!file.exists(paste0(root.dir,"/output"))) dir.create(paste0(root.dir,"/output"))
-if (!file.exists(paste0(root.dir,"/output/process"))) dir.create(paste0(root.dir,"/output/process"))
-if (!file.exists(paste0(root.dir,"/output/pdf"))) dir.create(paste0(root.dir,"/output/pdf"))
-if (!file.exists(paste0(root.dir,"/output/html"))) dir.create(paste0(root.dir,"/output/html"))
-if (!file.exists(paste0(root.dir,"/output/jpg"))) dir.create(paste0(root.dir,"/output/jpg"))
+dir.create(paste0(root.dir,"/output/pdf"), showWarnings = FALSE, recursive = TRUE)
+dir.create(paste0(root.dir,"/output/process"), showWarnings = FALSE, recursive = TRUE)
 
 ## Copy .Rnw files into process/-folder
 flist <- list.files(paste0(root.dir,"/input/"),
                     "+[.]Rnw$",
                     full.names = TRUE)
 file.copy(flist, paste0(root.dir,"/output/process"), overwrite = TRUE)
-
-
-## Copy .md into jpg folder
-flist <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
-                    "+[.]md$",
-                    full.names = TRUE)
-# adhoc fix to get the html there for russian translation
-flist2 <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
-                    "+[.]html$",
-                    full.names = TRUE)
-# adhoc fix to get the html there for russian translation
-flist3 <- list.files(paste0(root.dir,"/input/templates/jpg_comparison"),
-                     "+[.]png$",
-                     full.names = TRUE)
-flist <- c(flist,flist2,flist3)
-file.copy(flist, paste0(root.dir,"/output/jpg"), overwrite = TRUE)
-
 
 setwd(paste0(root.dir,"/output/process"))
 
@@ -187,33 +167,6 @@ for (region_to_report in regionS_to_report) {
   #   knitr::spin("syb_part1.R")
 
   # create jpg's for web comparisons
-
-
-if (broke_only_tables_into_images){
-
-    if (region_to_report == "RAF"){
-      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
-      system("pdftk syb_main.pdf cat 30 output table_pic.pdf") # Ethiopia
-    }
-    if (region_to_report == "RAP"){
-      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
-      system("pdftk syb_main.pdf cat 25 output table_pic.pdf") # Bangladesh
-    }
-    if (region_to_report == "RNE"){
-      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
-      system("pdftk syb_main.pdf cat 22 output table_pic.pdf") # Saudi-Arabia
-    }
-    if (region_to_report == "REU"){
-      system("pdftk syb_main.pdf cat 7 output agg_pic.pdf") # subregion
-      system("pdftk syb_main.pdf cat 59 output table_pic.pdf") # Turkey
-    }
-
-  system(paste0("convert -density 150 -alpha remove agg_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_agg",".jpg"))
-  system(paste0("convert -density 150 -alpha remove table_pic.pdf ",root.dir,"output/jpg/",region_to_report,"_tbl",".jpg"))
-
-}
-if (broke_all_into_images) 
-  system(paste0("convert -density 150 -alpha remove syb_main_",region_to_report,".pdf ",root.dir,"output/jpg/",region_to_report,".jpg"))
 }
 
 # copy the output -pdf's into the output/pdf-folder
@@ -230,61 +183,5 @@ flist <- flist[!grepl("book\\.", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]
 
 file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
-
-
-
-
-if (broke_all_into_images | broke_only_tables_into_images){
-
-  # copy the output -html's into the output/html-folder
-  flist <- list.files(paste0(root.dir,"/output/process"),
-                      "+[.]html$",
-                      full.names = TRUE)
-  file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
-
-  # convert the index.md into html in jpog comparison
-
-  system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison.md -o ",     root.dir,"output/jpg/regional_book_comparison.html"))
-  system(paste0("pandoc ",root.dir,"output/jpg/regional_book_comparison_reg.md -o ", root.dir,"output/jpg/regional_book_comparison_reg.html"))
-  system(paste0("pandoc ",root.dir,"output/jpg/regional_table_comparison.md -o ",    root.dir,"output/jpg/regional_table_comparison.html"))
-  if (region_to_report == "COF") system(paste0("pandoc ",root.dir,"output/jpg/coffee_comparison.md -o ",root.dir,"output/jpg/coffee_comparison.html"))
-
-}
-
-if (broke_rus_translation_images){
-  
-
-  if (!rulang) system(paste0("convert -density 150 -alpha remove syb_main_REU.pdf ",root.dir,"output/jpg/REU.jpg"))
-  if (rulang) system(paste0("convert -density 150 -alpha remove syb_main_REU_ru.pdf ",root.dir,"output/jpg/REURU.jpg"))
-  
-  # copy the output -html's into the output/html-folder
-  flist <- list.files(paste0(root.dir,"/output/process"),
-                      "+[.]html$",
-                      full.names = TRUE)
-  file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
-
-}
-
-if (upload_pdfs_to_server) {
-
-  #  upload the output pdf to kapsi
-  # pdfs <- list.files(paste0(root.dir,"/output/pdf"), full.names = TRUE)
-  # pdfs <- c(pdfs,"/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf")
-  # pdfs <- pdfs[!(pdfs %in% c("/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/agg_pic.pdf",
-  #                            "/home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/table_pic.pdf"))]
-  # system(paste("scp",paste(pdfs, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15"))
-
-  system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/pdf/ muuankarski@kapsi.fi:public_html/fao/RSPB15")
-  system("rsync -arvI ~/faosync/pocketbooks/pocketbook//output/data/ muuankarski@kapsi.fi:public_html/fao/RSPB15/data")
-}
-
-
-if (upload_images_to_server) {
-    # comparison <- list.files(paste0(root.dir,"/output/jpg"), full.names = TRUE)
-    # system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison/"))
-    # # system(paste("scp",paste(comparison, collapse=" ")," output muuankarski@kapsi.fi:public_html/fao/RSPB15_65/comparison/"))
-    system("rsync -arv /home/aurelius/faosync/pocketbooks/pocketbook//output/jpg/ muuankarski@kapsi.fi:public_html/fao/RSPB15/comparison")
-}
-
 
 setwd(root.dir)

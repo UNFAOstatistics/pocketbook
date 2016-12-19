@@ -13,3 +13,4 @@ input/templates/cover/covermaps/maps_for_covers.html
 .sync
 databasehomma
 steve
+sync.sh

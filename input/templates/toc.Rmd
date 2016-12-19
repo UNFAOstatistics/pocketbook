@@ -1,0 +1,61 @@
+---
+title: FAO Statistical pocketbooks - works in progress
+author: Markus Kainu
+date: "Last updated: **`r Sys.time()`**"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    number_sections: yes
+    code_folding: hide
+    theme: united
+---
+
+
+# Current pdfs
+
+
+```{r, include=FALSE}
+library(tidyverse)
+library(pdftools)
+root.dir <- "~/faosync/pocketbooks/pocketbook/"
+
+# boooks <- list.files(path = paste0(root.dir,"/output/pdf/"), pattern = ".pdf", full.names = TRUE)
+books <- c("GLO", "RAF", "RAP", "REU", "REU_ru", "RNE")
+pdfinfodata <- data_frame()
+for (book in books){
+  path <- paste0(root.dir,"/output/pdf/syb_main_",book,".pdf")
+  if (!file.exists(path)) next()
+  newline <- as.data.frame(pdf_info(path)[c("modified","pages")])
+  newline$book <- book
+  pdfinfodata <- bind_rows(pdfinfodata,newline)
+}
+```
+
+| link to pdf | Modified | pages |
+| --- | -------- | ----- |
+| [GLO](pdf/syb_main_GLO.pdf) | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$pages``|
+| [REU](pdf/syb_main_REU.pdf) | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$pages``|
+| [REU_ru](pdf/syb_main_REU_ru.pdf) | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$pages``|
+| [RAP](pdf/syb_main_RAP.pdf) | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$pages``|
+| [RAF](pdf/syb_main_RAF.pdf) | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$pages``|
+| [RNE](pdf/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``|
+
+# Comparisons
+
+- [Global 2015 vs. Global 2016](pdf/GLO15_GLO.html)
+- [RAP 2016 vs. Global 2016](pdf/RAP.html)
+- [REU 2016 vs. Global 2016](pdf/REU.html)
+- [REU ru 2016 vs. Global 2016](pdf/REU_ru.html)
+- [RNE 2016 vs. Global 2016](pdf/RNE.html)
+- [RAF 2016 vs. Global 2016](pdf/RAF.html)
+- [All regional book](pdf/regional_books16.html)
+
+# Data-apps
+
+
+
+
+# misc
+
+- [working hours](http://koti.kapsi.fi/~muuankarski/fao/timesheet/fao_working_hours.html)
