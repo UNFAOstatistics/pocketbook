@@ -50,6 +50,7 @@ for (book in books){
 - [RNE 2016 vs. Global 2016](pdf/RNE.html)
 - [RAF 2016 vs. Global 2016](pdf/RAF.html)
 - [All regional book](pdf/regional_books16.html)
+- [REU vs. Reu ru](pdf/REU_ru_REU.html)
 
 # Data-apps
 

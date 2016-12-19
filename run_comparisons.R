@@ -118,7 +118,7 @@ file = fileOut, append = TRUE)
 nr_of_pages <- length(list.files(path = "GLO/", pattern = ".jpg"))
 for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO15/page-',i,'.jpg" vspace="10"/></br>
+<img src="GLO15/page-',i+6,'.jpg" vspace="10"/></br>
                '),
         file = fileOut, append = TRUE) 
 }
@@ -145,6 +145,62 @@ cat(paste("
 </body>
 "),
     file = fileOut, append = TRUE) 
+
+
+# ------------------------------------
+# global with global
+# ------------------------------------
+setwd(paste0(root.dir,"/output/pdf"))
+if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
+fileOut <- "REU_ru_REU.html"
+file.create(fileOut, showWarnings = FALSE)
+cat(paste('
+<body bgcolor="#669999">
+
+<h1> spreads<h1>
+
+<table>
+<tr>
+<th>REU 2016</th><th>REU ru 2016</th><th>Comments</th>
+</tr>
+<tr>
+<td>            
+'),
+    file = fileOut, append = TRUE) 
+
+# number of images in the folder
+nr_of_pages <- length(list.files(path = "REU_ru/", pattern = ".jpg"))
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="REU/page-',i-1,'.jpg" vspace="10"/></br>
+               '),
+      file = fileOut, append = TRUE) 
+}
+
+cat(paste('
+</td>
+<td>
+          '),
+    file = fileOut, append = TRUE) 
+
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="REU_ru/page-',i-1,'.jpg" vspace="10"/></br>
+               '),
+      file = fileOut, append = TRUE) 
+}
+cat(paste("
+</td>
+<td>
+<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016REU_ru_REU?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(1240+20),"></iframe> 
+</td>
+</table>
+
+</body>
+"),
+    file = fileOut, append = TRUE) 
+
+
 
 # ---------------------------------------------
 # Regional books all compared
