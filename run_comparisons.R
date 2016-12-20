@@ -58,10 +58,15 @@ for (region_to_report in books){
 file = fileOut, append = TRUE) 
 
 # number of images in the folder
-nr_of_pages <- length(list.files(path = "GLO/", pattern = ".jpg"))
+nr_of_pages1 <- length(list.files(path = "GLO/", pattern = ".jpg"))
+nr_of_pages2 <- length(list.files(path = paste0(region_to_report,"/"), pattern = ".jpg"))
+if (nr_of_pages1 >= nr_of_pages2){
+  nr_of_pages <- nr_of_pages2
+} else nr_of_pages <- nr_of_pages1
+
 for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="GLO/page-',i-1,'.jpg" vspace="10" height="800"/></br>
 '),
         file = fileOut, append = TRUE) 
 }
@@ -73,10 +78,9 @@ cat(paste('
 file = fileOut, append = TRUE) 
   
 # number of images in the folder
-nr_of_pages <- length(list.files(path = paste0(region_to_report,"/"), pattern = ".jpg"))
   for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="',region_to_report,'/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="',region_to_report,'/page-',i-1,'.jpg" vspace="10"  height="800"/></br>
 '),
         file = fileOut, append = TRUE) 
 }
@@ -84,7 +88,7 @@ nr_of_pages <- length(list.files(path = paste0(region_to_report,"/"), pattern = 
 cat(paste0("
 </td>
 <td>
-<iframe name='embed_readwrite' src='http://pad.okfn.org/p/faopocketbook2016",region_to_report,"?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(1240+20),"></iframe> 
+<iframe name='embed_readwrite' src='http://pad.okfn.org/p/faopocketbook2016",region_to_report,"?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
 </td>
 </table>
 
@@ -118,7 +122,7 @@ file = fileOut, append = TRUE)
 nr_of_pages <- length(list.files(path = "GLO/", pattern = ".jpg"))
 for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO15/page-',i+6,'.jpg" vspace="10"/></br>
+<img src="GLO15/page-',i+6,'.jpg" vspace="10"/ height="800"></br>
                '),
         file = fileOut, append = TRUE) 
 }
@@ -131,14 +135,14 @@ file = fileOut, append = TRUE)
   
   for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="GLO/page-',i-1,'.jpg" vspace="10"/ height="800"></br>
                '),
         file = fileOut, append = TRUE) 
   }
 cat(paste("
 </td>
 <td>
-<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016GLO?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(1240+20),"></iframe> 
+<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016GLO?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
 </td>
 </table>
 
@@ -148,7 +152,7 @@ cat(paste("
 
 
 # ------------------------------------
-# global with global
+# REU ru vs REU
 # ------------------------------------
 setwd(paste0(root.dir,"/output/pdf"))
 if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
@@ -169,10 +173,15 @@ cat(paste('
     file = fileOut, append = TRUE) 
 
 # number of images in the folder
-nr_of_pages <- length(list.files(path = "REU_ru/", pattern = ".jpg"))
+nr_of_pages1 <- length(list.files(path = "REU/", pattern = ".jpg"))
+nr_of_pages2 <- length(list.files(path = "REU_ru/", pattern = ".jpg"))
+if (nr_of_pages1 >= nr_of_pages2){
+  nr_of_pages <- nr_of_pages2
+} else nr_of_pages <- nr_of_pages1
+
 for (i in 1:nr_of_pages){
   cat(paste0('
-<img src="REU/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="REU/page-',i-1,'.jpg" vspace="10" height="800"/></br>
                '),
       file = fileOut, append = TRUE) 
 }
@@ -185,14 +194,14 @@ cat(paste('
 
 for (i in 1:nr_of_pages){
   cat(paste0('
-<img src="REU_ru/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="REU_ru/page-',i-1,'.jpg" vspace="10" height="800"/></br>
                '),
       file = fileOut, append = TRUE) 
 }
 cat(paste("
 </td>
 <td>
-<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016REU_ru_REU?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(1240+20),"></iframe> 
+<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016REU_ru_REU?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
 </td>
 </table>
 
@@ -224,10 +233,11 @@ cat(paste('
 file = fileOut, append = TRUE) 
 
 # number of images in the folder
-nr_of_pages <- length(list.files(path = "REU/", pattern = ".jpg"))
+nr_of_pages <- length(list.files(path = "RNE/", pattern = ".jpg"))
+
 for (i in 1:nr_of_pages){
 cat(paste0('
-<img src="REU/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="REU/page-',i-1,'.jpg" vspace="10" height="620"/></br>
 '),
 file = fileOut, append = TRUE) 
 }
@@ -238,7 +248,7 @@ cat(paste('
 file = fileOut, append = TRUE) 
 for (i in 1:nr_of_pages){
 cat(paste0('
-<img src="RAP/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="RAP/page-',i-1,'.jpg" vspace="10" height="620"/></br>
 '),
 file = fileOut, append = TRUE) 
 }
@@ -249,7 +259,7 @@ cat(paste('
 file = fileOut, append = TRUE) 
 for (i in 1:nr_of_pages){
 cat(paste0('
-<img src="RAF/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="RAF/page-',i-1,'.jpg" vspace="10" height="620"/></br>
              '),
 file = fileOut, append = TRUE) 
 }
@@ -261,7 +271,7 @@ file = fileOut, append = TRUE)
 
 for (i in 1:nr_of_pages){
 cat(paste0('
-<img src="RNE/page-',i-1,'.jpg" vspace="10"/></br>
+<img src="RNE/page-',i-1,'.jpg" vspace="10" height="620"/></br>
 '),
 file = fileOut, append = TRUE) 
 }
@@ -269,7 +279,7 @@ file = fileOut, append = TRUE)
 cat(paste("
 </td>
 <td>
-<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016regions?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(1240+20),"></iframe> 
+<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016regions?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(620+20),"></iframe> 
 </td>
 </table>
 

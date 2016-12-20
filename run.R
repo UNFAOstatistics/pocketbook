@@ -16,16 +16,16 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                         ,"RAP" # Asia and the Pacific
-                        , "RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                      # "GLO" # Global
+                         # ,"RAP" # Asia and the Pacific
+                        # , "RAF"  # Africa
+                        "REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -58,7 +58,7 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
+include_country_profiles <- F
 include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables 
