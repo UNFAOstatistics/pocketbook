@@ -31,9 +31,9 @@ if (region_to_report == "RAP") map.out.width  <- "1.05\\columnwidth"
 if (region_to_report == "RAP") map.out.extra  <- 'angle=0'
 
 # REU
-if (region_to_report == "REU") map.fig.width  <- 13
+if (region_to_report == "REU") map.fig.width  <- 16
 if (region_to_report == "REU") map.fig.height  <- 7
-if (region_to_report == "REU") map.out.width  <- "2.0\\columnwidth"
+if (region_to_report == "REU") map.out.width  <- "2.2\\columnwidth"
 if (region_to_report == "REU") map.out.extra  <- 'angle=90'
 
 # RNE
@@ -50,9 +50,9 @@ if (region_to_report == "LAC") map.out.extra  <- 'angle=0'
 
 
 # GLO
-if (region_to_report == "GLO") map.fig.width  <- 12
+if (region_to_report == "GLO") map.fig.width  <- 19
 if (region_to_report == "GLO") map.fig.height  <- 8
-if (region_to_report == "GLO") map.out.width  <- "1.62\\columnwidth"
+if (region_to_report == "GLO") map.out.width  <- "2.32\\columnwidth"
 if (region_to_report == "GLO") map.out.extra  <- 'angle=90'
 
 # COF

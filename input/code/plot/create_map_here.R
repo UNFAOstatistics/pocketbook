@@ -33,6 +33,14 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   gr_rob <- fortify(grat_robin)
 
     # crop the grid
+  
+  if (region_to_report %in% c("GLO")) { # these are values from RAF data as we want to show the outline of RAF map here
+    gr_rob <- gr_rob[gr_rob$lat >= min(map.plot$lat) & gr_rob$lat <= max(map.plot$lat),]
+    gr_rob <- gr_rob[gr_rob$long >= min(map.plot$long) & gr_rob$long < max(map.plot$long),]
+    
+    # map.plot <- map.plot[map.plot$lat >= min(map.plot$lat) & map.plot$lat <= max(map.plot$lat),]
+    # map.plot <- map.plot[map.plot$long >= 3290114 & map.plot$long < 18198767,]
+  }
   if (region_to_report %in% "REU") {
     gr_rob <- gr_rob[gr_rob$lat >= 3065387 & gr_rob$lat <= 8184223,]
     gr_rob <- gr_rob[gr_rob$long >= -3290114 & gr_rob$long <= 13198767,]
@@ -71,7 +79,7 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
   #  ---- grid below the countries ------------------------
   p <- p + geom_path(data = gr_rob, aes(long, lat, group = group, fill = NULL), 
                      # linetype = "solid", color = col.main2, alpha=.1)
-                     linetype = "solid", color = "grey80", size = 0.5)
+                     linetype = "solid", color = "grey80", size = 0.3)
   # #  ---- whole region in grey  ------------------------
   if (region_to_report == "RNE") p <- p + geom_polygon(data=map.df[which(map.df[["RAF"]]),], fill = "grey95", colour = alpha("white", 1/2))
   #  ---- grid below the countries ------------------------
