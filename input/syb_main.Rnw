@@ -832,7 +832,7 @@ if (rulang) mapcaption <- "Классификация стран\\textsuperscrip
 \clearpage
 
 
-<<overview_map, eval=include_overview_map, fig.width=12, fig.height= 8 ,out.width="1.6\\columnwidth", out.extra='angle=90', fig.cap=mapcaption>>=
+<<overview_map, eval=include_overview_map, fig.width=9.5, fig.height= 6 ,out.width="1.62\\columnwidth", out.extra='angle=90', fig.cap=mapcaption>>=
 
 the_whole   <- map.df # for mapping the grey areas
 
@@ -852,6 +852,16 @@ if (region_to_report == "RAP"){
 overview.df <- merge(map.df,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 overview.df <- arrange(overview.df, order)
 #overview.df <- merge(overview.df,FAOcountryProfile,by="FAOST_CODE")
+
+
+if (region_to_report %in% "GLO"){
+  
+  overview.df$subgroup[overview.df$subgroup %in%  "Africa AND North Africa and Middle East"] <- "Africa"
+  overview.df$subgroup[overview.df$subgroup %in%  "Asia AND Europe"] <- "Europe"
+  overview.df$subgroup[overview.df$subgroup %in%  "Asia AND North Africa and Middle East"] <- "Asia"
+  overview.df$subgroup[overview.df$subgroup %in%  "North Africa and Middle East"] <- "Africa"
+}
+
 
 # define map unit
 map_unit <- ""
@@ -889,7 +899,11 @@ mapColors = mapColFun(nCol)
 # # } 
 # if (region_to_report == "REU") overview.df$subgroup[overview.df$subgroup %in% "misc"] <- "Andorra, Israel, Monaco and San Marino"
 
+# exlude Antarctica
+the_whole <- the_whole[!the_whole$ADM0_NAME %in% "Antarctica",]
 
+gr_rob <- gr_rob[gr_rob$lat >= min(the_whole$lat) & gr_rob$lat <= max(the_whole$lat),]
+gr_rob <- gr_rob[gr_rob$long >= min(the_whole$long) & gr_rob$long < max(the_whole$long),]
 
 # Create the plot
 p <- ggplot(data=overview.df, aes(long,lat,group=group))
@@ -929,6 +943,8 @@ p <- p + guides(fill = guide_legend(title = map_unit, family="PT Sans",
                                      title.position = "top",
                                      title.hjust=0))
 p <- p + guides(colour=FALSE)
+p <- p + theme(panel.grid.major.y = element_blank(),
+               panel.grid.major.x = element_blank())
 p
 
 # no overview table for COFFEE
@@ -1009,7 +1025,13 @@ df <- subgrouping(region_to_report = region_to_report, gather=FALSE)
 df$subgroup <- translate_subgroups(df$subgroup, isfactor = FALSE, add_row_breaks = FALSE, abbreviate=FALSE)
 overview.df <- left_join(df,region_key)
 
-
+if (region_to_report %in% "GLO"){
+  
+  overview.df$subgroup[overview.df$subgroup %in%  "Africa AND North Africa and Middle East"] <- "Africa"
+  overview.df$subgroup[overview.df$subgroup %in%  "Asia AND Europe"] <- "Europe"
+  overview.df$subgroup[overview.df$subgroup %in%  "Asia AND North Africa and Middle East"] <- "Asia"
+  overview.df$subgroup[overview.df$subgroup %in%  "North Africa and Middle East"] <- "Africa"
+}
 
 # Add region key and subset
 # if (!(region_to_report %in% c("GLO","COF","RAP"))) overview.df <- overview.df[which(overview.df[[region_to_report]]),]
@@ -1106,6 +1128,7 @@ if (region_to_report == "RAF") tbl_font_size <- "footnotesize"
 if (region_to_report == "RNE") tbl_font_size <- "footnotesize"
 if (region_to_report == "REU") tbl_font_size <- "footnotesize"
 if (region_to_report == "RAP") tbl_font_size <- "footnotesize"
+if (region_to_report == "GLO") tbl_font_size <- "tiny"
 
 if (rulang){
 
