@@ -26,7 +26,7 @@ source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 #                               countrycode.multilang::countrycode(syb.df$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao"),
 #                               syb.df$SHORT_NAME)
 # }
-  
+
 
 #    ___                                  _
 #   / _ \  __   __   ___   _ __  __   __ (_)   ___  __      __
@@ -108,7 +108,7 @@ if (region_to_report == "REU"){
     dat$variable[dat$variable == "OA_3010_561"] <- "Городское населениvе"
     dat$variable <- factor(dat$variable, levels=c("Сельское население",
                                                   "Городское населениvе"))
-    } 
+  } 
   
 }
 
@@ -176,7 +176,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$OA.TPBS.POP.PPL
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=OA.TPBS.POP.PPL.GR10))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = OA.TPBS.POP.PPL.GR10, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)  + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
@@ -217,8 +217,8 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SP.DYN.LE00.IN)
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SP.DYN.LE00.IN))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                     yend = SP.DYN.LE00.IN, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+                          yend = SP.DYN.LE00.IN, color=color), alpha=.5)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nyears")
@@ -278,7 +278,7 @@ map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 # define map unit
 map_unit <- "percent"
 if (rulang) map_unit <- "проценты"
-  
+
 
 
 p <- create_map_here()
@@ -375,7 +375,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$EA.PRD.AGRI.KD)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=EA.PRD.AGRI.KD))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = EA.PRD.AGRI.KD, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -388,13 +388,13 @@ p
 caption_text <- paste("Agriculture value added per worker, top",nrow(dat_plot),"countries with the highest values (2003-2013*)")
 if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве на одного работника,",nrow(dat_plot),"стран с самыми высокими значениями (2003-2013 гг.*)")
 
- 
+
 
 ## ---- P1econRIGHT ----
 
 # data
 dat <- syb.df %>% filter(Year %in% c(2003:2013)) %>% select(FAOST_CODE,SHORT_NAME,Year,NV.AGR.TOTL.KD)
-  dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
+dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -432,7 +432,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$growth_NV.AGR.T
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=growth_NV.AGR.TOTL.KD))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = growth_NV.AGR.TOTL.KD, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
@@ -602,7 +602,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SL.AGR.EMPL.FE.
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SL.AGR.EMPL.FE.ZS))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SL.AGR.EMPL.FE.ZS, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -638,7 +638,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SL.AGR.EMPL.MA.
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SL.AGR.EMPL.MA.ZS))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SL.AGR.EMPL.MA.ZS, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -798,7 +798,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RF.FERT.NI.TN.S
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RF.FERT.NI.TN.SH))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = RF.FERT.NI.TN.SH, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -837,7 +837,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RF.FERT.PH.TN.S
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RF.FERT.PH.TN.SH))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = RF.FERT.PH.TN.SH, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -1030,7 +1030,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$Value)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion US$")
@@ -1077,7 +1077,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$dfa_AOI_commit)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=dfa_AOI_commit))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = dfa_AOI_commit, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)  + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
@@ -1118,13 +1118,13 @@ dat$variable[dat$variable == "privat_don_agr"] <- "Private"
 dat$variable <- factor(dat$variable, levels= c("Multilateral","Bilateral","Private"))
 
 dat_plot <- dat %>% group_by(FAOST_CODE) %>% 
-              filter(Year == 2013) %>% 
-              dplyr::mutate(value_sum = sum(value, na.rm=TRUE)) %>% 
-              select(FAOST_CODE,Year,SHORT_NAME,variable,value,value_sum) %>% 
-              ungroup() %>%
-              arrange(-value_sum) %>% 
-              mutate(r = dense_rank(-value_sum)) %>% 
-              filter(r %in% 1:10)
+  filter(Year == 2013) %>% 
+  dplyr::mutate(value_sum = sum(value, na.rm=TRUE)) %>% 
+  select(FAOST_CODE,Year,SHORT_NAME,variable,value,value_sum) %>% 
+  ungroup() %>%
+  arrange(-value_sum) %>% 
+  mutate(r = dense_rank(-value_sum)) %>% 
+  filter(r %in% 1:10)
 
 # dat$value <- dat$value / 1000 # into bilion dollars
 

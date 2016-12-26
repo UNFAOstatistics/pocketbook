@@ -88,7 +88,7 @@ if (rulang){
   d$var[d$var == "FBS.SDES.MO.PCT3D"] <- "Meat and offals"
   d$var[d$var == "FBS.SDES.VOAF.PCT3D"] <- "Milk\n(excl. butter)"
   d$var[d$var == "FBS.SDES.MEB.PCT3D"] <- "Veg. oils and\nanimal fats"
-
+  
 }
 
 
@@ -190,7 +190,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/cap/day")
@@ -241,7 +241,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
@@ -436,7 +436,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
@@ -488,7 +488,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
@@ -563,7 +563,7 @@ if (!rulang){
   dat_plot$variable <- factor(dat_plot$variable, levels=c("Harvested area",
                                                           "Production",
                                                           "Yield"
-                                                          ))
+  ))
 } else{
   dat_plot$variable[dat_plot$variable == "QC.PRD.CRLS.TN.NO"] <- "Производство"
   dat_plot$variable[dat_plot$variable == "QC.RHRV.CRLS.HA.NO"] <- "Уборочная площадь"
@@ -571,7 +571,7 @@ if (!rulang){
   dat_plot$variable <- factor(dat_plot$variable, levels=c("Уборочная площадь",
                                                           "Производство",
                                                           "Урожайность"
-                                                          ))
+  ))
 }
 
 p <- ggplot(dat_plot, aes(x=variable,y=growth_rate,fill=variable))
@@ -748,7 +748,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
@@ -809,7 +809,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
@@ -928,14 +928,14 @@ dat <- dat[which(dat[[region_to_report]]),]
 d13 <- dat %>%  filter(Year %in% 2013, Unit %in% c("Head","1000 Head")) %>%
   filter(!grepl("Total",Item),
          !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes","Rabbits and hares") # Rabbits and hares because Nigeria in 2013 figures
-         ) %>%
+  ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
   arrange(-Value)
 d00 <- dat %>%  filter(Year %in% 2000, Unit %in% c("Head","1000 Head")) %>%
   filter(!grepl("Total",Item),
          !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes","Rabbits and hares") # Rabbits and hares because Nigeria in 2013 figures)
-         ) %>%
+  ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
   arrange(-Value)
@@ -1006,7 +1006,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.MILK.TN.
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QL.PRD.MILK.TN.NO))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = QL.PRD.MILK.TN.NO, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
@@ -1051,7 +1051,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.EGG.TN.N
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QL.PRD.EGG.TN.NO))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = QL.PRD.EGG.TN.NO, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmln tonnes")
@@ -1110,11 +1110,11 @@ library(ggrepel)
 p <- ggplot(d, aes(x=sum/2, y = share, fill = subgroup, width = sum, label=label, ymax=1))
 p <- p + geom_bar(position="fill", stat="identity")
 p <- p + geom_label(aes(x=sum*2/2,y=share+14),
-                   label.padding = unit(0.10, "lines"),
-                   position="fill",
-                   color="white",
-                   stat="identity",alpha=.8,
-                   size=3,family="PT Sans",fontface="bold",show.legend=FALSE)
+                    label.padding = unit(0.10, "lines"),
+                    position="fill",
+                    color="white",
+                    stat="identity",alpha=.8,
+                    size=3,family="PT Sans",fontface="bold",show.legend=FALSE)
 p <- p + facet_wrap(~Year)
 p <- p + coord_polar("y")
 p <- p + theme_minimal()
@@ -1200,7 +1200,7 @@ if (region_to_report == "RNE") short_text <- "Fish is an important component in 
 if (region_to_report == "GLO") short_text <- "Fish is an important component in people’s diets, providing about 3.1 billion people with almost 20 percent of their average intake of animal protein. Capture fisheries continue to dominate world output, but aquaculture accounts for a growing percentage of total fish supply. Fishery sectors are particularly important in developing countries, providing both food and livelihoods."
 if (rulang) spread_title <- "Рыбное хозяйство"
 if (region_to_report == "REU" & rulang) short_text <- "Рыба является важным компонентом в рационе питания населения региона. Рыболовство продолжает доминировать в рыбном хозяйстве в регионе, однако доля продукция аквакультуры в общем объеме производства рыбы растет."
-  
+
 ## ---- P3fisheriesData ----
 
 
@@ -1285,7 +1285,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$capture_fish_pr
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=capture_fish_production))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = capture_fish_production, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
@@ -1329,7 +1329,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$aquaculture_fis
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=aquaculture_fish_production))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = aquaculture_fish_production, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
@@ -1485,7 +1485,7 @@ if (rulang){
 
 print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
                     # align= "l{\raggedright\arraybackslash}rrr"),
-             align= "lrrr"),
+                    align= "lrrr"),
              type = table_type, table.placement = NULL, booktabs = TRUE, include.rownames = FALSE,
              comment = FALSE,
              size = "footnotesize", caption.placement = "top",
@@ -1529,7 +1529,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
@@ -1582,7 +1582,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5) 
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")

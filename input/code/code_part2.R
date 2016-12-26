@@ -48,7 +48,7 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   dat$FAOST_CODE[dat$FAOST_CODE == "5104"] <- 12004 # Southern Africa
   dat$FAOST_CODE[dat$FAOST_CODE == "5105"] <- 12005 # Western Africa
   dat$FAOST_CODE[dat$FAOST_CODE == "421exclSudan"] <- 12003 # North Africa missing for SOFI
-
+  
   # RAP
   dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRapReg"] <- 13000  #  Regional Office for Asia and the Pacific
   dat$FAOST_CODE[dat$FAOST_CODE == "5834"] <- 13001  #	East Asia
@@ -67,15 +67,15 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   new_rows <- dat[dat$FAOST_CODE == "68",]
   new_rows$FAOST_CODE[new_rows$FAOST_CODE == "68"] <- 13007  #	France
   dat <- rbind(dat,new_rows)
-
+  
   new_rows <- dat[dat$FAOST_CODE == "185",]
   new_rows$FAOST_CODE[new_rows$FAOST_CODE == "185"] <- 13011  #	Russian Federation
   dat <- rbind(dat,new_rows)
-
+  
   new_rows <- dat[dat$FAOST_CODE == "231",]
   new_rows$FAOST_CODE[new_rows$FAOST_CODE == "231"] <- 13013  #	United States
   dat <- rbind(dat,new_rows)
-
+  
   # REU  - ALL MISSING FROM SOFI
   dat$FAOST_CODE[dat$FAOST_CODE == "SOFIReuReg"] <- 14000 # Regional Office for Europe and Central Asia
   dat$FAOST_CODE[dat$FAOST_CODE == "REUCaucAndTurkey"] <- 14001 # REU Caucasus and Turkey ??
@@ -88,37 +88,37 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   new_rows <- dat[dat$FAOST_CODE == "105",]
   new_rows$FAOST_CODE[new_rows$FAOST_CODE == "105"] <- 14005 # Israel
   dat <- rbind(dat,new_rows)
-
+  
   # RNE - ALL MISSING FROM SOFI
   dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRneReg"] <- 15000 # Regional Office for the Near East
   dat$FAOST_CODE[dat$FAOST_CODE == "RNEgccsy"] <- 15001 # Gulf Cooperation Council States and Yemen
   dat$FAOST_CODE[dat$FAOST_CODE == "RNEmaghreb"] <- 15002 # North Africa
   dat$FAOST_CODE[dat$FAOST_CODE == "RNEmashreq"] <- 15003 # Other Near East countries
-
+  
   dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
   dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
-
+  
   dat <- dat[!is.na(dat$FAOST_CODE),]
   dat <- dat[!duplicated(dat[c("Year","FAOST_CODE")]),]
-
+  
   # Add Area var from syb.df
   tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
   dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE",all.x=TRUE)
   dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
-
+  
   dat$FAO_TABLE_NAME <- str_replace_all(dat$FAO_TABLE_NAME, "SOFI Regional Office for ", "")
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
   # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
-
+  
   # GLO
   # dat$FAOST_CODE[dat$FAOST_CODE == "LACregion"] <- 5205 # Regional Office for the Near East
   # dat$FAOST_CODE[dat$FAOST_CODE == "RAFregion"] <- 5100 # Gulf Cooperation Council States and Yemen
   # dat$FAOST_CODE[dat$FAOST_CODE == "RAPregion"] <- 5300 # North Africa
   # dat$FAOST_CODE[dat$FAOST_CODE == "REUregion"] <- 5400 # Other Near East countries
   # dat$FAOST_CODE[dat$FAOST_CODE == "RNEregion"] <- 5500 # Other Near East countries
-
-
+  
+  
   # As filippo stated in email on 22/10/15 that
   ## The aggregates in yellow have been created but not disseminated because
   ## they include developed countries. This means that you can use them but
@@ -127,23 +127,23 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   ## you cannot show the Prevalence of Undernourishment for these aggregates.
   # -> so I am replacing values for those variables & those aggregates with NA
   # and they will appear empty in countryprofile tables
-
+  
   aggregates_to_censore <- c( #13006,  #	Australia New Zealand ?? This is now Oceania!!
-                              13008,  #	Melanesia ??
-                              13009,  #	Micronesia ??
-                              13010,  #	Polynesia ??
-                              13011,  #	Russian Federation
-                              13007,  #	France
-                              13013,  #	United States
-                              14007,  # REU South Eastern Europe
-                              14006,  # REU Other and EFTA
-                              14001,  # REU Caucasus and Turkey ??
-                              14004,  # REU CIS Europe
-                              14003,  # REU Central Eastern Europe
-                              14005,  # Israel
-                              5400    # Europe
+    13008,  #	Melanesia ??
+    13009,  #	Micronesia ??
+    13010,  #	Polynesia ??
+    13011,  #	Russian Federation
+    13007,  #	France
+    13013,  #	United States
+    14007,  # REU South Eastern Europe
+    14006,  # REU Other and EFTA
+    14001,  # REU Caucasus and Turkey ??
+    14004,  # REU CIS Europe
+    14003,  # REU Central Eastern Europe
+    14005,  # Israel
+    5400    # Europe
   )
-
+  
   variables_to_censore <- c("FS.OA.POU.PCT3D1", # Prevalence of undernourishment (percent) (3 year averages)
                             "FS.OA.SFEP.PCT",    #	Share of food expenditure of the poor (percent)
                             "FS.OA.DOFD.KCD3D",	 # Depth of food decifit (kcal/capita/day) (3 year averages)
@@ -161,8 +161,8 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   for (i in variables_to_censore){
     dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_censore, NA, dat[[i]])
   }
-
-
+  
+  
   save(dat, file=paste0(data.dir,"/fsi_data.RData"))
 } else load(paste0(data.dir,"/fsi_data.RData"))
 
@@ -185,8 +185,8 @@ df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 # This should be thought twice how to produce it for regional books!
 
 dw <- df %>%
-      filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000),
-             Year %in% c(1991,2015)) %>%
+  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000),
+         Year %in% c(1991,2015)) %>%
   mutate(Year = paste0("X",Year)) %>%
   select(Year,FAO_TABLE_NAME,FS.OA.POU.PCT3D1) %>%
   spread(key = Year,value = FS.OA.POU.PCT3D1)
@@ -251,7 +251,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
@@ -297,7 +297,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
@@ -373,13 +373,13 @@ if (rulang) caption_text <- ""
 
 
 
- #
- #   ___  _               _ _
- #  / _ \| |__   ___  ___(_) |_ _   _
- # | | | | '_ \ / _ \/ __| | __| | | |
- # | |_| | |_) |  __/\__ \ | |_| |_| |
- #  \___/|_.__/ \___||___/_|\__|\__, |
- #                              |___/
+#
+#   ___  _               _ _
+#  / _ \| |__   ___  ___(_) |_ _   _
+# | | | | '_ \ / _ \/ __| | __| | | |
+# | |_| | |_) |  __/\__ \ | |_| |_| |
+#  \___/|_.__/ \___||___/_|\__|\__, |
+#                              |___/
 
 
 ## ---- P2obesityTEXT ----
@@ -429,7 +429,7 @@ over_acq$Year <- as.numeric(levels(over_acq$Year))[over_acq$Year]
 names(over_acq) <- c("FAOST_CODE","FAO_TABLE_NAME","Year_range","value","Year")
 
 dat <- over_acq %>% filter(FAOST_CODE %in% c(5001,5851,5852), Year %in% c(1992,2015)) %>%  select(FAOST_CODE,FAO_TABLE_NAME,Year,value) %>%
-    dplyr::rename(SHORT_NAME = FAO_TABLE_NAME)
+  dplyr::rename(SHORT_NAME = FAO_TABLE_NAME)
 
 dat$fill[dat$Year == 1992] <- "1991-93"
 dat$fill[dat$Year == 2015] <- "2014-16"
@@ -483,7 +483,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.MA.
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.MA.ZS))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SH.STA.OWGH.MA.ZS, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -518,7 +518,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.FE.
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.FE.ZS))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SH.STA.OWGH.FE.ZS, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -563,7 +563,7 @@ if (rulang) caption_text <- paste("Распространенность избы
 
 ## ---- P2obesityMAP ----
 dat <- syb.df %>% filter(Year == 2014) %>%
-                select(Year,FAOST_CODE,SHORT_NAME,overweight_BOTH)
+  select(Year,FAOST_CODE,SHORT_NAME,overweight_BOTH)
 dat <- dat[!is.na(dat$overweight_BOTH),]
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
 
@@ -682,7 +682,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
@@ -728,7 +728,7 @@ if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(le
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PPCS.GT.GCD3D))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = FBS.PPCS.GT.GCD3D, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\ng/cap/day")
@@ -902,7 +902,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
@@ -953,7 +953,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
@@ -1119,7 +1119,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/capita/day")
@@ -1167,7 +1167,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
@@ -1329,7 +1329,7 @@ if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(le
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.STNT.ZS))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SH.STA.STNT.ZS, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
@@ -1377,7 +1377,7 @@ if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(le
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.WAST.ZS))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = SH.STA.WAST.ZS, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
@@ -1411,7 +1411,7 @@ if (rulang){
   
   dat_plot$variable[dat_plot$variable == "Water source"] <- "Источник воды"
   dat_plot$variable[dat_plot$variable == "Sanitation facilities"] <- "Санитарные-технические сооружения"
-
+  
 }
 
 p <- ggplot(dat_plot, aes(x=Year,y=value,color=variable))

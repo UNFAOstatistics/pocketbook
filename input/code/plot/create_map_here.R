@@ -179,7 +179,9 @@ create_map_here <- function(manualPalette=FALSE,manual_palette=c("#a6611a","#dfc
                                       title.position = "top", 
                                       title.hjust=0))
   
-    p <- p + scale_fill_manual(values=mapColors) # no data to think about
+  p <- p + scale_fill_manual(values=mapColors) # no data to think about
   p <- p + guides(colour=FALSE)
+  p <- p + theme(panel.grid.major.y = element_blank(),
+                 panel.grid.major.x = element_blank())
   p
 }

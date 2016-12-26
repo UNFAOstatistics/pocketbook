@@ -74,8 +74,8 @@ dat$fill[dat$variable == "RL.AREA.AGR.HA.SH"] <- "Agricultural"
 dat$fill[dat$variable == "RL.AREA.FOR.HA.SH"] <- "Forest"
 dat$fill[dat$variable == "RL.AREA.OTH.HA.SH"] <- "Other"
 dat$fill <- factor(dat$fill, levels=c("Agricultural",
-                                     "Forest",
-                                     "Other"))
+                                      "Forest",
+                                      "Other"))
 
 
 dat$value <- dat$value * 100 # into percents
@@ -90,9 +90,9 @@ if (rulang){
   dat_plot$fill[dat_plot$fill == "Forest"] <- "Леса"
   dat_plot$fill[dat_plot$fill == "Other"] <- "Другие \nземли"
   dat_plot$fill <- factor(dat_plot$fill, levels=c("Сельскохозяйственные \nземли",
-                                       "Леса",
-                                       "Другие \nземли"
-                                       ))
+                                                  "Леса",
+                                                  "Другие \nземли"
+  ))
   dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks = TRUE)
 } 
 
@@ -144,7 +144,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RL.AREA.ARBL.HA
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RL.AREA.ARBL.HA.SHP))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = RL.AREA.ARBL.HA.SHP, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -168,7 +168,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$RL.AREA.ARBL.HA
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=RL.AREA.ARBL.HA.SHP))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = RL.AREA.ARBL.HA.SHP, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -401,7 +401,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$new_var)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=new_var))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = new_var, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -440,7 +440,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$new_var)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=new_var))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = new_var, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -486,10 +486,10 @@ if (rulang) caption_text <- "Страны с самыми высокими по�
 
 ## ---- P4waterMAP ----
 dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
-                select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
-                group_by(FAOST_CODE) %>% dplyr::summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
-                #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
-                ungroup()
+  select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
+  group_by(FAOST_CODE) %>% dplyr::summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
+  #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
+  ungroup()
 
 water <- syb.df[c("FAOST_CODE","Year","AQ.WAT.RFRWAGR.MC.SH")]
 water <- water[!is.na(water$AQ.WAT.RFRWAGR.MC.SH),]
@@ -604,7 +604,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$EE_6740_72041)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=EE_6740_72041))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = EE_6740_72041, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -643,7 +643,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$EE_6741_72040)
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=EE_6741_72040))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = EE_6741_72040, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -755,8 +755,8 @@ dat <- syb.df %>% select(FAOST_CODE,Year,
                          FO.PRD.WP.M3.NO,
                          FO.PRD.PPB.M3.NO) %>%
   dplyr::mutate(FO.PRD.RP.M3.NO = FO.PRD.RP.M3.NO / 1000000,
-         FO.PRD.WP.M3.NO = FO.PRD.WP.M3.NO / 1000000,
-         FO.PRD.PPB.M3.NO = FO.PRD.PPB.M3.NO / 1000000)
+                FO.PRD.WP.M3.NO = FO.PRD.WP.M3.NO / 1000000,
+                FO.PRD.PPB.M3.NO = FO.PRD.PPB.M3.NO / 1000000)
 
 
 # Add region key and subset
@@ -778,7 +778,7 @@ dat_plot <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
 # AGREGATE
 dat_plot <- dat_plot %>% group_by(Year,fill) %>%
-          dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
+  dplyr::summarise(value  = sum(value, na.rm=TRUE)) %>%  ungroup()
 
 if (rulang){
   dat_plot$fill[dat_plot$fill == "Paper and paperboard"] <- "Бумага и \nкартон"
@@ -826,7 +826,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$FO.EXVAL.TOT.US
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FO.EXVAL.TOT.USD.NO))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = FO.EXVAL.TOT.USD.NO, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -866,7 +866,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$FO.IMVAL.TOT.US
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FO.IMVAL.TOT.USD.NO))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = FO.IMVAL.TOT.USD.NO, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
 p <- p + coord_flip()
@@ -1053,7 +1053,7 @@ if (rulang){
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$GHG.TOT.ALL.GG.NO) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=GHG.TOT.ALL.GG.NO))
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = GHG.TOT.ALL.GG.NO, color=color), alpha=.5)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -1104,7 +1104,7 @@ if (rulang){
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
                           yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y=expression("Mt CO"[2] * "eq"))
