@@ -1,4 +1,4 @@
-top_right_plot_height <- 2.5
+top_right_plot_height <- 2.3
 top_right_plot_width  <- 3
 
 left_plot_height  <- 6
