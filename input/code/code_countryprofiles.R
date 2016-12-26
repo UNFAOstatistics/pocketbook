@@ -557,6 +557,8 @@ if (rulang){
   names(indicators.df)[names(indicators.df) %in% "SERIES_NAME_SHORT_RU"] <- "SERIES_NAME_SHORT"
 }
 
+# M49countries <- M49countries[1:10,]
+
 # source(paste0(root.dir,"input/code/table/tableInfo.R"))
 if (table_type == "latex"){
 
@@ -593,7 +595,7 @@ if (table_type == "latex"){
   ## Years to be shown in the country profile
   year1 = 1990
   year2 = 2000
-  year3 = 2014
+  year3 = 2015
   ## This script creates the latex file
 
   ## Set the rowheight for cprofiles for each book
@@ -623,7 +625,7 @@ if (table_type == "latex"){
     define_row_color <- paste0("\\rowcolors{1}{",row_color,"!10}{white}")
     # conditional row colors ------------------------------
 
-    if (region_to_report == "COF"){
+    if (region_to_report %in% c("COF","GLO")){
       cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
           define_row_color,
           "\\begin{tabular}{L{4.6cm} R{0.9cm} R{0.9cm} R{0.9cm}}
@@ -632,6 +634,8 @@ if (table_type == "latex"){
           \\midrule\n",
           file = fileOut, append = TRUE)
     }
+
+    
     # RAP  customatisation
     if (region_to_report %in% "RAP"){
 
@@ -741,12 +745,10 @@ if (table_type == "latex"){
         }
         
       }
-      
-      
-
     }
     ## data
     tmp = CountryProfile.df[CountryProfile.df[, "FAOST_CODE"] == M49countries[i, "FAOST_CODE"], ]
+    tmp <- tmp[!is.na(tmp$Year),]
     
     
     
@@ -754,7 +756,7 @@ if (table_type == "latex"){
       #     cat("\t\\multicolumn{4}{l}{\\textcolor{",paste0("part", part),"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
       #         file = fileOut, append = TRUE, sep = "")
 
-      if (region_to_report == "COF"){
+      if (region_to_report %in% c("COF","GLO")){
         if (part %in% c(3,4)) {
           cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
@@ -895,6 +897,27 @@ if (table_type == "latex"){
       }
     }
     ## tail
+    
+    if (region_to_report %in% c("COF","GLO")){
+      
+      if (M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
+        
+        cat("\ \ \ \ \ \ \ \\toprule
+        \n\\end{tabular}
+        \\textsuperscript{\\ddag} Aggregation based on the country groupings defined in table 'Classification of Countries' on page xi.
+        \\clearpage\n",
+            file = fileOut, append = TRUE)
+      }
+      if (!M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
+        
+        cat("\ \ \ \ \ \ \ \\toprule
+        \\end{tabular}
+        \\clearpage\n",
+            file = fileOut, append = TRUE)
+      }
+      
+    }
+    
     if (region_to_report == "RAP"){
 
       if (M49countries[i,"SHORT_NAME"] %in% RAP_reg_names){
@@ -996,8 +1019,7 @@ if (table_type == "latex"){
         
       }
       
-      
-
+    
     if (region_to_report == "RNE"){
 
       if (M49countries[i,"SHORT_NAME"] %in% RNE_reg_names){
