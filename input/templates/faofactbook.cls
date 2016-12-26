@@ -74,7 +74,7 @@ PLACE_FONTSIZE_SMALL_HERE
 \renewcommand\footnotesize{\small}
 \renewcommand\scriptsize{\@setfontsize\scriptsize\@vpt\@vipt}
 %\renewcommand\tiny{\@setfontsize\tiny\@ivpt\@vpt}
-\renewcommand\tiny{\@setfontsize\tiny{3}{3}}
+\renewcommand\tiny{\@setfontsize\tiny{5.5}{4.5}}
 % \renewcommand\large{\@setfontsize\large\@viipt\@viiipt}
 % \renewcommand\large{\@setfontsize\large{6.5}{7}}
 
