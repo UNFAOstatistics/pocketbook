@@ -7,13 +7,14 @@
 
 
 books <- c(
-          "GLO",
-          "GLO15",
-          "RAF", 
-          "RAP", 
-          "REU", 
-          "REU_ru", 
-          "RNE")
+          "GLO"#,
+          # "GLO15",
+          # "RAF", 
+          # "RAP", 
+          # "REU", 
+          # "REU_ru", 
+          # "RNE"
+          )
 
 
 for (region_to_report in books){
@@ -122,7 +123,7 @@ file = fileOut, append = TRUE)
 nr_of_pages <- length(list.files(path = "GLO/", pattern = ".jpg"))
 for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO15/page-',i+6,'.jpg" vspace="10"/ height="800"></br>
+<img src="GLO15/page-',i,'.jpg" vspace="10"/ height="800"></br>
                '),
         file = fileOut, append = TRUE) 
 }
@@ -135,7 +136,7 @@ file = fileOut, append = TRUE)
   
   for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO/page-',i-1,'.jpg" vspace="10"/ height="800"></br>
+<img src="GLO/page-',i+5,'.jpg" vspace="10"/ height="800"></br>
                '),
         file = fileOut, append = TRUE) 
   }
@@ -354,4 +355,4 @@ setwd(root.dir)
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE) 
 
 # Sync to kapsi!!
-# system("/home/aurelius/faosync/pocketbooks/pocketbook/sync.sh")
+system("/home/aurelius/faosync/pocketbooks/pocketbook/sync.sh")
