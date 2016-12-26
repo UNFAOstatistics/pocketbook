@@ -67,9 +67,9 @@ for (region_to_report in regionS_to_report) {
   
   # Font sizes for Russian translation
   if (rulang){
-    system(paste0("sed -i -- 's/PLACE_FONTSIZE_NORMALSIZE_HERE/ \\\\@setfontsize\\\\normalsize{5.5\\\\p@}{6} /g' ",root.dir,"/output/process/faofactbook.cls"))
-    system(paste0("sed -i -- 's/PLACE_FONTSIZE_SMALL_HERE/ \\\\@setfontsize\\\\small{5\\\\p@}{5.5} /g' ",root.dir,"/output/process/faofactbook.cls"))
-    system(paste0("sed -i -- 's/PLACE_FONTSIZE_LARGE_HERE/ \\\\renewcommand\\\\large{\\\\@setfontsize\\\\large{5.5}{6.0}} /g' ",root.dir,"/output/process/faofactbook.cls"))
+    system(paste0("sed -i -- 's/PLACE_FONTSIZE_NORMALSIZE_HERE/ \\\\@setfontsize\\\\normalsize{6\\\\p@}{6} /g' ",root.dir,"/output/process/faofactbook.cls"))
+    system(paste0("sed -i -- 's/PLACE_FONTSIZE_SMALL_HERE/ \\\\@setfontsize\\\\small{5.5\\\\p@}{5.5} /g' ",root.dir,"/output/process/faofactbook.cls"))
+    system(paste0("sed -i -- 's/PLACE_FONTSIZE_LARGE_HERE/ \\\\renewcommand\\\\large{\\\\@setfontsize\\\\large{6.2}{6.2}} /g' ",root.dir,"/output/process/faofactbook.cls"))
   } else {
     system(paste0("sed -i -- 's/PLACE_FONTSIZE_NORMALSIZE_HERE/ \\\\@setfontsize\\\\normalsize{6\\\\p@}{7} /g' ",root.dir,"/output/process/faofactbook.cls"))
     system(paste0("sed -i -- 's/PLACE_FONTSIZE_SMALL_HERE/ \\\\@setfontsize\\\\small{5.5\\\\p@}{6} /g' ",root.dir,"/output/process/faofactbook.cls"))
