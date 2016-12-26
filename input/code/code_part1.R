@@ -70,6 +70,7 @@ dat <- left_join(dat,region_key)
 if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000)
 if (region_to_report == "RAP")  dat <- dat %>% filter(FAOST_CODE %in% 13000)
 if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
+if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
 if (region_to_report == "GLO")  dat <- dat %>% filter(FAOST_CODE %in% 5000)
 
 dat <- gather(dat, variable, value, 3:4)
@@ -78,39 +79,40 @@ dat$variable <- as.character(dat$variable)
 dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
 dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
 
-if (region_to_report == "REU"){
-  library(FAOSTAT)
-  dat <- getFAOtoSYB(domainCode = "OA",
-                     elementCode = 551,
-                     itemCode = 3010)
-  dat1 <- dat$aggregates
-  dat <- getFAOtoSYB(domainCode = "OA",
-                     elementCode = 561,
-                     itemCode = 3010)
-  dat2 <- dat$aggregates
-  dat <- left_join(dat1,dat2)
-  dfX <- gather(dat, variable, value, 3:4)
-  datX <- dfX %>% select(FAOST_CODE,Year,variable,value)
-  
-  dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>%
-    group_by(variable,Year) %>%
-    dplyr::summarise(value = sum(value, na.rm=TRUE))
-  dat$variable <- as.character(dat$variable)
-  if (!rulang){
-    dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
-    dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
-    dat$variable <- factor(dat$variable, levels=c("Rural population",
-                                                  "Urban population")) 
-  } 
+# if (region_to_report == "REU"){
+#   library(FAOSTAT)
+#   dat <- getFAOtoSYB(domainCode = "OA",
+#                      elementCode = 551,
+#                      itemCode = 3010)
+#   dat1 <- dat$aggregates
+#   dat <- getFAOtoSYB(domainCode = "OA",
+#                      elementCode = 561,
+#                      itemCode = 3010)
+#   dat2 <- dat$aggregates
+#   dat <- left_join(dat1,dat2)
+#   dfX <- gather(dat, variable, value, 3:4)
+#   datX <- dfX %>% select(FAOST_CODE,Year,variable,value)
+#   
+#   dat <- datX %>% filter(FAOST_CODE %in% c(5400,5301), Year <= 2050) %>% mutate(value = value * 1000) %>%
+#     group_by(variable,Year) %>%
+#     dplyr::summarise(value = sum(value, na.rm=TRUE))
+#   dat$variable <- as.character(dat$variable)
+  # if (!rulang){
+  #   dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
+  #   dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
+  #   dat$variable <- factor(dat$variable, levels=c("Rural population",
+  #                                                 "Urban population")) 
+  # } 
   if (rulang){
     
-    dat$variable[dat$variable == "OA_3010_551"] <- "Сельское население"
-    dat$variable[dat$variable == "OA_3010_561"] <- "Городское населениvе"
+    # dat$variable[dat$variable == "OA_3010_551"] <- "Сельское население"
+    # dat$variable[dat$variable == "OA_3010_561"] <- "Городское населениvе"
+    dat$variable[dat$variable == "Rural population"] <- "Сельское население"
+    dat$variable[dat$variable == "Urban population"] <- "Городское населениvе"
     dat$variable <- factor(dat$variable, levels=c("Сельское население",
                                                   "Городское населениvе"))
   } 
-  
-}
+# }
 
 
 
