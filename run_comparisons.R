@@ -7,13 +7,13 @@
 
 
 books <- c(
-          "GLO"#,
-          # "GLO15",
-          # "RAF", 
-          # "RAP", 
-          # "REU", 
-          # "REU_ru", 
-          # "RNE"
+          "GLO"
+          ,"GLO15"
+          ,"RAP"
+          ,"RAF"
+          ,"REU"
+          ,"REU_ru"
+          ,"RNE"
           )
 
 
@@ -121,6 +121,7 @@ file = fileOut, append = TRUE)
 
 # number of images in the folder
 nr_of_pages <- length(list.files(path = "GLO/", pattern = ".jpg"))
+nr_of_pages <- nr_of_pages - 7
 for (i in 1:nr_of_pages){
     cat(paste0('
 <img src="GLO15/page-',i,'.jpg" vspace="10"/ height="800"></br>

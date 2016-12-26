@@ -1288,7 +1288,7 @@ knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
 @
 
 
-<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width, eval=FALSE>>=
+<<P1overTOPRIGHT, eval=P1over, top_right_plot=P1over, fig.height=top_right_plot_height, fig.width=top_right_plot_width>>=
 @
 
 

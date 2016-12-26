@@ -154,6 +154,8 @@ for (region_to_report in regionS_to_report) {
   
   
 
+  # system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
+  # system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   if (!rulang) system(paste0("cp ",
