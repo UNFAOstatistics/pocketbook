@@ -12,7 +12,7 @@ books <- c(
           ,"RAP"
           ,"RAF"
           ,"REU"
-          ,"REU_ru"
+          # ,"REU_ru"
           ,"RNE"
           )
 
@@ -112,7 +112,7 @@ cat(paste('
 
 <table>
 <tr>
-<th>Global 2016</th><th>',region_to_report,' 2016</th><th>Comments</th>
+<th>Global 2015</th><th>Global 2016</th><th>Comments</th>
 </tr>
 <tr>
 <td>            
@@ -120,7 +120,7 @@ cat(paste('
 file = fileOut, append = TRUE) 
 
 # number of images in the folder
-nr_of_pages <- length(list.files(path = "GLO/", pattern = ".jpg"))
+nr_of_pages <- length(list.files(path = "GLO15/", pattern = ".jpg"))
 nr_of_pages <- nr_of_pages - 7
 for (i in 1:nr_of_pages){
     cat(paste0('
@@ -347,6 +347,11 @@ file = fileOut, append = TRUE)
 #   file.copy(flist, paste0(root.dir,"/output/html"), overwrite = TRUE)
 #   
 # }
+
+# Add data from bulk_download for Amanda
+file.copy("~/local_data/faostat/csv/faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
+file.copy("~/faosync/syb_bulk_database/metadata/meta_faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
+
 file.copy(paste0(root.dir,"/input/templates/toc.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 setwd(paste0(root.dir,"/output"))
 rmarkdown::render("toc.Rmd", output_file = "index.html")

@@ -52,6 +52,12 @@ for (book in books){
 - [All regional book](pdf/regional_books16.html)
 - [REU vs. Reu ru](pdf/REU_ru_REU.html)
 
+# Data
+
+- [all faostat in single csv (first 1000 lines)](data/faostat.csv) - *original has 72 million rows, 7,2 GB as .csv*
+- [metadata for the above](data/meta_faostat.csv)
+- [country level indicators for the book before aggregation](data/data_for_book.csv)
+
 # Data-apps
 
 
