@@ -16,11 +16,11 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                         # ,"RAP" # Asia and the Pacific
-                         # ,"RAF"  # Africa
-                        # ,"REU" # Europe and Central Asia
-                        # ,"RNE" # Near East and North Africa
+                      # "GLO" # Global
+                         "RAP" # Asia and the Pacific
+                         ,"RAF"  # Africa
+                        ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -393,6 +393,22 @@ load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-10-15/SYB201
 syb.df <- SYB.df; rm(SYB.df)
 
 syb.df <- syb.df[!syb.df$FAOST_CODE %in% "",]
+
+arvo <- FALSE
+
+if (arvo){
+  full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
+  csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
+  fao_bulk <- readRDS("~/local_data/faostat/rds/faostat.RDS")
+  fao_bulk$subcat <- csv_data$subcat[match(fao_bulk$id, csv_data$id)]
+  fao_bulk$FAOST_CODE <- fao_bulk$countrycode
+  fao_bulk$Year <- fao_bulk$year
+  fao_bulk %>% 
+    filter(subcat %in% "production_crops_e_all_data_(normalized)") %>% 
+    saveRDS(., "~/local_data/faostat/temp/production.RDS")
+}
+
+
 
 # s(syb.df$GN_6808_72182)
 
