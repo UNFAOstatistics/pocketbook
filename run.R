@@ -17,10 +17,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                         "RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                         # ,"RAP" # Asia and the Pacific
+                         # ,"RAF"  # Africa
+                        "REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -406,7 +406,13 @@ if (arvo){
   fao_bulk %>% 
     filter(subcat %in% "production_crops_e_all_data_(normalized)") %>% 
     saveRDS(., "~/local_data/faostat/temp/production.RDS")
-}
+  fao_bulk %>% 
+    filter(subcat %in% "production_livestock_e_all_data_(normalized)") %>% 
+    saveRDS(., "~/local_data/faostat/temp/livestockproduction.RDS")
+
+  
+  
+  }
 
 
 

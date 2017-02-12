@@ -49,7 +49,8 @@ for (book in books){
 - [REU ru 2016 vs. Global 2016](pdf/REU_ru.html)
 - [RNE 2016 vs. Global 2016](pdf/RNE.html)
 - [RAF 2016 vs. Global 2016](pdf/RAF.html)
-- [All regional book](pdf/regional_books16.html)
+- [All regional books](pdf/regional_books16.html)
+- [All 2016 books](pdf/all_books16.html)
 - [REU vs. Reu ru](pdf/REU_ru_REU.html)
 
 # Data

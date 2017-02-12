@@ -12,7 +12,7 @@ books <- c(
           ,"RAP"
           ,"RAF"
           ,"REU"
-          # ,"REU_ru"
+          ,"REU_ru"
           ,"RNE"
           )
 
@@ -288,6 +288,111 @@ cat(paste("
 </body>
 "),
 file = fileOut, append = TRUE) 
+
+
+# ---------------------------------------------
+# All 2016 books compared
+# ---------------------------------------------
+setwd(paste0(root.dir,"/output/pdf"))
+if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
+fileOut <- "all_books16.html"
+file.create(fileOut, showWarnings = FALSE)
+cat(paste('
+<body bgcolor="#669999">
+
+<h1> spreads<h1>
+
+<table>
+<tr>
+<th>Comments</th><th>REU</th><th>REU_ru</th><th>RAP</th><th>RAF</th><th>RNE</th><th>GLO</th>
+</tr>
+<tr>
+<td>            
+'),
+    file = fileOut, append = TRUE) 
+
+# number of images in the folder
+nr_of_pages <- length(list.files(path = "RNE/", pattern = ".jpg"))
+
+
+cat(paste0("
+<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016all?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(620+20),"></iframe> 
+</td>
+<td>
+"), file=fileOut, append=TRUE)
+
+
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="REU/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+'),
+      file = fileOut, append = TRUE) 
+}
+cat(paste('
+</td>
+          <td>
+          '),
+    file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+  cat(paste0('
+             <img src="REU_ru/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+             '),
+      file = fileOut, append = TRUE) 
+}
+
+cat(paste('
+</td>
+<td>
+'),
+    file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="RAP/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+'),
+      file = fileOut, append = TRUE) 
+}
+cat(paste('
+</td>
+<td>
+'),
+    file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="RAF/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+             '),
+      file = fileOut, append = TRUE) 
+}
+cat(paste('
+</td>
+          <td>
+          '),
+    file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+  cat(paste0('
+             <img src="RNE/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+             '),
+      file = fileOut, append = TRUE) 
+}
+cat(paste('
+</td>
+<td>
+          '),
+    file = fileOut, append = TRUE) 
+
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="GLO/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+'),
+      file = fileOut, append = TRUE) 
+}
+
+cat(paste("
+</td>
+</table>
+
+</body>
+"),
+    file = fileOut, append = TRUE) 
 
 
 

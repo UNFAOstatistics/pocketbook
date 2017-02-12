@@ -336,8 +336,7 @@ if (region_to_report == "REU" & rulang) short_text <- "Большинство л
 ## ---- P3cropproData ----
 
 # lets pull this from fao bulk
-# dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
-dat <- readRDS("~/local_data/faostat/temp/production.RDS")
+dat <- readRDS("~/local_data/faostat/temp/production.RDS") # crop production wad data processed in run.R
 
 
 
@@ -450,7 +449,7 @@ if (rulang) caption_text <- paste(ncases,"стран с наиболее выс�
 ## ---- P3cropproRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,QV.GPCPV.FOOD.ID.SHP)
+dat <- syb.df %>% filter(Year %in% c(2000,2013)) %>%  select(FAOST_CODE,Year,QV.GPCPV.FOOD.ID.SHP)
 
 dat <- dat[!is.na(dat$QV.GPCPV.FOOD.ID.SHP),]
 # Add region key and subset
@@ -469,7 +468,7 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -478,7 +477,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -495,8 +494,8 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Top",ncases,"food producing countries in 2012 based on net per capita food production value (constant 2004 - 2006 Int\\$)")
-if (rulang) caption_text <- paste(ncases,"стран с наиболее высокими показателями производства продовольствия в 2012 году на основе показателей чистого объема производства продовольствия на душу населения (в межд. постоянных долларах  2004 – 2006 гг.)")
+caption_text <- paste("Top",ncases,"food producing countries in 2013 based on net per capita food production value (constant 2004 - 2006 Int\\$)")
+if (rulang) caption_text <- paste(ncases,"стран с наиболее высокими показателями производства продовольствия в 2013 году на основе показателей чистого объема производства продовольствия на душу населения (в межд. постоянных долларах  2004 – 2006 гг.)")
 
 
 ## ---- P3cropproBOTTOM ----
@@ -580,8 +579,8 @@ p <- p + theme(legend.position = "none")
 p
 
 # Caption
-caption_text <- "Average annual growth in cereals production (2000-13)"
-if (rulang) caption_text <- "Среднегодовые темпы роста производства зерновых (2000-13 гг.)"
+caption_text <- "Average annual growth in cereals production (2000-14)"
+if (rulang) caption_text <- "Среднегодовые темпы роста производства зерновых (2000-14 гг.)"
 
 
 ## ---- P3cropproMAP ----
@@ -632,17 +631,11 @@ if (region_to_report == "REU" & rulang) short_text <- "Злаки, в частн
 ## ---- P3cropData ----
 
 # This should be thought twice how to produce it for regional books!
-if (!file.exists(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))){
-  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Crops_E_All_Data_(Norm).zip",
-                destfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"))
-  unzip(zipfile = paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).zip"),
-        exdir = data.dir)
-  dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
-} else dat <- read_csv(paste0(data.dir,"/Production_Crops_E_All_Data_(Norm).csv"))
+# lets pull this from fao bulk
+dat <- readRDS("~/local_data/faostat/temp/production.RDS") # crop production wad data processed in run.R
 
-names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
-# Remove two items
-dat <- dat[!dat$Item %in% c("Cereals (Rice Milled Eqv)","Vegetables Primary"),]
+# dat <- dat[!dat$Item %in% c("Cereals (Rice Milled Eqv)","Vegetables Primary"),]
+dat <- dat[!dat$itemcode %in% c(1817,1735),]
 
 
 # dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
@@ -653,34 +646,35 @@ dat <- left_join(dat,region_key)
 
 ## ---- P3cropTOPRIGHT ----
 dat <- dat[which(dat[[region_to_report]]),]
-d13 <- dat %>%  filter(Year == 2013, Element == "Production", FAOST_CODE < 5000) %>%
+dat$Item <- full_meta$item[match(dat$itemcode, full_meta$itemcode)]
+d13 <- dat %>%  filter(Year == 2014, elementcode == 5510, FAOST_CODE < 5000) %>%
   filter(!grepl("Total",Item)) %>%
   group_by(Item) %>%
-  dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
+  dplyr::summarise(Value = sum(value, na.rm = TRUE)) %>%
   arrange(-Value) %>%
   slice(1:5)
-d00 <- dat %>% filter(Year == 2000, Element == "Production", Item %in% d13$Item ) %>%
+d00 <- dat %>% filter(Year == 2000, elementcode == 5510, Item %in% d13$Item ) %>%
   filter(!grepl("Total",Item)) %>%
   group_by(Item) %>%
-  dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
+  dplyr::summarise(Value = sum(value, na.rm = TRUE)) %>%
   arrange(-Value) %>%
   slice(1:5)
 gg <- merge(d00,d13,by="Item")
 gg$Value.x <- gg$Value.x/1000
 gg$Value.y <- gg$Value.y/1000
 gg <- arrange(gg, -gg$Value.y)
-names(gg) <- c("","2000", "2013")
+names(gg) <- c("","2000", "2014")
 gg[[2]] <- round(gg[[2]],0)
 gg[[3]] <- round(gg[[3]],0)
 gg[[2]]<- prettyNum(gg[[2]], big.mark=" ")
 gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 
 tbl_data <- gg
-if (table_type == "latex") cap <- "\\large{Top five items produced in 2013, thousand tonnes}"
-if (table_type == "html")  cap <- "<b>Table: Top five items produced in 2013, thousand tonnes</b>"
+if (table_type == "latex") cap <- "\\large{Top five items produced in 2014, thousand tonnes}"
+if (table_type == "html")  cap <- "<b>Table: Top five items produced in 2014, thousand tonnes</b>"
 caption_text <- cap
 if (rulang){
-  caption_text <- "\\large{Пять самых распространенных продуктов, произведенных в 2013 году, тыс. тонн}"
+  caption_text <- "\\large{Пять самых распространенных продуктов, произведенных в 2014 году, тыс. тонн}"
   tbl_data[[1]][tbl_data[[1]] == "Wheat"] <- "Пшеница"
   tbl_data[[1]][tbl_data[[1]] == "Sugar beet"] <- "Сахарная свекла"
   tbl_data[[1]][tbl_data[[1]] == "Potatoes"] <- "Картофель"
@@ -702,17 +696,17 @@ print(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
 
 first <- as.character(gg[1,1])
 # data
-
-d <- dat %>% filter(Item %in% first, Element == "Production", Year %in% c(2000,2013)) %>%
+# dat$Item <- full_meta$item[match(dat$itemcode, full_meta$itemcode)]
+d <- dat %>% filter(Item %in% first, elementcode == 5510, Year %in% c(2000,2014)) %>%
   # select(FAOST_CODE,Year,Value,Unit,SHORT_NAME) %>%
-  mutate(Value = Value * 1000) # into kilograms
+  mutate(Value = value * 1000) # into kilograms
 
 # Add region key and subset
 
 d <- d[d$FAOST_CODE != 348,]
 d$SHORT_NAME[d$FAOST_CODE == 351] <- "China"
 
-per_capita <- syb.df %>% filter(Year %in% c(2000,2013)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
+per_capita <- syb.df %>% filter(Year %in% c(2000,2014)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
 
 d <- left_join(d,per_capita)
 
@@ -729,7 +723,7 @@ nro_latest_cases <- nrow(d[d$Year == max(d$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 d <- arrange(d, -Year, -Value)
 # slice the data for both years
-top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
+top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2014")
 top2000 <- d %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -738,7 +732,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
+  dat_plot$color[dat_plot$color == "2014"] <- "2014 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -765,15 +759,15 @@ if (rulang) caption_text <- paste(ncases,
 
 second <- as.character(gg[2,1])
 
-d <- dat %>% filter(Item %in% second, Element == "Production", Year %in% c(2000,2013)) %>%
+d <- dat %>% filter(Item %in% second, elementcode == 5510, Year %in% c(2000,2014)) %>%
   # select(FAOST_CODE,Year,Value,Unit,SHORT_NAME) %>%
-  mutate(Value = Value * 1000) # into kilograms
+  mutate(Value = value * 1000) # into kilograms
 
 
 d <- d[d$FAOST_CODE != 348,]
 d$SHORT_NAME[d$FAOST_CODE == 351] <- "China"
 
-per_capita <- syb.df %>% filter(Year %in% c(2000,2013)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
+per_capita <- syb.df %>% filter(Year %in% c(2000,2014)) %>% select(FAOST_CODE,Year,OA.TPBS.POP.PPL.NO)
 
 d <- left_join(d,per_capita)
 
@@ -790,7 +784,7 @@ nro_latest_cases <- nrow(d[d$Year == max(d$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 d <- arrange(d, -Year, -Value)
 # slice the data for both years
-top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
+top2015 <- d %>% slice(1:ncases) %>% dplyr::mutate(color = "2014")
 top2000 <- d %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -799,7 +793,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
+  dat_plot$color[dat_plot$color == "2014"] <- "2014 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -823,19 +817,19 @@ if (rulang) caption_text <- paste(ncases,
 
 
 ## ---- P3cropBOTTOM ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Area,Year,
          QC.YIELD.CRLS.HG.NO)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Area,Year,
          QC.YIELD.CRLS.HG.NO)
 if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Area,Year,
          QC.YIELD.CRLS.HG.NO)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Area,Year,
          QC.YIELD.CRLS.HG.NO)
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Area,Year,
          QC.YIELD.CRLS.HG.NO)
 dat_plot <- na.omit(dat)
@@ -848,7 +842,7 @@ p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plo
 p <- p + labs(y="hg/capita\n", x="")
 if (rulang) p <- p + labs(x="",y="Гг на душу населения\n")
 p <- p + guides(color = guide_legend(nrow = 3))
-p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
+p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012,2014))
 p <- p + scale_y_continuous(labels=space)
 p
 
@@ -858,7 +852,7 @@ if (rulang) caption_text <- "Зерновые, урожайность, в гек
 
 
 ## ---- P3cropMAP ----
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,QC.PRD.CRLS.TN.SHP) %>% mutate(QC.PRD.CRLS.TN.SHP = QC.PRD.CRLS.TN.SHP * 1000)
+dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,QC.PRD.CRLS.TN.SHP) %>% mutate(QC.PRD.CRLS.TN.SHP = QC.PRD.CRLS.TN.SHP * 1000)
 
 dat <- dat[dat$FAOST_CODE != 351,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -881,8 +875,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Cereal production, kg/cap (2013)"
-if (rulang) caption_text <- "Производство зерновых, кг/чел (2013 г.)"
+caption_text <- "Cereal production, kg/cap (2014)"
+if (rulang) caption_text <- "Производство зерновых, кг/чел (2014 г.)"
 
 
 
@@ -905,31 +899,24 @@ if (region_to_report == "REU" & rulang) short_text <- "Продовольств�
 
 ## ---- P3livestockData ----
 
-# This should be thought twice how to produce it for regional books!
-if (!file.exists(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))){
-  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Livestock_E_All_Data_(Norm).zip",
-                destfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"))
-  unzip(zipfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"),
-        exdir = data.dir)
-  dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
-} else dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
-
-names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
-dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
+# subsetting fao bulk data
+dat <- readRDS("~/local_data/faostat/temp/livestockproduction.RDS")
+dat$Item <- full_meta$item[match(dat$itemcode, full_meta$itemcode)]
+dat$Value <- ifelse(dat$unit %in% "1000 Head", dat$value * 1000, dat$value)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
 ## ---- P3livestockTOPRIGHT ----
 dat <- dat[which(dat[[region_to_report]]),]
-d13 <- dat %>%  filter(Year %in% 2013, Unit %in% c("Head","1000 Head")) %>%
+d13 <- dat %>%  filter(Year %in% 2014, unit %in% c("Head","1000 Head")) %>%
   filter(!grepl("Total",Item),
          !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes","Rabbits and hares") # Rabbits and hares because Nigeria in 2013 figures
   ) %>%
   group_by(Item) %>%
   dplyr::summarise(Value = sum(Value, na.rm = TRUE)) %>%
   arrange(-Value)
-d00 <- dat %>%  filter(Year %in% 2000, Unit %in% c("Head","1000 Head")) %>%
+d00 <- dat %>%  filter(Year %in% 2000, unit %in% c("Head","1000 Head")) %>%
   filter(!grepl("Total",Item),
          !Item %in% c("Poultry Birds","Sheep and Goats","Cattle and Buffaloes","Rabbits and hares") # Rabbits and hares because Nigeria in 2013 figures)
   ) %>%
@@ -941,7 +928,7 @@ gg$Value.x <- gg$Value.x/1000
 gg$Value.y <- gg$Value.y/1000
 gg <- arrange(gg, -gg$Value.y)
 gg <- gg[1:5,]
-names(gg) <- c("","2000", "2013")
+names(gg) <- c("","2000", "2014")
 gg[[2]] <- round(gg[[2]],0)
 gg[[3]] <- round(gg[[3]],0)
 gg[[2]]<- prettyNum(gg[[2]], big.mark=" ")
@@ -950,11 +937,11 @@ gg[[3]]<- prettyNum(gg[[3]], big.mark=" ")
 top_animal <- gg[1,1]
 
 tbl_data <- gg
-if (table_type == "latex") cap <- "\\large{Live animal number, top 5 in 2013 (thousand heads)}"
-if (table_type == "html")  cap <- "<b>Table: Live animal number, top 5 in 2013 (thousand heads)</b>"
+if (table_type == "latex") cap <- "\\large{Live animal number, top 5 in 2014 (thousand heads)}"
+if (table_type == "html")  cap <- "<b>Table: Live animal number, top 5 in 2014 (thousand heads)</b>"
 caption_text <- cap
 if (rulang){
-  caption_text <- "\\large{Число самых распространенных животных в 2013 году (тыс. голов)}"
+  caption_text <- "\\large{Число самых распространенных животных в 2014 году (тыс. голов)}"
   tbl_data[[1]][tbl_data[[1]] == "Chickens"] <- "Куры"
   tbl_data[[1]][tbl_data[[1]] == "Sheep"] <- "Овцы"
   tbl_data[[1]][tbl_data[[1]] == "Pigs"] <- "Свиньи"
@@ -975,7 +962,7 @@ print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
 
 ## ---- P3livestockLEFT ----
 # data
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.MILK.TN.NO) %>%  mutate(QL.PRD.MILK.TN.NO = QL.PRD.MILK.TN.NO / 1000000)
+dat <- filter(syb.df, Year %in% 2014) %>% select(FAOST_CODE,Year,QL.PRD.MILK.TN.NO) %>%  mutate(QL.PRD.MILK.TN.NO = QL.PRD.MILK.TN.NO / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -1013,14 +1000,14 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Total milk production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
-if (rulang) caption_text <- paste("Общий объем производства молока,",nrow(dat_plot)/2,"стран с самыми высокими и самими низкими показателями (2012 г.)")
+caption_text <- paste("Total milk production, top and bottom",nrow(dat_plot)/2,"countries (2014)")
+if (rulang) caption_text <- paste("Общий объем производства молока,",nrow(dat_plot)/2,"стран с самыми высокими и самими низкими показателями (2014 г.)")
 
 
 
 ## ---- P3livestockRIGHT ----
 
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO) %>%  mutate(QL.PRD.EGG.TN.NO = QL.PRD.EGG.TN.NO / 1000000)
+dat <- filter(syb.df, Year %in% 2014) %>% select(FAOST_CODE,Year,QL.PRD.EGG.TN.NO) %>%  mutate(QL.PRD.EGG.TN.NO = QL.PRD.EGG.TN.NO / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -1058,21 +1045,15 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Total egg production, top and bottom",nrow(dat_plot)/2,"countries (2012)")
-if (rulang) caption_text <- paste("Общий объем производства яиц,",nrow(dat_plot)/2,"стран с самыми высокими и самими низкими показателями (2012 г.)")
+caption_text <- paste("Total egg production, top and bottom",nrow(dat_plot)/2,"countries (2014)")
+if (rulang) caption_text <- paste("Общий объем производства яиц,",nrow(dat_plot)/2,"стран с самыми высокими и самими низкими показателями (2014 г.)")
 
 
 ## ---- P3livestockBOTTOM ----
-if (!file.exists(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))){
-  download.file("http://faostat3.fao.org/faostat-bulkdownloads/Production_Livestock_E_All_Data_(Norm).zip",
-                destfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"))
-  unzip(zipfile = paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).zip"),
-        exdir = data.dir)
-  dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
-} else dat <- read_csv(paste0(data.dir,"/Production_Livestock_E_All_Data_(Norm).csv"))
+dat <- readRDS("~/local_data/faostat/temp/livestockproduction.RDS")
+dat$Item <- full_meta$item[match(dat$itemcode, full_meta$itemcode)]
+dat$Value <- ifelse(dat$unit %in% "1000 Head", dat$value * 1000, dat$value)
 
-names(dat)[names(dat)=="Country Code"] <- "FAOST_CODE"
-dat$Value <- ifelse(dat$Unit %in% "1000 Head", dat$Value * 1000, dat$Value)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -1091,7 +1072,7 @@ if (rulang){
 # merge data with the region info
 dat <- merge(dat,df[c("FAOST_CODE","subgroup")],by="FAOST_CODE")
 
-d <- dat %>% filter(Item == top_animal, Year %in% c(2000,2013), Unit %in% c("Head","1000 Head")) %>%
+d <- dat %>% filter(Item == top_animal, Year %in% c(2000,2014), unit %in% c("Head","1000 Head")) %>%
   group_by(Year,subgroup) %>%
   dplyr::summarise(Value = sum(Value,na.rm=TRUE)) %>%
   na.omit() %>%
@@ -1143,13 +1124,13 @@ p
 
 
 # Caption
-caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2013 (million heads)")
-if (rulang) caption_text <- "Производство кур (самое распространенное домашнее животное в регионе) в 2000 и 2013 гг. (в млн голов)"
+caption_text <- paste0("Production of ",tolower(top_animal)," (regions most produced animal) in 2000 and 2014 (million heads)")
+if (rulang) caption_text <- "Производство кур (самое распространенное домашнее животное в регионе) в 2000 и 2014 гг. (в млн голов)"
 
 
 
 ## ---- P3livestockMAP ----
-dat <- syb.df %>% filter(Year %in% 2012) %>% select(FAOST_CODE,
+dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,
                                                     QA.STCK.CB.HD.SHL)
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
@@ -1178,8 +1159,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Cattle and buffaloes per ha of agricultural area, heads per ha (2012)"
-if (rulang) caption_text <- "Крупный рогатый скот и буйволы на один гектар сельскохозяйственных угодий, голов/га (2012 г.)"
+caption_text <- "Cattle and buffaloes per ha of agricultural area, heads per ha (2014)"
+if (rulang) caption_text <- "Крупный рогатый скот и буйволы на один гектар сельскохозяйственных угодий, голов/га (2014 г.)"
 
 
 #   _____  _       _                  _
@@ -1248,6 +1229,7 @@ p <- p + labs(x="",y="million tonnes\n")
 if (rulang) p <- p + labs(x="",y="млн тонн\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(axis.text.x = element_text(angle=45))
+p  <-p +  scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2013))
 p
 
 # Caption
@@ -1256,7 +1238,7 @@ if (rulang) caption_text <- "Рыбная продукция аквакульт�
 
 
 ## ---- P3fisheriesLEFT ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,capture_fish_production) %>% mutate(capture_fish_production = capture_fish_production / 1000000)
+dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,Year,capture_fish_production) %>% mutate(capture_fish_production = capture_fish_production / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -1299,7 +1281,7 @@ if (rulang) caption_text <- paste(nrow(dat_plot)/2,"стран с самыми �
 
 ## ---- P3fisheriesRIGHT ----
 
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,aquaculture_fish_production) %>% mutate(aquaculture_fish_production = aquaculture_fish_production / 1000000)
+dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,Year,aquaculture_fish_production) %>% mutate(aquaculture_fish_production = aquaculture_fish_production / 1000000)
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -1431,7 +1413,7 @@ if (region_to_report == "REU" & rulang) short_text <- "Большая часть
 
 ## ---- P3tradeTOPRIGHT ----
 
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2012, FAOST_CODE %in% 12001:12005) %>%
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.FOOD.USD.NO,   # food export value
          TP.IMVAL.FOOD.USD.NO) # food import value
@@ -1492,7 +1474,7 @@ print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
 
 ## ---- P3tradeLEFT ----
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.IMVAL.FOOD.USD.NO) %>% mutate(TP.IMVAL.FOOD.USD.NO = TP.IMVAL.FOOD.USD.NO / 1000000000)
+dat <- syb.df %>% filter(Year %in% c(2000,2013)) %>%  select(FAOST_CODE,Year,TP.IMVAL.FOOD.USD.NO) %>% mutate(TP.IMVAL.FOOD.USD.NO = TP.IMVAL.FOOD.USD.NO / 1000000000)
 
 dat <- dat[!is.na(dat$TP.IMVAL.FOOD.USD.NO),]
 # Add region key and subset
@@ -1511,7 +1493,7 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -1520,7 +1502,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -1536,15 +1518,15 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Top",ncases,"food importing countries in 2012")
-if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями импорта продовольствия в 2012 году")
+caption_text <- paste("Top",ncases,"food importing countries in 2013")
+if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями импорта продовольствия в 2013 году")
 
 
 
 ## ---- P3tradeRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,TP.EXVAL.FOOD.USD.NO) %>% mutate(TP.EXVAL.FOOD.USD.NO = TP.EXVAL.FOOD.USD.NO / 1000000000)
+dat <- syb.df %>% filter(Year %in% c(2000,2013)) %>%  select(FAOST_CODE,Year,TP.EXVAL.FOOD.USD.NO) %>% mutate(TP.EXVAL.FOOD.USD.NO = TP.EXVAL.FOOD.USD.NO / 1000000000)
 
 dat <- dat[!is.na(dat$TP.EXVAL.FOOD.USD.NO),]
 # Add region key and subset
@@ -1563,7 +1545,7 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -1572,7 +1554,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -1589,24 +1571,24 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Top",ncases,"food exporting countries in 2012")
-if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями экспорта продовольствия в 2012 году")
+caption_text <- paste("Top",ncases,"food exporting countries in 2013")
+if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями экспорта продовольствия в 2013 году")
 
 
 ## ---- P3tradeBOTTOM ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Area,Year,
          TP.EXVAL.CRLS.USD.NO)   # cereal export value
 dat_plot <- na.omit(dat)
@@ -1621,7 +1603,7 @@ p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plo
 p <- p + labs(y="billion constant 2005 US$\n", x="")
 if (rulang) p <- p + labs(x="",y="млрд долл. США в постоянных ценах 2005 г.\n")
 p <- p + guides(color = guide_legend(nrow = 3))
-p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2012))
+p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2013))
 p
 
 # Caption
@@ -1629,7 +1611,7 @@ caption_text <- "Cereal exports"
 if (rulang) caption_text <- "Экспорт зерновых"
 
 ## ---- P3tradeMAP ----
-dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,
+dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
                                                     TI.IMVAL.FOOD.IN.NO)
 
 dat <- dat[dat$FAOST_CODE != 351,]
@@ -1654,5 +1636,5 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Import value index (2004-2006 = 100, 2011)"
-if (rulang) caption_text <- "Индекс стоимости импорта (2004-2006 гг.= 100, 2011 г.)"
+caption_text <- "Import value index (2004-2006 = 100, 2013)"
+if (rulang) caption_text <- "Индекс стоимости импорта (2004-2006 гг.= 100, 2013 г.)"
