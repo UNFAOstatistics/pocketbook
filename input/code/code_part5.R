@@ -62,12 +62,19 @@ if (region_to_report != "COF"){
 }
 
 if (region_to_report == "COF"){
-  dat <- df[df$FAOST_CODE == 5000,]
-  dat$variable <- as.character(dat$variable)
-  dat$variable[dat$variable == "OA_3010_551"] <- "Rural population"
-  dat$variable[dat$variable == "OA_3010_561"] <- "Urban population"
-  dat$value <- dat$value /1000000
+  dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPU.POP.PPL.NO,OA.TPR.POP.PPL.NO)
+  dat <- dat[!is.na(dat$OA.TPR.POP.PPL.NO),]
+  dat <- left_join(dat,region_key)
+  dat <- dat %>% filter(FAOST_CODE %in% 5000)
 }
+
+dat <- gather(dat, variable, value, 3:4)
+
+dat$variable <- as.character(dat$variable)
+dat$variable[dat$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
+dat$variable[dat$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
+
+dat <- dat %>% group_by(Year,variable) %>%  dplyr::summarise(value = sum(value, na.rm=TRUE)/1000000000)
 
 # Draw the plot
 p <- ggplot(dat, aes(x = Year, y = value))
@@ -106,6 +113,8 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Coun
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, OA.TPBS.POP.PPL.GR10),y=OA.TPBS.POP.PPL.GR10))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = OA.TPBS.POP.PPL.GR10, color=color), alpha=.5) + theme(panel.grid.major.y = element_blank())
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -133,6 +142,8 @@ bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Coun
 dat_plot <- rbind(top10,bot10)
 
 p <- ggplot(dat_plot, aes(x=reorder(SHORT_NAME, SP.DYN.LE00.IN),y=SP.DYN.LE00.IN))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = SP.DYN.LE00.IN, color=color), alpha=.5) + theme(panel.grid.major.y = element_blank())
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()

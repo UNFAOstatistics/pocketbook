@@ -21,7 +21,7 @@ library(pdftools)
 root.dir <- "~/faosync/pocketbooks/pocketbook/"
 
 # boooks <- list.files(path = paste0(root.dir,"/output/pdf/"), pattern = ".pdf", full.names = TRUE)
-books <- c("GLO", "RAF", "RAP", "REU", "REU_ru", "RNE")
+books <- c("GLO", "RAF", "RAP", "REU", "REU_ru", "RNE","COF")
 pdfinfodata <- data_frame()
 for (book in books){
   path <- paste0(root.dir,"/output/pdf/syb_main_",book,".pdf")
@@ -40,6 +40,7 @@ for (book in books){
 | [RAP](pdf/syb_main_RAP.pdf) | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$pages``|
 | [RAF](pdf/syb_main_RAF.pdf) | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$pages``|
 | [RNE](pdf/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``|
+| [Coffee](pdf/syb_main_COF.pdf) | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$pages``|
 
 # Comparisons
 

@@ -154,6 +154,8 @@ dat_plot$SHORT_NAME  <- factor(dat_plot$SHORT_NAME, levels=top15[order(top15$QC_
 
 #
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QC_656_5510))
+p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+                          yend = QC_656_5510, color=color), alpha=.5) + theme(panel.grid.major.y = element_blank())
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
