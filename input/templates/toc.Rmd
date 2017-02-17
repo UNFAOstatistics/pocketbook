@@ -12,6 +12,13 @@ output:
 ---
 
 
+
+<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Read this!</h4>
+  <p>TESTED WITH LATEST FIREFOX BROWSER, TRY USING IT IF PROBLEMS</p>
+</div>
+
 # Current pdfs
 
 
@@ -67,4 +74,4 @@ for (book in books){
 
 # misc
 
-- [working hours](http://koti.kapsi.fi/~muuankarski/fao/timesheet/fao_working_hours.html)
+- [working hours](http://software.markuskainu.fi/fao/timesheet/fao_working_hours.html)

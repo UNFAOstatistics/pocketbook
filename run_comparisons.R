@@ -454,8 +454,8 @@ cat(paste("
 # }
 
 # Add data from bulk_download for Amanda
-file.copy("~/local_data/faostat/csv/faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
-file.copy("~/faosync/syb_bulk_database/metadata/meta_faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
+# file.copy("~/local_data/faostat/csv/faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
+# file.copy("~/faosync/syb_bulk_database/metadata/meta_faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
 
 file.copy(paste0(root.dir,"/input/templates/toc.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 setwd(paste0(root.dir,"/output"))

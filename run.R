@@ -25,7 +25,7 @@ regionS_to_report <- c(
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -47,10 +47,10 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
+include_part1        <- T
+include_part2        <- T
 include_part3        <- T
-include_part4        <- F
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -58,8 +58,8 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
-include_definitions      <- F
+include_country_profiles <- T
+include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
@@ -388,11 +388,16 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-12-15-20/SYB2016-12-15-20.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-06-19/SYB2017-02-06-19.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-07-18/SYB2017-02-07-18.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-10-15/SYB2017-02-10-15.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-10-15/SYB2017-02-10-15.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-13-22/SYB2017-02-13-22.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-15-08/SYB2017-02-15-08.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-17-00/SYB2017-02-17-00.RData")
 
 syb.df <- SYB.df; rm(SYB.df)
 
 syb.df <- syb.df[!syb.df$FAOST_CODE %in% "",]
+
+# quick fix for short names!!!
 
 arvo <- FALSE
 
@@ -409,10 +414,16 @@ if (arvo){
   fao_bulk %>% 
     filter(subcat %in% "production_livestock_e_all_data_(normalized)") %>% 
     saveRDS(., "~/local_data/faostat/temp/livestockproduction.RDS")
-
   
   
   }
+
+source("../pocketbook_database/code/read_functions/ReadMetadata.R")
+meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
+                         encoding = "UTF-8")
+meta_full <- meta.lst[["FULL"]]
+full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
+csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 
 
 
@@ -485,8 +496,8 @@ syb.df$FAOST_CODE <- as.numeric(levels(syb.df$FAOST_CODE))[syb.df$FAOST_CODE]
 
 
 
-
-syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], by = "FAOST_CODE", all.x = TRUE)
+syb.df <- merge(syb.df, FAOcountryProfile[, c("FAOST_CODE", "SHORT_NAME")], 
+                by = "FAOST_CODE", all.x = TRUE)
 
 
 # Fill missing values in SHORT_NAME with FAO_TABLE_NAME
