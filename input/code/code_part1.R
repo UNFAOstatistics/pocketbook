@@ -69,7 +69,7 @@ dat <- left_join(dat,region_key)
 
 if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000)
 if (region_to_report == "RAP")  dat <- dat %>% filter(FAOST_CODE %in% 13000)
-if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
+if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
 if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
 if (region_to_report == "GLO")  dat <- dat %>% filter(FAOST_CODE %in% 5000)
 
@@ -128,8 +128,8 @@ p <- p + geom_area(aes(fill=variable), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="billion people\n")
 if (rulang) p <- p + labs(x="",y="млрд человек\n")
-p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
-p <- p + scale_x_continuous(breaks=c(1961,2000,2015,2050))
+p <- p + geom_vline(aes(xintercept=2016), color="grey20", linetype="dashed")
+p <- p + scale_x_continuous(breaks=c(1961,2000,2016,2050))
 p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
@@ -150,8 +150,8 @@ if (region_to_report == "REU" & rulang)  caption_text <- "Сельское и г
 
 ## ---- P1overLEFT ----
 # data
-dat <- filter(syb.df, Year %in%
-                c(2004:2014)) %>%
+dat <- syb.df %>% 
+  filter(Year %in% c(2006:2016)) %>%
   group_by(FAOST_CODE,SHORT_NAME) %>%
   dplyr::summarise(OA.TPBS.POP.PPL.GR10 = mean(OA.TPBS.POP.PPL.GR10, na.rm=TRUE))
 dat <- ungroup(dat)
@@ -187,15 +187,18 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Population, average annual growth, top and bottom",nrow(dat_plot)/2,"countries (2004-2014)")
-if (rulang) caption_text <- paste("Население, среднегодовые темпы роста,",nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями (2004-2014 гг.)")
+caption_text <- paste("Population, average annual growth, top and bottom",nrow(dat_plot)/2,"countries (2006-2016)")
+if (rulang) caption_text <- paste("Население, среднегодовые темпы роста,",nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями (2006-2016 гг.)")
 
 
 
 ## ---- P1overRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% 2011) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
+# wdi_df <- readRDS("~/local_data/wdi/rds/WB_tmp.RDS")
+# saveRDS(WB.df, "~/local_data/wdi/rds/WB_tmp.RDS")
+
+dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SP.DYN.LE00.IN)
 dat <- dat[!is.na(dat$SP.DYN.LE00.IN),]
 
 # Add region key and subset
@@ -229,37 +232,38 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Life expectancy at birth, top and bottom",nrow(dat_plot)/2,"countries (2013)")
-if (rulang) caption_text <- paste("Ожидаемая продолжительность жизни при рождении, ",nrow(dat_plot)/2,"стран с самыми высокими самими низкими значениями (2013 г.)")
+caption_text <- paste("Life expectancy at birth, top and bottom",nrow(dat_plot)/2,"countries (2014)")
+if (rulang) caption_text <- paste("Ожидаемая продолжительность жизни при рождении, ",nrow(dat_plot)/2,"стран с самыми высокими самими низкими значениями (2014 г.)")
 
 
 ## ---- P1overBOTTOM ----
 # data
+# New variable from ILO ILO_EMP_2EMP_SEX_AGE_NB - "Employment by sex and age -- ILO estimates and projections, Nov. 2016 (thousands)"
 
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>% select(FAOST_CODE,Year,SHORT_NAME,OA.TEAPT.POP.PPL.NO)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year <= 2016) %>% select(FAOST_CODE,Year,SHORT_NAME,ILO_EMP_2EMP_SEX_AGE_NB)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year <= 2016) %>% select(FAOST_CODE,Year,SHORT_NAME,ILO_EMP_2EMP_SEX_AGE_NB)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year <= 2016) %>% select(FAOST_CODE,Year,SHORT_NAME,ILO_EMP_2EMP_SEX_AGE_NB)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year <= 2016) %>% select(FAOST_CODE,Year,SHORT_NAME,ILO_EMP_2EMP_SEX_AGE_NB)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year <= 2016) %>% select(FAOST_CODE,Year,SHORT_NAME,ILO_EMP_2EMP_SEX_AGE_NB)
 
-dat_plot <- dat[!is.na(dat$OA.TEAPT.POP.PPL.NO),]
+dat_plot <- dat[!is.na(dat$ILO_EMP_2EMP_SEX_AGE_NB),]
 
-dat_plot$OA.TEAPT.POP.PPL.NO <- dat_plot$OA.TEAPT.POP.PPL.NO / 1000000
+dat_plot$ILO_EMP_2EMP_SEX_AGE_NB <- dat_plot$ILO_EMP_2EMP_SEX_AGE_NB / 1000000
 
 if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME)
 
-p <- ggplot(dat_plot, aes(x=Year,y=OA.TEAPT.POP.PPL.NO,color=SHORT_NAME))
+p <- ggplot(dat_plot, aes(x=Year,y=ILO_EMP_2EMP_SEX_AGE_NB,color=SHORT_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="million people\n")
 if (rulang) p <- p + labs(x="",y="млн человек\n")
 p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + scale_x_continuous(breaks=c(1991,2000,2010,2016))
 p
 
 # Caption
-caption_text <- "Total economically active population (2000 to 2014)"
-if (rulang) caption_text <- "Общая численность экономически активного населения (с 2000 по 2014 гг.)"
-
+caption_text <- "Total economically active population (1991 to 2016)"
+if (rulang) caption_text <- "Общая численность экономически активного населения (с 1991 по 2016 гг.)"
 
 
 ## ---- P1overMAP ----
@@ -658,14 +662,16 @@ if (rulang) caption_text <- paste("Доля мужского населения,
 
 
 ## ---- P1laboBOTTOM ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2000:2014) %>% select(SHORT_NAME,Year,OA.TEAPFA.POP.PPL.NO,OA.TEAPF.POP.PPL.NO)
+# New variables from ILO based on "Employment by sex and economic activity -- ILO estimates and projections, Nov. 2016 (thousands)"
+# ILO_female_emp_agri - female in agriculture share of total female
 
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2016) %>% select(SHORT_NAME,Year,ILO_female_emp_agri)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2016) %>% select(SHORT_NAME,Year,ILO_female_emp_agri)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2016) %>% select(SHORT_NAME,Year,ILO_female_emp_agri)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2016) %>% select(SHORT_NAME,Year,ILO_female_emp_agri)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2000:2016) %>% select(SHORT_NAME,Year,ILO_female_emp_agri)
 
-dat$share <- dat$OA.TEAPFA.POP.PPL.NO / dat$OA.TEAPF.POP.PPL.NO * 100
+dat$share <- dat$ILO_female_emp_agri
 
 dat_plot <- dat
 
@@ -682,7 +688,7 @@ p <- p + guides(color = guide_legend(nrow = 3))
 p
 
 # Caption
-caption_text <- "Female employment in agriculture, share of female employment (2000-2014)"
+caption_text <- "Female employment in agriculture, share of female employment (2000-2016)"
 if (rulang) caption_text <- "Доля женского населения, занятого в сельском хозяйстве, среди экономически активного женского населения (2000-2014 гг.)"
 
 ## ---- P1laboMAP ----
