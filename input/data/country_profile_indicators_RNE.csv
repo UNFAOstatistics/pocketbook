@@ -11,7 +11,7 @@ The setting,10,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
 The setting,11,RF.FERT.NI.TN.SH,,,"Fertilizers, Nitrogen (kg per ha)",0.001,0
 The setting,12,RF.FERT.PH.TN.SH,,,"Fertilizers, Phosphate (kg per ha)",0.001,0
 The setting,13,RF.FERT.PO.TN.SH,,,"Fertilizers, Potash (kg per ha)",0.001,0
-The setting,14,energy.for.power.irrigation,,,"Energy consump, power irrigation (mln kWh)",1000000,0
+The setting,14,GN_6808_72182,,,"Energy consump, power irrigation (mln kWh)",1000000,0
 The setting,15,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),,0
 Hunger dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
 Hunger dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1

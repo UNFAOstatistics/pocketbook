@@ -9,7 +9,7 @@
 "The setting",10,"RF.FERT.NI.TN.SH",NA,NA,"Fertilizers, Nitrogen (kg per ha)",0.001,1,"Удобрения, азот (кг/га)","Контекст"
 "The setting",11,"RF.FERT.PH.TN.SH",NA,NA,"Fertilizers, Phosphate (kg per ha)",0.001,1,"Удобрения, фосфат (кг/га)","Контекст"
 "The setting",12,"RF.FERT.PO.TN.SH",NA,NA,"Fertilizers, Potash (kg per ha)",0.001,1,"Удобрения,  поташ (кг/га)","Контекст"
-"The setting",13,"energy.for.power.irrigation",NA,NA,"Energy consump, power irrigation (mln kWh)",1e+06,0,"Потр. энерг. для орошения машинн. спос. (млн кВтч)","Контекст"
+"The setting",13,"GN_6808_72182",NA,NA,"Energy consump, power irrigation (mln kWh)",1e+06,0,"Потр. энерг. для орошения машинн. спос. (млн кВтч)","Контекст"
 "The setting",14,"EA.PRD.AGRI.KD",NA,NA,"Agr value added per worker (constant US$)",NA,1,"Добав. стоимость в сель. хоз. на одного работника (в пост. долл. США)","Контекст"
 "The setting",15,"NY.GDP.PCAP.PP.KD",NA,NA,"GDP per capita (US$, PPP)",NA,0,"ВВП на душу населения (в долл. США, по ППС)","Контекст"
 "Hunger and dietary quality dimensions",16,"FBS.PCS.PDES.KCD3D",NA,NA,"Dietary energy supply (kcal/pc/day)",NA,0,"Предложение пищевой энергии (ккал/чел/день)","Аспекты голода и рациона питания"
