@@ -2,13 +2,13 @@ PART,ORDER,INDICATOR1,INDICATOR2,INDICATOR3,SERIES_NAME_SHORT,MULTIPLIER,DIGITS
 The setting,1,OA.TPBS.POP.PPL.NO,,,"Population, total (mln)",,1
 The setting,2,OA.TPBS.POP.PPL.GR10,,,"Population, growth (%)",,1
 The setting,3,rural_pop_share,,,"Population, rural (% total population)",,1
-The setting,4,IG.AFFH.STOCGG.USD.SH,,,Govt expenditure on ag (% total outlays),,1
+The setting,4,IG_6111_23161,,,Govt expenditure on ag (% total outlays),,1
 The setting,5,area_harvested,,,Area harvested (mln ha),1000000,1
 The setting,7,AQ.WAT.WATPCP.MC.NO,,,Water resources (m3/person/year),1000,0
 The setting,8,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1000 ha),1000,0
 The setting,9,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (%),,1
 The setting,10,SL.AGR.EMPL.ZS,,,Employment in agriculture (%),,1
-The setting,11,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
+The setting,11,ILO_female_emp_agri,,,"Employment in agriculture, female (%)",,1
 The setting,13,RF.FERT.NI.TN.SH,,,"Fertilizers, Nitrogen (kg per ha)",0.001,0
 The setting,14,RF.FERT.PH.TN.SH,,,"Fertilizers, Phosphate (kg per ha)",0.001,0
 The setting,15,RF.FERT.PO.TN.SH,,,"Fertilizers, Potash (kg per ha)",0.001,0
