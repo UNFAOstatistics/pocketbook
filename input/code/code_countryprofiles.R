@@ -117,7 +117,7 @@ sanitizeToHTML <- function(str, html=FALSE, type=c("text","table")) {
 
 
 ## -------------------------------------------------------------------------------------
-# Variables in common
+# merge with FSI with syb.df for country profiles
 
 
 if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
@@ -126,16 +126,84 @@ if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
 
   dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
   vars_to_exclude <- names(syb.df)[names(syb.df) %in% names(dat)][c(-1:-4,-14)]
-  myvars <- names(syb.df) %in% vars_to_exclude
-  syb.df <- syb.df[!myvars]
-
-  vars_to_exclude <- c("FAO_TABLE_NAME","SHORT_NAME","Area")
+  # myvars <- names(syb.df) %in% vars_to_exclude
+  # syb.df <- syb.df[!myvars]
   myvars <- names(dat) %in% vars_to_exclude
   dat <- dat[!myvars]
+
+  vars_to_exclude <- c("FAO_TABLE_NAME","SHORT_NAME","Area")
+  # myvars <- names(dat) %in% vars_to_exclude
+  # dat <- dat[!myvars]
+  myvars <- names(syb.df) %in% vars_to_exclude
+  syb.df <- syb.df[!myvars]
 
 
   syb.df <- merge(syb.df,dat,by=c("FAOST_CODE","Year"),all.x=TRUE)
 }
+
+
+# syb.df %>% select(FAOST_CODE,Year,
+#                   # FS.OU.VAD.PCT,
+#                   # SI.POV.DDAY,
+#                   # GN_6808_72182,
+#                   ILO_female_emp_agri) %>%
+#   # filter(!is.na(FS.OU.VAD.PCT)) %>%
+#   # filter(!is.na(SI.POV.DDAY)) %>%
+#   filter(!is.na(ILO_female_emp_agri)) %>%
+#   # group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>%
+#   left_join(.,FAOcountryProfile[c("FAOST_CODE","FAO_TABLE_NAME")]) %>%
+#   arrange(FAO_TABLE_NAME) %>%
+#   filter(FAO_TABLE_NAME == "China") %>%
+#   as.data.frame(.)
+
+
+# An awful china hack
+
+syb.df_357 <- syb.df %>% filter(FAOST_CODE == 357)
+syb.df_41 <- syb.df %>% filter(FAOST_CODE == 41)
+syb.df_351 <- syb.df %>% filter(FAOST_CODE == 351)
+
+for (y in unique(syb.df_351$Year)) {
+  for (i in unique(names(syb.df_351))) {
+    syb.df_351[syb.df_351$Year == y, i] <- ifelse(is.na(syb.df_351[syb.df_351$Year == y,i]),
+                                                    syb.df_41[syb.df_41$Year == y, i],
+                                                    syb.df_351[syb.df_351$Year == y, i])
+    
+  }
+}
+
+for (y in unique(syb.df_351$Year)) {
+  for (i in unique(names(syb.df_351))) {
+    syb.df_351[syb.df_351$Year == y, i] <- ifelse(is.na(syb.df_351[syb.df_351$Year == y,i]),
+                                                  syb.df_357[syb.df_357$Year == y, i],
+                                                  syb.df_351[syb.df_351$Year == y, i])
+    
+  }
+}
+
+# sum(colSums(is.na(syb.df_357)))
+# sum(colSums(is.na(syb.df_41)))
+# sum(colSums(is.na(syb.df_351)))
+
+syb.df_tmp <- syb.df %>% filter(FAOST_CODE != 351) 
+syb.df <- bind_rows(syb.df_tmp,syb.df_351)
+  
+  # 
+# syb.df_351
+# 
+# for (i in names(syb.df)){
+#   for (y in 1990:2020){
+#           
+#     syb.df[[i]] <- ifelse(syb.df$FAOSTAT_CODE == 351 & syb.df$Year == y & is.na(syb.df[[i]]),
+#                           syb.df_357[syb.df_357$Year == y, i],
+#                           syb.df[i])
+#     syb.df[[i]] <- ifelse(syb.df$FAOSTAT_CODE == 351 & syb.df$Year == y & is.na(syb.df[[i]]),
+#                           syb.df_41[syb.df_41$Year == y, i],
+#                           syb.df[i])
+#   }
+# }
+
+
 
 if (!("cropping_intensity_ratio" %in% names(syb.df))) {
 
@@ -604,7 +672,8 @@ if (table_type == "latex"){
   if (region_to_report == "COF") tbl_row_height <- 1.42
   if (region_to_report == "RAF") tbl_row_height <- 1.18
   if (region_to_report == "RAP") tbl_row_height <- 1.12
-  if (region_to_report == "REU") tbl_row_height <- 1.06
+  if (region_to_report == "REU" & rulang) tbl_row_height <- .80
+  if (region_to_report == "REU" & !rulang) tbl_row_height <- 1.06
   if (region_to_report == "RNE") tbl_row_height <- 1.12
   if (region_to_report == "GLO") tbl_row_height <- 1.22
 
