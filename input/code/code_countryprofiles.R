@@ -833,32 +833,61 @@ if (table_type == "latex"){
                    file = fileOut, append = TRUE, sep = "")
       }
       if (region_to_report == "RAF"){
-        if (part %in% c(4,5)) {
+        if (part %in% c(4)) {
           cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        }
+        if (part %in% c(5)) {
+          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "\\S}}} \\\\ \n",
+              file = fileOut, append = TRUE, sep = "")
+        }
+        if (!part %in% c(4,5)) {
+          cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
                    file = fileOut, append = TRUE, sep = "")
+        }
       }
       if (region_to_report == "RAP"){
-        if (part %in% c(4,5)) {
+        if (part %in% c(4)) {
+          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "\\S}}} \\\\ \n",
+              file = fileOut, append = TRUE, sep = "")
+        } 
+        if (part %in% c(5)) {
           cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        } 
+        
+        if (!part %in% c(4,5)) {
+          cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
                    file = fileOut, append = TRUE, sep = "")
+        }
       }
       if (region_to_report == "REU"){
-        if (part %in% c(4,5)) {
+        if (part %in% c(4)) {
+          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "\\S}}} \\\\ \n",
+              file = fileOut, append = TRUE, sep = "")
+        }
+        if (part %in% c(5)) {
           cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        }
+        if (!part %in% c(4,5)) {
+          cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
                    file = fileOut, append = TRUE, sep = "")
+        }
       }
       if (region_to_report == "RNE"){
-        if (part %in% c(4,5)) {
+        if (part %in% c(4)) {
+          cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "\\S}}} \\\\ \n",
+              file = fileOut, append = TRUE, sep = "")
+        } 
+        if (part %in% c(5)) {
           cat("\t\\multicolumn{4}{l}{\\textit{\\normalsize{", unique(indicators.df$PART)[part], "}}} \\\\ \n",
               file = fileOut, append = TRUE, sep = "")
-        } else cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
+        } 
+        if (!part %in% c(4,5)) {
+          cat("\t\\multicolumn{4}{l}{\\textcolor{",row_color,"}{\\textbf{\\large{", unique(indicators.df$PART)[part], "}}}} \\\\ \n",
                    file = fileOut, append = TRUE, sep = "")
+        }
       }
 
 
