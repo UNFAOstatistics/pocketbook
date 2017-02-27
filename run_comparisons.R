@@ -8,12 +8,12 @@
 
 books <- c(
           "GLO"
-          ,"GLO15"
-          ,"RAP"
-          ,"RAF"
-          ,"REU"
-          ,"REU_ru"
-          ,"RNE"
+          # ,"GLO15"
+          # ,"RAP"
+          # ,"RAF"
+          # ,"REU"
+          # ,"REU_ru"
+          # ,"RNE"
           )
 
 
@@ -396,6 +396,151 @@ cat(paste("
 
 
 
+# ------------------------------------
+# Country profile tables
+# ------------------------------------
+setwd(paste0(root.dir,"/output/pdf"))
+fileOut <- "country_profiles.html"
+file.remove(fileOut)
+file.create(fileOut, showWarnings = FALSE)
+cat(paste('
+<body bgcolor="#669999">
+
+<h1> spreads<h1>
+
+<table>
+<tr>
+<th>Comments</th><th>updated</th><th>original in 20170221</th><th>global book2015</th>
+</tr>
+<tr>
+<td>            
+'),
+    file = fileOut, append = TRUE) 
+
+cat("
+# <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016countryprofiles?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=23500></iframe> 
+</td>
+<td>
+", file=fileOut, append=TRUE)
+
+# number of images in the folder
+  cat('
+<h3>REU-book</h3>
+<img src="REU/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-76.jpg" vspace="10" height="1200"/></br>
+<h3>REU_ru-book</h3>
+<img src="REU_ru/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-76.jpg" vspace="10" height="1200"/></br>
+<h3>RAF-book</h3>
+<img src="RAF/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-78.jpg" vspace="10" height="1200"/></br>
+<h3>RAP-book</h3>
+<img src="RAP/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-71.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-93.jpg" vspace="10" height="1200"/></br>
+<h3>RNE-book</h3>
+<img src="RNE/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-62.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-72.jpg" vspace="10" height="1200"/></br>
+<h3>GLO-book</h3>
+<img src="GLO/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-133.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-228.jpg" vspace="10" height="1200"/></br>
+               ',
+      file = fileOut, append = TRUE) 
+
+cat(paste('
+</td>
+<td>
+          '),
+    file = fileOut, append = TRUE) 
+
+# number of images in the folder
+cat('
+<h3>REU-book</h3>
+<img src="../pdf_tmp/REU/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/REU/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/REU/page-76.jpg" vspace="10" height="1200"/></br>
+<h3>REU_ru-book</h3>
+<img src="../pdf_tmp/REU_ru/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/REU_ru/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/REU_ru/page-76.jpg" vspace="10" height="1200"/></br>
+<h3>RAF-book</h3>
+<img src="../pdf_tmp/RAF/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RAF/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RAF/page-78.jpg" vspace="10" height="1200"/></br>
+<h3>RAP-book</h3>
+<img src="../pdf_tmp/RAP/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RAP/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RAP/page-71.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RAP/page-93.jpg" vspace="10" height="1200"/></br>
+<h3>RNE-book</h3>
+<img src="../pdf_tmp/RNE/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RNE/page-62.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/RNE/page-72.jpg" vspace="10" height="1200"/></br>
+<h3>GLO-book</h3>
+<img src="../pdf_tmp/GLO/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO/page-133.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO/page-228.jpg" vspace="10" height="1200"/></br>
+               ',
+file = fileOut, append = TRUE)
+
+cat(paste('
+</td>
+          <td>
+          '),
+    file = fileOut, append = TRUE) 
+
+cat('
+<h3>GLO-book</h3>
+<img src="../pdf_tmp/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-109.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-66.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-103.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-107.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp/GLO15/page-52.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-87.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-125.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-204.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-127.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-184.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp/GLO15/page-65.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-131.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp/GLO15/page-215.jpg" vspace="10" height="1200"/></br>
+    ',
+    file = fileOut, append = TRUE)
+
+
+
+
+cat(paste("
+</td>
+</table>
+
+</body>
+"),
+    file = fileOut, append = TRUE) 
+
+
+
+
+
+
+
 # if (broke_only_tables_into_images){
 #   
 #   # if (region_to_report == "RAF"){
@@ -466,4 +611,6 @@ setwd(root.dir)
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE) 
 
 # Sync to kapsi!!
-system("/home/aurelius/faosync/pocketbooks/pocketbook/sync.sh")
+# system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+# system("/home/aurelius/faosync/pocketbooks/pocketbook/sync.sh")

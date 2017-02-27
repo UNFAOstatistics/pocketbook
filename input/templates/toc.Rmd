@@ -60,16 +60,26 @@ for (book in books){
 - [All regional books](pdf/regional_books16.html)
 - [All 2016 books](pdf/all_books16.html)
 - [REU vs. Reu ru](pdf/REU_ru_REU.html)
+- [Country profiles](pdf/country_profiles.html)
+
+
+# Data sources
+
+- [Faostat](http://www.fao.org/faostat/en/#home)
+- [World Development Indicators](http://data.worldbank.org/data-catalog/world-development-indicators)
+- [ILO](http://www.ilo.org/ilostat/faces/ilostat-home/download?_adf.ctrl-state=xh99k169b_4&_afrLoop=54910682937899#!)
+
+# Source code
+
+- [pocketbook](https://github.com/UNFAOstatistics/pocketbook/)
+- [pocketbook_database](https://github.com/UNFAOstatistics/pocketbook_database/)
+
 
 # Data
 
 - [all faostat in single csv (first 1000 lines)](data/faostat.csv) - *original has 72 million rows, 7,2 GB as .csv*
 - [metadata for the above](data/meta_faostat.csv)
 - [country level indicators for the book before aggregation](data/data_for_book.csv)
-
-# Data-apps
-
-
 
 
 # misc
