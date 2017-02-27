@@ -346,6 +346,10 @@ if (rulang) caption_text <- ""
 
 dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
 
+
+# df[df$Year %in%  c(1991:2015) & df$FAOST_CODE == 238,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
+
+
 #dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
 
 map.plot <- left_join(map.df,dat)
@@ -613,7 +617,9 @@ if (region_to_report == "REU" & rulang) short_text <- "Наличие продо
 
 
 ## ---- P2availabTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
+dat_plot <- df %>% 
+  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -647,7 +653,11 @@ if (rulang) caption_text <- paste("Адекватность средней эн�
 
 ## ---- P2availabLEFT ----
 
-dat <- df[df$Year %in%  c(2000,2010) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PCSS.CSR.PCT3D")]
+df %>% 
+  filter(Year %in% c(2000,2010),
+         FAOST_CODE < 5000) %>% 
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PCSS.CSR.PCT3D) %>% 
+  as_tibble() -> dat
 
 dat <- dat[!is.na(dat$FBS.PCSS.CSR.PCT3D),]
 # Add region key and subset
@@ -968,7 +978,11 @@ if (rulang) caption_text <- paste("Распространенность недо
 
 ## ---- P2accessBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+# dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
+# New from WORLD BANK instead of FSI
+dat_plot <- syb.df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD) %>% 
+  filter(!is.na(NY.GDP.PCAP.PP.KD))
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -985,6 +999,15 @@ if (rulang){
   dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Europe and Central Asia"] <- "Европа и Центральная Азия"
   dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Near East and North Africa"] <- "Ближний Восток и Северная Африка"
 }
+
+
+dat_plot$FAO_TABLE_NAME <- gsub("Regional Office for ","",dat_plot$FAO_TABLE_NAME)
+dat_plot$FAO_TABLE_NAME <- gsub("^the ","",dat_plot$FAO_TABLE_NAME)
+
+dat_plot$FAO_TABLE_NAME <- ifelse(grepl("Near East", dat_plot$FAO_TABLE_NAME), 
+                                  paste(dat_plot$FAO_TABLE_NAME, "North Africa"),
+                                  dat_plot$FAO_TABLE_NAME)
+
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
@@ -1180,14 +1203,17 @@ caption_text <- paste("Domestic food price volatility index, top",ncases,"countr
 if (rulang) caption_text <- paste("Индекс волатильности внутренних цен на продовольствие,",ncases,"стран с самыми высокими значениями в 2014 году")
 
 ## ---- P2stabilityBOTTOM ----
-dat <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
+dat_plot <- df %>%
+  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000),
+         Year %in% c(2000,2010)) %>%
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D) %>%
+  filter(!is.na(T.V.FEFS.PCT3D)) %>%
+  mutate(year_range = ifelse(Year==2000, "1999-2001", "2009-2011"))
 
-dat_plot <- dat[!is.na(dat$T.V.FEFS.PCT3D),]
-
-# top ten
-
-dat_plot$year_range[dat$Year == 2000] <- "1999-2001"
-dat_plot$year_range[dat$Year == 2010] <- "2009-2011"
+# did not succeed!!!
+# dat1 <- syb.df %>%
+#   filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000), Year %in% c(2000,2010)) %>%
+#   select(FAOST_CODE,Year,FAO_TABLE_NAME,T.V.FEFS.PCT3D)
 
 dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=(dat_plot %>% filter(year_range == "2009-2011") %>% arrange(-T.V.FEFS.PCT3D))$FAO_TABLE_NAME)
 
@@ -1197,8 +1223,8 @@ if (rulang){
   levels(dat_plot$FAO_TABLE_NAME)[levels(dat_plot$FAO_TABLE_NAME) =="Asia and the Pacific"] <- "Азиатско-Тихоокеанский \nрегион"
   levels(dat_plot$FAO_TABLE_NAME)[levels(dat_plot$FAO_TABLE_NAME) =="Europe and Central Asia"] <- "Европа и \nЦентральная Азия"
   levels(dat_plot$FAO_TABLE_NAME)[levels(dat_plot$FAO_TABLE_NAME) =="Near East and North Africa"] <- "Ближний Восток и \nСеверная Африка"
-  dat_plot$year_range[dat$Year == 2000] <- "1999-2001 гг."
-  dat_plot$year_range[dat$Year == 2010] <- "2009-2011 гг."
+  dat_plot$year_range[dat_plot$year_range == "1999-2001"] <- "1999-2001 гг."
+  dat_plot$year_range[dat_plot$year_range == "2009-2011"] <- "2009-2011 гг."
 }
 
 
@@ -1214,9 +1240,18 @@ caption_text <- paste("Value of food imports as a share of total merchandise exp
 if (rulang) caption_text <- paste("Стоимость импорта продовольствия по отношению к стоимости экспорта всех товаров (средние значения за 3 года)",dag_char)
 
 ## ---- P2stabilityMAP ----
-dat <- df[df$Year %in%  2013 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","G.GD.PSAVT.IN")]
+dat <- df %>%  filter(Year == 2013, 
+                      FAOST_CODE < 5000) %>% 
+  select(Year,FAOST_CODE,G.GD.PSAVT.IN) %>% 
+  filter(!is.na(G.GD.PSAVT.IN))
 
-dat <- dat[!is.na(dat$G.GD.PSAVT.IN),]
+# did not work out...
+dat <- syb.df %>%  filter(Year %in% 2013,
+                      FAOST_CODE < 5000) %>%
+  select(Year,FAOST_CODE,G.GD.PSAVT.IN) %>%
+  filter(!is.na(G.GD.PSAVT.IN))
+
+
 
 map.plot <- left_join(map.df,dat)
 
