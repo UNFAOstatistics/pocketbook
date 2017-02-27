@@ -18,7 +18,7 @@ Hunger dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy 
 Hunger dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary energy supp, cereals/roots/tubers (%)",,1
 Hunger dimensions,19,FS.OA.NOU.P3D1,,,Number of undernourished (mln),,0
 Hunger dimensions,20,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
-Hunger dimensions,21,current_account_balance,,,Current account balance (% GDP),,1
+Hunger dimensions,21,BN.CAB.XOKA.GD.ZS,,,Current account balance (% GDP),,1
 Hunger dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0
 Hunger dimensions,23,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
 Hunger dimensions,24,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1

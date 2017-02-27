@@ -30,13 +30,13 @@ Food supply,30,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
 Production indices (2004-06=100),31,QI.NPIN.FOOD.IN.NO,,,Net food,,0
 Production indices (2004-06=100),32,QI.NPIN.CRPS.IN.NO,,,Net crops,,0
 Production indices (2004-06=100),33,QI.NPIN.CRLS.IN.NO,,,Cereals,,0
-Production indices (2004-06=100),34,Oilcrops.Primary,,,Vegetable oils,,0
-Production indices (2004-06=100),35,Roots.and.Tubers.Total,,,Roots and tubers,,0
-Production indices (2004-06=100),36,Vegetables.and.Fruit.Primary,,,Fruit and vegetables,,0
-Production indices (2004-06=100),37,Sugar.raw,,,Sugar,,0
+Production indices (2004-06=100),34,prod_ind_Oilcrops.Primary,,,Vegetable oils,,0
+Production indices (2004-06=100),35,prod_ind_Roots.and.Tubers.Total,,,Roots and tubers,,0
+Production indices (2004-06=100),36,prod_ind_Vegetables.and.Fruit.Primary,,,Fruit and vegetables,,0
+Production indices (2004-06=100),37,prod_ind_Sugar.raw,,,Sugar,,0
 Production indices (2004-06=100),38,QI.NPIN.LVSTCK.IN.NO,,,Livestock,,0
-Production indices (2004-06=100),39,Milk.Total,,,Milk,,0
-Production indices (2004-06=100),40,Meat.indigenous.total,,,Meat,,0
+Production indices (2004-06=100),39,prod_ind_Milk.Total,,,Milk,,0
+Production indices (2004-06=100),40,prod_ind_Meat.indigenous.total,,,Meat,,0
 Production indices (2004-06=100),41,production_quantity_index,,,Fish ,,0
 Net trade (mln US\$),42,TP.NETVAL.CRLSPREP.USD.NO,,,Cereals,1000000,0
 Net trade (mln US\$),43,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
