@@ -184,6 +184,8 @@ flist <- flist[!grepl("book\\.", flist, ignore.case = TRUE)]
 # Exclude the plain syb_main.pdf
 flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]
 
-file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
+if (output_type == "web") file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
+if (output_type == "print") file.copy(flist, paste0(root.dir,"/output/print"), overwrite = TRUE)
+
 
 setwd(root.dir)

@@ -19,7 +19,7 @@ output:
   <p>TESTED WITH LATEST FIREFOX BROWSER, TRY USING IT IF PROBLEMS</p>
 </div>
 
-# Current pdfs
+# Current pdfs for web
 
 
 ```{r, include=FALSE}
@@ -48,6 +48,37 @@ for (book in books){
 | [RAF](pdf/syb_main_RAF.pdf) | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$pages``|
 | [RNE](pdf/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``|
 | [Coffee](pdf/syb_main_COF.pdf) | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$pages``|
+
+# Current pdfs for print
+
+```{r, include=FALSE}
+library(tidyverse)
+library(pdftools)
+root.dir <- "~/faosync/pocketbooks/pocketbook/"
+
+# boooks <- list.files(path = paste0(root.dir,"/output/pdf/"), pattern = ".pdf", full.names = TRUE)
+books <- c("GLO", "RAF", "RAP", "REU", "REU_ru", "RNE","COF")
+pdfinfodata <- data_frame()
+for (book in books){
+  path <- paste0(root.dir,"/output/print/syb_main_",book,".pdf")
+  if (!file.exists(path)) next()
+  newline <- as.data.frame(pdf_info(path)[c("modified","pages")])
+  newline$book <- book
+  pdfinfodata <- bind_rows(pdfinfodata,newline)
+}
+```
+
+
+| link to pdf | Modified | pages | covers |
+| --- | -------- | ----- | --- |
+| [GLO](print/syb_main_GLO.pdf) | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$pages``| [print covers](covers/GLO16.pdf) |
+| [REU](print/syb_main_REU.pdf) | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$pages``| [print covers](covers/REU16.pdf) |
+| [REU_ru](print/syb_main_REU_ru.pdf) | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$pages``| print covers |
+| [RAP](print/syb_main_RAP.pdf) | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$pages``| [print covers](covers/RAP16.pdf) |
+| [RAF](print/syb_main_RAF.pdf) | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$pages``| [print covers](covers/RAF16.pdf) |
+| [RNE](print/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``| [print covers](covers/RAF16.pdf) |
+| [Coffee](print/syb_main_COF.pdf) | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$pages``| covers |
+
 
 # Comparisons
 

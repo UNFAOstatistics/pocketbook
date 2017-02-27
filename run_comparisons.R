@@ -7,8 +7,8 @@
 
 
 books <- c(
-          "GLO"
-          # ,"GLO15"
+          # "GLO"
+          # # ,"GLO15"
           # ,"RAP"
           # ,"RAF"
           # ,"REU"
@@ -611,6 +611,7 @@ setwd(root.dir)
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE) 
 
 # Sync to kapsi!!
-# system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
-system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+# system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+# system('rsync -avzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
 # system("/home/aurelius/faosync/pocketbooks/pocketbook/sync.sh")
