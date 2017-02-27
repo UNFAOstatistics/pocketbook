@@ -39,27 +39,27 @@ if (region_to_report == "REU" & rulang) short_text <- "В регионе Евр�
 
 
 ## ---- P4landTOPRIGHT ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>%
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>%
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>%
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>%
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
          RL.AREA.OTH.HA.SH)
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,
          RL.AREA.AGR.HA.SH,
          RL.AREA.FOR.HA.SH,
@@ -109,12 +109,12 @@ if (rulang) p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- "Land area"
-if (rulang) caption_text <- "Земельные площади"
+caption_text <- "Land area (2014)"
+if (rulang) caption_text <- "Земельные площади (2014 г.)"
 
 
 ## ---- P4landLEFT ----
-dat <- syb.df[syb.df$Year %in%  2012 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RL.AREA.ARBL.HA.SHP")]
+dat <- syb.df[syb.df$Year %in%  2014 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","RL.AREA.ARBL.HA.SHP")]
 
 dat <- dat[!is.na(dat$RL.AREA.ARBL.HA.SHP),]
 # Add region key and subset
@@ -154,8 +154,8 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Arable land per capita, top",nrow(dat_plot),"countries")
-if (rulang) caption_text <- paste("Пахотные земли на душу населения,",nrow(dat_plot),"стран с самыми высокими значениями")
+caption_text <- paste("Arable land per capita, top",nrow(dat_plot),"countries (2014)")
+if (rulang) caption_text <- paste("Пахотные земли на душу населения,",nrow(dat_plot),"стран с самыми высокими значениями (2014 г.)")
 
 
 ## ---- P4landRIGHT ----
@@ -178,34 +178,34 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Arable land per capita, bottom",nrow(dat_plot),"countries")
-if (rulang) caption_text <- paste("Пахотные земли на душу населения,",nrow(dat_plot),"стран с самыми низкими значениями")
+caption_text <- paste("Arable land per capita, bottom",nrow(dat_plot),"countries (2014)")
+if (rulang) caption_text <- paste("Пахотные земли на душу населения,",nrow(dat_plot),"стран с самыми низкими значениями (2014 г.)")
 
 
 
 ## ---- P4landBOTTOM ----
 
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 12001:12005) %>%
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 13001:13014) %>%
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 14001:14007) %>%
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% 15001:15003) %>%
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
          RL.AREA.PRMNMP.HA.SH)
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,
          RL.AREA.ARBL.HA.SH,
          RL.AREA.PRMNCR.HA.SH,
@@ -251,14 +251,16 @@ p <- p + coord_cartesian(ylim=c(0,100))
 p
 
 # Caption
-caption_text <- "Agricultural area"
-if (rulang) caption_text <- "Сельскохозяйственные земли"
+caption_text <- "Agricultural area (2014)"
+if (rulang) caption_text <- "Сельскохозяйственные земли (2014 г.)"
 
 
 
 ## ---- P4landMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH) #%>% mutate(RL.AREA.ARBLPRMN.HA.SH = RL.AREA.ARBLPRMN.HA.SH * 10000)
-
+dat <- syb.df %>% 
+  filter(Year %in% 2014) %>% 
+  select(FAOST_CODE,RL.AREA.ARBLPRMN.HA.SH) #%>% mutate(RL.AREA.ARBLPRMN.HA.SH = RL.AREA.ARBLPRMN.HA.SH * 10000)
+  
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
 
@@ -282,8 +284,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Cropland per capita, ha/cap"
-if (rulang) caption_text <- "Земли под сельскохозяйственными культурами на душу населения, га/чел"
+caption_text <- "Cropland per capita, ha/cap (2014)"
+if (rulang) caption_text <- "Земли под сельскохозяйственными культурами на душу населения, га/чел (2014 г.)"
 
 
 #
@@ -469,6 +471,8 @@ if (rulang) levels(topdata$FAO_TABLE_NAME) <- countrycode.multilang::countrycode
 if (rulang) topdata$Year[topdata$Year == 2000] <- "2000 г."
 if (rulang) topdata$Year[topdata$Year == 2010] <- "2010 г."
 
+if (!rulang) levels(topdata$FAO_TABLE_NAME) <- gsub('(.{1,30})(\\s|$)', '\\1\n', levels(topdata$FAO_TABLE_NAME))
+
 p <- ggplot(topdata, aes(x=FAO_TABLE_NAME,y=per_capita_water_resources,fill=factor(Year)))
 p <- p + geom_bar(stat="identity",position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -549,7 +553,7 @@ if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAO
          EE_6740_72041)
 if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Year,
-         EE_6740_72041)
+         EE_6740_72041) %>% filter(!is.na(EE_6740_72041))
 if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Year,
          EE_6740_72041)
@@ -695,7 +699,10 @@ caption_text <- "Energy use in agriculture and forestry, share of total energy c
 if (rulang) caption_text <- "Потребление энергии в сельском и лесном хозяйстве, доля в общем объеме потребления энергии"
 
 ## ---- P4energyMAP ----
-dat <- syb.df %>% filter(Year >= 2008) %>% select(FAOST_CODE,Year,GN_6808_72182) %>% mutate(GN_6808_72182 = GN_6808_72182 / 1000000)
+dat <- syb.df %>%
+  filter(Year >= 2008) %>%
+  select(FAOST_CODE,Year,GN_6808_72182) %>%
+  mutate(GN_6808_72182 = GN_6808_72182 / 1000000)
 dat <- na.omit(dat)
 
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>%  ungroup()
@@ -722,8 +729,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Energy consumption for power irrigation, million kWh (2008-2011*)"
-if (rulang) caption_text <- "Потребление энергии для орошения машинным способом, млн кВтч (2008-2011 гг.*)"
+caption_text <- "Energy consumption for power irrigation, TJ (2008-2011*)"
+if (rulang) caption_text <- "Потребление энергии для орошения машинным способом, ТДж (2008-2011 гг.*)"
 
 
 #   _____                               _
@@ -750,6 +757,9 @@ if (region_to_report == "REU" & rulang) short_text <- "Леса вносят с�
 
 ## ---- P4forestryTOPRIGHT ----
 
+# syb.df %>% select(FAOST_CODE,Year,FO.PRD.WP.M3.NO) %>% filter(FAOST_CODE == 11)
+
+
 dat <- syb.df %>% select(FAOST_CODE,Year,
                          FO.PRD.RP.M3.NO,
                          FO.PRD.WP.M3.NO,
@@ -757,7 +767,6 @@ dat <- syb.df %>% select(FAOST_CODE,Year,
   dplyr::mutate(FO.PRD.RP.M3.NO = FO.PRD.RP.M3.NO / 1000000,
                 FO.PRD.WP.M3.NO = FO.PRD.WP.M3.NO / 1000000,
                 FO.PRD.PPB.M3.NO = FO.PRD.PPB.M3.NO / 1000000)
-
 
 # Add region key and subset
 dat <- left_join(dat,region_key)
@@ -803,7 +812,7 @@ if (rulang) caption_text <- "Производство отдельных лес�
 
 
 ## ---- P4forestryLEFT ----
-dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.EXVAL.TOT.USD.NO) %>%
+dat <- syb.df %>%  filter(Year %in%  2013) %>%  select(FAOST_CODE,Year,FO.EXVAL.TOT.USD.NO) %>%
   dplyr::mutate(FO.EXVAL.TOT.USD.NO = FO.EXVAL.TOT.USD.NO / 1000000000 ) #into trillion
 
 dat <- dat[!is.na(dat$FO.EXVAL.TOT.USD.NO),]
@@ -817,7 +826,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -FO.EXVAL.TOT.USD.NO)
-dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
@@ -837,13 +846,13 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top",nrow(dat_plot),"exporters of forest products (2012)")
-if (rulang) caption_text <- caption_text <- paste(nrow(dat_plot),"самых крупных экспортеров лесопродукции (2012 г.)")
+caption_text <- paste("Top",nrow(dat_plot),"exporters of forest products (2013)")
+if (rulang) caption_text <- caption_text <- paste(nrow(dat_plot),"самых крупных экспортеров лесопродукции (2013 г.)")
 
 
 ## ---- P4forestryRIGHT ----
 
-dat <- syb.df %>%  filter(Year %in%  2012) %>%  select(FAOST_CODE,Year,FO.IMVAL.TOT.USD.NO) %>%
+dat <- syb.df %>%  filter(Year %in%  2013) %>%  select(FAOST_CODE,Year,FO.IMVAL.TOT.USD.NO) %>%
   dplyr::mutate(FO.IMVAL.TOT.USD.NO = FO.IMVAL.TOT.USD.NO / 1000000000 ) #into trillion
 
 dat <- dat[!is.na(dat$FO.IMVAL.TOT.USD.NO),]
@@ -877,8 +886,8 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Top",nrow(dat_plot),"importers of forest products (2012)")
-if (rulang) caption_text <- paste(nrow(dat_plot),"самых крупных импортеров лесопродукции (2012 г.)")
+caption_text <- paste("Top",nrow(dat_plot),"importers of forest products (2013)")
+if (rulang) caption_text <- paste(nrow(dat_plot),"самых крупных импортеров лесопродукции (2013 г.)")
 
 
 ## ---- P4forestryBOTTOM ----
@@ -938,7 +947,9 @@ if (rulang) caption_text <- "Характеристики леса (2015 г.)"
 
 
 ## ---- P4forestryMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH * 100) # we want percetanges
+dat <- filter(syb.df, Year %in% 2013) %>% 
+  select(FAOST_CODE, RL.AREA.FOR.HA.SH) %>% 
+  mutate(RL.AREA.FOR.HA.SH = RL.AREA.FOR.HA.SH * 100) # we want percetanges
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -962,8 +973,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Forest area as share of total land area, percent (2012)"
-if (rulang) caption_text <- "Доля площади лесов в общей площади суши, в процентах (2012 г.)"
+caption_text <- "Forest area as share of total land area, percent (2013)"
+if (rulang) caption_text <- "Доля площади лесов в общей площади суши, в процентах (2013 г.)"
 
 
 #    ____   _   _                       _                     _
@@ -987,19 +998,19 @@ if (region_to_report == "REU" & rulang) short_text <- "Интенсивност�
 
 
 ## ---- P4climateTOPRIGHT ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 12001:12005) %>%
+if (region_to_report == "RAF") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 12001:12005) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 13001:13014) %>%
+if (region_to_report == "RAP") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 13001:13014) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 14001:14007) %>%
+if (region_to_report == "REU") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 14001:14007) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
+if (region_to_report == "RNE") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% 15001:15003) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
+if (region_to_report == "GLO") dat <- syb.df %>% filter(Year >= 2000, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
   select(SHORT_NAME,Year,
          GHG.TOT.ALL.GG.NO)
 dat <- na.omit(dat)
@@ -1026,7 +1037,9 @@ if (rulang) caption_text <- "Выбросы парниковых газов в �
 
 
 ## ---- P4climateLEFT ----
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,GHG.TOT.ALL.GG.NO) %>%
+dat <- syb.df %>% 
+  filter(Year %in% c(2000,2013)) %>% 
+  select(FAOST_CODE,Year,GHG.TOT.ALL.GG.NO) %>%
   dplyr::mutate(GHG.TOT.ALL.GG.NO = GHG.TOT.ALL.GG.NO / 1000)
 
 dat <- dat[!is.na(dat$GHG.TOT.ALL.GG.NO),]
@@ -1039,14 +1052,14 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -Year, -GHG.TOT.ALL.GG.NO)
-top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top12 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2013")
 top00 <- dat %>% filter(FAOST_CODE %in% top12$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top12,top00)
 
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top12,GHG.TOT.ALL.GG.NO)$SHORT_NAME)
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -1064,13 +1077,13 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Greehouse gas emissions in agriculture, highest",nrow(top12),"countries in 2012")
-if (rulang) caption_text <- paste("Выбросы парниковых газов в сельском хозяйстве, ",nrow(top12),"стран с самыми высокими показателями в 2012 году")
+caption_text <- paste("Greehouse gas emissions in agriculture, highest",nrow(top12),"countries in 2013")
+if (rulang) caption_text <- paste("Выбросы парниковых газов в сельском хозяйстве, ",nrow(top12),"стран с самыми высокими показателями в 2013 году")
 
 
 
 ## ---- P4climateRIGHT ----
-dat <- syb.df %>% filter(Year %in% c(2000,2012)) %>%  select(FAOST_CODE,Year,GL.LU.TOT.NERCO2EQ.NO) %>%
+dat <- syb.df %>% filter(Year %in% c(2000,2013)) %>%  select(FAOST_CODE,Year,GL.LU.TOT.NERCO2EQ.NO) %>%
   dplyr::mutate(GL.LU.TOT.NERCO2EQ.NO = GL.LU.TOT.NERCO2EQ.NO / 1000)
 
 dat <- dat[!is.na(dat$GL.LU.TOT.NERCO2EQ.NO),]
@@ -1089,7 +1102,7 @@ nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat <- arrange(dat, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2012")
+top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
 top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
@@ -1097,7 +1110,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2012"] <- "2012 г."
+  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
@@ -1113,19 +1126,19 @@ p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 # Caption
-caption_text <- paste("Land use total emissions, highest",ncases,"countries in 2012")
+caption_text <- paste("Land use total emissions, highest",ncases,"countries in 2013")
 if (rulang) caption_text <- paste("Общий объем выбросов парниковых газов в результате землепользования,",
-                                  ncases,"стран с самыми высокими показателями в 2012 году")
+                                  ncases,"стран с самыми высокими показателями в 2013 году")
 
 
 
 ## ---- P4climateBOTTOM ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2013) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2013) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2013) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000,  Year %in% 2012) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2013) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000,  Year %in% 2013) %>% select(SHORT_NAME,GHG.TOT.ALL.GG.NO,GL.FL.NFC.NERCO2EQ.NO,GHG.BS.TECO2EQ.GG.NO,GL.FL.TOT.NERCO2EQ.NO)
 
 dat <- gather(dat, variable, value, 2:5)
 dat$fill[dat$variable == "GHG.TOT.ALL.GG.NO"]   <- "All GHG agricultural sectors"
@@ -1161,13 +1174,13 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- "Emissions by subsectors in 2012"
-if (rulang) caption_text <- "Выбросы парниковых газов в подсекторах в 2012 г."
+caption_text <- "Emissions by subsectors in 2013"
+if (rulang) caption_text <- "Выбросы парниковых газов в подсекторах в 2013 г."
 
 
 
 ## ---- P4climateMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO) %>%
+dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,GHG.AFOLU.TOT.ECO2EQ.NO) %>%
   dplyr::mutate(GHG.AFOLU.TOT.ECO2EQ.NO = GHG.AFOLU.TOT.ECO2EQ.NO / 1000) # into million gigagrams
 
 # dat <- dat[dat$FAOST_CODE != 41,]
@@ -1192,5 +1205,5 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2012)"
-if (rulang) caption_text <- "Суммарные выбросы парниковых газов в сельском хозяйстве, лесном хозяйстве и других видах землепользования, в млн гигаграммов эквивалента CO\\textsubscript{2} (2012 г.)"
+caption_text <- "Total greenhouse gas emissions from agriculture, forestry and other land use, mln gigagrams CO\\textsubscript{2} eq (2013)"
+if (rulang) caption_text <- "Суммарные выбросы парниковых газов в сельском хозяйстве, лесном хозяйстве и других видах землепользования, в млн гигаграммов эквивалента CO\\textsubscript{2} (2013 г.)"
