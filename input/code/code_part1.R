@@ -267,7 +267,7 @@ if (rulang) caption_text <- "Общая численность экономич�
 
 
 ## ---- P1overMAP ----
-dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP) %>%
+dat <- syb.df %>% filter(Year %in% 2015, FAOST_CODE < 5000) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP) %>%
   mutate(OA.TPR.POP.PPL.SHP = OA.TPR.POP.PPL.SHP * 100)
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
@@ -291,8 +291,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Rural population, share of total population (2014)"
-if (rulang) caption_text <- "Сельское население, доля сельского населения (2014 г.)"
+caption_text <- "Rural population, share of total population (2015)"
+if (rulang) caption_text <- "Сельское население, доля сельского населения (2015 г.)"
 
 
 
@@ -324,7 +324,7 @@ if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:1
 if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003) %>% select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
 if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>% select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
 
-dat <- filter(dat, Year %in% 2013) %>% select(SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
+dat <- filter(dat, Year %in% 2015) %>% select(SHORT_NAME,NV.AGR.TOTL.ZS,NV.IND.TOTL.ZS,NV.SRV.TETC.ZS)
 
 # Add region key and subset
 
@@ -353,11 +353,11 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- "Value added in agriculture, industry and services, share of GDP (2013)"
-if (rulang) caption_text <- "Добавленная стоимость в сельском хозяйстве, промышленности и сфере услуг, доля от ВВП (2013 г.)"
+caption_text <- "Value added in agriculture, industry and services, share of GDP (2015)"
+if (rulang) caption_text <- "Добавленная стоимость в сельском хозяйстве, промышленности и сфере услуг, доля от ВВП (2015 г.)"
 
 ## ---- P1econLEFT ----
-dat <- syb.df[syb.df$Year %in%  2003:2013 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","EA.PRD.AGRI.KD")]
+dat <- syb.df[syb.df$Year %in%  2005:2015 & syb.df$FAOST_CODE < 5000,c("FAOST_CODE","Year","SHORT_NAME","EA.PRD.AGRI.KD")]
 
 dat <- dat[!is.na(dat$EA.PRD.AGRI.KD),]
 # Add region key and subset
@@ -370,8 +370,13 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
-dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-EA.PRD.AGRI.KD) %>% slice(1:20) %>% dplyr::mutate(color = "2013",
-                                                                                                                                                           EA.PRD.AGRI.KD = EA.PRD.AGRI.KD / 1000)
+dat_plot <- dat %>% 
+  group_by(SHORT_NAME) %>% 
+  dplyr::filter(Year == max(Year)) %>% 
+  ungroup() %>% 
+  arrange(-EA.PRD.AGRI.KD) %>% 
+  slice(1:20) %>% dplyr::mutate(color = "2015",
+                                EA.PRD.AGRI.KD = EA.PRD.AGRI.KD / 1000)
 
 # translate country names
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
@@ -391,15 +396,16 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Agriculture value added per worker, top",nrow(dat_plot),"countries with the highest values (2003-2013*)")
-if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве на одного работника,",nrow(dat_plot),"стран с самыми высокими значениями (2003-2013 гг.*)")
+caption_text <- paste("Agriculture value added per worker, top",nrow(dat_plot),"countries with the highest values (2005-2015*)")
+if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве на одного работника,",nrow(dat_plot),"стран с самыми высокими значениями (2005-2015 гг.*)")
 
 
 
 ## ---- P1econRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% c(2003:2013)) %>% select(FAOST_CODE,SHORT_NAME,Year,NV.AGR.TOTL.KD)
+dat <- syb.df %>% filter(Year %in% c(2005:2015)) %>% 
+  select(FAOST_CODE,SHORT_NAME,Year,NV.AGR.TOTL.KD)
 dat <- dat[!is.na(dat$NV.AGR.TOTL.KD),]
 dat <- dat[!is.na(dat$SHORT_NAME),]
 # Add region key and subset
@@ -447,8 +453,8 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Value added in agriculture, average annual growth,",nrow(dat_plot)/2,"countries with highest and lowest values (2003-2013)")
-if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве, среднегодовой прирост,",nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями (2003-2013 гг.)")
+caption_text <- paste("Value added in agriculture, average annual growth,",nrow(dat_plot)/2,"countries with highest and lowest values (2005-2015)")
+if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве, среднегодовой прирост,",nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями (2005-2015 гг.)")
 
 
 ## ---- P1econBOTTOM_data ----
@@ -461,11 +467,11 @@ nomin <- syb.df[c("FAOST_CODE","SHORT_NAME","Year","NV.AGR.TOTL.KD")]
 
 ## ---- P1econBOTTOM ----
 
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2000:2014) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2000:2015) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2000:2015) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2000:2015) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2000:2015) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2000:2015) %>% select(SHORT_NAME,Year,NY.GDP.MKTP.KD,NV.AGR.TOTL.KD)
 
 
 dat_plot <- dat %>%  group_by(Year) %>%
@@ -490,10 +496,12 @@ caption_text <- "Value added in agriculture as share of GDP"
 if (rulang) caption_text <- "Добавленная стоимость в сельском хозяйстве в процентах от ВВП"
 
 ## ---- P1econMAP ----
-dat <- syb.df %>% filter(Year %in% c(2010:2013), FAOST_CODE < 5000) %>%
-  select(FAOST_CODE,SHORT_NAME,NV.AGR.TOTL.ZS) %>%
-  group_by(FAOST_CODE) %>% dplyr::summarise(NV.AGR.TOTL.ZS = max(NV.AGR.TOTL.ZS)) %>%
+dat <- syb.df %>% filter(Year %in% c(2012:2015), FAOST_CODE < 5000) %>%
+  select(FAOST_CODE,Year,SHORT_NAME,NV.AGR.TOTL.ZS) %>%
+  na.omit(.) %>% 
+  group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>%
   ungroup()
+
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
@@ -523,8 +531,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Value added in agriculture, share of GDP (percent, 2010 to 2013*)"
-if (rulang) caption_text <- "Добавленная стоимость в сельском хозяйстве, доля в ВВП (в процентах, 2010-2013 гг.*)"
+caption_text <- "Value added in agriculture, share of GDP (percent, 2012 to 2015*)"
+if (rulang) caption_text <- "Добавленная стоимость в сельском хозяйстве, доля в ВВП (в процентах, 2012-2015 гг.*)"
 
 
 
@@ -548,11 +556,11 @@ if (region_to_report == "REU" & rulang) short_text <- "Стабильный ры
 
 
 ## ---- P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2013) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2014) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2014) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2014) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2014) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2014) %>% select(SHORT_NAME,SL.TLF.CACT.MA.ZS,SL.TLF.CACT.FE.ZS,OA.TPBS.POP.PPL.NO)
 
 
 dat <- gather(dat, variable, value, 2:3)
@@ -581,11 +589,11 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- "Labour force participation rate by gender, ages 15+ (2013)"
-if (rulang) caption_text <- "Показатель экономической активности населения, с разбивкой по полу, в возрасте 15+ (2013 г.)"
+caption_text <- "Labour force participation rate by gender, ages 15+ (2014)"
+if (rulang) caption_text <- "Показатель экономической активности населения, с разбивкой по полу, в возрасте 15+ (2014 г.)"
 
 ## ---- P1laboLEFT ----
-dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
+dat <- syb.df[syb.df$Year %in%  2004:2014 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
 
 dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
 # Add region key and subset
@@ -597,7 +605,12 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 #and subset
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SL.AGR.EMPL.FE.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% 
+  dplyr::filter(Year == max(Year)) %>% 
+  ungroup() %>% 
+  arrange(-SL.AGR.EMPL.FE.ZS) %>% 
+  slice(1:20) %>% 
+  dplyr::mutate(color = "x")
 
 ncases <- nrow(dat_plot)
 
@@ -618,11 +631,11 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Female employment in agriculture in top",ncases,"countries, share of female employment (percent 2003-2013*)")
-if (rulang) caption_text <- paste("Доля женского населения, занятого в сельском хозяйстве среди экономически активного женского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2003-2013 гг.*)")
+caption_text <- paste("Female employment in agriculture in top",ncases,"countries, share of female employment (percent 2004-2014*)")
+if (rulang) caption_text <- paste("Доля женского населения, занятого в сельском хозяйстве среди экономически активного женского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2004-2014 гг.*)")
 
 ## ---- P1laboRIGHT ----
-dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
+dat <- syb.df[syb.df$Year %in%  2004:2014 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
 
 dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
 # Add region key and subset
@@ -634,7 +647,11 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 #and subset
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SL.AGR.EMPL.MA.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
+dat_plot <- dat %>% group_by(SHORT_NAME) %>% 
+  dplyr::filter(Year == max(Year)) %>% 
+  ungroup() %>% 
+  arrange(-SL.AGR.EMPL.MA.ZS) %>% 
+  slice(1:20) %>% dplyr::mutate(color = "x")
 ncases <- nrow(dat_plot)
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
@@ -654,8 +671,8 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Male employment in agriculture in top",ncases,"countries, share of male employment (percent 2003 - 2013*)")
-if (rulang) caption_text <- paste("Доля мужского населения, занятого в сельском хозяйстве среди экономически активного мужского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2003-2013 гг.*)")
+caption_text <- paste("Male employment in agriculture in top",ncases,"countries, share of male employment (percent 2004 - 2014*)")
+if (rulang) caption_text <- paste("Доля мужского населения, занятого в сельском хозяйстве среди экономически активного мужского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2004-2014 гг.*)")
 
 ## ---- P1laboBOTTOM_data ----
 
@@ -692,9 +709,11 @@ caption_text <- "Female employment in agriculture, share of female employment (2
 if (rulang) caption_text <- "Доля женского населения, занятого в сельском хозяйстве, среди экономически активного женского населения (2000-2014 гг.)"
 
 ## ---- P1laboMAP ----
-dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
-  select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
-  group_by(FAOST_CODE) %>% dplyr::summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
+dat <- syb.df %>% filter(Year %in% c(2008:2014)) %>%
+  select(Year,FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
+  na.omit(.) %>% 
+  group_by(FAOST_CODE) %>% 
+  filter(Year == max(Year, na.rm = TRUE)) %>%
   #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
   ungroup()
 
@@ -717,8 +736,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Employment in agriculture, share of total employment (percent, 2007 to 2012*)"
-if (rulang) caption_text <- "Занятость в сельском хозяйстве, доля в общей занятости (в процентах, с 2007 по 2012 гг.*)"
+caption_text <- "Employment in agriculture, share of total employment (percent, 2008 to 2014*)"
+if (rulang) caption_text <- "Занятость в сельском хозяйстве, доля в общей занятости (в процентах, с 2008 по 2014 гг.*)"
 
 
 #   ___                           _
@@ -739,17 +758,17 @@ if (region_to_report == "REU") short_text <- "Adequate access to inputs, includi
 if (region_to_report == "RNE") short_text <- "Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. Within the region, it is evident the use of large quantities of fertilizers, nitrogen in specific. However, fertilizers use is not homogenous within the region as the Gulf countries consume more than five times nutrients per hectare than Near East and North Africa countries. This is mainly due to the difficult and costly expansion of arable land within the desert environment."
 if (region_to_report == "GLO") short_text <- "Adequate access to inputs, including land, pesticides and fertilizers, is vital for agricultural production and growth. Throughout Asia and in parts of Latin America, expanding seed and fertilizer use has been accompanied by investments in irrigation, rural roads, marketing infrastructure and financial services, paving the way for dynamic commercial input markets. In other regions, such as sub-Saharan Africa, the uptake of agricultural inputs is relatively low because it is often cheaper to expand cropland to have higher production."
 if (rulang) spread_title <- "Факторы производства"
-if (region_to_report == "REU" & rulang) short_text <- "Адекватный доступ к факторам производства, таким как земля, пестициды и удобрения, имеет первостепенное значение для сельскохозяйственного производства и роста. Что касается применения удобрений и пестицидов, ситуация в регионе неоднородна. В субрегионе «Другие страны ЕС и ЕАСТ», благодаря усилению тенденций перехода к ресурсосберегающему сельскому хозяйству и к органическому сельскому хозяйству, использование минеральных удобрений и пестицидов на гектар пашни на протяжении последнего десятилетия снижается, в то время как в остальной части региона применение удобрений и пестицидов увеличивается. Тем не менее, с точки зрения общего уровня применения удобрений, субрегион «Другие страны ЕС и ЕАСТ» по-прежнему лидирует, вместе со субрегионами «Юго-Восточноя Европа» и «Центральная и Восточная часть ЕС». "
+if (region_to_report == "REU" & rulang) short_text <- "Адекватный доступ к факторам производства, таким как земля, пестициды и удобрения, имеет первостепенное значение для сельскохозяйственного производства и роста. Что касается применения удобрений и пестицидов, ситуация в регионе неоднородна. В субрегионе «Другие страны ЕС и ЕАСТ», благодаря усилению тенденций перехода к ресурсосберегающему сельскому хозяйству и к органическому сельскому хозяйству, использование минеральных удобрений и пестицидов на гектар пашни на протяжении последнего десятилетия снижается, в то время как в остальной части региона применение удобрений и пестицидов увеличивается." # Тем не менее, с точки зрения общего уровня применения удобрений, субрегион «Другие страны ЕС и ЕАСТ» по-прежнему лидирует, вместе со субрегионами «Юго-Восточноя Европа» и «Центральная и Восточная часть ЕС». "
 
 ## ---- P1inputData ----
 
 
 ## ---- P1inputTOPRIGHT ----
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2002:2012) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12000, Year %in% 2002:2014) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13000, Year %in% 2002:2014) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14000, Year %in% 2002:2014) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15000, Year %in% 2002:2014) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% 5000, Year %in% 2002:2014) %>% select(SHORT_NAME,Year,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
 
 dat <- gather(dat, variable, value, 3:5)
 dat$fill[dat$variable == "RF.FERT.NI.TN.SH"] <- "Nitrogen"
@@ -772,19 +791,19 @@ p <- p + geom_area(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="kg/ha\n")
 if (rulang) p <- p + labs(x="",y="кг/га\n")
-p <- p + scale_x_continuous(breaks=c(2002,2004,2006,2008,2010,2012))
+p <- p + scale_x_continuous(breaks=c(2002,2006,2010,2014))
 p
 
 # Caption
-caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002 to 2012)"
-if (rulang) caption_text <- "Использование удобрений в переводе в питательные вещества, на гектар пашни, 20 стран с самыми высокими значениями (с 2002 по 2012 гг.)"
+caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002 to 2014)"
+if (rulang) caption_text <- "Использование удобрений в переводе в питательные вещества, на гектар пашни, 20 стран с самыми высокими значениями (с 2002 по 2014 гг.)"
 
 ## ---- P1inputLEFT ----
-dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>%
+dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>%
   select(FAOST_CODE,Year,RF.FERT.NI.TN.SH) %>%
+  na.omit() %>% 
   mutate(RF.FERT.NI.TN.SH = RF.FERT.NI.TN.SH * 1000) # As we want kg per ha
 
-dat <- dat[!is.na(dat$RF.FERT.NI.TN.SH),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -795,7 +814,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RF.FERT.NI.TN.SH)
-top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+top20 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014")
 
 dat_plot <- top20
 
@@ -817,15 +836,15 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("Nitrogen fertilizers consumption in nutrients per ha of arable land, top",nrow(dat_plot),"countries (2012)")
-if (rulang) caption_text <- paste("Использование азотных удобрений в переводе в питательное вещество, на гектар пашни,",nrow(dat_plot),"стран с самыми высокими значениями (2012 г.)")
+caption_text <- paste("Nitrogen fertilizers consumption in nutrients per ha of arable land, top",nrow(dat_plot),"countries (2014)")
+if (rulang) caption_text <- paste("Использование азотных удобрений в переводе в питательное вещество, на гектар пашни,",nrow(dat_plot),"стран с самыми высокими значениями (2014 г.)")
 
 ## ---- P1inputRIGHT ----
-dat <- syb.df %>% filter(Year %in% 2012, FAOST_CODE < 5000) %>%
+dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>%
   select(FAOST_CODE,Year,RF.FERT.PH.TN.SH) %>%
+  na.omit(.) %>% 
   mutate(RF.FERT.PH.TN.SH = RF.FERT.PH.TN.SH * 1000) # As we want kg per ha
 
-dat <- dat[!is.na(dat$RF.FERT.PH.TN.SH),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -836,7 +855,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 # top for this plot
 dat <- arrange(dat, -RF.FERT.PH.TN.SH)
-dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2012")
+dat_plot <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014")
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
@@ -855,8 +874,8 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Phosphate fertilizers consumption in nutrients per ha of arable land, top",nrow(dat_plot)," countries (2012)")
-if (rulang) caption_text <- paste("Использование фосфорных удобрений в переводе в питательное вещество на гектар пашни,",nrow(dat_plot)," стран с самыми высокими значениями (2012 г.)")
+caption_text <- paste("Phosphate fertilizers consumption in nutrients per ha of arable land, top",nrow(dat_plot)," countries (2014)")
+if (rulang) caption_text <- paste("Использование фосфорных удобрений в переводе в питательное вещество на гектар пашни,",nrow(dat_plot)," стран с самыми высокими значениями (2014 г.)")
 
 ## ---- P1inputBOTTOM ----
 
@@ -875,11 +894,11 @@ if (rulang) caption_text <- paste("Использование фосфорных
 #
 # dat$share <- (dat$value * 1000) / dat$RL.AREA.ARBLPRMN.HA.NO
 
-if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
-if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2012) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RAF")  dat <- syb.df %>% filter(FAOST_CODE %in% 12001:12005, Year %in% 2014) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RAP")  dat <- syb.df %>% filter(FAOST_CODE %in% 13001:13014, Year %in% 2014) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "REU")  dat <- syb.df %>% filter(FAOST_CODE %in% 14001:14007, Year %in% 2014) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "RNE")  dat <- syb.df %>% filter(FAOST_CODE %in% 15001:15003, Year %in% 2014) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
+if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,5200,5300,5400,5500), Year %in% 2014) %>% select(SHORT_NAME,RF.FERT.NI.TN.SH,RF.FERT.PH.TN.SH,RF.FERT.PO.TN.SH)
 
 dat <- gather(dat, variable, value, 2:4)
 dat$fill[dat$variable == "RF.FERT.NI.TN.SH"] <- "Nitrogen"
@@ -910,18 +929,16 @@ p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
 # Caption
-caption_text <- paste("Fertilizer consumption in nutrients per ha of arable land (2012)")
-if (rulang) caption_text <- "Использование удобрений в переводе в питательные вещества на гектар пашни (2012 г.)"
+caption_text <- paste("Fertilizer consumption in nutrients per ha of arable land (2014)")
+if (rulang) caption_text <- "Использование удобрений в переводе в питательные вещества на гектар пашни (2014 г.)"
 
 ## ---- P1inputMAP ----
 # TRY RP.PEST.TOT.TN.SH.EXP
-dat <- syb.df %>% filter(Year %in% 2007:2012) %>%
+dat <- syb.df %>% filter(Year %in% 2009:2014) %>%
   select(FAOST_CODE, Year, RP.PEST.TOT.TN.SH) %>%
-  dplyr::mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH * 1000) # we want kg per ha
-
-dat <- dat[!is.na(dat$RP.PEST.TOT.TN.SH),]
-
-dat <- dat %>% group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ungroup()
+  na.omit(.) %>% 
+  dplyr::mutate(RP.PEST.TOT.TN.SH = RP.PEST.TOT.TN.SH * 1000) %>%  # we want kg per ha
+  group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ungroup()
 
 # dat <- dat[dat$FAOST_CODE != 41,]
 dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
@@ -945,8 +962,8 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Pesticides per ha of arable land (kg/ha, 2007 to 2012*)"
-if (rulang) caption_text <- "Использование пестицидов на гектар пашни (кг/га, с 2007 по 2012 гг.*)"
+caption_text <- "Pesticides per ha of arable land (kg/ha, 2009 to 2014*)"
+if (rulang) caption_text <- "Использование пестицидов на гектар пашни (кг/га, с 2009 по 2014 гг.*)"
 
 #   ___                                _                                _
 #  |_ _|  _ __   __   __   ___   ___  | |_   _ __ ___     ___   _ __   | |_
@@ -1187,45 +1204,31 @@ if (rulang) caption_text <- paste("Потоки помощи в сельское
 
 
 ## ---- P1investMAP ----
-# map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
-# 
-# # Add region key and subset
-# 
-# map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-# 
-# cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IG_23101_6111")]
-# cat_data$value_cat <- categories(x=cat_data$IG_23101_6111, n=5, method="jenks",decimals=2)
-# 
-# map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-# 
-# # define map unit
-# map_unit <- "percent"
-# if (rulang) map_unit <- ""
-# #
-# p <- create_map_here()
-# p
-# 
-dat <- as.data.frame(unique(syb.df$FAOST_CODE))
-names(dat) <- "FAOST_CODE"
-dat$value <- dat$FAOST_CODE
-map.plot <- left_join(map.df,dat)
+dat <- syb.df %>% filter(Year >= 2009) %>%
+  select(FAOST_CODE, Year, IG_6111_23161) %>%
+  na.omit(.) %>% 
+  group_by(FAOST_CODE) %>% dplyr::filter(Year == max(Year)) %>% ungroup()
+
+# dat <- dat[dat$FAOST_CODE != 41,]
+dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+
+# set Robinson projection
+map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+
+# Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","value")]
-cat_data$value_cat <- categories(x=cat_data$value, n=5, method="jenks",decimals=2)
+
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IG_6111_23161")]
+cat_data$value_cat <- categories(x=cat_data$IG_6111_23161, n=5, method="jenks",decimals=2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
-map_unit <- "nonsense"
-if (rulang) map_unit <- "бред какой то"
+# define map unit
+map_unit <- "percent"
+if (rulang) map_unit <- "проценты"
 #
 p <- create_map_here()
 p
-
-# 
-# map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
-# 
-# # define map unit
-# map_unit <- "percent"
 
 # # Caption
 caption_text <- "Share of government expenditure on agriculture, share of total outlays (percent, 2008 to 2012*)"
