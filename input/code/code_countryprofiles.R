@@ -122,7 +122,8 @@ sanitizeToHTML <- function(str, html=FALSE, type=c("text","table")) {
 
 if (!("FS.DA.ADESA.PCT3D" %in% names(syb.df))) {
 
-  load(paste0(data.dir,"/fsi_data.RData")) # manipulated in code_part2.R
+  dat <- readRDS(paste0(data.dir,"/fsi_data.RDS")) # manipulated in code_part2.R
+  # dat <- readRDS(paste0(data.dir,"/fsi_data_old.RDS")) %>% # Old fsi data
 
   dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
   vars_to_exclude <- names(syb.df)[names(syb.df) %in% names(dat)][c(-1:-4,-14)]

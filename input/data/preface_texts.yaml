@@ -1,10 +1,10 @@
 - id: RAF
   maintitle: FAO Statistical Pocketbook
-  year: 2016
+  year: 2017
   subtitle: Africa
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Africa
-  bottom_row3: Accra, 2016
+  bottom_row3: Accra, 2017
   foreword: |
     The objective of the FAO Regional Office for Africa (RAF) is to 
     improve sustainable nutrition and food security in the African 
@@ -80,11 +80,11 @@
 #################################################################################
 - id: RAP
   maintitle: FAO Statistical Pocketbook
-  year: 2016
+  year: 2017
   subtitle: Asia and the Pacific
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Asia and the Pacific
-  bottom_row3: Bangkok, 2016
+  bottom_row3: Bangkok, 2017
   foreword: |
     This is the end of a 15-year cycle where the international community
     partnered with developing countries to tackle the Millennium Development
@@ -145,11 +145,11 @@
 #################################################################################
 - id: REU
   maintitle: FAO Statistical Pocketbook
-  year: 2016
+  year: 2017
   subtitle: Europe and Central Asia
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Europe and Central Asia
-  bottom_row3: Budapest, 2016
+  bottom_row3: Budapest, 2017
   foreword: |
     The present pocketbook appears at the crucial moment of the World Development Agenda.
 
@@ -211,11 +211,11 @@
 #################################################################################
 - id: REURU
   maintitle: Статистический карманный справочник ФАО
-  year: 2016
+  year: 2017
   subtitle: Европа и Центральная Азия
   bottom_row1: Продовольственная и сельскохозяйственная организация Объединенных Наций
   bottom_row2: Региональное отделение для Европы и Центральной Азии
-  bottom_row3: Будапешт, 2016
+  bottom_row3: Будапешт, 2017
   foreword: |
     Представленный вашему вниманию карманный справочник появляется на 
     решающем этапе повестки дня в области мирового развития.
@@ -279,11 +279,11 @@
 #################################################################################
 - id: RNE
   maintitle: FAO Statistical Pocketbook
-  year: 2016
+  year: 2017
   subtitle: Near East and North Africa
   bottom_row1: Food and Agriculture Organization of the United Nations
   bottom_row2: Regional office for Near East and North Africa
-  bottom_row3: Cairo, 2016
+  bottom_row3: Cairo, 2017
   foreword: |
     This statistical Pocketbook comes out at a time when the international
     community is closing a page on the MDGs, moving towards a new
@@ -415,10 +415,10 @@
 #################################################################################
 - id: GLO
   maintitle: FAO Statistical Pocketbook
-  year: 2016
+  year: 2017
   subtitle: ""
   bottom_row1: Food and Agriculture Organization of the United Nations
-  bottom_row2: Roma, 2016
+  bottom_row2: Roma, 2017
   bottom_row3: ""
   foreword: |
     This is the end of a 15-year cycle where the international community

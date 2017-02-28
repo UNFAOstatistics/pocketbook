@@ -16,23 +16,23 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                         ,"RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                      # "GLO" # Global
+                         # ,"RAP" # Asia and the Pacific
+                         # ,"RAF"  # Africa
+                        "REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
 ############################################################
 # For print or for web or a4-print (in-house)
-output_type <- "web" # web//a4g
-# output_type <- "print" # web/print/a4
+# output_type <- "web" # web//a4g
+output_type <- "print" # web/print/a4
 # output_type <- "a4" # web/print/a4
 
 

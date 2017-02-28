@@ -36,7 +36,12 @@ if (region_to_report == "GLO") short_text <- "Undernourishment is a state, lasti
 
 if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
-  # dat <- read.csv(paste0(data.dir,"/DisseminationDataset090216.csv"), stringsAsFactors=FALSE)
+  
+  # dat_country <- read.csv(paste0(data.dir,"/DisseminationDataset090216.csv"), stringsAsFactors=FALSE)
+  # dat_sofi <- read.csv(paste0(data.dir,"/DisseminationDataset090216_SOFIregions.csv"), stringsAsFactors=FALSE)
+  # dat_sofi$FS.OA.NOU.P3D1 <- as.character(dat_sofi$FS.OA.NOU.P3D1)
+  # dat <- bind_rows(dat_country,dat_sofi)
+
   # Cereal dependency ratio has odd numbers for year 2011. (China (351) is 100)
   # Recoding them to NA
   dat$FBS.IDR.CRLS.PCT3D[dat$Year == 2011]  <- NA
@@ -162,19 +167,19 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
     dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_censore, NA, dat[[i]])
   }
   
+  # M49LatinAmericaAndCaribbean
+  dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
+  # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
+  # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "ns"] <- 0
+  dat$FS.OA.NOU.P3D1 <- as.factor(dat$FS.OA.NOU.P3D1)
+  dat$FS.OA.NOU.P3D1 <- as.numeric(levels(dat$FS.OA.NOU.P3D1))[dat$FS.OA.NOU.P3D1]
+  dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
+  dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
+  dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
   
-  save(dat, file=paste0(data.dir,"/fsi_data.RData"))
-} else load(paste0(data.dir,"/fsi_data.RData"))
-
-# M49LatinAmericaAndCaribbean
-dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
-# dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
-# dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "ns"] <- 0
-dat$FS.OA.NOU.P3D1 <- as.factor(dat$FS.OA.NOU.P3D1)
-dat$FS.OA.NOU.P3D1 <- as.numeric(levels(dat$FS.OA.NOU.P3D1))[dat$FS.OA.NOU.P3D1]
-dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
-dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
-dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
+  saveRDS(dat, file=paste0(data.dir,"/fsi_data.RDS"))
+  # saveRDS(dat, file=paste0(data.dir,"/fsi_data_old.RDS")) # this is the old data 20170228
+} else dat <- readRDS(paste0(data.dir,"/fsi_data.RDS"))
 
 df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
@@ -760,13 +765,10 @@ if (rulang) caption_text <- paste("Средний объем получаемы�
 
 ## ---- P2availabBOTTOM ----
 
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
-
-# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-#                                                                     "Europe and Central Asia",
-#                                                                     "Asia and the Pacific",
-#                                                                     "Africa",
-#                                                                     "World"))
+dat_plot <- df %>%
+  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000)
+                          else c(5000,12000,13000,14000,15000)) %>%
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
 
 dat_plot <- dat_plot[!is.na(dat_plot$FBS.PPCS.AO.GCD3D),]
 dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
@@ -844,7 +846,10 @@ if (region_to_report == "REU" & rulang) short_text <- "Наличие доста
 
 
 ## ---- P2accessTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+dat_plot <- df %>%
+  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) 
+         else c(5000,12000,13000,14000,15000)) %>%  
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -1078,7 +1083,11 @@ if (region_to_report == "REU" & rulang) short_text <- "В течение пос�
 
 
 ## ---- P2stabilityTOPRIGHT ----
-dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+dat_plot <- df %>%
+  filter(FAOST_CODE %in% 
+                            if (region_to_report == "RNE") c(5000,420,13000,14000,15000) 
+                          else c(5000,12000,13000,14000,15000)) %>%  
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -1432,11 +1441,16 @@ caption_text <- paste("Percentage of children under 5 affected by wasting, highe
 if (rulang) caption_text <- paste("Процентная доля детей до пяти лет, страдающих от истощения,",ncases,"стран с самыми высокими показателями (2006 – 2014 гг.*)")
 
 ## ---- P2utilizaBOTTOM ----
-if (region_to_report == "RAF") dat <- df %>% filter(FAOST_CODE %in% c(12000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
-if (region_to_report == "RAP") dat <- df %>% filter(FAOST_CODE %in% c(5853), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
-if (region_to_report == "REU") dat <- df %>% filter(FAOST_CODE %in% c(14000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
-if (region_to_report == "RNE") dat <- df %>% filter(FAOST_CODE %in% c(15000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
-if (region_to_report == "GLO") dat <- df %>% filter(FAOST_CODE %in% c(5000),  Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RAF") dat <- df %>%
+  filter(FAOST_CODE %in% c(12000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RAP") dat <- df %>%
+  filter(FAOST_CODE %in% c(5853), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "REU") dat <- df %>%
+  filter(FAOST_CODE %in% c(14000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "RNE") dat <- df %>%
+  filter(FAOST_CODE %in% c(15000), Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
+if (region_to_report == "GLO") dat <- df %>% 
+  filter(FAOST_CODE %in% c(5000),  Year >= 2000) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,SH.H2O.SAFE.ZS,SH.STA.ACSN)
 
 
 dat <- dat[!is.na(dat$SH.STA.ACSN),]

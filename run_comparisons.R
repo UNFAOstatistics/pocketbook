@@ -7,13 +7,13 @@
 
 
 books <- c(
-          # "GLO"
+          "GLO"
           # # ,"GLO15"
-          # ,"RAP"
-          # ,"RAF"
-          # ,"REU"
-          # ,"REU_ru"
-          # ,"RNE"
+          ,"RAP"
+          ,"RAF"
+          ,"REU"
+          ,"REU_ru"
+          ,"RNE"
           )
 
 
@@ -426,30 +426,30 @@ cat("
 # number of images in the folder
   cat('
 <h3>REU-book</h3>
-<img src="REU/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="REU/page-66.jpg" vspace="10" height="1200"/></br>
-<img src="REU/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-77.jpg" vspace="10" height="1200"/></br>
 <h3>REU_ru-book</h3>
-<img src="REU_ru/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="REU_ru/page-66.jpg" vspace="10" height="1200"/></br>
-<img src="REU_ru/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-57.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-77.jpg" vspace="10" height="1200"/></br>
 <h3>RAF-book</h3>
-<img src="RAF/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="RAF/page-76.jpg" vspace="10" height="1200"/></br>
-<img src="RAF/page-78.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-79.jpg" vspace="10" height="1200"/></br>
 <h3>RAP-book</h3>
-<img src="RAP/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="RAP/page-67.jpg" vspace="10" height="1200"/></br>
-<img src="RAP/page-71.jpg" vspace="10" height="1200"/></br>
-<img src="RAP/page-93.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-68.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-94.jpg" vspace="10" height="1200"/></br>
 <h3>RNE-book</h3>
-<img src="RNE/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="RNE/page-62.jpg" vspace="10" height="1200"/></br>
-<img src="RNE/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-73.jpg" vspace="10" height="1200"/></br>
 <h3>GLO-book</h3>
-<img src="GLO/page-66.jpg" vspace="10" height="1200"/></br>
-<img src="GLO/page-133.jpg" vspace="10" height="1200"/></br>
-<img src="GLO/page-228.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-134.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-229.jpg" vspace="10" height="1200"/></br>
                ',
       file = fileOut, append = TRUE) 
 
