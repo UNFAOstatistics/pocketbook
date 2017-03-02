@@ -71,27 +71,28 @@ for (book in books){
 
 | link to pdf | Modified | pages | covers |
 | --- | -------- | ----- | --- |
-| [GLO](print/syb_main_GLO.pdf) | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$pages``| [print covers](covers/GLO16.pdf) |
-| [REU](print/syb_main_REU.pdf) | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$pages``| [print covers](covers/REU16.pdf) |
-| [REU_ru](print/syb_main_REU_ru.pdf) | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$pages``| print covers |
-| [RAP](print/syb_main_RAP.pdf) | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$pages``| [print covers](covers/RAP16.pdf) |
-| [RAF](print/syb_main_RAF.pdf) | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$pages``| [print covers](covers/RAF16.pdf) |
-| [RNE](print/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``| [print covers](covers/RAF16.pdf) |
+| [GLO](print/syb_main_GLO.pdf) | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "GLO") %>% .$pages``| [print covers](print/GLO_cover.pdf) |
+| [REU](print/syb_main_REU.pdf) | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU") %>% .$pages``| [print covers](print/REU_cover.pdf) |
+| [REU_ru](print/syb_main_REU_ru.pdf) | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "REU_ru") %>% .$pages``| [print covers](print/REU_ru_cover.pdf) |
+| [RAP](print/syb_main_RAP.pdf) | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAP") %>% .$pages``| [print covers](print/RAP_cover.pdf) |
+| [RAF](print/syb_main_RAF.pdf) | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RAF") %>% .$pages``| [print covers](print/RAF_cover.pdf) |
+| [RNE](print/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``| [print covers](print/RNE_cover.pdf) |
 | [Coffee](print/syb_main_COF.pdf) | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$pages``| covers |
 
 
 # Comparisons
 
-- [Global 2015 vs. Global 2016](pdf/GLO15_GLO.html)
+<!-- - [Global 2015 vs. Global 2016](pdf/GLO15_GLO.html) -->
 - [RAP 2016 vs. Global 2016](pdf/RAP.html)
 - [REU 2016 vs. Global 2016](pdf/REU.html)
 - [REU ru 2016 vs. Global 2016](pdf/REU_ru.html)
 - [RNE 2016 vs. Global 2016](pdf/RNE.html)
 - [RAF 2016 vs. Global 2016](pdf/RAF.html)
-- [All regional books](pdf/regional_books16.html)
+<!-- - [All regional books](pdf/regional_books16.html) -->
 - [All 2016 books](pdf/all_books16.html)
 - [REU vs. Reu ru](pdf/REU_ru_REU.html)
-- [Country profiles](pdf/country_profiles.html)
+- [Country profiles 20170221](pdf/country_profiles_20170221.html) - one i presented over skype
+- [Country profiles 20170301](pdf/country_profiles_20170301.html) - one comparing changes to that
 
 
 # Data sources

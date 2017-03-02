@@ -187,5 +187,11 @@ flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]
 if (output_type == "web") file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
 if (output_type == "print") file.copy(flist, paste0(root.dir,"/output/print"), overwrite = TRUE)
 
-
-setwd(root.dir)
+# Copy print covers too
+if (output_type == "print"){
+  flist <- list.files(paste0(root.dir,"output/process"),
+                      "+._cover.pdf$",
+                      full.names = TRUE)
+  file.copy(flist, paste0(root.dir,"/output/print"), overwrite = TRUE)
+  
+}

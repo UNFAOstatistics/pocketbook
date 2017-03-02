@@ -43,114 +43,134 @@ for (region_to_report in books){
   setwd(paste0(root.dir,"/output/pdf"))
   if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
   fileOut <- paste0(region_to_report,".html")
+  file.remove(fileOut)
   file.create(fileOut, showWarnings = FALSE)
-  cat(paste('
- <body bgcolor="#669999">
+  
+  # number of images in the folder
+  nr_of_pages1 <- length(list.files(path = "GLO/", pattern = ".jpg"))
+  nr_of_pages2 <- length(list.files(path = paste0(region_to_report,"/"), pattern = ".jpg"))
+  if (nr_of_pages1 >= nr_of_pages2){
+    nr_of_pages <- nr_of_pages2
+  } else nr_of_pages <- nr_of_pages1
+  nr_of_pages <- nr_of_pages -2
+  cat(paste0("
+ <body bgcolor='#669999'>
             
 <h1> spreads<h1>
               
 <table>
 <tr>
-<th>Global 2016</th><th>',region_to_report,' 2016</th><th>Comments</th>
+<th>Comments</th><th>latest</th><th>20170221-version prior bulk</th>
 </tr>
 <tr>
-<td>            
-'),
-file = fileOut, append = TRUE) 
-
-# number of images in the folder
-nr_of_pages1 <- length(list.files(path = "GLO/", pattern = ".jpg"))
-nr_of_pages2 <- length(list.files(path = paste0(region_to_report,"/"), pattern = ".jpg"))
-if (nr_of_pages1 >= nr_of_pages2){
-  nr_of_pages <- nr_of_pages2
-} else nr_of_pages <- nr_of_pages1
-
-for (i in 1:nr_of_pages){
-    cat(paste0('
-<img src="GLO/page-',i-1,'.jpg" vspace="10" height="800"/></br>
-'),
-        file = fileOut, append = TRUE) 
-}
-  
-cat(paste('
-</td>
-<td>
-'),
-file = fileOut, append = TRUE) 
-  
-# number of images in the folder
-  for (i in 1:nr_of_pages){
-    cat(paste0('
-<img src="',region_to_report,'/page-',i-1,'.jpg" vspace="10"  height="800"/></br>
-'),
-        file = fileOut, append = TRUE) 
-}
-
-cat(paste0("
-</td>
 <td>
 <iframe name='embed_readwrite' src='http://pad.okfn.org/p/faopocketbook2016",region_to_report,"?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
 </td>
-</table>
-
-</body>
-"),
-    file = fileOut, append = TRUE) 
-}
-
-# ------------------------------------
-# global with global
-# ------------------------------------
-setwd(paste0(root.dir,"/output/pdf"))
-if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
-fileOut <- "GLO15_GLO.html"
-file.create(fileOut, showWarnings = FALSE)
-cat(paste('
-<body bgcolor="#669999">
-
-<h1> spreads<h1>
-
-<table>
-<tr>
-<th>Global 2015</th><th>Global 2016</th><th>Comments</th>
-</tr>
-<tr>
-<td>            
-'),
+<td>
+            "),
 file = fileOut, append = TRUE) 
+
 
 # number of images in the folder
-nr_of_pages <- length(list.files(path = "GLO15/", pattern = ".jpg"))
-nr_of_pages <- nr_of_pages - 7
-for (i in 1:nr_of_pages){
+  for (i in 1:nr_of_pages){
     cat(paste0('
-<img src="GLO15/page-',i,'.jpg" vspace="10"/ height="800"></br>
-               '),
+<img src="',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+'),
         file = fileOut, append = TRUE) 
 }
-  
+
+
 cat(paste('
 </td>
 <td>
-          '),
-file = fileOut, append = TRUE) 
-  
-  for (i in 1:nr_of_pages){
-    cat(paste0('
-<img src="GLO/page-',i+5,'.jpg" vspace="10"/ height="800"></br>
-               '),
-        file = fileOut, append = TRUE) 
-  }
-cat(paste("
-</td>
-<td>
-<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016GLO?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
+'),
+    file = fileOut, append = TRUE) 
+
+# number of images in the folder
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="../pdf_tmp_20170221/',region_to_report,'/page-',i-1,'.jpg" vspace="10"  height="800"/></br>
+'),
+      file = fileOut, append = TRUE) 
+}
+
+# cat(paste('
+# </td>
+# <td>
+# '),
+#     file = fileOut, append = TRUE) 
+# 
+# for (i in 1:nr_of_pages){
+# cat(paste0('
+# <img src="../pdf_tmp_20170221/GLO15/page-',i-1,'.jpg" vspace="10" height="800"/></br>
+# '),
+#     file = fileOut, append = TRUE) 
+# }
+
+cat(paste0("
 </td>
 </table>
-
 </body>
 "),
     file = fileOut, append = TRUE) 
+
+}
+
+
+
+# # ------------------------------------
+# # global with global
+# # ------------------------------------
+# setwd(paste0(root.dir,"/output/pdf"))
+# if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
+# fileOut <- "GLO15_GLO.html"
+# file.create(fileOut, showWarnings = FALSE)
+# cat(paste('
+# <body bgcolor="#669999">
+# 
+# <h1> spreads<h1>
+# 
+# <table>
+# <tr>
+# <th>Global 2015</th><th>Global 2016</th><th>Comments</th>
+# </tr>
+# <tr>
+# <td>            
+# '),
+# file = fileOut, append = TRUE) 
+# 
+# # number of images in the folder
+# nr_of_pages <- length(list.files(path = "GLO15/", pattern = ".jpg"))
+# nr_of_pages <- nr_of_pages - 7
+# for (i in 1:nr_of_pages){
+#     cat(paste0('
+# <img src="GLO15/page-',i,'.jpg" vspace="10"/ height="800"></br>
+#                '),
+#         file = fileOut, append = TRUE) 
+# }
+#   
+# cat(paste('
+# </td>
+# <td>
+#           '),
+# file = fileOut, append = TRUE) 
+#   
+#   for (i in 1:nr_of_pages){
+#     cat(paste0('
+# <img src="GLO/page-',i+5,'.jpg" vspace="10"/ height="800"></br>
+#                '),
+#         file = fileOut, append = TRUE) 
+#   }
+# cat(paste("
+# </td>
+# <td>
+# <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016GLO?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
+# </td>
+# </table>
+# 
+# </body>
+# "),
+#     file = fileOut, append = TRUE) 
 
 
 # ------------------------------------
@@ -212,82 +232,82 @@ cat(paste("
     file = fileOut, append = TRUE) 
 
 
-
-# ---------------------------------------------
-# Regional books all compared
-# ---------------------------------------------
-setwd(paste0(root.dir,"/output/pdf"))
-if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
-fileOut <- "regional_books16.html"
-file.create(fileOut, showWarnings = FALSE)
-cat(paste('
-<body bgcolor="#669999">
-
-<h1> spreads<h1>
-
-<table>
-<tr>
-<th>REU</th><th>RAP</th><th>RAF</th><th>RNE</th><th>Comments</th>
-</tr>
-<tr>
-<td>            
-'),
-file = fileOut, append = TRUE) 
-
-# number of images in the folder
-nr_of_pages <- length(list.files(path = "RNE/", pattern = ".jpg"))
-
-for (i in 1:nr_of_pages){
-cat(paste0('
-<img src="REU/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-'),
-file = fileOut, append = TRUE) 
-}
-cat(paste('
-</td>
-<td>
-'),
-file = fileOut, append = TRUE) 
-for (i in 1:nr_of_pages){
-cat(paste0('
-<img src="RAP/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-'),
-file = fileOut, append = TRUE) 
-}
-cat(paste('
-</td>
-<td>
-'),
-file = fileOut, append = TRUE) 
-for (i in 1:nr_of_pages){
-cat(paste0('
-<img src="RAF/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-             '),
-file = fileOut, append = TRUE) 
-}
-cat(paste('
-</td>
-<td>
-          '),
-file = fileOut, append = TRUE) 
-
-for (i in 1:nr_of_pages){
-cat(paste0('
-<img src="RNE/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-'),
-file = fileOut, append = TRUE) 
-}
-
-cat(paste("
-</td>
-<td>
-<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016regions?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(620+20),"></iframe> 
-</td>
-</table>
-
-</body>
-"),
-file = fileOut, append = TRUE) 
+# 
+# # ---------------------------------------------
+# # Regional books all compared
+# # ---------------------------------------------
+# setwd(paste0(root.dir,"/output/pdf"))
+# if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
+# fileOut <- "regional_books16.html"
+# file.create(fileOut, showWarnings = FALSE)
+# cat(paste('
+# <body bgcolor="#669999">
+# 
+# <h1> spreads<h1>
+# 
+# <table>
+# <tr>
+# <th>REU</th><th>RAP</th><th>RAF</th><th>RNE</th><th>Comments</th>
+# </tr>
+# <tr>
+# <td>            
+# '),
+# file = fileOut, append = TRUE) 
+# 
+# # number of images in the folder
+# nr_of_pages <- length(list.files(path = "RNE/", pattern = ".jpg"))
+# 
+# for (i in 1:nr_of_pages){
+# cat(paste0('
+# <img src="REU/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+# '),
+# file = fileOut, append = TRUE) 
+# }
+# cat(paste('
+# </td>
+# <td>
+# '),
+# file = fileOut, append = TRUE) 
+# for (i in 1:nr_of_pages){
+# cat(paste0('
+# <img src="RAP/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+# '),
+# file = fileOut, append = TRUE) 
+# }
+# cat(paste('
+# </td>
+# <td>
+# '),
+# file = fileOut, append = TRUE) 
+# for (i in 1:nr_of_pages){
+# cat(paste0('
+# <img src="RAF/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+#              '),
+# file = fileOut, append = TRUE) 
+# }
+# cat(paste('
+# </td>
+# <td>
+#           '),
+# file = fileOut, append = TRUE) 
+# 
+# for (i in 1:nr_of_pages){
+# cat(paste0('
+# <img src="RNE/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+# '),
+# file = fileOut, append = TRUE) 
+# }
+# 
+# cat(paste("
+# </td>
+# <td>
+# <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016regions?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(620+20),"></iframe> 
+# </td>
+# </table>
+# 
+# </body>
+# "),
+# file = fileOut, append = TRUE) 
 
 
 # ---------------------------------------------
@@ -397,10 +417,10 @@ cat(paste("
 
 
 # ------------------------------------
-# Country profile tables
+# Country profile tables 
 # ------------------------------------
 setwd(paste0(root.dir,"/output/pdf"))
-fileOut <- "country_profiles.html"
+fileOut <- "country_profiles_20170221.html"
 file.remove(fileOut)
 file.create(fileOut, showWarnings = FALSE)
 cat(paste('
@@ -462,30 +482,30 @@ cat(paste('
 # number of images in the folder
 cat('
 <h3>REU-book</h3>
-<img src="../pdf_tmp/REU/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/REU/page-66.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/REU/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/REU/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/REU/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/REU/page-76.jpg" vspace="10" height="1200"/></br>
 <h3>REU_ru-book</h3>
-<img src="../pdf_tmp/REU_ru/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/REU_ru/page-66.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/REU_ru/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/REU_ru/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/REU_ru/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/REU_ru/page-76.jpg" vspace="10" height="1200"/></br>
 <h3>RAF-book</h3>
-<img src="../pdf_tmp/RAF/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RAF/page-76.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RAF/page-78.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAF/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAF/page-76.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAF/page-78.jpg" vspace="10" height="1200"/></br>
 <h3>RAP-book</h3>
-<img src="../pdf_tmp/RAP/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RAP/page-67.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RAP/page-71.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RAP/page-93.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAP/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAP/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAP/page-71.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RAP/page-93.jpg" vspace="10" height="1200"/></br>
 <h3>RNE-book</h3>
-<img src="../pdf_tmp/RNE/page-55.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RNE/page-62.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/RNE/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RNE/page-55.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RNE/page-62.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/RNE/page-72.jpg" vspace="10" height="1200"/></br>
 <h3>GLO-book</h3>
-<img src="../pdf_tmp/GLO/page-66.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO/page-133.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO/page-228.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO/page-133.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO/page-228.jpg" vspace="10" height="1200"/></br>
                ',
 file = fileOut, append = TRUE)
 
@@ -497,30 +517,30 @@ cat(paste('
 
 cat('
 <h3>GLO-book</h3>
-<img src="../pdf_tmp/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-63.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-109.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-109.jpg" vspace="10" height="1200"/></br>
 <h3>GLO15-book</h3>
-<img src="../pdf_tmp/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-66.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-66.jpg" vspace="10" height="1200"/></br>
 <h3>GLO15-book</h3>
-<img src="../pdf_tmp/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-103.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-107.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-103.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-107.jpg" vspace="10" height="1200"/></br>
 <h3>GLO15-book</h3>
-<img src="../pdf_tmp/GLO15/page-52.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-87.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-125.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-204.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-52.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-87.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-125.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-204.jpg" vspace="10" height="1200"/></br>
 <h3>GLO15-book</h3>
-<img src="../pdf_tmp/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-127.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-184.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-127.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-184.jpg" vspace="10" height="1200"/></br>
 <h3>GLO15-book</h3>
-<img src="../pdf_tmp/GLO15/page-65.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-131.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp/GLO15/page-215.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-65.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-131.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-215.jpg" vspace="10" height="1200"/></br>
     ',
     file = fileOut, append = TRUE)
 
@@ -537,6 +557,142 @@ cat(paste("
 
 
 
+
+setwd(paste0(root.dir,"/output/pdf"))
+fileOut <- "country_profiles_20170301.html"
+file.remove(fileOut)
+file.create(fileOut, showWarnings = FALSE)
+cat(paste('
+          <body bgcolor="#669999">
+          
+          <h1> spreads<h1>
+          
+          <table>
+          <tr>
+          <th>Comments</th><th>updated</th><th>original in 20170301</th><th>global book2015</th>
+          </tr>
+          <tr>
+          <td>            
+          '),
+    file = fileOut, append = TRUE) 
+
+cat("
+# <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016countryprofiles20170301?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=23500></iframe> 
+</td>
+<td>
+", file=fileOut, append=TRUE)
+
+# number of images in the folder
+cat('
+<h3>REU-book</h3>
+<img src="REU/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="REU/page-77.jpg" vspace="10" height="1200"/></br>
+<h3>REU_ru-book</h3>
+<img src="REU_ru/page-57.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="REU_ru/page-77.jpg" vspace="10" height="1200"/></br>
+<h3>RAF-book</h3>
+<img src="RAF/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="RAF/page-79.jpg" vspace="10" height="1200"/></br>
+<h3>RAP-book</h3>
+<img src="RAP/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-68.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="RAP/page-94.jpg" vspace="10" height="1200"/></br>
+<h3>RNE-book</h3>
+<img src="RNE/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="RNE/page-73.jpg" vspace="10" height="1200"/></br>
+<h3>GLO-book</h3>
+<img src="GLO/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-134.jpg" vspace="10" height="1200"/></br>
+<img src="GLO/page-229.jpg" vspace="10" height="1200"/></br>
+               ',
+    file = fileOut, append = TRUE) 
+
+cat(paste('
+</td>
+<td>
+          '),
+    file = fileOut, append = TRUE) 
+
+# number of images in the folder
+cat('
+<h3>REU-book</h3>
+<img src="../pdf_tmp_20170301/REU/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/REU/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/REU/page-77.jpg" vspace="10" height="1200"/></br>
+<h3>REU_ru-book</h3>
+<img src="../pdf_tmp_20170301/REU_ru/page-57.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/REU_ru/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/REU_ru/page-77.jpg" vspace="10" height="1200"/></br>
+<h3>RAF-book</h3>
+<img src="../pdf_tmp_20170301/RAF/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RAF/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RAF/page-79.jpg" vspace="10" height="1200"/></br>
+<h3>RAP-book</h3>
+<img src="../pdf_tmp_20170301/RAP/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RAP/page-68.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RAP/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RAP/page-94.jpg" vspace="10" height="1200"/></br>
+<h3>RNE-book</h3>
+<img src="../pdf_tmp_20170301/RNE/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RNE/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/RNE/page-73.jpg" vspace="10" height="1200"/></br>
+<h3>GLO-book</h3>
+<img src="../pdf_tmp_20170301/GLO/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/GLO/page-134.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170301/GLO/page-229.jpg" vspace="10" height="1200"/></br>
+               ',
+    file = fileOut, append = TRUE)
+
+cat(paste('
+</td>
+          <td>
+          '),
+    file = fileOut, append = TRUE) 
+
+cat('
+<h3>GLO-book</h3>
+<img src="../pdf_tmp_20170221/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-109.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp_20170221/GLO15/page-50.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-66.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp_20170221/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-103.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-107.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp_20170221/GLO15/page-52.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-87.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-125.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-204.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp_20170221/GLO15/page-51.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-127.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-184.jpg" vspace="10" height="1200"/></br>
+<h3>GLO15-book</h3>
+<img src="../pdf_tmp_20170221/GLO15/page-65.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-131.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170221/GLO15/page-215.jpg" vspace="10" height="1200"/></br>
+    ',
+    file = fileOut, append = TRUE)
+
+
+
+
+cat(paste("
+</td>
+</table>
+
+</body>
+"),
+    file = fileOut, append = TRUE) 
 
 
 
