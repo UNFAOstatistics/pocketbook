@@ -343,6 +343,8 @@ if (rulang) dat_plot$fill[dat_plot$fill == "Services"] <- "в сфере усл�
 
 if (rulang) dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME,isfactor = TRUE)
 
+dat_plot <- na.omit(dat_plot)
+
 p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
 p <- p + geom_bar(stat="identity", position="stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])

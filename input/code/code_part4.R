@@ -722,8 +722,8 @@ if (!region_to_report %in% c("RAP","GLO"))  cat_data$value_cat <- categories(x=c
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
 # define map unit
-map_unit <- "million kWh"
-if (rulang) map_unit <- "млн кВтч"
+map_unit <- "TJ"
+if (rulang) map_unit <- "ТДж"
 
 p <- create_map_here()
 p

@@ -1462,6 +1462,8 @@ if (rulang){
   tbl_data[[1]] <- translate_subgroups(tbl_data[[1]], isfactor = FALSE, add_row_breaks = FALSE)
 } 
 
+tbl_data[[1]] <- ifelse(grepl("Gulf Cooperation",tbl_data[[1]]), "GCCSY*", tbl_data[[1]])
+
 
 print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
                     # align= "l{\raggedright\arraybackslash}rrr"),
@@ -1470,6 +1472,12 @@ print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
              comment = FALSE,
              size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
+
+if (table_type == "latex"){
+  cat("\\footnotesize{\\textit{* Gulf Cooperation Council States and Yemen}}")
+  cat("\\vspace{1mm}")
+} else cat("<br><i>Data after 2015 are projections</i>")
+
 
 
 ## ---- P3tradeLEFT ----
