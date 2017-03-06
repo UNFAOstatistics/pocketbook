@@ -84,6 +84,31 @@ if (rulang) {
     \newpage}
 
 
+\usepackage{datetime}
+\usepackage{blindtext}
+\usepackage{draftwatermark}
+\SetWatermarkText{Compiled \today at \currenttime}
+\SetWatermarkScale{0.04}
+\SetWatermarkColor[rgb]{0.7,0,0}
+\SetWatermarkAngle{0}
+\SetWatermarkLightness{0.2}
+\SetWatermarkVerCenter{.98\paperheight}
+
+
+<<timestamp, eval=include_timestamp>>=
+cat("
+\\usepackage{datetime}
+\\usepackage{blindtext}
+\\usepackage{draftwatermark}
+\\SetWatermarkText{Compiled \\today at \\currenttime}
+\\SetWatermarkScale{0.04}
+\\SetWatermarkColor[rgb]{0.7,0,0}
+\\SetWatermarkAngle{0}
+\\SetWatermarkLightness{0.2}
+\\SetWatermarkVerCenter{.98\\paperheight}
+")
+@
+
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -232,19 +257,6 @@ cat(paste0(
 @
 
 \end{center}
-
-
-
-
-<<timestamp, eval=include_timestamp>>=
-time_generated <- Sys.time()
-
-cat(
-  paste0("\\Huge{Generated at} \n",time_generated)
-)
-
-@
-
 
 
 

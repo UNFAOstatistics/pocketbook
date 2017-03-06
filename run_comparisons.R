@@ -60,7 +60,7 @@ for (region_to_report in books){
               
 <table>
 <tr>
-<th>Comments</th><th>latest</th><th>20170221-version prior bulk</th>
+<th>Comments</th><th>latest</th><th>20170306 - prior Staceys comments</th><th>20170221 - prior bulk</th>
 </tr>
 <tr>
 <td>
@@ -77,6 +77,20 @@ file = fileOut, append = TRUE)
 <img src="',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
 '),
         file = fileOut, append = TRUE) 
+}
+
+
+cat(paste('
+</td>
+<td>
+'),
+    file = fileOut, append = TRUE) 
+
+for (i in 1:nr_of_pages){
+  cat(paste0('
+<img src="../pdf_tmp_20170306/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+'),
+      file = fileOut, append = TRUE) 
 }
 
 
@@ -767,7 +781,7 @@ setwd(root.dir)
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE) 
 
 # Sync to kapsi!!
-system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+# system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
 # system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
-# system('rsync -avzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+system('rsync -avzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
 # system("/home/aurelius/faosync/pocketbooks/pocketbook/sync.sh")

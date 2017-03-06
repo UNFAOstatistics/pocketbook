@@ -83,35 +83,35 @@ for (book in books){
 # Comparisons
 
 <!-- - [Global 2015 vs. Global 2016](pdf/GLO15_GLO.html) -->
-- [RAP 2016 vs. Global 2016](pdf/RAP.html)
-- [REU 2016 vs. Global 2016](pdf/REU.html)
-- [REU ru 2016 vs. Global 2016](pdf/REU_ru.html)
-- [RNE 2016 vs. Global 2016](pdf/RNE.html)
-- [RAF 2016 vs. Global 2016](pdf/RAF.html)
+1. [RAP 2017 (Asia & Pacific)](pdf/RAP.html)
+1. [REU 2017 (Europe & Central Asia)](pdf/REU.html)
+1. [REU ru 2017 (Europe & Central Asia in Russian)](pdf/REU_ru.html)
+1. [RNE 2017 (Near East & North Africa)](pdf/RNE.html)
+1. [RAF 2017 (Africa)](pdf/RAF.html)
 <!-- - [All regional books](pdf/regional_books16.html) -->
-- [All 2016 books](pdf/all_books16.html)
-- [REU vs. Reu ru](pdf/REU_ru_REU.html)
-- [Country profiles 20170221](pdf/country_profiles_20170221.html) - one i presented over skype
-- [Country profiles 20170301](pdf/country_profiles_20170301.html) - one comparing changes to that
+1. [All 2016 books](pdf/all_books16.html)
+<!-- -1. [REU vs. Reu ru](pdf/REU_ru_REU.html)-->
+1. [Country profiles 20170221](pdf/country_profiles_20170221.html) - one i presented over skype
+1. [Country profiles 20170301](pdf/country_profiles_20170301.html) - one comparing changes to that
 
 
 # Data sources
 
-- [Faostat](http://www.fao.org/faostat/en/#home)
-- [World Development Indicators](http://data.worldbank.org/data-catalog/world-development-indicators)
-- [ILO](http://www.ilo.org/ilostat/faces/ilostat-home/download?_adf.ctrl-state=xh99k169b_4&_afrLoop=54910682937899#!)
+1. [Faostat](http://www.fao.org/faostat/en/#home)
+1. [World Development Indicators](http://data.worldbank.org/data-catalog/world-development-indicators)
+1. [ILO](http://www.ilo.org/ilostat/faces/ilostat-home/download?_adf.ctrl-state=xh99k169b_4&_afrLoop=54910682937899#!)
 
 # Source code
 
-- [pocketbook](https://github.com/UNFAOstatistics/pocketbook/)
-- [pocketbook_database](https://github.com/UNFAOstatistics/pocketbook_database/)
+1. [pocketbook](https://github.com/UNFAOstatistics/pocketbook/)
+1. [pocketbook_database](https://github.com/UNFAOstatistics/pocketbook_database/)
 
 
 # Data
 
-- [all faostat in single csv (first 1000 lines)](data/faostat.csv) - *original has 72 million rows, 7,2 GB as .csv*
-- [metadata for the above](data/meta_faostat.csv)
-- [country level indicators for the book before aggregation](data/data_for_book.csv)
+1. [all faostat in single csv (first 1000 lines)](data/faostat.csv) - *original has 72 million rows, 7,2 GB as .csv*
+1. [metadata for the above](data/meta_faostat.csv)
+1. [country level indicators for the book before aggregation](data/data_for_book.csv)
 
 
 # misc
