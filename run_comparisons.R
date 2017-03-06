@@ -444,7 +444,7 @@ cat(paste('
 
 <table>
 <tr>
-<th>Comments</th><th>updated</th><th>original in 20170221</th><th>global book2015</th>
+<th>Comments</th><th>current</th><th>original in 20170221</th><th>global book2015</th>
 </tr>
 <tr>
 <td>            
@@ -583,7 +583,7 @@ cat(paste('
           
           <table>
           <tr>
-          <th>Comments</th><th>updated</th><th>original in 20170301</th><th>global book2015</th>
+          <th>Comments</th><th>current</th><th>original in 20170306</th><th>global book2015</th>
           </tr>
           <tr>
           <td>            
@@ -635,30 +635,30 @@ cat(paste('
 # number of images in the folder
 cat('
 <h3>REU-book</h3>
-<img src="../pdf_tmp_20170301/REU/page-56.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/REU/page-67.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/REU/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/REU/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/REU/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/REU/page-77.jpg" vspace="10" height="1200"/></br>
 <h3>REU_ru-book</h3>
-<img src="../pdf_tmp_20170301/REU_ru/page-57.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/REU_ru/page-67.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/REU_ru/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/REU_ru/page-57.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/REU_ru/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/REU_ru/page-77.jpg" vspace="10" height="1200"/></br>
 <h3>RAF-book</h3>
-<img src="../pdf_tmp_20170301/RAF/page-56.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RAF/page-77.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RAF/page-79.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAF/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAF/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAF/page-79.jpg" vspace="10" height="1200"/></br>
 <h3>RAP-book</h3>
-<img src="../pdf_tmp_20170301/RAP/page-56.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RAP/page-68.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RAP/page-72.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RAP/page-94.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAP/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAP/page-68.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAP/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RAP/page-94.jpg" vspace="10" height="1200"/></br>
 <h3>RNE-book</h3>
-<img src="../pdf_tmp_20170301/RNE/page-56.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RNE/page-63.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/RNE/page-73.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RNE/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RNE/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/RNE/page-73.jpg" vspace="10" height="1200"/></br>
 <h3>GLO-book</h3>
-<img src="../pdf_tmp_20170301/GLO/page-67.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/GLO/page-134.jpg" vspace="10" height="1200"/></br>
-<img src="../pdf_tmp_20170301/GLO/page-229.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/GLO/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/GLO/page-134.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170306/GLO/page-229.jpg" vspace="10" height="1200"/></br>
                ',
     file = fileOut, append = TRUE)
 

@@ -92,7 +92,7 @@ for (book in books){
 1. [All 2016 books](pdf/all_books16.html)
 <!-- -1. [REU vs. Reu ru](pdf/REU_ru_REU.html)-->
 1. [Country profiles 20170221](pdf/country_profiles_20170221.html) - one i presented over skype
-1. [Country profiles 20170301](pdf/country_profiles_20170301.html) - one comparing changes to that
+1. [Country profiles 20170306](pdf/country_profiles_20170301.html) - one comparing changes to version Stacey started with
 
 
 # Data sources
