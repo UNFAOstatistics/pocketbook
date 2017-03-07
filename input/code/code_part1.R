@@ -595,9 +595,9 @@ caption_text <- "Labour force participation rate by gender, ages 15+ (2014)"
 if (rulang) caption_text <- "Показатель экономической активности населения, с разбивкой по полу, в возрасте 15+ (2014 г.)"
 
 ## ---- P1laboLEFT ----
-dat <- syb.df[syb.df$Year %in%  2004:2014 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.FE.ZS")]
+dat <- syb.df[syb.df$Year %in%  2006:2016 ,c("FAOST_CODE","Year","SHORT_NAME","ILO_female_emp_agri")]
 
-dat <- dat[!is.na(dat$SL.AGR.EMPL.FE.ZS),]
+dat <- dat[!is.na(dat$ILO_female_emp_agri),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -610,7 +610,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat_plot <- dat %>% group_by(SHORT_NAME) %>% 
   dplyr::filter(Year == max(Year)) %>% 
   ungroup() %>% 
-  arrange(-SL.AGR.EMPL.FE.ZS) %>% 
+  arrange(-ILO_female_emp_agri) %>% 
   slice(1:20) %>% 
   dplyr::mutate(color = "x")
 
@@ -618,11 +618,11 @@ ncases <- nrow(dat_plot)
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SL.AGR.EMPL.FE.ZS) 
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$ILO_female_emp_agri) 
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SL.AGR.EMPL.FE.ZS))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=ILO_female_emp_agri))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = SL.AGR.EMPL.FE.ZS, color=color), alpha=.5)
+                          yend = ILO_female_emp_agri, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -633,13 +633,13 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Female employment in agriculture in top",ncases,"countries, share of female employment (percent 2004-2014*)")
-if (rulang) caption_text <- paste("Доля женского населения, занятого в сельском хозяйстве среди экономически активного женского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2004-2014 гг.*)")
+caption_text <- paste("Female employment in agriculture in top",ncases,"countries, share of female employment (percent 2006-2016*)")
+if (rulang) caption_text <- paste("Доля женского населения, занятого в сельском хозяйстве среди экономически активного женского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2006-2016 гг.*)")
 
 ## ---- P1laboRIGHT ----
-dat <- syb.df[syb.df$Year %in%  2004:2014 ,c("FAOST_CODE","Year","SHORT_NAME","SL.AGR.EMPL.MA.ZS")]
+dat <- syb.df[syb.df$Year %in%  2006:2016 ,c("FAOST_CODE","Year","SHORT_NAME","ILO_male_emp_agri")]
 
-dat <- dat[!is.na(dat$SL.AGR.EMPL.MA.ZS),]
+dat <- dat[!is.na(dat$ILO_male_emp_agri),]
 # Add region key and subset
 dat <- left_join(dat,region_key)
 
@@ -652,17 +652,17 @@ dat <- dat[which(dat[[region_to_report]]),]
 dat_plot <- dat %>% group_by(SHORT_NAME) %>% 
   dplyr::filter(Year == max(Year)) %>% 
   ungroup() %>% 
-  arrange(-SL.AGR.EMPL.MA.ZS) %>% 
+  arrange(-ILO_male_emp_agri) %>% 
   slice(1:20) %>% dplyr::mutate(color = "x")
 ncases <- nrow(dat_plot)
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
 
-dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SL.AGR.EMPL.MA.ZS) 
+dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$ILO_male_emp_agri) 
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SL.AGR.EMPL.MA.ZS))
+p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=ILO_male_emp_agri))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = SL.AGR.EMPL.MA.ZS, color=color), alpha=.5)
+                          yend = ILO_male_emp_agri, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -673,8 +673,8 @@ p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
-caption_text <- paste("Male employment in agriculture in top",ncases,"countries, share of male employment (percent 2004 - 2014*)")
-if (rulang) caption_text <- paste("Доля мужского населения, занятого в сельском хозяйстве среди экономически активного мужского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2004-2014 гг.*)")
+caption_text <- paste("Male employment in agriculture in top",ncases,"countries, share of male employment (percent 2006 - 2016*)")
+if (rulang) caption_text <- paste("Доля мужского населения, занятого в сельском хозяйстве среди экономически активного мужского населения в",ncases,"странах с самыми высокими значениями, (в процентах, 2006-2016 гг.*)")
 
 ## ---- P1laboBOTTOM_data ----
 
