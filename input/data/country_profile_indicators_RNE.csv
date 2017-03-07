@@ -7,7 +7,7 @@ The setting,6,AQ.WAT.WATPCP.MC.NO,,,Water resources (m3/person/year),1000,0
 The setting,7,AQ.WAT.EQIRR.HA.NO,,,Area equipped for irrigation (1000 ha),1000,0
 The setting,8,AQ.WAT.SHIRR.HA.SH,,,Area irrigated (%),,1
 The setting,9,SL.AGR.EMPL.ZS,,,Employment in agriculture (%),,1
-The setting,10,SL.AGR.EMPL.FE.ZS,,,"Employment in agriculture, female (%)",,1
+The setting,10,ILO_female_emp_agri,,,"Employment in agriculture, female (%)",,1
 The setting,11,RF.FERT.NI.TN.SH,,,"Fertilizers, Nitrogen (kg per ha)",0.001,0
 The setting,12,RF.FERT.PH.TN.SH,,,"Fertilizers, Phosphate (kg per ha)",0.001,0
 The setting,13,RF.FERT.PO.TN.SH,,,"Fertilizers, Potash (kg per ha)",0.001,0
