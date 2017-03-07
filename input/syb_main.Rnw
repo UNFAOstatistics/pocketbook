@@ -88,10 +88,10 @@ if (rulang) {
 \usepackage{blindtext}
 \usepackage{draftwatermark}
 \SetWatermarkText{Compiled \today at \currenttime}
-\SetWatermarkScale{0.04}
+\SetWatermarkScale{0.06}
 \SetWatermarkColor[rgb]{0.7,0,0}
 \SetWatermarkAngle{0}
-\SetWatermarkLightness{0.2}
+\SetWatermarkLightness{0.1}
 \SetWatermarkVerCenter{.98\paperheight}
 
 

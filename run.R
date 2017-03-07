@@ -16,16 +16,16 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                         ,"RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                        ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                      # "GLO" # Global
+                         # ,"RAP" # Asia and the Pacific
+                         # ,"RAF"  # Africa
+                        "REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -398,7 +398,8 @@ if (arvo){
   load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
   syb.dfo <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
   # sum(colSums(is.na(syb.df_old)))
-  load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-26-19/SYB2017-02-26-19.RData")
+  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-26-19/SYB2017-02-26-19.RData")
+  load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-06-23/SYB2017-03-06-23.RData")
   syb.df <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
   # sum(colSums(is.na(syb.df)))
   
@@ -595,4 +596,7 @@ if (!exists("regional15_web")){ # because of the pocketbook_web
   # rm(list=ls(all=TRUE)) # 
   # gc()
   } 
+
+
+
 
