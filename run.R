@@ -395,15 +395,16 @@ if (arvo){
   # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-19-16/SYB2017-02-19-16.RData")
   # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-21-09/SYB2017-02-21-09.RData")
   # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-22-22/SYB2017-02-22-22.RData")
+  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
   load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
   syb.dfo <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
   # sum(colSums(is.na(syb.df_old)))
   # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-26-19/SYB2017-02-26-19.RData")
-  load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-06-23/SYB2017-03-06-23.RData")
+  load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-10-00/SYB2017-03-10-00.RData")
   syb.df <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
   # sum(colSums(is.na(syb.df)))
   
-  for (y in unique(syb.df$Year)) {
+  for (y in 1950:1990) {
     for (cd in unique(syb.df$FAOST_CODE)){
       
       for (i in unique(names(syb.df))) {
@@ -418,8 +419,31 @@ if (arvo){
       }
     }
   }
-
-  saveRDS(syb.df, "./input/data/syb.df.RDS")
+  saveRDS(syb.df, "./input/data/syb.df1.RDS")
+  for (y in 1991:2020) {
+    for (cd in unique(syb.df$FAOST_CODE)){
+      
+      for (i in unique(names(syb.df))) {
+        if (!i %in% unique(names(syb.dfo))) next()
+        syb.df[syb.df$Year == y & 
+                 syb.df$FAOST_CODE == cd, i] <- ifelse(is.na(syb.df[syb.df$Year == y & 
+                                                                      syb.df$FAOST_CODE == cd,i]),
+                                                       syb.dfo[syb.dfo$Year == y & 
+                                                                 syb.dfo$FAOST_CODE == cd, i],
+                                                       syb.df[syb.df$Year == y & 
+                                                                syb.df$FAOST_CODE == cd, i])
+      }
+    }
+  }
+  saveRDS(syb.df, "./input/data/syb.df2.RDS")
+  d1 <- readRDS("./input/data/syb.df1.RDS")
+  d2 <- readRDS("./input/data/syb.df2.RDS")
+  d3 <- bind_rows(d1,d2)
+  d3 <- d3[!duplicated(d3[c("FAOST_CODE","Year")]),]
+  
+  
+  saveRDS(d3, "./input/data/syb.df_d3.RDS")
+  # saveRDS(syb.df, "./input/data/syb.df.RDS")
   
   full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
   csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
@@ -436,7 +460,7 @@ if (arvo){
   
   
   }
-syb.df <- readRDS("./input/data/syb.df.RDS")
+syb.df <- readRDS("./input/data/syb.df_d3.RDS")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
 # syb.df <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
 

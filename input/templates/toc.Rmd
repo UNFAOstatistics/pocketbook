@@ -79,6 +79,7 @@ for (book in books){
 | [RNE](print/syb_main_RNE.pdf) | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "RNE") %>% .$pages``| [print covers](print/RNE_cover.pdf) |
 | [Coffee](print/syb_main_COF.pdf) | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$modified`` | ``r pdfinfodata %>% filter(book %in% "COF") %>% .$pages``| covers |
 
+- [tex-files and everything](pdf/)
 
 # Comparisons
 

@@ -158,12 +158,28 @@ for (region_to_report in regionS_to_report) {
   # system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
   system(paste0("pdflatex ",root.dir,"output/process/syb_main.tex"))
-  if (!rulang) system(paste0("cp ",
-                             root.dir,"output/process/syb_main.pdf ",
-                             root.dir,"output/process/syb_main_",region_to_report,".pdf"))
-  if (rulang) system(paste0("cp ",
-                            root.dir,"output/process/syb_main.pdf ",
-                            root.dir,"output/process/syb_main_",region_to_report,"_ru.pdf"))
+  if (!rulang) {
+    system(paste0("cp ",
+                  root.dir,"output/process/syb_main.pdf ",
+                  root.dir,"output/process/syb_main_",region_to_report,".pdf"))
+    system(paste0("cp ",
+                  root.dir,"output/process/syb_main.tex ",
+                  root.dir,"output/process/syb_main_",region_to_report,".tex"))
+    system(paste0("cp ",
+                  root.dir,"output/process/CountryProfiles.tex ",
+                  root.dir,"output/process/CountryProfiles_",region_to_report,".tex"))
+  }
+  if (rulang){
+    system(paste0("cp ",
+                  root.dir,"output/process/syb_main.pdf ",
+                  root.dir,"output/process/syb_main_",region_to_report,"_ru.pdf"))
+    system(paste0("cp ",
+                  root.dir,"output/process/syb_main.tex ",
+                  root.dir,"output/process/syb_main_",region_to_report,"_ru.tex"))
+    system(paste0("cp ",
+                  root.dir,"output/process/CountryProfiles.tex ",
+                  root.dir,"output/process/CountryProfiles_",region_to_report,"_ru.tex"))
+  } 
   # Technical report
   #   knitr::purl("syb_part1.Rnw","syb_part1.R")
   #   knitr::spin("syb_part1.R")
@@ -183,6 +199,13 @@ flist <- flist[!grepl("barcode", flist, ignore.case = TRUE)]
 flist <- flist[!grepl("book\\.", flist, ignore.case = TRUE)]
 # Exclude the plain syb_main.pdf
 flist <- flist[!grepl("syb_main.pdf", flist, ignore.case = TRUE)]
+
+# Add the .tex files as requested by Stacey
+texs <- list.files(paste0(root.dir,"output/process"),
+                   "+[.]tex$",
+                   full.names = TRUE)
+texs <- texs[grepl("syb_main_|CountryProfiles_", texs, ignore.case = TRUE)]
+flist <- c(flist,texs)
 
 if (output_type == "web") file.copy(flist, paste0(root.dir,"/output/pdf"), overwrite = TRUE)
 if (output_type == "print") file.copy(flist, paste0(root.dir,"/output/print"), overwrite = TRUE)
