@@ -36,8 +36,10 @@ if (region_to_report == "GLO") short_text <- "Undernourishment is a state, lasti
 
 if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
-  
-  # dat_country <- read.csv(paste0(data.dir,"/DisseminationDataset090216.csv"), stringsAsFactors=FALSE)
+  dat_witout_country <- dat[dat$FAOST_CODE >= 5000,]
+  # Lets replace the COUNTRY level figures with the latest version from Filippo
+  dat_country <- read.csv(paste0(data.dir,"/DisseminationDataset090216.csv"), stringsAsFactors=FALSE)
+  dat <- bind_rows(dat_witout_country,dat_country)
   # dat_sofi <- read.csv(paste0(data.dir,"/DisseminationDataset090216_SOFIregions.csv"), stringsAsFactors=FALSE)
   # dat_sofi$FS.OA.NOU.P3D1 <- as.character(dat_sofi$FS.OA.NOU.P3D1)
   # dat <- bind_rows(dat_country,dat_sofi)
@@ -177,11 +179,12 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
   dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
   dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
   
+  dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
+  
   saveRDS(dat, file=paste0(data.dir,"/fsi_data.RDS"))
   # saveRDS(dat, file=paste0(data.dir,"/fsi_data_old.RDS")) # this is the old data 20170228
-} else dat <- readRDS(paste0(data.dir,"/fsi_data.RDS"))
+} else df <- readRDS(paste0(data.dir,"/fsi_data.RDS"))
 
-df <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
 
 
 
