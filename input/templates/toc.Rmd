@@ -95,6 +95,7 @@ for (book in books){
 1. [Country profiles 20170221](pdf/country_profiles_20170221.html) - one i presented over skype
 1. [Country profiles 20170306](pdf/country_profiles_20170301.html) - one comparing changes to version Stacey started with
 
+- [Google sheet for comparison](https://docs.google.com/spreadsheets/d/1qJ0NIP5s8aEA7ew8WEe_GBjOsk-DjJmEUQrlvPIyiRI/edit#gid=1197190715)
 
 # Data sources
 

@@ -17,9 +17,9 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                         # ,"RAP" # Asia and the Pacific
+                          # ,"RAP" # Asia and the Pacific
                          # ,"RAF"  # Africa
-                        "REU" # Europe and Central Asia
+                      "REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
@@ -342,127 +342,12 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 
 FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former Yugoslav\nRepublic of Macedonia"
 
-arvo <- FALSE
 
-if (arvo){
-  # load SYB data
-  # load(paste0(data.dir,"Data/Processed/SYB2015-08-18.RData"))
-  # load(paste0(data.dir,"/SYB2015-09-24.RData"))
-  # load(paste0(data.dir,"/SYB2015-10-14.RData"))
-  # load(paste0(data.dir,"/SYB2015-10-15.RData"))
-  # load(paste0(data.dir,"/SYB2015-10-20.RData"))
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-18/SYB2015-11-18.RData") # old FAO aggregation script
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-19_night/SYB2015-11-19.RData") # old FAO aggregation script
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-19/SYB2015-11-19.RData") # old FAO aggregation script
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-20/SYB2015-11-20.RData") # old FAO aggregation script
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-24/SYB2015-11-24.RData") # old FAO aggregation script
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-25-12/SYB2015-11-25-12.RData")
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-26-01/SYB2015-11-26-01.RData")
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-30-01/SYB2015-11-30-01.RData")
-  # load("/home/markus/faosync/syb_database/output_data/2015-11-30-11/SYB2015-11-30-11.RData")
-  # load("/home/aurelius/faosync/syb_database/output_data/2015-11-30-17/SYB2015-11-30-17.RData")
-  # load("~/faosync/syb_database/output_data/2015-12-01-01/SYB2015-12-01-01.RData")
-  # load("~/faosync/syb_database/output_data/2015-12-01-15/SYB2015-12-01-15.RData")
-  # load("~/faosync/syb_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-18-01/SYB2015-12-18-01.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-28-01/SYB2015-12-28-01.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-01/SYB2015-12-30-01.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2015-12-30-12/SYB2015-12-30-12.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-10-22/SYB2016-01-10-22.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-18-00/SYB2016-01-18-00.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-19-18/SYB2016-01-19-18.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-25-20/SYB2016-01-25-20.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-01-28-19/SYB2016-01-28-19.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-14/SYB2016-02-08-14.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-02-08-23/SYB2016-02-08-23.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-02-09-19/SYB2016-02-09-19.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-03-07-07/SYB2016-03-07-07.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-03-08-09/SYB2016-03-08-09.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-05-02-19/SYB2016-05-02-19.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-05-11-10/SYB2016-05-11-10.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-06-01-10/SYB2016-06-01-10.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-06-04-09/SYB2016-06-04-09.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-07-27-09/SYB2016-07-27-09.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-09-20-20/SYB2016-09-20-20.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2016-12-15-20/SYB2016-12-15-20.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-06-19/SYB2017-02-06-19.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-07-18/SYB2017-02-07-18.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-10-15/SYB2017-02-10-15.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-13-22/SYB2017-02-13-22.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-15-08/SYB2017-02-15-08.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-17-00/SYB2017-02-17-00.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-18-23/SYB2017-02-18-23.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-19-16/SYB2017-02-19-16.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-21-09/SYB2017-02-21-09.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-22-22/SYB2017-02-22-22.RData")
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
-  load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
-  syb.dfo <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
-  # sum(colSums(is.na(syb.df_old)))
-  # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-26-19/SYB2017-02-26-19.RData")
-  load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-10-00/SYB2017-03-10-00.RData")
-  syb.df <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
-  # sum(colSums(is.na(syb.df)))
-  
-  for (y in 1950:1990) {
-    for (cd in unique(syb.df$FAOST_CODE)){
-      
-      for (i in unique(names(syb.df))) {
-        if (!i %in% unique(names(syb.dfo))) next()
-        syb.df[syb.df$Year == y & 
-               syb.df$FAOST_CODE == cd, i] <- ifelse(is.na(syb.df[syb.df$Year == y & 
-                                                                  syb.df$FAOST_CODE == cd,i]),
-                                                     syb.dfo[syb.dfo$Year == y & 
-                                                                syb.dfo$FAOST_CODE == cd, i],
-                                                     syb.df[syb.df$Year == y & 
-                                                              syb.df$FAOST_CODE == cd, i])
-      }
-    }
-  }
-  saveRDS(syb.df, "./input/data/syb.df1.RDS")
-  for (y in 1991:2020) {
-    for (cd in unique(syb.df$FAOST_CODE)){
-      
-      for (i in unique(names(syb.df))) {
-        if (!i %in% unique(names(syb.dfo))) next()
-        syb.df[syb.df$Year == y & 
-                 syb.df$FAOST_CODE == cd, i] <- ifelse(is.na(syb.df[syb.df$Year == y & 
-                                                                      syb.df$FAOST_CODE == cd,i]),
-                                                       syb.dfo[syb.dfo$Year == y & 
-                                                                 syb.dfo$FAOST_CODE == cd, i],
-                                                       syb.df[syb.df$Year == y & 
-                                                                syb.df$FAOST_CODE == cd, i])
-      }
-    }
-  }
-  saveRDS(syb.df, "./input/data/syb.df2.RDS")
-  d1 <- readRDS("./input/data/syb.df1.RDS")
-  d2 <- readRDS("./input/data/syb.df2.RDS")
-  d3 <- bind_rows(d1,d2)
-  d3 <- d3[!duplicated(d3[c("FAOST_CODE","Year")]),]
-  
-  
-  saveRDS(d3, "./input/data/syb.df_d3.RDS")
-  # saveRDS(syb.df, "./input/data/syb.df.RDS")
-  
-  full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
-  csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
-  fao_bulk <- readRDS("~/local_data/faostat/rds/faostat.RDS")
-  fao_bulk$subcat <- csv_data$subcat[match(fao_bulk$id, csv_data$id)]
-  fao_bulk$FAOST_CODE <- fao_bulk$countrycode
-  fao_bulk$Year <- fao_bulk$year
-  fao_bulk %>% 
-    filter(subcat %in% "production_crops_e_all_data_(normalized)") %>% 
-    saveRDS(., "~/local_data/faostat/temp/production.RDS")
-  fao_bulk %>% 
-    filter(subcat %in% "production_livestock_e_all_data_(normalized)") %>% 
-    saveRDS(., "~/local_data/faostat/temp/livestockproduction.RDS")
-  
-  
-  }
-syb.df <- readRDS("./input/data/syb.df_d3.RDS")
-# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-02-25-14/SYB2017-02-25-14.RData")
-# syb.df <- SYB.dfsyb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
+# LATAA SYB
+# syb.df <- readRDS("~/faosync/pocketbooks/pocketbook/input/data/syb.df_d5.RDS")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-00/SYB2017-03-13-00.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-19/SYB2017-03-13-19.RData")
+# syb.df <- SYB.df;syb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
@@ -574,7 +459,7 @@ syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Ne
 #  | |_| ||  __/|  _|| || | | ||  __/ | |  |  __/| (_| || || (_) || | | |\__ \
 #  |____/  \___||_|  |_||_| |_| \___| |_|   \___| \__, ||_| \___/ |_| |_||___/
 #                                                 |___/
-
+fao_world <- gisfao::fao_world
 source(paste0(root.dir,"/input/code/define_regions.R"))
 save(region_key, file="~/faosync/pocketbooks/pocketbook_tests/data/region_key.RData")
 #  __  __                     _         _
@@ -613,7 +498,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="RNE" # debuggin
+region_to_report="REU" # debuggin<w
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))

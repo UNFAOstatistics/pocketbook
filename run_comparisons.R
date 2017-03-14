@@ -781,6 +781,6 @@ setwd(root.dir)
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE) 
 
 # Sync to kapsi!!
-if (Sys.info()["nodename"] =="markus-desktop-mint18") system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
-if (Sys.info()["nodename"] =="markus-ibm64")          system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
-if (Sys.info()["nodename"] == "markus-T430")          system('rsync -avzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+if (Sys.info()["nodename"] =="markus-desktop-mint18")     system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+if (Sys.info()["nodename"] =="aurelius-ThinkPad64-mint2") system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+if (Sys.info()["nodename"] == "markus-T430")              system('rsync -avzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')

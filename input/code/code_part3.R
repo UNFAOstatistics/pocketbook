@@ -584,7 +584,7 @@ if (rulang) caption_text <- "Среднегодовые темпы роста п
 
 
 ## ---- P3cropproMAP ----
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
+dat <- syb.df %>% filter(Year %in% 2012) %>% select(FAOST_CODE,
                                                     QV.NPCPV.CRPS.ID.SHP)
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
@@ -597,6 +597,9 @@ cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QV.N
 cat_data$value_cat <- categories(x=cat_data$QV.NPCPV.CRPS.ID.SHP, n=5, method="jenks")
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+# debug
+# map.plot %>% select(ADM0_NAME,FAOST_CODE,QV.NPCPV.CRPS.ID.SHP,value_cat) %>% distinct()
 
 # define map unit
 map_unit <- "index"
@@ -1473,7 +1476,7 @@ print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
              size = "footnotesize", caption.placement = "top",
              html.table.attributes = 'class="table table-striped table-hover"')
 
-if (table_type == "latex"){
+if (table_type == "latex" & region_to_report == "RNE"){
   cat("\\footnotesize{\\textit{* Gulf Cooperation Council States and Yemen}}")
   cat("\\vspace{1mm}")
 } else cat("<br><i>Data after 2015 are projections</i>")

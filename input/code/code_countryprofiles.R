@@ -274,6 +274,8 @@ if (!("agr_employment_male_female" %in% names(syb.df)) & region_to_report == "RE
   syb.df$tot_pop_male_female <- paste(round((syb.df$OA.TPM.POP.PPL.NO/1000000),0),round((syb.df$OA.TPF.POP.PPL.NO/1000000),0),sep="/")
   syb.df$tot_pop_male_female[syb.df$tot_pop_male_female %in% "NA/NA"] <- NA
 
+  #syb.df$rural_pop_gender_shares <- paste(round(syb.df$rural_male_share,1),round(syb.df$rural_female_share,1), sep="/")
+  # New source ILO
   syb.df$rural_pop_gender_shares <- paste(round(syb.df$rural_male_share,1),round(syb.df$rural_female_share,1), sep="/")
   syb.df$rural_pop_gender_shares[syb.df$rural_pop_gender_shares %in% "NA/NA"] <- NA
 
