@@ -16,7 +16,7 @@ The setting,15,EA.PRD.AGRI.KD,,,Agr value added per worker (constant US$),,0
 Hunger dimensions,16,FBS.PCS.PDES.KCD3D,,,Dietary energy supply (kcal/pc/day),,0
 Hunger dimensions,17,FS.DA.ADESA.PCT3D,,,Average dietary energy supply adequacy (%),,1
 Hunger dimensions,18,FBS.PCSS.CSR.PCT3D,,,"Dietary energy supp, cereals/roots/tubers (%)",,1
-Hunger dimensions,19,FS.OA.NOU.P3D1,,,Number of undernourished (mln),,0
+Hunger dimensions,19,FS.OA.NOU.P3D1,,,Number of undernourished (mln),,1
 Hunger dimensions,20,NY.GDP.PCAP.PP.KD,,,"GDP per capita (US$, PPP)",,0
 Hunger dimensions,21,BN.CAB.XOKA.GD.ZS,,,Current account balance (% GDP),,1
 Hunger dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),,0
