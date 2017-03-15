@@ -16,16 +16,16 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      # "GLO" # Global
-                          # ,"RAP" # Asia and the Pacific
-                         # ,"RAF"  # Africa
-                      "REU" # Europe and Central Asia
-                        # ,"RNE" # Near East and North Africa
+                      "GLO" # Global
+                          ,"RAP" # Asia and the Pacific
+                         ,"RAF"  # Africa
+                      ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 
@@ -346,7 +346,8 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # LATAA SYB
 # syb.df <- readRDS("~/faosync/pocketbooks/pocketbook/input/data/syb.df_d5.RDS")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-00/SYB2017-03-13-00.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-19/SYB2017-03-13-19.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-19/SYB2017-03-13-19.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-14-20/SYB2017-03-14-20.RData")
 # syb.df <- SYB.df;syb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
@@ -498,7 +499,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="REU" # debuggin<w
+region_to_report="REU" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))

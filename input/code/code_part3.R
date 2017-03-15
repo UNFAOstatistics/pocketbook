@@ -584,7 +584,7 @@ if (rulang) caption_text <- "Среднегодовые темпы роста п
 
 
 ## ---- P3cropproMAP ----
-dat <- syb.df %>% filter(Year %in% 2012) %>% select(FAOST_CODE,
+dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
                                                     QV.NPCPV.CRPS.ID.SHP)
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
