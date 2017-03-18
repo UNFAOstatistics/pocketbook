@@ -69,8 +69,8 @@ dat <- left_join(dat,region_key)
 
 if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000)
 if (region_to_report == "RAP")  dat <- dat %>% filter(FAOST_CODE %in% 13000)
-if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
-if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
+if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
+if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
 if (region_to_report == "GLO")  dat <- dat %>% filter(FAOST_CODE %in% 5000)
 
 dat <- gather(dat, variable, value, 3:4)
