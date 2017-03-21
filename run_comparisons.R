@@ -7,13 +7,13 @@
 
 
 books <- c(
-          "GLO"
+          # "GLO"
           # # ,"GLO15"
-          ,"RAP"
-          ,"RAF"
-          ,"REU"
-          ,"REU_ru"
-          ,"RNE"
+          # ,"RAP"
+          # ,"RAF"
+          # "REU"
+          # "REU_ru"
+          # ,"RNE"
           )
 
 
