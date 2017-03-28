@@ -67,7 +67,7 @@ dat <- syb.df %>% select(FAOST_CODE,Year,OA.TPU.POP.PPL.NO,OA.TPR.POP.PPL.NO)
 dat <- dat[!is.na(dat$OA.TPR.POP.PPL.NO),]
 dat <- left_join(dat,region_key)
 
-if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000)
+if (region_to_report == "RAF")  dat <- dat %>% filter(FAOST_CODE %in% 12000) 
 if (region_to_report == "RAP")  dat <- dat %>% filter(FAOST_CODE %in% 13000)
 if (region_to_report == "REU")  dat <- dat %>% filter(FAOST_CODE %in% 14000)
 if (region_to_report == "RNE")  dat <- dat %>% filter(FAOST_CODE %in% 15000)
@@ -129,7 +129,8 @@ p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="billion people\n")
 if (rulang) p <- p + labs(x="",y="млрд человек\n")
 p <- p + geom_vline(aes(xintercept=2016), color="grey20", linetype="dashed")
-p <- p + scale_x_continuous(breaks=c(1961,2000,2016,2050))
+if (region_to_report != "REU") p <- p + scale_x_continuous(breaks=c(1961,2000,2016))
+if (region_to_report == "REU") p <- p + scale_x_continuous(breaks=c(1992,2000,2016))
 p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
@@ -142,9 +143,9 @@ if (table_type == "latex"){
 
 
 # Caption
-if (region_to_report != "REU")  caption_text <- "Rural and urban population (1961 to 2016)"
-if (region_to_report == "REU" & !rulang)  caption_text <- "Rural and urban population (1961 to 2050)"
-if (region_to_report == "REU" & rulang)  caption_text <- "Сельское и городское население  (с 1961 по 2050 гг.)"
+if (region_to_report != "REU")  caption_text <- "Rural and urban population (1961 to 2020)"
+if (region_to_report == "REU" & !rulang)  caption_text <- "Rural and urban population (1992 to 2020)"
+if (region_to_report == "REU" & rulang)  caption_text <- "Сельское и городское население  (с 1992 по 2020 гг.)"
 
 
 

@@ -7,13 +7,13 @@
 
 
 books <- c(
-          # "GLO"
+          "GLO"
           # # ,"GLO15"
-          # ,"RAP"
-          # ,"RAF"
-          # "REU"
-          # "REU_ru"
-          # ,"RNE"
+          ,"RAP"
+          ,"RAF"
+          ,"REU"
+          ,"REU_ru"
+          ,"RNE"
           )
 
 
@@ -60,7 +60,7 @@ for (region_to_report in books){
               
 <table>
 <tr>
-<th>Comments</th><th>latest</th><th>20170306 - prior Staceys comments</th><th>20170221 - prior bulk</th>
+<th>Comments</th><th>latest</th><th>As in 20170328</th><th>20170306 - prior Staceys comments</th><th>20170221 - prior bulk</th>
 </tr>
 <tr>
 <td>
@@ -79,7 +79,20 @@ file = fileOut, append = TRUE)
         file = fileOut, append = TRUE) 
 }
 
-
+cat(paste('
+</td>
+<td>
+'),
+      file = fileOut, append = TRUE) 
+  
+  for (i in 1:nr_of_pages){
+    cat(paste0('
+<img src="../pdf_tmp_20170328/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+'),
+        file = fileOut, append = TRUE) 
+  }
+  
+  
 cat(paste('
 </td>
 <td>
@@ -487,6 +500,8 @@ cat("
                ',
       file = fileOut, append = TRUE) 
 
+
+
 cat(paste('
 </td>
 <td>
@@ -583,7 +598,7 @@ cat(paste('
           
           <table>
           <tr>
-          <th>Comments</th><th>current</th><th>original in 20170306</th><th>global book2015</th>
+          <th>Comments</th><th>current</th><th>as in 20170328</th><th>original in 20170306</th><th>global book2015</th>
           </tr>
           <tr>
           <td>            
@@ -625,6 +640,43 @@ cat('
 <img src="GLO/page-229.jpg" vspace="10" height="1200"/></br>
                ',
     file = fileOut, append = TRUE) 
+
+cat(paste('
+</td>
+<td>
+          '),
+    file = fileOut, append = TRUE) 
+
+# number of images in the folder
+<img src="../pdf_tmp_20170328/REU/page-56.jpg" vspace="10" height="1200"/></br>
+  cat('
+<h3>REU-book</h3>
+<img src="../pdf_tmp_20170328/REU/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/REU/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/REU/page-77.jpg" vspace="10" height="1200"/></br>
+<h3>REU_ru-book</h3>
+<img src="../pdf_tmp_20170328/REU_ru/page-57.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/REU_ru/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/REU_ru/page-77.jpg" vspace="10" height="1200"/></br>
+<h3>RAF-book</h3>
+<img src="../pdf_tmp_20170328/RAF/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RAF/page-77.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RAF/page-79.jpg" vspace="10" height="1200"/></br>
+<h3>RAP-book</h3>
+<img src="../pdf_tmp_20170328/RAP/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RAP/page-68.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RAP/page-72.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RAP/page-94.jpg" vspace="10" height="1200"/></br>
+<h3>RNE-book</h3>
+<img src="../pdf_tmp_20170328/RNE/page-56.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RNE/page-63.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/RNE/page-73.jpg" vspace="10" height="1200"/></br>
+<h3>GLO-book</h3>
+<img src="../pdf_tmp_20170328/GLO/page-67.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/GLO/page-134.jpg" vspace="10" height="1200"/></br>
+<img src="../pdf_tmp_20170328/GLO/page-229.jpg" vspace="10" height="1200"/></br>
+               ',
+      file = fileOut, append = TRUE) 
 
 cat(paste('
 </td>
@@ -782,5 +834,5 @@ unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE)
 
 # Sync to kapsi!!
 if (Sys.info()["nodename"] =="markus-desktop-mint18")     system('rsync -avzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
-if (Sys.info()["nodename"] =="aurelius-ThinkPad64-mint2") system('rsync -avzhe "ssh -i /home/aurelius/avaimet/ibm64-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
+if (Sys.info()["nodename"] =="markus-x220") system('rsync -avzhe "ssh -i /home/aurelius/avaimet/x220-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
 if (Sys.info()["nodename"] == "markus-T430")              system('rsync -avzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ muuankarski@kapsi.fi:sites/software.markuskainu.fi/www/fao/pocketbooks/')
