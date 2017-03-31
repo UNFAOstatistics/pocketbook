@@ -1,0 +1,516 @@
+---
+title: Final datatests for regional pocketbooks
+author: Markus Kainu
+date: "Last updated: ``r Sys.time()``"
+output: 
+  html_document:
+    theme: yeti 
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+  
+  
+```{r setup, knitr_setup, include=F}
+library(knitr)
+knitr::opts_chunk$set(list(echo=TRUE,
+                           eval=TRUE,
+                           cache=FALSE,
+                           warning=FALSE,
+                           message=FALSE, 
+                           cache.path="~/Lataukset"))
+opts_chunk$set(fig.width = 10, fig.height = 10)
+options(scipen=999)
+#+ setup, include=FALSE
+library(stringr)
+library(tidyverse)
+library(extrafont)
+loadfonts()
+library(svglite)
+library(showtext)
+library(hrbrthemes)
+
+dir.create("~/Lataukset/wb", recursive = TRUE, showWarnings = FALSE)
+
+pull_unzip_fao <- function(url="http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Land_E_All_Data_(Normalized).zip") {
+  filename <- gsub("^.+/","",url)
+  if (!file.exists(paste0("~/Lataukset/",filename))) {
+    download.file(url, destfile=paste0("~/Lataukset/",filename))
+    unzip(paste0("~/Lataukset/",filename), exdir = "~/Lataukset/")
+  }
+  if (grepl("\\(Norm\\)",filename)) filename <- gsub("_\\(Norm\\)","",filename) 
+  d <- read_csv(gsub(".zip",".csv", paste0("~/Lataukset/",filename)))
+  return(d)
+}
+
+# pull_unzip_wb <- function(url="http://api.worldbank.org/v2/en/indicator/ER.LND.PTLD.ZS?downloadformat=csv") {
+#   unlink("~/Lataukset/wb", recursive = TRUE, force=TRUE)
+#   dir.create("~/Lataukset/wb", showWarnings = FALSE)
+#   download.file(url, destfile="~/Lataukset/wb/wb.zip", method = "wget")
+#   flies <- list.files("~/Lataukset/wb")[!grepl("Metadata|zip",list.files("~/Lataukset/wb"))]
+#   d <- read_csv(paste0("~/Lataukset/wb/",flies))
+#   return(d)
+# }
+
+
+
+```
+
+# Charts
+
+```{r cars, eval=FALSE}
+geogr = function(x, n = 1){
+  T = length(x)
+  if(sum(is.na(x)) == T){
+    geogr = rep(NA, T)
+    warning("All values are NA")
+  } else {
+    firstObs = ifelse(any(is.na(x)), min(which(!is.na(x))), 1)
+    if(n > T - firstObs - 1){
+      geogr = rep(NA, T)
+      warning("Time series does not have sufficient values")
+    } else {
+      geogr = double(T)
+      geogr[1:(firstObs + n - 1)] = NA
+      geogr[(firstObs + n):T] = ((x[(firstObs + n):T]/
+                                    x[firstObs:(T - n)])^(1/n) - 1) * 100 
+    }
+  }
+  geogr
+}
+
+
+x <- c(83373,84878,85616,85474,84419,82326,79316,75902,72786,70473)
+x <- c(6197,6692,7250,7863,8526,9235,9987,10781,11616,12494,13414,14376,15376,16410,17470,18551,19646,20755,21888,23061,24279,25560,26892,28231,29514,30706,31781,32769,33746,34819,36063,37502,39112,40862,42704,44597,46515,48458,50431,52449,54511,56674,58904,61003,62707,63854,64291,64147,63888,64161,65399,67770,71046,74783,78337,81223,83373,84878,85616,85474,84419,82326,79316,75902,72786,70473)
+gr <- geogr(x, n=10)
+mean(gr[57:66])
+
+
+
+mean(c(2.63,2.84,2.97,2.91,2.59,1.96,1.11,0.15,-0.73,-1.41,-1.85))
+```
+
+
+
+<!-- ---------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------- -->
+
+# Country profiles
+
+## 1. The following variables appear to have some sort of systemic error:
+
+### a) Area equipped for irrigation (1 ha) 
+
+>2015 column is NA for all countries but there is data available from 2012. I checked this against the Water Tables file that Markus sent me.
+
+**Check**
+
+- meta: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L79>
+- used as is
+- in book:
+    - India: 49500,60432,70400
+    - Philippines: 1550,1361,1708
+    - Serbia: NA,NA,78
+    - Italy: 3858,3856,4004
+    - Jordan: 63,77,105
+    - Egypt: 2648,3291,3670
+    - Uganda: 9,9,11
+    - Ethiopia: 290,290,800
+- I see match here!
+
+**FAOSTAT data**
+
+```{r}
+d <- pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Land_E_All_Data_(Normalized).zip")
+d %>% 
+  filter(`Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+         Year >= 1988, 
+         `Element Code` == 5110,
+         `Item Code` == 6690
+         ) %>% 
+  na.omit() %>%
+  select(Area,Year,Value) %>% 
+  spread(., key = Year, value = Value) %>% 
+  kable()
+
+```
+
+
+### b. Fertilizers, Nitrogen (kg per ha) 
+
+>There appears to be an issue with the values in the year 2000. Of the eight countries I checked, the value for 2000 was correct in  4 countries and wrong in 4 countries.
+
+**Check**
+
+- meta: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L109>
+- constructed: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Construction2015.csv#L109> 
+    - <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L108> / 
+- in book:
+    - India: NA,65,100
+    - Philippines: NA,59,63
+    - Serbia: NA,NA,90.8
+    - Italy: NA,80.4,65.8
+    - Jordan: NA,214,88
+    - Egypt: NA,469,350
+    - Uganda: NA,1,1
+    - Ethiopia: NA,3,15
+- I see match here!
+
+**FAOSTAT data**
+
+```{r}
+pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Fertilizers_E_All_Data_(Normalized).zip")  %>% 
+  filter(
+    # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    Year >= 1988, 
+    # ElementCode == 5155,
+    `Element Code` == 5155,
+    # ItemCode == 3102
+    `Item Code` == 3102
+         ) %>% 
+  na.omit() %>%
+  select(Area,Year,Value) %>% 
+  rename(nitro = Value) -> da
+
+pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Land_E_All_Data_(Normalized).zip") %>% 
+  filter(
+    # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    Year >= 1988, 
+    # ElementCode == 5155,
+    `Element Code` == 5110,
+    # ItemCode == 3102
+    `Item Code` == 6620
+         ) %>% 
+  na.omit() %>%
+  select(Area,Year,Value)  %>% 
+  rename(area = Value) -> db
+  
+  left_join(db,da) %>% 
+    mutate(share = nitro/area) %>% 
+    gather(., key = var, value = val, 3:5) %>% 
+    spread(., key = Year, value = val) %>% 
+    kable(digits = 1)
+```
+
+
+### c. Fertilizers, Phosphate (kg per ha) 
+
+>There appears to be an issue with the values in the year 2000. Of the eight countries I checked, the value for 2000 was correct in  3 countries and wrong in 5 countries.
+
+**Check**
+
+- meta: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L109>
+- constructed: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Construction2015.csv#L109> 
+    - <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L108> / 
+- in book:
+    - India: NA,24,38
+    - Philippines: NA,21,16
+    - Serbia: NA,NA,23.7
+    - Italy: NA,30,18.7
+    - Jordan: NA,402,0
+    - Egypt: NA,52,108
+    - Uganda: NA,0,0
+    - Ethiopia: NA,2,10
+- I see match here!
+    
+
+**FAOSTAT data**
+
+```{r}
+pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Fertilizers_E_All_Data_(Normalized).zip")  %>% 
+  filter(
+    # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    Year >= 1988, 
+    # ElementCode == 5155,
+    `Element Code` == 5155,
+    # ItemCode == 3102
+    `Item Code` == 3103
+         ) %>% 
+  na.omit() %>%
+  select(Area,Year,Value) %>% 
+  rename(phos = Value) -> da
+
+pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Land_E_All_Data_(Normalized).zip") %>% 
+  filter(
+    # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    Year >= 1988, 
+    # ElementCode == 5155,
+    `Element Code` == 5110,
+    # ItemCode == 3102
+    `Item Code` == 6620
+         ) %>% 
+  na.omit() %>%
+  select(Area,Year,Value)  %>% 
+  rename(area = Value) -> db
+  
+  left_join(db,da) %>% 
+    mutate(share = phos/area) %>% 
+    gather(., key = var, value = val, 3:5) %>% 
+    spread(., key = Year, value = val) %>% 
+    kable(digits = 1)
+```
+
+
+
+### d. Terrestrial protect areas (% total land area)
+
+>Data is correct and incorrect for countries/years seemingly without reason. There are enough incorrect values I would take a look.
+
+- data: <http://data.worldbank.org/indicator/ER.LND.PTLD.ZS>
+- in book:
+    - India: 4.7,5,5.3
+    - Philippines: 8.7,10.8,11
+    - Serbia: NA,NA,6.8
+    - Italy: 5.8,17.4,21.5
+    - Jordan: 1.1,1.9,2.1
+    - Egypt: 0.4,4.3,11.2
+    - Uganda: 12.3,12.9,16
+    - Ethiopia: 17.7,17.7,18.4
+- I see match here, but with Serbia. Most probably this is due to how the country codes from WDI are treated for ex-Jugoslavian countries. I think we would need to have good reasons to unwind that process.
+
+**World Bank data**
+
+```{r}
+library(WDI)
+WDI(country = c("IN","PH","RS","IT","JO","EG","UG","ET"), indicator = "ER.LND.PTLD.ZS", start = 1988, end = 2016) %>% 
+  select(-iso2c) %>% 
+  spread(., key = year, value = ER.LND.PTLD.ZS) %>% 
+  kable()
+```
+
+
+### e. Net GHG emissions from AFOLU (CO2 eq, Mt)
+
+>Data is correct and incorrect for countries/years seemingly without reason. There are enough incorrect values I would take a look.
+
+- computed as <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/run.R#L1023>
+- which is <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L605> + <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/input_data/Metadata2015.csv#L617>
+- in book:
+    - India: 456,505,749
+    - Philippines: 36,44,-7
+    - Serbia: NA,NA,5
+    - Italy: 5,0,-4
+    - Jordan: 1,1,1
+    - Egypt: 19,26,31
+    - Uganda: 31,34,50
+    - Ethiopia: 82,86,115
+- i can see match for these countries!
+
+**FAOSTAT data**
+
+```{r}
+# 7231 	1711 +
+# 7217 	1707 
+
+# pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Emissions_Land_Use_Land_Use_Total_E_All_Data_(Norm).zip")
+# 
+# pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Emissions_Agriculture_Agriculture_total_E_All_Data_(Norm).zip")
+
+read_csv("~/Lataukset/Emissions_Agriculture_Agriculture_total_E_All_Data_(Norm).csv") %>% 
+  filter(
+    `Country Code` %in% c(100,171,112,59,272,106,226,59,238),
+    # `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    # Year >= 1988, 
+    # ElementCode == 5155,
+    `Element Code` == 7231,
+    # ItemCode == 3102
+    `Item Code` == 1711
+         ) %>% 
+  na.omit() %>%
+  select(Country,Year,Value) %>% 
+  rename(total_agr = Value) -> da
+
+read_csv("~/Lataukset/Emissions_Land_Use_Land_Use_Total_E_All_Data_(Norm).csv") %>% 
+  filter(
+    `Country Code` %in% c(100,171,112,59,272,106,226,59,238),
+    # `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    # Year >= 1988, 
+    # ElementCode == 5155,
+    `Element Code` == 7217,
+    # ItemCode == 3102
+    `Item Code` == 1707
+         ) %>% 
+  na.omit() %>%
+  select(Country,Year,Value) %>% 
+  rename(land_use = Value) -> db
+  
+left_join(db,da) %>% 
+    mutate(AFOLU = total_agr + land_use) %>% 
+    gather(., key = var, value = val, 3:5) %>% 
+    spread(., key = Year, value = val) %>% 
+    kable(digits = 1)
+
+```
+
+
+<!-- ---------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------- -->
+
+## There are still a few data points I have not been able to find; therefore the data still has not been checked on the following items:
+
+### a. Population, rural (% total population) 
+
+>REU book disaggregates M/F and I cannot find the data disaggregated. This variable in the other books is correct (and not disaggregated)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### b. Overweight, adults (m/f, %)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### c. Obesity, adults (m/f, %)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### d. Fish, Production Index (Could not find in FISHSTAT)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### e. Fish, Net Trade (Could not find in FISHSTAT)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+<!-- ---------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------- -->
+
+## The following indicators are pulling correct data, but we should update the Label
+
+
+### a. Water resources (m3/person/year) 
+
+>this is Renewable Water Resources (currently this is listed in definition but if we can fit it in on the profile page I think it would be better)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### b. Health expenditure per capita, PPP ($) 
+
+>This indicator is only in REU book. I checked against WB “Health expenditure per capita PPP constant 2011 international \$” and it did not match. However, it did match when checked against WB “Health expenditure per capita (current US$).” So we just need to update the label from PPP to current US \$ and it should be fine.
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+## Data corrent, but labels different 
+
+>The following three indicators all seem to be the same variable, pulling the same correct data, but with different labels. Each country profile has 2 of the following 3 duplicated indicators. We should choose one (presumably the one that already is in all the books), and remove the others.
+
+### a. Water withdrawal by agriculture (% of total) – appears in RNE, RAP, RAF
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### b. Renewable water res withdrawn (% of total) – appears in ALL books
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### c. Share of renewable water resources (%) - appears in REU only
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+<!-- ---------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------- -->
+
+## Data correct, but sparse, lots of NA's
+
+>The following three indicators are pulling correctly, but there is very little data overall so they appear as NA in almost every country. They should be removed and replaced (not necessarily for this round of books, but definitely in future books).
+
+### a. Share of food expenditure (%)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### b. Vitamin A deficiency, total pop (%)
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+
+### c. Iodine deficiency, children aged 6 to 12 (%)
+
+>If we leave this in we need to update the label, this is iodine deficiency for ALL, not only for children 6-12
+
+```{r}
+  
+```
+
+- note 1
+- note 2
+
+<!-- ---------------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------- -->
+
+# sessioninfo()
+```{r sessioninfo, knitr_setup, include=F}
+sessionInfo()
+```

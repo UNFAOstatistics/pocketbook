@@ -347,7 +347,9 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # syb.df <- readRDS("~/faosync/pocketbooks/pocketbook/input/data/syb.df_d5.RDS")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-00/SYB2017-03-13-00.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-19/SYB2017-03-13-19.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-14-20/SYB2017-03-14-20.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-14-20/SYB2017-03-14-20.RData")
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-29-21/SYB2017-03-29-21.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
 # syb.df <- SYB.df;syb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")

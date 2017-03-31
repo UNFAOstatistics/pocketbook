@@ -97,7 +97,7 @@ for (book in books){
 
 - [Google sheet for comparison](https://docs.google.com/spreadsheets/d/1qJ0NIP5s8aEA7ew8WEe_GBjOsk-DjJmEUQrlvPIyiRI/edit#gid=1197190715)
 - [Pocketbook tests](http://software.markuskainu.fi/fao/pocketbook_tests/)
-
+- [Final data tests](datatests.html)
 
 
 # Data sources

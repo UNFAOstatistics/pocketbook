@@ -8,7 +8,7 @@
 
 books <- c(
           "GLO"
-          # # ,"GLO15"
+          # # # ,"GLO15"
           ,"RAP"
           ,"RAF"
           ,"REU"
@@ -825,6 +825,7 @@ cat(paste("
 # file.copy("~/faosync/syb_bulk_database/metadata/meta_faostat.csv", paste0(root.dir,"/output/data"), overwrite = TRUE)
 
 file.copy(paste0(root.dir,"/input/templates/toc.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
+file.copy(paste0(root.dir,"/input/templates/datatests.html"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 setwd(paste0(root.dir,"/output"))
 rmarkdown::render("toc.Rmd", output_file = "index.html")
 file.remove("./toc.Rmd")
