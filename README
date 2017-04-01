@@ -1,3 +1,7 @@
-# FAO Regional Statistical Yearbooks 2015
+# FAO Regional Statistical Yearbooks
 
-Is gettings it's shape in here
+Follow the instructions here on how to setup your system:
+
+- <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/README.md>
+
+Spesify the data you generated in pocketbook_database on row ~100 in `run.R`, set parameters for books in the beginning of `run.R` and `source("run.R")`!

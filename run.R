@@ -96,6 +96,18 @@ cache_part6 <- F
 cache_country_profiles <- F
 cache_definitions <- F
 
+###########################################################
+# Data - Load SYB
+# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-01-19/SYB2017-04-01-19.RData")
+
+source("../pocketbook_database/code/read_functions/ReadMetadata.R")
+meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
+                         encoding = "UTF-8")
+meta_full <- meta.lst[["FULL"]]
+full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
+csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
+
 
 ############################################################
 ############################################################
@@ -342,28 +354,6 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem
 
 FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former Yugoslav\nRepublic of Macedonia"
 
-
-# LATAA SYB
-# syb.df <- readRDS("~/faosync/pocketbooks/pocketbook/input/data/syb.df_d5.RDS")
-# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-00/SYB2017-03-13-00.RData")
-# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-19/SYB2017-03-13-19.RData")
-# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-14-20/SYB2017-03-14-20.RData")
-# load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-29-21/SYB2017-03-29-21.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-01-00/SYB2017-04-01-00.RData")
-# syb.df <- SYB.df;syb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
-
-source("../pocketbook_database/code/read_functions/ReadMetadata.R")
-meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
-                         encoding = "UTF-8")
-meta_full <- meta.lst[["FULL"]]
-full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
-csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
-
-
-
-# s(syb.df$GN_6808_72182)
-
-# fff <- syb.df %>% group_by(FAOST_CODE)  %>% filter(row_number() == 1) %>% select(FAOST_CODE,FAO_TABLE_NAME)
 
 
 syb.df$FAOST_CODE[syb.df$FAOST_CODE %in% "LACregion"]         <- 11000
