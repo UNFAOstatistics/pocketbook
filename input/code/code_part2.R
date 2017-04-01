@@ -34,7 +34,7 @@ if (region_to_report == "GLO") short_text <- "Undernourishment is a state, lasti
 
 ## ---- P2undernuData ----
 
-if (!file.exists(paste0(data.dir,"/fsi_data.RData"))){
+if (!file.exists(paste0(data.dir,"/fsi_data.RDS"))){
   dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
   dat_witout_country <- dat[dat$FAOST_CODE >= 5000,]
   # Lets replace the COUNTRY level figures with the latest version from Filippo

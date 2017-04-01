@@ -16,11 +16,11 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                          ,"RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                      ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                      # "GLO" # Global
+                          # ,"RAP" # Asia and the Pacific
+                         # ,"RAF"  # Africa
+                      "REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -349,7 +349,7 @@ FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 154] <- "The former
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-13-19/SYB2017-03-13-19.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-14-20/SYB2017-03-14-20.RData")
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-29-21/SYB2017-03-29-21.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-01-00/SYB2017-04-01-00.RData")
 # syb.df <- SYB.df;syb.df <- SYB.df[!SYB.df$FAOST_CODE %in% "",]; rm(SYB.df)
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
@@ -464,7 +464,8 @@ syb.df$SHORT_NAME[syb.df$SHORT_NAME == "Other Near East countries"] <- "Other Ne
 #                                                 |___/
 fao_world <- gisfao::fao_world
 source(paste0(root.dir,"/input/code/define_regions.R"))
-save(region_key, file="~/faosync/pocketbooks/pocketbook_tests/data/region_key.RData")
+# if you want to run aggregation tests
+if (FALSE) save(region_key, file="~/faosync/pocketbooks/pocketbook_tests/data/region_key.RData")
 #  __  __                     _         _
 # |  \/  |  __ _  _ __     __| |  __ _ | |_  __ _
 # | |\/| | / _` || '_ \   / _` | / _` || __|/ _` |
