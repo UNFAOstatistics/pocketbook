@@ -581,7 +581,11 @@ if (rulang) caption_text <- paste("Распространенность избы
 
 ## ---- P2obesityMAP ----
 dat <- syb.df %>% filter(Year == 2014) %>%
-  select(Year,FAOST_CODE,SHORT_NAME,overweight_BOTH)
+  select(Year,FAOST_CODE,SHORT_NAME,overweight_FMLE,overweight_MLE) %>% 
+  mutate(overweight_BOTH = (overweight_FMLE+overweight_MLE)/2) %>% 
+  as_tibble() %>% 
+  select(-overweight_FMLE,-overweight_MLE)
+  
 dat <- dat[!is.na(dat$overweight_BOTH),]
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
 
