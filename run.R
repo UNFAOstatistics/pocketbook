@@ -25,7 +25,7 @@ regionS_to_report <- c(
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 
@@ -48,7 +48,7 @@ include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
-include_part2        <- F
+include_part2        <- T
 include_part3        <- F
 include_part4        <- F
 include_part5        <- F
@@ -58,8 +58,8 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- T
-include_definitions      <- T
+include_country_profiles <- F
+include_definitions      <- F
 # --------------------------- ----
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
@@ -108,9 +108,30 @@ meta_full <- meta.lst[["FULL"]]
 full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
 csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 
+## ---- load_libraries
+
+library(knitr)
+library(readxl)
+library(magrittr)
+library(lazyeval)
+library(FAOSTAT)
+#library(plyr) # to run certain computations using ddply. Should get rid of this
+library(stringr)
+library(rgdal)
+library(gisfao)
+library(grid)
+library(scales)
+library(WDI)
+library(wesanderson)
+library(xtable)
+library(extrafont)
+loadfonts()
+library(forcats)
+library(tidyverse)
+
 ## Process the production data manuyally
 
-if (!file.exists("~/local_data/faostat/temp/production.RDS")){
+# if (!file.exists("~/local_data/faostat/temp/production.RDS")){
   
   dir.create("~/local_data/faostat/temp/", recursive = TRUE, showWarnings = FALSE)
   full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
@@ -125,7 +146,7 @@ if (!file.exists("~/local_data/faostat/temp/production.RDS")){
   fao_bulk %>% 
     filter(subcat %in% "production_livestock_e_all_data_(normalized)") %>% 
     saveRDS(., "~/local_data/faostat/temp/livestockproduction.RDS")
-}
+# }
 
 
 
@@ -275,35 +296,6 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
 #   df$subgroup[df$subgroup %in% "Central Asia"] <- "Центральная Азия"
 # }
 
-
-
-#   _ _ _                    _
-#  | (_) |__  _ __ __ _ _ __(_) ___  ___
-#  | | | '_ \| '__/ _` | '__| |/ _ \/ __|
-#  | | | |_) | | | (_| | |  | |  __/\__ \
-#  |_|_|_.__/|_|  \__,_|_|  |_|\___||___/
-#
-
-## ---- load_libraries
-
-library(knitr)
-library(readxl)
-library(magrittr)
-library(lazyeval)
-library(FAOSTAT)
-#library(plyr) # to run certain computations using ddply. Should get rid of this
-library(stringr)
-library(rgdal)
-library(gisfao)
-library(grid)
-library(scales)
-library(WDI)
-library(wesanderson)
-library(xtable)
-library(extrafont)
-loadfonts()
-library(forcats)
-library(tidyverse)
 
 # Source functions
 

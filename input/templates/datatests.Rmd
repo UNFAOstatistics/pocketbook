@@ -375,8 +375,10 @@ in the book:
 - Italy: 16.5/16.8, 16.2/16.6, 15.4/15.6
 - Finland: 10.3/10.3, 9/8.9, 7.9/7.8
 
--> there is a match!
-
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>MAtch!</h4>
+</div>
 **In UN Pop data**
 
 ```{r}
@@ -412,10 +414,14 @@ d %>% filter(LocationName %in% c("Serbia","Italy","Finland")) %>%
 
 - data is pulled here: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/code/manualdata_scripts/overweight2015.R#L9> from <http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_25A&filter=AGEGROUP:*;COUNTRY:*;SEX:*>
 
-- Serbia: NA, NA, 60/49
-- Italy: NA, NA, 64/54
-- Finland: NA, NA, 62/49
+- Serbia: NA, NA, 59.3/45.6
+- Italy: 53/42.4, 59/47, 65.7/53.2
+- Finland: 50.1/38.8, 56.1/44, 62/48.6
 
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Match! But with early Serbia</h4>
+</div>
 
 ```{r}
 d <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_25A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")
@@ -443,9 +449,14 @@ d %>%
 - data is pulled in here: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/code/manualdata_scripts/overweight2015.R#L22> from <http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_30A&filter=AGEGROUP:*;COUNTRY:*;SEX:*>
 
 
-- Serbia: NA, NA, 19/20
-- Italy: NA, NA, 20/22
-- Finland: NA, NA, 22/20
+- Serbia: NA, NA, 17.6/18
+- Italy: 11.2/14.3, 15.1/17.3, 21.4/21.6
+- Finland: 11.8/11.9, 15.8/15.5, 21.4/19.9
+
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Match! But with early Serbia</h4>
+</div>
 
 
 ```{r}
@@ -454,7 +465,7 @@ d %>%
   as_tibble() %>% 
   select(COUNTRY,YEAR,SEX,Numeric) %>% 
   spread(., key = SEX, value = Numeric) %>% 
-  filter(YEAR >= 2010, COUNTRY %in% c("FIN","ITA","SRB")) %>% 
+  filter(COUNTRY %in% c("FIN","ITA","SRB")) %>%
   gather(., key = sex, value = val, 3:4) %>% 
   spread(., key=YEAR,value = val) %>% 
   knitr::kable(digits = 1)
@@ -463,7 +474,6 @@ d %>%
 ```
 
 
-jumbo
 
 ### d. Fish, Production Index (Could not find in FISHSTAT)
 
