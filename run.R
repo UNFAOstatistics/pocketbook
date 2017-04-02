@@ -18,14 +18,14 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
                       # "GLO" # Global
                           # ,"RAP" # Asia and the Pacific
-                         # ,"RAF"  # Africa
+                         # "RAF"  # Africa
                       "REU" # Europe and Central Asia
                         # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -99,7 +99,7 @@ cache_definitions <- F
 ###########################################################
 # Data - Load SYB
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-01-19/SYB2017-04-01-19.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-02-12/SYB2017-04-02-12.RData")
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
@@ -107,6 +107,27 @@ meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.
 meta_full <- meta.lst[["FULL"]]
 full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
 csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
+
+## Process the production data manuyally
+
+if (!file.exists("~/local_data/faostat/temp/production.RDS")){
+  
+  dir.create("~/local_data/faostat/temp/", recursive = TRUE, showWarnings = FALSE)
+  full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
+  csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
+  fao_bulk <- readRDS("~/local_data/faostat/rds/faostat.RDS")
+  fao_bulk$subcat <- csv_data$subcat[match(fao_bulk$id, csv_data$id)]
+  fao_bulk$FAOST_CODE <- fao_bulk$countrycode
+  fao_bulk$Year <- fao_bulk$year
+  fao_bulk %>% 
+    filter(subcat %in% "production_crops_e_all_data_(normalized)") %>% 
+    saveRDS(., "~/local_data/faostat/temp/production.RDS")
+  fao_bulk %>% 
+    filter(subcat %in% "production_livestock_e_all_data_(normalized)") %>% 
+    saveRDS(., "~/local_data/faostat/temp/livestockproduction.RDS")
+}
+
+
 
 
 ############################################################
@@ -492,7 +513,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="REU" # debuggin
+region_to_report="RNE" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))
