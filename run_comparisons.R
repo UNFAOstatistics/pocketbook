@@ -648,8 +648,8 @@ cat(paste('
     file = fileOut, append = TRUE) 
 
 # number of images in the folder
-<img src="../pdf_tmp_20170328/REU/page-56.jpg" vspace="10" height="1200"/></br>
-  cat('
+# <img src="../pdf_tmp_20170328/REU/page-56.jpg" vspace="10" height="1200"/></br>
+cat('
 <h3>REU-book</h3>
 <img src="../pdf_tmp_20170328/REU/page-56.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170328/REU/page-67.jpg" vspace="10" height="1200"/></br>
