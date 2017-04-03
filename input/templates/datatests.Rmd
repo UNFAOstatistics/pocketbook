@@ -98,10 +98,7 @@ mean(c(2.63,2.84,2.97,2.91,2.59,1.96,1.11,0.15,-0.73,-1.41,-1.85))
 
 # Country profiles
 
-```{r}
-readr::read_csv("~/faosync/pocketbooks/pocketbook/input/data/FAOcountryProfile.csv") %>% distinct(FAOST_CODE,FAO_TABLE_NAME) %>% 
-  DT::datatable()
-```
+
 
 
 ## 1. The following variables appear to have some sort of systemic error:
@@ -123,7 +120,11 @@ readr::read_csv("~/faosync/pocketbooks/pocketbook/input/data/FAOcountryProfile.c
     - Egypt: 2648,3291,3670
     - Uganda: 9,9,11
     - Ethiopia: 290,290,800
-- I see match here!
+
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p>Match for selected countries</p>
+</div>
 
 **FAOSTAT data**
 
@@ -161,7 +162,11 @@ d %>%
     - Egypt: NA,469,350
     - Uganda: NA,1,1
     - Ethiopia: NA,3,15
-- I see match here!
+
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p>Match for selected countries</p>
+</div>
 
 **FAOSTAT data**
 
@@ -220,7 +225,11 @@ pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs
     - Egypt: NA,52,108
     - Uganda: NA,0,0
     - Ethiopia: NA,2,10
-- I see match here!
+
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p>Match for selected countries</p>
+</div>
     
 
 **FAOSTAT data**
@@ -277,7 +286,11 @@ pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs
     - Egypt: 0.4,4.3,11.2
     - Uganda: 12.3,12.9,16
     - Ethiopia: 17.7,17.7,18.4
-- I see match here, but with Serbia. Most probably this is due to how the country codes from WDI are treated for ex-Jugoslavian countries. I think we would need to have good reasons to unwind that process.
+
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p>Match for selected countries, but early Serbia. This is due to how the country codes from non-FAOSTAT data are treated for ex-Jugoslavian countries. We would need to have good reasons to unwind that process..</p>
+</div>
 
 **World Bank data**
 
@@ -305,7 +318,11 @@ WDI(country = c("IN","PH","RS","IT","JO","EG","UG","ET"), indicator = "ER.LND.PT
     - Egypt: 19,26,31
     - Uganda: 31,34,50
     - Ethiopia: 82,86,115
-- i can see match for these countries!
+
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <p>Match for selected countries</p>
+</div>
 
 **FAOSTAT data**
 
@@ -377,8 +394,9 @@ in the book:
 
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>MAtch!</h4>
+  <p>Match!</p>
 </div>
+
 **In UN Pop data**
 
 ```{r}
@@ -406,11 +424,7 @@ d %>% filter(LocationName %in% c("Serbia","Italy","Finland")) %>%
 
 ### b. Overweight, adults (m/f, %)
 
-<div class="alert alert-dismissible alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Win!</h4>
-  <p>This indicator was re-computed as the source data had changed! Data now less sparse ie. less NA in tables</p>
-</div>
+**This indicator was re-computed as the source data had changed! Data now less sparse ie. less NA in tables**
 
 - data is pulled here: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/code/manualdata_scripts/overweight2015.R#L9> from <http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_25A&filter=AGEGROUP:*;COUNTRY:*;SEX:*>
 
@@ -420,7 +434,7 @@ d %>% filter(LocationName %in% c("Serbia","Italy","Finland")) %>%
 
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Match! But with early Serbia</h4>
+  <p>Match for selected countries, but early Serbia. This is due to how the country codes from non-FAOSTAT data are treated for ex-Jugoslavian countries. We would need to have good reasons to unwind that process..</p>
 </div>
 
 ```{r}
@@ -439,11 +453,7 @@ d %>%
 
 ### c. Obesity, adults (m/f, %)
 
-<div class="alert alert-dismissible alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Win!</h4>
-  <p>This indicator was re-computed as the source data had changed! Data now less sparse ie. less NA in tables</p>
-</div>
+**This indicator was re-computed as the source data had changed! Data now less sparse ie. less NA in tables**
 
 
 - data is pulled in here: <https://github.com/UNFAOstatistics/pocketbook_database/blob/master/code/manualdata_scripts/overweight2015.R#L22> from <http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_30A&filter=AGEGROUP:*;COUNTRY:*;SEX:*>
@@ -455,9 +465,8 @@ d %>%
 
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Match! But with early Serbia</h4>
+  <p>Match for selected countries, but early Serbia. This is due to how the country codes from non-FAOSTAT data are treated for ex-Jugoslavian countries. We would need to have good reasons to unwind that process..</p>
 </div>
-
 
 ```{r}
 d <- read.csv("http://apps.who.int/gho/athena/data/data-coded.csv?target=GHO/NCD_BMI_30A&filter=AGEGROUP:*;COUNTRY:*;SEX:*")  
@@ -499,8 +508,7 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Fixed!</h4>
-  <p>fixed now as `Renewable water resources (m3/person/year)`</p>
+  <p>Fixed now as `Renewable water resources (m3/person/year)`</p>
 </div>
 
 
@@ -522,7 +530,7 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-info">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Agree, but did not harmonise yet!!</p>
+  <p>I agree, but did not harmonise yet!!</p>
 </div>
 
 
@@ -530,7 +538,7 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-info">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Agree, but did not harmonise yet!!</p>
+  <p>I agree, but did not harmonise yet!!</p>
 </div>
 
 
@@ -538,7 +546,7 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-info">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Agree, but did not harmonise yet!!</p>
+  <p>I agree, but did not harmonise yet!!</p>
 </div>
 
 
@@ -554,7 +562,7 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-info">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Agree, but did not remove yet!</p>
+  <p>I agree, but did not remove yet!</p>
 </div>
 
 
@@ -562,7 +570,7 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-info">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Agree, but did not remove yet!</p>
+  <p>I agree, but did not remove yet!</p>
 </div>
 
 
@@ -570,12 +578,20 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 <div class="alert alert-dismissible alert-info">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Agree, but did not remove yet!</p>
+  <p>I agree, but did not remove yet!</p>
 </div>
 
 
 <!-- ---------------------------------------------------------------------- -->
 <!-- ---------------------------------------------------------------------- -->
+
+# Help functions etc.
+
+```{r}
+readr::read_csv("~/faosync/pocketbooks/pocketbook/input/data/FAOcountryProfile.csv") %>% distinct(FAOST_CODE,FAO_TABLE_NAME) %>% 
+  DT::datatable()
+```
+
 
 # sessioninfo()
 ```{r sessioninfo, knitr_setup, include=F}
