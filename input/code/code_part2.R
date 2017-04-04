@@ -736,7 +736,7 @@ dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
 
 dat <- dat[which(dat[[region_to_report]]),]
 
-dat <- arrange(dat, -Year, -FBS.PPCS.GT.GCD3D)
+dat <- arrange(dat, -FBS.PPCS.GT.GCD3D)
 
 # limit the nro of printed for REU/RNE countries
 if (nrow(dat) < 20){

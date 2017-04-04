@@ -162,11 +162,17 @@ d %>%
     - Egypt: NA,469,350
     - Uganda: NA,1,1
     - Ethiopia: NA,3,15
+    - Bangladesh: NA 109 145
+    - Senegal: NA 4 6
+    - Egypt: NA 469 350
+    - Algeria: NA 2 32
 
-<div class="alert alert-dismissible alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>Match for selected countries</p>
-</div>
+
+
+<!-- <div class="alert alert-dismissible alert-success"> -->
+<!--   <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+<!--   <p>Match for selected countries</p> -->
+<!-- </div> -->
 
 **FAOSTAT data**
 
@@ -174,7 +180,8 @@ d %>%
 pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Fertilizers_E_All_Data_(Normalized).zip")  %>% 
   filter(
     # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
-    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(16,195,4,59,230,
+                        100,171,112,272,106,226,238), 
     Year >= 1988, 
     # ElementCode == 5155,
     `Element Code` == 5155,
@@ -188,7 +195,8 @@ pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs
 pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Land_E_All_Data_(Normalized).zip") %>% 
   filter(
     # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
-    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(16,195,4,59,230,
+                       100,171,112,272,106,226,238), 
     Year >= 1988, 
     # ElementCode == 5155,
     `Element Code` == 5110,
@@ -225,6 +233,10 @@ pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs
     - Egypt: NA,52,108
     - Uganda: NA,0,0
     - Ethiopia: NA,2,10
+    - Senegal: NA 4 0
+    - Algeria: NA 1 9
+    - Egypt: NA 52 108
+    - Bangladesh: NA 23 66
 
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -238,7 +250,8 @@ pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs
 pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Fertilizers_E_All_Data_(Normalized).zip")  %>% 
   filter(
     # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
-    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(16,195,4,59,230,
+                       100,171,112,272,106,226,238), 
     Year >= 1988, 
     # ElementCode == 5155,
     `Element Code` == 5155,
@@ -252,7 +265,8 @@ pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs
 pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_Land_E_All_Data_(Normalized).zip") %>% 
   filter(
     # CountryCode %in% c(100,171,112,59,272,106,226,59,238), 
-    `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
+    `Area Code` %in% c(16,195,4,59,230,
+                       100,171,112,272,106,226,238), 
     Year >= 1988, 
     # ElementCode == 5155,
     `Element Code` == 5110,
@@ -318,6 +332,11 @@ WDI(country = c("IN","PH","RS","IT","JO","EG","UG","ET"), indicator = "ER.LND.PT
     - Egypt: 19,26,31
     - Uganda: 31,34,50
     - Ethiopia: 82,86,115
+    - Australia: 163 196 75
+    - Algeria: 8 9 12
+    - Rwanda: 11 11 4
+    - Ukraine: 23 -10 28
+    - Slovakia: -6 -7 -3
 
 <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -336,7 +355,8 @@ WDI(country = c("IN","PH","RS","IT","JO","EG","UG","ET"), indicator = "ER.LND.PT
 
 read_csv("~/Lataukset/Emissions_Agriculture_Agriculture_total_E_All_Data_(Norm).csv") %>% 
   filter(
-    `Country Code` %in% c(100,171,112,59,272,106,226,59,238),
+    `Country Code` %in% c(4,10,184,230,199,
+      100,171,112,59,272,106,226,59,238),
     # `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
     # Year >= 1988, 
     # ElementCode == 5155,
@@ -350,7 +370,8 @@ read_csv("~/Lataukset/Emissions_Agriculture_Agriculture_total_E_All_Data_(Norm).
 
 read_csv("~/Lataukset/Emissions_Land_Use_Land_Use_Total_E_All_Data_(Norm).csv") %>% 
   filter(
-    `Country Code` %in% c(100,171,112,59,272,106,226,59,238),
+    `Country Code` %in% c(4,10,184,230,199,
+                          100,171,112,59,272,106,226,59,238),
     # `Area Code` %in% c(100,171,112,59,272,106,226,59,238), 
     # Year >= 1988, 
     # ElementCode == 5155,
