@@ -693,7 +693,7 @@ if (region_to_report == "GLO")  dat <- syb.df %>% filter(FAOST_CODE %in% c(5100,
 
 dat$share <- dat$ILO_female_emp_agri
 
-dat_plot <- dat
+dat_plot <- dat %>% na.omit()
 
 dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = TRUE, add_row_breaks = FALSE)
 
@@ -704,7 +704,7 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
 if (rulang) p <- p + labs(x="",y="проценты\n")
-p <- p + guides(color = guide_legend(nrow = 3))
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -802,7 +802,7 @@ caption_text <- "Fertilizer consumption in nutrients per ha of arable land (2002
 if (rulang) caption_text <- "Использование удобрений в переводе в питательные вещества, на гектар пашни, 20 стран с самыми высокими значениями (с 2002 по 2014 гг.)"
 
 ## ---- P1inputLEFT ----
-dat <- syb.df %>% filter(Year %in% 2014, FAOST_CODE < 5000) %>%
+dat <- syb.df %>% filter(Year %in% 2013, FAOST_CODE < 5000) %>%
   select(FAOST_CODE,Year,RF.FERT.NI.TN.SH) %>%
   na.omit() %>% 
   mutate(RF.FERT.NI.TN.SH = RF.FERT.NI.TN.SH * 1000) # As we want kg per ha
@@ -1008,7 +1008,7 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
 if (rulang) p <- p + labs(x="",y="проценты\n")
-p <- p + guides(color = guide_legend(nrow = 6))
+p <- p + guides(color = guide_legend(nrow = length(unique(dat_plot$SHORT_NAME))))
 p
 
 
@@ -1113,9 +1113,8 @@ if (rulang) p <- p + labs(x="",y="\nиндекс")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
-
 # Caption
-caption_text <- paste("DFA Agriculture Orientation Index,",nrow(dat_plot)/2,"countries with highest and lowest values, average (2009-2013)")
+caption_text <- paste("Development flows to agriculture, Agriculture Orientation Index,",nrow(dat_plot)/2,"countries with highest and lowest values, average (2009-2013)")
 if (rulang) caption_text <- paste("Индекс ориентации на сельское хозяйство,",
                                   nrow(dat_plot)/2,"
                                   стран с самыми высокими и самыми низкими значениями, среднее значение (2009-2013 гг.)")

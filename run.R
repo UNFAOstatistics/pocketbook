@@ -16,11 +16,11 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      # "GLO" # Global
-                          # ,"RAP" # Asia and the Pacific
-                         # "RAF"  # Africa
-                      "REU" # Europe and Central Asia
-                        # ,"RNE" # Near East and North Africa
+                      "GLO" # Global
+                          ,"RAP" # Asia and the Pacific
+                         ,"RAF"  # Africa
+                      ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -49,8 +49,8 @@ include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
 include_part2        <- T
-include_part3        <- F
-include_part4        <- F
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -58,8 +58,8 @@ include_part6        <- F
 # include_part9        <- F # just a placeholder
 # include_part10       <- F # just a placeholder
 # -------------------------------
-include_country_profiles <- F
-include_definitions      <- F
+include_country_profiles <- T
+include_definitions      <- T
 # --------------------------- ----
 # Upgrade the comparison tables 
 broke_all_into_images         <- F
@@ -131,7 +131,7 @@ library(tidyverse)
 
 ## Process the production data manuyally
 
-# if (!file.exists("~/local_data/faostat/temp/production.RDS")){
+if (!file.exists("~/local_data/faostat/temp/production.RDS")){
   
   dir.create("~/local_data/faostat/temp/", recursive = TRUE, showWarnings = FALSE)
   full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
@@ -146,7 +146,7 @@ library(tidyverse)
   fao_bulk %>% 
     filter(subcat %in% "production_livestock_e_all_data_(normalized)") %>% 
     saveRDS(., "~/local_data/faostat/temp/livestockproduction.RDS")
-# }
+}
 
 
 
@@ -505,7 +505,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="RNE" # debuggin
+region_to_report="RAP" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))

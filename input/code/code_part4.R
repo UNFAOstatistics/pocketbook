@@ -572,9 +572,11 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y="% of tot energy production\n")
 if (rulang) p <- p + labs(x="",y="% в общем объеме \nпроизводства энергии\n")
-p <- p + guides(color = guide_legend(nrow = 6))
+p <- p + guides(color = guide_legend(nrow = length(unique(dat_plot$SHORT_NAME))))
 p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009))
 p
+
+
 
 # Caption
 caption_text <- "Bioenergy production, share of total energy production"
@@ -802,8 +804,9 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
 if (rulang) p <- p + labs(x="",y="млн тонн\n")
-p <- p + theme(axis.text.x = element_text(angle=45))
+# p <- p + theme(axis.text.x = element_text(angle=45))
 p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_x_continuous(breaks=c(1960,1980,2000,2014))
 p
 
 # Caption
@@ -1026,9 +1029,9 @@ p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
 p <- p + labs(x="",y=expression("thousand gigagrams CO"[2] * "eq"))
 if (rulang) p <- p + labs(x="",y=expression("тыс. гигаграммов CO"[2] * "-экв"))
-p <- p + theme(axis.text.x = element_text(angle=45))
-p <- p + guides(color = guide_legend(nrow = 6))
-p <- p + scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
+# p <- p + theme(axis.text.x = element_text(angle=45))
+p <- p + guides(color = guide_legend(nrow = length(unique(dat_plot$SHORT_NAME))))
+p <- p + scale_x_continuous(breaks=c(2000,2006,2012))
 p
 
 # Caption

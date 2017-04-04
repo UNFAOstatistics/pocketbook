@@ -659,9 +659,9 @@ p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plo
 p <- p + labs(y="percent\n", x="")
 if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + guides(color = guide_legend(nrow = 5))
-p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
-                            labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
-p <- p + theme(axis.text.x = element_text(angle = 45))
+p <- p + scale_x_continuous(breaks = c(1991, 2006, 2015),
+                            labels = c("1990-92",  "2005-07", "2014-16"))
+# p <- p + theme(axis.text.x = element_text(angle = 45))
 p
 
 
@@ -874,16 +874,14 @@ if (rulang){
   dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Near East and North Africa"] <- "Ближний Восток и Северная Африка"
 }
 
-
 p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
 p <- p + labs(y="kcal/cap/day\n", x="")
 if (rulang) p <- p + labs(x="",y="ккал/чел/день\n")
-p <- p + guides(color = guide_legend(nrow = 5))
-p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2013, 2015),
-                            labels = c("1990-92", "2000-02", "2005-07", "2012-14", "2014-16"))
-p <- p + theme(axis.text.x = element_text(angle = 45))
+p <- p + guides(color = guide_legend(nrow = length(unique(dat_plot$FAO_TABLE_NAME))))
+p <- p + scale_x_continuous(breaks = c(1991,  2006,  2015),
+                            labels = c("1990-92",  "2005-07",  "2014-16"))
 p
 
 
@@ -998,7 +996,7 @@ if (rulang) caption_text <- paste("Распространенность недо
 
 # dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
 # New from WORLD BANK instead of FSI
-dat_plot <- syb.df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  
+dat_plot <- syb.df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,12000,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  
   select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD) %>% 
   filter(!is.na(NY.GDP.PCAP.PP.KD))
 
@@ -1092,9 +1090,10 @@ if (region_to_report == "REU" & rulang) short_text <- "В течение пос�
 ## ---- P2stabilityTOPRIGHT ----
 dat_plot <- df %>%
   filter(FAOST_CODE %in% 
-                            if (region_to_report == "RNE") c(5000,420,13000,14000,15000) 
+                            if (region_to_report == "RNE") c(5000,12000,13000,14000,15000) 
                           else c(5000,12000,13000,14000,15000)) %>%  
-  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD)
+  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DEA.PCFPV.IDD) %>% 
+  na.omit(.)
 
 # dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
 #                                                                     "Europe and Central Asia",
@@ -1118,7 +1117,7 @@ p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plo
 p <- p + labs(y="index\n", x="")
 if (rulang) p <- p + labs(x="",y="индекс\n")
 p <- p + guides(color = guide_legend(nrow = 5))
-p <- p + theme(axis.text.x = element_text(angle = 45))
+p <- p + scale_x_continuous(breaks = c(1990,  2000,  2010, 2015))
 p
 
 
@@ -1365,7 +1364,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>% ungroup()
 
-dat <- arrange(dat, -Year, -SH.STA.STNT.ZS)
+dat <- arrange(dat, -SH.STA.STNT.ZS)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
@@ -1413,7 +1412,7 @@ dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year)) %>% ungroup()
 
-dat <- arrange(dat, -Year, -SH.STA.WAST.ZS)
+dat <- arrange(dat, -SH.STA.WAST.ZS)
 
 # limit the nro of printed for REU/RNE countries
 if (region_to_report %in% c("REU","RNE")){
