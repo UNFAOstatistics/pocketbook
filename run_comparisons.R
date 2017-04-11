@@ -826,6 +826,9 @@ cat(paste("
 
 file.copy(paste0(root.dir,"/input/templates/toc.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 file.copy(paste0(root.dir,"/input/templates/datatests.html"), to = paste0(root.dir,"/output"), overwrite = TRUE)
+file.copy(paste0(root.dir,"/input/templates/github_browser_edit.gif"), to = paste0(root.dir,"/output"), overwrite = TRUE)
+
+
 setwd(paste0(root.dir,"/output"))
 rmarkdown::render("toc.Rmd", output_file = "index.html")
 file.remove("./toc.Rmd")

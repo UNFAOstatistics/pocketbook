@@ -110,6 +110,7 @@ for (book in books){
 
 1. [pocketbook](https://github.com/UNFAOstatistics/pocketbook/)
 1. [pocketbook_database](https://github.com/UNFAOstatistics/pocketbook_database/)
+1. [*How to edit in Github* gif-image](github_browser_edit.gif)
 
 
 # Data
