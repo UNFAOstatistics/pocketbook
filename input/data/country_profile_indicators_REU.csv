@@ -49,7 +49,6 @@
 "Environment",53,"AQ.WAT.WWAGR.MC.SH",NA,NA,"Renewable water res withdrawn (% of total)",NA,1,"Забор воды из возобновляемых источников (% от общего забора)","Окружающая среда"
 "Environment",54,"ER.LND.PTLD.ZS",NA,NA,"Terrestrial protect areas (% total land area) ",NA,1,"Наземные охран. природ. территории (% от общей пл. земли)","Окружающая среда"
 "Environment",55,"RL.AREA.AGRORG.HA.SH",NA,NA,"Organic area (% total agricultural area)",0.01,1,"Органические земли (% сельскохозяйственных земель)","Окружающая среда"
-"Environment",56,"AQ.WAT.WWAGR.MC.SH",NA,NA,"Share of renewable water resources (%)",NA,1,"Доля возобновляемых водных ресурсов (%)","Окружающая среда"
 "Environment",57,"BP.TP.GP.TJ.NO",NA,NA,"Biofuel production (thousand kt of oil eq.)",1000,0,"Производство биотоплива (тыс. кт нефтяного эквивалента)","Окружающая среда"
 "Environment",58,"FO.WP.PQ.TN.NO",NA,NA,"Wood pellet prod. (mln tonnes)",1000,0,"Производство древесных гранул (млн тонн)","Окружающая среда"
 "Environment",59,"GHG.AFOLU.TOT.ECO2EQ.NO",NA,NA,"Net GHG emissions from AFOLU (CO2 eq, Mt)",1000,0,"Чистые выбросы парниковых газов от СХЛХДВЗ (СО2-экв, Мт)","Окружающая среда"

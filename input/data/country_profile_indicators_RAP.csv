@@ -43,7 +43,6 @@ Net trade (mln US\$),45,TP.NETVAL.MEATPREP.USD.NO,,,Meat,1000000,0
 Net trade (mln US\$),46,TP.NETVAL.FV.USD.NO,,,Fruit and vegetables,1000000,0
 Net trade (mln US\$),47,TP.NETVAL.MILKEQ.USD.NO,,,Dairy products,1000000,0
 Environment,49,RL.AREA.FOR.HA.SH,,,Forest area (%),0.01,1
-Environment,50,AQ.WAT.WWAGR.MC.SH,,,Water withdrawal by agriculture (% of total),,1
 Environment,51,ER.LND.PTLD.ZS,,,Terrestrial protect areas (% total land area) ,,1
 Environment,52,RL.AREA.AGRORG.HA.SH,,,Organic area (% total agricultural area),0.01,1
 Environment,53,AQ.WAT.WWAGR.MC.SH,,,Renewable water res withdrawn (% of total),,1
