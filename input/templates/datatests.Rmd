@@ -99,7 +99,54 @@ mean(c(2.63,2.84,2.97,2.91,2.59,1.96,1.11,0.15,-0.73,-1.41,-1.85))
 # Country profiles
 
 
+## 0. Area Harvested
 
+
+Currently I do sum up all the "Item aggraged" which are
+
+```{r}
+dat <- pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip")
+names(dat) <- tolower(str_replace_all(names(dat), " ", ""))
+dat %>% 
+  mutate(item = as.character(item)) %>% 
+  dplyr::filter(grepl("Total", item),
+         areacode < 5000, 
+         element %in% "Area harvested") %>% 
+    distinct(item)
+```
+
+
+So for Bangladesh for Year 2014 it currently is:
+
+```{r}
+dat %>% 
+  mutate(item = as.character(item)) %>% 
+  dplyr::filter(grepl("Total", item),
+         area == "Bangladesh",
+         year == 2014,
+         element %in% "Area harvested") %>% 
+  select(area,areacode,year,item,value) -> total_items
+dat %>% 
+  mutate(item = as.character(item)) %>% 
+  dplyr::filter(grepl("Total", item),
+         area == "Bangladesh",
+         year == 2014,
+         element %in% "Area harvested") %>% 
+  group_by(area,areacode,year) %>% 
+  summarise(value = sum(value)) %>% 
+mutate(item = "Total summed up") -> total
+
+bind_rows(total_items,total) %>% kable()
+
+```
+
+
+
+
+
+
+
+  
 
 ## 1. The following variables appear to have some sort of systemic error:
 
