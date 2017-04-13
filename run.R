@@ -16,11 +16,11 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
-                      "GLO" # Global
-                          ,"RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                      ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                      # "GLO" # Global
+                          "RAP" # Asia and the Pacific
+                         # ,"RAF"  # Africa
+                      # ,"REU" # Europe and Central Asia
+                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -99,7 +99,7 @@ cache_definitions <- F
 ###########################################################
 # Data - Load SYB
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-04-22/SYB2017-04-04-22.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-04-12-22/SYB2017-04-12-22.RData")
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 

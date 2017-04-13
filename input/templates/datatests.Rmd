@@ -109,10 +109,11 @@ dat <- pull_unzip_fao("http://fenixservices.fao.org/faostat/static/bulkdownloads
 names(dat) <- tolower(str_replace_all(names(dat), " ", ""))
 dat %>% 
   mutate(item = as.character(item)) %>% 
-  dplyr::filter(grepl("Total", item),
+  dplyr::filter(!grepl("Total", item),
          areacode < 5000, 
          element %in% "Area harvested") %>% 
-    distinct(item)
+    distinct(item) %>% 
+  arrange(item)
 ```
 
 
@@ -121,19 +122,19 @@ So for Bangladesh for Year 2014 it currently is:
 ```{r}
 dat %>% 
   mutate(item = as.character(item)) %>% 
-  dplyr::filter(grepl("Total", item),
+  dplyr::filter(!grepl("A", flag),
          area == "Bangladesh",
          year == 2014,
          element %in% "Area harvested") %>% 
   select(area,areacode,year,item,value) -> total_items
 dat %>% 
   mutate(item = as.character(item)) %>% 
-  dplyr::filter(grepl("Total", item),
+  dplyr::filter(!grepl("A", flag),
          area == "Bangladesh",
          year == 2014,
          element %in% "Area harvested") %>% 
   group_by(area,areacode,year) %>% 
-  summarise(value = sum(value)) %>% 
+  summarise(value = sum(value,na.rm=TRUE)) %>% 
 mutate(item = "Total summed up") -> total
 
 bind_rows(total_items,total) %>% kable()
@@ -596,25 +597,24 @@ Data is this from Fisheries <https://github.com/UNFAOstatistics/pocketbook_datab
 
 ### a. Water withdrawal by agriculture (% of total) – appears in RNE, RAP, RAF
 
-<div class="alert alert-dismissible alert-info">
+<div class="alert alert-dismissible alert-warning">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>I agree, but did not harmonise yet!!</p>
+  <p>Removed!!</p>
 </div>
-
 
 ### b. Renewable water res withdrawn (% of total) – appears in ALL books
 
-<div class="alert alert-dismissible alert-info">
+<div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>I agree, but did not harmonise yet!!</p>
+  <p>Kept!</p>
 </div>
 
 
 ### c. Share of renewable water resources (%) - appears in REU only
 
-<div class="alert alert-dismissible alert-info">
+<div class="alert alert-dismissible alert-warning">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <p>I agree, but did not harmonise yet!!</p>
+  <p>Removed!!</p>
 </div>
 
 
