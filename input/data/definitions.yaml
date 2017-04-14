@@ -658,7 +658,7 @@
   source_ru: ФАО, Отдел статистики
   owner_ru: ФАО
 - id: domestic_food_price_volatility
-  name: Domestic food price volatility
+  name: Domestic food price volatility index
   description: Measures the variability in the relative price of food in a country.  The
     indicator is calculated from the monthly domestic food price level index using
     monthly consumer and general food price indices and purchasing power parity data
@@ -1313,7 +1313,7 @@
   source_ru: Отдел земельных и водных ресурсов (АКВАСТАТ)
   owner_ru: ФАО
 - id: water_resources_per_capita_(m3_person_year)
-  name: Water resources per capita (m3/person/year)
+  name: Renewable water resources per capita (m3/person/year)
   description: Total annual internal renewable water resources per inhabitant.
   source: Land and Water Division (AQUASTAT)
   owner: FAO
