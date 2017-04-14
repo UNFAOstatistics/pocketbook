@@ -822,7 +822,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: share_of_food_expenditure(pros)
-  name: Share of food expenditure (\%)
+  name: Share of food expenditure of the poor (\%)
   description: Proportion of food consumption over total consumption (food and non-food)
     for the lowest income quintile of the population. Due to the way in which the
     share of food expenditures is defined in the sources of data, this indicator captures
