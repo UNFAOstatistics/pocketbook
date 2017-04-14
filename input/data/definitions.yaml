@@ -297,7 +297,7 @@
 - id: population._total
   name: Population, total
   description: De facto population in a country, area or region as of 1 July of the
-    year indicated.
+    year indicated, and are presented in thousands.
   source: FAO, Statistics Division
   owner: 'World Population Prospects: The 2012 Revision from the UN Population Division'
   name_ru: Общая численность населения
