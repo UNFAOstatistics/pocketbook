@@ -1512,5 +1512,5 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Percentage of anaemia among children under 5, percent (2011)"
+caption_text <- "Percentage of anemia among children under 5, percent (2011)"
 if (rulang) caption_text <- "Масштабы распространения анемии среди детей до пяти лет, в процентах (2011 г.)"
