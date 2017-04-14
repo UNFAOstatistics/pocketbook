@@ -1,5 +1,5 @@
 - id: prevalence_of_anemia_among_pregnant_women_(pros)
-  name: Anaemia among pregnant women, prevalence (\%)
+  name: Anemia among pregnant women, prevalence (\%)
   description: The percentage of pregnant women whose hemoglobin level is smaller than 110 grams per liter at sea level. Anemia is a condition in which the number of red blood cells or their oxygen-carrying capacity is insufficient to meet physiologic needs, which vary by age, sex, altitude, smoking status, and pregnancy status. In its severe form it is associated with fatigue, weakness, dizziness, and drowsiness. Children under age 5 and pregnant women have the highest risk for anemia.
   source: World Bank
   owner: WHO
