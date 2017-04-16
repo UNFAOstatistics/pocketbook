@@ -262,6 +262,9 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
                         spread(key = Year, value = Value) %>% 
@@ -315,6 +318,9 @@ dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
+
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
 
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
@@ -715,6 +721,9 @@ if (rulang){
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
 }
 
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
                         spread(key = Year, value = Value) %>% 
@@ -936,6 +945,9 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
                         spread(key = Year, value = Value) %>% 
@@ -989,6 +1001,8 @@ if (rulang){
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
 }
 
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
 
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
@@ -1177,6 +1191,9 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
                         spread(key = Year, value = Value) %>% 
@@ -1227,6 +1244,9 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2014"] <- "2014 г."
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
+
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
 
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
