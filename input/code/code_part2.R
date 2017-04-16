@@ -323,11 +323,16 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)
 dat_plot <- arrange(dat_plot, color)
 
 p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+if (region_to_report == "RNE") p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
                       aes(y = `1991`, xend = SHORT_NAME,
-                          yend = `2015`), color="grey80")
+                          yend = `2010`), color="grey80")
+if (region_to_report != "RNE") p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                                                       spread(key = Year, value = Value) %>% 
+                                                       mutate(color=NA), 
+                                                     aes(y = `1991`, xend = SHORT_NAME,
+                                                         yend = `2015`), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -516,7 +521,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.MA.ZS) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.MA.ZS))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = min(dat_plot$SH.STA.OWGH.MA.ZS), xend = SHORT_NAME, 
                           yend = SH.STA.OWGH.MA.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
@@ -551,7 +556,7 @@ if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$F
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.FE.ZS) 
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.FE.ZS))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = min(dat_plot$SH.STA.OWGH.MA.ZS), xend = SHORT_NAME, 
                           yend = SH.STA.OWGH.FE.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])

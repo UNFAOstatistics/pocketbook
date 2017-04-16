@@ -204,7 +204,7 @@ p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/cap/day")
 if (rulang) p <- p + labs(x="",y="\nккал/чел/день")
-p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
@@ -262,7 +262,7 @@ p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
 if (rulang) p <- p + labs(x="",y="\n")
-p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
 p
 
