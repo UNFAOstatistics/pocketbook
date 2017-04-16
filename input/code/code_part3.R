@@ -188,11 +188,19 @@ if (rulang){
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2015`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/cap/day")
 if (rulang) p <- p + labs(x="",y="\nккал/чел/день")
@@ -239,11 +247,18 @@ if (rulang){
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2015`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
 if (rulang) p <- p + labs(x="",y="\n")
@@ -434,6 +449,20 @@ p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME,
                           yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2013`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
 if (rulang) p <- p + labs(x="",y="\nпост. межд. долл.  \n2004 − 2006 гг.")
@@ -481,11 +510,19 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2013`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
 if (rulang) p <- p + labs(x="",y="\nпост. межд. долл.  \n2004 − 2006 гг.")
@@ -739,11 +776,18 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2014`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
 if (rulang) p <- p + labs(x="",y="\nкг на душу населения")
@@ -800,11 +844,20 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2014`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkg per capita")
 if (rulang) p <- p + labs(x="",y="\nкг на душу населения")
@@ -992,7 +1045,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.MILK.TN.
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QL.PRD.MILK.TN.NO))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = QL.PRD.MILK.TN.NO, color=color), alpha=.5)
+                          yend = QL.PRD.MILK.TN.NO, color=color), alpha=.5, show.legend = FALSE)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1037,11 +1090,11 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.EGG.TN.N
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=QL.PRD.EGG.TN.NO))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = QL.PRD.EGG.TN.NO, color=color), alpha=.5)
+                          yend = QL.PRD.EGG.TN.NO, color=color), alpha=.5, show.legend = FALSE)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="\nmln tonnes")
+p <- p + labs(x="",y="\nmillion tonnes")
 if (rulang) p <- p + labs(x="",y="\nмлн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + scale_y_continuous(labels=space)
@@ -1267,7 +1320,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$capture_fish_pr
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=capture_fish_production))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = capture_fish_production, color=color), alpha=.5)
+                          yend = capture_fish_production, color=color), alpha=.5, show.legend = FALSE)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1311,7 +1364,7 @@ dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$aquaculture_fis
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=aquaculture_fish_production))
 p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = aquaculture_fish_production, color=color), alpha=.5)
+                          yend = aquaculture_fish_production, color=color), alpha=.5, show.legend = FALSE)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -1479,7 +1532,7 @@ print.xtable(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
 if (table_type == "latex" & region_to_report == "RNE"){
   cat("\\footnotesize{\\textit{* Gulf Cooperation Council States and Yemen}}")
   cat("\\vspace{1mm}")
-} else cat("<br><i>Data after 2015 are projections</i>")
+} 
 
 
 
@@ -1517,11 +1570,19 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2013`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
 if (rulang) p <- p + labs(x="",y="\nмлрд долл. США")
@@ -1570,11 +1631,18 @@ if (rulang){
 }
 
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5) 
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
+
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2013`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
 if (rulang) p <- p + labs(x="",y="\nмлрд долл. США")
