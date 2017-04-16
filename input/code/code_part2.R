@@ -262,16 +262,24 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `1991`, xend = SHORT_NAME,
+                          yend = `2015`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
 if (rulang) p <- p + labs(x="",y="\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
+
+
+# 
+
+
 
 caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16")
 if (rulang) caption_text <- ""
@@ -308,11 +316,14 @@ dat_plot <- rbind(top2015,top2000)
 dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
 ###############
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `1991`, xend = SHORT_NAME,
+                          yend = `2015`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
 if (rulang) p <- p + labs(x="",y="\n")
@@ -704,15 +715,18 @@ if (rulang){
   dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2010`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
-if (rulang) p <- p + labs(x="",y="\nпроценты")
-p <- p + guides(color = guide_legend(nrow = 2))
+if (rulang) p <- p + labs(x="",y="\n")
+p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -751,7 +765,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FBS.PPC
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PPCS.GT.GCD3D))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = min(dat_plot$FBS.PPCS.GT.GCD3D), xend = SHORT_NAME, 
                           yend = FBS.PPCS.GT.GCD3D, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -922,15 +936,18 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2014`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
 if (rulang) p <- p + labs(x="",y="\nиндекс")
-p <- p + guides(color = guide_legend(nrow = 1))
+p <- p + guides(fill = guide_legend(nrow = 1))
 p
 
 # Caption
@@ -973,15 +990,18 @@ if (rulang){
 }
 
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2015`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
 if (rulang) p <- p + labs(x="",y="\nпроценты")
-p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + guides(fill = guide_legend(nrow = 2))
 p
 
 
@@ -1157,11 +1177,14 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2011`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nkcal/capita/day")
 if (rulang) p <- p + labs(x="",y="\nккал/чел/день")
@@ -1205,11 +1228,15 @@ if (rulang){
   dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=Value))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+                        spread(key = Year, value = Value) %>% 
+                        mutate(color=NA), 
+                      aes(y = `2000`, xend = SHORT_NAME,
+                          yend = `2014`), color="grey80")
+p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
+p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
+
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
 if (rulang) p <- p + labs(x="",y="\nиндекс")
@@ -1380,7 +1407,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, SH.STA.
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.STNT.ZS))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = min(dat_plot$SH.STA.STNT.ZS), xend = SHORT_NAME, 
                           yend = SH.STA.STNT.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -1388,7 +1415,6 @@ p <- p + coord_flip()
 p <- p + theme(legend.position = "none")
 p <- p + labs(x="",y="\npercent")
 if (rulang) p <- p + labs(x="",y="\nпроценты")
-# p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 # Caption
@@ -1428,7 +1454,7 @@ dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, SH.STA.
 if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 
 p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.WAST.ZS))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
+p <- p + geom_segment(aes(y = min(dat_plot$SH.STA.WAST.ZS), xend = SHORT_NAME, 
                           yend = SH.STA.WAST.ZS, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
