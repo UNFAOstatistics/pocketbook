@@ -706,11 +706,8 @@
   owner_ru: ФАО
 - id: employment_in_agriculture_(pros)
   name: Employment in agriculture (\%)
-  description: People who work for a public or private employer and receive remuneration
-    in wages, salary, commission, tips, piece rates, or pay in kind. Agriculture corresponds
-    to division 1 (ISIC revision 2) or tabulation categories A and B (ISIC revision
-    3) and includes hunting, forestry, and fishing.
-  source: World Bank
+  description: The indicator provides information on all persons above the minimum legal working age who, during a specified brief period, were classified in the following categories: a) paid employment (whether at work or with a job but not at work); or b) self-employment (whether at work or with an enterprise but not at work). Temporary absence from work includes reasons such as illness, maternity and parental leave, holiday, training, and industrial disputes. Agriculture is defined according to the latest version of the International Standard Industrial Classification and is comprised of Category A (Agriculture, hunting and forestry) and Category B (Fishing). When disaggregated by gender, male employment in agriculture is calculated as the percentage of males employed in agriculture out of the total number of males employed. Female employment in agriculture is calculated as the percentage of females employed in agriculture out of the total number of females employed.
+  source: ILO
   owner: ILO
   name_ru: Занятость в сельском хозяйстве (\%)
   description_ru: Лица, работающие в государственных или частных предприятиях и получающие вознаграждение в виде заработной платы, оклада, комиссионного вознаграждения, чаевых, сдельной оплаты или оплаты в натуральном виде. Сельское хозяйство соответствует разделу 1 Международной стандартной отраслевой классификации (МСОК – 2-й пересмотренный вариант) или разделам A и B (МСОК – 3-й пересмотренный вариант) и включает в себя охоту, лесное и рыбное хозяйство. Всемирный банк
