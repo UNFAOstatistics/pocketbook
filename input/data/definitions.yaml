@@ -1013,7 +1013,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: food_production_index
-  name: Food production index
+  name: Production indices, food
   description: 'The FAO indices of agricultural production show the relative level
     of the aggregate volume of agricultural production for each year in comparison
     with the base period 2004-2006. It should be noted that when calculating indices
