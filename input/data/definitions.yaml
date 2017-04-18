@@ -465,7 +465,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: children_under_5_years_of_age_who_are_stunted_(pros)
-  name: Children under 5 years of age who are stunted (\%)
+  name: Stunting, children under 5 years of age (\%)
   description: Height-for-age less than -2 standard deviations of the WHO Child Growth
     Standards median, among children aged 0-5 years.
   source: World Bank
@@ -573,7 +573,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: the_depth_of_the_food_deficit_(pros)
-  name: The depth of the food deficit (\%)
+  name: Depth of the food deficit (\%)
   description: Indicates how many calories would be needed to lift the undernourished
     from their status, everything else being constant. The average intensity of food
     deprivation of the undernourished, estimated as the difference between the average
@@ -1191,7 +1191,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: children_under_5_years_of_age_affected_by_wasting_(pros)
-  name: Children under 5 years of age affected by wasting (\%)
+  name: Wasting, children under 5 years of age (\%)
   description: The proportion of children under five whose weight for height is more
     than two standard deviations below the median for the international reference
     population ages 0-59.
