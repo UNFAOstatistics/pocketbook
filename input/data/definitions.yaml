@@ -922,8 +922,8 @@
   description_ru: Относится к основным направлениям государственной деятельности, имеющей важное значение для сельскохозяйственного сектора на основе Классификации функций органов государственного управления (КФОГУ), как описано в руководстве МВФ по статистике государственных финансов, 2001 (РСГФ 2001 года). Статистические данные о государственных расходах на сельское хозяйство, лесное хозяйство, рыбное хозяйство и охрану окружающей среды могут использоваться для изучения эффективности государственных программ поддержки благоприятных условий для основных общественных благ с высокой экономической и социальной отдачей.
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО и МВФ
-- id: population_with_access_to_sanitation_facilities_(pros)
-  name: Population with access to sanitation facilities (\%)
+- id: improved_sanitation_facilities
+  name: Improved sanitation facilities (\% of population with access)
   description: Refers to the percentage of the population with at least adequate access
     to excreta disposal facilities that can effectively prevent human, animal, and
     insect contact with excreta. Improved facilities range from simple but protected
