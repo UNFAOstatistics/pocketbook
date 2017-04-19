@@ -1001,11 +1001,7 @@
   owner_ru: ФАО
 - id: cereal_import_dependency_ratio
   name: Cereal import dependency ratio
-  description: Tells how much of the available domestic food supply of cereals has
-    been imported and how much comes from the country's own production. It is computed
-    as (cereal imports - cereal exports)/(cereal production + cereal imports - cereal
-    exports) * 100. Given this formula the indicator assumes only values <= 100. Negative
-    values indicate that the country is a net exporter of cereals.
+  description:  This indicator provides a measure of the dependence of a country or region from cereal imports. The higher the value of the indicator, the higher the dependence. Specifically, the cereal imports dependency ratio tells how much of the available domestic food supply of cereals has been imported and how much comes from the country's own production. It is computed as (cereal imports - cereal exports)/(cereal production + cereal imports - cereal exports) * 100. Given this formula the indicator assumes only values <= 100. Negative values indicate that the country is a net exporter of cereals. The indicator is calculated in three year averages, from 1990-92 to 2009-11, to reduce the impact of possible errors in estimated production and trade, due to the difficulties in properly accounting of stock variations in major food.
   source: FAO, Statistics Division
   owner: FAO
   name_ru: name русском
