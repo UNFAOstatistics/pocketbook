@@ -308,7 +308,7 @@
   name: Population, rural
   description: De facto population living in areas classified as rural (that is, it
     is the difference between the total population of a country and its urban population).
-    Data refer to 1 July of the year indicated and are presented in thousands.
+    Data refer to 1 July of the year indicated and are presented in thousands or as a percentage of the total population.
   source: FAO, Statistics Division
   owner: United Nations Population Division, World Urbanization Prospects.
   name_ru: Сельское население
