@@ -1391,3 +1391,8 @@
   description: Number of people in a condition of undernourishment. The number of persons undernourished is obtained by multiplying estimates of the proportion of undernourished for each country by estimates of the total population. Undernourishment refers to the condition of people whose dietary energy consumption is continuously below a minimum dietary energy requirement for maintaining a healthy life and carrying out a light physical activity.
   source: FAO, Statistics Division
   owner: FAO
+  - id: value_agricultural_exports
+  name: Value of agricultural exports
+  description: Value of agricultural exports are expressed in thousand US dollars in the FAOSTAT database. Export values are reported as FOB  (free on board—that is, the value of the goods plus the value of the services performed to deliver the goods to the border of the exporting country). 
+  source: FAO, Statistics Division
+  owner: FAO
