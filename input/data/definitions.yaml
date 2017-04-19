@@ -205,13 +205,14 @@
   source_ru: Всемирный банк
   owner_ru: Комитет содействия развитию Организации экономического сотрудничества и развития, Географическое распределение финансовых потоков в развивающиеся страны, Доклад по сотрудничеству и развитию и База данных статистики по международному развитию.
 - id: greenhouse_gas_emissions_from_agriculture_(co2_eq._gigagrams)
-  name: Greenhouse gas emissions from agriculture (CO2 eq, gigagrams)
+  name: Greenhouse gas emissions from agriculture, forestry and other land use (AFOLU) (CO2 eq, gigagrams)
   description: Contains all the emissions produced in the different agricultural emissions
     sub-domains, providing a picture of the contribution to the total amount of GHG
     emissions from agriculture.  GHG Emissions from agriculture consist of non-CO2
     gases, namely methane (CH4) and nitrous oxide (N2O), produced by crop and livestock
-    production and management activities.
-  source: FAO, Statistics Division
+    production and management activities. Land use includes CO2 emissions by sources and removals by sinks
+    from forest land, cropland and grassland, as well as emissions of non-CO2 from fires of biomass and organic soils.
+  source: FAO, Statistics Division and Global Forest Resources Assessments
   owner: FAO
   name_ru: Выбросы парниковых газов в сельском хозяйстве (CO2-экв, в гигаграммах)
   description_ru: Содержит все выбросы, производимые в разных сельскохозяйственных подсекторах, предоставляя информацию о вкладе сельского хозяйства в общий объем выбросов парниковых газов. Выбросы парниковых газов в результате сельскохозяйственной деятельности состоят из иных, чем CO2, газов, а именно метана (СН4) и закиси азота (N2O), выбрасываемых в результате производства сельскохозяйственных культур, животноводческой деятельности и управления сельским хозяйством.
@@ -1083,7 +1084,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: forest_area_pros
-  name: Forest area (\%)
+  name: Forest area
   description: 'The land spanning more than 0.5 hectares with trees higher than 5
     meters and a canopy cover of more than 10 percent, or trees able to reach these
     thresholds in situ. It does not include land that is predominantly under agricultural
