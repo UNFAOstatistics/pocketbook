@@ -511,6 +511,16 @@ pref_d[pref_d$id %in% preface_region,"foreword"],
 \\hspace*{\\fill}",
         pref_d[pref_d$id %in% preface_region,"person2_title"],
 "\\hspace*{\\fill}
+
+\\bigskip
+
+\\hspace*{\\fill}",
+        pref_d[pref_d$id %in% preface_region,"person3_name"],
+"\\hspace*{\\fill}
+
+\\hspace*{\\fill}",
+        pref_d[pref_d$id %in% preface_region,"person3_title"],
+"\\hspace*{\\fill}
 "))
 @
 

@@ -55,6 +55,8 @@
   person1_title: Assistant Director-General and Regional Representative for Africa
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
   acknowledgements: |
     The Food and Agriculture Organization of the United Nations’ Regional Office 
     for Africa and the FAO Statistics Division (ESS) would like to acknowledge 
@@ -121,6 +123,8 @@
   person1_title: Assistant Director-General and Regional Representative, Asia and the Pacific
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
   acknowledgements: |
     The Regional Office for Asia and the Pacific (RAP) and the Statistics
     Division (ESS) of Food and Agriculture Organization (FAO) of the 
@@ -185,6 +189,8 @@
   person1_title: Regional Assistant Director-General, Europe and Central Asia
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
   acknowledgements: |
     The Food and Agriculture Organization of the United Nations’ Regional Office 
     for Europe and central Asia and the FAO Statistics Division (ESS) would like 
@@ -257,6 +263,8 @@
   person1_title: Заместитель Генерального директора ФАО, \\ Региональный представитель по Европе и Центральной Азии
   person2_name: Пьетро Дженнари
   person2_title: Главный статистик и директор статистического отдела ФАО
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
   acknowledgements: |
     Региональное отделение ФАО для Европы и Центральной Азии и Статистический отдел ФАО хотели бы отметить 
     коллективные усилия статистиков и других сотрудников национальных статистических служб, министерств сельского 
@@ -335,6 +343,8 @@
   person1_title: Assistant Director-General, FAO Regional Representative for Near East and North Africa
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
   acknowledgements: |
     The Food and Agriculture Organization of the United Nations’ Regional 
     Office for Near East and North Africa (NENA) and the FAO Statistics
@@ -411,6 +421,8 @@
   person1_title: ""
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
 #################################################################################
 #################################################################################
 - id: GLO
@@ -484,3 +496,6 @@
   person1_title: ""
   person2_name: Pietro Gennari
   person2_title: Chief Statistician and Director, Statistics Division
+  person3_name: Placeholder for third name
+  person3_title: Placeholder for third title
+
