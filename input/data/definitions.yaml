@@ -21,7 +21,7 @@
   owner_ru: ФАО
 - id: bioenergy_production
   name: Bioenergy production
-  description: Fuel that is produced through biological processes, including agriculture. They can be derived directly from plants, or indirectly from agricultural, commercial, domestic, and/or industrial wastes.
+  description: Production of energy derived from biomass. Biomass is defined as material of biological origin excluding material embedded in geological formation and/or transformed to fossil. 
   source: United Nations Statistics Division
   owner: United Nations Statistics Division
   name_ru: Производство биоэнергии
@@ -429,9 +429,7 @@
   owner_ru: ФАО
 - id: biofuel_production_(thousand_kt_of_oil_eq.)
   name: Biofuel production (thousand kt of oil eq.)
-  description: Fuel that is produced through biological processes, including agriculture.
-    They can be derived directly from plants, or indirectly from agricultural, commercial,
-    domestic, and/or industrial wastes.
+  description: Production of fuel derived directly or indirectly from biomass. For the purpose of this pocketbook, biofuel is the sum of biodiesel, biogases, biogasoline, and other liquid biofuels. Biodiesel includes liquid biofuels derived from biomass and used in diesel engines. Biogases include gases arising from the anaerobic fermentation of biomass and the gasification of solid biomass (including biomass in wastes). Biogasoline includes liquid fuels derived from biomass and used in spark-ignition internal combustion engines. Other liquid biofuels includes liquid biofuels not elsewhere specified.
   source: United Nations Statistics Division
   owner: United Nations Statistics Division
   name_ru: name русском
