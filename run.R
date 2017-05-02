@@ -24,10 +24,15 @@ regionS_to_report <- c(
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
+
+# regionS_to_report="RAP"
 ## Language
 rulang <- F
 itlang <- F
 filang <- F
+
+# regionS_to_report="REU"; rulang = T
+setwd(root.dir)
 
 ############################################################
 # For print or for web or a4-print (in-house)
@@ -108,26 +113,19 @@ meta_full <- meta.lst[["FULL"]]
 full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
 csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 
-## ---- load_libraries
+## ---- load_libraries from CRAN
+PACKAGES <- c("tidyverse","knitr","stringr","FAOSTAT","stringr","WDI","wesanderson","xtable","extrafont")
+inst <- match(PACKAGES, .packages(all=TRUE, lib.loc = .libPaths()[1]))
+need <- which(is.na(inst))
+if (length(need) > 0) install.packages(PACKAGES[need], lib = .libPaths()[1])
+lapply(PACKAGES, library, character.only = TRUE, lib.loc = .libPaths()[1])
 
-library(knitr)
-library(readxl)
-library(magrittr)
-library(lazyeval)
-library(FAOSTAT)
-#library(plyr) # to run certain computations using ddply. Should get rid of this
-library(stringr)
-library(rgdal)
+
+## ---- load_libraries from GITHUB
+if (is.na(match("gisfao", .packages(all=TRUE)))) devtools::install_github("unfaostatistics/gisfao")
+if (is.na(match("countrycode.multilang", .packages(all=TRUE)))) devtools::install_github("muuankarski/countrycode.multilang") else 
+library(countrycode.multilang)
 library(gisfao)
-library(grid)
-library(scales)
-library(WDI)
-library(wesanderson)
-library(xtable)
-library(extrafont)
-loadfonts()
-library(forcats)
-library(tidyverse)
 
 ## Process the production data manuyally
 
