@@ -309,6 +309,11 @@ if ("SH.STA.STNT.ZS.y" %in% names(temp)){
 M49countries <- region_key[which(region_key[[region_to_report]]),c("FAOST_CODE","FAO_TABLE_NAME")]
 M49countries <- as.data.frame(M49countries)
 names(M49countries)[names(M49countries)=="FAO_TABLE_NAME"] <- "SHORT_NAME"
+
+# Reorder in alphabetical order (forget "the")
+M49countries <- M49countries %>% mutate(ordervar = gsub("^the ", "", SHORT_NAME)) %>% 
+  arrange(ordervar) %>% select(-ordervar) 
+
 # } else {
 # M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>%
 #   select(FAOST_CODE, SHORT_NAME) %>%  arrange(SHORT_NAME) %>%  na.omit()
@@ -461,6 +466,7 @@ tbr.df <-
                             243,
                             205),
              stringsAsFactors = FALSE)
+
 M49countries <-
   M49countries[!M49countries[, "FAOST_CODE"] %in% tbr.df[, "FAOST_CODE"],]
 ## Occupied Palestinian Territory
