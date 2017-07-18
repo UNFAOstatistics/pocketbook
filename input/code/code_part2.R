@@ -36,10 +36,14 @@ if (region_to_report == "GLO") short_text <- "Undernourishment is a state, lasti
 
 if (!file.exists(paste0(data.dir,"/fsi_data.RDS"))){
   dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
+  dat$FAOST_CODE <- as.integer(dat$FAOST_CODE)
   dat_witout_country <- dat[dat$FAOST_CODE >= 5000,]
   # Lets replace the COUNTRY level figures with the latest version from Filippo
   dat_country <- read.csv(paste0(data.dir,"/DisseminationDataset090216.csv"), stringsAsFactors=FALSE)
+  dat_country$FAOST_CODE  <- as.integer(dat_country$FAOST_CODE)
+  dat_country <- dat_country[dat_country$FAOST_CODE < 5000,]
   dat <- bind_rows(dat_witout_country,dat_country)
+  # dat <- bind_rows(dat_witout_country,dat)
   # dat_sofi <- read.csv(paste0(data.dir,"/DisseminationDataset090216_SOFIregions.csv"), stringsAsFactors=FALSE)
   # dat_sofi$FS.OA.NOU.P3D1 <- as.character(dat_sofi$FS.OA.NOU.P3D1)
   # dat <- bind_rows(dat_country,dat_sofi)
@@ -106,6 +110,7 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RDS"))){
   dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
   
   dat <- dat[!is.na(dat$FAOST_CODE),]
+  
   dat <- dat[!duplicated(dat[c("Year","FAOST_CODE")]),]
   
   # Add Area var from syb.df
