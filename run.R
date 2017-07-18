@@ -17,10 +17,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                          # ,"RAP" # Asia and the Pacific
-                         # ,"RAF"  # Africa
-                      "REU" # Europe and Central Asia
-                        # ,"RNE" # Near East and North Africa
+                          "RAP" # Asia and the Pacific
+                         ,"RAF"  # Africa
+                      ,"REU" # Europe and Central Asia
+                        ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -355,8 +355,10 @@ FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Netherlands Antilles"   
 FAOcountryProfile[FAOcountryProfile[, "SHORT_NAME"] == "Laos"                         & !is.na(FAOcountryProfile[, "SHORT_NAME"]), "SHORT_NAME"] <- "Lao PDR"
 
 
-
 FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 116] <- "Korea, Dem Rep"
+# Czech republic -> Czechia
+FAOcountryProfile$SHORT_NAME[FAOcountryProfile$FAOST_CODE == 167] <- "Czechia"
+FAOcountryProfile$FAO_TABLE_NAME[FAOcountryProfile$FAOST_CODE == 167] <- "Czechia"
 
 
 # North Korea
@@ -503,7 +505,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="RAP" # debuggin
+region_to_report="RAF" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))
