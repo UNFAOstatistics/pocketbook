@@ -43,7 +43,7 @@ d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Iodine deficiency, children age
 d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Health expenditure, total (% of GDP)"] <- "Расходы на здравоохранение (% от ВВП)"
 d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Health expenditure per capita, PPP ($)"] <- "Расходы на здравоохранение на душу населения, по ППС (в долл. США)"
 d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Improved water source (% pop)"] <- "Доступ к улучшенным источникам воды (% населения)"
-d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Food production value, (2004-2006 mln I$)"] <- "Стоимость продовольственной продукции, (2004-2006, в млн межд. долл.)"
+d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Food Production Value, (2004-2006 mln I$)"] <- "Стоимость продовольственной продукции, (2004-2006, в млн межд. долл.)"
 d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Agriculture, value added (% GDP)"] <- "Добавленная стоимость в сельском хозяйстве (% ВВП)"
 d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Net food"] <- "Чистое производство продовольствия"
 d$SERIES_NAME_SHORT_RU[d$SERIES_NAME_SHORT %in% "Net crop"] <- "Чистое производство сельскохозяйственных культур"

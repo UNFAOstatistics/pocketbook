@@ -1354,7 +1354,7 @@
   source_ru: ФАО, Статистический отдел
   owner_ru: ФАО
 - id: food_production_value_(gross)
-  name: Food production value (gross)
+  name: Food Production Value (gross)
   description: Value of gross production has been compiled by multiplying gross production
     in physical terms by output prices at farm gate. Thus, value of production measures
     production in monetary terms at the farm gate level. Since intermediate uses within

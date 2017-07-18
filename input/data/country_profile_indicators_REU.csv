@@ -32,7 +32,7 @@
 "Hunger and dietary quality dimensions",36,"SH.XPD.TOTL.ZS",NA,NA,"Health expenditure, total (% of GDP)",NA,1,"Расходы на здравоохранение (% от ВВП)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",37,"SH.XPD.PCAP",NA,NA,"Health expenditure per capita, PPP ($)",NA,0,"Расходы на здравоохранение на душу населения, по ППС (в долл. США)","Аспекты голода и рациона питания"
 "Hunger and dietary quality dimensions",38,"SH.H2O.SAFE.ZS",NA,NA,"Improved water source (% pop)",NA,1,"Доступ к улучшенным источникам воды (% населения)","Аспекты голода и рациона питания"
-"Food Supply",39,"QV.NPV.FOOD.ID.NO",NA,NA,"Food production value, (2004-2006 mln I$)",1e+06,0," Стоимость продовольственной продукции, (в млн межд. долл. 2004-2006 гг.)","Продовольственное снабжение"
+"Food Supply",39,"QV.NPV.FOOD.ID.NO",NA,NA,"Food Production Value, (2004-2006 mln I$)",1e+06,0," Стоимость продовольственной продукции, (в млн межд. долл. 2004-2006 гг.)","Продовольственное снабжение"
 "Food Supply",40,"NV.AGR.TOTL.ZS",NA,NA,"Agriculture, value added (% GDP)",NA,1,"Добавленная стоимость в сельском хозяйстве (% ВВП)","Продовольственное снабжение"
 "Production indices (2004-06=100)",41,"QI.NPIN.FOOD.IN.NO",NA,NA,"Net food",NA,0,"Чистое производство продовольствия","Индексы производства (2004-06 гг.=100)"
 "Production indices (2004-06=100)",42,"QI.NPIN.CRPS.IN.NO",NA,NA,"Net crop",NA,0,"Чистое производство сельскохозяйственных культур","Индексы производства (2004-06 гг.=100)"

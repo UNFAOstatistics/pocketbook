@@ -23,7 +23,7 @@ Hunger dimensions,22,FS.DEA.DFPLIV.IND,,,Domestic food price volatility (index),
 Hunger dimensions,23,FBS.IDR.CRLS.PCT3D,,,Cereal import dependency ratio (%),,1
 Hunger dimensions,24,SH.STA.MALN.ZS,,,"Underweight, children under-5 (%)",,1
 Hunger dimensions,25,SH.H2O.SAFE.ZS,,,Improved water source (% pop),,1
-Food Supply,26,QV.NPV.FOOD.ID.NO,,,"Food production value, (2004-2006 mln I$)",1000000,0
+Food Supply,26,QV.NPV.FOOD.ID.NO,,,"Food Production Value, (2004-2006 mln I$)",1000000,0
 Food Supply,27,NV.AGR.TOTL.ZS,,,"Agriculture, value added (% GDP)",,1
 Food Supply,28,TP.EXVAL.FOOD.USD.NO,,,Food exports (mln US$) ,1000000,0
 Food Supply,29,TP.IMVAL.FOOD.USD.NO,,,Food imports (mln US$) ,1000000,0
