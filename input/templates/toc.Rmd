@@ -127,3 +127,4 @@ for (book in books){
 # misc
 
 - [working hours](http://software.markuskainu.fi/fao/timesheet/fao_working_hours.html)
+- [rstudio](http://82.181.174.101)

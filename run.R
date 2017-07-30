@@ -104,7 +104,7 @@ cache_definitions <- F
 ###########################################################
 # Data - Load SYB
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-06-20-22/SYB2017-06-20-22.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-07-25-22/SYB2017-07-25-22.RData")
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
