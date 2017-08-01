@@ -1,4 +1,3 @@
-
 ###########################################################################
 ## This script generates the ICN2 Statistical Pocketbook 2014
 ###########################################################################
@@ -311,8 +310,10 @@ M49countries <- as.data.frame(M49countries)
 names(M49countries)[names(M49countries)=="FAO_TABLE_NAME"] <- "SHORT_NAME"
 
 # Reorder in alphabetical order (forget "the")
-M49countries <- M49countries %>% mutate(ordervar = gsub("^the ", "", SHORT_NAME)) %>% 
-  arrange(ordervar) %>% select(-ordervar) 
+M49countries <- M49countries %>% 
+  mutate(ordervar = gsub("^the ", "", SHORT_NAME)) %>% 
+  arrange(ordervar) %>% 
+  select(-ordervar) 
 
 # } else {
 # M49countries <- FAOcountryProfile %>% filter(UNSD_WORLD_REG %in% "World") %>%
@@ -513,14 +514,6 @@ REU_reg_names <- c("Europe and Central Asia",
 
 REU_reg_names_ru <- translate_subgroups(REU_reg_names, isfactor = FALSE, add_row_breaks = FALSE, abbreviate = FALSE)
 
-# REU_reg_names_ru <- c("Европа и Центральная Азия",
-#                       "Центральная Азия",
-#                       "Кавказа и Турции",
-#                       "Центральная и Восточная ЕС",
-#                       "СНГ Европа",
-#                       "ЕС другой и ЕАСТ",
-#                       "Юго-Восточной Европы"
-#                       )
 
 
 RNE_reg_names <- c("Near East and North Africa",

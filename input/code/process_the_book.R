@@ -88,7 +88,6 @@ for (region_to_report in regionS_to_report) {
   }
   
 
-  # region_to_report <- regionS_to_report[1]
 
   ### Which spreads
   spreads <- read_csv(paste0(root.dir,"/input/define_spreads.csv"))

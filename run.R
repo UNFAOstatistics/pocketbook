@@ -17,10 +17,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                          "RAP" # Asia and the Pacific
-                         ,"RAF"  # Africa
-                      ,"REU" # Europe and Central Asia
-                        ,"RNE" # Near East and North Africa
+                          # "RAP" # Asia and the Pacific
+                        # ,"RAF"  # Africa
+                     "REU" # Europe and Central Asia
+                       # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -66,15 +66,6 @@ include_part6        <- F
 include_country_profiles <- T
 include_definitions      <- T
 # --------------------------- ----
-# Upgrade the comparison tables 
-broke_all_into_images         <- F
-broke_only_tables_into_images <- F
-broke_rus_translation_images  <- F
-# -------------------------------
-# To be uploaded for comments or not91830
-upload_pdfs_to_server   <- F
-upload_images_to_server <- F
-# ------------------------------
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
 
@@ -83,28 +74,10 @@ dag_char <- "\\textsuperscript{\\dag}"
 ddag_char <- "\\textsuperscript{\\ddag}"
 
 
-# just for troubleshooting
-# region_to_report <- "RAF"
-
-############################################################
-# CACHE
-
-cache_foreword <- F
-cache_overview_map <- F
-cache_overview_tbl <- F
-cache_part1 <- F
-cache_part2 <- F
-cache_part3 <- F
-cache_part4 <- F
-cache_part5 <- F
-cache_part6 <- F
-cache_country_profiles <- F
-cache_definitions <- F
-
 ###########################################################
 # Data - Load SYB
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-07-25-22/SYB2017-07-25-22.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-07-31-17/SYB2017-07-31-17.RData")
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
@@ -282,17 +255,6 @@ translate_subgroups <- function(var, isfactor=FALSE,add_row_breaks=TRUE,abbrevia
   return(var)
 }
 
-
-
-# if (region_to_report == "REU" & rulang) {
-#   df$subgroup[df$subgroup %in% "Andorra Israel Monaco and San Marino"] <- "Андорра, Израиль, Монако и Сан-Марино"
-#   df$subgroup[df$subgroup %in% "South Eastern Europe"] <- "Юго-Восточной Европы"
-#   df$subgroup[df$subgroup %in% "Caucasus and Turkey"] <- "Кавказа и Турции"
-#   df$subgroup[df$subgroup %in% "EU other and EFTA"] <- "ЕС другой и ЕАСТ"
-#   df$subgroup[df$subgroup %in% "CIS Europe"] <- "СНГ Европа"
-#   df$subgroup[df$subgroup %in% "EU Central and Eastern"] <- "Центральная и Восточная ЕС"
-#   df$subgroup[df$subgroup %in% "Central Asia"] <- "Центральная Азия"
-# }
 
 
 # Source functions
@@ -505,7 +467,7 @@ map.df <- left_join(map.df,region_key)
 # syb.df <- syb.df[!(syb.df$FAOST_CODE %in% na_countries_FAOST_CODE), ]
 # names(syb.df)
 
-region_to_report="RAF" # debuggin
+region_to_report="REU" # debuggin
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))
