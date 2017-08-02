@@ -27,7 +27,7 @@ regionS_to_report <- c(
 
 # regionS_to_report="RAP"
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -53,9 +53,9 @@ include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
-include_part2        <- T
-include_part3        <- T
-include_part4        <- T
+include_part2        <- F
+include_part3        <- F
+include_part4        <- F
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -64,7 +64,7 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- T
-include_definitions      <- T
+include_definitions      <- F
 # --------------------------- ----
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -77,7 +77,7 @@ ddag_char <- "\\textsuperscript{\\ddag}"
 ###########################################################
 # Data - Load SYB
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-07-31-17/SYB2017-07-31-17.RData")
+load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-07-25-22/SYB2017-07-25-22.RData")
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
