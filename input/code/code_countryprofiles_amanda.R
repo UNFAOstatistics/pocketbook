@@ -1,22 +1,182 @@
+###########################################################################
+## Country profiles
+###########################################################################
+
 # Read in the data for a particular publication
-
-region_to_report <- "REU"
-rulang <-  FALSE
-
-year1 <- 1990
-year2 <- 2000
-year3 <- 2015
-
-temp <- read_csv(paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",region_to_report,"_cp_data_final.csv"))
+temp <- read_csv(paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",
+                        region_to_report,
+                        "_cp_data_final.csv"))
+# Spesify the years!
+year1 <- "1990"
+year2 <- "2000"
+year3 <- "2015"
 
 # reformat the data a bit
 temp <- temp %>% setNames(tolower(names(.))) %>% 
   rename(FAOST_CODE = areacode)
 
-# create a .tex file for the output
 
+# read in the file specifying in indicators for a particular book
+cinds <- read_csv(paste0(root.dir,"input/data/country_profile_indicators_",region_to_report,".csv"))
+
+# Swap the english and russian topic & indicator names in the case of REU
+if (region_to_report == "REU" & rulang){
+  cinds <- cinds %>% 
+    mutate(PART = PART_RU) %>% 
+    rename(SERIES_NAME_SHORT_DAG = SERIES_NAME_SHORT) %>% 
+    mutate(SERIES_NAME_SHORT = SERIES_NAME_SHORT_RU) %>% View()
+}
+
+# set names for indicators (based on indicator codes!)
+temp <- left_join(temp,
+                  cinds %>% select(INDICATOR1,SERIES_NAME_SHORT,ORDER),
+                  by = c("indicator" = "INDICATOR1")) %>% 
+  rename(name = SERIES_NAME_SHORT)
+
+# Add country names
+temp$SHORT_NAME <- FAOcountryProfile$SHORT_NAME[match(temp$FAOST_CODE,FAOcountryProfile$FAOST_CODE)]
+
+# Reorder in alphabetical order (forget "the")
+temp <- temp %>% 
+  mutate(ordervar = gsub("^the ", "", SHORT_NAME)) %>% 
+  arrange(ordervar) %>% 
+  select(-ordervar) %>% 
+  # !!!!! remove aggregates as we dont have names from them yet!
+  filter(FAOST_CODE <= 400)
+
+# Names for Regions and Subregions
+## RAF
+RAF_reg_names <- c("Africa",
+                   "Central Africa",
+                   "Eastern Africa",
+                   "Northern Africa",
+                   "Southern Africa",
+                   "Western Africa")
+RAF_reg_codes <- 12000:12005
+## RAP
+RAP_reg_names <- c("Asia and the Pacific",
+                   "East Asia",
+                   "Southeast Asia",
+                   "Central Asia",
+                   "Oceania",
+                   "Southern Asia"
+)
+RAP_reg_codes <- c(13000, # Regional Office for Asia and the Pacific
+                   13001, # East Asia
+                   13003, # Southeast Asia
+                   13005, # Central Asia
+                   13006, # Oceania
+                   13012 # Southhern Asia
+)
+# REU
+REU_reg_names <- c("Europe and Central Asia",
+                   "Central Asia",
+                   "Caucasus and Turkey",
+                   "EU Central and Eastern",
+                   "CIS Europe",
+                   "EU Other and EFTA",
+                   "South Eastern Europe")
+# translate into Russian
+if (rulang){
+  REU_reg_names <- translate_subgroups(REU_reg_names, 
+                                          isfactor = FALSE, 
+                                          add_row_breaks = FALSE, 
+                                          abbreviate = FALSE)
+}
+REU_reg_codes <- c(14000,14001,14002,14003,14004,14006,14007)
+## RNE
+RNE_reg_names <- c("Near East and North Africa",
+                   "Gulf Cooperation\n Council States\n and Yemen",
+                   "North Africa",
+                   "Other Near\n East countries")
+RNE_reg_codes <- 15000:15003
+
+## Perhaps Amanda can include these countries automatically and 
+## all this have to do is to add footnotes!
+# 
+# data.frame(FAOST_CODE = c(68, # France
+#                           185,  # Russian Federation
+#                           231 # United States
+# ),
+# SHORT_NAME = c("France",
+#                "Russian Federation",
+#                "United States")
+
+
+
+## =====================================================
+## CUSTOM FUNCTIONS
+
+
+## Sanitize the expression for Latex code
+sanitizeToLatex <- function(str, html=FALSE, type=c("text","table")) {
+  
+  type <- match.arg(type)
+  
+  result <- as.character(str)
+  
+  result <- gsub("\\\\-","TEX.BACKSLASH",result)
+  result <- gsub("\\\\","SANITIZE.BACKSLASH",result)
+  result <- gsub("$","\\$",result,fixed=TRUE)
+  result <- gsub(">","$>$",result,fixed=TRUE)
+  result <- gsub("<","$<$",result,fixed=TRUE)
+  result <- gsub("|","$|$",result,fixed=TRUE)
+  result <- gsub("{","\\{",result,fixed=TRUE)
+  result <- gsub("}","\\}",result,fixed=TRUE)
+  result <- gsub("%","\\%",result,fixed=TRUE)
+  result <- gsub("&","\\&",result,fixed=TRUE)
+  result <- gsub("_","\\_",result,fixed=TRUE)
+  ## result <- gsub("_", "\\textsubscript", result, fixed = TRUE)
+  result <- gsub("#","\\#",result,fixed=TRUE)
+  result <- gsub("^", ifelse(type == "table", "\\verb|^|",
+                             "\\textsuperscript "), result,fixed = TRUE)
+  result <- gsub("~","\\~{}",result,fixed=TRUE)
+  result <- gsub("Ã´","\\^{o}",result,fixed=TRUE)
+  result <- gsub("?","\\^{o}",result,fixed=TRUE)
+  result <- gsub("Ã¢","\\^{a}",result,fixed=TRUE)
+  result <- gsub("Ã¨","\\`{e}",result,fixed=TRUE)
+  result <- gsub("?","\\`{e}",result,fixed=TRUE)
+  result <- gsub("Ã©","\\'{e}",result,fixed=TRUE)
+  result <- gsub("?","\\'{e}",result,fixed=TRUE)
+  result <- gsub("?","\\'{o}",result,fixed=TRUE)
+  result <- gsub("?","\\`{o}",result,fixed=TRUE)
+  result <- gsub("?","\\'{i}",result,fixed=TRUE)
+  result <- gsub("?","\\`{i}",result,fixed=TRUE)
+  result <- gsub("?","\\'{I}",result,fixed=TRUE)
+  result <- gsub("?","\\`{I}",result,fixed=TRUE)
+  result <- gsub("?","\\r{A}",result,fixed=TRUE)
+  result <- gsub("?","\\c{c}",result,fixed=TRUE)
+  result <- gsub("?","\\'{a}",result,fixed=TRUE)
+  result <- gsub("?","\\`{a}",result,fixed=TRUE)
+  result <- gsub("?","\\'{A}",result,fixed=TRUE)
+  result <- gsub("?","\\`{A}",result,fixed=TRUE)
+  result <- gsub("?","\\'{u}",result,fixed=TRUE)
+  result <- gsub("?","\\`{u}",result,fixed=TRUE)
+  result <- gsub("?","\\~{n}",result,fixed=TRUE)
+  result <- gsub("SANITIZE.BACKSLASH","$\\backslash$",result,fixed=TRUE)
+  result <- gsub("TEX.BACKSLASH","\\-",result,fixed=TRUE)
+  if(html) {
+    result <- gsub("( www.[0-9A-Za-z./\\-\\_]*)"," \\\\url{\\1}",result)
+    result <- gsub("(http://(www.)*[0-9A-Za-z./\\-\\_]*)","\\\\url{\\1}",result)
+    dotSlash<-grepl("\\url\\{.*\\.}",result)
+    result[dotSlash] <- gsub("\\.\\}","\\}\\.",result[dotSlash])
+  }
+  
+  ## special expressions
+  result <- gsub("km2", "km\\textsuperscript{2}", result, fixed = TRUE)
+  result <- gsub("m3", "m\\textsuperscript{3}", result, fixed = TRUE)
+  result <- gsub("CO2", "CO\\textsubscript{2}", result, fixed = TRUE)
+  
+  return(result)
+}
+## =====================================================
+
+
+
+## ========================================================
+## CREATE EMPTY TEX-FILE AND START POPULATING IT!"
 dir.create("./output/process", showWarnings = FALSE, recursive = TRUE)
-fileOut <- paste0("./output/process/countryprofile_",region_to_report,".tex")
+fileOut <- paste0(root.dir,"output/process/CountryProfiles.tex")
 file.create(fileOut)
 
 # Few presets for the whole table section!!
@@ -36,83 +196,78 @@ cat("\\setlength{\\tabcolsep}{4pt}\n",
     file = fileOut, append = TRUE) ## Reduce the space between columns
 cat("\\normalsize\n",
     file = fileOut, append = TRUE)
+## ========================================================
 
-
-# Loop across the countries in the data
-
+## ========================================================
+## LOOP ACROSS THE COUNTRIES IN THE DATA
 uniq_faost_code <- unique(temp$FAOST_CODE)
 
 for (i in 1:length(uniq_faost_code)){
   
-  ctemp <- temp[temp$FAOST_CODE == uniq_faost_code[i],]
-  # 
-  cname <- FAOcountryProfile %>% filter(FAOST_CODE == uniq_faost_code[i]) %>% pull(SHORT_NAME)
-  # read in the file specifying in indicators for a particular book
-  cinds <- read_csv(paste0("./input/data/country_profile_indicators_",region_to_report,".csv"))
-
-  # set names for indicators (based on indicator codes!)
-  ctemp$name <- cinds$SERIES_NAME_SHORT[match(cinds$INDICATOR1,ctemp$indicator)]
+  # country level data
+  dtbl <- temp %>% filter(FAOST_CODE == uniq_faost_code[i]) %>% 
+    select(name,indicator,year,value,flag,ORDER,SHORT_NAME) %>% 
+    arrange(ORDER)
   
-  tbl_print <- ctemp %>% 
-    select(name,year,value_char) %>% 
-    mutate(value_char = ifelse(is.na(value_char) , "NA", value_char)) %>% 
-    spread(data = ., key = year, value = value_char)
+  if (region_to_report == "REU" & rulang){
+    dbtl$SHORT_NAME <- countrycode.multilang::countrycode(dbtl$FAOST_CODE, 
+                                                             "fao", 
+                                                             "country.name.russian.fao")
+  } 
 
-  # conditional row colors ------------------------------
+  ## ==================================================================
+  ## LATEX-PREFIXES TO BE PRINTED BEFORE EACH COUNTRY TABLE
   row_color <- "FAOblue"
   if (region_to_report == "COF") row_color <- "part7"
   define_row_color <- paste0("\\rowcolors{1}{",row_color,"!10}{white}")
   
-  # if (rulang){
-    
-    # if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names_ru){
-    #   cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
-    #       define_row_color,
-    #       "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
-    #         \\toprule
-    #         \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
-    #         \\midrule\n",
-    #       file = fileOut, append = TRUE)
-    # }
-    # if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names_ru){
-    #   cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "}",
-    #       define_row_color,
-    #       "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
-    #           \\toprule
-    #           \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
-    #           \\midrule\n",
-    #       file = fileOut, append = TRUE)
-    # }
-    
-  # } else {
-    
-    # if (M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
-    #   cat("\\CountryData{", M49countries[i, "SHORT_NAME"], "\\textsuperscript{\\ddag} }", # asterisk for France, Russia & US
-    #       define_row_color,
-    #       "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
-    #         \\toprule
-    #         \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
-    #         \\midrule\n",
-    #       file = fileOut, append = TRUE)
-    # }
-    # if (!M49countries[i,"SHORT_NAME"] %in% REU_reg_names){
-  cat("\\CountryData{", cname, "}",
+  cat("\\CountryData{", unique(dtbl$SHORT_NAME), # Country name
+      "}",
       define_row_color,
       "\\begin{tabular}{L{4.20cm} R{1cm} R{1cm} R{1cm}}
           \\toprule
           \\multicolumn{1}{c}{} & \\multicolumn{1}{c}{", year1, "} & \\multicolumn{1}{c}{", year2, "} & \\multicolumn{1}{c}{", year3, "} \\\\
           \\midrule\n",
       file = fileOut, append = TRUE)
+  ## ==================================================================
   
   
-  
-  
-    # }
+  ## ==================================================================
+  ## CONTENT OF THE TABLES!
+
+  for (ind1 in unique(dtbl$indicator)){
+   
+    # Value for year1
+    value1 <- dtbl %>% filter(indicator %in% ind1,
+                              year %in% year1) %>% 
+      mutate(new_value = ifelse(flag == "i", paste0("\\textit{",value,"}"), value)) %>% pull(new_value)
+    # Value for year2
+    value2 <- dtbl %>% filter(indicator %in% ind1,
+                              year %in% year2) %>% 
+      mutate(new_value = ifelse(flag == "i", paste0("\\textit{",value,"}"), value)) %>% pull(new_value)
+    # Value for year3
+    value3 <- dtbl %>% filter(indicator %in% ind1,
+                              year %in% year3) %>% 
+      mutate(new_value = ifelse(flag == "i", paste0("\\textit{",value,"}"), value)) %>% pull(new_value)
+    # Indicator name
+    ind_name <- dtbl %>% filter(indicator %in% ind1) %>% distinct(name) %>% pull(name)
     
-  # }
+    # Write it all to the file!
+    cat("\t ~ ", sanitizeToLatex(ind_name), " & ", value1, " ~ \\ \\ & ", value2, " ~ \\ \\ & ", value3, " ~ \\ \\ \\\\ \n",
+        file = fileOut, append = TRUE, sep = "")
+
+  }
+  ## ==================================================================
   
-  print(xtable(tbl_print), include.rownames = FALSE, file = fileOut, append = TRUE)
   
   
+
+  ## ==================================================================
+  ## LATEX-POSTFIXES TO BE PRINTED AFTER EACH COUNTRY TABLE!
+  cat("\ \ \ \ \ \ \ \\toprule
+      \\end{tabular}
+      \\clearpage\n",
+      file = fileOut, append = TRUE)
+  ## ==================================================================
 }
 

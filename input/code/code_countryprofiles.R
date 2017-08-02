@@ -491,30 +491,21 @@ RAP_reg_names <- c("Asia and the Pacific",
                    "East Asia",
                    "Southeast Asia",
                    "Central Asia",
-                   # "Australia and New Zealand",
                    "Oceania",
                    "Southern Asia"
-                   # "France",
-                   # "Melanesia",
-                   # "Micronesia",
-                   # "Polynesia",
-                   # "Russian Federation",
-                   # "United States"
-                   # "Western Asia"
                    )
 REU_reg_names <- c("Europe and Central Asia",
                    "Central Asia",
                    "Caucasus and Turkey",
                    "EU Central and Eastern",
                    "CIS Europe",
-                   #"Israel",
                    "EU Other and EFTA",
                    "South Eastern Europe")
 
-
-REU_reg_names_ru <- translate_subgroups(REU_reg_names, isfactor = FALSE, add_row_breaks = FALSE, abbreviate = FALSE)
-
-
+REU_reg_names_ru <- translate_subgroups(REU_reg_names, 
+                                        isfactor = FALSE, 
+                                        add_row_breaks = FALSE, 
+                                        abbreviate = FALSE)
 
 RNE_reg_names <- c("Near East and North Africa",
                    "Gulf Cooperation\n Council States\n and Yemen",
