@@ -83,7 +83,8 @@ if (rulang){
                                           add_row_breaks = FALSE, 
                                           abbreviate = FALSE)
 }
-REU_reg_codes <- c(14000,14001,14002,14003,14004,14006,14007)
+#REU_reg_codes <- c(14000,14001,14002,14003,14004,14006,14007)
+REU_reg_codes <- c(445,5833,5840,5843,5841,5844,5842)
 ## RNE
 RNE_reg_names <- c("Near East and North Africa",
                    "Gulf Cooperation\n Council States\n and Yemen",
