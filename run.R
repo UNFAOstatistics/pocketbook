@@ -27,7 +27,7 @@ regionS_to_report <- c(
 
 # regionS_to_report="RAP"
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 

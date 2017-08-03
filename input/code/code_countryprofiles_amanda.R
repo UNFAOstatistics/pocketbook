@@ -34,61 +34,90 @@ temp <- left_join(temp,
 # Add country names
 temp$SHORT_NAME <- FAOcountryProfile$SHORT_NAME[match(temp$FAOST_CODE,FAOcountryProfile$FAOST_CODE)]
 
+# Names for Regions and Subregions
+## RAF
+
+if (region_to_report == "RAF"){
+  reg_names <- c("Africa",
+                     "Central Africa",
+                     "Eastern Africa",
+                     "Northern Africa",
+                     "Southern Africa",
+                     "Western Africa")
+  reg_codes <- 12000:12005
+  reg_data <- data_frame(SHORT_NAME = reg_names,
+                         FAOST_CODE = reg_codes)
+}
+
+
+## RAP
+if (region_to_report == "RAP"){
+  reg_names <- c("Asia and the Pacific",
+                     "East Asia",
+                     "Southeast Asia",
+                     "Central Asia",
+                     "Oceania",
+                     "Southern Asia"
+  )
+  reg_codes <- c(13000, # Regional Office for Asia and the Pacific
+                     13001, # East Asia
+                     13003, # Southeast Asia
+                     13005, # Central Asia
+                     13006, # Oceania
+                     13012 # Southhern Asia
+  )
+  reg_data <- data_frame(SHORT_NAME = reg_names,
+                         FAOST_CODE = reg_codes)  
+}
+
+# REU
+if (region_to_report == "REU"){
+  reg_names <- c("Europe and Central Asia",
+                 "Central Asia",
+                 "Caucasus and Turkey",
+                 "EU Central and Eastern",
+                 "CIS Europe",
+                 "EU Other and EFTA",
+                 "South Eastern Europe")
+  # translate into Russian
+  if (rulang){
+    reg_names <- translate_subgroups(reg_names, 
+                                     isfactor = FALSE, 
+                                     add_row_breaks = FALSE, 
+                                     abbreviate = FALSE)
+  }
+  
+  reg_codes <- c(445,5833,5840,5843,5841,5844,5842) # new codes by Amanda
+  reg_data <- data_frame(SHORT_NAME = reg_names,
+                         FAOST_CODE = reg_codes)
+}
+
+
+## RNE
+if (region_to_report == "RNE"){
+  reg_names <- c("Near East and North Africa",
+                     "Gulf Cooperation\n Council States\n and Yemen",
+                     "North Africa",
+                     "Other Near\n East countries")
+  reg_codes <- 15000:15003  
+  reg_data <- data_frame(SHORT_NAME = reg_names,
+                         FAOST_CODE = reg_codes)  
+}
 # Reorder in alphabetical order (forget "the")
-temp <- temp %>% 
+temp_cntry <- temp %>% 
   mutate(ordervar = gsub("^the ", "", SHORT_NAME)) %>% 
   arrange(ordervar) %>% 
   select(-ordervar) %>% 
   # !!!!! remove aggregates as we dont have names from them yet!
   filter(FAOST_CODE <= 400)
 
-# Names for Regions and Subregions
-## RAF
-RAF_reg_names <- c("Africa",
-                   "Central Africa",
-                   "Eastern Africa",
-                   "Northern Africa",
-                   "Southern Africa",
-                   "Western Africa")
-RAF_reg_codes <- 12000:12005
-## RAP
-RAP_reg_names <- c("Asia and the Pacific",
-                   "East Asia",
-                   "Southeast Asia",
-                   "Central Asia",
-                   "Oceania",
-                   "Southern Asia"
-)
-RAP_reg_codes <- c(13000, # Regional Office for Asia and the Pacific
-                   13001, # East Asia
-                   13003, # Southeast Asia
-                   13005, # Central Asia
-                   13006, # Oceania
-                   13012 # Southhern Asia
-)
-# REU
-REU_reg_names <- c("Europe and Central Asia",
-                   "Central Asia",
-                   "Caucasus and Turkey",
-                   "EU Central and Eastern",
-                   "CIS Europe",
-                   "EU Other and EFTA",
-                   "South Eastern Europe")
-# translate into Russian
-if (rulang){
-  REU_reg_names <- translate_subgroups(REU_reg_names, 
-                                          isfactor = FALSE, 
-                                          add_row_breaks = FALSE, 
-                                          abbreviate = FALSE)
-}
-#REU_reg_codes <- c(14000,14001,14002,14003,14004,14006,14007)
-REU_reg_codes <- c(445,5833,5840,5843,5841,5844,5842)
-## RNE
-RNE_reg_names <- c("Near East and North Africa",
-                   "Gulf Cooperation\n Council States\n and Yemen",
-                   "North Africa",
-                   "Other Near\n East countries")
-RNE_reg_codes <- 15000:15003
+temp_reg <- temp %>% 
+  filter(FAOST_CODE >= 400, FAOST_CODE != 5839) %>% 
+  select(-SHORT_NAME) %>% 
+  left_join(.,reg_data)
+
+temp_all <- bind_rows(temp_reg,temp_cntry)
+temp <- temp_all
 
 ## Perhaps Amanda can include these countries automatically and 
 ## all this have to do is to add footnotes!
@@ -100,6 +129,10 @@ RNE_reg_codes <- 15000:15003
 # SHORT_NAME = c("France",
 #                "Russian Federation",
 #                "United States")
+
+
+
+
 
 
 
