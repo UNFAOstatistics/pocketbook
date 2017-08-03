@@ -80,7 +80,7 @@ ddag_char <- "\\textsuperscript{\\ddag}"
 
 # For the time being, I have the latest syb.df on the server at: http://software.markuskainu.fi/fao/SYB2017.RData 
 if (!file.exists("~/local_data/faostat/temp/SYB2017.RData")){
-  download.file('http://software.markuskainu.fi/fao/SYB2017.RData', 
+  download.file('http://software.markuskainu.fi/fao/data_temp/SYB2017.RData', 
                 "~/local_data/faostat/temp/SYB2017.RData")
 }
 load("~/local_data/faostat/temp/SYB2017.RData")
