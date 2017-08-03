@@ -52,7 +52,7 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- T
+include_part1        <- F
 include_part2        <- F
 include_part3        <- F
 include_part4        <- F
@@ -77,7 +77,14 @@ ddag_char <- "\\textsuperscript{\\ddag}"
 ###########################################################
 # Data - Load SYB
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
-load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-07-25-22/SYB2017-07-25-22.RData")
+
+# For the time being, I have the latest syb.df on the server at: http://software.markuskainu.fi/fao/SYB2017.RData 
+if (!file.exists("~/local_data/faostat/temp/SYB2017.RData")){
+  download.file('http://software.markuskainu.fi/fao/SYB2017.RData', 
+                "~/local_data/faostat/temp/SYB2017.RData")
+}
+load("~/local_data/faostat/temp/SYB2017.RData")
+
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
 meta.lst <- ReadMetadata(file = "../pocketbook_database/input_data/Metadata2015.csv", 
@@ -468,6 +475,8 @@ map.df <- left_join(map.df,region_key)
 # names(syb.df)
 
 region_to_report="REU" # debuggin
+
+# Run all the down here before debuggin etc.
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
   source(paste0(root.dir,"/input/code/process_the_book.R"))

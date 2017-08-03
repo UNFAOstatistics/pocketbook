@@ -1,7 +1,6 @@
 ###########################################################################
 ## Country profiles
 ###########################################################################
-
 # Read in the data for a particular publication
 temp <- read_csv(paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",
                         region_to_report,
@@ -15,7 +14,6 @@ year3 <- "2015"
 temp <- temp %>% setNames(tolower(names(.))) %>% 
   rename(FAOST_CODE = areacode)
 
-
 # read in the file specifying in indicators for a particular book
 cinds <- read_csv(paste0(root.dir,"input/data/country_profile_indicators_",region_to_report,".csv"))
 
@@ -24,7 +22,7 @@ if (region_to_report == "REU" & rulang){
   cinds <- cinds %>% 
     mutate(PART = PART_RU) %>% 
     rename(SERIES_NAME_SHORT_DAG = SERIES_NAME_SHORT) %>% 
-    mutate(SERIES_NAME_SHORT = SERIES_NAME_SHORT_RU) %>% View()
+    mutate(SERIES_NAME_SHORT = SERIES_NAME_SHORT_RU)
 }
 
 # set names for indicators (based on indicator codes!)
@@ -192,7 +190,6 @@ if (region_to_report == "GLO") tbl_row_height <- 1.22
 
 cat(paste0("\\renewcommand{\\arraystretch}{",tbl_row_height,"}\n"),
     file = fileOut, append = TRUE)
-
 cat("\\setlength{\\tabcolsep}{4pt}\n",
     file = fileOut, append = TRUE) ## Reduce the space between columns
 cat("\\normalsize\n",
@@ -207,11 +204,11 @@ for (i in 1:length(uniq_faost_code)){
   
   # country level data
   dtbl <- temp %>% filter(FAOST_CODE == uniq_faost_code[i]) %>% 
-    select(name,indicator,year,value,flag,ORDER,SHORT_NAME) %>% 
+    select(FAOST_CODE,name,indicator,year,value,flag,ORDER,SHORT_NAME) %>% 
     arrange(ORDER)
   
   if (region_to_report == "REU" & rulang){
-    dbtl$SHORT_NAME <- countrycode.multilang::countrycode(dbtl$FAOST_CODE, 
+    dtbl$SHORT_NAME <- countrycode.multilang::countrycode(dtbl$FAOST_CODE, 
                                                              "fao", 
                                                              "country.name.russian.fao")
   } 
@@ -256,6 +253,8 @@ for (i in 1:length(uniq_faost_code)){
     # Write it all to the file!
     cat("\t ~ ", sanitizeToLatex(ind_name), " & ", value1, " ~ \\ \\ & ", value2, " ~ \\ \\ & ", value3, " ~ \\ \\ \\\\ \n",
         file = fileOut, append = TRUE, sep = "")
+    
+  
 
   }
   ## ==================================================================

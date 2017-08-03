@@ -3,7 +3,7 @@
 "The setting",2,"rural_pop_gender_shares",NA,NA,"Population, rural (M/F, % total population)",NA,1,"Сельское население (м/ж, % от общей числ. нас.)","Контекст"
 "The setting",4,"area_harvested",NA,NA,"Area harvested (mln ha)",1e+06,1,"Уборочная площадь (млн га)","Контекст"
 "The setting",6,"AQ.WAT.WATPCP.MC.NO",NA,NA,"Renewable water resources (m3/person/year)",1000,0,"Водные ресурсы (м3/чел/год)","Контекст"
-"The setting",7,"AQ.WAT.EQIRR.HA.NO",NA,NA,"Area equipped for irrigation (1000 ha)",1000,0,"Земли, оборудованные под орошение (1000 га)","Контекст"
+"The setting",7,"RL.WAT.EQIRR.HA.NO",NA,NA,"Area equipped for irrigation (1000 ha)",1000,0,"Земли, оборудованные под орошение (1000 га)","Контекст"
 "The setting",8,"AQ.WAT.SHIRR.HA.SH",NA,NA,"Area irrigated (%)",NA,1,"Орошаемые земли (%)","Контекст"
 "The setting",9,"agr_employment_male_female",NA,NA,"Employment in agriculture (M/F, %)",NA,1,"Занятость в сельском хозяйстве (м/ж, %)","Контекст"
 "The setting",10,"RF.FERT.NI.TN.SH",NA,NA,"Fertilizers, Nitrogen (kg per ha)",0.001,1,"Удобрения, азот (кг/га)","Контекст"
