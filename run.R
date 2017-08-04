@@ -27,7 +27,7 @@ regionS_to_report <- c(
 
 # regionS_to_report="RAP"
 ## Language
-rulang <- F
+rulang <- T
 itlang <- F
 filang <- F
 
@@ -52,10 +52,10 @@ include_acknowledgements <- T
 include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
-include_part1        <- F
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part1        <- T
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -64,7 +64,7 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- T
-include_definitions      <- F
+include_definitions      <- T
 # --------------------------- ----
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -79,11 +79,11 @@ ddag_char <- "\\textsuperscript{\\ddag}"
 # load("~/faosync/pocketbooks/pocketbook_database/output_data/2017-03-30-14/SYB2017-03-30-14.RData")
 
 # For the time being, I have the latest syb.df on the server at: http://software.markuskainu.fi/fao/SYB2017.RData 
-if (!file.exists("~/local_data/faostat/temp/SYB2017.RData")){
-  download.file('http://software.markuskainu.fi/fao/data_temp/SYB2017.RData', 
-                "~/local_data/faostat/temp/SYB2017.RData")
+if (!file.exists("~/local_data/faostat/temp/SYB2017-08-03-13.RData")){
+  download.file('http://software.markuskainu.fi/fao/data_temp/SYB2017-08-03-13.RData', 
+                "~/local_data/faostat/temp/SYB2017-08-03-13.RData")
 }
-load("~/local_data/faostat/temp/SYB2017.RData")
+load("~/local_data/faostat/temp/SYB2017-08-03-13.RData")
 
 
 source("../pocketbook_database/code/read_functions/ReadMetadata.R")
