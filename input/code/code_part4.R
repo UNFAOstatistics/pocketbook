@@ -489,15 +489,21 @@ if (rulang) caption_text <- "Страны с самыми высокими по�
 
 
 ## ---- P4waterMAP ----
-dat <- syb.df %>% filter(Year %in% c(2007:2012)) %>%
-  select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
-  group_by(FAOST_CODE) %>% dplyr::summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
-  #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
-  ungroup()
+# dat <- syb.df %>% 
+#   filter(Year %in% c(2007:2012)) %>%
+#   select(FAOST_CODE,SHORT_NAME,SL.AGR.EMPL.ZS) %>%
+#   group_by(FAOST_CODE) %>% 
+#   dplyr::summarise(SL.AGR.EMPL.ZS = max(SL.AGR.EMPL.ZS, na.rm = TRUE)) %>%
+#   #filter(!is.na(SL.AGR.EMPL.ZS)) %>%
+#   ungroup()
 
 water <- syb.df[c("FAOST_CODE","Year","AQ.WAT.RFRWAGR.MC.SH")]
 water <- water[!is.na(water$AQ.WAT.RFRWAGR.MC.SH),]
-dat <- water %>% group_by(FAOST_CODE) %>% dplyr::summarise(pooled.freshwater = mean(AQ.WAT.RFRWAGR.MC.SH, na.rm = TRUE))
+dat <- water %>% 
+  group_by(FAOST_CODE) %>% 
+  filter(!is.na(AQ.WAT.RFRWAGR.MC.SH),
+         Year %in% 1999:2013,
+         Year == max(Year))
 
 map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
 
@@ -505,8 +511,8 @@ map.plot <- left_join(map.df,dat) # so that each country in the region will be f
 
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","pooled.freshwater")]
-cat_data$value_cat <- categories(x=cat_data$pooled.freshwater, n=5, method="jenks")
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","AQ.WAT.RFRWAGR.MC.SH")]
+cat_data$value_cat <- categories(x=cat_data$AQ.WAT.RFRWAGR.MC.SH, n=4, method="jenks", decimals = 3)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
