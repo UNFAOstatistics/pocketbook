@@ -27,7 +27,7 @@ regionS_to_report <- c(
 
 # regionS_to_report="RAP"
 ## Language
-rulang <- T
+rulang <- F
 itlang <- F
 filang <- F
 
@@ -93,15 +93,19 @@ meta_full <- meta.lst[["FULL"]]
 full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
 csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 
+# All packages now comes from the system library. 
+# Please look at the installation instructions at pocketbook wiki at
+# https://github.com/UNFAOstatistics/pocketbook/wiki/Setting-up-the-system
+
 ## ---- load_libraries from CRAN
 PACKAGES <- c("devtools","tidyverse","knitr","stringr","FAOSTAT","stringr","WDI","wesanderson","xtable","extrafont","forcats","maptools","rgdal")
-inst <- match(PACKAGES, .packages(all=TRUE, lib.loc = .libPaths()[1]))
-need <- which(is.na(inst))
-if (length(need) > 0) install.packages(PACKAGES[need], lib = .libPaths()[1])
-lapply(PACKAGES, library, character.only = TRUE, lib.loc = .libPaths()[1])
+# inst <- match(PACKAGES, .packages(all=TRUE, lib.loc = .libPaths()[1]))
+# need <- which(is.na(inst))
+# if (length(need) > 0) install.packages(PACKAGES[need], lib = .libPaths()[1])
+# lapply(PACKAGES, library, character.only = TRUE, lib.loc = .libPaths()[1])
+lapply(PACKAGES, library, character.only = TRUE) # load from system library
 
-
-## ---- load_libraries from GITHUB
+## ---- load_libraries from GITHUB into USER LIBRARY as they work better from there
 if (is.na(match("gisfao", .packages(all=TRUE)))) devtools::install_github("unfaostatistics/gisfao")
 if (is.na(match("countrycode.multilang", .packages(all=TRUE)))) devtools::install_github("muuankarski/countrycode.multilang")
 library(countrycode.multilang)
