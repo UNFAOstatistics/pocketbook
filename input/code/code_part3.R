@@ -1028,8 +1028,8 @@ dat <- dat[!is.na(dat$QL.PRD.MILK.TN.NO),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -QL.PRD.MILK.TN.NO)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
@@ -1037,8 +1037,8 @@ if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,]
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
 }
 
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.MILK.TN.NO) 
@@ -1073,16 +1073,16 @@ dat <- dat[!is.na(dat$QL.PRD.EGG.TN.NO),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -QL.PRD.EGG.TN.NO)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
 }
 
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$QL.PRD.EGG.TN.NO) 
@@ -1304,16 +1304,16 @@ dat <- dat[!is.na(dat$capture_fish_production),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -capture_fish_production)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
 }
 
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$capture_fish_production) 
@@ -1347,16 +1347,16 @@ dat <- dat[!is.na(dat$aquaculture_fish_production),]
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -aquaculture_fish_production)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
 }
 
 dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$aquaculture_fish_production) 

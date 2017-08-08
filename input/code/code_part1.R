@@ -163,10 +163,10 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -OA.TPBS.POP.PPL.GR10)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
 if (rulang) top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Самые высокие значения")
 
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
 if (rulang) bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
@@ -207,10 +207,10 @@ dat <- left_join(dat,region_key)
 dat <- dat[which(dat[[region_to_report]]),]
 
 dat <- arrange(dat, -SP.DYN.LE00.IN)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "With highest values")
+top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
 if (rulang) top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Самые высокие значения")
 
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "With lowest values")
+bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
 if (rulang) bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
@@ -422,7 +422,7 @@ top10 <- dat %>% arrange(FAOST_CODE,Year) %>%
   dplyr::summarise(growth_NV.AGR.TOTL.KD = mean(Growth, na.rm = TRUE)*100) %>%
   arrange(-growth_NV.AGR.TOTL.KD) %>%
   slice(1:10) %>%
-  dplyr::mutate(color = "With highest values")
+  dplyr::mutate(color = "Highest values")
 
 bot10 <- dat %>% arrange(FAOST_CODE,Year) %>%
   group_by(FAOST_CODE) %>% dplyr::mutate(Growth=c(NA,exp(diff(log(NV.AGR.TOTL.KD)))-1)) %>%
@@ -430,15 +430,15 @@ bot10 <- dat %>% arrange(FAOST_CODE,Year) %>%
   dplyr::summarise(growth_NV.AGR.TOTL.KD = mean(Growth, na.rm = TRUE)*100) %>%
   arrange(growth_NV.AGR.TOTL.KD) %>%
   slice(1:10) %>%
-  dplyr::mutate(color = "With lowest values")
+  dplyr::mutate(color = "Lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 # translate
 if (rulang){
-  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
   dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 } 
 
@@ -1090,19 +1090,19 @@ dat <- dat[which(dat[[region_to_report]]),]
 top10 <- dat %>%  group_by(SHORT_NAME) %>% dplyr::summarise(dfa_AOI_commit = mean(dfa_AOI_commit, na.rm=TRUE)) %>%
   arrange(-dfa_AOI_commit) %>%
   slice(1:10) %>%
-  dplyr::mutate(color = "With highest values")
+  dplyr::mutate(color = "Highest values")
 
 bot10 <- dat %>%  group_by(SHORT_NAME) %>% dplyr::summarise(dfa_AOI_commit = mean(dfa_AOI_commit, na.rm=TRUE)) %>%
   arrange(dfa_AOI_commit) %>%
   slice(1:10) %>%
-  dplyr::mutate(color = "With lowest values")
+  dplyr::mutate(color = "Lowest values")
 
 overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
 if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 if (rulang){
-  dat_plot$color[dat_plot$color == "With highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "With lowest values"] <- "Самые низкие значения"
+  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
+  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
   dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
 }
 
@@ -1117,7 +1117,7 @@ p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
 if (rulang) p <- p + labs(x="",y="\nиндекс")
 p <- p + guides(color = guide_legend(nrow = 2))
-p
+p + theme(legend.justification = "left")
 
 # Caption
 caption_text <- paste("Development flows to agriculture, Agriculture Orientation Index,",nrow(dat_plot)/2,"countries with highest and lowest values, average (2009-2013)")
