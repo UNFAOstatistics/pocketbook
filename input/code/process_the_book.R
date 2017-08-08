@@ -9,7 +9,9 @@ unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force=TRUE)
 # unlink(paste0(root.dir,"/output/jpg"), recursive = TRUE)# lets not do this in order for russian translation to work..
 
 # -- Create output folder if not exists --- #
-dir.create(paste0(root.dir,"/output/pdf"), showWarnings = FALSE, recursive = TRUE)
+if (output_type == "web")dir.create(paste0(root.dir,"/output/pdf"), showWarnings = FALSE, recursive = TRUE)
+if (output_type == "print")dir.create(paste0(root.dir,"/output/print"), showWarnings = FALSE, recursive = TRUE)
+
 dir.create(paste0(root.dir,"/output/process"), showWarnings = FALSE, recursive = TRUE)
 
 ## Copy .Rnw files into process/-folder
