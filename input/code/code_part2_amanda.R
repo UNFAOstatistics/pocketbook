@@ -1,3 +1,12 @@
+## new data source
+## can't get it to work with csv
+library(readxl)
+url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",region_to_report,"_Charts_data_final.xlsx")
+destfile <- paste0(region_to_report,"_Charts_data_final.xlsx")
+curl::curl_download(url, destfile)
+temp <- read_excel(destfile, col_types = c("text", "text", "numeric", "text", 
+                                           "text", "text", "numeric", "text", 
+                                           "text", "text", "text", "text"))
 ## ---- part2_setup ----
 source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
@@ -196,23 +205,20 @@ if (!file.exists(paste0(data.dir,"/fsi_data.RDS"))){
 ## ---- P2undernuTOPRIGHT ----
 
 # This should be thought twice how to produce it for regional books!
+dat1 <- subset(temp, subset=Part %in% "P2undernu")
+dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1$Value <- as.character(dat1$Value)
 
-dw <- df %>%
-  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000),
-  # filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5001,
-  #                                                                                            5100,
-  #                                                                                            5205,
-  #                                                                                            5500,
-  #                                                                                            5853,
-  #                                                                                            5857),
-         Year %in% c(1991,2015)) %>%
-  mutate(Year = paste0("X",Year)) %>%
-  select(Year,FAO_TABLE_NAME,FS.OA.POU.PCT3D1) %>%
-  spread(key = Year,value = FS.OA.POU.PCT3D1)
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
+
+dw <- dat1 %>%
+  select(Year,AreaName,Value) %>%
+  spread(key = Year,value = Value)
 
 dw$FAO_TABLE_NAME[dw$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
-dw$X2015[dw$X2015 == "20"] <- "20.0"
-names(dw) <- c("","1990-92","2014-16")
+names(dw) <- c("",minYr,maxYr)
 tbl_data <- dw
 #dw <- dw[c(7,3,4,1,2,5,6),]
 # Chiaras comments
@@ -229,171 +235,136 @@ print.xtable(xtable(dw, caption = cap, digits = c(0,0,0,0),
              html.table.attributes = 'class="table table-striped table-hover"')
 
 
-
 ## ---- P2undernuLEFT ----
 # data
-dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+dat1 <- subset(temp, subset=Part %in% "P2undernu")
+dat1 <- subset(dat1, subset=Position %in% "LEFT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
 
-dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
-dat <- dat[!is.na(dat$SHORT_NAME),]
+dat1 <- arrange(dat1, -Yr, -Value)
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat <- dat[dat$FAOST_CODE != 357,]
-dat <- dat[dat$FAOST_CODE != 41,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 
-#dat <- dat[which(dat[[region_to_report]]),]
-
-dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
-top15 <- dat %>% slice(1:20) %>% dplyr::mutate(color = "2014-2016")
-top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
+# slice the data for both years
+top15 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top91 <- dat1 %>% filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top15,top91)
 
-# semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="FS.OA.NOU.P3D1"] <- "Value"
-# Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
-if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
-# slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
-dat_plot <- rbind(top2015,top2000)
+
 # levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top15,Value)$AreaName)
 ###############
 
 # To make the latest point on top
 dat_plot <- arrange(dat_plot, color)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `1991`, xend = SHORT_NAME,
-                          yend = `2015`), color="grey80")
+                      aes(y = `1999-2001`, xend = AreaName,
+                          yend = `2014-2016`), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлн человек")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
 
-# 
-
-
-
-caption_text <- paste("World top",ncases,"countries with the highest number of undernourished in 2014-16")
+caption_text <- paste("World top ",ncases," countries with the highest number of undernourished in ",maxYr,")", sep = "")
 if (rulang) caption_text <- ""
 
 ## ---- P2undernuRIGHT ----
+# data
+dat1 <- subset(temp, subset=Part %in% "P2undernu")
+dat1 <- subset(dat1, subset=Position %in% "RIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
 
-if (region_to_report != "RNE") dat <- df[df$Year %in%  c(1991,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
-if (region_to_report == "RNE") dat <- df[df$Year %in%  c(1991,2010) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
-dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+dat1 <- arrange(dat1, -Yr, -Value)
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-dat <- arrange(dat, -Year, -FS.OA.NOU.P3D1)
-
-# semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="FS.OA.NOU.P3D1"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
+
 # slice the data for both years
-if (region_to_report == "RNE") top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2009-2011")
-if (region_to_report != "RNE") top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 1991) %>% dplyr::mutate(color = "1990-1992")
-dat_plot <- rbind(top2015,top2000)
+top15 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top91 <- dat1 %>% filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+dat_plot <- rbind(top15,top91)
+
+
 # levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top15,Value)$AreaName)
 ###############
 
 # To make the latest point on top
 dat_plot <- arrange(dat_plot, color)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-if (region_to_report == "RNE") p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `1991`, xend = SHORT_NAME,
-                          yend = `2010`), color="grey80")
-if (region_to_report != "RNE") p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
-                                                       spread(key = Year, value = Value) %>% 
-                                                       mutate(color=NA), 
-                                                     aes(y = `1991`, xend = SHORT_NAME,
-                                                         yend = `2015`), color="grey80")
+                      aes(y = `1999-2001`, xend = AreaName,
+                          yend = `2014-2016`), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion people")
-if (rulang) p <- p + labs(x="",y="\n")
+if (rulang) p <- p + labs(x="",y="\nмлн человек")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
 # Caption
-caption_text <- paste("Top",ncases,"countries with the highest number of undernourished in",unique(top2015$color))
+caption_text <- paste("Top",ncases,"countries with the highest number of undernourished in",unique(top15$color))
 if (rulang) caption_text <- ""
 
 ## ---- P2undernuBOTTOM ----
+dat1 <- subset(temp, subset=Part %in% "P2undernu")
+dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
 
-dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.NOU.P3D1")]
-
-dat <- dat[!is.na(dat$FS.OA.NOU.P3D1),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-top5_FAOST_CODE <- dat %>% filter(Year == 2013) %>% arrange(-FS.OA.NOU.P3D1) %>% slice(1:5) %>% select(FAOST_CODE)
-dat_plot <- dat %>%  filter(FAOST_CODE %in% as.vector(as.matrix(top5_FAOST_CODE)))
-
-
-
-p <- ggplot(dat_plot, aes(x=Year,y=FS.OA.NOU.P3D1,color=SHORT_NAME))
+p <- ggplot(dat1, aes(x=Yr,y=Value,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 5)[["Sub"]])
 p <- p + labs(x="",y="million\n")
-if (rulang) p <- p + labs(x="",y="\n")
-p <- p + scale_x_continuous(breaks = c(1991, 2000, 2005, 2010, 2015),
-                            labels = c("1990-92", "1999-2001", "2004-06", "2009-11", "2014-16"))
+if (rulang) p <- p + labs(x="",y="\nмлн")
+p <- p + scale_x_continuous(breaks = c(2000, 2005, 2010, 2015),
+                            labels = c("1999-2001", "2004-06", "2009-11", "2014-16"))
 p
 
+maxYr <- max(dat1$Year)
 # Caption
-caption_text <- "Number of undernourished (million), top 5 countries in 2012-2014"
+caption_text <- paste("Number of undernourished (million), top 5 countries in",maxYr,"")
 if (rulang) caption_text <- ""
 
 
 ## ---- P2undernuMAP ----
-# dat <- syb.df %>% filter(Year %in% 2014) %>% select(FAOST_CODE,SHORT_NAME,OA.TPR.POP.PPL.SHP)
-
-dat <- df[df$Year %in%  c(1991:2015) & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
-
-
-# df[df$Year %in%  c(1991:2015) & df$FAOST_CODE == 238,c("Year","FAOST_CODE","FS.OA.POU.PCT3D1")]
+dat1 <- subset(temp, subset=Part %in% "P2undernu")
+dat1 <- subset(dat1, subset=Position %in% "MAP")
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
+dat1$AreaCode <- as.integer(dat1$AreaCode)
 
 
-#dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
-
-map.plot <- left_join(map.df,dat)
+map.plot <- left_join(map.df,dat1)
 
 # Add region key and subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
@@ -411,8 +382,9 @@ if (rulang) map_unit <- ""
 p <- create_map_here()
 p
 
+yr = dat1$Year[1]
 # Caption
-caption_text <- "Prevalence of undernourishment (percent, 2014-16)"
+caption_text <- paste("Prevalence of undernourishment (percent, ",yr,")", sep = "")
 if (rulang) caption_text <- ""
 
 
@@ -438,61 +410,23 @@ if (rulang) spread_title <- "Ожирение/избыточный вес"
 if (region_to_report == "REU" & rulang) short_text <- "Избыточный вес и ожирение определяются как чрезмерные и излишние жировые отложения, которые могут нанести ущерб здоровью. Ожирение и избыточный вес определяются с помощью Индекса массы тела (ИМТ). ИМТ больше 25 кг/м2 указывает на избыточный вес, ИМТ выше 30 кг/м2 указывает на ожирение. Считается, что высокий Индекс массы тела увеличивает вероятность возникновения различных неинфекционных заболеваний и проблем со здоровьем, в том числе сердечно-сосудистых заболеваний, сахарного диабета, различных видов рака и остеоартрита. Распространенность избыточного веса и ожирения возросла в регионе и растет почти в всех странах."
 
 ## ---- P2obesityTOPRIGHT
-dat <- read.csv(paste0(data.dir,"/FSI2015_disseminationData_A_11.csv"), stringsAsFactors=FALSE)
-over_acq <- gather(dat, Year_range, value, 3:27)
-over_acq$Year_range <- as.character(over_acq$Year_range)
+dat1 <- subset(temp, subset=Part %in% "P2obesity")
+dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
-over_acq$Year[over_acq$Year_range == "X1990.92"] <- 1991
-over_acq$Year[over_acq$Year_range == "X1991.93"] <- 1992
-over_acq$Year[over_acq$Year_range == "X1992.94"] <- 1993
-over_acq$Year[over_acq$Year_range == "X1993.95"] <- 1994
-over_acq$Year[over_acq$Year_range == "X1994.96"] <- 1995
-over_acq$Year[over_acq$Year_range == "X1995.97"] <- 1996
-over_acq$Year[over_acq$Year_range == "X1996.98"] <- 1997
-over_acq$Year[over_acq$Year_range == "X1997.99"] <- 1998
-over_acq$Year[over_acq$Year_range == "X1998.00"] <- 1999
-over_acq$Year[over_acq$Year_range == "X1999.01"] <- 2000
-over_acq$Year[over_acq$Year_range == "X2000.02"] <- 2001
-over_acq$Year[over_acq$Year_range == "X2001.03"] <- 2002
-over_acq$Year[over_acq$Year_range == "X2002.04"] <- 2003
-over_acq$Year[over_acq$Year_range == "X2003.05"] <- 2004
-over_acq$Year[over_acq$Year_range == "X2004.06"] <- 2005
-over_acq$Year[over_acq$Year_range == "X2005.07"] <- 2006
-over_acq$Year[over_acq$Year_range == "X2006.08"] <- 2007
-over_acq$Year[over_acq$Year_range == "X2007.09"] <- 2008
-over_acq$Year[over_acq$Year_range == "X2008.10"] <- 2009
-over_acq$Year[over_acq$Year_range == "X2009.11"] <- 2010
-over_acq$Year[over_acq$Year_range == "X2010.12"] <- 2011
-over_acq$Year[over_acq$Year_range == "X2011.13"] <- 2012
-over_acq$Year[over_acq$Year_range == "X2012.14."] <- 2013
-over_acq$Year[over_acq$Year_range == "X2013.15."] <- 2014
-over_acq$Year[over_acq$Year_range == "X2014.16."] <- 2015
-
-over_acq$Year <- factor(over_acq$Year)
-over_acq$Year <- as.numeric(levels(over_acq$Year))[over_acq$Year]
-
-names(over_acq) <- c("FAOST_CODE","FAO_TABLE_NAME","Year_range","value","Year")
-
-dat <- over_acq %>% filter(FAOST_CODE %in% c(5001,5851,5852), Year %in% c(1992,2015)) %>%  select(FAOST_CODE,FAO_TABLE_NAME,Year,value) %>%
-  dplyr::rename(SHORT_NAME = FAO_TABLE_NAME)
-
-dat$fill[dat$Year == 1992] <- "1991-93"
-dat$fill[dat$Year == 2015] <- "2014-16"
-
-dat_plot <- dat
+dat_plot <- dat1
 # reorder
 # dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "2014-16") %>% arrange(-value))$SHORT_NAME)
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=c("Developed countries","Developing countries","World"))
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=c("Developed countries","Developing countries","World"))
 
 if (rulang){
-  dat_plot$fill[dat_plot$fill == "1991-93"] <- "1991−93 гг."
-  dat_plot$fill[dat_plot$fill == "2014-16"] <- "2014−16 гг."
-  levels(dat_plot$SHORT_NAME)[levels(dat_plot$SHORT_NAME) == "Developed countries"] <- "Развитые \nстраны"
-  levels(dat_plot$SHORT_NAME)[levels(dat_plot$SHORT_NAME) == "Developing countries"] <- "Развивающиеся \nстраны"
-  levels(dat_plot$SHORT_NAME)[levels(dat_plot$SHORT_NAME) == "World"] <- "Мир"
+  dat_plot$Year <- paste(dat_plot$Year,"rr.")
+  levels(dat_plot$AreaName)[levels(dat_plot$AreaName) == "Developed countries"] <- "Развитые \nстраны"
+  levels(dat_plot$AreaName)[levels(dat_plot$AreaName) == "Developing countries"] <- "Развивающиеся \nстраны"
+  levels(dat_plot$AreaName)[levels(dat_plot$AreaName) == "World"] <- "Мир"
 }
 
-p <- ggplot(dat_plot, aes(x=SHORT_NAME, y=value, fill=fill))
+p <- ggplot(dat_plot, aes(x=AreaName, y=Value, fill=Year))
 p <- p + geom_bar(stat="identity", position="dodge")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="percent\n")
@@ -500,34 +434,28 @@ if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + theme(axis.text.x = element_text(angle=45))
 p
 
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
+
 # Caption
-caption_text <- paste0("Prevalence of food over-acquisition (1991-93 and 2014-16)",dag_char)
-if (rulang) caption_text <- paste0("Распространенность избыточного приобретения пищи (1991-93 и 2014-16 гг.)",dag_char)
+caption_text <- paste0("Prevalence of food over-acquisition (",minYr," and ",maxYr,")",dag_char, sep = "")
+if (rulang) caption_text <- paste0("Распространенность избыточного приобретения пищи (",minYr," и ",maxYr," гг.)",dag_char, sep = "")
 
 
 
 ## ---- P2obesityLEFT ----
-dat <- syb.df[syb.df$Year %in%  2005:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SH.STA.OWGH.MA.ZS")]
+dat1 <- subset(temp, subset=Part %in% "P2obesity")
+dat1 <- subset(dat1, subset=Position %in% "LEFT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+yr = dat1$Year[1]
 
-dat <- dat[!is.na(dat$SH.STA.OWGH.MA.ZS),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+dat_plot <- dat1 %>% dplyr::mutate(color = yr)
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
-#and subset
-dat <- dat[which(dat[[region_to_report]]),]
-
-dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SH.STA.OWGH.MA.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
-
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
-
-dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.MA.ZS) 
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.MA.ZS))
-p <- p + geom_segment(aes(y = min(dat_plot$SH.STA.OWGH.MA.ZS), xend = SHORT_NAME, 
-                          yend = SH.STA.OWGH.MA.ZS, color=color), alpha=.5)
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = min(dat_plot$Value), xend = AreaName, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -537,32 +465,25 @@ if (rulang) p <- p + labs(x="",y="\nпроценты")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
+
 # Caption
-caption_text <- paste("Prevalence of overweight among children under 5, top",nrow(dat_plot),"countries with the highest values, male (percent 2005-2013*)")
-if (rulang) caption_text <- paste("Процентная доля мальчиков в возрасте до пяти лет, имеющих избыточный вес,",nrow(dat_plot),"стран с самыми высокими значениями (в процентах, 2005-2013 гг.*)")
+caption_text <- paste("Prevalence of overweight among children under 5, top ",nrow(dat_plot)," countries with the highest values, male (percent ",yr,"*)", sep = "")
+if (rulang) caption_text <- paste("Процентная доля мальчиков в возрасте до пяти лет, имеющих избыточный вес, ",nrow(dat_plot)," стран с самыми высокими значениями (в процентах, ",yr," гг.*)", sep = "")
 
 ## ---- P2obesityRIGHT ----
-dat <- syb.df[syb.df$Year %in%  2003:2013 ,c("FAOST_CODE","Year","SHORT_NAME","SH.STA.OWGH.FE.ZS")]
+dat1 <- subset(temp, subset=Part %in% "P2obesity")
+dat1 <- subset(dat1, subset=Position %in% "RIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+yr = dat1$Year[1]
 
-dat <- dat[!is.na(dat$SH.STA.OWGH.FE.ZS),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+dat_plot <- dat1 %>% dplyr::mutate(color = yr)
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
+dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
-#and subset
-dat <- dat[which(dat[[region_to_report]]),]
-
-dat_plot <- dat %>% group_by(SHORT_NAME) %>% dplyr::filter(Year == max(Year)) %>% ungroup() %>% arrange(-SH.STA.OWGH.FE.ZS) %>% slice(1:20) %>% dplyr::mutate(color = "2013")
-
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao")
-
-dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$SH.STA.OWGH.FE.ZS) 
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=SH.STA.OWGH.FE.ZS))
-p <- p + geom_segment(aes(y = min(dat_plot$SH.STA.OWGH.MA.ZS), xend = SHORT_NAME, 
-                          yend = SH.STA.OWGH.FE.ZS, color=color), alpha=.5)
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = min(dat_plot$Value), xend = AreaName, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
 p <- p + theme(legend.position = "none") # hide legend as only one year plotted
@@ -572,29 +493,33 @@ if (rulang) p <- p + labs(x="",y="\nпроценты")
 p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
 # Caption
-caption_text <- paste("Prevalence of overweight among children under 5, top",nrow(dat_plot),"countries with the highest values, female (percent 2005-2013*)")
-if (rulang) caption_text <- paste("Процентная доля девочек в возрасте до 5 лет, имеющих избыточный вес,",ncases,"стран с самыми высокими значениями (в процентах, 2005-2013 гг.*)")
+caption_text <- paste("Prevalence of overweight among children under 5, top ",nrow(dat_plot)," countries with the highest values, female (percent ",yr,"*)", sep = "")
+if (rulang) caption_text <- paste("Процентная доля девочек в возрасте до 5 лет, имеющих избыточный вес, ",ncases," стран с самыми высокими значениями (в процентах, ",yr," гг.*)", sep = "")
 
 #
 ## ---- P2obesityBOTTOM ----
-dat <- over_acq %>% filter(FAOST_CODE %in% c(5001,5100,5853,5500,5205), Year >= 1990) %>%  select(FAOST_CODE,FAO_TABLE_NAME,Year,value) %>%
-  dplyr::rename(SHORT_NAME = FAO_TABLE_NAME)
+dat1 <- subset(temp, subset=Part %in% "P2obesity")
+dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
 
-
-dat_plot <- dat
+dat_plot <- dat1
 
 if (rulang){
-  dat_plot$SHORT_NAME[dat_plot$SHORT_NAME =="World"] <- "Весь мир"
-  dat_plot$SHORT_NAME[dat_plot$SHORT_NAME =="Africa"] <- "Африка"
-  dat_plot$SHORT_NAME[dat_plot$SHORT_NAME =="Asia"] <- "Азия"
-  dat_plot$SHORT_NAME[dat_plot$SHORT_NAME =="Latin America and the Caribbean"] <- "Латинская Америка и \nКарибский бассейн"
-  dat_plot$SHORT_NAME[dat_plot$SHORT_NAME =="Oceania"] <- "Океания"
+  dat_plot$AreaName[dat_plot$AreaName =="World"] <- "Весь мир"
+  dat_plot$AreaName[dat_plot$AreaName =="Africa"] <- "Африка"
+  dat_plot$AreaName[dat_plot$AreaName =="Asia"] <- "Азия"
+  dat_plot$AreaName[dat_plot$AreaName =="Latin America and the Caribbean"] <- "Латинская Америка и \nКарибский бассейн"
+  dat_plot$AreaName[dat_plot$AreaName =="Oceania"] <- "Океания"
 }
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
+p <- ggplot(data = dat_plot, aes(x = Yr, y = Value,group=AreaName,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$AreaName)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
 if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + guides(color = guide_legend(nrow = 2))
@@ -602,26 +527,23 @@ p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010,2015),
                             labels = c("1990-92", "2000-02", "2005-07", "2009-11","2014-16"))
 p
 
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 # Caption
-caption_text <- paste("Prevalence of food over-acquisition (1990-92 to 2014-16)",dag_char)
-if (rulang) caption_text <- paste("Распространенность избыточного приобретения пищи (1990-92 to 2014-16 гг.)",dag_char)
+caption_text <- paste("Prevalence of food over-acquisition (",minYr," to ",maxYr,")",dag_char, sep = "")
+if (rulang) caption_text <- paste("Распространенность избыточного приобретения пищи (",minYr," to ",maxYr," гг.)",dag_char, sep = "")
 
 ## ---- P2obesityMAP ----
-dat <- syb.df %>% filter(Year == 2014) %>%
-  select(Year,FAOST_CODE,SHORT_NAME,overweight_BOTH) 
-  
-dat <- dat[!is.na(dat$overweight_BOTH),]
-dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
+dat1 <- subset(temp, subset=Part %in% "P2obesity")
+dat1 <- subset(dat1, subset=Position %in% "MAP")
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
+dat1$AreaCode <- as.integer(dat1$AreaCode)
 
-
-map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+map.plot <- left_join(map.df,dat1) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","overweight_BOTH")]
-cat_data$value_cat <- categories(x=cat_data$overweight_BOTH, n=5, method="jenks")
+cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks")
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -632,9 +554,10 @@ if (rulang) map_unit <- "проценты"
 p <- create_map_here()
 p
 
+yr = dat1$Year[1]
 # Caption
-caption_text <- "Prevalence of overweight and obesity, adults (percent, 2014)"
-if (rulang) caption_text <- "Распространенность избыточного веса и ожирения среди взрослых (в процентах, 2014 г.)"
+caption_text <- paste("Prevalence of overweight and obesity, adults (percent, ",yr,")", sep = "")
+if (rulang) caption_text <- paste("Распространенность избыточного веса и ожирения среди взрослых (в процентах, ",yr," г.)", sep = "")
 
 
 #   _____                       _                             _   _           _       _   _   _   _
@@ -655,137 +578,111 @@ if (rulang) spread_title <- "Наличие продовольствия"
 if (region_to_report == "REU" & rulang) short_text <- "Наличие продовольствия является важным фактором продовольственной безопасности. Наличие достаточного количества пищи у населения является необходимым, но недостаточным условием для обеспечения адекватного доступа. За последнее десятилетие тенденции в области производства продуктов питания на душу населения в регионе были позитивными. В большинстве стран региона высокий уровень наличия продовольствия связан с относительно низкой распространенностью недоедания. Однако индикаторы последствий показывают, что высокий уровень наличия продовольствияя не всегда является гарантией высокой продовольственной безопасности."
 
 ## ---- P2availabData ----
-
-
+dat1 <- subset(temp, subset=Part %in% "P2availab")
+dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr)) + 1
 
 ## ---- P2availabTOPRIGHT ----
-dat_plot <- df %>% 
-  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  
-  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.DA.ADESA.PCT3D)
+dat_plot <- dat1
 
-# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-#                                                                     "Europe and Central Asia",
-#                                                                     "Asia and the Pacific",
-#                                                                     "Africa",
-#                                                                     "World"))
-
-if (rulang){
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="World"] <- "Весь мир"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Africa"] <- "Африка"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Asia and the Pacific"] <- "Азиатско-Тихоокеанский регион"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Europe and Central Asia"] <- "Европа и Центральная Азия"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Near East and North Africa"] <- "Ближний Восток и Северная Африка"
-}
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = FS.DA.ADESA.PCT3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
+p <- ggplot(data = dat_plot, aes(x = Yr, y = Value,group=AreaName,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$AreaName)))[["Sub"]])
 p <- p + labs(y="percent\n", x="")
 if (rulang) p <- p + labs(x="",y="проценты\n")
 p <- p + guides(color = guide_legend(nrow = 5))
-p <- p + scale_x_continuous(breaks = c(1991, 2006, 2015),
-                            labels = c("1990-92",  "2005-07", "2014-16"))
+p <- p + scale_x_continuous(breaks = c(2000, 2006, 2015),
+                            labels = c("1999-2001",  "2005-07", "2014-16"))
 # p <- p + theme(axis.text.x = element_text(angle = 45))
 p
 
 
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 # Caption
-caption_text <- paste("Average dietary energy supply adequacy, 3 year average (1990 to 2015)",dag_char)
-if (rulang) caption_text <- paste("Адекватность средней энергетической ценности пищевого рациона, средние значения за 3 года (с 1990 по 2015 гг.)",dag_char)
+caption_text <- paste("Average dietary energy supply adequacy, 3 year average (",minYr," to ",maxYr,")",dag_char, sep = "")
+if (rulang) caption_text <- paste("Адекватность средней энергетической ценности пищевого рациона, средние значения за 3 года (с ",minYr," по ",maxYr," гг.)",dag_char, sep = "")
+
 
 ## ---- P2availabLEFT ----
+dat1 <- subset(temp, subset=Part %in% "P2availab")
+dat1 <- subset(dat1, subset=Position %in% "LEFT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
 
-df %>% 
-  filter(Year %in% c(2000,2010),
-         FAOST_CODE < 5000) %>% 
-  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PCSS.CSR.PCT3D) %>% 
-  as_tibble() -> dat
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
-dat <- dat[!is.na(dat$FBS.PCSS.CSR.PCT3D),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+dat1 <- arrange(dat1, -Yr, -Value)
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="FBS.PCSS.CSR.PCT3D"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
-# slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2009-2011")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
-dat_plot <- rbind(top2015,top2000)
-# levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
-###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
-if (rulang){
-  dat_plot$color[dat_plot$color == "2009-2011"] <- "2009−2011 гг."
-  dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
-}
+# slice the data for both years
+top15 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top91 <- dat1 %>% filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+dat_plot <- rbind(top15,top91)
+
+
+# levels based on newest year
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top15,Value)$AreaName)
+###############
 
 # To make the latest point on top
 dat_plot <- arrange(dat_plot, color)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = SHORT_NAME,
-                          yend = `2010`), color="grey80")
+                      aes(y = `1999-2001`, xend = AreaName,
+                          yend = `2011-2013`), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
-if (rulang) p <- p + labs(x="",y="\n")
-p <- p + guides(fill = guide_legend(nrow = 2))
+if (rulang) p <- p + labs(x="",y="\nпроценты")
+p <- p + guides(color = guide_legend(nrow = 2))
 p
 
+
 # Caption
-caption_text <- paste("Energy supply derived from cereals, roots and tubers, top",ncases,"countries in 2009-2011")
-if (rulang) caption_text <- paste("Доля злаков, корнеплодов и клубнеплодов в энергетической ценности пищевого рациона,",ncases,"стран с самыми высокими значениями в 2009-2011 гг.")
+caption_text <- paste("Energy supply derived from cereals, roots and tubers, top ",ncases," countries in ",maxYr, sep = "")
+if (rulang) caption_text <- paste("Доля злаков, корнеплодов и клубнеплодов в энергетической ценности пищевого рациона, ",ncases," стран с самыми высокими значениями в ",maxYr," гг.", sep = "")
 
 ## ---- P2availabRIGHT ----
+dat1 <- subset(temp, subset=Part %in% "P2availab")
+dat1 <- subset(dat1, subset=Position %in% "RIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
+
+dat1 <- arrange(dat1, -Yr, -Value)
+
+# Plot only as many countries as there are for particular region, max 20
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
+if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
+
+dat_plot <- dat1 %>% dplyr::mutate(color = minYr)
 
 
-dat <- df[df$Year %in%  c(2010) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FBS.PPCS.GT.GCD3D")]
+# levels based on newest year
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(dat_plot,Value)$AreaName)
+###############
 
-dat <- dat[!is.na(dat$FBS.PPCS.GT.GCD3D),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+# To make the latest point on top
+dat_plot <- arrange(dat_plot, color)
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-dat <- arrange(dat, -FBS.PPCS.GT.GCD3D)
-
-# limit the nro of printed for REU/RNE countries
-if (nrow(dat) < 20){
-  max_nro_countries <- nrow(dat)
-} else max_nro_countries <- 20
-
-
-top15 <- dat %>% slice(1:max_nro_countries) %>% dplyr::mutate(color = "2009-2011")
-# top91 <- dat %>% filter(FAOST_CODE %in% top15$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
-# dat_plot <- rbind(top15,top91)
-dat_plot <- top15
-
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top15, FBS.PPCS.GT.GCD3D)$SHORT_NAME)
-
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=FBS.PPCS.GT.GCD3D))
-p <- p + geom_segment(aes(y = min(dat_plot$FBS.PPCS.GT.GCD3D), xend = SHORT_NAME, 
-                          yend = FBS.PPCS.GT.GCD3D, color=color), alpha=.5)
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = min(dat_plot$Value), xend = AreaName, 
+                          yend = Value, color=color), alpha=.5)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -795,39 +692,35 @@ if (rulang) p <- p + labs(x="",y="\nг/чел/день")
 p <- p + theme(legend.position = "none")
 p
 
+
+yr = dat1$Year[1]
 # Caption
-caption_text <- paste("Average protein supply, top",nrow(dat_plot),"countries in 2009-2011")
-if (rulang) caption_text <- paste("Средний объем получаемых белков,",nrow(dat_plot),"стран с самыми высокими значениями в 2009-2011 гг.")
+caption_text <- paste("Average protein supply, top ",nrow(dat_plot)," countries in ",yr, sep = "")
+if (rulang) caption_text <- paste("Средний объем получаемых белков, ",nrow(dat_plot)," стран с самыми высокими значениями в ",yr," гг.", sep = "")
 
 
 ## ---- P2availabBOTTOM ----
+dat1 <- subset(temp, subset=Part %in% "P2availab")
+dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr)) + 1
 
-dat_plot <- df %>%
-  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000)
-                          else c(5000,12000,13000,14000,15000)) %>%
-  select(FAOST_CODE,Year,FAO_TABLE_NAME,FBS.PPCS.AO.GCD3D)
+dat_plot <- dat1
 
-dat_plot <- dat_plot[!is.na(dat_plot$FBS.PPCS.AO.GCD3D),]
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
-
-if (rulang){
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="World"] <- "Весь мир"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Africa"] <- "Африка"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Asia and the Pacific"] <- "Азиатско-Тихоокеанский регион"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Europe and Central Asia"] <- "Европа и Центральная Азия"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Near East and North Africa"] <- "Ближний Восток и Северная Африка"
-}
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = FBS.PPCS.AO.GCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
+p <- ggplot(data = dat_plot, aes(x = Yr, y = Value,group=AreaName,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$AreaName)))[["Sub"]])
 p <- p + labs(y="g/cap/day\n", x="")
 if (rulang) p <- p + labs(x="",y="г/чел/день\n")
-p <- p + guides(color = guide_legend(nrow = 3))
-p <- p + scale_x_continuous(breaks = c(1991, 2001, 2006, 2010),
-                            labels = c("1990-92", "2000-02", "2005-07", "2009-11"))
-p <- p + theme(axis.text.x = element_text(angle = 45))
+p <- p + guides(color = guide_legend(nrow = 2))
+p <- p + scale_x_continuous(breaks = c(2001, 2006, 2010,2012),
+                            labels = c("2000-02", "2005-07", "2009-11","2011-13"))
 p
+
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
 # Caption
 caption_text <- paste("Average supply of protein of animal origin",dag_char)
@@ -836,15 +729,19 @@ if (rulang) caption_text <- paste("Средний объем получаемы�
 
 ## ---- P2availabMAP ----
 
-dat <- df[df$Year %in%  2012 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","QV.PCNPV.FOOD.ID3D")]
+dat1 <- subset(temp, subset=Part %in% "P2availab")
+dat1 <- subset(dat1, subset=Position %in% "MAP")
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
+dat1$AreaCode <- as.integer(dat1$AreaCode)
 
-map.plot <- left_join(map.df,dat)
+map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
+
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","QV.PCNPV.FOOD.ID3D")]
-cat_data$value_cat <- categories(x=cat_data$QV.PCNPV.FOOD.ID3D, n=5) # manualBreaks = c(0, 5, 15, 25, 35, 100),
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
+cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks",decimals=2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -856,9 +753,10 @@ if (rulang) map_unit <- "проценты"
 p <- create_map_here()
 p
 
+yr = dat1$Year[1]
 # Caption
-caption_text <- "Average value of food production, constant 2004-2006 I\\$ per person (3 year average, 2011-13)"
-if (rulang) caption_text <- "Средний объем производства продовольствия в стоимостном выражении, в постоянных межд. долларах 2004-2006 гг. на душу населения (средние значения за три года, 2011-13 гг.)"
+caption_text <- paste("Average value of food production, constant 2004-2006 I\\$ per person (3 year average, ",yr,")", sep = "")
+if (rulang) caption_text <- paste("Средний объем производства продовольствия в стоимостном выражении, в постоянных межд. долларах 2004-2006 гг. на душу населения (средние значения за три года, ",yr," гг.)", sep = "")
 
 #   _____                       _
 #  |  ___|   ___     ___     __| |     __ _    ___    ___    ___   ___   ___
@@ -879,41 +777,26 @@ if (rulang) spread_title <- "Доступность продовольствия
 if (region_to_report == "REU" & rulang) short_text <- "Наличие достаточного количества продуктов питания само по себе не гарантирует уровень продовольственной безопасности на уровне домохозяйств. Доступ к продуктам питания в первую очередь определяется уровнем доходов, цен на продовольствие и способностью домохозяйств и индивидуумов получить доступ к социальной поддержке. Доступ индивидуумов к продуктам питания также сильно зависит от социальных факторов, включая гендерное позиционирование и иерархию власти внутри домохозяйства. В дополнение к экономической доступности, физическая доступность продовольствия также обусловливается адекватной инфраструктурой, в том числе густотой железнодорожной сети и наличием дорог с твердым покрытием."
 
 ## ---- P2accessData ----
-
-
+dat1 <- subset(temp, subset=Part %in% "P2access")
+dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr)) + 1
 
 ## ---- P2accessTOPRIGHT ----
-dat_plot <- df %>%
-  filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) 
-         else c(5000,12000,13000,14000,15000)) %>%  
-  select(FAOST_CODE,Year,FAO_TABLE_NAME,FS.OA.DOFD.KCD3D)
+dat_plot <- dat1
 
-# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-#                                                                     "Europe and Central Asia",
-#                                                                     "Asia and the Pacific",
-#                                                                     "Africa",
-#                                                                     "World"))
-
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
-
-if (rulang){
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="World"] <- "Весь мир"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Africa"] <- "Африка"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Asia and the Pacific"] <- "Азиатско-Тихоокеанский регион"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Europe and Central Asia"] <- "Европа и Центральная Азия"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Near East and North Africa"] <- "Ближний Восток и Северная Африка"
-}
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = FS.OA.DOFD.KCD3D,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
+p <- ggplot(data = dat_plot, aes(x = Yr, y = Value,group=AreaName,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$AreaName)))[["Sub"]])
 p <- p + labs(y="kcal/cap/day\n", x="")
 if (rulang) p <- p + labs(x="",y="ккал/чел/день\n")
-p <- p + guides(color = guide_legend(nrow = length(unique(dat_plot$FAO_TABLE_NAME))))
-p <- p + scale_x_continuous(breaks = c(1991,  2006,  2015),
-                            labels = c("1990-92",  "2005-07",  "2014-16"))
+p <- p + guides(color = guide_legend(nrow = 5))
+p <- p + scale_x_continuous(breaks = c(2000, 2006, 2015),
+                            labels = c("1999-2001",  "2005-07", "2014-16"))
+# p <- p + theme(axis.text.x = element_text(angle = 45))
 p
-
 
 # Caption
 caption_text <- paste("Depth of food deficit (kcal/capita/day) (3 year averages)",dag_char)
@@ -921,48 +804,40 @@ if (rulang) caption_text <- paste("Масштабы дефицита продо�
 
 
 ## ---- P2accessLEFT ----
+dat1 <- subset(temp, subset=Part %in% "P2access")
+dat1 <- subset(dat1, subset=Position %in% "LEFT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1$Year <- as.integer((dat1$Year))
 
-
-dat <- df[df$Year %in%  c(2000,2014) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.DEA.DFPLI.IND")]
-
-dat <- dat[!is.na(dat$FS.DEA.DFPLI.IND),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
 # semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="FS.DEA.DFPLI.IND"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
+dat1 <- arrange(dat1, -Year, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2014"] <- "2014 г."
-  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+  dat_plot$color <- paste(dat_plot$color," г.")
 }
 
 # To make the latest point on top
 dat_plot <- arrange(dat_plot, color)
+dat_plot$color <- as.character(dat_plot$color)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = SHORT_NAME,
+                      aes(y = `2000`, xend = AreaName,
                           yend = `2014`), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
@@ -972,103 +847,71 @@ if (rulang) p <- p + labs(x="",y="\nиндекс")
 p <- p + guides(fill = guide_legend(nrow = 1))
 p
 
+
 # Caption
-caption_text <- paste("Domestic food price level index, top",ncases,"countries in 2014 (2000 to 2014)")
-if (rulang) caption_text <- paste("Индекс внутренних цен на продовольствие,",ncases,"стран с самыми высокими значениями в 2014 году (с 2000 по 2014 гг.)")
+caption_text <- paste("Domestic food price level index, top ",ncases," countries in ",maxYr," (",minYr," to ",maxYr,")", sep = "")
+if (rulang) caption_text <- paste("Индекс внутренних цен на продовольствие, ",ncases," стран с самыми высокими значениями в ",maxYr," году (с ",minYr," по ",maxYr," гг.)", sep = "")
 
 
 ## ---- P2accessRIGHT ----
+dat1 <- subset(temp, subset=Part %in% "P2access")
+dat1 <- subset(dat1, subset=Position %in% "RIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr))
 
-dat <- df[df$Year %in%  c(2000,2015) & df$FAOST_CODE < 5000,c("FAOST_CODE","Year","FAO_TABLE_NAME","FS.OA.POU.PCT3D1")]
-
-dat <- dat[!is.na(dat$FS.OA.POU.PCT3D1),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
-
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
 # semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="FS.OA.POU.PCT3D1"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+nro_latest_cases <- nrow(dat1[dat1$Yr == max(dat1$Yr),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
+dat1 <- arrange(dat1, -Yr, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2014-2016")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "1999-2001")
+top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2014-2016"] <- "2014−2016 гг."
-  dat_plot$color[dat_plot$color == "1999-2001"] <- "1999−2001 гг."
+  dat_plot$color <- paste(dat_plot$color," гг.")
 }
 
 # To make the latest point on top
 dat_plot <- arrange(dat_plot, color)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = SHORT_NAME,
-                          yend = `2015`), color="grey80")
+                      aes(y = `1999-2001`, xend = AreaName,
+                          yend = `2014-2016`), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\npercent")
 if (rulang) p <- p + labs(x="",y="\nпроценты")
-p <- p + guides(fill = guide_legend(nrow = 2))
+p <- p + guides(fill = guide_legend(nrow = 1))
 p
 
 
 # Caption
-caption_text <- paste("Prevalence of undernourishment, highest",ncases,"countries in 2014-16 (3 year averages)")
-if (rulang) caption_text <- paste("Распространенность недоедания,",ncases,"стран мира с самими высокими показателями в 2014-16 гг. (средние показатели за 3 года)")
+caption_text <- paste("Prevalence of undernourishment, highest ",ncases," countries in ",maxYr," (3 year averages)", sep = "")
+if (rulang) caption_text <- paste("Распространенность недоедания,",ncases,"стран мира с самими высокими показателями в ",maxYr," гг. (средние показатели за 3 года)", sep = "")
 
 ## ---- P2accessBOTTOM ----
+dat1 <- subset(temp, subset=Part %in% "P2access")
+dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1$Year <- as.integer((dat1$Year))
 
-# dat_plot <- df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,420,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD)
-# New from WORLD BANK instead of FSI
-dat_plot <- syb.df %>% filter(FAOST_CODE %in% if (region_to_report == "RNE") c(5000,12000,13000,14000,15000) else c(5000,12000,13000,14000,15000)) %>%  
-  select(FAOST_CODE,Year,FAO_TABLE_NAME,NY.GDP.PCAP.PP.KD) %>% 
-  filter(!is.na(NY.GDP.PCAP.PP.KD))
-
-# dat_plot$FAO_TABLE_NAME <- factor(dat_plot$FAO_TABLE_NAME, levels=c("Near East and North Africa",
-#                                                                     "Europe and Central Asia",
-#                                                                     "Asia and the Pacific",
-#                                                                     "Africa",
-#                                                                     "World"))
-
-dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin Am. and the Carib."
-
-if (rulang){
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="World"] <- "Весь мир"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Africa"] <- "Африка"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Asia and the Pacific"] <- "Азиатско-Тихоокеанский регион"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Europe and Central Asia"] <- "Европа и Центральная Азия"
-  dat_plot$FAO_TABLE_NAME[dat_plot$FAO_TABLE_NAME =="Near East and North Africa"] <- "Ближний Восток и Северная Африка"
-}
-
-
-dat_plot$FAO_TABLE_NAME <- gsub("Regional Office for ","",dat_plot$FAO_TABLE_NAME)
-dat_plot$FAO_TABLE_NAME <- gsub("^the ","",dat_plot$FAO_TABLE_NAME)
-
-dat_plot$FAO_TABLE_NAME <- ifelse(grepl("Near East", dat_plot$FAO_TABLE_NAME), 
-                                  paste(dat_plot$FAO_TABLE_NAME, "North Africa"),
-                                  dat_plot$FAO_TABLE_NAME)
-
-
-p <- ggplot(data = dat_plot, aes(x = Year, y = NY.GDP.PCAP.PP.KD,group=FAO_TABLE_NAME,color=FAO_TABLE_NAME))
+p <- ggplot(data = dat1, aes(x = Year, y = Value,group=AreaName,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$FAO_TABLE_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat1$AreaName)))[["Sub"]])
 p <- p + labs(y="US$\n", x="")
 if (rulang) p <- p + labs(x="",y="доллары США\n")
 p <- p + guides(color = guide_legend(nrow = 3))
@@ -1076,26 +919,23 @@ p <- p + scale_y_continuous(labels=space)
 p
 
 # Caption
-caption_text <- paste("GDP per capita, PPP, constant 2011 international \\$",dag_char)
-if (rulang) caption_text <- paste("ВВП на душу населения по ППС, в постоянных межд. долл. 2011 г.",dag_char)
+caption_text <- paste("GDP per capita, PPP, constant 2011 international \\$", sep = "")
+if (rulang) caption_text <- paste("ВВП на душу населения по ППС, в постоянных межд. долл. 2011 г.", sep = "")
 
 
 ## ---- P2accessMAP ----
-dat <- df[df$Year %in%  2007:2011 & df$FAOST_CODE < 5000,c("Year","FAOST_CODE","IS.ROD.DNST.K2D")]
+dat1 <- subset(temp, subset=Part %in% "P2access")
+dat1 <- subset(dat1, subset=Position %in% "MAP")
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
+dat1$AreaCode <- as.integer(dat1$AreaCode)
 
+map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
-dat <- dat[!is.na(dat$IS.ROD.DNST.K2D),]
-dat <- dat %>% group_by(FAOST_CODE) %>% filter(Year == max(Year))
-
-map.plot <- left_join(map.df,dat)
-
-# Add region key and subset
-map.plot <- map.plot[which(map.plot[[region_to_report]]),]
-
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","IS.ROD.DNST.K2D")]
-cat_data$value_cat <- categories(x=cat_data$IS.ROD.DNST.K2D, n=5) # manualBreaks = c(0, 5, 15, 25, 35, 100),
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
+cat_data$value_cat <- categories(x=cat_data$Value, n=5) # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
 
 # define map unit
 map_unit <- "km per 100 km² of land"
@@ -1104,9 +944,10 @@ if (rulang) map_unit <- "км на 100 км² суши"
 p <- create_map_here()
 p
 
+yr = dat1$Year[1]
 # Caption
-caption_text <- "Road density, km per 100 km\\textsuperscript{2} of land area (2007 to 2011*)"
-if (rulang) caption_text <- "Густота дорожной сети, в км на 100 км2 площади суши (2007-2011 гг.*)"
+caption_text <- paste("Road density, km per 100 km\\textsuperscript{2} of land area (",yr,"*)", sep = "")
+if (rulang) caption_text <- paste("Густота дорожной сети, в км на 100 км2 площади суши (",yr," гг.*)", sep = "")
 
 #   _____                       _           _             _       _   _   _   _
 #  |  ___|   ___     ___     __| |    ___  | |_    __ _  | |__   (_) | | (_) | |_   _   _
