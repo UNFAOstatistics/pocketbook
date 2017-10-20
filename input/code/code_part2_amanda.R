@@ -7,6 +7,14 @@ curl::curl_download(url, destfile)
 temp <- read_excel(destfile, col_types = c("text", "text", "numeric", "text", 
                                            "text", "text", "numeric", "text", 
                                            "text", "text", "text", "text"))
+
+## if RU, then remove EN names and rename RU columns
+if (rulang) {
+  temp <- subset(temp, select = -c(AreaName,ItemName))
+  names(temp)[names(temp) == 'AreaNameRU'] <- 'AreaName'
+  names(temp)[names(temp) == 'ItemNameRU'] <- 'ItemName'
+}
+
 ## ---- part2_setup ----
 source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
@@ -42,169 +50,6 @@ if (region_to_report == "RNE") short_text <- "Undernourishment is a state, lasti
 if (region_to_report == "GLO") short_text <- "Undernourishment is a state, lasting for at least one year, of inability to acquire enough food, defined as a level of food intake insufficient to meet dietary energy requirements. About 793 million people – just over one in every nine people – in the world still lack sufficient food for conducting an active and healthy life. Yet progress has been made, even in the presence of significant population growth. Two hundred and sixteen million million fewer people suffer from undernourishment than 25 years ago and 167 million fewer than a decade ago."
 
 ## ---- P2undernuData ----
-
-if (!file.exists(paste0(data.dir,"/fsi_data.RDS"))){
-  dat <- read.csv(paste0(data.dir,"/DisseminationDatasetRYB.csv"), stringsAsFactors=FALSE)
-  dat$FAOST_CODE <- as.integer(dat$FAOST_CODE)
-  dat_witout_country <- dat[dat$FAOST_CODE >= 5000,]
-  # Lets replace the COUNTRY level figures with the latest version from Filippo
-  dat_country <- read.csv(paste0(data.dir,"/DisseminationDataset090216.csv"), stringsAsFactors=FALSE)
-  dat_country$FAOST_CODE  <- as.integer(dat_country$FAOST_CODE)
-  dat_country <- dat_country[dat_country$FAOST_CODE < 5000,]
-  dat <- bind_rows(dat_witout_country,dat_country)
-  # dat <- bind_rows(dat_witout_country,dat)
-  # dat_sofi <- read.csv(paste0(data.dir,"/DisseminationDataset090216_SOFIregions.csv"), stringsAsFactors=FALSE)
-  # dat_sofi$FS.OA.NOU.P3D1 <- as.character(dat_sofi$FS.OA.NOU.P3D1)
-  # dat <- bind_rows(dat_country,dat_sofi)
-
-  # Cereal dependency ratio has odd numbers for year 2011. (China (351) is 100)
-  # Recoding them to NA
-  dat$FBS.IDR.CRLS.PCT3D[dat$Year == 2011]  <- NA
-  
-  # RAF
-  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRafReg"] <- "12000" # Regional Office for Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == "5101"] <- 12002 # Eastern Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == "5102"] <- 12001 # Middle Africa (sofi) - central africa (RAF)
-  dat$FAOST_CODE[dat$FAOST_CODE == "5104"] <- 12004 # Southern Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == "5105"] <- 12005 # Western Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == "421exclSudan"] <- 12003 # North Africa missing for SOFI
-  
-  # RAP
-  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRapReg"] <- 13000  #  Regional Office for Asia and the Pacific
-  dat$FAOST_CODE[dat$FAOST_CODE == "5834"] <- 13001  #	East Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13002  #	Pacific Islands
-  dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13003  #	Southeast Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == 5100] <- 13004  #	South and Southwest Asia
-  dat$FAOST_CODE[dat$FAOST_CODE == "5857"] <- 13005  #	Central Asia - 'Caucasus and central Asia' in SOFI
-  # dat$FAOST_CODE[dat$FAOST_CODE == "5501"] <- 13006  #	Australia New Zealand ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "5500"] <- 13006  #	Australia New Zealand ??
-  # dat$FAOST_CODE[dat$FAOST_CODE == "5502"] <- 13008  #	Melanesia ??
-  # dat$FAOST_CODE[dat$FAOST_CODE == "5503"] <- 13009  #	Micronesia ??
-  # dat$FAOST_CODE[dat$FAOST_CODE == "5504"] <- 13010  #	Polynesia ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "5303"] <- 13012  #	Southern Asia
-  # dat$FAOST_CODE[dat$FAOST_CODE == "5856"] <- 13014  #	Western Asia ??
-  ## RAP country level aggregates
-  new_rows <- dat[dat$FAOST_CODE == "68",]
-  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "68"] <- 13007  #	France
-  dat <- rbind(dat,new_rows)
-  
-  new_rows <- dat[dat$FAOST_CODE == "185",]
-  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "185"] <- 13011  #	Russian Federation
-  dat <- rbind(dat,new_rows)
-  
-  new_rows <- dat[dat$FAOST_CODE == "231",]
-  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "231"] <- 13013  #	United States
-  dat <- rbind(dat,new_rows)
-  
-  # REU  - ALL MISSING FROM SOFI
-  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIReuReg"] <- 14000 # Regional Office for Europe and Central Asia
-  dat$FAOST_CODE[dat$FAOST_CODE == "REUCaucAndTurkey"] <- 14001 # REU Caucasus and Turkey ??
-  dat$FAOST_CODE[dat$FAOST_CODE == "REUCentralAsia"] <- 14002 # REU Central Asia
-  dat$FAOST_CODE[dat$FAOST_CODE == "REUCentralEasternEurope"] <- 14003 # REU Central Eastern Europe
-  dat$FAOST_CODE[dat$FAOST_CODE == "REUCISeurope"] <- 14004 # REU CIS Europe
-  dat$FAOST_CODE[dat$FAOST_CODE == "REUOtherAndEFTA"] <- 14006 # REU Other and EFTA
-  dat$FAOST_CODE[dat$FAOST_CODE == "REUSouthEasternEurope"] <- 14007 # REU South Eastern Europe
-  ## REU country level aggregates
-  new_rows <- dat[dat$FAOST_CODE == "105",]
-  new_rows$FAOST_CODE[new_rows$FAOST_CODE == "105"] <- 14005 # Israel
-  dat <- rbind(dat,new_rows)
-  
-  # RNE - ALL MISSING FROM SOFI
-  dat$FAOST_CODE[dat$FAOST_CODE == "SOFIRneReg"] <- 15000 # Regional Office for the Near East
-  dat$FAOST_CODE[dat$FAOST_CODE == "RNEgccsy"] <- 15001 # Gulf Cooperation Council States and Yemen
-  dat$FAOST_CODE[dat$FAOST_CODE == "RNEmaghreb"] <- 15002 # North Africa
-  dat$FAOST_CODE[dat$FAOST_CODE == "RNEmashreq"] <- 15003 # Other Near East countries
-  
-  dat$FAOST_CODE <- as.factor(dat$FAOST_CODE)
-  dat$FAOST_CODE <- as.numeric(levels(dat$FAOST_CODE))[dat$FAOST_CODE]
-  
-  dat <- dat[!is.na(dat$FAOST_CODE),]
-  
-  dat <- dat[!duplicated(dat[c("Year","FAOST_CODE")]),]
-  
-  # Add Area var from syb.df
-  tmp <- syb.df[!duplicated(dat[c("FAOST_CODE")]),]
-  dat <- merge(dat,tmp[c("FAOST_CODE","Area")],by="FAOST_CODE",all.x=TRUE)
-  dat <- merge(dat,FAOcountryProfile[c("FAOST_CODE","SHORT_NAME")],by="FAOST_CODE", all.x=TRUE)
-  
-  dat$FAO_TABLE_NAME <- str_replace_all(dat$FAO_TABLE_NAME, "SOFI Regional Office for ", "")
-  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Near East and North Africa"] <- "Near East & N. Africa"
-  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Europe and Central Asia"] <- "Europe & C. Asia"
-  # dat$FAO_TABLE_NAME[dat$FAO_TABLE_NAME %in% "Asia and the Pacific"] <- "Asia & the Pacific"
-  
-  # GLO
-  # dat$FAOST_CODE[dat$FAOST_CODE == "LACregion"] <- 5205 # Regional Office for the Near East
-  # dat$FAOST_CODE[dat$FAOST_CODE == "RAFregion"] <- 5100 # Gulf Cooperation Council States and Yemen
-  # dat$FAOST_CODE[dat$FAOST_CODE == "RAPregion"] <- 5300 # North Africa
-  # dat$FAOST_CODE[dat$FAOST_CODE == "REUregion"] <- 5400 # Other Near East countries
-  # dat$FAOST_CODE[dat$FAOST_CODE == "RNEregion"] <- 5500 # Other Near East countries
-  
-  
-  # As filippo stated in email on 22/10/15 that
-  ## The aggregates in yellow have been created but not disseminated because
-  ## they include developed countries. This means that you can use them but
-  ## just for those statistics in which developed countries are shown
-  ## (you can refer to the Food Security Indicators file for this). For example,
-  ## you cannot show the Prevalence of Undernourishment for these aggregates.
-  # -> so I am replacing values for those variables & those aggregates with NA
-  # and they will appear empty in countryprofile tables
-  
-  aggregates_to_censore <- c( #13006,  #	Australia New Zealand ?? This is now Oceania!!
-    13008,  #	Melanesia ??
-    13009,  #	Micronesia ??
-    13010,  #	Polynesia ??
-    13011,  #	Russian Federation
-    13007,  #	France
-    13013,  #	United States
-    14007,  # REU South Eastern Europe
-    14006,  # REU Other and EFTA
-    14001,  # REU Caucasus and Turkey ??
-    14004,  # REU CIS Europe
-    14003,  # REU Central Eastern Europe
-    14005,  # Israel
-    5400    # Europe
-  )
-  
-  variables_to_censore <- c("FS.OA.POU.PCT3D1", # Prevalence of undernourishment (percent) (3 year averages)
-                            "FS.OA.SFEP.PCT",    #	Share of food expenditure of the poor (percent)
-                            "FS.OA.DOFD.KCD3D",	 # Depth of food decifit (kcal/capita/day) (3 year averages)
-                            "FS.OA.POFI.PCT3D1", # Prevalence of food inadequacy (percent) (3 year avearages)
-                            "SH.STA.WAST.ZS",    # Percentage of children under 5 years of age affected by wasting (percent)
-                            "SH.STA.STNT.ZS",    #	Percentage of children under 5 years of age who are stunted (percent)
-                            "SH.STA.MALN.ZS",	   #	Percentage of children under 5 years of age who are underweight (percent)
-                            "SH.STA.AMALN.ZS",	 # 	Percentage of adults who are underweight (percent)
-                            "FS.OU.VAD.PCT",     #	Prevalence of Vitamin A deficiency (%)
-                            "FS.OU.IODINE.PCT",	#	Prevalence of Iodine deficiency (%)
-                            "FS.OA.NOU.P3D1",	#	Number of people undernourished (millions) (3 year averages)
-                            "FBS.PCS.PDES.KCD3D" # Dietary energy supply (kcal/cap/day) (3 year averages)
-  )
-  # Replace existing value with NA
-  for (i in variables_to_censore){
-    dat[[i]] <- ifelse(dat$FAOST_CODE %in% aggregates_to_censore, NA, dat[[i]])
-  }
-  
-  # M49LatinAmericaAndCaribbean
-  dat$Area[dat$FAOST_CODE == 5205] <- "M49macroReg"
-  # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "<0.1"] <- 0.01
-  # dat$FS.OA.NOU.P3D1[dat$FS.OA.NOU.P3D1 == "ns"] <- 0
-  dat$FS.OA.NOU.P3D1 <- as.factor(dat$FS.OA.NOU.P3D1)
-  dat$FS.OA.NOU.P3D1 <- as.numeric(levels(dat$FS.OA.NOU.P3D1))[dat$FS.OA.NOU.P3D1]
-  dat$FS.OA.POU.PCT3D1[dat$FS.OA.POU.PCT3D1 == "<5.0"] <- 0.1
-  dat$FS.OA.POU.PCT3D1 <- as.factor(dat$FS.OA.POU.PCT3D1)
-  dat$FS.OA.POU.PCT3D1 <- as.numeric(levels(dat$FS.OA.POU.PCT3D1))[dat$FS.OA.POU.PCT3D1]
-  
-  dat <- dat[!duplicated(dat[c("FAOST_CODE","Year")]),]
-  
-  saveRDS(dat, file=paste0(data.dir,"/fsi_data.RDS"))
-  # saveRDS(dat, file=paste0(data.dir,"/fsi_data_old.RDS")) # this is the old data 20170228
-} else df <- readRDS(paste0(data.dir,"/fsi_data.RDS"))
-
-
-
-
-## ---- P2undernuTOPRIGHT ----
-
-# This should be thought twice how to produce it for regional books!
 dat1 <- subset(temp, subset=Part %in% "P2undernu")
 dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
 dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
@@ -212,6 +57,8 @@ dat1$Value <- as.character(dat1$Value)
 
 minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
+
+## ---- P2undernuTOPRIGHT ----
 
 dw <- dat1 %>%
   select(Year,AreaName,Value) %>%
