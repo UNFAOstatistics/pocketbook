@@ -838,7 +838,10 @@ if (rulang) caption_text <- paste("Потоки помощи в сельское
 dat1 <- subset(temp, subset=Part %in% "P1invest")
 dat1 <- subset(dat1, subset=Position %in% "LEFT")
 dat1 <- subset(dat1, select = c(Year,AreaName,Value))
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 dat1$Year <- as.integer(dat1$Year)
+
 
 nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
@@ -846,8 +849,8 @@ dat1 <- arrange(dat1, -Year, -Value)
 
 
 # slice the data for both years
-topY1 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = "2015")
-topY2 <- dat1 %>% filter(AreaName %in% topY1$AreaName, Year == 2000) %>% dplyr::mutate(color = "2000")
+topY1 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+topY2 <- dat1 %>% filter(AreaName %in% topY1$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(topY1,topY2)
 # levels based on newest year
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(topY1,Value)$AreaName)
@@ -860,8 +863,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = AreaName,
-                          yend = `2015`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -870,7 +873,7 @@ if (rulang) p <- p + labs(x="",y="\nмлн долл. США")
 p <- p + guides(fill = guide_legend(nrow = 1))
 p
 
-maxYr <- max(dat1$Year)
+
 # Caption
 caption_text <- paste("Total credit to agriculture, top ",ncases," countries in ",maxYr,")", sep = "")
 if (rulang) caption_text <- paste("Общий объем кредитования сельского хозяйства, ",

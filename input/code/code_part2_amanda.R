@@ -117,8 +117,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `1999-2001`, xend = AreaName,
-                          yend = `2014-2016`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -166,8 +166,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `1999-2001`, xend = AreaName,
-                          yend = `2014-2016`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -488,8 +488,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `1999-2001`, xend = AreaName,
-                          yend = `2011-2013`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -684,8 +684,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = AreaName,
-                          yend = `2014`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -735,8 +735,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `1999-2001`, xend = AreaName,
-                          yend = `2014-2016`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -870,8 +870,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = AreaName,
-                          yend = `2013`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
@@ -920,8 +920,8 @@ p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
-                      aes(y = `2000`, xend = AreaName,
-                          yend = `2014`), color="grey80")
+                      aes_(y = as.name(minYr), xend = quote(AreaName),
+                           yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
