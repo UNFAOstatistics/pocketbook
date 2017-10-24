@@ -330,8 +330,8 @@ p
 yr = dat1$Year[1]
 
 # Caption
-caption_text <- paste("Agriculture value added per worker, top ",nrow(dat_plot)," countries with the highest values (",yr,"*)", sep = "")
-if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве на одного работника, ",nrow(dat_plot)," стран с самыми высокими значениями (",yr," гг.*)", sep = "")
+caption_text <- paste("Agriculture value added per worker, top ",nrow(dat_plot1)," countries with the highest values (",yr,"*)", sep = "")
+if (rulang) caption_text <- paste("Добавленная стоимость в сельском хозяйстве на одного работника, ",nrow(dat_plot1)," стран с самыми высокими значениями (",yr," гг.*)", sep = "")
 
 
 ## ---- P1econRIGHT ----
