@@ -957,55 +957,33 @@ if (region_to_report == "REU" & rulang) short_text <- "Рыба является
 
 ## ---- P3fisheriesData ----
 
-
-
-
-
+dat1 <- subset(temp, subset=Part %in% "P3fisheries")
+dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
+dat1$Year <- as.integer(dat1$Year)
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
 ## ---- P3fisheriesTOPRIGHT ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(FAOST_CODE %in% 12000) %>%
-  select(SHORT_NAME,Year,
-         capture_fish_production,aquaculture_fish_production)
-if (region_to_report == "RAP") dat <- syb.df %>% filter(FAOST_CODE %in% 13000) %>%
-  select(SHORT_NAME,Year,
-         capture_fish_production,aquaculture_fish_production)
-if (region_to_report == "REU") dat <- syb.df %>% filter(FAOST_CODE %in% 14000) %>%
-  select(SHORT_NAME,Year,
-         capture_fish_production,aquaculture_fish_production)
-if (region_to_report == "RNE") dat <- syb.df %>% filter(FAOST_CODE %in% 15000) %>%
-  select(SHORT_NAME,Year,
-         capture_fish_production,aquaculture_fish_production)
-if (region_to_report == "GLO") dat <- syb.df %>% filter(FAOST_CODE %in% 5000) %>%
-  select(SHORT_NAME,Year,
-         capture_fish_production,aquaculture_fish_production)
-dat <- na.omit(dat)
-
-# Add region key and subset
-
-dat <- gather(dat, variable, value, 3:4)
 if (rulang){
-  dat$fill[dat$variable == "capture_fish_production"] <- "Рыболовство"
-  dat$fill[dat$variable == "aquaculture_fish_production"] <- "Аквакультура"
+  dat1$fill[dat1$variable == "capture_fish_production"] <- "Рыболовство"
+  dat1$fill[dat1$variable == "aquaculture_fish_production"] <- "Аквакультура"
 } else {
-  dat$fill[dat$variable == "capture_fish_production"] <- "From capture fishing"
-  dat$fill[dat$variable == "aquaculture_fish_production"] <- "From aquaculture"
+  dat1$fill[dat1$variable == "capture_fish_production"] <- "From capture fishing"
+  dat1$fill[dat1$variable == "aquaculture_fish_production"] <- "From aquaculture"
 }
 
-
-
-dat$value <- dat$value / 1000000
-
-dat_plot <- dat
-
-p <- ggplot(dat_plot, aes(x=Year, y=value, color=fill))
+p <- ggplot(dat1, aes(x=Year, y=Value, color=Indicator))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
 if (rulang) p <- p + labs(x="",y="млн тонн\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(axis.text.x = element_text(angle=45))
-p  <-p +  scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2013))
+p  <-p +  scale_x_continuous(breaks=c(minYr,1995,2000,2005,2010,maxYr))
 p
+
+
 
 # Caption
 caption_text <- "Fish production from aquaculture and capture fishing"
@@ -1013,120 +991,97 @@ if (rulang) caption_text <- "Рыбная продукция аквакульт�
 
 
 ## ---- P3fisheriesLEFT ----
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,Year,capture_fish_production) %>% mutate(capture_fish_production = capture_fish_production / 1000000)
+dat1 <- subset(temp, subset=Part %in% "P3fisheries")
+dat1 <- subset(dat1, subset=Position %in% "LEFT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
+dat1 <- arrange(dat1, -Value)
 
-dat <- dat[!is.na(dat$capture_fish_production),]
+top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+if (rulang) top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Самые высокие значения")
 
-dat <- dat[which(dat[[region_to_report]]),]
+bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Lowest values")
+if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
-dat <- arrange(dat, -capture_fish_production)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
+overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
-overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
-if (rulang){
-  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
-}
-
-dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$capture_fish_production) 
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=capture_fish_production))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = capture_fish_production, color=color), alpha=.5, show.legend = FALSE)
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = min(dat_plot$Value), xend = AreaName, 
+                          yend = Value, color=color), alpha=.5, show.legend = FALSE)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
 if (rulang) p <- p + labs(x="",y="\n млн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels=space)
 p
 
+
 # Caption
-caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of capture production (2013)")
-if (rulang) caption_text <- paste(nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями производства аквакультуры (2013 г.)")
+caption_text <- paste(nrow(dat_plot)/2," countries with highest and lowest value of capture production (",dat1$Year[1],")", sep = "")
+if (rulang) caption_text <- paste(nrow(dat_plot)/2," стран с самыми высокими и самыми низкими значениями производства аквакультуры (",dat1$Year[1]," г.)", sep = "")
 
 
 ## ---- P3fisheriesRIGHT ----
+dat1 <- subset(temp, subset=Part %in% "P3fisheries")
+dat1 <- subset(dat1, subset=Position %in% "RIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
-dat <- filter(syb.df, Year %in% 2013) %>% select(FAOST_CODE,Year,aquaculture_fish_production) %>% mutate(aquaculture_fish_production = aquaculture_fish_production / 1000000)
+dat1 <- arrange(dat1, -Value)
 
-# Add region key and subset
-dat <- left_join(dat,region_key)
+top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+if (rulang) top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Самые высокие значения")
 
-dat <- dat[!is.na(dat$aquaculture_fish_production),]
+bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Lowest values")
+if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
-dat <- dat[which(dat[[region_to_report]]),]
+overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
-dat <- arrange(dat, -aquaculture_fish_production)
-top10 <- dat %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
-bot10 <- dat %>% slice( (nrow(dat)-9):nrow(dat)) %>% dplyr::mutate(color = "Lowest values")
+dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
-overlap <- top10$SHORT_NAME[top10$SHORT_NAME %in% bot10$SHORT_NAME]
-if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$SHORT_NAME %in% overlap,], bot10[!bot10$SHORT_NAME %in% overlap,]) else dat_plot <- rbind(top10,bot10)
-
-if (rulang) dat_plot$SHORT_NAME <- countrycode.multilang::countrycode(dat_plot$SHORT_NAME, origin = "country.name", destination = "country.name.russian.fao")
-if (rulang){
-  dat_plot$color[dat_plot$color == "Highest values"] <- "Самые высокие значения"
-  dat_plot$color[dat_plot$color == "Lowest values"] <- "Самые низкие значения"
-}
-
-dat_plot$SHORT_NAME <- fct_reorder(dat_plot$SHORT_NAME, dat_plot$aquaculture_fish_production) 
-
-
-p <- ggplot(dat_plot, aes(x=SHORT_NAME,y=aquaculture_fish_production))
-p <- p + geom_segment(aes(y = 0, xend = SHORT_NAME, 
-                          yend = aquaculture_fish_production, color=color), alpha=.5, show.legend = FALSE)
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = min(dat_plot$Value), xend = AreaName, 
+                          yend = Value, color=color), alpha=.5, show.legend = FALSE)
 p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nmillion tonnes")
-if (rulang) p <- p + labs(x="",y="\nмлн тонн")
+if (rulang) p <- p + labs(x="",y="\n млн тонн")
 p <- p + guides(color = guide_legend(nrow = 2))
-p <- p + scale_y_continuous(labels=space)
 p
+
+
 
 # Caption
 
-caption_text <- paste(nrow(dat_plot)/2,"countries with highest and lowest value of aquaculture production (2013)")
-if (rulang) caption_text <- paste(nrow(dat_plot)/2,"стран с самыми высокими и самыми низкими значениями производства аквакультуры (2013 г.)")
+caption_text <- paste(nrow(dat_plot)/2," countries with highest and lowest value of aquaculture production (",dat1$Year[1],")", sep = "")
+if (rulang) caption_text <- paste(nrow(dat_plot)/2," стран с самыми высокими и самыми низкими значениями производства аквакультуры (",dat1$Year[1]," г.)", sep = "")
 
 
 ## ---- P3fisheriesBOTTOM ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
-  select(SHORT_NAME,Area,Year,
-         production_quantity_index)   # fish
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
-  select(SHORT_NAME,Area,Year,
-         production_quantity_index)   # cereal export value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2014, FAOST_CODE %in% 14001:14007) %>%
-  select(SHORT_NAME,Area,Year,
-         production_quantity_index)   # cereal export value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% 15001:15003) %>%
-  select(SHORT_NAME,Area,Year,
-         production_quantity_index)   # cereal export value
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2012, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
-  select(SHORT_NAME,Area,Year,
-         production_quantity_index)   # cereal export value
-dat_plot <- na.omit(dat)
+dat1 <- subset(temp, subset=Part %in% "P3fisheries")
+dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
+dat1 <- subset(dat1, select = c(AreaName,Year,Value))
+dat1$Year <- as.integer(dat1$Year)
 
-dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = production_quantity_index,group=SHORT_NAME,color=SHORT_NAME))
+dat_plot <- dat1[!is.na(dat1$Value),]
+
+p <- ggplot(dat_plot, aes(x=Year,y=Value,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$AreaName)))[["Sub"]])
 p <- p + labs(y="index\n", x="")
 if (rulang) p <- p + labs(x="",y="индекс\n")
 p <- p + guides(color = guide_legend(nrow = 3))
-p  <-p +  scale_x_continuous(breaks=c(2000,2003,2006,2009,2012))
+p <- p + scale_x_continuous(breaks=c(minYr,2003,2006,2009,2012,maxYr))
 p
+
 
 # Caption
 caption_text <- "Fish production indices (2004-06=100)"
@@ -1135,33 +1090,33 @@ if (rulang) caption_text <- "Индексы производства рыбы (2
 
 
 ## ---- P3fisheriesMAP ----
-dat <- filter(syb.df, Year %in% 2012) %>% select(FAOST_CODE,Year,net_fish_trade) %>%  mutate(net_fish_trade = net_fish_trade/ 1000)
-dat <- dat[!is.na(dat$net_fish_trade),]
+dat1 <- subset(temp, subset=Part %in% "P3fisheries")
+dat1 <- subset(dat1, subset=Position %in% "MAP")
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
+dat1$AreaCode <- as.integer(dat1$AreaCode)
 
-# dat <- dat[dat$FAOST_CODE != 351,]
-# dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
+map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
-# set Robinson projection
-map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+# Add region key and subset
 
-# Subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","net_fish_trade")]
-cat_data$value_cat <- categories(x=cat_data$net_fish_trade, n=5)
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
+cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks",decimals=0)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
+
 # define map unit
-map_unit <- "1 000 US$"
-if (rulang) map_unit <- "1 000 долл. США"
+map_unit <- "million US$"
+if (rulang) map_unit <- "миллиона долл. США"
 
 p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Net trade of fish in 2012"
-if (rulang) caption_text <- "Чистый объем торговли рыбой в 2012 году"
+caption_text <- paste("Net trade of fish in ",dat1$Year[1], sep = "")
+if (rulang) caption_text <- paste("Чистый объем торговли рыбой в ",dat1$Year[1]," году", sep = "")
 
 
 #      _                 _               _  _                       _   _                    _
@@ -1183,58 +1138,35 @@ if (rulang) spread_title <- "Торговля сельскохозяйствен
 if (region_to_report == "REU" & rulang) short_text <- "Большая часть торговли продовольствием в регионе происходит между развитыми странами. Масштабы торговли продовольственной и сельскохозяйственной продукцией на сегодняшний день являются беспрецедентными. Регион является одним из важных экспортеров зерновых, при этом субрегион «Другие страны ЕС и ЕАСТ» лидирует в этой сфере, далее следуют субрегионы «СНГ Европа» и «Центральная и Восточная часть ЕС»."
 
 ## ---- P3tradeData ----
-
-
+dat1 <- subset(temp, subset=Part %in% "P3trade")
+dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
 ## ---- P3tradeTOPRIGHT ----
 
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 12001:12005) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.FOOD.USD.NO,   # food export value
-         TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 13001:13014) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.FOOD.USD.NO,   # food export value
-         TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 14001:14007) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.FOOD.USD.NO,   # food export value
-         TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% 15001:15003) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.FOOD.USD.NO,   # food export value
-         TP.IMVAL.FOOD.USD.NO) # food import value
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year == 2013, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.FOOD.USD.NO,   # food export value
-         TP.IMVAL.FOOD.USD.NO) # food import value
-dw <- na.omit(dat)
+dw1 <- dat1 %>%
+  select(AreaName,Indicator,Value) %>%
+  spread(key = Indicator,value = Value)
 
-dw$TP.EXVAL.FOOD.USD.NO <- dw$TP.EXVAL.FOOD.USD.NO / 1000000000
-dw$TP.IMVAL.FOOD.USD.NO <- dw$TP.IMVAL.FOOD.USD.NO / 1000000000
+names(dw1)[names(dw1) == 'TP.EXVAL.FOOD.USD.NO'] <- 'Export'
+names(dw1)[names(dw1) == 'TP.IMVAL.FOOD.USD.NO'] <- 'Import'
+dw1 <- arrange(dw1,-Import)
+names(dw1) <- c("","Export", "Import")
 
-dw <- dw[order(-dw$TP.IMVAL.FOOD.USD.NO),c("SHORT_NAME","TP.EXVAL.FOOD.USD.NO","TP.IMVAL.FOOD.USD.NO")]
+dw1[[2]] <- round(dw1[[2]],0)
+dw1[[3]] <- round(dw1[[3]],0)
+dw1[[2]]<- prettyNum(dw1[[2]], big.mark=" ")
+dw1[[3]]<- prettyNum(dw1[[3]], big.mark=" ")
 
-dw <- head(dw, 7) # to work with RAP too
-
-names(dw) <- c("","Export", "Import")
-
-dw[[2]] <- round(dw[[2]],0)
-dw[[3]] <- round(dw[[3]],0)
-dw[[2]]<- prettyNum(dw[[2]], big.mark=" ")
-dw[[3]]<- prettyNum(dw[[3]], big.mark=" ")
-
-tbl_data <- dw
-if (table_type == "latex") cap <- "\\large{Export and Import values of food, million US\\$ (2013)}"
-if (table_type == "html")  cap <- "<b>Table: Export and Import values of food, million US$ (2013) </b>"
+tbl_data <- dw1
+if (table_type == "latex") cap <- paste("\\large{Export and Import values of food, billion US\\$ (",dat1$Year[1],")}", sep = "")
+if (table_type == "html")  cap <- paste("<b>Table: Export and Import values of food, billion US$ (",dat1$Year[1],") </b>", sep = "")
 caption_text <- cap
-if (rulang) caption_text <- ""
 
 if (rulang){
-  caption_text <- "\\large{Экспорт и импорт продовольствия, в млн долл. США (в постоянных ценах 2013 г.)}"
+  caption_text <- paste("\\large{Экспорт и импорт продовольствия, в миллиард долл. США (в постоянных ценах ",dat1$Year[1]," г.)}", sep = "")
   # names(tbl_data) <- c("","Стоимость экспорта", "Стоимость импорта")
   names(tbl_data) <- c("","экспорт", "импорт")
-  tbl_data[[1]] <- translate_subgroups(tbl_data[[1]], isfactor = FALSE, add_row_breaks = FALSE)
 } 
 
 tbl_data[[1]] <- ifelse(grepl("Gulf Cooperation",tbl_data[[1]]), "GCCSY*", tbl_data[[1]])
@@ -1254,177 +1186,150 @@ if (table_type == "latex" & region_to_report == "RNE"){
 } 
 
 
-
 ## ---- P3tradeLEFT ----
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2013)) %>%  select(FAOST_CODE,Year,TP.IMVAL.FOOD.USD.NO) %>% mutate(TP.IMVAL.FOOD.USD.NO = TP.IMVAL.FOOD.USD.NO / 1000000000)
+dat1 <- subset(temp, subset=Part %in% "P3trade")
+dat1 <- subset(dat1, subset=Position %in% "LEFT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
-dat <- dat[!is.na(dat$TP.IMVAL.FOOD.USD.NO),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
+dat1$Yr <- as.integer((dat1$Year))
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="TP.IMVAL.FOOD.USD.NO"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
+dat1 <- arrange(dat1, -Yr, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
-  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+  dat_plot$color <- paste(dat_plot$color," г.")
 }
 
 # To make the latest point on top
-dat_plot <- arrange(dat_plot, color)
+dat_plot <- arrange(dat_plot, Year)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
                       aes_(y = as.name(minYr), xend = quote(AreaName),
                            yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-
-
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
 if (rulang) p <- p + labs(x="",y="\nмлрд долл. США")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
+
+
+
 # Caption
-caption_text <- paste("Top",ncases,"food importing countries in 2013")
-if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями импорта продовольствия в 2013 году")
+caption_text <- paste("Top ",ncases," food importing countries in ",maxYr, sep = "")
+if (rulang) caption_text <- paste(ncases," стран с самыми высокими показателями импорта продовольствия в ",maxYr," году", sep = "")
 
 
 
 ## ---- P3tradeRIGHT ----
 
 # data
-dat <- syb.df %>% filter(Year %in% c(2000,2013)) %>%  select(FAOST_CODE,Year,TP.EXVAL.FOOD.USD.NO) %>% mutate(TP.EXVAL.FOOD.USD.NO = TP.EXVAL.FOOD.USD.NO / 1000000000)
+dat1 <- subset(temp, subset=Part %in% "P3trade")
+dat1 <- subset(dat1, subset=Position %in% "RIGHT")
+dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
-dat <- dat[!is.na(dat$TP.EXVAL.FOOD.USD.NO),]
-# Add region key and subset
-dat <- left_join(dat,region_key)
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
+dat1$Yr <- as.integer((dat1$Year))
 
-dat <- dat[dat$FAOST_CODE != 348,]
-dat$SHORT_NAME[dat$FAOST_CODE == 351] <- "China"
-
-dat <- dat[which(dat[[region_to_report]]),]
-
-# semi-standard data munging for two year dot-plots
-# give name Value for value-col
-names(dat)[names(dat)=="TP.EXVAL.FOOD.USD.NO"] <- "Value"
 # Plot only as many countries as there are for particular region, max 20
-nro_latest_cases <- nrow(dat[dat$Year == max(dat$Year),])
+nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat <- arrange(dat, -Year, -Value)
+dat1 <- arrange(dat1, -Yr, -Value)
 # slice the data for both years
-top2015 <- dat %>% slice(1:ncases) %>% dplyr::mutate(color = "2013")
-top2000 <- dat %>% filter(FAOST_CODE %in% top2015$FAOST_CODE, Year == 2000) %>% dplyr::mutate(color = "2000")
+top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
+top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
-dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=arrange(top2015,Value)$SHORT_NAME)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
 ###############
 
-if (rulang) levels(dat_plot$SHORT_NAME) <- countrycode.multilang::countrycode(levels(dat_plot$SHORT_NAME), origin = "country.name", destination = "country.name.russian.fao")
 if (rulang){
-  dat_plot$color[dat_plot$color == "2013"] <- "2013 г."
-  dat_plot$color[dat_plot$color == "2000"] <- "2000 г."
+  dat_plot$color <- paste(dat_plot$color," г.")
 }
 
-
 # To make the latest point on top
-dat_plot <- arrange(dat_plot, color)
+dat_plot <- arrange(dat_plot, Year)
 
-p <- ggplot(data=dat_plot, aes(x=SHORT_NAME, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,SHORT_NAME,Value) %>%
+p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
+p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
                       aes_(y = as.name(minYr), xend = quote(AreaName),
                            yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-
 p <- p + coord_flip()
 p <- p + labs(x="",y="\nbillion US$")
 if (rulang) p <- p + labs(x="",y="\nмлрд долл. США")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
+
 # Caption
-caption_text <- paste("Top",ncases,"food exporting countries in 2013")
-if (rulang) caption_text <- paste(ncases,"стран с самыми высокими показателями экспорта продовольствия в 2013 году")
+caption_text <- paste("Top ",ncases," food exporting countries in ",maxYr, sep = "")
+if (rulang) caption_text <- paste(ncases," стран с самыми высокими показателями экспорта продовольствия в ",maxYr," году", sep = "")
 
 
 ## ---- P3tradeBOTTOM ----
-if (region_to_report == "RAF") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 12001:12005) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "RAP") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 13001:13014) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "REU") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 14001:14007) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "RNE") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% 15001:15003) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.CRLS.USD.NO)   # cereal export value
-if (region_to_report == "GLO") dat <- syb.df %>% filter(Year %in% 2000:2013, FAOST_CODE %in% c(5100,5200,5300,5400,5500)) %>%
-  select(SHORT_NAME,Area,Year,
-         TP.EXVAL.CRLS.USD.NO)   # cereal export value
-dat_plot <- na.omit(dat)
+dat1 <- subset(temp, subset=Part %in% "P3trade")
+dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
+dat1 <- subset(dat1, select = c(AreaName,Year,Value))
+dat1$Year <- as.integer(dat1$Year)
 
-dat_plot$value <- dat_plot$TP.EXVAL.CRLS.USD.NO / 1000000000
+minYr <- min(dat1$Year)
+maxYr <- max(dat1$Year)
 
-dat_plot$SHORT_NAME <- translate_subgroups(dat_plot$SHORT_NAME, isfactor = FALSE, add_row_breaks = FALSE)
+dat_plot <- dat1[!is.na(dat1$Value),]
 
-p <- ggplot(data = dat_plot, aes(x = Year, y = value,group=SHORT_NAME,color=SHORT_NAME))
+p <- ggplot(dat_plot, aes(x=Year,y=Value,color=AreaName))
 p <- p + geom_line(size=1.1, alpha=.7)
-p <- p + scale_color_manual(values = plot_colors(part = 1, length(unique(dat_plot$SHORT_NAME)))[["Sub"]])
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, length(unique(dat_plot$AreaName)))[["Sub"]])
 p <- p + labs(y="billion constant 2005 US$\n", x="")
 if (rulang) p <- p + labs(x="",y="млрд долл. США в постоянных ценах 2005 г.\n")
 p <- p + guides(color = guide_legend(nrow = 3))
-p <-p +  scale_x_continuous(breaks=c(2000,2002,2004,2006,2008,2010,2013))
+p <- p +  scale_x_continuous(breaks=c(minYr,2002,2004,2006,2008,2010,minYr))
 p
+
 
 # Caption
 caption_text <- "Cereal exports"
 if (rulang) caption_text <- "Экспорт зерновых"
 
 ## ---- P3tradeMAP ----
-dat <- syb.df %>% filter(Year %in% 2013) %>% select(FAOST_CODE,
-                                                    TI.IMVAL.FOOD.IN.NO)
+dat1 <- subset(temp, subset=Part %in% "P3trade")
+dat1 <- subset(dat1, subset=Position %in% "MAP")
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
+dat1$AreaCode <- as.integer(dat1$AreaCode)
 
-dat <- dat[dat$FAOST_CODE != 351,]
-dat$FAOST_CODE[dat$FAOST_CODE == 41] <- 351
-
-map.plot <- left_join(map.df,dat) # so that each country in the region will be filled (value/NA)
+map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","TI.IMVAL.FOOD.IN.NO")]
-cat_data$value_cat <- categories(x=cat_data$TI.IMVAL.FOOD.IN.NO, n=5, method="jenks")
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
+cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks")
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
 
 # define map unit
 map_unit <- "index"
@@ -1434,5 +1339,5 @@ p <- create_map_here()
 p
 
 # Caption
-caption_text <- "Import value index (2004-2006 = 100, 2013)"
-if (rulang) caption_text <- "Индекс стоимости импорта (2004-2006 гг.= 100, 2013 г.)"
+caption_text <- paste("Import value index (2004-2006 = 100, ",dat1$Year[1],")", sep = "")
+if (rulang) caption_text <- paste("Индекс стоимости импорта (2004-2006 гг.= 100, ",dat1$Year[1]," г.)", sep = "")
