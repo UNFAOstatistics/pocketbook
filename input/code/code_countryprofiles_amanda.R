@@ -2,9 +2,20 @@
 ## Country profiles
 ###########################################################################
 # Read in the data for a particular publication
-temp <- read_csv(paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",
-                        region_to_report,
-                        "_cp_data_final.csv"))
+#temp <- read_csv(paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",
+#                        region_to_report,
+#                        "_cp_data_final.csv"))
+
+# read from Excel instead of csv
+library(readxl)
+url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",region_to_report,"_CP_data_final.xlsx")
+destfile <- paste0(region_to_report,"_CP_data_final.xlsx")
+curl::curl_download(url, destfile)
+temp <- read_excel(destfile, col_types = c("text", "text", "text", "text", 
+                                           "text", "text"))
+
+
+
 # Spesify the years!
 year1 <- "1990"
 year2 <- "2000"
