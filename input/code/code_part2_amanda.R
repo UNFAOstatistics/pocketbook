@@ -285,8 +285,8 @@ minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 
 # Caption
-caption_text <- paste0("Prevalence of food over-acquisition (",minYr," and ",maxYr,")",dag_char, sep = "")
-if (rulang) caption_text <- paste0("Распространенность избыточного приобретения пищи (",minYr," и ",maxYr," гг.)",dag_char, sep = "")
+caption_text <- paste0("Prevalence of obesity among adults (",minYr," and ",maxYr,")",dag_char, sep = "")
+if (rulang) caption_text <- paste0("Распространенность ожирения среди взрослых (",minYr," и ",maxYr," гг.)",dag_char, sep = "")
 
 
 
@@ -377,8 +377,8 @@ p
 minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 # Caption
-caption_text <- paste("Prevalence of food over-acquisition (",minYr," to ",maxYr,")",dag_char, sep = "")
-if (rulang) caption_text <- paste("Распространенность избыточного приобретения пищи (",minYr," to ",maxYr," гг.)",dag_char, sep = "")
+caption_text <- paste("Prevalence of obesity among adults (",minYr," to ",maxYr,")",dag_char, sep = "")
+if (rulang) caption_text <- paste("Распространенность ожирения среди взрослых (",minYr," to ",maxYr," гг.)",dag_char, sep = "")
 
 ## ---- P2obesityMAP ----
 dat1 <- subset(temp, subset=Part %in% "P2obesity")
@@ -689,15 +689,15 @@ p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="\nindex")
-if (rulang) p <- p + labs(x="",y="\nиндекс")
+p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\nпроценты")
 p <- p + guides(fill = guide_legend(nrow = 1))
 p
 
 
 # Caption
-caption_text <- paste("Domestic food price level index, top ",ncases," countries in ",maxYr," (",minYr," to ",maxYr,")", sep = "")
-if (rulang) caption_text <- paste("Индекс внутренних цен на продовольствие, ",ncases," стран с самыми высокими значениями в ",maxYr," году (с ",minYr," по ",maxYr," гг.)", sep = "")
+caption_text <- paste("Prevalence of severe food insecurity, top ",ncases," countries in ",maxYr," (",minYr," to ",maxYr,")", sep = "")
+if (rulang) caption_text <- paste("Распространенность серьезной продовольственной необеспеченности, ",ncases," стран с самыми высокими значениями в ",maxYr," году (с ",minYr," по ",maxYr," гг.)", sep = "")
 
 
 ## ---- P2accessRIGHT ----
@@ -793,8 +793,8 @@ p
 
 yr = dat1$Year[1]
 # Caption
-caption_text <- paste("Road density, km per 100 km\\textsuperscript{2} of land area (",yr,"*)", sep = "")
-if (rulang) caption_text <- paste("Густота дорожной сети, в км на 100 км2 площади суши (",yr," гг.*)", sep = "")
+caption_text <- paste("Rail lines density, km per 100 km\\textsuperscript{2} of land area (",yr,"*)", sep = "")
+if (rulang) caption_text <- paste("Плотность железнодорожных линий, в км на 100 км2 площади суши (",yr," гг.*)", sep = "")
 
 #   _____                       _           _             _       _   _   _   _
 #  |  ___|   ___     ___     __| |    ___  | |_    __ _  | |__   (_) | | (_) | |_   _   _
@@ -925,15 +925,15 @@ p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
-p <- p + labs(x="",y="\nindex")
-if (rulang) p <- p + labs(x="",y="\nиндекс")
+p <- p + labs(x="",y="\npercent")
+if (rulang) p <- p + labs(x="",y="\nпроценты")
 p <- p + guides(color = guide_legend(nrow = 1))
 p
 
 
 # Caption
-caption_text <- paste("Domestic food price volatility index, top ",ncases," countries in ",maxYr,"", sep = "")
-if (rulang) caption_text <- paste("Индекс волатильности внутренних цен на продовольствие, ",ncases," стран с самыми высокими значениями в ",maxYr," году", sep = "")
+caption_text <- paste("Cereal import dependency ratio, top ",ncases," countries in ",maxYr,"", sep = "")
+if (rulang) caption_text <- paste("Коэффициент зависимости импорта зерновых, ",ncases," стран с самыми высокими значениями в ",maxYr," году", sep = "")
 
 ## ---- P2stabilityBOTTOM ----
 dat1 <- subset(temp, subset=Part %in% "P2stability")
