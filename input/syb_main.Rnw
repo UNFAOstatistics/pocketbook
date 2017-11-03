@@ -1294,7 +1294,7 @@ cat(paste("
 
 
 <<setup-code-part1, eval=P1over>>=
-knitr::read_chunk(paste0(root.dir,"input/code/code_part1.R"))
+knitr::read_chunk(paste0(root.dir,"input/code/code_part1_amanda.R"))
 @
 
 
@@ -1524,7 +1524,7 @@ cat(paste("
 
 
 <<setup-code-part2, eval=P2availab>>=
-knitr::read_chunk(paste0(root.dir,"input/code/code_part2.R"))
+knitr::read_chunk(paste0(root.dir,"input/code/code_part2_amanda.R"))
 @
 
 
@@ -1789,7 +1789,7 @@ cat(paste("
 
 
 <<setup-code-part3, eval=P3des>>=
-knitr::read_chunk(paste0(root.dir,"input/code/code_part3.R"))
+knitr::read_chunk(paste0(root.dir,"input/code/code_part3_amanda.R"))
 @
 
 
@@ -2056,7 +2056,7 @@ cat(paste("
 
 
 <<setup-code-part4, eval=P4land>>=
-knitr::read_chunk(paste0(root.dir,"input/code/code_part4.R"))
+knitr::read_chunk(paste0(root.dir,"input/code/code_part4_amanda.R"))
 @
 
 
