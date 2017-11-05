@@ -124,7 +124,8 @@ bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "L
 if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
-if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$AreaName %in% overlap,], 
+                                          bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
@@ -163,7 +164,8 @@ bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "L
 if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
-if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$AreaName %in% overlap,], 
+                                          bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
@@ -350,7 +352,8 @@ bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "L
 if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
-if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+if (length(overlap)!=0) dat_plot <- rbind(top10[top10$AreaName %in% overlap,], 
+                                          bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
 
@@ -521,6 +524,7 @@ p
 
 yr = dat1$Year[1]
 # Caption
+ncases <- nrow(dat_plot)
 caption_text <- paste("Female employment in agriculture in top ",ncases," countries, share of female employment (percent ",yr,"*)", sep = "")
 if (rulang) caption_text <- paste("Доля женского населения, занятого в сельском хозяйстве среди экономически активного женского населения в ",ncases," странах с самыми высокими значениями, (в процентах, ",yr," гг.*)", sep = "")
 
@@ -550,6 +554,7 @@ p
 
 yr = dat1$Year[1]
 # Caption
+ncases <- nrow(dat_plot)
 caption_text <- paste("Male employment in agriculture in top ",ncases," countries, share of male employment (percent ",yr,"*)", sep = "")
 if (rulang) caption_text <- paste("Доля мужского населения, занятого в сельском хозяйстве среди экономически активного мужского населения в ",ncases," странах с самыми высокими значениями, (в процентах, ",yr," гг.*)", sep = "")
 
@@ -582,9 +587,9 @@ if (rulang) caption_text <- paste("Доля женского населения,
 ## ---- P1laboMAP ----
 dat1 <- subset(temp, subset=Part %in% "P1labo")
 dat1 <- subset(dat1, subset=Position %in% "MAP")
-dat1 <- subset(dat1, select = c(AreaCode,Value))
+dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
 dat1$AreaCode <- as.integer(dat1$AreaCode)
-dat1$Year <- as.integer(dat1$Year)
+# dat1$Year <- as.integer(dat1$Year)
 
 map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
@@ -907,7 +912,7 @@ p <- p + coord_flip()
 p <- p + labs(x="",y="\nindex")
 if (rulang) p <- p + labs(x="",y="\nиндекс")
 p <- p + guides(color = guide_legend(nrow = 2))
-p + theme(legend.justification = "left")
+p <- p + theme(legend.justification = "left")
 p
 
 yr = dat1$Year[1]

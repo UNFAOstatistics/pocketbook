@@ -1,6 +1,9 @@
 #################################################################################################
 # This is the main script used to control the production of FAO statistical pocketbook workflow #
 ################################################################################################
+caption_text <- "Caption not defined"
+spread_title <- "Spread title not defined"
+short_text <- "Short text not defined"
 
 options(scipen=999) # disable scientific number formatting
 
