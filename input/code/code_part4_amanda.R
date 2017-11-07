@@ -1,3 +1,5 @@
+## ---- part4_setup ----
+
 ## new data source
 ## can't get it to work with csv
 library(readxl)
@@ -13,7 +15,7 @@ if (rulang) {
   names(temp)[names(temp) == 'AreaNameRU'] <- 'AreaName'
   names(temp)[names(temp) == 'ItemNameRU'] <- 'ItemName'
 }
-## ---- part4_setup ----
+
 
 source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 

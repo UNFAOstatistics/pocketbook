@@ -1,3 +1,6 @@
+
+
+## ---- part2_setup ----
 ## new data source
 ## can't get it to work with csv
 library(readxl)
@@ -15,7 +18,6 @@ if (rulang) {
   names(temp)[names(temp) == 'ItemNameRU'] <- 'ItemName'
 }
 
-## ---- part2_setup ----
 source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
 syb_part <- 2
