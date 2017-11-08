@@ -1,3 +1,7 @@
+#!/usr/bin/r
+setwd("~/faosync/pocketbooks/pocketbook")
+# set root directory
+root.dir <- "~/faosync/pocketbooks/pocketbook/"
 # This  script converst the pdfs into images and makes comparisons etc
 
 ####################################################

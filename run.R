@@ -1,3 +1,5 @@
+#!/usr/bin/r
+setwd("~/faosync/pocketbooks/pocketbook")
 #################################################################################################
 # This is the main script used to control the production of FAO statistical pocketbook workflow #
 ################################################################################################
@@ -20,10 +22,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                          # ,"RAP" # Asia and the Pacific
-                        # ,"RAF"  # Africa
-                     "REU" # Europe and Central Asia
-                       # ,"RNE" # Near East and North Africa
+                          "RAP" # Asia and the Pacific
+                        ,"RAF"  # Africa
+                     ,"REU" # Europe and Central Asia
+                       ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -56,9 +58,9 @@ include_overview_map     <- T
 include_overview_tbl     <- T # do not include for coffee book
 # -------------------------------
 include_part1        <- T
-include_part2        <- F
-include_part3        <- F
-include_part4        <- F
+include_part2        <- T
+include_part3        <- T
+include_part4        <- T
 include_part5        <- F
 include_part6        <- F
 # include_part7        <- F # just a placeholder
@@ -67,7 +69,7 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- F
-include_definitions      <- F
+include_definitions      <- T
 # --------------------------- ----
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -101,7 +103,7 @@ csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 # https://github.com/UNFAOstatistics/pocketbook/wiki/Setting-up-the-system
 
 ## ---- load_libraries from CRAN
-PACKAGES <- c("devtools","tidyverse","knitr","stringr","FAOSTAT","stringr","WDI","wesanderson","xtable","extrafont","forcats","maptools","rgdal")
+PACKAGES <- c("devtools","tidyverse","knitr","stringr","FAOSTAT","WDI","xtable","extrafont","forcats","maptools","rgdal")
 # inst <- match(PACKAGES, .packages(all=TRUE, lib.loc = .libPaths()[1]))
 # need <- which(is.na(inst))
 # if (length(need) > 0) install.packages(PACKAGES[need], lib = .libPaths()[1])
