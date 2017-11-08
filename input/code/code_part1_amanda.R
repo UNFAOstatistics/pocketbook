@@ -1,29 +1,32 @@
-## new data source
-## can't get it to work with csv
+
+## ---- part1_setup ----
+# new data source
+# can't get it to work with csv
 library(readxl)
 url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",region_to_report,"_Charts_data_final.xlsx")
 destfile <- paste0(region_to_report,"_Charts_data_final.xlsx")
 curl::curl_download(url, destfile)
-temp <- read_excel(destfile, col_types = c("text", "text", "numeric", "text", 
-                                          "text", "text", "numeric", "text", 
-                                          "text", "text", "text", "text"))
+temp <- read_excel(destfile, col_types = c("text", "text", "numeric", "text",
+                                           "text", "text", "numeric", "text",
+                                           "text", "text", "text", "text"))
 
-## if RU, then remove EN names and rename RU columns
+# if RU, then remove EN names and rename RU columns
 if (rulang) {
   temp <- subset(temp, select = -c(AreaName,ItemName))
   names(temp)[names(temp) == 'AreaNameRU'] <- 'AreaName'
   names(temp)[names(temp) == 'ItemNameRU'] <- 'ItemName'
 }
 
-## ---- part1_setup ----
+
 source(paste0(root.dir,'/input/code/plot/plot_color.R'))
+source(paste0(root.dir,"input/code/knitr_hooks.R"))
 
 syb_part <- 1
 
-## Part 1
+# Part 1
 colPart1 <- plot_colors(part = syb_part, 12)
 col.main1 <- colPart1[["Main"]][1]
-## color for the grid
+# color for the grid
 col.main2 <- colPart1[["Main"]][2]
 
 source(paste0(root.dir,"/input/code/plot/theme.R"))
@@ -39,10 +42,13 @@ mapColors = mapColFun(nCol)
 source(paste0(root.dir,'/input/code/plot/map_categories.R'))
 
 # if (rulang){
-#   syb.df$SHORT_NAME <- ifelse(syb.df$FAOST_CODE <= 351, 
+#   syb.df$SHORT_NAME <- ifelse(syb.df$FAOST_CODE <= 351,
 #                               countrycode.multilang::countrycode(syb.df$FAOST_CODE, origin = "fao", destination = "country.name.russian.fao"),
 #                               syb.df$SHORT_NAME)
 # }
+
+
+
 
 
 #    ___                                  _
@@ -279,7 +285,7 @@ dat1$fill[dat1$Indicator == "NV.IND.TOTL.ZS"] <- "Industry"
 dat1$fill[dat1$Indicator == "NV.SRV.TETC.ZS"] <- "Services"
 
 dat1$AreaName <- factor(dat1$AreaName, levels=(dat1 %>% 
-                                       filter(fill == "Agriculture") %>% 
+                                       dplyr::filter(fill == "Agriculture") %>% 
                                        arrange(-Value))$AreaName)
 
 if (rulang) dat1$fill[dat1$fill == "Agriculture"] <- "в сельском хозяйстве"
@@ -388,7 +394,7 @@ dat_plot <- dat1 %>%
   na.omit() %>% 
   group_by(AreaName) %>% 
   mutate(n = n()) %>% 
-  filter(n >= 2) %>% 
+  dplyr::filter(n >= 2) %>% 
   ungroup() %>% 
   arrange(-Value) 
 
@@ -466,7 +472,7 @@ if (rulang) spread_title <- "Занятость"
 if (region_to_report == "REU" & rulang) short_text <- "Стабильный рынок труда является основой устойчивого благосостояния и экономического роста, инклюзивности и социальной сплоченности. Поэтому доступ к безопасной, продуктивной и оплачиваемой работе имеет первостепенное значение. Однако многие работники, в первую очередь наиболее уязвимые, не участвуют в формальной оплачиваемой занятости, а вместо этого являются самозанятыми или выполняют неоплачиваемую работу в семье, например, в сельском хозяйстве. Это в первую очередь распространяется на натуральное хозяйство. Поскольку значительная доля бедных слоев населения занята в сельском хозяйстве, изменения в этом секторе оказывают существенное влияние на уровень благосостояния населения."
 
 
-## ---- P1laboTOPRIGHT, eval=P1labo, top_right_plot=P1labo, fig.height=top_right_plot_height, fig.width=top_right_plot_width ----
+## ---- P1laboTOPRIGHT ----
 dat1 <- subset(temp, subset=Part %in% "P1labo")
 dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
 dat1 <- subset(dat1, select = c(AreaName,Indicator,Value,Year))
@@ -477,7 +483,7 @@ dat1$fill <- factor(dat1$fill, levels=c("Male","Female"))
 
 dat_plot <- dat1
 # reorder
-dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% filter(fill == "Male") %>% arrange(-Value))$AreaName)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% dplyr::filter(fill == "Male") %>% arrange(-Value))$AreaName)
 
 if (rulang){
   levels(dat_plot$fill)[levels(dat_plot$fill) == "Male"] <- "Мужчины"
@@ -742,7 +748,7 @@ dat1$fill[dat1$Indicator == "RF.FERT.PO.TN.SH"] <- "Potash"
 
 dat_plot <- dat1
 
-dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% filter(fill == "Nitrogen") %>% arrange(-Value))$AreaName)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% dplyr::filter(fill == "Nitrogen") %>% arrange(-Value))$AreaName)
 
 ncases <- nrow(dat_plot)
 
@@ -819,8 +825,8 @@ dat1 <- subset(temp, subset=Part %in% "P1invest")
 dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
 dat1 <- subset(dat1, select = c(Year,AreaName,Value))
 dat1$Year <- as.integer(dat1$Year)
-## ---- P1investTOPRIGHT ----
 
+## ---- P1investTOPRIGHT ----
 dat_plot <- dat1
 
 p <- ggplot(data = dat_plot, aes(x = Year, y = Value,group=AreaName,color=AreaName))
@@ -855,7 +861,7 @@ dat1 <- arrange(dat1, -Year, -Value)
 
 # slice the data for both years
 topY1 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-topY2 <- dat1 %>% filter(AreaName %in% topY1$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+topY2 <- dat1 %>% dplyr::filter(AreaName %in% topY1$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(topY1,topY2)
 # levels based on newest year
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(topY1,Value)$AreaName)
@@ -984,6 +990,8 @@ cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Valu
 cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks",decimals=2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
+
+## ---- p1investMAP ----
 
 # define map unit
 map_unit <- "percent"

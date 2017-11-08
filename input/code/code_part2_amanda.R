@@ -104,7 +104,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 
 # slice the data for both years
 top15 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top91 <- dat1 %>% filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top91 <- dat1 %>% dplyr::filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top15,top91)
 
 
@@ -153,7 +153,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 
 # slice the data for both years
 top15 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top91 <- dat1 %>% filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top91 <- dat1 %>% dplyr::filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top15,top91)
 
 
@@ -265,7 +265,7 @@ dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 
 dat_plot <- dat1
 # reorder
-# dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% filter(fill == "2014-16") %>% arrange(-value))$SHORT_NAME)
+# dat_plot$SHORT_NAME <- factor(dat_plot$SHORT_NAME, levels=(dat_plot %>% dplyr::filter(fill == "2014-16") %>% arrange(-value))$SHORT_NAME)
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=c("Developed countries","Developing countries","World"))
 
 if (rulang){
@@ -475,7 +475,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 
 # slice the data for both years
 top15 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top91 <- dat1 %>% filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top91 <- dat1 %>% dplyr::filter(AreaName %in% top15$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top15,top91)
 
 
@@ -668,7 +668,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat1 <- arrange(dat1, -Year, -Value)
 # slice the data for both years
 top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top2000 <- dat1 %>% dplyr::filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
@@ -720,7 +720,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat1 <- arrange(dat1, -Yr, -Value)
 # slice the data for both years
 top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top2000 <- dat1 %>% dplyr::filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
@@ -855,7 +855,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat1 <- arrange(dat1, -Yr, -Value)
 # slice the data for both years
 top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top2000 <- dat1 %>% dplyr::filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
@@ -905,7 +905,7 @@ if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
 dat1 <- arrange(dat1, -Yr, -Value)
 # slice the data for both years
 top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
-top2000 <- dat1 %>% filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
+top2000 <- dat1 %>% dplyr::filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
 dat_plot <- rbind(top2015,top2000)
 # levels based on newest year
 dat_plot$AreaName <- factor(dat_plot$AreaName, levels=arrange(top2015,Value)$AreaName)
@@ -945,7 +945,7 @@ dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 dat_plot <- dat1
-dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% filter(Year == maxYr) %>% arrange(-Value))$AreaName)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% dplyr::filter(Year == maxYr) %>% arrange(-Value))$AreaName)
 
 if (rulang){
   dat_plot$Year <- paste(dat_plot$Year," гг.")
