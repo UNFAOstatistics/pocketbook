@@ -98,6 +98,17 @@ meta_full <- meta.lst[["FULL"]]
 full_meta <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
 csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 
+
+# ***************************************************************
+# Load all new excel files at one go
+dir.create(paste0(root.dir,"input_data"), showWarnings = FALSE)
+for (rr in regionS_to_report){
+  url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",rr,"_Charts_data_final.xlsx")
+  destfile <- paste0(root.dir,"/input_data/",rr,"_Charts_data_final.xlsx")
+  # curl::curl_download(url, destfile)  
+  download.file(url, destfile)
+}
+
 # All packages now comes from the system library. 
 # Please look at the installation instructions at pocketbook wiki at
 # https://github.com/UNFAOstatistics/pocketbook/wiki/Setting-up-the-system

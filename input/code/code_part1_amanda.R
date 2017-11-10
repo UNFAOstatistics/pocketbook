@@ -2,13 +2,10 @@
 ## ---- part1_setup ----
 # new data source
 # can't get it to work with csv
-library(readxl)
-url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",region_to_report,"_Charts_data_final.xlsx")
-destfile <- paste0(region_to_report,"_Charts_data_final.xlsx")
-curl::curl_download(url, destfile)
-temp <- read_excel(destfile, col_types = c("text", "text", "numeric", "text",
-                                           "text", "text", "numeric", "text",
-                                           "text", "text", "text", "text"))
+temp <- readxl::read_excel(paste0(root.dir,"/input_data/",region_to_report,"_Charts_data_final.xlsx"), 
+                   col_types = c("text", "text", "numeric", "text",
+                                 "text", "text", "numeric", "text",
+                                  "text", "text", "text", "text"))
 
 # if RU, then remove EN names and rename RU columns
 if (rulang) {
