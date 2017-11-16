@@ -127,7 +127,7 @@ bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "L
 if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$AreaName %in% overlap,], 
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], 
                                           bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
@@ -167,7 +167,7 @@ bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "L
 if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$AreaName %in% overlap,], 
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], 
                                           bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
@@ -355,7 +355,7 @@ bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "L
 if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
 
 overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
-if (length(overlap)!=0) dat_plot <- rbind(top10[top10$AreaName %in% overlap,], 
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], 
                                           bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
 
 dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
