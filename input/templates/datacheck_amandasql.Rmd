@@ -1,0 +1,116 @@
+---
+title: Current excel-datasets described
+author: Markus Kainu
+date: "Last updated: ``r Sys.time()``"
+output: 
+  html_document:
+    theme: yeti 
+    toc: true
+    toc_float: false
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(list(echo=TRUE,
+                           eval=TRUE,
+                           cache=FALSE,
+                           warning=FALSE,
+                           message=FALSE))
+opts_chunk$set(fig.width = 13, fig.height = 13)
+options(scipen=999)
+#+ setup, include=FALSE
+library(stringr)
+library(DT)
+library(tidyverse)
+library(extrafont)
+loadfonts()
+library(showtext)
+library(hrbrthemes)
+library(readxl)
+library(forcats)
+```
+
+# Heatmap
+
+
+```{r}
+spreads <- read_csv("~/faosync/pocketbooks/pocketbook/input/define_spreads.csv")
+```
+
+```{r}
+dat <- data_frame()
+for (rr in c("REU","RAP","RNE","RAF")){
+ tmp <- read_excel(paste0("~/faosync/pocketbooks/pocketbook/input_data/",rr,"_Charts_data_final.xlsx"))
+ tmp$reg <- rr
+ dat <- bind_rows(dat,tmp)
+}  
+  
+dat  %>% 
+  count(reg,Part,Position) %>% 
+  mutate(Position = factor(Position, levels = c("TOPRIGHT",
+                                               "LEFT",
+                                               "RIGHT",
+                                               "BOTTOM",
+                                               "MAP")),
+         Part = factor(Part, levels = spreads$SPREAD[1:22]),
+         Part = fct_rev(Part)) %>% 
+    ggplot(., aes(x=Position, 
+               y=Part,fill=n,label=n)) + 
+  geom_tile() + geom_text(color = "white", size = 2.5) +
+  labs(title = "Rows per object for each region",
+       fill = "number of rows") +
+  theme_ipsum_rc() + 
+    facet_wrap(~reg) +
+  scale_x_discrete(position = "top") 
+
+```
+
+
+# Browse datas {.tabset}
+
+## REU
+
+```{r}
+read_excel("~/faosync/pocketbooks/pocketbook/input_data/REU_Charts_data_final.xlsx") %>% 
+             datatable(., filter = 'top', 
+                          options = list(
+                              search = list(regex = TRUE, caseInsensitive = FALSE),
+                              pageLength = 20
+  ))
+```
+
+## RAF
+
+```{r}
+read_excel("~/faosync/pocketbooks/pocketbook/input_data/RAF_Charts_data_final.xlsx") %>% 
+             datatable(., filter = 'top', 
+                          options = list(
+                              search = list(regex = TRUE, caseInsensitive = FALSE),
+                              pageLength = 20
+  ))
+```
+
+## RNE
+
+```{r}
+read_excel("~/faosync/pocketbooks/pocketbook/input_data/RNE_Charts_data_final.xlsx") %>% 
+             datatable(., filter = 'top', 
+                          options = list(
+                              search = list(regex = TRUE, caseInsensitive = FALSE),
+                              pageLength = 20
+  ))
+```
+
+## RAP
+
+```{r}
+read_excel("~/faosync/pocketbooks/pocketbook/input_data/RAP_Charts_data_final.xlsx") %>% 
+             datatable(., filter = 'top', 
+                          options = list(
+                              search = list(regex = TRUE, caseInsensitive = FALSE),
+                              pageLength = 20
+  ))
+```
+
+
