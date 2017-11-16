@@ -955,8 +955,8 @@ if (rulang){
 p <- ggplot(data=arrange(dat_plot,Indicator), aes(x = reorder(AreaName,-value_sum), y = Value))
 p <- p + geom_bar(aes(fill=Indicator), stat = "identity",position = "stack")
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 3)[["Sub"]])
-p <- p + labs(x="",y="million 2013 US$\n")
-if (rulang) p <- p + labs(x="",y="млн долл. США (в постоянных ценах 2013 г.)\n")
+p <- p + labs(x="",y="million 2015 US$\n")
+if (rulang) p <- p + labs(x="",y="млн долл. США (в постоянных ценах 2015 г.)\n")
 # p <- p + geom_vline(aes(xintercept=2015), color="grey20", linetype="dashed")
 # p <- p + scale_x_continuous(breaks=min(dat_plot$Year):max(dat_plot$Year))
 p <- p + theme(axis.text.x = element_text(angle=90,vjust=.5))
@@ -964,10 +964,10 @@ p
 
 yr = dat1$Year[1]
 # Caption
-caption_text <- paste("Aid commitment flows to Agriculture, Forestry and Fishing, top",length(unique(dat_plot$AreaName)),"countries in",yr,"(million 2013 US\\$)")
+caption_text <- paste("Aid commitment flows to Agriculture, Forestry and Fishing, top",length(unique(dat_plot$AreaName)),"countries in",yr,"(million 2015 US\\$)")
 if (rulang) caption_text <- paste("Потоки помощи в сельское хозяйство, лесное хозяйство и рыбное хозяйство,",
                                   length(unique(dat_plot$AreaName)),
-                                  "стран с самыми высокими значениями в",yr,"г. (млн долл. США, в постоянных ценах 2013 г.)")
+                                  "стран с самыми высокими значениями в",yr,"г. (млн долл. США, в постоянных ценах 2015 г.)")
 
 ## ---- p1investMAPdata ----
 dat1 <- subset(temp, subset=Part %in% "P1invest")
