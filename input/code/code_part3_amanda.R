@@ -80,10 +80,22 @@ if (rulang){
 }
 sum <- 100
 dat_plot <- dat1
+dat_plot <- dat_plot %>% dplyr::mutate(mean = Value/sum(Value)*100)
 
-p <- ggplot(dat_plot, aes(x=sum/2, y = Value, fill = ItemName, width = sum, ymax=1))
+p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = var, width = sum, ymax=1))
 p <- p + geom_bar(position="fill", stat="identity")
-p <- p + geom_label(aes(x=sum*2.0/2,y=Value-2,label=paste0(round(Value,1),"%")),
+p <- p + geom_label(aes(x=sum*2.0/2,y=mean+2,label=paste0(round(wmean,1),"%")),
+                    label.padding = unit(0.10, "lines"),
+                    position="fill",
+                    color="white",lineheight=.7,
+                    stat="identity",alpha=.9,
+                    size=3,family="PT Sans",fontface="bold",show.legend=FALSE)
+
+
+p <- ggplot(dat_plot, aes(x=sum/2, y = mean, fill = ItemName, width = sum, ymax=1))
+p <- p + geom_bar(position="fill", stat="identity")
+#p <- p + geom_label(aes(x=sum*2.0/2,y=mean+2,label=paste0(round(Value,1),"%")),
+p <- p + geom_label(aes(x=sum,y=mean,label=paste0(round(Value,1),"%")),
                     label.padding = unit(0.10, "lines"),
                     position="fill",
                     color="white",lineheight=.7,
@@ -423,12 +435,13 @@ p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
                            yend = as.name(maxYr)), color="grey80")
 p <- p + geom_point(aes(fill=color),size = 4, alpha = 0.75, pch=21, color="white") + theme(panel.grid.major.y = element_blank())
 p <- p + scale_fill_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-signp <- p + coord_flip()
+p <- p + coord_flip()
 p <- p + labs(x="",y="\nconstant 2004 - 2006 Int$")
 if (rulang) p <- p + labs(x="",y="\nпост. межд. долл.  \n2004 − 2006 гг.")
 p <- p + guides(color = guide_legend(nrow = 1))
 p <- p + scale_y_continuous(labels=space)
 p
+
 
 
 # Caption
@@ -861,7 +874,7 @@ dat_plot <- dat1 %>%
 library(ggrepel)
 p <- ggplot(dat_plot, aes(x=sum/2, y = Value, fill = AreaName, width = sum, label=Value, ymax=1))
 p <- p + geom_bar(position="fill", stat="identity")
-p <- p + geom_label(aes(x=sum*2/2,y=share+14),
+p <- p + geom_label(aes(x=sum,y=share),
                     label.padding = unit(0.10, "lines"),
                     position="fill",
                     color="white",
@@ -919,7 +932,7 @@ map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that 
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
-cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks",decimals=1)
+cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks",decimals=2)
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -974,14 +987,14 @@ maxYr <- max(dat1$Year)
 
 ## ---- P3fisheriesTOPRIGHT ----
 if (rulang){
-  dat1$fill[dat1$variable == "capture_fish_production"] <- "Рыболовство"
-  dat1$fill[dat1$variable == "aquaculture_fish_production"] <- "Аквакультура"
+  dat1$fill[dat1$Indicator == "capture_fish_production"] <- "Рыболовство"
+  dat1$fill[dat1$Indicator == "aquaculture_fish_production"] <- "Аквакультура"
 } else {
-  dat1$fill[dat1$variable == "capture_fish_production"] <- "From capture fishing"
-  dat1$fill[dat1$variable == "aquaculture_fish_production"] <- "From aquaculture"
+  dat1$fill[dat1$Indicator == "capture_fish_production"] <- "From capture fishing"
+  dat1$fill[dat1$Indicator == "aquaculture_fish_production"] <- "From aquaculture"
 }
 
-p <- ggplot(dat1, aes(x=Year, y=Value, color=Indicator))
+p <- ggplot(dat1, aes(x=Year, y=Value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + labs(x="",y="million tonnes\n")
