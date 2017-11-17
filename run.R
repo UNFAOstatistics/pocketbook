@@ -22,10 +22,10 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 ## ---- chapters_to_include ----
 regionS_to_report <- c(
                       # "GLO" # Global
-                          "RAP" # Asia and the Pacific
-                        ,"RAF"  # Africa
-                     ,"REU" # Europe and Central Asia
-                       ,"RNE" # Near East and North Africa
+                          # "RAP" # Asia and the Pacific
+                        # ,"RAF"  # Africa
+                     "REU" # Europe and Central Asia
+                       # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
                         #,"LAC" # Latin America and the Caribbean
                       )
@@ -102,13 +102,14 @@ csv_data <- readRDS("~/local_data/faostat/metadata/csv_data.RDS")
 # ***************************************************************
 # Load all new excel files at one go
 dir.create(paste0(root.dir,"input_data"), showWarnings = FALSE)
+if (TRUE){
 for (rr in regionS_to_report){
   url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",rr,"_Charts_data_final.xlsx")
   destfile <- paste0(root.dir,"/input_data/",rr,"_Charts_data_final.xlsx")
   # curl::curl_download(url, destfile)  
   download.file(url, destfile)
 }
-
+}
 # All packages now comes from the system library. 
 # Please look at the installation instructions at pocketbook wiki at
 # https://github.com/UNFAOstatistics/pocketbook/wiki/Setting-up-the-system

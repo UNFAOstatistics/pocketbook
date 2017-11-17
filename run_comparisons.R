@@ -1066,11 +1066,18 @@ if (amanda){
 file.copy(paste0(root.dir,"/input/templates/toc.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 file.copy(paste0(root.dir,"/input/templates/datatests.html"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 file.copy(paste0(root.dir,"/input/templates/github_browser_edit.gif"), to = paste0(root.dir,"/output"), overwrite = TRUE)
-
+file.copy(paste0(root.dir,"/input/templates/datacheck_amandasql.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 
 setwd(paste0(root.dir,"/output"))
 rmarkdown::render("toc.Rmd", output_file = "index.html")
+rmarkdown::render("datacheck_amandasql.Rmd", output_file = "datacheck_amandasql.html")
 file.remove("./toc.Rmd")
+file.remove("./datacheck_amandasql.Rmd")
+
+fly <- readLines("./datacheck_amandasql.html")
+fly <- gsub("max-width: 940px;", "max-width: 1240px;", fly)
+writeLines(fly, "./datacheck_amandasql.html")
+
 setwd(root.dir)
 
 unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE) 
