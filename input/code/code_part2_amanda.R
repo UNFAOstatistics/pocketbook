@@ -653,16 +653,20 @@ if (rulang) caption_text <- paste("Масштабы дефицита продо�
 dat1 <- subset(temp, subset=Part %in% "P2access")
 dat1 <- subset(dat1, subset=Position %in% "LEFT")
 dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
-dat1$Year <- as.integer((dat1$Year))
+dat1 <- dat1 %>% 
+  dplyr::mutate(Yr = substr(dat1$Year,1,4))
+dat1$Yr <- as.integer((dat1$Yr)) + 1
 
-minYr <- min(dat1$Year)
-maxYr <- max(dat1$Year)
+# for new indicator Severe food insecurity, there is one one year'
+minYr = min(dat1$Yr)
+maxYr = max(dat1$Yr)
 
 # semi-standard data munging for two year dot-plots
 # Plot only as many countries as there are for particular region, max 20
 nro_latest_cases <- nrow(dat1[dat1$Year == max(dat1$Year),])
 if (nro_latest_cases < 20) {ncases <- nro_latest_cases} else ncases <- 20
-dat1 <- arrange(dat1, -Year, -Value)
+dat1 <- arrange(dat1, -Yr, -Value)
+
 # slice the data for both years
 top2015 <- dat1 %>% slice(1:ncases) %>% dplyr::mutate(color = maxYr)
 top2000 <- dat1 %>% dplyr::filter(AreaName %in% top2015$AreaName, Year == minYr) %>% dplyr::mutate(color = minYr)
@@ -680,7 +684,7 @@ dat_plot <- arrange(dat_plot, color)
 dat_plot$color <- as.character(dat_plot$color)
 
 p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
-p <- p + geom_segment(data=dat_plot %>% select(Year,AreaName,Value) %>%
+p <- p + geom_segment(data=dat_plot %>% select(Yr,AreaName,Value) %>%
                         spread(key = Year, value = Value) %>% 
                         mutate(color=NA), 
                       aes_(y = as.name(minYr), xend = quote(AreaName),
@@ -695,8 +699,12 @@ p
 
 
 # Caption
-caption_text <- paste("Prevalence of severe food insecurity, top ",ncases," countries in ",maxYr," (",minYr," to ",maxYr,")", sep = "")
-if (rulang) caption_text <- paste("Распространенность серьезной продовольственной необеспеченности, ",ncases," стран с самыми высокими значениями в ",maxYr," году (с ",minYr," по ",maxYr," гг.)", sep = "")
+#caption_text <- paste("Prevalence of severe food insecurity, top ",ncases," countries in ",maxYr," (",minYr," to ",maxYr,")", sep = "")
+#if (rulang) caption_text <- paste("Распространенность серьезной продовольственной необеспеченно
+#                                  сти, ",ncases," стран с самыми высокими значениями в ",maxYr," году (с ",minYr," по ",maxYr," гг.)", sep = "")
+caption_text <- paste("Prevalence of severe food insecurity, top ",ncases," countries in ",dat1$Year[1], sep = "")
+if (rulang) caption_text <- paste("Распространенность серьезной продовольственной необеспеченно
+                                  сти, ",ncases," стран с самыми высокими значениями в ",dat1$Year[1]," году", sep = "")
 
 
 ## ---- P2accessRIGHT ----
@@ -778,7 +786,7 @@ dat1$AreaCode <- as.integer(dat1$AreaCode)
 map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
 cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
-cat_data$value_cat <- categories(x=cat_data$Value, n=5) # manualBreaks = c(0, 5, 15, 25, 35, 100),
+cat_data$value_cat <- categories(x=cat_data$Value, n=3,decimals=2) # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -1089,7 +1097,19 @@ dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
 dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 dat1$Year <- as.integer(dat1$Year)
 
+
 dat_plot <- dat1
+
+dat_plot$Indicator <- as.character(dat_plot$Indicator)
+dat_plot$Indicator[dat_plot$Indicator == "SH.H2O.SAFE.ZS"] <- "Water source"
+dat_plot$Indicator[dat_plot$Indicator == "SH.STA.ACSN"] <- "Sanitation facilities"
+
+if (rulang){
+  
+  dat_plot$Indicator[dat_plot$Indicator == "Water source"] <- "Источник воды"
+  dat_plot$Indicator[dat_plot$Indicator == "Sanitation facilities"] <- "Санитарные-технические сооружения"
+  
+}
 
 p <- ggplot(dat_plot, aes(x=Year,y=Value,color=Indicator))
 p <- p + geom_line(size=1.1, alpha=.7)
