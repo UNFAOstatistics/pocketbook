@@ -17,11 +17,12 @@ knitr::opts_chunk$set(list(echo=TRUE,
                            cache=FALSE,
                            warning=FALSE,
                            message=FALSE))
-opts_chunk$set(fig.width = 13, fig.height = 13)
+opts_chunk$set(fig.width = 13, fig.height = 7)
 options(scipen=999)
 #+ setup, include=FALSE
 library(stringr)
 library(DT)
+library(glue)
 library(tidyverse)
 library(extrafont)
 loadfonts()
@@ -37,6 +38,8 @@ library(forcats)
 ```{r}
 spreads <- read_csv("~/faosync/pocketbooks/pocketbook/input/define_spreads.csv")
 ```
+
+## At the object level
 
 ```{r}
 dat <- data_frame()
@@ -61,10 +64,47 @@ dat  %>%
   labs(title = "Rows per object for each region",
        fill = "number of rows") +
   theme_ipsum_rc() + 
-    facet_wrap(~reg) +
-  scale_x_discrete(position = "top") 
+    facet_wrap(~reg, nrow = 1) +
+  scale_x_discrete(position = "top")  +
+  scale_fill_continuous(na.value = 'salmon')
 
 ```
+
+
+## At the year level within object
+
+```{r, results = "asis", fig.height = 14}
+dat  %>% 
+  count(reg,Part,Position,Year) %>% 
+  mutate(Position = factor(Position, levels = c("TOPRIGHT",
+                                               "LEFT",
+                                               "RIGHT",
+                                               "BOTTOM",
+                                               "MAP")),
+         Part = factor(Part, levels = spreads$SPREAD[1:22])) -> df 
+
+
+for(pt in rev(unique(levels(df$Position)))){
+# for(pt in rev(unique(levels(df$Part)))){
+
+cat(glue("**Position: {pt} **"))
+
+  df %>% filter(Position == pt) %>% 
+    ggplot(., aes(x=reg, 
+               y=Year,fill=n,label=n)) + 
+  geom_tile() + geom_text(color = "white", size = 2.5) +
+  labs(title= glue("Position: {pt}"),
+    subtitle = "Rows per object for each region",
+       fill = "number of rows") +
+  theme_ipsum_rc() + 
+    facet_wrap(~Part, ncol = 5, scales = "free_y") +
+  scale_x_discrete(position = "top") +
+    scale_fill_continuous(na.value = 'salmon') -> p
+  print(p)
+}
+cat("\n\n")
+```
+
 
 
 # Browse datas {.tabset}
