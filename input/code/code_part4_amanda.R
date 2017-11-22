@@ -99,22 +99,26 @@ dat1 <- subset(temp, subset=Part %in% "P4land")
 dat1 <- subset(dat1, subset=Position %in% "LEFT")
 dat1 <- subset(dat1, select = c(AreaName,Value,Year))
 
-# top for this plot
-dat_plot1 <- dat1 %>% 
-  group_by(AreaName) %>% 
-  ungroup() %>% 
-  arrange(-Value) %>% 
-  slice(1:20) %>% 
-  dplyr::mutate(color = "2015")
+# top and bottom for this plot
+dat1 <- arrange(dat1, -Value)
 
-dat_plot1$AreaName <- fct_reorder(dat_plot1$AreaName, dat_plot1$Value) 
+top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+if (rulang) top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Самые высокие значения")
 
-p <- ggplot(dat_plot1, aes(x=AreaName,y=Value))
-p <- p + geom_segment(aes(y = min(dat_plot1$Value), xend = AreaName, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Lowest values")
+if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
+
+overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], 
+                                          bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+
+dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
+
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = AreaName, 
+                          yend = Value, color=color), alpha=.5, show.legend = FALSE)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)  + theme(panel.grid.major.y = element_blank())
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n\nha/cap")
 if (rulang) p <- p + labs(x="",y="\nга на душу населения")
@@ -123,8 +127,8 @@ p
 
 
 # Caption
-caption_text <- paste("Arable land per capita, top ",nrow(dat_plot1)," countries (",dat1$Year[1],")", sep = "")
-if (rulang) caption_text <- paste("Пахотные земли на душу населения, ",nrow(dat_plot1)," стран с самыми высокими значениями (",dat1$Year[1]," г.)", sep = "")
+caption_text <- paste("Arable land per capita, top and bottom ",nrow(dat_plot)/2," countries (",dat1$Year[1],")", sep = "")
+if (rulang) caption_text <- paste("Пахотные земли на душу населения, ",nrow(dat_plot)," стран с самыми высокими и самыми низкими значениями (",dat1$Year[1]," г.)", sep = "")
 
 
 ## ---- P4landRIGHT ----
@@ -132,22 +136,26 @@ dat1 <- subset(temp, subset=Part %in% "P4land")
 dat1 <- subset(dat1, subset=Position %in% "RIGHT")
 dat1 <- subset(dat1, select = c(AreaName,Value,Year))
 
-# top for this plot
-dat_plot1 <- dat1 %>% 
-  group_by(AreaName) %>% 
-  ungroup() %>% 
-  arrange(-Value) %>% 
-  slice(1:20) %>% 
-  dplyr::mutate(color = "2015")
+# top and bottom for this plot
+dat1 <- arrange(dat1, -Value)
 
-dat_plot1$AreaName <- fct_reorder(dat_plot1$AreaName, dat_plot1$Value) 
+top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Highest values")
+if (rulang) top10 <- dat1 %>% slice(1:10) %>% dplyr::mutate(color = "Самые высокие значения")
 
-p <- ggplot(dat_plot1, aes(x=AreaName,y=Value))
-p <- p + geom_segment(aes(y = min(dat_plot1$Value), xend = AreaName, 
-                          yend = Value, color=color), alpha=.5)
-p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75) + theme(panel.grid.major.y = element_blank())
-p <- p + scale_color_manual(values=plot_colors(part = syb_part, 1)[["Sub"]])
-p <- p + theme(legend.position = "none") # hide legend as only one year plotted
+bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Lowest values")
+if (rulang) bot10 <- dat1 %>% slice( (nrow(dat1)-9):nrow(dat1)) %>% dplyr::mutate(color = "Самые низкие значения")
+
+overlap <- top10$AreaName[top10$AreaName %in% bot10$AreaName]
+if (length(overlap)!=0) dat_plot <- rbind(top10[!top10$AreaName %in% overlap,], 
+                                          bot10[!bot10$AreaName %in% overlap,]) else dat_plot <- rbind(top10,bot10)
+
+dat_plot$AreaName <- fct_reorder(dat_plot$AreaName, dat_plot$Value) 
+
+p <- ggplot(dat_plot, aes(x=AreaName,y=Value))
+p <- p + geom_segment(aes(y = 0, xend = AreaName, 
+                          yend = Value, color=color), alpha=.5, show.legend = FALSE)
+p <- p + geom_point(aes(color=color),size = 3, alpha = 0.75)  + theme(panel.grid.major.y = element_blank())
+p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
 p <- p + coord_flip()
 p <- p + labs(x="",y="\n\nha/cap")
 if (rulang) p <- p + labs(x="",y="\nга на душу населения")
@@ -156,9 +164,8 @@ p
 
 
 # Caption
-caption_text <- paste("Arable land per capita, bottom ",nrow(dat_plot1)," countries (",dat1$Year[1],")", sep = "")
-if (rulang) caption_text <- paste("Пахотные земли на душу населения, ",nrow(dat_plot1)," стран с самыми низкими значениями (",dat1$Year[1]," г.)", sep = "")
-
+caption_text <- paste("Permanent crops per capita, top and bottom ",nrow(dat_plot)/2," countries (",dat1$Year[1],")", sep = "")
+if (rulang) caption_text <- paste("Многолетние сельскохозяйственные культуры на душу населения, ",nrow(dat_plot)," стран с самыми высокими и самыми низкими значениями (",dat1$Year[1]," г.)", sep = "")
 
 
 ## ---- P4landBOTTOM ----
