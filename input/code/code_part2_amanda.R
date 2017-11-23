@@ -285,7 +285,7 @@ maxYr <- max(dat1$Year)
 
 # Caption
 caption_text <- paste0("Prevalence of obesity among adults (",minYr," and ",maxYr,")",dag_char, sep = "")
-if (rulang) caption_text <- paste0("Распространенность ожирения среди взрослых (",minYr," и ",maxYr," гг.)",dag_char, sep = "")
+if (rulang) caption_text <- paste0("Распространенность ожирения у взрослых (",minYr," и ",maxYr," гг.)",dag_char, sep = "")
 
 
 
@@ -377,7 +377,7 @@ minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 # Caption
 caption_text <- paste("Prevalence of obesity among adults (",minYr," to ",maxYr,")",dag_char, sep = "")
-if (rulang) caption_text <- paste("Распространенность ожирения среди взрослых (",minYr," to ",maxYr," гг.)",dag_char, sep = "")
+if (rulang) caption_text <- paste("Распространенность ожирения у взрослых (",minYr," to ",maxYr," гг.)",dag_char, sep = "")
 
 ## ---- P2obesityMAP ----
 dat1 <- subset(temp, subset=Part %in% "P2obesity")
@@ -700,10 +700,10 @@ p
 
 # Caption
 #caption_text <- paste("Prevalence of severe food insecurity, top ",ncases," countries in ",maxYr," (",minYr," to ",maxYr,")", sep = "")
-#if (rulang) caption_text <- paste("Распространенность серьезной продовольственной необеспеченно
+#if (rulang) caption_text <- paste("Распространенность тяжелой формы отсутствия продовольственной безопасности
 #                                  сти, ",ncases," стран с самыми высокими значениями в ",maxYr," году (с ",minYr," по ",maxYr," гг.)", sep = "")
 caption_text <- paste("Prevalence of severe food insecurity, top ",ncases," countries in ",dat1$Year[1], sep = "")
-if (rulang) caption_text <- paste("Распространенность серьезной продовольственной необеспеченно
+if (rulang) caption_text <- paste("Распространенность тяжелой формы отсутствия продовольственной безопасности
                                   сти, ",ncases," стран с самыми высокими значениями в ",dat1$Year[1]," году", sep = "")
 
 
@@ -801,7 +801,7 @@ p
 yr = dat1$Year[1]
 # Caption
 caption_text <- paste("Rail lines density, km per 100 km\\textsuperscript{2} of land area (",yr,"*)", sep = "")
-if (rulang) caption_text <- paste("Плотность железнодорожных линий, в км на 100 км2 площади суши (",yr," гг.*)", sep = "")
+if (rulang) caption_text <- paste("Плотность железнодорожной сети, в км на 100 км2 площади суши (",yr," гг.*)", sep = "")
 
 #   _____                       _           _             _       _   _   _   _
 #  |  ___|   ___     ___     __| |    ___  | |_    __ _  | |__   (_) | | (_) | |_   _   _
