@@ -45,7 +45,7 @@ Environment,43,RL.AREA.FOR.HA.SH,NA,NA,Forest area (%),0.01,1,Площадь л�
 Environment,44,AQ.WAT.RFRWTOT.MC.SH,NA,NA,Renewable water res withdrawn (% of total),NA,1,Забор воды из возобновляемых источников (% от общего забора),Окружающая среда
 Environment,45,ER.LND.PTLD.ZS,NA,NA,Terrestrial protect areas (% total land area) ,NA,1,Наземные охран. природ. территории (% от общей пл. земли),Окружающая среда
 Environment,46,RL.AREA.AGRORG.HA.SH,NA,NA,Organic area (% total agricultural area),0.01,1,Органические земли (% сельскохозяйственных земель),Окружающая среда
-Environment,47,BP.TP.GP.TJ.NO,NA,NA,Biofuel production (thousand kt of oil eq.),1000,0,Производство биотоплива (тыс. кт нефтяного эквивалента),Окружающая среда
+Environment,47,BP.TP.GP.TJ.NO,NA,NA,Production of biofuels and wastes (TJ),1000,0,Производство биотоплива и отходов (TJ),Окружающая среда
 Environment,48,FO.WP.PQ.TN.NO,NA,NA,Wood pellet prod. (mln tonnes),1000,0,Производство древесных гранул (млн тонн),Окружающая среда
 Environment,49,GHG.AFOLU.TOT.ECO2EQ.NO,NA,NA,"Net GHG emissions from AFOLU (CO2 eq, Mt)",1000,0,Чистые выбросы парниковых газов от СХЛХДВЗ (СО2-экв, Мт),Окружающая среда
 
