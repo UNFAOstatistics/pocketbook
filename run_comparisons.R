@@ -11,14 +11,14 @@ root.dir <- "~/faosync/pocketbooks/pocketbook/"
 amanda <- FALSE
 
 books <- c(
-          # "GLO"
-          # ,"GLO15"
-          "RAP"
-          # ,"RAF"
-          # ,"REU"
-          # ,"REU_ru"
-          # ,"RNE"
-          )
+  # "GLO"
+  # ,"GLO15"
+  "RAP"
+  ,"RAF"
+  ,"REU"
+  ,"REU_ru"
+  ,"RNE"
+)
 
 
 for (region_to_report in books){
@@ -44,98 +44,98 @@ for (region_to_report in books){
 # regional comparison with global
 # ------------------------------------
 for (region_to_report in books){
-  setwd(paste0(root.dir,"/output/pdf"))
-  if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
-  fileOut <- paste0(region_to_report,".html")
-  file.remove(fileOut)
-  file.create(fileOut, showWarnings = FALSE)
-  
-  # number of images in the folder
-  nr_of_pages1 <- length(list.files(path = "GLO/", pattern = ".jpg"))
-  nr_of_pages2 <- length(list.files(path = paste0(region_to_report,"/"), pattern = ".jpg"))
-  if (nr_of_pages1 >= nr_of_pages2){
-    nr_of_pages <- nr_of_pages2
-  } else nr_of_pages <- nr_of_pages1
-  nr_of_pages <- nr_of_pages -2
-  cat(paste0("
+setwd(paste0(root.dir,"/output/pdf"))
+if (!file.exists(paste0("syb_main_",region_to_report,".pdf"))) next()
+fileOut <- paste0(region_to_report,".html")
+file.remove(fileOut)
+file.create(fileOut, showWarnings = FALSE)
+
+# number of images in the folder
+nr_of_pages1 <- length(list.files(path = "GLO/", pattern = ".jpg"))
+nr_of_pages2 <- length(list.files(path = paste0(region_to_report,"/"), pattern = ".jpg"))
+if (nr_of_pages1 >= nr_of_pages2){
+nr_of_pages <- nr_of_pages2
+} else nr_of_pages <- nr_of_pages1
+nr_of_pages <- nr_of_pages -2
+cat(paste0("
  <body bgcolor='#669999'>
-            
-<h1> spreads<h1>
-              
-<table>
-<tr>
-<th>Comments</th><th>latest</th><th>As in 20170601 - before new data, after Staceys comments</th><th>As in 20170328</th><th>20170306 - prior Staceys comments</th><th>20170221 - prior bulk</th>
-</tr>
-<tr>
-<td>
-<iframe name='embed_readwrite' src='http://pad.okfn.org/p/faopocketbook2016",region_to_report,"?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
-</td>
-<td>
-            "),
+ 
+ <h1> spreads<h1>
+ 
+ <table>
+ <tr>
+ <th>Comments</th><th>latest</th><th>As in 20170601 - before new data, after Staceys comments</th><th>As in 20170328</th><th>20170306 - prior Staceys comments</th><th>20170221 - prior bulk</th>
+ </tr>
+ <tr>
+ <td>
+   <iframe name='embed_readwrite' src='http://pad.okfn.org/p/faopocketbook2016",region_to_report,"?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(800+20),"></iframe> 
+   </td>
+   <td>
+   "),
 file = fileOut, append = TRUE) 
 
 
 # number of images in the folder
-  for (i in 1:nr_of_pages){
-    cat(paste0('
-<img src="',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
-'),
-        file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+cat(paste0('
+     <img src="',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+     '),
+file = fileOut, append = TRUE) 
 }
 
 cat(paste('
-</td>
-<td>
-'),
-      file = fileOut, append = TRUE) 
+  </td>
+  <td>
+  '),
+file = fileOut, append = TRUE) 
 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="../pdf_tmp_20170601/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
-'),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+     <img src="../pdf_tmp_20170601/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+     '),
+file = fileOut, append = TRUE) 
 }
 
 cat(paste('
-</td>
-<td>
-'),
-    file = fileOut, append = TRUE) 
-  
-  for (i in 1:nr_of_pages){
-    cat(paste0('
-<img src="../pdf_tmp_20170328/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
-'),
-        file = fileOut, append = TRUE) 
-  }
-  
-  
-cat(paste('
-</td>
-<td>
-'),
-    file = fileOut, append = TRUE) 
+  </td>
+  <td>
+  '),
+file = fileOut, append = TRUE) 
 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="../pdf_tmp_20170306/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
-'),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+     <img src="../pdf_tmp_20170328/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+     '),
+file = fileOut, append = TRUE) 
 }
 
 
 cat(paste('
-</td>
-<td>
-'),
-    file = fileOut, append = TRUE) 
+  </td>
+  <td>
+  '),
+file = fileOut, append = TRUE) 
+
+for (i in 1:nr_of_pages){
+cat(paste0('
+     <img src="../pdf_tmp_20170306/',region_to_report,'/page-',i,'.jpg" vspace="10"  height="800"/></br>
+     '),
+file = fileOut, append = TRUE) 
+}
+
+
+cat(paste('
+  </td>
+  <td>
+  '),
+file = fileOut, append = TRUE) 
 
 # number of images in the folder
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="../pdf_tmp_20170221/',region_to_report,'/page-',i-1,'.jpg" vspace="10"  height="800"/></br>
-'),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+     <img src="../pdf_tmp_20170221/',region_to_report,'/page-',i-1,'.jpg" vspace="10"  height="800"/></br>
+     '),
+file = fileOut, append = TRUE) 
 }
 
 # cat(paste('
@@ -152,11 +152,11 @@ for (i in 1:nr_of_pages){
 # }
 
 cat(paste0("
-</td>
-</table>
-</body>
-"),
-    file = fileOut, append = TRUE) 
+   </td>
+   </table>
+   </body>
+   "),
+file = fileOut, append = TRUE) 
 
 }
 
@@ -236,33 +236,33 @@ cat(paste('
 <tr>
 <td>            
 '),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 # number of images in the folder
 nr_of_pages1 <- length(list.files(path = "REU/", pattern = ".jpg"))
 nr_of_pages2 <- length(list.files(path = "REU_ru/", pattern = ".jpg"))
 if (nr_of_pages1 >= nr_of_pages2){
-  nr_of_pages <- nr_of_pages2
+nr_of_pages <- nr_of_pages2
 } else nr_of_pages <- nr_of_pages1
 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="REU/page-',i-1,'.jpg" vspace="10" height="800"/></br>
-               '),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+   <img src="REU/page-',i-1,'.jpg" vspace="10" height="800"/></br>
+   '),
+file = fileOut, append = TRUE) 
 }
 
 cat(paste('
 </td>
 <td>
-          '),
-    file = fileOut, append = TRUE) 
+'),
+file = fileOut, append = TRUE) 
 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="REU_ru/page-',i-1,'.jpg" vspace="10" height="800"/></br>
-               '),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+   <img src="REU_ru/page-',i-1,'.jpg" vspace="10" height="800"/></br>
+   '),
+file = fileOut, append = TRUE) 
 }
 cat(paste("
 </td>
@@ -273,7 +273,7 @@ cat(paste("
 
 </body>
 "),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 
 # 
@@ -373,81 +373,81 @@ cat(paste('
 <tr>
 <td>            
 '),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 # number of images in the folder
 nr_of_pages <- length(list.files(path = "RNE/", pattern = ".jpg"))
 
 
 cat(paste0("
-<iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016all?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(620+20),"></iframe> 
-</td>
-<td>
-"), file=fileOut, append=TRUE)
+ <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016all?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=",nr_of_pages*(620+20),"></iframe> 
+ </td>
+ <td>
+ "), file=fileOut, append=TRUE)
 
 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="REU/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-'),
-      file = fileOut, append = TRUE) 
-}
-cat(paste('
-</td>
-          <td>
-          '),
-    file = fileOut, append = TRUE) 
-for (i in 1:nr_of_pages){
-  cat(paste0('
-             <img src="REU_ru/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-             '),
-      file = fileOut, append = TRUE) 
-}
-
-cat(paste('
-</td>
-<td>
-'),
-    file = fileOut, append = TRUE) 
-for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="RAP/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-'),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+   <img src="REU/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+   '),
+file = fileOut, append = TRUE) 
 }
 cat(paste('
 </td>
 <td>
 '),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="RAF/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-             '),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+   <img src="REU_ru/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+   '),
+file = fileOut, append = TRUE) 
 }
+
 cat(paste('
 </td>
-          <td>
-          '),
-    file = fileOut, append = TRUE) 
+<td>
+'),
+file = fileOut, append = TRUE) 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-             <img src="RNE/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-             '),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+   <img src="RAP/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+   '),
+file = fileOut, append = TRUE) 
 }
 cat(paste('
 </td>
 <td>
-          '),
-    file = fileOut, append = TRUE) 
+'),
+file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+cat(paste0('
+   <img src="RAF/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+   '),
+file = fileOut, append = TRUE) 
+}
+cat(paste('
+</td>
+<td>
+'),
+file = fileOut, append = TRUE) 
+for (i in 1:nr_of_pages){
+cat(paste0('
+   <img src="RNE/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+   '),
+file = fileOut, append = TRUE) 
+}
+cat(paste('
+</td>
+<td>
+'),
+file = fileOut, append = TRUE) 
 
 for (i in 1:nr_of_pages){
-  cat(paste0('
-<img src="GLO/page-',i-1,'.jpg" vspace="10" height="620"/></br>
-'),
-      file = fileOut, append = TRUE) 
+cat(paste0('
+   <img src="GLO/page-',i-1,'.jpg" vspace="10" height="620"/></br>
+   '),
+file = fileOut, append = TRUE) 
 }
 
 cat(paste("
@@ -456,7 +456,7 @@ cat(paste("
 
 </body>
 "),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 
 
@@ -479,7 +479,7 @@ cat(paste('
 <tr>
 <td>            
 '),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 cat("
 # <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016countryprofiles?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=23500></iframe> 
@@ -488,7 +488,7 @@ cat("
 ", file=fileOut, append=TRUE)
 
 # number of images in the folder
-  cat('
+cat('
 <h3>REU-book</h3>
 <img src="REU/page-56.jpg" vspace="10" height="1200"/></br>
 <img src="REU/page-67.jpg" vspace="10" height="1200"/></br>
@@ -514,8 +514,8 @@ cat("
 <img src="GLO/page-67.jpg" vspace="10" height="1200"/></br>
 <img src="GLO/page-134.jpg" vspace="10" height="1200"/></br>
 <img src="GLO/page-229.jpg" vspace="10" height="1200"/></br>
-               ',
-      file = fileOut, append = TRUE) 
+',
+file = fileOut, append = TRUE) 
 
 
 # number of images in the folder
@@ -545,14 +545,14 @@ cat('
 <img src="../pdf_tmp_20170221/GLO/page-66.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170221/GLO/page-133.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170221/GLO/page-228.jpg" vspace="10" height="1200"/></br>
-               ',
+',
 file = fileOut, append = TRUE)
 
 cat(paste('
 </td>
-          <td>
-          '),
-    file = fileOut, append = TRUE) 
+<td>
+'),
+file = fileOut, append = TRUE) 
 
 cat('
 <h3>GLO-book</h3>
@@ -580,8 +580,8 @@ cat('
 <img src="../pdf_tmp_20170221/GLO15/page-65.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170221/GLO15/page-131.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170221/GLO15/page-215.jpg" vspace="10" height="1200"/></br>
-    ',
-    file = fileOut, append = TRUE)
+',
+file = fileOut, append = TRUE)
 
 
 
@@ -592,7 +592,7 @@ cat(paste("
 
 </body>
 "),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 
 
@@ -602,18 +602,18 @@ fileOut <- "country_profiles_20170301.html"
 file.remove(fileOut)
 file.create(fileOut, showWarnings = FALSE)
 cat(paste('
-          <body bgcolor="#669999">
-          
-          <h1> spreads<h1>
-          
-          <table>
-          <tr>
-          <th>Comments</th><th>current</th><th>as in 20170328</th><th>original in 20170306</th><th>global book2015</th>
-          </tr>
-          <tr>
-          <td>            
-          '),
-    file = fileOut, append = TRUE) 
+<body bgcolor="#669999">
+
+<h1> spreads<h1>
+
+<table>
+<tr>
+<th>Comments</th><th>current</th><th>as in 20170328</th><th>original in 20170306</th><th>global book2015</th>
+</tr>
+<tr>
+<td>            
+'),
+file = fileOut, append = TRUE) 
 
 cat("
 # <iframe name='embed_readwrite' src='https://pad.okfn.org/p/faopocketbook2016countryprofiles20170301?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false' width=500 height=23500></iframe> 
@@ -648,14 +648,14 @@ cat('
 <img src="GLO/page-67.jpg" vspace="10" height="1200"/></br>
 <img src="GLO/page-134.jpg" vspace="10" height="1200"/></br>
 <img src="GLO/page-229.jpg" vspace="10" height="1200"/></br>
-               ',
-    file = fileOut, append = TRUE) 
+',
+file = fileOut, append = TRUE) 
 
 cat(paste('
 </td>
 <td>
-          '),
-    file = fileOut, append = TRUE) 
+'),
+file = fileOut, append = TRUE) 
 
 # number of images in the folder
 # <img src="../pdf_tmp_20170328/REU/page-56.jpg" vspace="10" height="1200"/></br>
@@ -685,14 +685,14 @@ cat('
 <img src="../pdf_tmp_20170328/GLO/page-67.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170328/GLO/page-134.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170328/GLO/page-229.jpg" vspace="10" height="1200"/></br>
-               ',
-      file = fileOut, append = TRUE) 
+',
+file = fileOut, append = TRUE) 
 
 cat(paste('
 </td>
 <td>
-          '),
-    file = fileOut, append = TRUE) 
+'),
+file = fileOut, append = TRUE) 
 
 # number of images in the folder
 cat('
@@ -721,14 +721,14 @@ cat('
 <img src="../pdf_tmp_20170306/GLO/page-67.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170306/GLO/page-134.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170306/GLO/page-229.jpg" vspace="10" height="1200"/></br>
-               ',
-    file = fileOut, append = TRUE)
+',
+file = fileOut, append = TRUE)
 
 cat(paste('
 </td>
-          <td>
-          '),
-    file = fileOut, append = TRUE) 
+<td>
+'),
+file = fileOut, append = TRUE) 
 
 cat('
 <h3>GLO-book</h3>
@@ -756,8 +756,8 @@ cat('
 <img src="../pdf_tmp_20170221/GLO15/page-65.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170221/GLO15/page-131.jpg" vspace="10" height="1200"/></br>
 <img src="../pdf_tmp_20170221/GLO15/page-215.jpg" vspace="10" height="1200"/></br>
-    ',
-    file = fileOut, append = TRUE)
+',
+file = fileOut, append = TRUE)
 
 
 
@@ -768,7 +768,7 @@ cat(paste("
 
 </body>
 "),
-    file = fileOut, append = TRUE) 
+file = fileOut, append = TRUE) 
 
 
 
@@ -777,17 +777,17 @@ fileOut <- "country_profiles_20170601.html"
 file.remove(fileOut)
 file.create(fileOut, showWarnings = FALSE)
 cat(paste('
-    <body bgcolor="#669999">
-    
-    <h1> spreads<h1>
-    
-    <table>
-    <tr>
-    <th>Comments</th><th>current</th><th>as in 20170328</th><th>original in 20170306</th><th>global book2015</th>
-    </tr>
-    <tr>
-    <td>            
-    '),
+<body bgcolor="#669999">
+
+<h1> spreads<h1>
+
+<table>
+<tr>
+<th>Comments</th><th>current</th><th>as in 20170328</th><th>original in 20170306</th><th>global book2015</th>
+</tr>
+<tr>
+<td>            
+'),
 file = fileOut, append = TRUE) 
 
 cat("
@@ -827,15 +827,15 @@ cat('
 file = fileOut, append = TRUE) 
 
 cat(paste('
-    </td>
-    <td>
-    '),
+</td>
+<td>
+'),
 file = fileOut, append = TRUE) 
 
 cat(paste('
 </td>
-    <td>
-    '),
+<td>
+'),
 file = fileOut, append = TRUE) 
 
 # number of images in the folder
@@ -869,9 +869,9 @@ cat('
 file = fileOut, append = TRUE)
 
 cat(paste('
-    </td>
-    <td>
-    '),
+</td>
+<td>
+'),
 file = fileOut, append = TRUE) 
 
 # number of images in the folder
@@ -906,9 +906,9 @@ cat('
 file = fileOut, append = TRUE) 
 
 cat(paste('
-    </td>
-    <td>
-    '),
+</td>
+<td>
+'),
 file = fileOut, append = TRUE) 
 
 # number of images in the folder
@@ -942,9 +942,9 @@ cat('
 file = fileOut, append = TRUE)
 
 cat(paste('
-    </td>
-    <td>
-    '),
+</td>
+<td>
+'),
 file = fileOut, append = TRUE) 
 
 cat('
@@ -1052,14 +1052,14 @@ file = fileOut, append = TRUE)
 # Add data from bulk_download for Amanda
 
 if (amanda){
-  
-  tmp <- readRDS("~/local_data/faostat/rds/faostat.RDS")
-  write_csv(tmp[1:10000,], paste0(root.dir,"/output/data/faostat.csv"))
-  
-  tmp <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
-  write_csv(tmp, paste0(root.dir,"/output/data/meta_faostat.csv"))
-  
-  write_csv(syb.df, paste0(root.dir,"/output/data/data_for_book.csv"))
+
+tmp <- readRDS("~/local_data/faostat/rds/faostat.RDS")
+write_csv(tmp[1:10000,], paste0(root.dir,"/output/data/faostat.csv"))
+
+tmp <- readRDS("~/local_data/faostat/metadata/meta_faostat.RDS")
+write_csv(tmp, paste0(root.dir,"/output/data/meta_faostat.csv"))
+
+write_csv(syb.df, paste0(root.dir,"/output/data/data_for_book.csv"))
 }
 
 
@@ -1086,5 +1086,5 @@ unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE)
 if (Sys.info()["nodename"] =="markus-desktop-mint18" & Sys.info()["user"] == "aurelius")     system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
 if (Sys.info()["nodename"] =="markus-x220") system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/x220-rsync-key" --recursive --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
 if (Sys.info()["nodename"] == "markus-T430")              system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
-if (Sys.info()["nodename"] =="markus-desktop-mint18" & Sys.info()["user"] == "amanda")     system('rsync -lptDvzhe "ssh -i /home/amanda/avaimet/amanda-rsync-key" --progress /home/amanda/faosync/pocketbooks/pocketbook/output/ amanda@82.181.175.116:/var/www/html/fao/pocketbooks/')
+if (Sys.info()["nodename"] =="markus-desktop-mint18" & Sys.info()["user"] == "amanda")     system('rsync -lptDvzhe "ssh -i /home/amanda/avaimet/amanda-rsync-key" --progress --delete --recursive /home/amanda/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
 
