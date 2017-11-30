@@ -1085,6 +1085,6 @@ unlink(paste0(root.dir,"/output/process"), recursive = TRUE, force = TRUE)
 # Sync to kapsi!!
 if (Sys.info()["nodename"] =="markus-desktop-mint18" & Sys.info()["user"] == "aurelius")     system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/nuc-rsync-key" --progress --delete --recursive /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
 if (Sys.info()["nodename"] =="markus-x220") system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/x220-rsync-key" --recursive --progress --delete /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
-if (Sys.info()["nodename"] == "markus-T430")              system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
+if (Sys.info()["nodename"] == "markus-T430")              system('rsync -lptDvzhe "ssh -i /home/aurelius/avaimet/t430-rsync-key" --progress --delete --recursive /home/aurelius/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
 if (Sys.info()["nodename"] =="markus-desktop-mint18" & Sys.info()["user"] == "amanda")     system('rsync -lptDvzhe "ssh -i /home/amanda/avaimet/amanda-rsync-key" --progress --delete --recursive /home/amanda/faosync/pocketbooks/pocketbook/output/ pi@82.181.175.116:/var/www/html/fao/pocketbooks/')
 
