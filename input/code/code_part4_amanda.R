@@ -14,6 +14,8 @@ if (rulang) {
   names(temp)[names(temp) == 'ItemNameRU'] <- 'ItemName'
 }
 
+# Fix linebreaks in area names
+temp$AreaName <- gsub("\\\\n", "\n", temp$AreaName)
 
 source(paste0(root.dir,'/input/code/plot/plot_color.R'))
 
