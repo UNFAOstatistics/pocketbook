@@ -549,6 +549,8 @@ dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value,ItemName))
 minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 
+first <- dat1$ItemName[1]
+second <- dat1$ItemName[2]
 
 d13 <- dat1 %>%  dplyr::filter(Year == maxYr)
 d00 <- dat1 %>% dplyr::filter(Year == minYr )
@@ -758,7 +760,7 @@ if (rulang) spread_title <- "Животноводство"
 if (region_to_report == "REU" & rulang) short_text <- "Продовольственной экономикой региона все больше движет сдвиг рациона питания в сторону продуктов животного происхождения, таких как мясо, молоко и молочные продукты. В результате на сельское хозяйство воздействует не только рост производства животноводческой продукции, но также взаимодействие с другими секторами, которые поставляют корм для животных, такими как растениеводство и рыболовство. Животноводство является крупнейшим пользователем сельскохозяйственных земель и, следовательно, накладывает значительный отпечаток на окружающую среду."
 
 ## ---- P3livestockData ----
-dat1 <- subset(temp, subset=Part %in% "P3crop")
+dat1 <- subset(temp, subset=Part %in% "P3livestock")
 dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
 dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value,ItemName))
 minYr <- min(dat1$Year)
@@ -997,6 +999,7 @@ if (rulang){
   dat1$fill[dat1$Indicator == "aquaculture_fish_production"] <- "From aquaculture"
 }
 
+dat1 <- na.omit(dat1)
 p <- ggplot(dat1, aes(x=Year, y=Value, color=fill))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])

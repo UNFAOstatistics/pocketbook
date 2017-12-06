@@ -66,7 +66,8 @@ dat1$fill <- factor(dat1$fill, levels=c("Agricultural",
 
 dat_plot <- dat1
 
-dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% dplyr::filter(fill == "Agricultural") %>% arrange(-value))$AreaName)
+dat_plot$AreaName <- factor(dat_plot$AreaName, levels=(dat_plot %>% dplyr::filter(fill == "Agricultural") %>% arrange(-Value))$AreaName)
+
 
 if (rulang){
   dat_plot$fill <- as.character(dat_plot$fill)

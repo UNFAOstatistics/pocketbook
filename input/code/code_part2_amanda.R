@@ -66,7 +66,7 @@ dw <- dat1 %>%
   select(Year,AreaName,Value) %>%
   spread(key = Year,value = Value)
 
-dw$FAO_TABLE_NAME[dw$FAO_TABLE_NAME == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
+#dw$AreaName[dw$AreaName == "Latin America and the Caribbean"] <- "Latin America and \n the Caribbean"
 names(dw) <- c("",minYr,maxYr)
 tbl_data <- dw
 #dw <- dw[c(7,3,4,1,2,5,6),]
@@ -213,13 +213,13 @@ dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
 dat1$AreaCode <- as.integer(dat1$AreaCode)
 
 
-map.plot <- left_join(map.df,dat1)
+map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 map.plot <- map.plot[which(map.plot[[region_to_report]]),]
 
-cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","FS.OA.POU.PCT3D1")]
-cat_data$value_cat <- categories(x=cat_data$FS.OA.POU.PCT3D1, n=5, manual = TRUE, manual_breaks = c(0, 5, 15, 25, 35, 100), method="sd") # manualBreaks = c(0, 5, 15, 25, 35, 100),
+cat_data <- map.plot[!duplicated(map.plot[c("FAOST_CODE")]),c("FAOST_CODE","Value")]
+cat_data$value_cat <- categories(x=cat_data$Value, n=5, manual = TRUE, manual_breaks = c(0, 5, 15, 25, 35, 100), method="sd") # manualBreaks = c(0, 5, 15, 25, 35, 100),
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
@@ -688,7 +688,7 @@ dat_plot$color <- as.character(dat_plot$color)
 
 p <- ggplot(data=dat_plot, aes(x=AreaName, y= Value, fill=color))
 p <- p + geom_segment(data=dat_plot %>% select(Yr,AreaName,Value) %>%
-                        spread(key = Year, value = Value) %>% 
+                        spread(key = Yr, value = Value) %>% 
                         mutate(color=NA), 
                       aes_(y = as.name(minYr), xend = quote(AreaName),
                            yend = as.name(maxYr)), color="grey80")

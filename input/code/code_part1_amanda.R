@@ -971,7 +971,7 @@ if (rulang) caption_text <- paste("Потоки помощи в сельское
                                   length(unique(dat_plot$AreaName)),
                                   "стран с самыми высокими значениями в",yr,"г. (млн долл. США, в постоянных ценах 2015 г.)")
 
-## ---- p1investMAPdata ----
+## ---- p1investMAP ----
 dat1 <- subset(temp, subset=Part %in% "P1invest")
 dat1 <- subset(dat1, subset=Position %in% "MAP")
 dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
@@ -990,7 +990,6 @@ cat_data$value_cat <- categories(x=cat_data$Value, n=5, method="jenks",decimals=
 
 map.plot <- left_join(map.plot,cat_data[c("FAOST_CODE","value_cat")])
 
-## ---- p1investMAP ----
 
 # define map unit
 map_unit <- "percent"
@@ -1002,8 +1001,7 @@ p
 minYr <- substr(dat1$Year[1], 1, 4)
 maxYr <- substr(dat1$Year[1], 6, 9)
 
-# # Caption
+# Caption
 caption_text <- paste("Share of government expenditure on agriculture, share of total outlays (percent,",minYr,"to",maxYr,"*)")
 if (rulang) caption_text <- paste("Доля государственных расходов на сельское хозяйство, доля в общем объеме расходов (в процентах, с",minYr,"по",maxYr,"гг.*)")
-
 
