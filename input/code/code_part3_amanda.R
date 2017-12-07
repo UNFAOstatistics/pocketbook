@@ -324,6 +324,7 @@ dat1 <- subset(dat1, select = c(ItemName,Value,Year))
 yr = dat1$Year[1]
 dat1 <- subset(dat1, select = c(ItemName,Value))
 
+## ---- P3cropproTOPRIGHT ----
 rc <- dat1 %>% arrange(-Value) %>% slice(1:5)
 
 names(rc) <- c("","%")
@@ -549,6 +550,7 @@ dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value,ItemName))
 minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 
+## ---- P3cropTOPRIGHT ----
 first <- dat1$ItemName[1]
 second <- dat1$ItemName[2]
 
@@ -766,7 +768,7 @@ dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value,ItemName))
 minYr <- min(dat1$Year)
 maxYr <- max(dat1$Year)
 
-
+## ---- P3livestockTOPRIGHT ----
 d13 <- dat1 %>%  dplyr::filter(Year == maxYr)
 d00 <- dat1 %>% dplyr::filter(Year == minYr )
 gg <- merge(d00,d13,by="ItemName")
@@ -983,33 +985,32 @@ if (region_to_report == "REU" & rulang) short_text <- "Рыба является
 
 ## ---- P3fisheriesData ----
 
+## ---- P3fisheriesTOPRIGHT ----
 dat1 <- subset(temp, subset=Part %in% "P3fisheries")
 dat1 <- subset(dat1, subset=Position %in% "TOPRIGHT")
 dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 dat1$Year <- as.integer(dat1$Year)
-minYr <- min(dat1$Year)
-maxYr <- max(dat1$Year)
 
-## ---- P3fisheriesTOPRIGHT ----
+dat_plot <- dat1
+
+dat_plot$Indicator <- as.character(dat_plot$Indicator)
+dat_plot$Indicator[dat_plot$Indicator == "capture_fish_production"] <- "From capture fishing"
+dat_plot$Indicator[dat_plot$Indicator == "aquaculture_fish_production"] <- "From aquaculture"
+
 if (rulang){
-  dat1$fill[dat1$Indicator == "capture_fish_production"] <- "Рыболовство"
-  dat1$fill[dat1$Indicator == "aquaculture_fish_production"] <- "Аквакультура"
-} else {
-  dat1$fill[dat1$Indicator == "capture_fish_production"] <- "From capture fishing"
-  dat1$fill[dat1$Indicator == "aquaculture_fish_production"] <- "From aquaculture"
+  dat_plot$Indicator[dat_plot$Indicator == "From capture fishing"] <- "Рыболовство"
+  dat_plot$Indicator[dat_plot$Indicator == "From aquaculture"] <- "Аквакультура"
 }
 
-dat1 <- na.omit(dat1)
-p <- ggplot(dat1, aes(x=Year, y=Value, color=fill))
+p <- ggplot(dat_plot, aes(x=Year,y=Value,color=Indicator))
 p <- p + geom_line(size=1.1, alpha=.7)
 p <- p + scale_color_manual(values=plot_colors(part = syb_part, 2)[["Sub"]])
-p <- p + labs(x="",y="million tonnes\n")
+p <- p + labs(x=NULL,y="million tonnes\n")
 if (rulang) p <- p + labs(x="",y="млн тонн\n")
 p <- p + guides(color = guide_legend(nrow = 2))
 p <- p + theme(axis.text.x = element_text(angle=45))
-p  <-p +  scale_x_continuous(breaks=c(minYr,1995,2000,2005,2010,maxYr))
+p <- p + scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2015))
 p
-
 
 
 # Caption

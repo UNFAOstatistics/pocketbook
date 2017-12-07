@@ -971,7 +971,7 @@ if (rulang) caption_text <- paste("Потоки помощи в сельское
                                   length(unique(dat_plot$AreaName)),
                                   "стран с самыми высокими значениями в",yr,"г. (млн долл. США, в постоянных ценах 2015 г.)")
 
-## ---- p1investMAP ----
+## ---- P1investMAP ----
 dat1 <- subset(temp, subset=Part %in% "P1invest")
 dat1 <- subset(dat1, subset=Position %in% "MAP")
 dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
@@ -1004,4 +1004,5 @@ maxYr <- substr(dat1$Year[1], 6, 9)
 # Caption
 caption_text <- paste("Share of government expenditure on agriculture, share of total outlays (percent,",minYr,"to",maxYr,"*)")
 if (rulang) caption_text <- paste("Доля государственных расходов на сельское хозяйство, доля в общем объеме расходов (в процентах, с",minYr,"по",maxYr,"гг.*)")
+
 

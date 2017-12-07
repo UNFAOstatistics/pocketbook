@@ -1100,7 +1100,6 @@ dat1 <- subset(dat1, subset=Position %in% "BOTTOM")
 dat1 <- subset(dat1, select = c(AreaName,Year,Indicator,Value))
 dat1$Year <- as.integer(dat1$Year)
 
-
 dat_plot <- dat1
 
 dat_plot$Indicator <- as.character(dat_plot$Indicator)
@@ -1108,10 +1107,8 @@ dat_plot$Indicator[dat_plot$Indicator == "SH.H2O.SAFE.ZS"] <- "Water source"
 dat_plot$Indicator[dat_plot$Indicator == "SH.STA.ACSN"] <- "Sanitation facilities"
 
 if (rulang){
-  
   dat_plot$Indicator[dat_plot$Indicator == "Water source"] <- "Источник воды"
   dat_plot$Indicator[dat_plot$Indicator == "Sanitation facilities"] <- "Санитарные-технические сооружения"
-  
 }
 
 p <- ggplot(dat_plot, aes(x=Year,y=Value,color=Indicator))
