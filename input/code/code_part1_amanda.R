@@ -80,6 +80,7 @@ dat1 <- subset(dat1, select = c(Year,Indicator,Value))
 names(dat1)[names(dat1) == 'Indicator'] <- 'variable'
 names(dat1)[names(dat1) == 'Value'] <- 'value'
 dat1$Year <- as.integer(dat1$Year)
+if (region_to_report == "REU") dat1 <- dat1[dat1$Year>=1992,]
 dat1$variable[dat1$variable == "OA.TPR.POP.PPL.NO"] <- "Rural population"
 dat1$variable[dat1$variable == "OA.TPU.POP.PPL.NO"] <- "Urban population"
 

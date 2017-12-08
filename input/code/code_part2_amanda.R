@@ -388,7 +388,7 @@ dat1 <- subset(dat1, subset=Position %in% "MAP")
 dat1 <- subset(dat1, select = c(AreaCode,Value,Year))
 dat1$AreaCode <- as.integer(dat1$AreaCode)
 
-map.plot <- left_join(map.df,dat1) # so that each country in the region will be filled (value/NA)
+map.plot <- left_join(map.df,dat1, by = c("FAOST_CODE" = "AreaCode")) # so that each country in the region will be filled (value/NA)
 
 # Add region key and subset
 
