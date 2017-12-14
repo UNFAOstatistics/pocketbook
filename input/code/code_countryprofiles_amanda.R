@@ -9,12 +9,10 @@
 # read from Excel instead of csv
 library(readxl)
 url <- paste0("http://fenixservices.fao.org/faostat/static/bulkdownloads/",region_to_report,"_CP_data_final.xlsx")
-destfile <- paste0(region_to_report,"_CP_data_final.xlsx")
+destfile <- paste0(root.dir,"input_data/",region_to_report,"_CP_data_final.xlsx")
 curl::curl_download(url, destfile)
 temp <- read_excel(destfile, col_types = c("text", "text", "text", "text", 
                                            "text", "text"))
-
-
 
 # Spesify the years!
 year1 <- "1990"
@@ -116,13 +114,15 @@ if (region_to_report == "RNE"){
 }
 # Reorder in alphabetical order (forget "the")
 temp_cntry <- temp %>% 
+  mutate(FAOST_CODE = as.integer(FAOST_CODE)) %>% 
   mutate(ordervar = gsub("^the ", "", SHORT_NAME)) %>% 
   arrange(ordervar) %>% 
   select(-ordervar) %>% 
   # !!!!! remove aggregates as we dont have names from them yet!
   filter(FAOST_CODE <= 400)
 
-temp_reg <- temp %>% 
+temp_reg <- temp %>%
+  mutate(FAOST_CODE = as.integer(FAOST_CODE)) %>% 
   filter(FAOST_CODE >= 400, FAOST_CODE != 5839) %>% 
   select(-SHORT_NAME) %>% 
   left_join(.,reg_data)
