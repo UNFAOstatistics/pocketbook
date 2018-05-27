@@ -23,7 +23,7 @@ data.dir <- paste0(root.dir,"/input/data/database/")
 regionS_to_report <- c(
                       # "GLO" # Global
                           # "RAP" # Asia and the Pacific
-                        # "RAF"  # Africa
+                        # ,"RAF"  # Africa
                      "REU" # Europe and Central Asia
                        # ,"RNE" # Near East and North Africa
                         # "COF" # Coffee
@@ -41,7 +41,7 @@ setwd(root.dir)
 
 ############################################################
 # For print or for web or a4-print (in-house)
-output_type <- "web" # web//a4g
+ output_type <- "web" # web//a4g
 # output_type <- "print" # web/print/a4
 # output_type <- "a4" # web/print/a4
 
@@ -69,7 +69,7 @@ include_part6        <- F
 # include_part10       <- F # just a placeholder
 # -------------------------------
 include_country_profiles <- T
-include_definitions      <- F
+include_definitions      <- T
 # --------------------------- ----
 # for latex tables etc. latex specific stuff
 table_type <- "latex"
@@ -496,7 +496,7 @@ map.df <- left_join(map.df,region_key)
 # names(syb.df)
 
 region_to_report="REU" # debuggin
-
+# regionS_to_report="REU"
 # Run all the down here before debuggin etc.
 
 if (!exists("regional15_web")){ # because of the pocketbook_web
