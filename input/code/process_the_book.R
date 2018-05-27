@@ -219,3 +219,4 @@ if (output_type == "print"){
   file.copy(flist, paste0(root.dir,"/output/print"), overwrite = TRUE)
   
 }
+setwd("~/faosync/pocketbooks/pocketbook")
