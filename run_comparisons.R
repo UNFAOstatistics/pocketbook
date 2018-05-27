@@ -11,9 +11,9 @@ root.dir <- "~/faosync/pocketbooks/pocketbook/"
 amanda <- FALSE
 
 books <- c(
-  "GLO"
+  # "GLO"
   # ,"GLO15"
-  ,"RAP"
+  "RAP"
   ,"RAF"
   ,"REU"
   ,"REU_ru"
@@ -1064,8 +1064,8 @@ write_csv(syb.df, paste0(root.dir,"/output/data/data_for_book.csv"))
 
 
 file.copy(paste0(root.dir,"/input/templates/toc.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
-file.copy(paste0(root.dir,"/input/templates/datatests.html"), to = paste0(root.dir,"/output"), overwrite = TRUE)
-file.copy(paste0(root.dir,"/input/templates/github_browser_edit.gif"), to = paste0(root.dir,"/output"), overwrite = TRUE)
+# file.copy(paste0(root.dir,"/input/templates/datatests.html"), to = paste0(root.dir,"/output"), overwrite = TRUE)
+# file.copy(paste0(root.dir,"/input/templates/github_browser_edit.gif"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 file.copy(paste0(root.dir,"/input/templates/datacheck_amandasql.Rmd"), to = paste0(root.dir,"/output"), overwrite = TRUE)
 
 setwd(paste0(root.dir,"/output"))
