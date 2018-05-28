@@ -11,13 +11,13 @@ root.dir <- "~/faosync/pocketbooks/pocketbook/"
 amanda <- FALSE
 
 books <- c(
-  # "GLO"
+   "GLO"
   # ,"GLO15"
-  "RAP"
+  ,"RAP"
   ,"RAF"
   ,"REU"
   ,"REU_ru"
-  ,"RNE"
+  #,"RNE"
 )
 
 
