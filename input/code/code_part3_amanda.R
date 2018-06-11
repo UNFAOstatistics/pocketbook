@@ -562,6 +562,8 @@ gg <- arrange(gg, -gg$Value.y)
 gg$Value.x<- prettyNum(gg$Value.x, big.mark=" ")
 gg$Value.y<- prettyNum(gg$Value.y, big.mark=" ")
 
+names(gg)[names(gg) == 'Value.x'] <- minYr
+names(gg)[names(gg) == 'Value.y'] <- maxYr
 
 tbl_data <- gg
 if (table_type == "latex") cap <- paste("\\large{Top five items produced in ",maxYr,", thousand tonnes}", sep = "")
@@ -777,6 +779,8 @@ gg <- arrange(gg, -gg$Value.y)
 gg$Value.x<- prettyNum(gg$Value.x, big.mark=" ")
 gg$Value.y<- prettyNum(gg$Value.y, big.mark=" ")
 
+names(gg)[names(gg) == 'Value.x'] <- minYr
+names(gg)[names(gg) == 'Value.y'] <- maxYr
 
 tbl_data <- gg
 if (table_type == "latex") cap <- paste("\\large{Live animal number, top 5 in ",maxYr," (thousand heads)}", sep = "")
@@ -785,7 +789,6 @@ caption_text <- cap
 if (rulang){
   caption_text <- paste("\\large{Число самых распространенных животных в ",maxYr," году (тыс. голов)}", sep = "")
 } 
-
 
 print(xtable(tbl_data, caption = caption_text, digits = c(0,0,0,0),
              align= "l{\raggedright\arraybackslash}p{1.0cm}rr"),

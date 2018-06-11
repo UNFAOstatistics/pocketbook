@@ -1103,8 +1103,8 @@ dat1$Year <- as.integer(dat1$Year)
 dat_plot <- dat1
 
 dat_plot$Indicator <- as.character(dat_plot$Indicator)
-dat_plot$Indicator[dat_plot$Indicator == "SH.H2O.SAFE.ZS"] <- "Water source"
-dat_plot$Indicator[dat_plot$Indicator == "SH.STA.ACSN"] <- "Sanitation facilities"
+dat_plot$Indicator[dat_plot$Indicator == "SH.H2O.SMDW.ZS"] <- "Water source"
+dat_plot$Indicator[dat_plot$Indicator == "SH.STA.SMSS.ZS"] <- "Sanitation facilities"
 
 if (rulang){
   dat_plot$Indicator[dat_plot$Indicator == "Water source"] <- "Источник воды"
